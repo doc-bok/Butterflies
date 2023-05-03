@@ -134,6 +134,7 @@ public class Butterfly extends AmbientCreature {
      */
     @Nullable
     @Override
+    @SuppressWarnings( {"deprecation", "OverrideOnly"} )
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level,
                                         @NotNull DifficultyInstance difficulty,
                                         @NotNull MobSpawnType spawnType,
@@ -271,9 +272,9 @@ public class Butterfly extends AmbientCreature {
         //  2. After a 1/30 random chance
         //  3. We get too close to the current target position
         if (this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerToCenterThan(this.position(), 2.0d)) {
-            this.targetPosition = new BlockPos(this.getX() + (double) this.random.nextInt(7) - (double) this.random.nextInt(7),
-                                               this.getY() + (double) this.random.nextInt(6) - 2.0d,
-                                               this.getZ() + (double) this.random.nextInt(7) - (double) this.random.nextInt(7));
+            this.targetPosition = new BlockPos((int) this.getX() + this.random.nextInt(7) - this.random.nextInt(7),
+                                               (int) this.getY() + this.random.nextInt(6) - 2,
+                                               (int) this.getZ() + this.random.nextInt(7) - this.random.nextInt(7));
         }
 
         // Calculate an updated movement delta.
@@ -296,7 +297,7 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Override to define extra data to be synched between server and client.
+     * Override to define extra data to be synced between server and client.
      */
     @Override
     protected void defineSynchedData() {
