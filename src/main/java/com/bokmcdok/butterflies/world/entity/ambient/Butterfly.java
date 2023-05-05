@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -33,29 +34,44 @@ import javax.annotation.Nullable;
  */
 public class Butterfly extends AmbientCreature {
 
+    //  Represents the possible sizes of the butterflies.
+    public enum Size {
+        SMALL,
+        MEDIUM,
+        LARGE
+    }
+
+    // The unique IDs that are used to reference a butterfly entity.
+    public static final String MORPHO_NAME = "morpho";
+    public static final String FORESTER_NAME = "forester";
+    public static final String COMMON_NAME = "common";
+    public static final String EMPEROR_NAME = "emperor";
+    public static final String HAIRSTREAK_NAME = "hairstreak";
+    public static final String RAINBOW_NAME = "rainbow";
+    public static final String HEATH_NAME = "heath";
+    public static final String GLASSWING_NAME = "glasswing";
+    public static final String CHALKHILL_NAME = "chalkhill";
+    public static final String SWALLOWTAIL_NAME = "swallowtail";
+
     // The unique ID that is used to reference a butterfly entity.
-    public static final String NAME = "butterfly";
+    //public static final String NAME = "butterfly";
 
     // Holds a flag that is set to TRUE if a player placed the butterfly.
     // entity.
     private static final EntityDataAccessor<Boolean> DATA_PLACED_BY_PLAYER =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
 
-    // Holds an integer that represents the variant of the butterfly.
-    private static final EntityDataAccessor<Integer> DATA_VARIANT =
-            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
-
     // The number of ticks per flap. Used for event emissions.
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
-
-    // The maximum number of butterfly variants.
-    private static final int MAX_VARIANTS = 10;
 
     // The name of the "respawned" attribute in the save data.
     private static final String PLACED_BY_PLAYER = "butterflyPlacedByPlayer";
 
-    // The name of the "variant" attribute in the save data.
-    private static final String VARIANT = "butterflyVariant";
+    //  The size of the butterfly
+    private final Size size;
+
+    //  The location of the texture that the renderer should use.
+    private final ResourceLocation texture;
 
     // The position the butterfly is flying towards. Butterflies can spawn
     // anywhere the light level is above 8.
@@ -88,13 +104,140 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
+     * Create a Morpho butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createMorphoButterfly(EntityType<? extends Butterfly> entityType,
+                                                  Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_blue.png", entityType, level);
+    }
+
+    /**
+     * Create a Forester butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createForesterButterfly(EntityType<? extends Butterfly> entityType,
+                                                    Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_nyan.png", entityType, level);
+    }
+
+    /**
+     * Create a Common butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createCommonButterfly(EntityType<? extends Butterfly> entityType,
+                                                  Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_peacemaker.png", entityType, level);
+    }
+
+    /**
+     * Create an Emperor butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createEmperorButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_purple.png", entityType, level);
+    }
+
+    /**
+     * Create a Hairstreak butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createHairstreakButterfly(EntityType<? extends Butterfly> entityType,
+                                                      Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_purple_trim.png", entityType, level);
+    }
+
+    /**
+     * Create a Rainbow butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createRainbowButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_rainbow.png", entityType, level);
+    }
+
+    /**
+     * Create a Heath butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createHeathButterfly(EntityType<? extends Butterfly> entityType,
+                                                 Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_red.png", entityType, level);
+    }
+
+    /**
+     * Create a Glasswing butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createGlasswingButterfly(EntityType<? extends Butterfly> entityType,
+                                                     Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_seethru.png", entityType, level);
+    }
+
+    /**
+     * Create a Chalkhill butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createChalkhillButterfly(EntityType<? extends Butterfly> entityType,
+                                                     Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_sword.png", entityType, level);
+    }
+
+    /**
+     * Create a Swallowtail butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createSwallowtailButterfly(EntityType<? extends Butterfly> entityType,
+                                                       Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_white.png", entityType, level);
+    }
+
+    /**
      * The default constructor.
+     * @param size The size of the butterfly.
+     * @param texture The texture the butterfly should use.
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
      */
-    public Butterfly(EntityType<? extends Butterfly> entityType,
+    public Butterfly(Size size,
+                     String texture,
+                     EntityType<? extends Butterfly> entityType,
                      Level level) {
         super(entityType, level);
+
+        this.size = size;
+        this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/" + texture);
     }
 
     /**
@@ -104,7 +247,6 @@ public class Butterfly extends AmbientCreature {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putInt(VARIANT, this.entityData.get(DATA_VARIANT));
         tag.putBoolean(PLACED_BY_PLAYER, this.entityData.get(DATA_PLACED_BY_PLAYER));
     }
 
@@ -140,16 +282,7 @@ public class Butterfly extends AmbientCreature {
                                         @NotNull MobSpawnType spawnType,
                                         @Nullable SpawnGroupData spawnGroupData,
                                         @Nullable CompoundTag tag) {
-        setVariant(this.random.nextInt(MAX_VARIANTS));
         return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, tag);
-    }
-
-    /**
-     * Get the variant (species) of this butterfly.
-     * @return The index representing this butterfly's species.
-     */
-    public int getVariant() {
-        return this.entityData.get(DATA_VARIANT);
     }
 
     /**
@@ -189,11 +322,6 @@ public class Butterfly extends AmbientCreature {
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
-        // Read the variant (species) of the butterfly if it exists.
-        if (tag.contains(VARIANT)) {
-            this.entityData.set(DATA_VARIANT, tag.getInt(VARIANT));
-        }
-
         // Read the placed-by-player flag if it exists.
         if (tag.contains(PLACED_BY_PLAYER)) {
             this.entityData.set(DATA_PLACED_BY_PLAYER, tag.getBoolean(PLACED_BY_PLAYER));
@@ -217,14 +345,6 @@ public class Butterfly extends AmbientCreature {
      */
     public void setPlacedByPlayer() {
         entityData.set(DATA_PLACED_BY_PLAYER, true);
-    }
-
-    /**
-     * Sets the variant (species) of this butterfly.
-     * @param variant The variant of this butterfly.
-     */
-    public void setVariant(int variant) {
-        entityData.set(DATA_VARIANT, variant);
     }
 
     /**
@@ -302,7 +422,6 @@ public class Butterfly extends AmbientCreature {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_VARIANT, 0);
         this.entityData.define(DATA_PLACED_BY_PLAYER, false);
     }
 
@@ -328,6 +447,18 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
+     * Get the scale to use for the butterfly.
+     * @return A scale value based on the butterfly's size.
+     */
+    public float getScale() {
+        switch (size) {
+            case SMALL -> { return 0.25f; }
+            case LARGE ->{ return 0.45f; }
+            default -> { return 0.35f; }
+        }
+    }
+
+    /**
      * Override to control an entity's relative volume. Butterflies are silent.
      * @return Always zero, so butterflies are silent.
      */
@@ -346,6 +477,14 @@ public class Butterfly extends AmbientCreature {
     protected float getStandingEyeHeight(@NotNull Pose pose,
                                          EntityDimensions dimensions) {
         return dimensions.height / 2.0f;
+    }
+
+    /**
+     * Get the texture to use for rendering.
+     * @return The resource location of the texture.
+     */
+    public ResourceLocation getTexture() {
+        return texture;
     }
 
     /**
