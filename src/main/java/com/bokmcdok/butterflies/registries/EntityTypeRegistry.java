@@ -60,7 +60,7 @@ public class EntityTypeRegistry {
     public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
         event.register(BUTTERFLY.get(),
                 SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
     }
