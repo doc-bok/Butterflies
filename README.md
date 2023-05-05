@@ -3,6 +3,9 @@
  
 ## Changelog
 
+### [0.1.5] 2023-05-05
+- Added the Monarch Butterfly.
+
 ### [0.1.4] 2023-05-05
 - Butterflies will now spawn in different biomes depending on type.
 
