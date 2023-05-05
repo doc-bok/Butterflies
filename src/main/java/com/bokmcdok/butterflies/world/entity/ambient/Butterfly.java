@@ -53,6 +53,7 @@ public class Butterfly extends AmbientCreature {
     public static final String CHALKHILL_NAME = "chalkhill";
     public static final String SWALLOWTAIL_NAME = "swallowtail";
     public static final String MONARCH_NAME = "monarch";
+    public static final String CABBAGE_NAME = "cabbage";
 
     // The unique ID that is used to reference a butterfly entity.
     //public static final String NAME = "butterfly";
@@ -234,6 +235,18 @@ public class Butterfly extends AmbientCreature {
     public static Butterfly createMonarchButterfly(EntityType<? extends Butterfly> entityType,
                                                    Level level) {
         return new Butterfly(Size.MEDIUM, "butterfly_monarch.png", entityType, level);
+    }
+
+    /**
+     * Create a Cabbage butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createCabbageButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_cabbage.png", entityType, level);
     }
 
     /**
