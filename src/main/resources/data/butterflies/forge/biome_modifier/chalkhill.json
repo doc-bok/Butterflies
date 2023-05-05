@@ -1,0 +1,19 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:taiga",
+    "minecraft:savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_savanna"
+  ],
+  "spawners":
+  {
+    "type": "butterflies:chalkhill",
+    "weight": 10,
+    "minCount": 3,
+    "maxCount": 5
+  }
+}

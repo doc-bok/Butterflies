@@ -3,8 +3,6 @@
   "biomes": [
     "minecraft:plains",
     "minecraft:sunflower_plains",
-    "minecraft:swamp",
-    "minecraft:mangrove_swamp",
     "minecraft:forest",
     "minecraft:flower_forest",
     "minecraft:birch_forest",
@@ -18,18 +16,13 @@
     "minecraft:windswept_hills",
     "minecraft:windswept_forest",
     "minecraft:windswept_savanna",
-    "minecraft:jungle",
-    "minecraft:sparse_jungle",
-    "minecraft:bamboo_jungle",
     "minecraft:wooded_badlands",
     "minecraft:meadow",
-    "minecraft:river",
-    "minecraft:mushroom_fields",
-    "minecraft:lush_caves"
+    "minecraft:river"
   ],
   "spawners":
   {
-    "type": "butterflies:butterfly",
+    "type": "butterflies:chalkhill",
     "weight": 10,
     "minCount": 3,
     "maxCount": 5

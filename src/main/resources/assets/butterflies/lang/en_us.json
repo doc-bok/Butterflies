@@ -1,3 +1,12 @@
 {
-  "item.butterflies.butterfly": "Butterfly"
+  "item.butterflies.morpho": "Morpho Butterfly",
+  "item.butterflies.forester": "Forester Butterfly",
+  "item.butterflies.common": "Common Butterfly",
+  "item.butterflies.emperor": "Emperor Butterfly",
+  "item.butterflies.hairstreak": "Hairstreak Butterfly",
+  "item.butterflies.rainbow": "Rainbow Butterfly",
+  "item.butterflies.heath": "Heath Butterfly",
+  "item.butterflies.glasswing": "Glasswing Butterfly",
+  "item.butterflies.chalkhill": "Chalkhill Butterfly",
+  "item.butterflies.swallowtail": "Swallowtail Butterfly"
 }

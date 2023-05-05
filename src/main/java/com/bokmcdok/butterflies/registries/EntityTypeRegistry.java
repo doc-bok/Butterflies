@@ -28,11 +28,56 @@ public class EntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> INSTANCE =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MODID);
 
-    // The Butterfly entity type.
-    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY =
-            INSTANCE.register(Butterfly.NAME, () -> EntityType.Builder.of(Butterfly::new, MobCategory.AMBIENT)
+    // Register the butterflies.
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_MORPHO =
+            INSTANCE.register(Butterfly.MORPHO_NAME, () -> EntityType.Builder.of(Butterfly::createMorphoButterfly, MobCategory.AMBIENT)
                     .sized(0.3f, 0.4f)
-                    .build(Butterfly.NAME));
+                    .build(Butterfly.MORPHO_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_FORESTER =
+            INSTANCE.register(Butterfly.FORESTER_NAME, () -> EntityType.Builder.of(Butterfly::createForesterButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.FORESTER_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_COMMON =
+            INSTANCE.register(Butterfly.COMMON_NAME, () -> EntityType.Builder.of(Butterfly::createCommonButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.COMMON_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_EMPEROR =
+            INSTANCE.register(Butterfly.EMPEROR_NAME, () -> EntityType.Builder.of(Butterfly::createEmperorButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.EMPEROR_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_HAIRSTREAK =
+            INSTANCE.register(Butterfly.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Butterfly::createHairstreakButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.HAIRSTREAK_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_RAINBOW =
+            INSTANCE.register(Butterfly.RAINBOW_NAME, () -> EntityType.Builder.of(Butterfly::createRainbowButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.RAINBOW_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_HEATH =
+            INSTANCE.register(Butterfly.HEATH_NAME, () -> EntityType.Builder.of(Butterfly::createHeathButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.HEATH_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_GLASSWING =
+            INSTANCE.register(Butterfly.GLASSWING_NAME, () -> EntityType.Builder.of(Butterfly::createGlasswingButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.GLASSWING_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_CHALKHILL =
+            INSTANCE.register(Butterfly.CHALKHILL_NAME, () -> EntityType.Builder.of(Butterfly::createChalkhillButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.CHALKHILL_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_SWALLOWTAIL =
+            INSTANCE.register(Butterfly.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Butterfly::createSwallowtailButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.SWALLOWTAIL_NAME));
 
     /**
      * Register the renderers for our entities
@@ -41,7 +86,16 @@ public class EntityTypeRegistry {
     @SubscribeEvent
     public static void registerEntityRenders(final EntityRenderersEvent.RegisterRenderers event)
     {
-        event.registerEntityRenderer(BUTTERFLY.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_MORPHO.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_COMMON.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_FORESTER.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_EMPEROR.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_HAIRSTREAK.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_RAINBOW.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_HEATH.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_GLASSWING.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_CHALKHILL.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_SWALLOWTAIL.get(), ButterflyRenderer::new);
     }
 
     /**
@@ -49,7 +103,16 @@ public class EntityTypeRegistry {
      */
     @SubscribeEvent
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(BUTTERFLY.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_MORPHO.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_COMMON.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_FORESTER.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_EMPEROR.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_HAIRSTREAK.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_RAINBOW.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_HEATH.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_GLASSWING.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_CHALKHILL.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_SWALLOWTAIL.get(), Butterfly.createAttributes().build());
     }
 
     /**
@@ -58,7 +121,61 @@ public class EntityTypeRegistry {
      */
     @SubscribeEvent
     public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
-        event.register(BUTTERFLY.get(),
+        event.register(BUTTERFLY_MORPHO.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_COMMON.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_FORESTER.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_EMPEROR.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_HAIRSTREAK.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_RAINBOW.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_HEATH.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_GLASSWING.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_CHALKHILL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_SWALLOWTAIL.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
