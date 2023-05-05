@@ -52,6 +52,9 @@ public class ItemRegistry {
     private static final RegistryObject<Item> BUTTERFLY_SWALLOWTAIL_EGG = INSTANCE.register(Butterfly.SWALLOWTAIL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
 
+    private static final RegistryObject<Item> BUTTERFLY_MONARCH_EGG = INSTANCE.register(Butterfly.MONARCH_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_MONARCH, 0xdd8855, 0x000000, new Item.Properties()));
+
     /**
      * Registers items with the relevant creative tab
      * @param event The event information
@@ -69,6 +72,7 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_GLASSWING_EGG);
             event.accept(BUTTERFLY_CHALKHILL_EGG);
             event.accept(BUTTERFLY_SWALLOWTAIL_EGG);
+            event.accept(BUTTERFLY_MONARCH_EGG);
         }
     }
 }
