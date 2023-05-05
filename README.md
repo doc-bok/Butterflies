@@ -3,6 +3,12 @@
  
 ## Changelog
 
+### [0.1.8] 2023-05-06
+- Butterfly bodies now face the right way.
+
+### [0.1.7] 2023-05-06
+- Replaced Common Butterfly with Birdwing Butterfly.
+
 ### [0.1.6] 2023-05-05
 - Added the Cabbage Butterfly.
 
