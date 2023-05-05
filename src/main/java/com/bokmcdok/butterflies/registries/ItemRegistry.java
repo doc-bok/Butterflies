@@ -26,11 +26,11 @@ public class ItemRegistry {
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY, 0xff0000, 0x000000, new Item.Properties()));
 
     /**
-     * Register entity spawn placements here
+     * Registers items with the relevant creative tab
      * @param event The event information
      */
     @SubscribeEvent
-    public static void registerEntitySpawnPlacement(CreativeModeTabEvent.BuildContents event) {
+    public static void registerCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
         if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(BUTTERFLY_EGG);
         }
