@@ -3,6 +3,9 @@
  
 ## Changelog
 
+### [0.1.6] 2023-05-05
+- Added the Cabbage Butterfly.
+
 ### [0.1.5] 2023-05-05
 - Added the Monarch Butterfly.
 
