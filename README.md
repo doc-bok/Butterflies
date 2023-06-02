@@ -3,6 +3,9 @@
  
 ## Changelog
 
+### [0.1.11] 2023-06-02
+- Added the Clipper and Buckeye Butterflies.
+
 ### [0.1.10] 2023-05-31
 - Added the Longwing Butterfly.
 
