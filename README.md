@@ -3,6 +3,12 @@
  
 ## Changelog
 
+### [0.1.10] 2023-05-31
+- Added the Longwing Butterfly.
+
+### [0.1.9] 2023-05-31
+- Added the Admiral Butterfly.
+
 ### [0.1.8] 2023-05-06
 - Butterfly bodies now face the right way.
 

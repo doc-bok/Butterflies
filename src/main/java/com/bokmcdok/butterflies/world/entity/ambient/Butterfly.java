@@ -54,9 +54,8 @@ public class Butterfly extends AmbientCreature {
     public static final String SWALLOWTAIL_NAME = "swallowtail";
     public static final String MONARCH_NAME = "monarch";
     public static final String CABBAGE_NAME = "cabbage";
-
-    // The unique ID that is used to reference a butterfly entity.
-    //public static final String NAME = "butterfly";
+    public static final String ADMIRAL_NAME = "admiral";
+    public static final String LONGWING_NAME = "longwing";
 
     // Holds a flag that is set to TRUE if a player placed the butterfly.
     // entity.
@@ -138,7 +137,7 @@ public class Butterfly extends AmbientCreature {
     @NotNull
     public static Butterfly createCommonButterfly(EntityType<? extends Butterfly> entityType,
                                                   Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_peacemaker.png", entityType, level);
+        return new Butterfly(Size.MEDIUM, "butterfly_birdwing.png", entityType, level);
     }
 
     /**
@@ -247,6 +246,30 @@ public class Butterfly extends AmbientCreature {
     public static Butterfly createCabbageButterfly(EntityType<? extends Butterfly> entityType,
                                                    Level level) {
         return new Butterfly(Size.LARGE, "butterfly_cabbage.png", entityType, level);
+    }
+
+    /**
+     * Create an Admiral butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createAdmiralButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_admiral.png", entityType, level);
+    }
+
+    /**
+     * Create a Longwing butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createLongwingButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_longwing.png", entityType, level);
     }
 
     /**

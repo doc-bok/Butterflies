@@ -89,6 +89,16 @@ public class EntityTypeRegistry {
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.CABBAGE_NAME));
 
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_ADMIRAL =
+            INSTANCE.register(Butterfly.ADMIRAL_NAME, () -> EntityType.Builder.of(Butterfly::createAdmiralButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.ADMIRAL_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_LONGWING =
+            INSTANCE.register(Butterfly.LONGWING_NAME, () -> EntityType.Builder.of(Butterfly::createLongwingButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.LONGWING_NAME));
+
     /**
      * Register the renderers for our entities
      * @param event The event information
@@ -108,6 +118,8 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(BUTTERFLY_SWALLOWTAIL.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_MONARCH.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_CABBAGE.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_ADMIRAL.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_LONGWING.get(), ButterflyRenderer::new);
     }
 
     /**
@@ -127,6 +139,8 @@ public class EntityTypeRegistry {
         event.put(BUTTERFLY_SWALLOWTAIL.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_MONARCH.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_CABBAGE.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_ADMIRAL.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_LONGWING.get(), Butterfly.createAttributes().build());
     }
 
     /**
@@ -202,6 +216,18 @@ public class EntityTypeRegistry {
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_CABBAGE.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_ADMIRAL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_LONGWING.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
