@@ -56,6 +56,8 @@ public class Butterfly extends AmbientCreature {
     public static final String CABBAGE_NAME = "cabbage";
     public static final String ADMIRAL_NAME = "admiral";
     public static final String LONGWING_NAME = "longwing";
+    public static final String BUCKEYE_NAME = "buckeye";
+    public static final String CLIPPER_NAME = "clipper";
 
     // Holds a flag that is set to TRUE if a player placed the butterfly.
     // entity.
@@ -268,8 +270,32 @@ public class Butterfly extends AmbientCreature {
      */
     @NotNull
     public static Butterfly createLongwingButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
+                                                    Level level) {
         return new Butterfly(Size.SMALL, "butterfly_longwing.png", entityType, level);
+    }
+
+    /**
+     * Create a Clipper butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createClipperButterfly(EntityType<? extends Butterfly> entityType,
+                                                    Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_clipper.png", entityType, level);
+    }
+
+    /**
+     * Create a Buckeye butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createBuckeyeButterfly(EntityType<? extends Butterfly> entityType,
+                                                    Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_buckeye.png", entityType, level);
     }
 
     /**

@@ -99,6 +99,16 @@ public class EntityTypeRegistry {
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.LONGWING_NAME));
 
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_CLIPPER =
+            INSTANCE.register(Butterfly.CLIPPER_NAME, () -> EntityType.Builder.of(Butterfly::createClipperButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.CLIPPER_NAME));
+
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_BUCKEYE =
+            INSTANCE.register(Butterfly.BUCKEYE_NAME, () -> EntityType.Builder.of(Butterfly::createBuckeyeButterfly, MobCategory.AMBIENT)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.BUCKEYE_NAME));
+
     /**
      * Register the renderers for our entities
      * @param event The event information
@@ -120,6 +130,8 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(BUTTERFLY_CABBAGE.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_ADMIRAL.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_LONGWING.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_CLIPPER.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_BUCKEYE.get(), ButterflyRenderer::new);
     }
 
     /**
@@ -141,6 +153,8 @@ public class EntityTypeRegistry {
         event.put(BUTTERFLY_CABBAGE.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_ADMIRAL.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_LONGWING.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_CLIPPER.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_BUCKEYE.get(), Butterfly.createAttributes().build());
     }
 
     /**
@@ -228,6 +242,18 @@ public class EntityTypeRegistry {
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_LONGWING.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_CLIPPER.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_BUCKEYE.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
