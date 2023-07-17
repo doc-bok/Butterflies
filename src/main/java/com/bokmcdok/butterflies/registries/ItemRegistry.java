@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -20,6 +21,10 @@ public class ItemRegistry {
 
     // An instance of a deferred registry we use to register items.
     public static final DeferredRegister<Item> INSTANCE = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MODID);
+
+    //  Butterfly net - Used to catch butterflies
+    public static final RegistryObject<Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.NAME,
+            () -> new ButterflyNetItem(new Item.Properties().stacksTo(1)));
 
     //  Spawn eggs
     private static final RegistryObject<Item> BUTTERFLY_MORPHO_EGG = INSTANCE.register(Butterfly.MORPHO_NAME,
@@ -76,6 +81,10 @@ public class ItemRegistry {
      */
     @SubscribeEvent
     public static void registerCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
+        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(BUTTERFLY_NET);
+        }
+
         if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(BUTTERFLY_MORPHO_EGG);
             event.accept(BUTTERFLY_FORESTER_EGG);

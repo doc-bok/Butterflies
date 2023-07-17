@@ -1,0 +1,250 @@
+{
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_net",
+      "nbt": "{CustomModelData:1}"
+    },
+    "title": {
+      "translate": "advancements.butterfly.catch_all_butterflies.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.catch_all_butterflies.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "caught_admiral": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:admiral\"}"
+          }
+        ]
+      }
+    },
+    "caught_buckeye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:buckeye\"}"
+          }
+        ]
+      }
+    },
+    "caught_cabbage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:cabbage\"}"
+          }
+        ]
+      }
+    },
+    "caught_chalkhill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:chalkhill\"}"
+          }
+        ]
+      }
+    },
+    "caught_clipper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:clipper\"}"
+          }
+        ]
+      }
+    },
+    "caught_common": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:common\"}"
+          }
+        ]
+      }
+    },
+    "caught_emporer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:emporer\"}"
+          }
+        ]
+      }
+    },
+    "caught_forester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:forester\"}"
+          }
+        ]
+      }
+    },
+    "caught_glasswing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:glasswing\"}"
+          }
+        ]
+      }
+    },
+    "caught_hairstreak": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:hairstreak\"}"
+          }
+        ]
+      }
+    },
+    "caught_heath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:heath\"}"
+          }
+        ]
+      }
+    },
+    "caught_longwing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:longwing\"}"
+          }
+        ]
+      }
+    },
+    "caught_monarch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:monarch\"}"
+          }
+        ]
+      }
+    },
+    "caught_morpho": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:morpho\"}"
+          }
+        ]
+      }
+    },
+    "caught_rainbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:rainbow\"}"
+          }
+        ]
+      }
+    },
+    "caught_swallowtail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{EntityId:\"butterflies:swallowtail\"}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "caught_admiral"
+    ],
+    [
+      "caught_buckeye"
+    ],
+    [
+      "caught_cabbage"
+    ],
+    [
+      "caught_chalkhill"
+    ],
+    [
+      "caught_clipper"
+    ],
+    [
+      "caught_common"
+    ],
+    [
+      "caught_emporer"
+    ],
+    [
+      "caught_forester"
+    ],
+    [
+      "caught_glasswing"
+    ],
+    [
+      "caught_hairstreak"
+    ],
+    [
+      "caught_heath"
+    ],
+    [
+      "caught_longwing"
+    ],
+    [
+      "caught_monarch"
+    ],
+    [
+      "caught_morpho"
+    ],
+    [
+      "caught_rainbow"
+    ],
+    [
+      "caught_swallowtail"
+    ]
+  ]
+}

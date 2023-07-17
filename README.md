@@ -3,6 +3,9 @@
  
 ## Changelog
 
+### [0.1.12] 2023-07-17
+- Added the butterfly net.
+
 ### [0.1.11] 2023-06-02
 - Added the Clipper and Buckeye Butterflies.
 

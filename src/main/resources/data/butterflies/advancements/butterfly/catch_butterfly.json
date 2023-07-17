@@ -1,0 +1,36 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_net"
+    },
+    "title": {
+      "translate": "advancements.butterfly.catch_butterfly.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.catch_butterfly.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "caught_butterfly": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:butterfly_net",
+            "nbt": "{CustomModelData:1}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "caught_butterfly"
+    ]
+  ]
+}
