@@ -14,5 +14,14 @@
   "item.butterflies.admiral": "Admiral Butterfly",
   "item.butterflies.longwing": "Longwing Butterfly",
   "item.butterflies.clipper": "Clipper Butterfly",
-  "item.butterflies.buckeye": "Buckeye Butterfly"
+  "item.butterflies.buckeye": "Buckeye Butterfly",
+
+  "item.butterflies.butterfly_net": "Butterfly Net",
+
+  "advancements.butterfly.root.title": "Butterflies",
+  "advancements.butterfly.root.description": "Fluttering with colour",
+  "advancements.butterfly.catch_butterfly.title": "Butterfly Catcher",
+  "advancements.butterfly.catch_butterfly.description": "Catch a butterfly with a butterfly net",
+  "advancements.butterfly.catch_all_butterflies.title": "Butterfly Collector",
+  "advancements.butterfly.catch_all_butterflies.description": "Gotta catch 'em all"
 }

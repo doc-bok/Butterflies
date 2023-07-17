@@ -6,6 +6,8 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -20,10 +22,12 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ambient.AmbientCreature;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -296,6 +300,47 @@ public class Butterfly extends AmbientCreature {
     public static Butterfly createBuckeyeButterfly(EntityType<? extends Butterfly> entityType,
                                                     Level level) {
         return new Butterfly(Size.MEDIUM, "butterfly_buckeye.png", entityType, level);
+    }
+
+    /**
+     * Used to release a butterfly from an item back into the world.
+     * @param level The current level.
+     * @param player The player releasing the butterfly.
+     * @param entityId The type of butterfly to release.
+     * @param position The current position of the player.
+     */
+    public static void release(@NotNull Level level,
+                               @NotNull Player player,
+                               String entityId,
+                               BlockPos position) {
+
+        if (level instanceof ServerLevel) {
+            //  Move the target position slightly in front of the player
+            Vec3 lookAngle = player.getLookAngle();
+            position = position.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
+
+            ResourceLocation key = new ResourceLocation(entityId);
+            EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
+            if (entityType != null) {
+                Butterfly butterfly = (Butterfly) entityType.create(player.level);
+                if (butterfly != null) {
+                    butterfly.moveTo(position.getX() + 0.45D,
+                            position.getY() + 0.2D,
+                            position.getZ() + 0.5D,
+                            0.0F, 0.0F);
+                    butterfly.finalizeSpawn((ServerLevel) level,
+                            level.getCurrentDifficultyAt(player.getOnPos()),
+                            MobSpawnType.NATURAL,
+                            null,
+                            null);
+
+                    butterfly.setPlacedByPlayer();
+                    player.level.addFreshEntity(butterfly);
+                }
+            }
+        } else {
+            player.playSound(SoundEvents.PLAYER_ATTACK_WEAK, 1F, 1F);
+        }
     }
 
     /**
