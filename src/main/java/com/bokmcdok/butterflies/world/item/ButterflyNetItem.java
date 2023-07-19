@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -105,7 +104,7 @@ public class ButterflyNetItem extends Item {
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains("EntityId")) {
             String entityId = tag.getString("EntityId");
-            Butterfly.release(level, player, entityId, player.blockPosition());
+            Butterfly.release(player, entityId, player.blockPosition());
             tag.remove("CustomModelData");
             tag.remove("EntityId");
 

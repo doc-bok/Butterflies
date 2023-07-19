@@ -3,6 +3,11 @@
  
 ## Changelog
 
+### [0.2.1] 2023-07-19
+- Fixed butterfly release code.
+- Reduced butterfly speed to make them easier to catch.
+- Made fishing rod recipe a bit more readable.
+
 ### [0.1.12] 2023-07-17
 - Added the butterfly net.
 
