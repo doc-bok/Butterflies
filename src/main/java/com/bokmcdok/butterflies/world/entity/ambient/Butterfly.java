@@ -74,6 +74,9 @@ public class Butterfly extends AmbientCreature {
     // The name of the "respawned" attribute in the save data.
     private static final String PLACED_BY_PLAYER = "butterflyPlacedByPlayer";
 
+    // Helper constant to modify butterfly speed
+    private static final double BUTTERFLY_SPEED = 0.0325d;
+
     //  The size of the butterfly
     private final Size size;
 
@@ -304,17 +307,16 @@ public class Butterfly extends AmbientCreature {
 
     /**
      * Used to release a butterfly from an item back into the world.
-     * @param level The current level.
      * @param player The player releasing the butterfly.
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
-    public static void release(@NotNull Level level,
-                               @NotNull Player player,
+    public static void release(@NotNull Player player,
                                String entityId,
                                BlockPos position) {
-
+        Level level = player.level;
         if (level instanceof ServerLevel) {
+
             //  Move the target position slightly in front of the player
             Vec3 lookAngle = player.getLookAngle();
             position = position.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
@@ -322,12 +324,14 @@ public class Butterfly extends AmbientCreature {
             ResourceLocation key = new ResourceLocation(entityId);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
             if (entityType != null) {
-                Butterfly butterfly = (Butterfly) entityType.create(player.level);
-                if (butterfly != null) {
+                Entity entity = entityType.create(player.level);
+                if (entity instanceof Butterfly butterfly) {
+
                     butterfly.moveTo(position.getX() + 0.45D,
                             position.getY() + 0.2D,
                             position.getZ() + 0.5D,
                             0.0F, 0.0F);
+
                     butterfly.finalizeSpawn((ServerLevel) level,
                             level.getCurrentDifficultyAt(player.getOnPos()),
                             MobSpawnType.NATURAL,
@@ -335,7 +339,7 @@ public class Butterfly extends AmbientCreature {
                             null);
 
                     butterfly.setPlacedByPlayer();
-                    player.level.addFreshEntity(butterfly);
+                    level.addFreshEntity(butterfly);
                 }
             }
         } else {
@@ -523,9 +527,9 @@ public class Butterfly extends AmbientCreature {
         double dz = this.targetPosition.getZ() + 0.5d - this.getZ();
 
         Vec3 deltaMovement = this.getDeltaMovement();
-        Vec3 updatedDeltaMovement = deltaMovement.add((Math.signum(dx) * 0.5d - deltaMovement.x) * 0.1d,
+        Vec3 updatedDeltaMovement = deltaMovement.add((Math.signum(dx) * 0.5d - deltaMovement.x) * BUTTERFLY_SPEED,
                                                       (Math.signum(dy) * 0.7d - deltaMovement.y) * 0.1d,
-                                                      (Math.signum(dz) * 0.5d - deltaMovement.z) * 0.1d);
+                                                      (Math.signum(dz) * 0.5d - deltaMovement.z) * BUTTERFLY_SPEED);
         this.setDeltaMovement(updatedDeltaMovement);
 
         this.zza = 0.5f;
