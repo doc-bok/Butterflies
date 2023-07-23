@@ -314,7 +314,7 @@ public class Butterfly extends AmbientCreature {
     public static void release(@NotNull Player player,
                                String entityId,
                                BlockPos position) {
-        Level level = player.level;
+        Level level = player.level();
         if (level instanceof ServerLevel) {
 
             //  Move the target position slightly in front of the player
@@ -324,7 +324,7 @@ public class Butterfly extends AmbientCreature {
             ResourceLocation key = new ResourceLocation(entityId);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
             if (entityType != null) {
-                Entity entity = entityType.create(player.level);
+                Entity entity = entityType.create(level);
                 if (entity instanceof Butterfly butterfly) {
 
                     butterfly.moveTo(position.getX() + 0.45D,
@@ -507,7 +507,7 @@ public class Butterfly extends AmbientCreature {
         super.customServerAiStep();
 
         // Check the current move target is still an empty block.
-        if (this.targetPosition != null && (!this.level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level.getMinBuildHeight())) {
+        if (this.targetPosition != null && (!this.level().isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level().getMinBuildHeight())) {
             this.targetPosition = null;
         }
 

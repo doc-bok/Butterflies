@@ -3,6 +3,9 @@
  
 ## Changelog
 
+### [0.3.0] 2023-07-19
+- Updated Forge to version 47.0.35 (supports Minecraft 1.20.1)
+
 ### [0.2.1] 2023-07-19
 - Fixed butterfly release code.
 - Reduced butterfly speed to make them easier to catch.
