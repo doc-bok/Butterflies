@@ -6,7 +6,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -80,12 +80,12 @@ public class ItemRegistry {
      * @param event The event information
      */
     @SubscribeEvent
-    public static void registerCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
-        if (event.getTab() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+    public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BUTTERFLY_NET);
         }
 
-        if (event.getTab() == CreativeModeTabs.SPAWN_EGGS) {
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             event.accept(BUTTERFLY_MORPHO_EGG);
             event.accept(BUTTERFLY_FORESTER_EGG);
             event.accept(BUTTERFLY_COMMON_EGG);
