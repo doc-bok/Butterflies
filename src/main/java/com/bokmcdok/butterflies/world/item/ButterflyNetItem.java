@@ -1,12 +1,10 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
-import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -22,11 +20,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
-public class ButterflyNetItem extends Item {
+public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
+    //  The name this item is registered under.
     public static final String NAME = "butterfly_net";
-    public static final String ENTITY_ID = "EntityId";
-    public static final String CUSTOM_MODEL_DATA = "CustomModelData";
 
     /**
      * Construction
@@ -48,16 +45,28 @@ public class ButterflyNetItem extends Item {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains(ENTITY_ID)) {
-            String translatable = "item." + tag.getString(ENTITY_ID).replace(':', '.');
-            MutableComponent newComponent = Component.translatable(translatable);
-            Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED)).withItalic(true);
-            newComponent.setStyle(style);
-            components.add(newComponent);
-        }
-
+        appendButterflyNameToHoverText(stack, components);
         super.appendHoverText(stack, level, components, tooltipFlag);
+    }
+
+    /**
+     * Get the item that remains when we use this for crafting.
+     * @param itemStack The current ItemStack.
+     * @return An empty butterfly net.
+     */
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+        return new ItemStack(ItemRegistry.BUTTERFLY_NET.get());
+    }
+
+    /**
+     * Let Minecraft know we don't lose the item if we use it to craft.
+     * @return Always TRUE.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public boolean hasCraftingRemainingItem() {
+        return true;
     }
 
     /**
@@ -71,11 +80,11 @@ public class ButterflyNetItem extends Item {
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (entity instanceof Butterfly) {
             CompoundTag tag = stack.getOrCreateTag();
-            if (!tag.contains(CUSTOM_MODEL_DATA) ||
-                !tag.contains(ENTITY_ID)) {
+            if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
+                !tag.contains(CompoundTagId.ENTITY_ID)) {
 
-                tag.putInt(CUSTOM_MODEL_DATA,1);
-                tag.putString(ENTITY_ID, Objects.requireNonNull(entity.getEncodeId()));
+                tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA,1);
+                tag.putString(CompoundTagId.ENTITY_ID, Objects.requireNonNull(entity.getEncodeId()));
                 entity.discard();
 
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
@@ -102,11 +111,11 @@ public class ButterflyNetItem extends Item {
 
         ItemStack stack = player.getItemInHand(hand);
         CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains("EntityId")) {
-            String entityId = tag.getString("EntityId");
-            Butterfly.release(player, entityId, player.blockPosition());
-            tag.remove("CustomModelData");
-            tag.remove("EntityId");
+        if (tag.contains(CompoundTagId.ENTITY_ID)) {
+            String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+            Butterfly.release(player, entityId, player.blockPosition(), false);
+            tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
+            tag.remove(CompoundTagId.ENTITY_ID);
 
             return InteractionResultHolder.success(stack);
         }

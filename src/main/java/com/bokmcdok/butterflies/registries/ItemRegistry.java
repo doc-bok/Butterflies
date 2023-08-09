@@ -1,12 +1,18 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,7 +22,7 @@ import net.minecraftforge.registries.RegistryObject;
 /**
  * This class registers items with Forge's Item Registry
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ItemRegistry {
 
     // An instance of a deferred registry we use to register items.
@@ -25,6 +31,10 @@ public class ItemRegistry {
     //  Butterfly net - Used to catch butterflies
     public static final RegistryObject<Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.NAME,
             () -> new ButterflyNetItem(new Item.Properties().stacksTo(1)));
+
+    // Bottled butterfly - A butterfly trapped in a bottle.
+    public static final RegistryObject<Item> BOTTLED_BUTTERFLY = INSTANCE.register(BottledButterflyItem.NAME,
+            () -> new BottledButterflyItem(new Item.Properties().stacksTo(1)));
 
     //  Spawn eggs
     private static final RegistryObject<Item> BUTTERFLY_MORPHO_EGG = INSTANCE.register(Butterfly.MORPHO_NAME,
@@ -81,8 +91,8 @@ public class ItemRegistry {
      */
     @SubscribeEvent
     public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(BUTTERFLY_NET);
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(BOTTLED_BUTTERFLY);
         }
 
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
@@ -102,6 +112,31 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_LONGWING_EGG);
             event.accept(BUTTERFLY_CLIPPER_EGG);
             event.accept(BUTTERFLY_BUCKEYE_EGG);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(BUTTERFLY_NET);
+        }
+    }
+
+    /**
+     * Transfer butterfly data when moving from a butterfly net to a bottle
+     * @param event The event data
+     */
+    @SubscribeEvent
+    public static void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
+        ItemStack craftingItem = event.getCrafting();
+        if (craftingItem.getItem() == BOTTLED_BUTTERFLY.get()) {
+            Container craftingMatrix = event.getInventory();
+            for (int i = 0; i < craftingMatrix.getContainerSize(); ++i) {
+                ItemStack recipeItem = craftingMatrix.getItem(i);
+                if (recipeItem.getItem() == BUTTERFLY_NET.get()) {
+                    CompoundTag tag = recipeItem.getOrCreateTag();
+                    String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+                    BottledButterflyItem.setButterfly(craftingItem, entityId);
+                    break;
+                }
+            }
         }
     }
 }

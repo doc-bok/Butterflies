@@ -1,12 +1,16 @@
 # Butterflies
  This mod adds butterflies to the world of Minecraft. Butterflies can be caught
- or released using a butterfly net.
+ or released using a butterfly net. Once caught, they can be moved into bottles
+ and placed in the world as decorative objects.
  
 ## Changelog
 
+### [0.4.0] 2023-08-09
+- Added bottled butterflies
+
 ### [0.3.1] 2023-07-24
 - Updated Forge to version 47.1.42 (supports Minecraft 1.20.1)
-- 
+ 
 ### [0.3.0] 2023-07-19
 - Updated Forge to version 47.0.35 (supports Minecraft 1.20.1)
 

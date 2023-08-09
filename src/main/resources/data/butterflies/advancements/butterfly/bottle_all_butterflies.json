@@ -1,0 +1,249 @@
+{
+  "parent": "butterflies:butterfly/bottle_butterfly",
+  "display": {
+    "icon": {
+      "item": "butterflies:bottled_butterfly"
+    },
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "bottled_admiral": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:admiral\"}"
+          }
+        ]
+      }
+    },
+    "bottled_buckeye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:buckeye\"}"
+          }
+        ]
+      }
+    },
+    "bottled_cabbage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:cabbage\"}"
+          }
+        ]
+      }
+    },
+    "bottled_chalkhill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:chalkhill\"}"
+          }
+        ]
+      }
+    },
+    "bottled_clipper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:clipper\"}"
+          }
+        ]
+      }
+    },
+    "bottled_common": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:common\"}"
+          }
+        ]
+      }
+    },
+    "bottled_emporer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:emporer\"}"
+          }
+        ]
+      }
+    },
+    "bottled_forester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:forester\"}"
+          }
+        ]
+      }
+    },
+    "bottled_glasswing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:glasswing\"}"
+          }
+        ]
+      }
+    },
+    "bottled_hairstreak": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:hairstreak\"}"
+          }
+        ]
+      }
+    },
+    "bottled_heath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:heath\"}"
+          }
+        ]
+      }
+    },
+    "bottled_longwing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:longwing\"}"
+          }
+        ]
+      }
+    },
+    "bottled_monarch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:monarch\"}"
+          }
+        ]
+      }
+    },
+    "bottled_morpho": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:morpho\"}"
+          }
+        ]
+      }
+    },
+    "bottled_rainbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:rainbow\"}"
+          }
+        ]
+      }
+    },
+    "bottled_swallowtail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "butterflies:bottled_butterfly",
+            "nbt": "{EntityId:\"butterflies:swallowtail\"}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bottled_admiral"
+    ],
+    [
+      "bottled_buckeye"
+    ],
+    [
+      "bottled_cabbage"
+    ],
+    [
+      "bottled_chalkhill"
+    ],
+    [
+      "bottled_clipper"
+    ],
+    [
+      "bottled_common"
+    ],
+    [
+      "bottled_emporer"
+    ],
+    [
+      "bottled_forester"
+    ],
+    [
+      "bottled_glasswing"
+    ],
+    [
+      "bottled_hairstreak"
+    ],
+    [
+      "bottled_heath"
+    ],
+    [
+      "bottled_longwing"
+    ],
+    [
+      "bottled_monarch"
+    ],
+    [
+      "bottled_morpho"
+    ],
+    [
+      "bottled_rainbow"
+    ],
+    [
+      "bottled_swallowtail"
+    ]
+  ]
+}
