@@ -1,5 +1,7 @@
 package com.bokmcdok.butterflies;
 
+import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.mojang.logging.LogUtils;
@@ -28,6 +30,8 @@ public class ButterfliesMod
         modEventBus.register(this);
 
         // Deferred registries.
+        BlockRegistry.INSTANCE.register(modEventBus);
+        BlockEntityTypeRegistry.INSTANCE.register(modEventBus);
         EntityTypeRegistry.INSTANCE.register(modEventBus);
         ItemRegistry.INSTANCE.register(modEventBus);
     }

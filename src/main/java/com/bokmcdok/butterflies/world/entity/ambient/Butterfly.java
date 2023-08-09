@@ -313,13 +313,16 @@ public class Butterfly extends AmbientCreature {
      */
     public static void release(@NotNull Player player,
                                String entityId,
-                               BlockPos position) {
+                               BlockPos position,
+                               Boolean placed) {
         Level level = player.level();
         if (level instanceof ServerLevel) {
 
             //  Move the target position slightly in front of the player
-            Vec3 lookAngle = player.getLookAngle();
-            position = position.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
+            if (!placed) {
+                Vec3 lookAngle = player.getLookAngle();
+                position = position.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
+            }
 
             ResourceLocation key = new ResourceLocation(entityId);
             EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
@@ -339,6 +342,11 @@ public class Butterfly extends AmbientCreature {
                             null);
 
                     butterfly.setPlacedByPlayer();
+
+                    if (placed) {
+                        butterfly.setInvulnerable(true);
+                    }
+
                     level.addFreshEntity(butterfly);
                 }
             }
