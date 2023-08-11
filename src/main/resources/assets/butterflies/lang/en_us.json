@@ -15,11 +15,12 @@
   "item.butterflies.longwing": "Longwing Butterfly",
   "item.butterflies.clipper": "Clipper Butterfly",
   "item.butterflies.buckeye": "Buckeye Butterfly",
+  "item.butterflies.empty": "Empty",
 
   "item.butterflies.butterfly_net": "Butterfly Net",
-  "item.butterflies.bottled_butterfly": "Bottled Butterfly",
+  "item.butterflies.bottled_butterfly": "Butterfly Bottle",
 
-  "block.butterflies.bottled_butterfly": "Bottled Butterfly",
+  "block.butterflies.bottled_butterfly": "Butterfly Bottle",
 
   "advancements.butterfly.root.title": "Butterflies",
   "advancements.butterfly.root.description": "Fluttering with colour",

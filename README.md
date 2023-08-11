@@ -5,6 +5,9 @@
  
 ## Changelog
 
+### [0.4.1] 2023-08-11
+- Nets and bottles will now describe if they are empty.
+
 ### [0.4.0] 2023-08-09
 - Added bottled butterflies
 
