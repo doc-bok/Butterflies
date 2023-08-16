@@ -5,6 +5,10 @@
  
 ## Changelog
 
+### [0.4.2] 2023-08-16
+- Bottled butterfly recipe now unlocks if a player has both glass bottle(s) and
+  a butterfly net in their inventory.
+
 ### [0.4.1] 2023-08-11
 - Nets and bottles will now describe if they are empty.
 

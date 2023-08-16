@@ -6,13 +6,25 @@
     ]
   },
   "criteria": {
-    "has_glass_bottle": {
+    "has_bottle": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
               "minecraft:glass_bottle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_net": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net"
             ]
           }
         ]
@@ -27,7 +39,11 @@
   },
   "requirements": [
     [
-      "has_glass_bottle",
+      "has_bottle",
+      "has_the_recipe"
+    ],
+    [
+      "has_net",
       "has_the_recipe"
     ]
   ]
