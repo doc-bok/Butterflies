@@ -1,17 +1,22 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyIds;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -23,6 +28,91 @@ public class ButterflyLeavesBlock extends LeavesBlock {
 
     // An integer representation of the butterfly species.
     public static final IntegerProperty BUTTERFLY_INDEX = IntegerProperty.create("butterfly_index", 0, 15);
+
+    /**
+     * Plants an egg on the specified block it it is a leaf block.
+     * @param level The current level.
+     * @param blockState The current blockstate.
+     * @param position The position of the block.
+     * @param entityId The entity ID of the butterfly.
+     * @return True if the egg was successfully planted, otherwise false.
+     */
+    public static boolean plantButterflyEgg(Level level,
+                                            BlockState blockState,
+                                            BlockPos position,
+                                            String entityId) {
+
+        if (blockState.getBlock() == Blocks.OAK_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_OAK_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.SPRUCE_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_SPRUCE_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.BIRCH_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_BIRCH_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.JUNGLE_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_JUNGLE_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.ACACIA_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_ACACIA_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.DARK_OAK_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.AZALEA_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_AZALEA_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.FLOWERING_AZALEA_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.CHERRY_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_CHERRY_LEAVES);
+            return true;
+        }
+
+        if (blockState.getBlock() == Blocks.MANGROVE_LEAVES) {
+            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Plants an egg in the leaf block.
+     * @param level The current level.
+     * @param position The position of the block.
+     * @param block The block to replace the current one with.
+     */
+    private static void plantButterflyEgg(Level level,
+                                          BlockPos position,
+                                          String entityId,
+                                          RegistryObject<Block> block) {
+        BlockState newBlockState = block.get().defaultBlockState();
+        int index = ButterflyIds.EntityIdToIndex(entityId);
+        if (index >= 0) {
+            newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
+        }
+
+        level.setBlockAndUpdate(position, newBlockState);
+    }
 
     /**
      * Creates a new butterfly leaves block.
