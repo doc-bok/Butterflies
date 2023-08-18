@@ -20,6 +20,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * An item that allows players to catch butterflies.
+ */
 public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
