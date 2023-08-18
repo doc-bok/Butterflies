@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
+import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
@@ -132,6 +133,6 @@ public class BottledButterflyBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos position,
                                       @NotNull BlockState blockState) {
-        return new ButterflyBlockEntity(position, blockState);
+        return ButterflyBlockEntity.CreateBottledButterflyBlockEntity(position, blockState);
     }
 }

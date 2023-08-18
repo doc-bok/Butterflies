@@ -18,8 +18,8 @@ public class BlockEntityTypeRegistry {
 
     // The block entity for a bottled butterfly.
     @SuppressWarnings("ConstantConditions")
-    public static final RegistryObject<BlockEntityType<ButterflyBlockEntity>> BUTTERFLY_BLOCK =
+    public static final RegistryObject<BlockEntityType<ButterflyBlockEntity>> BOTTLED_BUTTERFLY_BLOCK =
             INSTANCE.register(ButterflyBlockEntity.NAME,
-                    () -> BlockEntityType.Builder.of(ButterflyBlockEntity::new,
-                                                     BlockRegistry.BOTTLED_BUTTERFLY_BLOCK.get()).build(null));
+                    () -> BlockEntityType.Builder.of(ButterflyBlockEntity::CreateBottledButterflyBlockEntity,
+                            BlockRegistry.BOTTLED_BUTTERFLY_BLOCK.get()).build(null));
 }
