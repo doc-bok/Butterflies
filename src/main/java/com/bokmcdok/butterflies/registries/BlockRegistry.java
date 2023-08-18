@@ -2,7 +2,9 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.BottledButterflyBlock;
+import com.bokmcdok.butterflies.world.block.ButterflyCherryLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
+import com.bokmcdok.butterflies.world.block.ButterflyMangroveLeavesBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
@@ -63,8 +65,33 @@ public class BlockRegistry {
     public static final RegistryObject<Block> BUTTERFLY_FLOWERING_AZALEA_LEAVES =
             INSTANCE.register("butterfly_flowering_azalea_leaves", () -> butterflyLeaves(SoundType.AZALEA_LEAVES));
 
-    //public static final Block CHERRY_LEAVES = register("cherry_leaves", new CherryLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PINK).strength(0.2F).randomTicks().sound(SoundType.CHERRY_LEAVES).noOcclusion().isValidSpawn(Blocks::ocelotOrParrot).isSuffocating(Blocks::never).isViewBlocking(Blocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(Blocks::never)));
-    //public static final Block MANGROVE_LEAVES = register("mangrove_leaves", new MangroveLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.2F).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn(Blocks::ocelotOrParrot).isSuffocating(Blocks::never).isViewBlocking(Blocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(Blocks::never)));
+    public static final RegistryObject<Block> BUTTERFLY_CHERRY_LEAVES =
+            INSTANCE.register("butterfly_cherry_leaves", () -> new ButterflyCherryLeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_PINK)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .sound(SoundType.CHERRY_LEAVES)
+                    .noOcclusion()
+                    .isValidSpawn(BlockRegistry::ocelotOrParrot)
+                    .isSuffocating(BlockRegistry::never)
+                    .isViewBlocking(BlockRegistry::never)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    .isRedstoneConductor(BlockRegistry::never)));
+
+    public static final RegistryObject<Block> BUTTERFLY_MANGROVE_LEAVES =
+            INSTANCE.register("butterfly_mangrove_leaves", () -> new ButterflyMangroveLeavesBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.PLANT)
+                    .strength(0.2F)
+                    .randomTicks()
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .isValidSpawn(BlockRegistry::ocelotOrParrot)
+                    .isSuffocating(BlockRegistry::never)
+                    .isViewBlocking(BlockRegistry::never)
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY)
+                    .isRedstoneConductor(BlockRegistry::never)));
 
     private static ButterflyLeavesBlock butterflyLeaves(SoundType p_152615_) {
         return new ButterflyLeavesBlock(BlockBehaviour.Properties.of()
