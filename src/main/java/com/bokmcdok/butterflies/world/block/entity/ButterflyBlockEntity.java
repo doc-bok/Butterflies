@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,14 +19,21 @@ public class ButterflyBlockEntity extends BlockEntity {
     // The ID of the butterfly contained in this block.
     private String entityId = "";
 
+    @NotNull
+    public static ButterflyBlockEntity CreateBottledButterflyBlockEntity(BlockPos position,
+                                                                         BlockState blockState) {
+        return new ButterflyBlockEntity(BlockEntityTypeRegistry.BOTTLED_BUTTERFLY_BLOCK.get(), position, blockState);
+    }
+
     /**
      * Construction
      * @param position The position of the block that owns this entity.
      * @param blockState The state of the block that owns this entity.
      */
-    public ButterflyBlockEntity(BlockPos position,
+    public ButterflyBlockEntity(BlockEntityType<?> blockEntityType,
+                                BlockPos position,
                                 BlockState blockState) {
-        super(BlockEntityTypeRegistry.BUTTERFLY_BLOCK.get(), position, blockState);
+        super(blockEntityType, position, blockState);
     }
 
     /**

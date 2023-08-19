@@ -1,18 +1,14 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
+import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
@@ -22,7 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 /**
  * This class registers items with Forge's Item Registry
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ItemRegistry {
 
     // An instance of a deferred registry we use to register items.
@@ -35,6 +31,55 @@ public class ItemRegistry {
     // Bottled butterfly - A butterfly trapped in a bottle.
     public static final RegistryObject<Item> BOTTLED_BUTTERFLY = INSTANCE.register(BottledButterflyItem.NAME,
             () -> new BottledButterflyItem(new Item.Properties().stacksTo(1)));
+
+    // Butterfly Eggs - Eggs that will eventually hatch into a caterpillar.
+    public static final RegistryObject<Item> ADMIRAL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,
+            () -> new ButterflyEggItem(Butterfly.ADMIRAL_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> BUCKEYE_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.BUCKEYE_NAME,
+            () -> new ButterflyEggItem(Butterfly.BUCKEYE_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> CABBAGE_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CABBAGE_NAME,
+            () -> new ButterflyEggItem(Butterfly.CABBAGE_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> CHALKHILL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CHALKHILL_NAME,
+            () -> new ButterflyEggItem(Butterfly.CHALKHILL_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> CLIPPER_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CLIPPER_NAME,
+            () -> new ButterflyEggItem(Butterfly.CLIPPER_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> COMMON_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.COMMON_NAME,
+            () -> new ButterflyEggItem(Butterfly.COMMON_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> EMPEROR_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.EMPEROR_NAME,
+            () -> new ButterflyEggItem(Butterfly.EMPEROR_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> FORESTER_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.FORESTER_NAME,
+            () -> new ButterflyEggItem(Butterfly.FORESTER_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> GLASSWING_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.GLASSWING_NAME,
+            () -> new ButterflyEggItem(Butterfly.GLASSWING_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> HAIRSTREAK_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.HAIRSTREAK_NAME,
+            () -> new ButterflyEggItem(Butterfly.HAIRSTREAK_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> HEATH_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.HEATH_NAME,
+            () -> new ButterflyEggItem(Butterfly.HEATH_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> LONGWING_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.LONGWING_NAME,
+            () -> new ButterflyEggItem(Butterfly.LONGWING_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> MONARCH_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.MONARCH_NAME,
+            () -> new ButterflyEggItem(Butterfly.MONARCH_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> MORPHO_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.MORPHO_NAME,
+            () -> new ButterflyEggItem(Butterfly.MORPHO_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> RAINBOW_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.RAINBOW_NAME,
+            () -> new ButterflyEggItem(Butterfly.RAINBOW_NAME, new Item.Properties()));
+
+    public static final RegistryObject<Item> SWALLOWTAIL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.SWALLOWTAIL_NAME,
+            () -> new ButterflyEggItem(Butterfly.SWALLOWTAIL_NAME, new Item.Properties()));
 
     //  Spawn eggs
     private static final RegistryObject<Item> BUTTERFLY_MORPHO_EGG = INSTANCE.register(Butterfly.MORPHO_NAME,
@@ -91,6 +136,25 @@ public class ItemRegistry {
      */
     @SubscribeEvent
     public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(ADMIRAL_BUTTERFLY_EGG);
+            event.accept(BUCKEYE_BUTTERFLY_EGG);
+            event.accept(CABBAGE_BUTTERFLY_EGG);
+            event.accept(CHALKHILL_BUTTERFLY_EGG);
+            event.accept(CLIPPER_BUTTERFLY_EGG);
+            event.accept(COMMON_BUTTERFLY_EGG);
+            event.accept(EMPEROR_BUTTERFLY_EGG);
+            event.accept(FORESTER_BUTTERFLY_EGG);
+            event.accept(GLASSWING_BUTTERFLY_EGG);
+            event.accept(HAIRSTREAK_BUTTERFLY_EGG);
+            event.accept(HEATH_BUTTERFLY_EGG);
+            event.accept(LONGWING_BUTTERFLY_EGG);
+            event.accept(MONARCH_BUTTERFLY_EGG);
+            event.accept(MORPHO_BUTTERFLY_EGG);
+            event.accept(RAINBOW_BUTTERFLY_EGG);
+            event.accept(SWALLOWTAIL_BUTTERFLY_EGG);
+        }
+
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(BOTTLED_BUTTERFLY);
         }
@@ -116,27 +180,6 @@ public class ItemRegistry {
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BUTTERFLY_NET);
-        }
-    }
-
-    /**
-     * Transfer butterfly data when moving from a butterfly net to a bottle
-     * @param event The event data
-     */
-    @SubscribeEvent
-    public static void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
-        ItemStack craftingItem = event.getCrafting();
-        if (craftingItem.getItem() == BOTTLED_BUTTERFLY.get()) {
-            Container craftingMatrix = event.getInventory();
-            for (int i = 0; i < craftingMatrix.getContainerSize(); ++i) {
-                ItemStack recipeItem = craftingMatrix.getItem(i);
-                if (recipeItem.getItem() == BUTTERFLY_NET.get()) {
-                    CompoundTag tag = recipeItem.getOrCreateTag();
-                    String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-                    BottledButterflyItem.setButterfly(craftingItem, entityId);
-                    break;
-                }
-            }
         }
     }
 }

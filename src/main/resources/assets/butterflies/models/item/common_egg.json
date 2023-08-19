@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld_rod",
+  "textures": {
+    "layer0": "butterflies:item/butterfly_egg/common_egg"
+  }
+}

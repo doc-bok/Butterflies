@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ambient;
 
+import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -514,8 +515,10 @@ public class Butterfly extends AmbientCreature {
     protected void customServerAiStep() {
         super.customServerAiStep();
 
+        Level level = this.level();
+
         // Check the current move target is still an empty block.
-        if (this.targetPosition != null && (!this.level().isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= this.level().getMinBuildHeight())) {
+        if (this.targetPosition != null && (!level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= level.getMinBuildHeight())) {
             this.targetPosition = null;
         }
 
@@ -546,6 +549,21 @@ public class Butterfly extends AmbientCreature {
         double yRot = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.x) * (180.0d / Math.PI)) - 90.0d;
         double yRotDelta = Mth.wrapDegrees(yRot - this.getYRot());
         this.setYRot(this.getYRot() + (float)yRotDelta);
+
+        // Attempt to lay an egg.
+        if (this.random.nextInt(20) == 1) {
+            BlockPos position = this.blockPosition();
+            position = switch (this.random.nextInt(6)) {
+                default -> position.above();
+                case 1 -> position.below();
+                case 2 -> position.north();
+                case 3 -> position.east();
+                case 4 -> position.south();
+                case 5 -> position.west();
+            };
+
+            ButterflyLeavesBlock.plantButterflyEgg(level, position, this.getEncodeId());
+        }
     }
 
     /**
