@@ -5,9 +5,11 @@ import com.bokmcdok.butterflies.world.block.BottledButterflyBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyCherryLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyMangroveLeavesBlock;
+import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -15,6 +17,10 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -22,6 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 /**
  * Registers the blocks used by the mod.
  */
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
     // An instance of a deferred registry we use to register items.
@@ -136,5 +143,26 @@ public class BlockRegistry {
                                           BlockPos position,
                                           EntityType<?> entityType) {
         return entityType == EntityType.OCELOT || entityType == EntityType.PARROT;
+    }
+
+    @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
+        // Evergreen
+        event.register((state, tint, position, color) -> FoliageColor.getEvergreenColor(),
+                BUTTERFLY_SPRUCE_LEAVES.get());
+
+        // Birch
+        event.register((state, tint, position, color) -> FoliageColor.getBirchColor(),
+                BUTTERFLY_BIRCH_LEAVES.get());
+
+        // Default
+        event.register((state, tint, position, color) ->
+                        tint != null && position != null ? BiomeColors.getAverageFoliageColor(tint, position) :
+                                                           FoliageColor.getDefaultColor(),
+                BUTTERFLY_OAK_LEAVES.get(),
+                BUTTERFLY_JUNGLE_LEAVES.get(),
+                BUTTERFLY_ACACIA_LEAVES.get(),
+                BUTTERFLY_DARK_OAK_LEAVES.get(),
+                BUTTERFLY_MANGROVE_LEAVES.get());
     }
 }
