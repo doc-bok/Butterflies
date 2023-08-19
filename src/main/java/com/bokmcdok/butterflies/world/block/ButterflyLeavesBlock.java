@@ -32,15 +32,14 @@ public class ButterflyLeavesBlock extends LeavesBlock {
     /**
      * Plants an egg on the specified block it it is a leaf block.
      * @param level The current level.
-     * @param blockState The current blockstate.
      * @param position The position of the block.
      * @param entityId The entity ID of the butterfly.
      * @return True if the egg was successfully planted, otherwise false.
      */
     public static boolean plantButterflyEgg(Level level,
-                                            BlockState blockState,
                                             BlockPos position,
                                             String entityId) {
+        BlockState blockState = level.getBlockState(position);
 
         if (blockState.getBlock() == Blocks.OAK_LEAVES) {
             plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_OAK_LEAVES);
@@ -105,12 +104,22 @@ public class ButterflyLeavesBlock extends LeavesBlock {
                                           BlockPos position,
                                           String entityId,
                                           RegistryObject<Block> block) {
+        BlockState oldBlockState = level.getBlockState(position);
+
+        // Create a new block and copy the old state.
         BlockState newBlockState = block.get().defaultBlockState();
+        newBlockState = newBlockState
+                .setValue(LeavesBlock.DISTANCE, oldBlockState.getValue(LeavesBlock.DISTANCE))
+                .setValue(LeavesBlock.PERSISTENT, oldBlockState.getValue(LeavesBlock.PERSISTENT))
+                .setValue(LeavesBlock.WATERLOGGED, oldBlockState.getValue(LeavesBlock.WATERLOGGED));
+
+        // Try and get the species index and save this state as well.
         int index = ButterflyIds.EntityIdToIndex(entityId);
         if (index >= 0) {
             newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
         }
 
+        // Update the block to the new block.
         level.setBlockAndUpdate(position, newBlockState);
     }
 

@@ -2,8 +2,14 @@
  This mod adds butterflies to the world of Minecraft. Butterflies can be caught
  or released using a butterfly net. Once caught, they can be moved into bottles
  and placed in the world as decorative objects.
+
+ Butterflies will also lay eggs in leaves if they get close to them, and if a
+ player collects these eggs they can plant them in other leaf blocks.
  
 ## Changelog
+
+### [0.5.0] 2023-08-19
+ - Added butterfly eggs.
 
 ### [0.4.2] 2023-08-16
 - Bottled butterfly recipe now unlocks if a player has both glass bottle(s) and

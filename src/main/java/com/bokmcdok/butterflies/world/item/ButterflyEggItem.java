@@ -7,7 +7,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -54,9 +53,8 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public InteractionResult useOn(@NotNull UseOnContext context) {
         Level level = context.getLevel();
         BlockPos position = context.getClickedPos();
-        BlockState blockState = level.getBlockState(position);
 
-        if (ButterflyLeavesBlock.plantButterflyEgg(level, blockState, position, this.entityId)) {
+        if (ButterflyLeavesBlock.plantButterflyEgg(level, position, this.entityId)) {
             ItemStack itemStack = context.getItemInHand();
             itemStack.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);
