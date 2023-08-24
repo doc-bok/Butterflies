@@ -305,15 +305,15 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Used to release a butterfly from an item back into the world.
+     * Used to spawn a butterfly into the world.
      * @param player The player releasing the butterfly.
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
-    public static void release(@NotNull Player player,
-                               String entityId,
-                               BlockPos position,
-                               Boolean placed) {
+    public static void spawn(@NotNull Player player,
+                             String entityId,
+                             BlockPos position,
+                             Boolean placed) {
         Level level = player.level();
         if (level instanceof ServerLevel) {
 
@@ -540,7 +540,7 @@ public class Butterfly extends AmbientCreature {
                 case 5 -> position.west();
             };
 
-            ButterflyLeavesBlock.plantButterflyEgg(level, position, this.getEncodeId());
+            ButterflyLeavesBlock.swapLeavesBlock(level, position, this.getEncodeId());
         }
     }
 

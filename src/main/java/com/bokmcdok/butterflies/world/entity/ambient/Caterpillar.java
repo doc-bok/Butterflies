@@ -1,21 +1,28 @@
 package com.bokmcdok.butterflies.world.entity.ambient;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ambient.AmbientCreature;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -260,6 +267,37 @@ public class Caterpillar extends AmbientCreature {
     public static Caterpillar createBuckeyeCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                    Level level) {
         return new Caterpillar("caterpillar_buckeye.png", entityType, level);
+    }
+
+    /**
+     * Spawns a caterpillar into the world.
+     * @param entityId The type of butterfly to release.
+     * @param position The current position of the player.
+     */
+    public static void spawn(ServerLevel level,
+                             String entityId,
+                             BlockPos position) {
+
+        ResourceLocation key = new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
+        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
+        if (entityType != null) {
+            Entity entity = entityType.create(level);
+            if (entity instanceof Caterpillar caterpillar) {
+
+                caterpillar.moveTo(position.getX() + 0.45D,
+                        position.getY() + 0.2D,
+                        position.getZ() + 0.5D,
+                        0.0F, 0.0F);
+
+                caterpillar.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(position),
+                        MobSpawnType.NATURAL,
+                        null,
+                        null);
+
+                level.addFreshEntity(caterpillar);
+            }
+        }
     }
 
     /**

@@ -3,8 +3,11 @@ package com.bokmcdok.butterflies.world.block;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -16,7 +19,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -36,62 +38,123 @@ public class ButterflyLeavesBlock extends LeavesBlock {
      * @param entityId The entity ID of the butterfly.
      * @return True if the egg was successfully planted, otherwise false.
      */
-    public static boolean plantButterflyEgg(Level level,
-                                            BlockPos position,
-                                            String entityId) {
+    public static boolean swapLeavesBlock(Level level,
+                                          BlockPos position,
+                                          String entityId) {
         BlockState blockState = level.getBlockState(position);
 
         if (blockState.getBlock() == Blocks.OAK_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_OAK_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_OAK_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.SPRUCE_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_SPRUCE_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_SPRUCE_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.BIRCH_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_BIRCH_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_BIRCH_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.JUNGLE_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_JUNGLE_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_JUNGLE_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.ACACIA_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_ACACIA_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_ACACIA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.DARK_OAK_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.AZALEA_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_AZALEA_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_AZALEA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.FLOWERING_AZALEA_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.CHERRY_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_CHERRY_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.MANGROVE_LEAVES) {
-            plantButterflyEgg(level, position, entityId, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES);
+            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES.get());
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * Removes an egg from the specified block it it is a leaf block.
+     *
+     * @param level    The current level.
+     * @param position The position of the block.
+     */
+    public static void removeButterflyEgg(Level level,
+                                          BlockPos position) {
+        BlockState blockState = level.getBlockState(position);
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_OAK_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.OAK_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_SPRUCE_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.SPRUCE_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_BIRCH_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.BIRCH_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_JUNGLE_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.JUNGLE_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_ACACIA_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.ACACIA_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.DARK_OAK_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_AZALEA_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.AZALEA_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.FLOWERING_AZALEA_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.CHERRY_LEAVES);
+            return;
+        }
+
+        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_MANGROVE_LEAVES.get()) {
+            swapLeavesBlock(level, position, null, Blocks.MANGROVE_LEAVES);
+        }
+
     }
 
     /**
@@ -100,23 +163,25 @@ public class ButterflyLeavesBlock extends LeavesBlock {
      * @param position The position of the block.
      * @param block The block to replace the current one with.
      */
-    private static void plantButterflyEgg(Level level,
-                                          BlockPos position,
-                                          String entityId,
-                                          RegistryObject<Block> block) {
+    private static void swapLeavesBlock(Level level,
+                                        BlockPos position,
+                                        String entityId,
+                                        Block block) {
         BlockState oldBlockState = level.getBlockState(position);
 
         // Create a new block and copy the old state.
-        BlockState newBlockState = block.get().defaultBlockState();
+        BlockState newBlockState = block.defaultBlockState();
         newBlockState = newBlockState
                 .setValue(LeavesBlock.DISTANCE, oldBlockState.getValue(LeavesBlock.DISTANCE))
                 .setValue(LeavesBlock.PERSISTENT, oldBlockState.getValue(LeavesBlock.PERSISTENT))
                 .setValue(LeavesBlock.WATERLOGGED, oldBlockState.getValue(LeavesBlock.WATERLOGGED));
 
         // Try and get the species index and save this state as well.
-        int index = ButterflyIds.EntityIdToIndex(entityId);
-        if (index >= 0) {
-            newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
+        if (entityId != null) {
+            int index = ButterflyIds.EntityIdToIndex(entityId);
+            if (index >= 0) {
+                newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
+            }
         }
 
         // Update the block to the new block.
@@ -170,5 +235,40 @@ public class ButterflyLeavesBlock extends LeavesBlock {
         }
 
         return result;
+    }
+
+    /**
+     * We will need to random tick so that eggs will spawn caterpillars
+     * @param blockState The current block state.
+     * @return Always TRUE.
+     */
+    @Override
+    public boolean isRandomlyTicking(@NotNull BlockState blockState) {
+        return true;
+    }
+
+    /**
+     * After a certain amount of time, a caterpillar will spawn.
+     * @param blockState The current block state.
+     * @param level The current level.
+     * @param position The position of the block.
+     * @param random The random number generator.
+     */
+    @Override
+    public void randomTick(@NotNull BlockState blockState,
+                           @NotNull ServerLevel level,
+                           @NotNull BlockPos position,
+                           @NotNull RandomSource random) {
+        if (random.nextInt(15) == 0) {
+            if (level.isEmptyBlock(position.above())) {
+                Caterpillar.spawn(level, ButterflyIds.IndexToEntityId(blockState.getValue(BUTTERFLY_INDEX)), position.above());
+                removeButterflyEgg(level, position);
+            }
+        }
+
+        // Only run the super's random tick if it would have ticked anyway.
+        if (super.isRandomlyTicking(blockState)) {
+            super.randomTick(blockState, level, position, random);
+        }
     }
 }
