@@ -43,8 +43,8 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
     public ButterflyModel(ModelPart root) {
         this.root = root;
         this.body = root.getChild("body");
-        this.left_wing = body.getChild("left_wing");
-        this.right_wing = body.getChild("right_wing");
+        this.left_wing = this.body.getChild("left_wing");
+        this.right_wing = this.body.getChild("right_wing");
     }
 
     /**

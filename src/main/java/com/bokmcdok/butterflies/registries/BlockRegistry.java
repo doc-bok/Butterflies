@@ -145,6 +145,10 @@ public class BlockRegistry {
         return entityType == EntityType.OCELOT || entityType == EntityType.PARROT;
     }
 
+    /**
+     * Register colors for (e.g.) foliage-style blocks.
+     * @param event The event fired to let us know we can register block colors.
+     */
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event){
         // Evergreen
