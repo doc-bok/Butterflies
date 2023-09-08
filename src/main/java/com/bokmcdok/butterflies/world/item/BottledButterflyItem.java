@@ -86,7 +86,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-            Butterfly.release(player, entityId, player.blockPosition(), false);
+            Butterfly.spawn(player, entityId, player.blockPosition(), false);
             player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
 
             return InteractionResultHolder.success(stack);
@@ -119,7 +119,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Level level = context.getLevel();
             BlockPos position = context.getClickedPos();
 
-            Butterfly.release(player, entityId, position, true);
+            Butterfly.spawn(player, entityId, position, true);
 
             BlockEntity blockEntity = level.getBlockEntity(position);
             if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {

@@ -11,7 +11,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ambient.AmbientCreature;
@@ -307,15 +305,16 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Used to release a butterfly from an item back into the world.
+     * Used to spawn a butterfly into the world.
      * @param player The player releasing the butterfly.
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
-    public static void release(@NotNull Player player,
-                               String entityId,
-                               BlockPos position,
-                               Boolean placed) {
+    @SuppressWarnings({"deprecation", "OverrideOnly"})
+    public static void spawn(@NotNull Player player,
+                             String entityId,
+                             BlockPos position,
+                             Boolean placed) {
         Level level = player.level();
         if (level instanceof ServerLevel) {
 
@@ -396,26 +395,6 @@ public class Butterfly extends AmbientCreature {
                                    float blockModifier,
                                    @NotNull DamageSource damageSource) {
         return false;
-    }
-
-    /**
-     * Used to finalise an entity's data after spawning. This will set the butterfly to a random variant.
-     * @param level The level the entity is spawning into.
-     * @param difficulty The difficulty of the level.
-     * @param spawnType The type of spawn happening.
-     * @param spawnGroupData The group data for the spawn.
-     * @param tag The data tag for the entity.
-     * @return Updated group data for the entity.
-     */
-    @Nullable
-    @Override
-    @SuppressWarnings( {"deprecation", "OverrideOnly"} )
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor level,
-                                        @NotNull DifficultyInstance difficulty,
-                                        @NotNull MobSpawnType spawnType,
-                                        @Nullable SpawnGroupData spawnGroupData,
-                                        @Nullable CompoundTag tag) {
-        return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, tag);
     }
 
     /**
@@ -562,7 +541,7 @@ public class Butterfly extends AmbientCreature {
                 case 5 -> position.west();
             };
 
-            ButterflyLeavesBlock.plantButterflyEgg(level, position, this.getEncodeId());
+            ButterflyLeavesBlock.swapLeavesBlock(level, position, this.getEncodeId());
         }
     }
 

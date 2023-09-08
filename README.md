@@ -8,6 +8,9 @@
  
 ## Changelog
 
+### [0.6.0] 2023-09-08
+ - Added caterpillars.
+
 ### [0.5.0] 2023-08-19
  - Added butterfly eggs.
 

@@ -116,7 +116,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-            Butterfly.release(player, entityId, player.blockPosition(), false);
+            Butterfly.spawn(player, entityId, player.blockPosition(), false);
             tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
             tag.remove(CompoundTagId.ENTITY_ID);
 

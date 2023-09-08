@@ -54,7 +54,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
         Level level = context.getLevel();
         BlockPos position = context.getClickedPos();
 
-        if (ButterflyLeavesBlock.plantButterflyEgg(level, position, this.entityId)) {
+        if (ButterflyLeavesBlock.swapLeavesBlock(level, position, this.entityId)) {
             ItemStack itemStack = context.getItemInHand();
             itemStack.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);
