@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
@@ -40,7 +41,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
             !tag.contains(CompoundTagId.ENTITY_ID)) {
-            tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
+            tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, ButterflyIds.EntityIdToIndex(entityId));
             tag.putString(CompoundTagId.ENTITY_ID, entityId);
         }
     }
