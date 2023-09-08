@@ -110,7 +110,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createCommonCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                   Level level) {
-        return new Caterpillar("caterpillar_birdwing.png", entityType, level);
+        return new Caterpillar("caterpillar_common.png", entityType, level);
     }
 
     /**
