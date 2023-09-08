@@ -1,6 +1,24 @@
 {
   "parent": "item/handheld_rod",
   "textures": {
-    "layer0": "butterflies:item/bottled_butterfly"
-  }
+    "layer0": "minecraft:item/glass_bottle"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 0 }, "model": "butterflies:item/bottled_admiral" },
+    { "predicate": { "custom_model_data": 1 }, "model": "butterflies:item/bottled_buckeye" },
+    { "predicate": { "custom_model_data": 2 }, "model": "butterflies:item/bottled_cabbage" },
+    { "predicate": { "custom_model_data": 3 }, "model": "butterflies:item/bottled_chalkhill" },
+    { "predicate": { "custom_model_data": 4 }, "model": "butterflies:item/bottled_clipper" },
+    { "predicate": { "custom_model_data": 5 }, "model": "butterflies:item/bottled_common" },
+    { "predicate": { "custom_model_data": 6 }, "model": "butterflies:item/bottled_emperor" },
+    { "predicate": { "custom_model_data": 7 }, "model": "butterflies:item/bottled_forester" },
+    { "predicate": { "custom_model_data": 8 }, "model": "butterflies:item/bottled_glasswing" },
+    { "predicate": { "custom_model_data": 9 }, "model": "butterflies:item/bottled_hairstreak" },
+    { "predicate": { "custom_model_data": 10 }, "model": "butterflies:item/bottled_heath" },
+    { "predicate": { "custom_model_data": 11 }, "model": "butterflies:item/bottled_longwing" },
+    { "predicate": { "custom_model_data": 12 }, "model": "butterflies:item/bottled_monarch" },
+    { "predicate": { "custom_model_data": 13 }, "model": "butterflies:item/bottled_morpho" },
+    { "predicate": { "custom_model_data": 14 }, "model": "butterflies:item/bottled_rainbow" },
+    { "predicate": { "custom_model_data": 15 }, "model": "butterflies:item/bottled_swallowtail" }
+  ]
 }

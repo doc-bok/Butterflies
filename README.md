@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### [0.6.3] 2023-09-09
+- Added multiple textures for bottled butterflies.
+
 ### [0.6.2] 2023-09-08
  - Added advancements for collecting butterfly eggs.
 

@@ -113,135 +113,27 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Create a Morpho butterfly
+     * Create an Admiral butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createMorphoButterfly(EntityType<? extends Butterfly> entityType,
-                                                  Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_blue.png", entityType, level);
-    }
-
-    /**
-     * Create a Forester butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createForesterButterfly(EntityType<? extends Butterfly> entityType,
-                                                    Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_nyan.png", entityType, level);
-    }
-
-    /**
-     * Create a Common butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createCommonButterfly(EntityType<? extends Butterfly> entityType,
-                                                  Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_birdwing.png", entityType, level);
-    }
-
-    /**
-     * Create an Emperor butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createEmperorButterfly(EntityType<? extends Butterfly> entityType,
+    public static Butterfly createAdmiralButterfly(EntityType<? extends Butterfly> entityType,
                                                    Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_purple.png", entityType, level);
+        return new Butterfly(Size.MEDIUM, "butterfly_admiral.png", entityType, level);
     }
 
     /**
-     * Create a Hairstreak butterfly
+     * Create a Buckeye butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createHairstreakButterfly(EntityType<? extends Butterfly> entityType,
-                                                      Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_purple_trim.png", entityType, level);
-    }
-
-    /**
-     * Create a Rainbow butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createRainbowButterfly(EntityType<? extends Butterfly> entityType,
+    public static Butterfly createBuckeyeButterfly(EntityType<? extends Butterfly> entityType,
                                                    Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_rainbow.png", entityType, level);
-    }
-
-    /**
-     * Create a Heath butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createHeathButterfly(EntityType<? extends Butterfly> entityType,
-                                                 Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_red.png", entityType, level);
-    }
-
-    /**
-     * Create a Glasswing butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createGlasswingButterfly(EntityType<? extends Butterfly> entityType,
-                                                     Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_seethru.png", entityType, level);
-    }
-
-    /**
-     * Create a Chalkhill butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createChalkhillButterfly(EntityType<? extends Butterfly> entityType,
-                                                     Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_sword.png", entityType, level);
-    }
-
-    /**
-     * Create a Swallowtail butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createSwallowtailButterfly(EntityType<? extends Butterfly> entityType,
-                                                       Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_white.png", entityType, level);
-    }
-
-    /**
-     * Create a Monarch butterfly
-     * @param entityType The type of the entity.
-     * @param level The current level.
-     * @return A newly constrycted butterfly.
-     */
-    @NotNull
-    public static Butterfly createMonarchButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_monarch.png", entityType, level);
+        return new Butterfly(Size.MEDIUM, "butterfly_buckeye.png", entityType, level);
     }
 
     /**
@@ -257,15 +149,99 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Create an Admiral butterfly
+     * Create a Chalkhill butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createAdmiralButterfly(EntityType<? extends Butterfly> entityType,
+    public static Butterfly createChalkhillButterfly(EntityType<? extends Butterfly> entityType,
+                                                     Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_chalkhill.png", entityType, level);
+    }
+
+    /**
+     * Create a Clipper butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createClipperButterfly(EntityType<? extends Butterfly> entityType,
                                                    Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_admiral.png", entityType, level);
+        return new Butterfly(Size.LARGE, "butterfly_clipper.png", entityType, level);
+    }
+
+    /**
+     * Create a Common butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createCommonButterfly(EntityType<? extends Butterfly> entityType,
+                                                  Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_common.png", entityType, level);
+    }
+
+    /**
+     * Create an Emperor butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createEmperorButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_emperor.png", entityType, level);
+    }
+
+    /**
+     * Create a Forester butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createForesterButterfly(EntityType<? extends Butterfly> entityType,
+                                                    Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_forester.png", entityType, level);
+    }
+
+    /**
+     * Create a Glasswing butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createGlasswingButterfly(EntityType<? extends Butterfly> entityType,
+                                                     Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_glasswing.png", entityType, level);
+    }
+
+    /**
+     * Create a Hairstreak butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createHairstreakButterfly(EntityType<? extends Butterfly> entityType,
+                                                      Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_hairstreak.png", entityType, level);
+    }
+
+    /**
+     * Create a Heath butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createHeathButterfly(EntityType<? extends Butterfly> entityType,
+                                                 Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_heath.png", entityType, level);
     }
 
     /**
@@ -281,27 +257,51 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Create a Clipper butterfly
+     * Create a Monarch butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createClipperButterfly(EntityType<? extends Butterfly> entityType,
-                                                    Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_clipper.png", entityType, level);
+    public static Butterfly createMonarchButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.MEDIUM, "butterfly_monarch.png", entityType, level);
     }
 
     /**
-     * Create a Buckeye butterfly
+     * Create a Morpho butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createBuckeyeButterfly(EntityType<? extends Butterfly> entityType,
-                                                    Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_buckeye.png", entityType, level);
+    public static Butterfly createMorphoButterfly(EntityType<? extends Butterfly> entityType,
+                                                  Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_morpho.png", entityType, level);
+    }
+
+    /**
+     * Create a Rainbow butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createRainbowButterfly(EntityType<? extends Butterfly> entityType,
+                                                   Level level) {
+        return new Butterfly(Size.SMALL, "butterfly_rainbow.png", entityType, level);
+    }
+
+    /**
+     * Create a Swallowtail butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constrycted butterfly.
+     */
+    @NotNull
+    public static Butterfly createSwallowtailButterfly(EntityType<? extends Butterfly> entityType,
+                                                       Level level) {
+        return new Butterfly(Size.LARGE, "butterfly_swallowtail.png", entityType, level);
     }
 
     /**
