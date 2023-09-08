@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### [0.6.2] 2023-09-08
+ - Added advancements for collecting butterfly eggs.
+
 ### [0.6.1] 2023-09-08
  - Fixed JSON format of achievements. 
 
