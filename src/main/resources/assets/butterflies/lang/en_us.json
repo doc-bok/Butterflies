@@ -56,7 +56,7 @@
 
   "block.butterflies.bottled_butterfly": "Butterfly Bottle",
 
-  "advancements.butterfly.root.title": "Butterflies",
+  "advancements.butterfly.root.title": "Lepidopterist",
   "advancements.butterfly.root.description": "Fluttering with colour",
   "advancements.butterfly.catch_butterfly.title": "Butterfly Catcher",
   "advancements.butterfly.catch_butterfly.description": "Catch a butterfly with a butterfly net",
@@ -65,5 +65,9 @@
   "advancements.butterfly.bottle_butterfly.title": "Bottled It",
   "advancements.butterfly.bottle_butterfly.description": "Bottle a butterfly",
   "advancements.butterfly.bottle_all_butterflies.title": "Gotta catch 'em all",
-  "advancements.butterfly.bottle_all_butterflies.description": "Bottle every species of butterfly"
+  "advancements.butterfly.bottle_all_butterflies.description": "Bottle every species of butterfly",
+  "advancements.butterfly.find_butterfly_egg.title": "Mini Egg",
+  "advancements.butterfly.find_butterfly_egg.description": "Find a butterfly egg.",
+  "advancements.butterfly.find_all_butterfly_eggs.title": "Basketfull",
+  "advancements.butterfly.find_all_butterfly_eggs.description": "Find all types of butterfly egg"
 }
