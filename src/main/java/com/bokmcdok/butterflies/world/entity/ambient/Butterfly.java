@@ -310,6 +310,7 @@ public class Butterfly extends AmbientCreature {
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
+    @SuppressWarnings({"deprecation", "OverrideOnly"})
     public static void spawn(@NotNull Player player,
                              String entityId,
                              BlockPos position,

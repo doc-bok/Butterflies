@@ -29,9 +29,7 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarMod
      */
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull Caterpillar entity) {
-        //  TODO: This is a temporary texture for testing purposes.
-        return new ResourceLocation(ButterfliesMod.MODID, "textures/entity/caterpillar/caterpillar_buckeye.png");
-        //return entity.getTexture();
+        return entity.getTexture();
     }
 
     /**

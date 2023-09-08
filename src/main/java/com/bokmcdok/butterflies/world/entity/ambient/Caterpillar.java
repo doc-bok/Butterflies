@@ -8,7 +8,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ambient.AmbientCreature;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -86,7 +84,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createMorphoCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                   Level level) {
-        return new Caterpillar("caterpillar_blue.png", entityType, level);
+        return new Caterpillar("caterpillar_morpho.png", entityType, level);
     }
 
     /**
@@ -98,7 +96,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createForesterCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                     Level level) {
-        return new Caterpillar("caterpillar_nyan.png", entityType, level);
+        return new Caterpillar("caterpillar_forester.png", entityType, level);
     }
 
     /**
@@ -122,7 +120,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createEmperorCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                    Level level) {
-        return new Caterpillar("caterpillar_purple.png", entityType, level);
+        return new Caterpillar("caterpillar_emperor.png", entityType, level);
     }
 
     /**
@@ -134,7 +132,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createHairstreakCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                       Level level) {
-        return new Caterpillar("caterpillar_purple_trim.png", entityType, level);
+        return new Caterpillar("caterpillar_hairstreak.png", entityType, level);
     }
 
     /**
@@ -158,7 +156,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createHeathCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                  Level level) {
-        return new Caterpillar("caterpillar_red.png", entityType, level);
+        return new Caterpillar("caterpillar_heath.png", entityType, level);
     }
 
     /**
@@ -170,7 +168,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createGlasswingCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                      Level level) {
-        return new Caterpillar("caterpillar_seethru.png", entityType, level);
+        return new Caterpillar("caterpillar_glasswing.png", entityType, level);
     }
 
     /**
@@ -182,7 +180,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createChalkhillCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                      Level level) {
-        return new Caterpillar("caterpillar_sword.png", entityType, level);
+        return new Caterpillar("caterpillar_chalkhill.png", entityType, level);
     }
 
     /**
@@ -194,7 +192,7 @@ public class Caterpillar extends AmbientCreature {
     @NotNull
     public static Caterpillar createSwallowtailCaterpillar(EntityType<? extends Caterpillar> entityType,
                                                        Level level) {
-        return new Caterpillar("caterpillar_white.png", entityType, level);
+        return new Caterpillar("caterpillar_swallowtail.png", entityType, level);
     }
 
     /**
@@ -249,7 +247,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Clipper butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createClipperCaterpillar(EntityType<? extends Caterpillar> entityType,
@@ -274,6 +272,7 @@ public class Caterpillar extends AmbientCreature {
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
+    @SuppressWarnings({"deprecation", "OverrideOnly"})
     public static void spawn(ServerLevel level,
                              String entityId,
                              BlockPos position) {
@@ -309,7 +308,7 @@ public class Caterpillar extends AmbientCreature {
                           EntityType<? extends AmbientCreature> entityType,
                           Level level) {
         super(entityType, level);
-        this.texture = new ResourceLocation("caterpillars:textures/entity/caterpillar/" + texture);
+        this.texture = new ResourceLocation("butterflies:textures/entity/caterpillar/" + texture);
     }
 
     /**
