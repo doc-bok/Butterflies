@@ -4,9 +4,13 @@
  and placed in the world as decorative objects.
 
  Butterflies will also lay eggs in leaves if they get close to them, and if a
- player collects these eggs they can plant them in other leaf blocks.
+ player collects these eggs they can plant them in other leaf blocks. The eggs
+ will eventually hatch into caterpillars.
  
 ## Changelog
+
+### [0.6.1] 2023-09-08
+ - Fixed JSON format of achievements. 
 
 ### [0.6.0] 2023-09-08
  - Added caterpillars.

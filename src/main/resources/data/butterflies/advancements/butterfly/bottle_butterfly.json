@@ -21,7 +21,9 @@
       "conditions": {
         "items": [
           {
-            "item": "butterflies:bottled_butterfly"
+            "items": [
+              "butterflies:bottled_butterfly"
+            ]
           }
         ]
       }
