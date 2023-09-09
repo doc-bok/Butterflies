@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -63,11 +64,7 @@ public class BottledButterflyBlock extends BaseEntityBlock {
                         @NotNull BlockState state) {
         super.destroy(level, position, state);
 
-        AABB aabb = new AABB(position);
-        List<Butterfly> butterflies = level.getEntitiesOfClass(Butterfly.class, aabb);
-        for(Butterfly i : butterflies) {
-            i.remove(Entity.RemovalReason.DISCARDED);
-        }
+        removeButterfly(level, position, Entity.RemovalReason.DISCARDED);
     }
 
     /**
@@ -134,5 +131,38 @@ public class BottledButterflyBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(@NotNull BlockPos position,
                                       @NotNull BlockState blockState) {
         return ButterflyBlockEntity.CreateBottledButterflyBlockEntity(position, blockState);
+    }
+
+    /**
+     * Called when the block is replaced with another block
+     * @param oldBlockState The original block state.
+     * @param level The current level.
+     * @param position The block's position.
+     * @param newBlockState The new block state.
+     * @param flag Unknown.
+     */
+    @Override
+    public void onRemove(@NotNull BlockState oldBlockState,
+                         @NotNull Level level,
+                         @NotNull BlockPos position,
+                         @NotNull BlockState newBlockState,
+                         boolean flag) {
+        super.onRemove(oldBlockState, level, position, newBlockState,flag);
+
+        removeButterfly(level, position, Entity.RemovalReason.KILLED);
+    }
+
+    /**
+     * Removes a butterfly for the specified reason.
+     * @param level The current level.
+     * @param position The block's position.
+     * @param reason The removal reason.
+     */
+    private void removeButterfly(LevelAccessor level, BlockPos position, Entity.RemovalReason reason) {
+        AABB aabb = new AABB(position);
+        List<Butterfly> butterflies = level.getEntitiesOfClass(Butterfly.class, aabb);
+        for(Butterfly i : butterflies) {
+            i.remove(reason);
+        }
     }
 }
