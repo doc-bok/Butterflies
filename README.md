@@ -9,8 +9,11 @@
  
 ## Changelog
 
+### [0.6.4] 2023-09-09
+ - Fixed immortal butterflies being spawned if a bottled butterfly is destroyed by lava.
+
 ### [0.6.3] 2023-09-09
-- Added multiple textures for bottled butterflies.
+ - Added multiple textures for bottled butterflies.
 
 ### [0.6.2] 2023-09-08
  - Added advancements for collecting butterfly eggs.
