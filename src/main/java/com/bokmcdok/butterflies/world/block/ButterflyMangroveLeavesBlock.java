@@ -1,9 +1,8 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyIds;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.MangroveLeavesBlock;
@@ -11,7 +10,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -19,7 +17,7 @@ import java.util.List;
 /**
  * A class to represent leaves that have a butterfly egg inside them.
  */
-public class ButterflyMangroveLeavesBlock extends MangroveLeavesBlock {
+public class ButterflyMangroveLeavesBlock extends MangroveLeavesBlock implements ButterflyEggHolder {
 
     // An integer representation of the butterfly species.
     public static final IntegerProperty BUTTERFLY_INDEX = IntegerProperty.create("butterfly_index", 0, 15);
@@ -58,18 +56,37 @@ public class ButterflyMangroveLeavesBlock extends MangroveLeavesBlock {
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(@NotNull BlockState blockState,
                                     @NotNull LootParams.Builder builder) {
+        return addButterflyEggDrop(blockState, super.getDrops(blockState, builder));
+    }
 
-        List<ItemStack> result = super.getDrops(blockState, builder);
+    /**
+     * We will need to random tick so that eggs will spawn caterpillars
+     * @param blockState The current block state.
+     * @return Always TRUE.
+     */
+    @Override
+    public boolean isRandomlyTicking(@NotNull BlockState blockState) {
+        return true;
+    }
 
-        int index = blockState.getValue(BUTTERFLY_INDEX);
-        String entityId = ButterflyIds.IndexToEntityId(index);
-        if (entityId != null) {
-            Item entry = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg"));
-            if (entry != null) {
-                result.add(new ItemStack(entry));
-            }
+    /**
+     * After a certain amount of time, a caterpillar will spawn.
+     * @param blockState The current block state.
+     * @param level The current level.
+     * @param position The position of the block.
+     * @param random The random number generator.
+     */
+    @Override
+    public void randomTick(@NotNull BlockState blockState,
+                           @NotNull ServerLevel level,
+                           @NotNull BlockPos position,
+                           @NotNull RandomSource random) {
+
+        trySpawnCaterpillar(blockState, level, position, random);
+
+        // Only run the super's random tick if it would have ticked anyway.
+        if (super.isRandomlyTicking(blockState)) {
+            super.randomTick(blockState, level, position, random);
         }
-
-        return result;
     }
 }

@@ -1,14 +1,10 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyIds;
-import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -18,7 +14,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -26,13 +21,13 @@ import java.util.List;
 /**
  * A class to represent leaves that have a butterfly egg inside them.
  */
-public class ButterflyLeavesBlock extends LeavesBlock {
+public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHolder {
 
     // An integer representation of the butterfly species.
     public static final IntegerProperty BUTTERFLY_INDEX = IntegerProperty.create("butterfly_index", 0, 15);
 
     /**
-     * Plants an egg on the specified block it it is a leaf block.
+     * Plants an egg on the specified block if it is a leaf block.
      * @param level The current level.
      * @param position The position of the block.
      * @param entityId The entity ID of the butterfly.
@@ -97,7 +92,7 @@ public class ButterflyLeavesBlock extends LeavesBlock {
     }
 
     /**
-     * Removes an egg from the specified block it it is a leaf block.
+     * Removes an egg from the specified block if it is a leaf block.
      *
      * @param level    The current level.
      * @param position The position of the block.
@@ -222,19 +217,7 @@ public class ButterflyLeavesBlock extends LeavesBlock {
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(@NotNull BlockState blockState,
                                     @NotNull LootParams.Builder builder) {
-
-        List<ItemStack> result = super.getDrops(blockState, builder);
-
-        int index = blockState.getValue(BUTTERFLY_INDEX);
-        String entityId = ButterflyIds.IndexToEntityId(index);
-        if (entityId != null) {
-            Item entry = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg"));
-            if (entry != null) {
-                result.add(new ItemStack(entry));
-            }
-        }
-
-        return result;
+        return addButterflyEggDrop(blockState, super.getDrops(blockState, builder));
     }
 
     /**
@@ -259,12 +242,8 @@ public class ButterflyLeavesBlock extends LeavesBlock {
                            @NotNull ServerLevel level,
                            @NotNull BlockPos position,
                            @NotNull RandomSource random) {
-        if (random.nextInt(15) == 0) {
-            if (level.isEmptyBlock(position.above())) {
-                Caterpillar.spawn(level, ButterflyIds.IndexToEntityId(blockState.getValue(BUTTERFLY_INDEX)), position.above());
-                removeButterflyEgg(level, position);
-            }
-        }
+
+        trySpawnCaterpillar(blockState, level, position, random);
 
         // Only run the super's random tick if it would have ticked anyway.
         if (super.isRandomlyTicking(blockState)) {
