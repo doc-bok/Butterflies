@@ -10,26 +10,26 @@
 ## Changelog
 
 ### [0.6.5] 2023-09-13
- - Fixed mangrove and cherry leaf blocks not spawning caterpillars.
+-   Fixed mangrove and cherry leaf blocks not spawning caterpillars.
 
 ### [0.6.4] 2023-09-09
- - Fixed immortal butterflies being spawned if a bottled butterfly is destroyed
+-   Fixed immortal butterflies being spawned if a bottled butterfly is destroyed
    by lava.
 
 ### [0.6.3] 2023-09-09
- - Added multiple textures for bottled butterflies.
+-   Added multiple textures for bottled butterflies.
 
 ### [0.6.2] 2023-09-08
- - Added advancements for collecting butterfly eggs.
+-   Added advancements for collecting butterfly eggs.
 
 ### [0.6.1] 2023-09-08
- - Fixed JSON format of achievements. 
+-   Fixed JSON format of achievements. 
 
 ### [0.6.0] 2023-09-08
- - Added caterpillars.
+-   Added caterpillars.
 
 ### [0.5.0] 2023-08-19
- - Added butterfly eggs.
+-   Added butterfly eggs.
 
 ### [0.4.2] 2023-08-16
 - Bottled butterfly recipe now unlocks if a player has both glass bottle(s) and
