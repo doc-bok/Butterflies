@@ -9,8 +9,12 @@
  
 ## Changelog
 
+### [0.6.5] 2023-09-13
+ - Fixed mangrove and cherry leaf blocks not spawning caterpillars.
+
 ### [0.6.4] 2023-09-09
- - Fixed immortal butterflies being spawned if a bottled butterfly is destroyed by lava.
+ - Fixed immortal butterflies being spawned if a bottled butterfly is destroyed
+   by lava.
 
 ### [0.6.3] 2023-09-09
  - Added multiple textures for bottled butterflies.
