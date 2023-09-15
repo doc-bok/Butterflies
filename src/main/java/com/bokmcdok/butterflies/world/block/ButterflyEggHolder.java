@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -24,13 +25,18 @@ public interface ButterflyEggHolder {
      * @return The updated item list.
      */
     @NotNull
-    default List<ItemStack> addButterflyEggDrop(@NotNull BlockState blockState,
-                                                @NotNull List<ItemStack> items) {
+    default List<ItemStack> addButterflyEggDrop(
+            @NotNull BlockState blockState,
+            @NotNull List<ItemStack> items) {
 
         int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
         String entityId = ButterflyIds.IndexToEntityId(index);
         if (entityId != null) {
-            Item entry = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg"));
+            ResourceLocation location = new ResourceLocation(
+                    ButterfliesMod.MODID,
+                    entityId + "_egg");
+
+            Item entry = ForgeRegistries.ITEMS.getValue(location);
             if (entry != null) {
                 items.add(new ItemStack(entry));
             }
@@ -51,9 +57,46 @@ public interface ButterflyEggHolder {
                                      @NotNull BlockPos position,
                                      @NotNull RandomSource random) {
         if (random.nextInt(15) == 0) {
-            if (level.isEmptyBlock(position.above())) {
-                int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
-                Caterpillar.spawn(level, ButterflyIds.IndexToEntityId(index), position.above());
+            int directionIndex = random.nextInt(6);
+            BlockPos spawnPosition;
+            Direction direction;
+            switch (directionIndex) {
+                case 0 -> {
+                    spawnPosition = position.below();
+                    direction = Direction.UP;
+                }
+                case 1 -> {
+                    spawnPosition = position.north();
+                    direction = Direction.SOUTH;
+                }
+                case 2 -> {
+                    spawnPosition = position.south();
+                    direction = Direction.NORTH;
+                }
+                case 3 -> {
+                    spawnPosition = position.east();
+                    direction = Direction.WEST;
+                }
+                case 4 -> {
+                    spawnPosition = position.west();
+                    direction = Direction.EAST;
+                }
+                default -> {
+                    spawnPosition = position.above();
+                    direction = Direction.DOWN;
+                }
+            }
+
+            if (level.isEmptyBlock(spawnPosition)) {
+                int index = blockState.getValue(
+                        ButterflyLeavesBlock.BUTTERFLY_INDEX);
+
+                Caterpillar.spawn(
+                        level,
+                        ButterflyIds.IndexToEntityId(index),
+                        spawnPosition,
+                        direction);
+
                 ButterflyLeavesBlock.removeButterflyEgg(level, position);
             }
         }
