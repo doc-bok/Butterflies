@@ -33,35 +33,59 @@ public class Caterpillar extends AmbientCreature {
 
     // The unique IDs that are used to reference a butterfly entity.
     public static final String MORPHO_NAME = "morpho_caterpillar";
+
     public static final String FORESTER_NAME = "forester_caterpillar";
+
     public static final String COMMON_NAME = "common_caterpillar";
+
     public static final String EMPEROR_NAME = "emperor_caterpillar";
+
     public static final String HAIRSTREAK_NAME = "hairstreak_caterpillar";
+
     public static final String RAINBOW_NAME = "rainbow_caterpillar";
+
     public static final String HEATH_NAME = "heath_caterpillar";
+
     public static final String GLASSWING_NAME = "glasswing_caterpillar";
+
     public static final String CHALKHILL_NAME = "chalkhill_caterpillar";
+
     public static final String SWALLOWTAIL_NAME = "swallowtail_caterpillar";
+
     public static final String MONARCH_NAME = "monarch_caterpillar";
+
     public static final String CABBAGE_NAME = "cabbage_caterpillar";
+
     public static final String ADMIRAL_NAME = "admiral_caterpillar";
+
     public static final String LONGWING_NAME = "longwing_caterpillar";
+
     public static final String BUCKEYE_NAME = "buckeye_caterpillar";
+
+
     public static final String CLIPPER_NAME = "clipper_caterpillar";
 
     // Serializers for data stored in the save data.
     private static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
-            SynchedEntityData.defineId(Caterpillar.class, EntityDataSerializers.BOOLEAN);
+            SynchedEntityData.defineId(
+                    Caterpillar.class,
+                    EntityDataSerializers.BOOLEAN);
 
     private static final EntityDataAccessor<Direction> DATA_DIRECTION =
-            SynchedEntityData.defineId(Caterpillar.class, EntityDataSerializers.DIRECTION);
+            SynchedEntityData.defineId(
+                    Caterpillar.class,
+                    EntityDataSerializers.DIRECTION);
 
     private static final EntityDataAccessor<BlockPos> DATA_SURFACE_BLOCK =
-            SynchedEntityData.defineId(Caterpillar.class, EntityDataSerializers.BLOCK_POS);
+            SynchedEntityData.defineId(
+                    Caterpillar.class,
+                    EntityDataSerializers.BLOCK_POS);
 
     // Names of the attributes stored in the save data.
     private static final String PERSISTENT = "persistent";
+
     private static final String DIRECTION = "direction";
+
     private static final String SURFACE_BLOCK = "surface_block";
 
     // Helper constant to modify speed
@@ -90,8 +114,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createMorphoCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                  Level level) {
+    public static Caterpillar createMorphoCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_morpho.png", entityType, level);
     }
 
@@ -102,8 +127,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createForesterCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                    Level level) {
+    public static Caterpillar createForesterCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_forester.png", entityType, level);
     }
 
@@ -114,8 +140,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createCommonCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                  Level level) {
+    public static Caterpillar createCommonCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_common.png", entityType, level);
     }
 
@@ -126,8 +153,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createEmperorCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createEmperorCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_emperor.png", entityType, level);
     }
 
@@ -150,8 +178,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createRainbowCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createRainbowCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_rainbow.png", entityType, level);
     }
 
@@ -162,8 +191,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createHeathCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                 Level level) {
+    public static Caterpillar createHeathCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_heath.png", entityType, level);
     }
 
@@ -174,8 +204,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createGlasswingCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                     Level level) {
+    public static Caterpillar createGlasswingCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_glasswing.png", entityType, level);
     }
 
@@ -186,8 +217,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createChalkhillCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                     Level level) {
+    public static Caterpillar createChalkhillCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_chalkhill.png", entityType, level);
     }
 
@@ -198,9 +230,13 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createSwallowtailCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                       Level level) {
-        return new Caterpillar("caterpillar_swallowtail.png", entityType, level);
+    public static Caterpillar createSwallowtailCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
+        return new Caterpillar(
+                "caterpillar_swallowtail.png",
+                entityType,
+                level);
     }
 
     /**
@@ -210,8 +246,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createMonarchCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createMonarchCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_monarch.png", entityType, level);
     }
 
@@ -222,8 +259,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createCabbageCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createCabbageCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_cabbage.png", entityType, level);
     }
 
@@ -234,8 +272,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createAdmiralCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createAdmiralCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_admiral.png", entityType, level);
     }
 
@@ -246,8 +285,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createLongwingCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                    Level level) {
+    public static Caterpillar createLongwingCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_longwing.png", entityType, level);
     }
 
@@ -258,8 +298,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constructed butterfly.
      */
     @NotNull
-    public static Caterpillar createClipperCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createClipperCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_clipper.png", entityType, level);
     }
 
@@ -270,8 +311,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createBuckeyeCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                   Level level) {
+    public static Caterpillar createBuckeyeCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_buckeye.png", entityType, level);
     }
 
@@ -286,7 +328,10 @@ public class Caterpillar extends AmbientCreature {
                              BlockPos position,
                              Direction direction) {
 
-        ResourceLocation key = new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
+        ResourceLocation key = new ResourceLocation(
+                ButterfliesMod.MODID,
+                entityId + "_caterpillar");
+
         EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
         if (entityType != null) {
             Entity entity = entityType.create(level);
@@ -340,7 +385,9 @@ public class Caterpillar extends AmbientCreature {
         super.addAdditionalSaveData(tag);
         tag.putBoolean(PERSISTENT, this.entityData.get(DATA_PERSISTENT));
         tag.putString(DIRECTION, this.entityData.get(DATA_DIRECTION).getName());
-        tag.putString(SURFACE_BLOCK, this.entityData.get(DATA_SURFACE_BLOCK).toShortString());
+        tag.putString(
+                SURFACE_BLOCK,
+                this.entityData.get(DATA_SURFACE_BLOCK).toShortString());
     }
 
     /**
@@ -414,9 +461,10 @@ public class Caterpillar extends AmbientCreature {
         if (tag.contains(SURFACE_BLOCK)) {
             String data = tag.getString(SURFACE_BLOCK);
             String[] values = data.split(",");
-            BlockPos position = new BlockPos(Integer.parseInt(values[0].trim()),
-                                             Integer.parseInt(values[1].trim()),
-                                             Integer.parseInt(values[2].trim()));
+            BlockPos position = new BlockPos(
+                    Integer.parseInt(values[0].trim()),
+                    Integer.parseInt(values[1].trim()),
+                    Integer.parseInt(values[2].trim()));
             this.entityData.set(DATA_SURFACE_BLOCK, position);
         }
     }
@@ -475,7 +523,8 @@ public class Caterpillar extends AmbientCreature {
                           EntityType<? extends AmbientCreature> entityType,
                           Level level) {
         super(entityType, level);
-        this.texture = new ResourceLocation("butterflies:textures/entity/caterpillar/" + texture);
+        this.texture = new ResourceLocation(
+                "butterflies:textures/entity/caterpillar/" + texture);
     }
 
     /**
@@ -496,24 +545,34 @@ public class Caterpillar extends AmbientCreature {
             //  2. After a 1/30 random chance
             //  3. We get too close to the current target position
             if (this.targetPosition == null ||
-                    this.random.nextInt(30) == 0 ||
-                    this.targetPosition.distanceToSqr(this.position()) < 0.007d) {
+                this.targetPosition.distanceToSqr(this.position()) < 0.007d ||
+                this.random.nextInt(30) == 0) {
+
                 if (this.targetPosition == null) {
                     this.targetPosition = this.position();
                 }
 
                 if (axis == Direction.Axis.X) {
-                    this.targetPosition = new Vec3(this.targetPosition.x(),
-                            Math.floor(this.targetPosition.y()) + (this.random.nextDouble() % 1.0),
-                            Math.floor(this.targetPosition.z()) + (this.random.nextDouble() % 1.0));
+                    this.targetPosition = new Vec3(
+                            this.targetPosition.x(),
+                            Math.floor(this.targetPosition.y())
+                                    + (this.random.nextDouble() % 1.0),
+                            Math.floor(this.targetPosition.z())
+                                    + (this.random.nextDouble() % 1.0));
                 } else if (axis == Direction.Axis.Y) {
-                    this.targetPosition = new Vec3(Math.floor(this.targetPosition.x()) + (this.random.nextDouble() % 1.0),
+                    this.targetPosition = new Vec3(
+                            Math.floor(this.targetPosition.x())
+                                    + (this.random.nextDouble() % 1.0),
                             this.targetPosition.y(),
-                            Math.floor(this.targetPosition.z()) + (this.random.nextDouble() % 1.0));
+                            Math.floor(this.targetPosition.z())
+                                    + (this.random.nextDouble() % 1.0));
 
                 } else {
-                    this.targetPosition = new Vec3(Math.floor(this.targetPosition.x()) + (this.random.nextDouble() % 1.0),
-                            Math.floor(this.targetPosition.y()) + (this.random.nextDouble() % 1.0),
+                    this.targetPosition = new Vec3(
+                            Math.floor(this.targetPosition.x())
+                                    + (this.random.nextDouble() % 1.0),
+                            Math.floor(this.targetPosition.y())
+                                    + (this.random.nextDouble() % 1.0),
                             this.targetPosition.z());
                 }
             }
@@ -525,21 +584,27 @@ public class Caterpillar extends AmbientCreature {
                 double dz = this.targetPosition.z() + 0.1d - this.getZ();
                 updatedDeltaMovement = deltaMovement.add(
                         0.0,
-                        (Math.signum(dy) * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
-                        (Math.signum(dz) * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
+                        (Math.signum(dy) * 0.5d - deltaMovement.y)
+                                * CATERPILLAR_SPEED,
+                        (Math.signum(dz) * 0.5d - deltaMovement.z)
+                                * CATERPILLAR_SPEED);
             } else if (axis == Direction.Axis.Y) {
                 double dx = this.targetPosition.x() + 0.1d - this.getX();
                 double dz = this.targetPosition.z() + 0.1d - this.getZ();
                 updatedDeltaMovement = deltaMovement.add(
-                        (Math.signum(dx) * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
+                        (Math.signum(dx) * 0.5d - deltaMovement.x)
+                                * CATERPILLAR_SPEED,
                         0.0,
-                        (Math.signum(dz) * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
+                        (Math.signum(dz) * 0.5d - deltaMovement.z)
+                                * CATERPILLAR_SPEED);
             } else {
                 double dx = this.targetPosition.x() + 0.1d - this.getX();
                 double dy = this.targetPosition.y() + 0.1d - this.getY();
                 updatedDeltaMovement = deltaMovement.add(
-                        (Math.signum(dx) * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
-                        (Math.signum(dy) * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
+                        (Math.signum(dx) * 0.5d - deltaMovement.x)
+                                * CATERPILLAR_SPEED,
+                        (Math.signum(dy) * 0.5d - deltaMovement.y)
+                                * CATERPILLAR_SPEED,
                         0.0);
             }
 
@@ -550,17 +615,41 @@ public class Caterpillar extends AmbientCreature {
             // Calculate the rotational velocity.
             double updatedRotation;
             if (direction == Direction.DOWN) {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.x) * (180.0d / Math.PI)) - 90.0d;
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.z,
+                                updatedDeltaMovement.x)
+                        * (180.0d / Math.PI)) - 90.0d;
             } else if (direction == Direction.UP) {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.x, updatedDeltaMovement.z) * (180.0d / Math.PI)) - 180.0d;
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.x,
+                                updatedDeltaMovement.z)
+                        * (180.0d / Math.PI)) - 180.0d;
             } else if (direction == Direction.NORTH) {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.x, updatedDeltaMovement.y) * (180.0d / Math.PI)) - 180.0d;
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.x,
+                                updatedDeltaMovement.y)
+                        * (180.0d / Math.PI)) - 180.0d;
             } else if (direction == Direction.SOUTH) {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.y, updatedDeltaMovement.x) * (180.0d / Math.PI)) - 90.0d;
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.y,
+                                updatedDeltaMovement.x)
+                        * (180.0d / Math.PI)) - 90.0d;
             } else if (direction == Direction.EAST) {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.y) * (180.0d / Math.PI)) - 90.0d;
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.z,
+                                updatedDeltaMovement.y)
+                        * (180.0d / Math.PI)) - 90.0d;
             } else {
-                updatedRotation = (Mth.atan2(updatedDeltaMovement.y, updatedDeltaMovement.z) * (180.0d / Math.PI));
+                updatedRotation =
+                        (Mth.atan2(
+                                updatedDeltaMovement.y,
+                                updatedDeltaMovement.z)
+                        * (180.0d / Math.PI));
             }
 
             double rotationDelta = Mth.wrapDegrees(updatedRotation - this.getYRot());
@@ -608,6 +697,7 @@ public class Caterpillar extends AmbientCreature {
     public float getScale() {
         return 0.1f;
     }
+    
     /**
      * Override to control an entity's relative volume. Caterpillars are silent.
      * @return Always zero, so caterpillars are silent.
