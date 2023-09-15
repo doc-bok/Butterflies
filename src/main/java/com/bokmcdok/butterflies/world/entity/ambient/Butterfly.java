@@ -46,26 +46,42 @@ public class Butterfly extends AmbientCreature {
 
     // The unique IDs that are used to reference a butterfly entity.
     public static final String MORPHO_NAME = "morpho";
+
     public static final String FORESTER_NAME = "forester";
+
     public static final String COMMON_NAME = "common";
+
     public static final String EMPEROR_NAME = "emperor";
+
     public static final String HAIRSTREAK_NAME = "hairstreak";
+
     public static final String RAINBOW_NAME = "rainbow";
+
     public static final String HEATH_NAME = "heath";
+
     public static final String GLASSWING_NAME = "glasswing";
+
     public static final String CHALKHILL_NAME = "chalkhill";
+
     public static final String SWALLOWTAIL_NAME = "swallowtail";
+
     public static final String MONARCH_NAME = "monarch";
+
     public static final String CABBAGE_NAME = "cabbage";
+
     public static final String ADMIRAL_NAME = "admiral";
+
     public static final String LONGWING_NAME = "longwing";
+
     public static final String BUCKEYE_NAME = "buckeye";
+
     public static final String CLIPPER_NAME = "clipper";
 
     // Holds a flag that is set to TRUE if a player placed the butterfly.
     // entity.
     private static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
-            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
+            SynchedEntityData.defineId(Butterfly.class,
+                                       EntityDataSerializers.BOOLEAN);
 
     // The name of the "respawned" attribute in the save data.
     private static final String PERSISTENT = "persistent";
@@ -88,18 +104,21 @@ public class Butterfly extends AmbientCreature {
 
     /**
      * Checks custom rules to determine if the entity can spawn.
-     * @param entityType The type of the entity to spawn.
+     * @param entityType (Unused) The type of the entity to spawn.
      * @param level The level/world to spawn the entity into.
-     * @param spawnType The type of spawn happening.
+     * @param spawnType (Unused) The type of spawn happening.
      * @param position The position to spawn the entity into.
-     * @param rng The global random number generator.
+     * @param rng (Unused) The global random number generator.
      * @return TRUE if the butterfly can spawn.
      */
-    public static boolean checkButterflySpawnRules(@SuppressWarnings("unused") EntityType<Butterfly> entityType,
+    public static boolean checkButterflySpawnRules(@SuppressWarnings("unused")
+                                                   EntityType<Butterfly> entityType,
                                                    ServerLevelAccessor level,
-                                                   @SuppressWarnings("unused") MobSpawnType spawnType,
+                                                   @SuppressWarnings("unused")
+                                                   MobSpawnType spawnType,
                                                    BlockPos position,
-                                                   @SuppressWarnings("unused") RandomSource rng) {
+                                                   @SuppressWarnings("unused")
+                                                   RandomSource rng) {
         return level.getRawBrightness(position, 0) > 8;
     }
 
@@ -119,9 +138,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createAdmiralButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_admiral.png", entityType, level);
+    public static Butterfly createAdmiralButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_admiral.png",
+                entityType, level);
     }
 
     /**
@@ -131,9 +154,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createBuckeyeButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_buckeye.png", entityType, level);
+    public static Butterfly createBuckeyeButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_buckeye.png",
+                entityType, level);
     }
 
     /**
@@ -143,9 +170,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createCabbageButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_cabbage.png", entityType, level);
+    public static Butterfly createCabbageButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.LARGE,
+                "butterfly_cabbage.png",
+                entityType, level);
     }
 
     /**
@@ -155,9 +186,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createChalkhillButterfly(EntityType<? extends Butterfly> entityType,
-                                                     Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_chalkhill.png", entityType, level);
+    public static Butterfly createChalkhillButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.SMALL,
+                "butterfly_chalkhill.png",
+                entityType, level);
     }
 
     /**
@@ -167,9 +202,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createClipperButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_clipper.png", entityType, level);
+    public static Butterfly createClipperButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.LARGE,
+                "butterfly_clipper.png",
+                entityType, level);
     }
 
     /**
@@ -179,9 +218,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createCommonButterfly(EntityType<? extends Butterfly> entityType,
-                                                  Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_common.png", entityType, level);
+    public static Butterfly createCommonButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_common.png",
+                entityType, level);
     }
 
     /**
@@ -191,9 +234,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createEmperorButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_emperor.png", entityType, level);
+    public static Butterfly createEmperorButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.LARGE,
+                "butterfly_emperor.png",
+                entityType, level);
     }
 
     /**
@@ -203,9 +250,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createForesterButterfly(EntityType<? extends Butterfly> entityType,
-                                                    Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_forester.png", entityType, level);
+    public static Butterfly createForesterButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_forester.png",
+                entityType, level);
     }
 
     /**
@@ -215,9 +266,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createGlasswingButterfly(EntityType<? extends Butterfly> entityType,
-                                                     Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_glasswing.png", entityType, level);
+    public static Butterfly createGlasswingButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_glasswing.png",
+                entityType, level);
     }
 
     /**
@@ -227,9 +282,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createHairstreakButterfly(EntityType<? extends Butterfly> entityType,
-                                                      Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_hairstreak.png", entityType, level);
+    public static Butterfly createHairstreakButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_hairstreak.png",
+                entityType, level);
     }
 
     /**
@@ -239,9 +298,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createHeathButterfly(EntityType<? extends Butterfly> entityType,
-                                                 Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_heath.png", entityType, level);
+    public static Butterfly createHeathButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.SMALL,
+                "butterfly_heath.png",
+                entityType, level);
     }
 
     /**
@@ -251,9 +314,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createLongwingButterfly(EntityType<? extends Butterfly> entityType,
-                                                    Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_longwing.png", entityType, level);
+    public static Butterfly createLongwingButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.SMALL,
+                "butterfly_longwing.png",
+                entityType, level);
     }
 
     /**
@@ -263,9 +330,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createMonarchButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.MEDIUM, "butterfly_monarch.png", entityType, level);
+    public static Butterfly createMonarchButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.MEDIUM,
+                "butterfly_monarch.png",
+                entityType, level);
     }
 
     /**
@@ -275,9 +346,12 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createMorphoButterfly(EntityType<? extends Butterfly> entityType,
-                                                  Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_morpho.png", entityType, level);
+    public static Butterfly createMorphoButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.LARGE,
+                "butterfly_morpho.png", entityType, level);
     }
 
     /**
@@ -287,9 +361,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createRainbowButterfly(EntityType<? extends Butterfly> entityType,
-                                                   Level level) {
-        return new Butterfly(Size.SMALL, "butterfly_rainbow.png", entityType, level);
+    public static Butterfly createRainbowButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.SMALL,
+                "butterfly_rainbow.png",
+                entityType, level);
     }
 
     /**
@@ -299,9 +377,13 @@ public class Butterfly extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Butterfly createSwallowtailButterfly(EntityType<? extends Butterfly> entityType,
-                                                       Level level) {
-        return new Butterfly(Size.LARGE, "butterfly_swallowtail.png", entityType, level);
+    public static Butterfly createSwallowtailButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                Size.LARGE,
+                "butterfly_swallowtail.png",
+                entityType, level);
     }
 
     /**
@@ -319,9 +401,10 @@ public class Butterfly extends AmbientCreature {
         if (level instanceof ServerLevel) {
 
             //  Move the target position slightly in front of the player
+            BlockPos positionToSpawn = position;
             if (!placed) {
                 Vec3 lookAngle = player.getLookAngle();
-                position = position.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
+                positionToSpawn = positionToSpawn.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
             }
 
             ResourceLocation key = new ResourceLocation(entityId);
@@ -330,9 +413,9 @@ public class Butterfly extends AmbientCreature {
                 Entity entity = entityType.create(level);
                 if (entity instanceof Butterfly butterfly) {
 
-                    butterfly.moveTo(position.getX() + 0.45D,
-                            position.getY() + 0.2D,
-                            position.getZ() + 0.5D,
+                    butterfly.moveTo(positionToSpawn.getX() + 0.45D,
+                            positionToSpawn.getY() + 0.2D,
+                            positionToSpawn.getZ() + 0.5D,
                             0.0F, 0.0F);
 
                     butterfly.finalizeSpawn((ServerLevel) level,
