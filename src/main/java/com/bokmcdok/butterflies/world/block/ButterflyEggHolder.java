@@ -25,13 +25,18 @@ public interface ButterflyEggHolder {
      * @return The updated item list.
      */
     @NotNull
-    default List<ItemStack> addButterflyEggDrop(@NotNull BlockState blockState,
-                                                @NotNull List<ItemStack> items) {
+    default List<ItemStack> addButterflyEggDrop(
+            @NotNull BlockState blockState,
+            @NotNull List<ItemStack> items) {
 
         int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
         String entityId = ButterflyIds.IndexToEntityId(index);
         if (entityId != null) {
-            Item entry = ForgeRegistries.ITEMS.getValue(new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg"));
+            ResourceLocation location = new ResourceLocation(
+                    ButterfliesMod.MODID,
+                    entityId + "_egg");
+
+            Item entry = ForgeRegistries.ITEMS.getValue(location);
             if (entry != null) {
                 items.add(new ItemStack(entry));
             }
@@ -83,8 +88,15 @@ public interface ButterflyEggHolder {
             }
 
             if (level.isEmptyBlock(spawnPosition)) {
-                int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
-                Caterpillar.spawn(level, ButterflyIds.IndexToEntityId(index), spawnPosition, direction);
+                int index = blockState.getValue(
+                        ButterflyLeavesBlock.BUTTERFLY_INDEX);
+
+                Caterpillar.spawn(
+                        level,
+                        ButterflyIds.IndexToEntityId(index),
+                        spawnPosition,
+                        direction);
+                
                 ButterflyLeavesBlock.removeButterflyEgg(level, position);
             }
         }
