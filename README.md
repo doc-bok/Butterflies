@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.6.6 (2023-09-15)
+-   Caterpillars can now crawl on surfaces in all directions.
+
 ### 0.6.5 (2023-09-13)
 -   Fixed mangrove and cherry leaf blocks not spawning caterpillars.
 

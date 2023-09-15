@@ -64,14 +64,14 @@ public class Butterfly extends AmbientCreature {
 
     // Holds a flag that is set to TRUE if a player placed the butterfly.
     // entity.
-    private static final EntityDataAccessor<Boolean> DATA_PLACED_BY_PLAYER =
+    private static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
+
+    // The name of the "respawned" attribute in the save data.
+    private static final String PERSISTENT = "persistent";
 
     // The number of ticks per flap. Used for event emissions.
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
-
-    // The name of the "respawned" attribute in the save data.
-    private static final String PLACED_BY_PLAYER = "butterflyPlacedByPlayer";
 
     // Helper constant to modify butterfly speed
     private static final double BUTTERFLY_SPEED = 0.0325d;
@@ -379,7 +379,7 @@ public class Butterfly extends AmbientCreature {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean(PLACED_BY_PLAYER, this.entityData.get(DATA_PLACED_BY_PLAYER));
+        tag.putBoolean(PERSISTENT, this.entityData.get(DATA_PERSISTENT));
     }
 
     /**
@@ -435,8 +435,8 @@ public class Butterfly extends AmbientCreature {
         super.readAdditionalSaveData(tag);
 
         // Read the placed-by-player flag if it exists.
-        if (tag.contains(PLACED_BY_PLAYER)) {
-            this.entityData.set(DATA_PLACED_BY_PLAYER, tag.getBoolean(PLACED_BY_PLAYER));
+        if (tag.contains(PERSISTENT)) {
+            this.entityData.set(DATA_PERSISTENT, tag.getBoolean(PERSISTENT));
         }
     }
 
@@ -447,7 +447,7 @@ public class Butterfly extends AmbientCreature {
      */
     @Override
     public boolean requiresCustomPersistence() {
-        return this.entityData.get(DATA_PLACED_BY_PLAYER)
+        return this.entityData.get(DATA_PERSISTENT)
                 || super.requiresCustomPersistence();
     }
 
@@ -456,7 +456,7 @@ public class Butterfly extends AmbientCreature {
      * despawning.
      */
     public void setPlacedByPlayer() {
-        entityData.set(DATA_PLACED_BY_PLAYER, true);
+        entityData.set(DATA_PERSISTENT, true);
     }
 
     /**
@@ -551,7 +551,7 @@ public class Butterfly extends AmbientCreature {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_PLACED_BY_PLAYER, false);
+        this.entityData.define(DATA_PERSISTENT, false);
     }
 
     /**

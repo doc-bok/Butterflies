@@ -1,11 +1,13 @@
 package com.bokmcdok.butterflies.renderer.entity;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.model.CaterpillarModel;
 import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -42,5 +44,37 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarMod
     protected void scale(@NotNull Caterpillar entity, PoseStack poses, float scale) {
         float s = entity.getScale();
         poses.scale(s, s, s);
+    }
+
+    /**
+     * Rotates the caterpillar so it's attached to its block.
+     * @param entity The caterpillar entity.
+     * @param p_115456_ Unknown.
+     * @param p_115457_ Unknown.
+     * @param poseStack The posed model to render.
+     * @param multiBufferSource The render buffer.
+     * @param p_115460_ Unknown.
+     */
+    @Override
+    public void render(@NotNull Caterpillar entity,
+                       float p_115456_,
+                       float p_115457_,
+                       @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource multiBufferSource,
+                       int p_115460_) {
+        Direction direction = entity.getSurfaceDirection();
+        if (direction == Direction.UP) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
+        } else if (direction == Direction.NORTH) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
+        } else if (direction == Direction.SOUTH) {
+            poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
+        } else if (direction == Direction.WEST) {
+            poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+        } else if (direction == Direction.EAST){
+            poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
+        }
+
+        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
     }
 }
