@@ -14,14 +14,19 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The renderer for the caterpillar entity.
  */
-public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarModel> {
+public class CaterpillarRenderer
+        extends MobRenderer<Caterpillar, CaterpillarModel> {
 
     /**
      * Bakes a new model for the renderer
      * @param context The current rendering context
      */
     public CaterpillarRenderer(EntityRendererProvider.Context context) {
-        super(context, new CaterpillarModel(context.bakeLayer(CaterpillarModel.LAYER_LOCATION)), 0.05F);
+        super(
+                context,
+                new CaterpillarModel(
+                        context.bakeLayer(CaterpillarModel.LAYER_LOCATION)),
+                0.05F);
     }
 
     /**
@@ -30,7 +35,8 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarMod
      * @return The texture to use for this entity
      */
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Caterpillar entity) {
+    @NotNull
+    public ResourceLocation getTextureLocation(@NotNull Caterpillar entity) {
         return entity.getTexture();
     }
 
@@ -41,7 +47,9 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarMod
      * @param scale The scale that should be applied
      */
     @Override
-    protected void scale(@NotNull Caterpillar entity, PoseStack poses, float scale) {
+    protected void scale(@NotNull Caterpillar entity,
+                         PoseStack poses,
+                         float scale) {
         float s = entity.getScale();
         poses.scale(s, s, s);
     }
@@ -75,6 +83,12 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarMod
             poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
         }
 
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
+        super.render(
+                entity,
+                p_115456_,
+                p_115457_,
+                poseStack,
+                multiBufferSource,
+                p_115460_);
     }
 }
