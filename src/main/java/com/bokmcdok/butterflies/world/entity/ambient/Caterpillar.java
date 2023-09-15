@@ -166,8 +166,9 @@ public class Caterpillar extends AmbientCreature {
      * @return A newly constrycted butterfly.
      */
     @NotNull
-    public static Caterpillar createHairstreakCaterpillar(EntityType<? extends Caterpillar> entityType,
-                                                      Level level) {
+    public static Caterpillar createHairstreakCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
         return new Caterpillar("caterpillar_hairstreak.png", entityType, level);
     }
 
@@ -652,7 +653,8 @@ public class Caterpillar extends AmbientCreature {
                         * (180.0d / Math.PI));
             }
 
-            double rotationDelta = Mth.wrapDegrees(updatedRotation - this.getYRot());
+            double rotationDelta =
+                    Mth.wrapDegrees(updatedRotation - this.getYRot());
             this.setYRot(this.getYRot() + (float) rotationDelta);
         }
     }
@@ -697,7 +699,7 @@ public class Caterpillar extends AmbientCreature {
     public float getScale() {
         return 0.1f;
     }
-    
+
     /**
      * Override to control an entity's relative volume. Caterpillars are silent.
      * @return Always zero, so caterpillars are silent.
