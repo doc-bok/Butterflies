@@ -96,7 +96,7 @@ public interface ButterflyEggHolder {
                         ButterflyIds.IndexToEntityId(index),
                         spawnPosition,
                         direction);
-                
+
                 ButterflyLeavesBlock.removeButterflyEgg(level, position);
             }
         }

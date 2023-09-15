@@ -111,14 +111,12 @@ public class Butterfly extends AmbientCreature {
      * @param rng (Unused) The global random number generator.
      * @return TRUE if the butterfly can spawn.
      */
-    public static boolean checkButterflySpawnRules(@SuppressWarnings("unused")
-                                                   EntityType<Butterfly> entityType,
-                                                   ServerLevelAccessor level,
-                                                   @SuppressWarnings("unused")
-                                                   MobSpawnType spawnType,
-                                                   BlockPos position,
-                                                   @SuppressWarnings("unused")
-                                                   RandomSource rng) {
+    public static boolean checkButterflySpawnRules(
+            @SuppressWarnings("unused") EntityType<Butterfly> entityType,
+            ServerLevelAccessor level,
+            @SuppressWarnings("unused") MobSpawnType spawnType,
+            BlockPos position,
+            @SuppressWarnings("unused") RandomSource rng) {
         return level.getRawBrightness(position, 0) > 8;
     }
 
@@ -404,11 +402,15 @@ public class Butterfly extends AmbientCreature {
             BlockPos positionToSpawn = position;
             if (!placed) {
                 Vec3 lookAngle = player.getLookAngle();
-                positionToSpawn = positionToSpawn.offset((int) lookAngle.x, (int) lookAngle.y + 1, (int) lookAngle.z);
+                positionToSpawn = positionToSpawn.offset(
+                        (int) lookAngle.x,
+                        (int) lookAngle.y + 1,
+                        (int) lookAngle.z);
             }
 
             ResourceLocation key = new ResourceLocation(entityId);
-            EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
+            EntityType<?> entityType =
+                    ForgeRegistries.ENTITY_TYPES.getValue(key);
             if (entityType != null) {
                 Entity entity = entityType.create(level);
                 if (entity instanceof Butterfly butterfly) {
@@ -452,7 +454,8 @@ public class Butterfly extends AmbientCreature {
         super(entityType, level);
 
         this.size = size;
-        this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/" + texture);
+        this.texture = new ResourceLocation(
+                "butterflies:textures/entity/butterfly/" + texture);
     }
 
     /**
@@ -551,7 +554,8 @@ public class Butterfly extends AmbientCreature {
 
         //  Reduce the vertical movement to keep the butterfly close to the
         //  same height.
-        this.setDeltaMovement(this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
+        this.setDeltaMovement(
+                this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
     }
 
     /**
@@ -580,7 +584,9 @@ public class Butterfly extends AmbientCreature {
         Level level = this.level();
 
         // Check the current move target is still an empty block.
-        if (this.targetPosition != null && (!level.isEmptyBlock(this.targetPosition) || this.targetPosition.getY() <= level.getMinBuildHeight())) {
+        if (this.targetPosition != null
+                && (!level.isEmptyBlock(this.targetPosition)
+                || this.targetPosition.getY() <= level.getMinBuildHeight())) {
             this.targetPosition = null;
         }
 
@@ -588,10 +594,20 @@ public class Butterfly extends AmbientCreature {
         //  1. We don't have one already
         //  2. After a 1/30 random chance
         //  3. We get too close to the current target position
-        if (this.targetPosition == null || this.random.nextInt(30) == 0 || this.targetPosition.closerToCenterThan(this.position(), 2.0d)) {
-            this.targetPosition = new BlockPos((int) this.getX() + this.random.nextInt(7) - this.random.nextInt(7),
-                                               (int) this.getY() + this.random.nextInt(6) - 2,
-                                               (int) this.getZ() + this.random.nextInt(7) - this.random.nextInt(7));
+        if (this.targetPosition == null
+                || this.random.nextInt(30) == 0
+                || this.targetPosition.closerToCenterThan(
+                        this.position(), 2.0d)) {
+            this.targetPosition = new BlockPos(
+                    (int) this.getX()
+                            + this.random.nextInt(7)
+                            - this.random.nextInt(7),
+                    (int) this.getY()
+                            + this.random.nextInt(6)
+                            - 2,
+                    (int) this.getZ()
+                            + this.random.nextInt(7)
+                            - this.random.nextInt(7));
         }
 
         // Calculate an updated movement delta.
@@ -600,15 +616,17 @@ public class Butterfly extends AmbientCreature {
         double dz = this.targetPosition.getZ() + 0.5d - this.getZ();
 
         Vec3 deltaMovement = this.getDeltaMovement();
-        Vec3 updatedDeltaMovement = deltaMovement.add((Math.signum(dx) * 0.5d - deltaMovement.x) * BUTTERFLY_SPEED,
-                                                      (Math.signum(dy) * 0.7d - deltaMovement.y) * 0.1d,
-                                                      (Math.signum(dz) * 0.5d - deltaMovement.z) * BUTTERFLY_SPEED);
+        Vec3 updatedDeltaMovement = deltaMovement.add(
+                (Math.signum(dx) * 0.5d - deltaMovement.x) * BUTTERFLY_SPEED,
+                (Math.signum(dy) * 0.7d - deltaMovement.y) * 0.1d,
+                (Math.signum(dz) * 0.5d - deltaMovement.z) * BUTTERFLY_SPEED);
         this.setDeltaMovement(updatedDeltaMovement);
 
         this.zza = 0.5f;
 
         // Calculate the rotational velocity.
-        double yRot = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.x) * (180.0d / Math.PI)) - 90.0d;
+        double yRot = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.x)
+                * (180.0d / Math.PI)) - 90.0d;
         double yRotDelta = Mth.wrapDegrees(yRot - this.getYRot());
         this.setYRot(this.getYRot() + (float)yRotDelta);
 
@@ -624,7 +642,10 @@ public class Butterfly extends AmbientCreature {
                 case 5 -> position.west();
             };
 
-            ButterflyLeavesBlock.swapLeavesBlock(level, position, this.getEncodeId());
+            ButterflyLeavesBlock.swapLeavesBlock(
+                    level,
+                    position,
+                    this.getEncodeId());
         }
     }
 
