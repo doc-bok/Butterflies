@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -116,7 +118,15 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-            Butterfly.spawn(player, entityId, player.blockPosition(), false);
+
+            //  Move the target position slightly in front of the player
+            Vec3 lookAngle = player.getLookAngle();
+            BlockPos positionToSpawn = player.blockPosition().offset(
+                        (int) lookAngle.x,
+                        (int) lookAngle.y + 1,
+                        (int) lookAngle.z);
+
+            Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
             tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
             tag.remove(CompoundTagId.ENTITY_ID);
 

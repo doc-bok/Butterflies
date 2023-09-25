@@ -3,21 +3,14 @@ package com.bokmcdok.butterflies.world.entity.ambient;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -29,89 +22,38 @@ import javax.annotation.Nullable;
 /**
  * Creates the Caterpillar behaviour.
  */
-public class Caterpillar extends AmbientCreature {
+public class Caterpillar extends DirectionalCreature {
 
-    // The unique IDs that are used to reference a butterfly entity.
+    // The unique IDs that are used to reference a caterpillar entity.
     public static final String MORPHO_NAME = "morpho_caterpillar";
-
     public static final String FORESTER_NAME = "forester_caterpillar";
-
     public static final String COMMON_NAME = "common_caterpillar";
-
     public static final String EMPEROR_NAME = "emperor_caterpillar";
-
     public static final String HAIRSTREAK_NAME = "hairstreak_caterpillar";
-
     public static final String RAINBOW_NAME = "rainbow_caterpillar";
-
     public static final String HEATH_NAME = "heath_caterpillar";
-
     public static final String GLASSWING_NAME = "glasswing_caterpillar";
-
     public static final String CHALKHILL_NAME = "chalkhill_caterpillar";
-
     public static final String SWALLOWTAIL_NAME = "swallowtail_caterpillar";
-
     public static final String MONARCH_NAME = "monarch_caterpillar";
-
     public static final String CABBAGE_NAME = "cabbage_caterpillar";
-
     public static final String ADMIRAL_NAME = "admiral_caterpillar";
-
     public static final String LONGWING_NAME = "longwing_caterpillar";
-
     public static final String BUCKEYE_NAME = "buckeye_caterpillar";
-
-
     public static final String CLIPPER_NAME = "clipper_caterpillar";
-
-    // Serializers for data stored in the save data.
-    private static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
-            SynchedEntityData.defineId(
-                    Caterpillar.class,
-                    EntityDataSerializers.BOOLEAN);
-
-    private static final EntityDataAccessor<Direction> DATA_DIRECTION =
-            SynchedEntityData.defineId(
-                    Caterpillar.class,
-                    EntityDataSerializers.DIRECTION);
-
-    private static final EntityDataAccessor<BlockPos> DATA_SURFACE_BLOCK =
-            SynchedEntityData.defineId(
-                    Caterpillar.class,
-                    EntityDataSerializers.BLOCK_POS);
-
-    // Names of the attributes stored in the save data.
-    private static final String PERSISTENT = "persistent";
-
-    private static final String DIRECTION = "direction";
-
-    private static final String SURFACE_BLOCK = "surface_block";
 
     // Helper constant to modify speed
     private static final double CATERPILLAR_SPEED = 0.00325d;
-
-    //  The location of the texture that the renderer should use.
-    private final ResourceLocation texture;
 
     // The current position the caterpillar is moving toward.
     @Nullable
     private Vec3 targetPosition;
 
     /**
-     * Supplies attributes for the butterfly, in this case just 1 points of
-     * maximum health (0.5 hearts).
-     * @return The butterfly attribute supplier.
-     */
-    public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 1d);
-    }
-
-    /**
      * Create a Morpho butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed entity.
      */
     @NotNull
     public static Caterpillar createMorphoCaterpillar(
@@ -124,7 +66,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Forester butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createForesterCaterpillar(
@@ -137,7 +79,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Common butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createCommonCaterpillar(
@@ -150,7 +92,7 @@ public class Caterpillar extends AmbientCreature {
      * Create an Emperor butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createEmperorCaterpillar(
@@ -163,7 +105,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Hairstreak butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createHairstreakCaterpillar(
@@ -176,7 +118,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Rainbow butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createRainbowCaterpillar(
@@ -189,7 +131,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Heath butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createHeathCaterpillar(
@@ -202,7 +144,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Glasswing butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createGlasswingCaterpillar(
@@ -215,7 +157,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Chalkhill butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createChalkhillCaterpillar(
@@ -228,7 +170,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Swallowtail butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createSwallowtailCaterpillar(
@@ -244,7 +186,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Monarch butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createMonarchCaterpillar(
@@ -257,7 +199,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Cabbage butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createCabbageCaterpillar(
@@ -270,7 +212,7 @@ public class Caterpillar extends AmbientCreature {
      * Create an Admiral butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createAdmiralCaterpillar(
@@ -283,7 +225,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Longwing butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createLongwingCaterpillar(
@@ -309,7 +251,7 @@ public class Caterpillar extends AmbientCreature {
      * Create a Buckeye butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Caterpillar createBuckeyeCaterpillar(
@@ -320,7 +262,7 @@ public class Caterpillar extends AmbientCreature {
 
     /**
      * Spawns a caterpillar into the world.
-     * @param entityId The type of butterfly to release.
+     * @param entityId The type of caterpillar to release.
      * @param position The current position of the player.
      */
     @SuppressWarnings({"deprecation", "OverrideOnly"})
@@ -378,29 +320,6 @@ public class Caterpillar extends AmbientCreature {
     }
 
     /**
-     * Used to add extra parameters to the entity's save data.
-     * @param tag The tag containing the extra save data.
-     */
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean(PERSISTENT, this.entityData.get(DATA_PERSISTENT));
-        tag.putString(DIRECTION, this.entityData.get(DATA_DIRECTION).getName());
-        tag.putString(
-                SURFACE_BLOCK,
-                this.entityData.get(DATA_SURFACE_BLOCK).toShortString());
-    }
-
-    /**
-     * Get the direction to the surface the caterpillar is crawling on.
-     * @return The direction of the block (UP, DOWN, NORTH, SOUTH, EAST, WEST).
-     */
-    @NotNull
-    public Direction getSurfaceDirection() {
-        return entityData.get(DATA_DIRECTION);
-    }
-
-    /**
      * Overrides how an entity handles triggers such as tripwires and pressure
      * plates. Caterpillars aren't heavy enough to trigger either.
      * @return Always TRUE, so caterpillars ignore block triggers.
@@ -438,74 +357,6 @@ public class Caterpillar extends AmbientCreature {
     }
 
     /**
-     * Override to read any additional save data.
-     * @param tag The tag containing the entity's save data.
-     */
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-
-        // Read the placed-by-player flag if it exists.
-        if (tag.contains(PERSISTENT)) {
-            this.entityData.set(DATA_PERSISTENT, tag.getBoolean(PERSISTENT));
-        }
-
-        // Get the direction
-        if (tag.contains(DIRECTION)) {
-            String name = tag.getString(DIRECTION);
-            Direction direction = Direction.byName(name);
-            if (direction != null) {
-                this.entityData.set(DATA_DIRECTION, direction);
-            }
-        }
-
-        if (tag.contains(SURFACE_BLOCK)) {
-            String data = tag.getString(SURFACE_BLOCK);
-            String[] values = data.split(",");
-            BlockPos position = new BlockPos(
-                    Integer.parseInt(values[0].trim()),
-                    Integer.parseInt(values[1].trim()),
-                    Integer.parseInt(values[2].trim()));
-            this.entityData.set(DATA_SURFACE_BLOCK, position);
-        }
-    }
-
-    /**
-     * Override to stop an entity despawning. Caterpillars that have been placed
-     * by a player won't despawn.
-     * @return TRUE if we want to prevent despawning.
-     */
-    @Override
-    public boolean requiresCustomPersistence() {
-        return this.entityData.get(DATA_PERSISTENT)
-                || super.requiresCustomPersistence();
-    }
-
-    /**
-     * Sets the placed-by-player flag to true to prevent the butterfly
-     * despawning.
-     */
-    public void setPersistent() {
-        entityData.set(DATA_PERSISTENT, true);
-    }
-
-    /**
-     * Set the position of the block the caterpillar is crawling on.
-     * @param position The position of the block.
-     */
-    public void setSurfaceBlock(BlockPos position) {
-        this.entityData.set(DATA_SURFACE_BLOCK, position);
-    }
-
-    /**
-     * Set the direction of the block that the caterpillar is crawling on.
-     * @param direction The direction of the surface block.
-     */
-    public void setSurfaceDirection(Direction direction) {
-        this.entityData.set(DATA_DIRECTION, direction);
-    }
-
-    /**
      * The main update loop for the entity.
      */
     @Override
@@ -523,9 +374,7 @@ public class Caterpillar extends AmbientCreature {
     protected Caterpillar(String texture,
                           EntityType<? extends AmbientCreature> entityType,
                           Level level) {
-        super(entityType, level);
-        this.texture = new ResourceLocation(
-                "butterflies:textures/entity/caterpillar/" + texture);
+        super("textures/entity/caterpillar/" + texture, entityType, level);
     }
 
     /**
@@ -656,18 +505,18 @@ public class Caterpillar extends AmbientCreature {
             double rotationDelta =
                     Mth.wrapDegrees(updatedRotation - this.getYRot());
             this.setYRot(this.getYRot() + (float) rotationDelta);
-        }
-    }
 
-    /**
-     * Override to define extra data to be synced between server and client.
-     */
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_PERSISTENT, false);
-        this.entityData.define(DATA_DIRECTION, Direction.DOWN);
-        this.entityData.define(DATA_SURFACE_BLOCK, new BlockPos(0,0,0));
+            // Spawn Chrysalis.
+            if (this.getAge() > 24000 && this.random.nextInt(0, 15) == 0) {
+                String encodeId = this.getEncodeId();
+                if (encodeId != null) {
+                    String[] splitEncodeId = encodeId.split("_");
+                    Chrysalis.spawn((ServerLevel) this.level(), splitEncodeId[0], this.blockPosition(),
+                                    this.getSurfaceDirection(), this.getYRot());
+                    this.remove(RemovalReason.DISCARDED);
+                }
+            }
+        }
     }
 
     /**
@@ -722,27 +571,11 @@ public class Caterpillar extends AmbientCreature {
     }
 
     /**
-     * Get the texture to use for rendering.
-     * @return The resource location of the texture.
-     */
-    public ResourceLocation getTexture() {
-        return texture;
-    }
-
-    /**
      * Override to change how pushing other entities affects them. Caterpillars
      * don't push other entities.
      */
     @Override
     protected void pushEntities() {
         // No-op
-    }
-
-    /**
-     * Get the position of the block the caterpillar is crawling on.
-     * @return The position of the block.
-     */
-    private BlockPos getSurfaceBlock() {
-        return this.entityData.get(DATA_SURFACE_BLOCK);
     }
 }

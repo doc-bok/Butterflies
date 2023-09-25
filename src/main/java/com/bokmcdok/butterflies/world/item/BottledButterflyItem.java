@@ -19,6 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -71,7 +72,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     }
 
     /**
-     * Right-clicking with a full bottle will release the net.
+     * Right-clicking with a full bottle will release the butterfly.
      * @param level The current level.
      * @param player The player holding the net.
      * @param hand The player's hand.
@@ -87,7 +88,15 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-            Butterfly.spawn(player, entityId, player.blockPosition(), false);
+
+            //  Move the target position slightly in front of the player
+            Vec3 lookAngle = player.getLookAngle();
+            BlockPos positionToSpawn = player.blockPosition().offset(
+                    (int) lookAngle.x,
+                    (int) lookAngle.y + 1,
+                    (int) lookAngle.z);
+
+            Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
             player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
 
             return InteractionResultHolder.success(stack);
@@ -120,7 +129,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Level level = context.getLevel();
             BlockPos position = context.getClickedPos();
 
-            Butterfly.spawn(player, entityId, position, true);
+            Butterfly.spawn(player.level(), entityId, position, true);
 
             BlockEntity blockEntity = level.getBlockEntity(position);
             if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
