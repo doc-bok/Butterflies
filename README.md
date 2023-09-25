@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.7.0 (2023-09-25)
+-   First pass Chrysalis implementation
+
 ### 0.6.6 (2023-09-15)
 -   Caterpillars can now crawl on surfaces in all directions.
 

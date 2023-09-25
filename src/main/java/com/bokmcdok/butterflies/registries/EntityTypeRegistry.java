@@ -3,10 +3,13 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.model.ButterflyModel;
 import com.bokmcdok.butterflies.model.CaterpillarModel;
+import com.bokmcdok.butterflies.model.ChrysalisModel;
 import com.bokmcdok.butterflies.renderer.entity.ButterflyRenderer;
 import com.bokmcdok.butterflies.renderer.entity.CaterpillarRenderer;
+import com.bokmcdok.butterflies.renderer.entity.ChrysalisRenderer;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
 import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
+import com.bokmcdok.butterflies.world.entity.ambient.Chrysalis;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -194,6 +197,87 @@ public class EntityTypeRegistry {
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.BUCKEYE_NAME));
 
+    // Register the chrysalises.
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_MORPHO =
+            INSTANCE.register(Chrysalis.MORPHO_NAME, () -> EntityType.Builder.of(Chrysalis::createMorpho, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.MORPHO_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_FORESTER =
+            INSTANCE.register(Chrysalis.FORESTER_NAME, () -> EntityType.Builder.of(Chrysalis::createForester, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.FORESTER_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_COMMON =
+            INSTANCE.register(Chrysalis.COMMON_NAME, () -> EntityType.Builder.of(Chrysalis::createCommon, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.COMMON_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_EMPEROR =
+            INSTANCE.register(Chrysalis.EMPEROR_NAME, () -> EntityType.Builder.of(Chrysalis::createEmperor, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.EMPEROR_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_HAIRSTREAK =
+            INSTANCE.register(Chrysalis.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Chrysalis::createHairstreak, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.HAIRSTREAK_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_RAINBOW =
+            INSTANCE.register(Chrysalis.RAINBOW_NAME, () -> EntityType.Builder.of(Chrysalis::createRainbow, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.RAINBOW_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_HEATH =
+            INSTANCE.register(Chrysalis.HEATH_NAME, () -> EntityType.Builder.of(Chrysalis::createHeath, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.HEATH_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_GLASSWING =
+            INSTANCE.register(Chrysalis.GLASSWING_NAME, () -> EntityType.Builder.of(Chrysalis::createGlasswing, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.GLASSWING_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CHALKHILL =
+            INSTANCE.register(Chrysalis.CHALKHILL_NAME, () -> EntityType.Builder.of(Chrysalis::createChalkhill, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.CHALKHILL_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_SWALLOWTAIL =
+            INSTANCE.register(Chrysalis.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Chrysalis::createSwallowtail, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.SWALLOWTAIL_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_MONARCH =
+            INSTANCE.register(Chrysalis.MONARCH_NAME, () -> EntityType.Builder.of(Chrysalis::createMonarch, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.MONARCH_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CABBAGE =
+            INSTANCE.register(Chrysalis.CABBAGE_NAME, () -> EntityType.Builder.of(Chrysalis::createCabbage, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.CABBAGE_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_ADMIRAL =
+            INSTANCE.register(Chrysalis.ADMIRAL_NAME, () -> EntityType.Builder.of(Chrysalis::createAdmiral, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.ADMIRAL_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_LONGWING =
+            INSTANCE.register(Chrysalis.LONGWING_NAME, () -> EntityType.Builder.of(Chrysalis::createLongwing, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.LONGWING_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CLIPPER =
+            INSTANCE.register(Chrysalis.CLIPPER_NAME, () -> EntityType.Builder.of(Chrysalis::createClipper, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.CLIPPER_NAME));
+
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_BUCKEYE =
+            INSTANCE.register(Chrysalis.BUCKEYE_NAME, () -> EntityType.Builder.of(Chrysalis::createBuckeye, MobCategory.AMBIENT)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.BUCKEYE_NAME));
+
     /**
      * Register the renderers for our entities
      * @param event The event information
@@ -234,6 +318,23 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(CATERPILLAR_LONGWING.get(), CaterpillarRenderer::new);
         event.registerEntityRenderer(CATERPILLAR_CLIPPER.get(), CaterpillarRenderer::new);
         event.registerEntityRenderer(CATERPILLAR_BUCKEYE.get(), CaterpillarRenderer::new);
+
+        event.registerEntityRenderer(CHRYSALIS_MORPHO.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_COMMON.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_FORESTER.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_EMPEROR.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_HAIRSTREAK.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_RAINBOW.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_HEATH.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_GLASSWING.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_CHALKHILL.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_SWALLOWTAIL.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_MONARCH.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_CABBAGE.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_ADMIRAL.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_LONGWING.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_CLIPPER.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_BUCKEYE.get(), ChrysalisRenderer::new);
     }
 
     /**
@@ -274,6 +375,23 @@ public class EntityTypeRegistry {
         event.put(CATERPILLAR_LONGWING.get(), Caterpillar.createAttributes().build());
         event.put(CATERPILLAR_CLIPPER.get(), Caterpillar.createAttributes().build());
         event.put(CATERPILLAR_BUCKEYE.get(), Caterpillar.createAttributes().build());
+
+        event.put(CHRYSALIS_MORPHO.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_COMMON.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_FORESTER.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_EMPEROR.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_HAIRSTREAK.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_RAINBOW.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_HEATH.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_GLASSWING.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_CHALKHILL.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_SWALLOWTAIL.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_MONARCH.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_CABBAGE.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_ADMIRAL.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_LONGWING.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_CLIPPER.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_BUCKEYE.get(), Chrysalis.createAttributes().build());
     }
 
     /**
@@ -473,6 +591,102 @@ public class EntityTypeRegistry {
                 Heightmap.Types.MOTION_BLOCKING,
                 AmbientCreature::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_MORPHO.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_COMMON.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_FORESTER.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_EMPEROR.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_HAIRSTREAK.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_RAINBOW.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_HEATH.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_GLASSWING.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_CHALKHILL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_SWALLOWTAIL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_MONARCH.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_CABBAGE.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_ADMIRAL.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_LONGWING.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_CLIPPER.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CHRYSALIS_BUCKEYE.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                AmbientCreature::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
     }
 
     /**
@@ -483,5 +697,6 @@ public class EntityTypeRegistry {
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
         event.registerLayerDefinition(CaterpillarModel.LAYER_LOCATION, CaterpillarModel::createBodyLayer);
+        event.registerLayerDefinition(ChrysalisModel.LAYER_LOCATION, ChrysalisModel::createBodyLayer);
     }
 }
