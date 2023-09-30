@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.7.1 (2023-09-30)
+-   Created textures for chrysalises.
+
 ### 0.7.0 (2023-09-25)
 -   First pass Chrysalis implementation
 

@@ -32,10 +32,7 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
     @Override
     @NotNull
     public ResourceLocation getTextureLocation(@NotNull Chrysalis entity) {
-        return new ResourceLocation(ButterfliesMod.MODID, "textures/entity/chrysalis/chrysalis.png");
-
-        // TODO: Create textures for each chrysalis
-        //return entity.getTexture();
+        return entity.getTexture();
     }
 
     /**
