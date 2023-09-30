@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.0 (2023-09-30)
+-   Cats now attack butterflies.
+
 ### 0.7.1 (2023-09-30)
 -   Created textures for chrysalises.
 
