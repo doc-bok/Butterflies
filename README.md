@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.1 (2023-10-15)
+-   Butterflies et al. are now `Animal`s instead of `AmbientCreature`s.
+
 ### 0.8.0 (2023-09-30)
 -   Cats now attack butterflies.
 

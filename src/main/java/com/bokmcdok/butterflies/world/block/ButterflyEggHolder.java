@@ -28,7 +28,6 @@ public interface ButterflyEggHolder {
     default List<ItemStack> addButterflyEggDrop(
             @NotNull BlockState blockState,
             @NotNull List<ItemStack> items) {
-
         int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
         String entityId = ButterflyIds.IndexToEntityId(index);
         if (entityId != null) {

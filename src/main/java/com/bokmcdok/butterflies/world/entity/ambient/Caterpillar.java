@@ -11,7 +11,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -265,7 +264,6 @@ public class Caterpillar extends DirectionalCreature {
      * @param entityId The type of caterpillar to release.
      * @param position The current position of the player.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
     public static void spawn(ServerLevel level,
                              String entityId,
                              BlockPos position,
@@ -372,7 +370,7 @@ public class Caterpillar extends DirectionalCreature {
      * @param level The level we are creating the entity in.
      */
     protected Caterpillar(String texture,
-                          EntityType<? extends AmbientCreature> entityType,
+                          EntityType<? extends Caterpillar> entityType,
                           Level level) {
         super("textures/entity/caterpillar/" + texture, entityType, level);
     }
