@@ -563,7 +563,7 @@ public class Butterfly extends Animal {
         this.setYRot(this.getYRot() + (float)yRotDelta);
 
         // Attempt to lay an egg.
-        if (this.random.nextInt(20) == 1) {
+        if (this.random.nextInt(320) == 1) {
             BlockPos position = this.blockPosition();
             position = switch (this.random.nextInt(6)) {
                 default -> position.above();
