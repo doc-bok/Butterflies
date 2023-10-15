@@ -8,33 +8,29 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ambient.AmbientCreature;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class DirectionalCreature extends AmbientCreature {
+import javax.annotation.Nullable;
+
+public abstract class DirectionalCreature extends Animal {
 
     // Serializers for data stored in the save data.
-    protected static final EntityDataAccessor<Integer> DATA_AGE =
-            SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.INT);
-
     protected static final EntityDataAccessor<Direction> DATA_DIRECTION =
             SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.DIRECTION);
-
-    protected static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
-            SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.BOOLEAN);
 
     protected static final EntityDataAccessor<BlockPos> DATA_SURFACE_BLOCK =
             SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.BLOCK_POS);
 
     // Names of the attributes stored in the save data.
-    protected static final String AGE = "age";
     protected static final String DIRECTION = "direction";
-    protected static final String PERSISTENT = "persistent";
     protected static final String SURFACE_BLOCK = "surface_block";
 
     // The location of the texture that the renderer should use.
@@ -56,18 +52,21 @@ public abstract class DirectionalCreature extends AmbientCreature {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putInt(AGE, this.entityData.get(DATA_AGE));
         tag.putString(DIRECTION, this.entityData.get(DATA_DIRECTION).getName());
-        tag.putBoolean(PERSISTENT, this.entityData.get(DATA_PERSISTENT));
         tag.putString(SURFACE_BLOCK, this.entityData.get(DATA_SURFACE_BLOCK).toShortString());
     }
 
     /**
-     * Get the age of the entity.
-     * @return The age.
+     * Caterpillars and chrysalises won't produce offspring.
+     * @param level The current level
+     * @param mob The parent mod
+     * @return NULL as there are no offspring
      */
-    protected int getAge() {
-        return this.entityData.get(DATA_AGE);
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel level,
+                                        @NotNull AgeableMob mob) {
+        return null;
     }
 
     /**
@@ -86,11 +85,6 @@ public abstract class DirectionalCreature extends AmbientCreature {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-
-        // Read the placed-by-player flag if it exists.
-        if (tag.contains(PERSISTENT)) {
-            this.entityData.set(DATA_PERSISTENT, tag.getBoolean(PERSISTENT));
-        }
 
         // Get the direction
         if (tag.contains(DIRECTION)) {
@@ -111,30 +105,6 @@ public abstract class DirectionalCreature extends AmbientCreature {
                     Integer.parseInt(values[2].trim()));
             this.entityData.set(DATA_SURFACE_BLOCK, position);
         }
-
-        // Get the age.
-        if (tag.contains(AGE)) {
-            this.entityData.set(DATA_AGE, tag.getInt(AGE));
-        }
-    }
-
-    /**
-     * Override to stop an entity despawning. Caterpillars that have been placed
-     * by a player won't despawn.
-     * @return TRUE if we want to prevent despawning.
-     */
-    @Override
-    public boolean requiresCustomPersistence() {
-        return this.entityData.get(DATA_PERSISTENT)
-                || super.requiresCustomPersistence();
-    }
-
-    /**
-     * Sets the placed-by-player flag to true to prevent the butterfly
-     * despawning.
-     */
-    public void setPersistent() {
-        entityData.set(DATA_PERSISTENT, true);
     }
 
     /**
@@ -166,7 +136,7 @@ public abstract class DirectionalCreature extends AmbientCreature {
      * @param level The current level.
      */
     protected DirectionalCreature(String texture,
-                                  EntityType<? extends AmbientCreature> entityType,
+                                  EntityType<? extends DirectionalCreature> entityType,
                                   Level level) {
         super(entityType, level);
         this.texture = new ResourceLocation(ButterfliesMod.MODID, texture);
@@ -178,8 +148,6 @@ public abstract class DirectionalCreature extends AmbientCreature {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(DATA_AGE, 0);
-        this.entityData.define(DATA_PERSISTENT, false);
         this.entityData.define(DATA_DIRECTION, Direction.DOWN);
         this.entityData.define(DATA_SURFACE_BLOCK, new BlockPos(0,0,0));
     }
@@ -198,13 +166,5 @@ public abstract class DirectionalCreature extends AmbientCreature {
      */
     protected BlockPos getSurfaceBlock() {
         return this.entityData.get(DATA_SURFACE_BLOCK);
-    }
-
-    /**
-     * Set the age of the entity.
-     * @param age The new age.
-     */
-    private void setAge(int age) {
-        this.entityData.set(DATA_AGE, age);
     }
 }

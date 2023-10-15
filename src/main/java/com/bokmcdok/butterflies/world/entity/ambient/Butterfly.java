@@ -436,6 +436,19 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Butterflies won't produce offspring: they lay eggs instead.
+     * @param level The current level
+     * @param mob The parent mod
+     * @return NULL as there are no offspring
+     */
+    @Nullable
+    @Override
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel level,
+                                        @NotNull AgeableMob mob) {
+        return null;
+    }
+
+    /**
      * Controls when a flapping event should be emitted.
      * @return TRUE when a flapping event should be emitted.
      */
@@ -566,19 +579,6 @@ public class Butterfly extends Animal {
                     position,
                     this.getEncodeId());
         }
-    }
-
-    /**
-     * Butterflies won't produce offspring: they lay eggs instead.
-     * @param level The current level
-     * @param mob The parent mod
-     * @return NULL as there are no offspring
-     */
-    @Nullable
-    @Override
-    public AgeableMob getBreedOffspring(@NotNull ServerLevel level,
-                                        @NotNull AgeableMob mob) {
-        return null;
     }
 
     /**

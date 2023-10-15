@@ -118,22 +118,22 @@ public class EntityTypeRegistry {
 
     // Register the caterpillars.
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_MORPHO =
-            INSTANCE.register(Caterpillar.MORPHO_NAME, () -> EntityType.Builder.of(Caterpillar::createMorphoCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.MORPHO_NAME, () -> EntityType.Builder.of(Caterpillar::createMorphoCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.MORPHO_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_FORESTER =
-            INSTANCE.register(Caterpillar.FORESTER_NAME, () -> EntityType.Builder.of(Caterpillar::createForesterCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.FORESTER_NAME, () -> EntityType.Builder.of(Caterpillar::createForesterCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.FORESTER_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_COMMON =
-            INSTANCE.register(Caterpillar.COMMON_NAME, () -> EntityType.Builder.of(Caterpillar::createCommonCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.COMMON_NAME, () -> EntityType.Builder.of(Caterpillar::createCommonCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.COMMON_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_EMPEROR =
-            INSTANCE.register(Caterpillar.EMPEROR_NAME, () -> EntityType.Builder.of(Caterpillar::createEmperorCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.EMPEROR_NAME, () -> EntityType.Builder.of(Caterpillar::createEmperorCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.EMPEROR_NAME));
 
@@ -143,138 +143,138 @@ public class EntityTypeRegistry {
                     .build(Caterpillar.HAIRSTREAK_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_RAINBOW =
-            INSTANCE.register(Caterpillar.RAINBOW_NAME, () -> EntityType.Builder.of(Caterpillar::createRainbowCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.RAINBOW_NAME, () -> EntityType.Builder.of(Caterpillar::createRainbowCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.RAINBOW_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_HEATH =
-            INSTANCE.register(Caterpillar.HEATH_NAME, () -> EntityType.Builder.of(Caterpillar::createHeathCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.HEATH_NAME, () -> EntityType.Builder.of(Caterpillar::createHeathCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.HEATH_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_GLASSWING =
-            INSTANCE.register(Caterpillar.GLASSWING_NAME, () -> EntityType.Builder.of(Caterpillar::createGlasswingCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.GLASSWING_NAME, () -> EntityType.Builder.of(Caterpillar::createGlasswingCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.GLASSWING_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_CHALKHILL =
-            INSTANCE.register(Caterpillar.CHALKHILL_NAME, () -> EntityType.Builder.of(Caterpillar::createChalkhillCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.CHALKHILL_NAME, () -> EntityType.Builder.of(Caterpillar::createChalkhillCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.CHALKHILL_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_SWALLOWTAIL =
-            INSTANCE.register(Caterpillar.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Caterpillar::createSwallowtailCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Caterpillar::createSwallowtailCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.SWALLOWTAIL_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_MONARCH =
-            INSTANCE.register(Caterpillar.MONARCH_NAME, () -> EntityType.Builder.of(Caterpillar::createMonarchCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.MONARCH_NAME, () -> EntityType.Builder.of(Caterpillar::createMonarchCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.MONARCH_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_CABBAGE =
-            INSTANCE.register(Caterpillar.CABBAGE_NAME, () -> EntityType.Builder.of(Caterpillar::createCabbageCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.CABBAGE_NAME, () -> EntityType.Builder.of(Caterpillar::createCabbageCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.CABBAGE_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_ADMIRAL =
-            INSTANCE.register(Caterpillar.ADMIRAL_NAME, () -> EntityType.Builder.of(Caterpillar::createAdmiralCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.ADMIRAL_NAME, () -> EntityType.Builder.of(Caterpillar::createAdmiralCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.ADMIRAL_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_LONGWING =
-            INSTANCE.register(Caterpillar.LONGWING_NAME, () -> EntityType.Builder.of(Caterpillar::createLongwingCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.LONGWING_NAME, () -> EntityType.Builder.of(Caterpillar::createLongwingCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.LONGWING_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_CLIPPER =
-            INSTANCE.register(Caterpillar.CLIPPER_NAME, () -> EntityType.Builder.of(Caterpillar::createClipperCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.CLIPPER_NAME, () -> EntityType.Builder.of(Caterpillar::createClipperCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.CLIPPER_NAME));
 
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_BUCKEYE =
-            INSTANCE.register(Caterpillar.BUCKEYE_NAME, () -> EntityType.Builder.of(Caterpillar::createBuckeyeCaterpillar, MobCategory.AMBIENT)
+            INSTANCE.register(Caterpillar.BUCKEYE_NAME, () -> EntityType.Builder.of(Caterpillar::createBuckeyeCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.BUCKEYE_NAME));
 
     // Register the chrysalises.
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_MORPHO =
-            INSTANCE.register(Chrysalis.MORPHO_NAME, () -> EntityType.Builder.of(Chrysalis::createMorpho, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.MORPHO_NAME, () -> EntityType.Builder.of(Chrysalis::createMorpho, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.MORPHO_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_FORESTER =
-            INSTANCE.register(Chrysalis.FORESTER_NAME, () -> EntityType.Builder.of(Chrysalis::createForester, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.FORESTER_NAME, () -> EntityType.Builder.of(Chrysalis::createForester, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.FORESTER_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_COMMON =
-            INSTANCE.register(Chrysalis.COMMON_NAME, () -> EntityType.Builder.of(Chrysalis::createCommon, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.COMMON_NAME, () -> EntityType.Builder.of(Chrysalis::createCommon, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.COMMON_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_EMPEROR =
-            INSTANCE.register(Chrysalis.EMPEROR_NAME, () -> EntityType.Builder.of(Chrysalis::createEmperor, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.EMPEROR_NAME, () -> EntityType.Builder.of(Chrysalis::createEmperor, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.EMPEROR_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_HAIRSTREAK =
-            INSTANCE.register(Chrysalis.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Chrysalis::createHairstreak, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Chrysalis::createHairstreak, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.HAIRSTREAK_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_RAINBOW =
-            INSTANCE.register(Chrysalis.RAINBOW_NAME, () -> EntityType.Builder.of(Chrysalis::createRainbow, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.RAINBOW_NAME, () -> EntityType.Builder.of(Chrysalis::createRainbow, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.RAINBOW_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_HEATH =
-            INSTANCE.register(Chrysalis.HEATH_NAME, () -> EntityType.Builder.of(Chrysalis::createHeath, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.HEATH_NAME, () -> EntityType.Builder.of(Chrysalis::createHeath, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.HEATH_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_GLASSWING =
-            INSTANCE.register(Chrysalis.GLASSWING_NAME, () -> EntityType.Builder.of(Chrysalis::createGlasswing, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.GLASSWING_NAME, () -> EntityType.Builder.of(Chrysalis::createGlasswing, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.GLASSWING_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CHALKHILL =
-            INSTANCE.register(Chrysalis.CHALKHILL_NAME, () -> EntityType.Builder.of(Chrysalis::createChalkhill, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.CHALKHILL_NAME, () -> EntityType.Builder.of(Chrysalis::createChalkhill, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.CHALKHILL_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_SWALLOWTAIL =
-            INSTANCE.register(Chrysalis.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Chrysalis::createSwallowtail, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Chrysalis::createSwallowtail, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.SWALLOWTAIL_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_MONARCH =
-            INSTANCE.register(Chrysalis.MONARCH_NAME, () -> EntityType.Builder.of(Chrysalis::createMonarch, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.MONARCH_NAME, () -> EntityType.Builder.of(Chrysalis::createMonarch, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.MONARCH_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CABBAGE =
-            INSTANCE.register(Chrysalis.CABBAGE_NAME, () -> EntityType.Builder.of(Chrysalis::createCabbage, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.CABBAGE_NAME, () -> EntityType.Builder.of(Chrysalis::createCabbage, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.CABBAGE_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_ADMIRAL =
-            INSTANCE.register(Chrysalis.ADMIRAL_NAME, () -> EntityType.Builder.of(Chrysalis::createAdmiral, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.ADMIRAL_NAME, () -> EntityType.Builder.of(Chrysalis::createAdmiral, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.ADMIRAL_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_LONGWING =
-            INSTANCE.register(Chrysalis.LONGWING_NAME, () -> EntityType.Builder.of(Chrysalis::createLongwing, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.LONGWING_NAME, () -> EntityType.Builder.of(Chrysalis::createLongwing, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.LONGWING_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_CLIPPER =
-            INSTANCE.register(Chrysalis.CLIPPER_NAME, () -> EntityType.Builder.of(Chrysalis::createClipper, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.CLIPPER_NAME, () -> EntityType.Builder.of(Chrysalis::createClipper, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.CLIPPER_NAME));
 
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_BUCKEYE =
-            INSTANCE.register(Chrysalis.BUCKEYE_NAME, () -> EntityType.Builder.of(Chrysalis::createBuckeye, MobCategory.AMBIENT)
+            INSTANCE.register(Chrysalis.BUCKEYE_NAME, () -> EntityType.Builder.of(Chrysalis::createBuckeye, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.BUCKEYE_NAME));
 

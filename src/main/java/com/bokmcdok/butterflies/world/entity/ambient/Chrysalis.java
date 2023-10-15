@@ -247,7 +247,6 @@ public class Chrysalis extends DirectionalCreature {
      * @param entityId The type of chrysalis to release.
      * @param position The current position of the player.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
     public static void spawn(ServerLevel level,
                              String entityId,
                              BlockPos position,
@@ -329,7 +328,7 @@ public class Chrysalis extends DirectionalCreature {
      * @param level      The current level.
      */
     protected Chrysalis(String texture,
-                        EntityType<? extends DirectionalCreature> entityType,
+                        EntityType<? extends Chrysalis> entityType,
                         Level level) {
         super("textures/entity/chrysalis/" + texture, entityType, level);
     }
