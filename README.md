@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.2 (2023-10-15)
+-   Fixed emperor chrysalis texture.
+
 ### 0.8.1 (2023-10-15)
 -   Butterflies et al. are now `Animal`s instead of `AmbientCreature`s.
 
