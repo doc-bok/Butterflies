@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.4 (2023-10-15)
+-   Moved butterfly eggs to Spawn Eggs section of creative inventory.
+
 ### 0.8.3 (2023-10-15)
 -   Made butterfly egg-laying 16 times rarer.
 

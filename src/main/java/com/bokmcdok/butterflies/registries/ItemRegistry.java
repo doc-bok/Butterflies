@@ -186,25 +186,6 @@ public class ItemRegistry {
      */
     @SubscribeEvent
     public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(ADMIRAL_BUTTERFLY_EGG);
-            event.accept(BUCKEYE_BUTTERFLY_EGG);
-            event.accept(CABBAGE_BUTTERFLY_EGG);
-            event.accept(CHALKHILL_BUTTERFLY_EGG);
-            event.accept(CLIPPER_BUTTERFLY_EGG);
-            event.accept(COMMON_BUTTERFLY_EGG);
-            event.accept(EMPEROR_BUTTERFLY_EGG);
-            event.accept(FORESTER_BUTTERFLY_EGG);
-            event.accept(GLASSWING_BUTTERFLY_EGG);
-            event.accept(HAIRSTREAK_BUTTERFLY_EGG);
-            event.accept(HEATH_BUTTERFLY_EGG);
-            event.accept(LONGWING_BUTTERFLY_EGG);
-            event.accept(MONARCH_BUTTERFLY_EGG);
-            event.accept(MORPHO_BUTTERFLY_EGG);
-            event.accept(RAINBOW_BUTTERFLY_EGG);
-            event.accept(SWALLOWTAIL_BUTTERFLY_EGG);
-        }
-
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(BOTTLED_BUTTERFLY);
         }
@@ -242,6 +223,22 @@ public class ItemRegistry {
             event.accept(CATERPILLAR_LONGWING_EGG);
             event.accept(CATERPILLAR_CLIPPER_EGG);
             event.accept(CATERPILLAR_BUCKEYE_EGG);
+            event.accept(ADMIRAL_BUTTERFLY_EGG);
+            event.accept(BUCKEYE_BUTTERFLY_EGG);
+            event.accept(CABBAGE_BUTTERFLY_EGG);
+            event.accept(CHALKHILL_BUTTERFLY_EGG);
+            event.accept(CLIPPER_BUTTERFLY_EGG);
+            event.accept(COMMON_BUTTERFLY_EGG);
+            event.accept(EMPEROR_BUTTERFLY_EGG);
+            event.accept(FORESTER_BUTTERFLY_EGG);
+            event.accept(GLASSWING_BUTTERFLY_EGG);
+            event.accept(HAIRSTREAK_BUTTERFLY_EGG);
+            event.accept(HEATH_BUTTERFLY_EGG);
+            event.accept(LONGWING_BUTTERFLY_EGG);
+            event.accept(MONARCH_BUTTERFLY_EGG);
+            event.accept(MORPHO_BUTTERFLY_EGG);
+            event.accept(RAINBOW_BUTTERFLY_EGG);
+            event.accept(SWALLOWTAIL_BUTTERFLY_EGG);
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
