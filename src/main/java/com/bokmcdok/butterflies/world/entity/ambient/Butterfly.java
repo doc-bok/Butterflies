@@ -2,10 +2,6 @@ package com.bokmcdok.butterflies.world.entity.ambient;
 
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -13,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -21,8 +18,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ambient.AmbientCreature;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,7 +32,7 @@ import javax.annotation.Nullable;
  * The butterfly entity that flies around the world, adding some ambience and
  * fertilising plants.
  */
-public class Butterfly extends AmbientCreature {
+public class Butterfly extends Animal {
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
@@ -47,45 +43,21 @@ public class Butterfly extends AmbientCreature {
 
     // The unique IDs that are used to reference a butterfly entity.
     public static final String MORPHO_NAME = "morpho";
-
     public static final String FORESTER_NAME = "forester";
-
     public static final String COMMON_NAME = "common";
-
     public static final String EMPEROR_NAME = "emperor";
-
     public static final String HAIRSTREAK_NAME = "hairstreak";
-
     public static final String RAINBOW_NAME = "rainbow";
-
     public static final String HEATH_NAME = "heath";
-
     public static final String GLASSWING_NAME = "glasswing";
-
     public static final String CHALKHILL_NAME = "chalkhill";
-
     public static final String SWALLOWTAIL_NAME = "swallowtail";
-
     public static final String MONARCH_NAME = "monarch";
-
     public static final String CABBAGE_NAME = "cabbage";
-
     public static final String ADMIRAL_NAME = "admiral";
-
     public static final String LONGWING_NAME = "longwing";
-
     public static final String BUCKEYE_NAME = "buckeye";
-
     public static final String CLIPPER_NAME = "clipper";
-
-    // Holds a flag that is set to TRUE if a player placed the butterfly.
-    // entity.
-    private static final EntityDataAccessor<Boolean> DATA_PERSISTENT =
-            SynchedEntityData.defineId(Butterfly.class,
-                                       EntityDataSerializers.BOOLEAN);
-
-    // The name of the "respawned" attribute in the save data.
-    private static final String PERSISTENT = "persistent";
 
     // The number of ticks per flap. Used for event emissions.
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
@@ -134,7 +106,7 @@ public class Butterfly extends AmbientCreature {
      * Create an Admiral butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createAdmiralButterfly(
@@ -150,7 +122,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Buckeye butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createBuckeyeButterfly(
@@ -166,7 +138,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Cabbage butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createCabbageButterfly(
@@ -182,7 +154,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Chalkhill butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createChalkhillButterfly(
@@ -198,7 +170,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Clipper butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createClipperButterfly(
@@ -214,7 +186,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Common butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createCommonButterfly(
@@ -230,7 +202,7 @@ public class Butterfly extends AmbientCreature {
      * Create an Emperor butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createEmperorButterfly(
@@ -246,7 +218,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Forester butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createForesterButterfly(
@@ -262,7 +234,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Glasswing butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createGlasswingButterfly(
@@ -278,7 +250,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Hairstreak butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createHairstreakButterfly(
@@ -294,7 +266,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Heath butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createHeathButterfly(
@@ -310,7 +282,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Longwing butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createLongwingButterfly(
@@ -326,7 +298,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Monarch butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createMonarchButterfly(
@@ -342,7 +314,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Morpho butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createMorphoButterfly(
@@ -357,7 +329,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Rainbow butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createRainbowButterfly(
@@ -373,7 +345,7 @@ public class Butterfly extends AmbientCreature {
      * Create a Swallowtail butterfly
      * @param entityType The type of the entity.
      * @param level The current level.
-     * @return A newly constrycted butterfly.
+     * @return A newly constructed butterfly.
      */
     @NotNull
     public static Butterfly createSwallowtailButterfly(
@@ -391,7 +363,6 @@ public class Butterfly extends AmbientCreature {
      * @param entityId The type of butterfly to release.
      * @param position The current position of the player.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
     public static void spawn(Level level,
                              String entityId,
                              BlockPos position,
@@ -416,7 +387,7 @@ public class Butterfly extends AmbientCreature {
                             null,
                             null);
 
-                    butterfly.setPlacedByPlayer();
+                    butterfly.setPersistenceRequired();
 
                     if (placed) {
                         butterfly.setInvulnerable(true);
@@ -447,16 +418,6 @@ public class Butterfly extends AmbientCreature {
         this.size = size;
         this.texture = new ResourceLocation(
                 "butterflies:textures/entity/butterfly/" + texture);
-    }
-
-    /**
-     * Used to add extra parameters to the entity's save data.
-     * @param tag The tag containing the extra save data.
-     */
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putBoolean(PERSISTENT, this.entityData.get(DATA_PERSISTENT));
     }
 
     /**
@@ -501,39 +462,6 @@ public class Butterfly extends AmbientCreature {
     @Override
     public boolean isPushable() {
         return false;
-    }
-
-    /**
-     * Override to read any additional save data.
-     * @param tag The tag containing the entity's save data.
-     */
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-
-        // Read the placed-by-player flag if it exists.
-        if (tag.contains(PERSISTENT)) {
-            this.entityData.set(DATA_PERSISTENT, tag.getBoolean(PERSISTENT));
-        }
-    }
-
-    /**
-     * Override to stop an entity despawning. Butterflies that have been placed
-     * by a player won't despawn.
-     * @return TRUE if we want to prevent despawning.
-     */
-    @Override
-    public boolean requiresCustomPersistence() {
-        return this.entityData.get(DATA_PERSISTENT)
-                || super.requiresCustomPersistence();
-    }
-
-    /**
-     * Sets the placed-by-player flag to true to prevent the butterfly
-     * despawning.
-     */
-    public void setPlacedByPlayer() {
-        entityData.set(DATA_PERSISTENT, true);
     }
 
     /**
@@ -641,12 +569,16 @@ public class Butterfly extends AmbientCreature {
     }
 
     /**
-     * Override to define extra data to be synced between server and client.
+     * Butterflies won't produce offspring: they lay eggs instead.
+     * @param level The current level
+     * @param mob The parent mod
+     * @return NULL as there are no offspring
      */
+    @Nullable
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_PERSISTENT, false);
+    public AgeableMob getBreedOffspring(@NotNull ServerLevel level,
+                                        @NotNull AgeableMob mob) {
+        return null;
     }
 
     /**

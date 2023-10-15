@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.ambient;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -113,7 +112,7 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
-     * Create a Emperor chrysalis.
+     * Create an Emperor chrysalis.
      *
      * @param entityType The type of the entity.
      * @param level      The current level.
@@ -294,7 +293,7 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Overrides how an entity handles triggers such as tripwires and pressure
-     * plates. Chysalises aren't heavy enough to trigger either.
+     * plates. Chrysalises aren't heavy enough to trigger either.
      *
      * @return Always TRUE, so caterpillars ignore block triggers.
      */
@@ -359,7 +358,7 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
-     * Override to change how pushing other entities affects them. Chrysaliss
+     * Override to change how pushing other entities affects them. Chrysalises
      * don't push other entities.
      * @param otherEntity The other entity pushing/being pushed.
      */
@@ -370,7 +369,7 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Override to control what kind of movement events the entity will emit.
-     * Chrysaliss will not emit sounds.
+     * Chrysalises will not emit sounds.
      * @return Movement events only.
      */
     @NotNull
@@ -389,7 +388,7 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
-     * Override to control an entity's relative volume. Chrysaliss are silent.
+     * Override to control an entity's relative volume. Chrysalises are silent.
      * @return Always zero, so caterpillars are silent.
      */
     @Override
@@ -410,7 +409,7 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
-     * Override to change how pushing other entities affects them. Chrysaliss
+     * Override to change how pushing other entities affects them. Chrysalises
      * don't push other entities.
      */
     @Override

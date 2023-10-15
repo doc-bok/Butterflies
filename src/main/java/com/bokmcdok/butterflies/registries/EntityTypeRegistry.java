@@ -37,82 +37,82 @@ public class EntityTypeRegistry {
 
     // Register the butterflies.
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_MORPHO =
-            INSTANCE.register(Butterfly.MORPHO_NAME, () -> EntityType.Builder.of(Butterfly::createMorphoButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.MORPHO_NAME, () -> EntityType.Builder.of(Butterfly::createMorphoButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.MORPHO_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_FORESTER =
-            INSTANCE.register(Butterfly.FORESTER_NAME, () -> EntityType.Builder.of(Butterfly::createForesterButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.FORESTER_NAME, () -> EntityType.Builder.of(Butterfly::createForesterButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.FORESTER_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_COMMON =
-            INSTANCE.register(Butterfly.COMMON_NAME, () -> EntityType.Builder.of(Butterfly::createCommonButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.COMMON_NAME, () -> EntityType.Builder.of(Butterfly::createCommonButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.COMMON_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_EMPEROR =
-            INSTANCE.register(Butterfly.EMPEROR_NAME, () -> EntityType.Builder.of(Butterfly::createEmperorButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.EMPEROR_NAME, () -> EntityType.Builder.of(Butterfly::createEmperorButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.EMPEROR_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_HAIRSTREAK =
-            INSTANCE.register(Butterfly.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Butterfly::createHairstreakButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.HAIRSTREAK_NAME, () -> EntityType.Builder.of(Butterfly::createHairstreakButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.HAIRSTREAK_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_RAINBOW =
-            INSTANCE.register(Butterfly.RAINBOW_NAME, () -> EntityType.Builder.of(Butterfly::createRainbowButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.RAINBOW_NAME, () -> EntityType.Builder.of(Butterfly::createRainbowButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.RAINBOW_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_HEATH =
-            INSTANCE.register(Butterfly.HEATH_NAME, () -> EntityType.Builder.of(Butterfly::createHeathButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.HEATH_NAME, () -> EntityType.Builder.of(Butterfly::createHeathButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.HEATH_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_GLASSWING =
-            INSTANCE.register(Butterfly.GLASSWING_NAME, () -> EntityType.Builder.of(Butterfly::createGlasswingButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.GLASSWING_NAME, () -> EntityType.Builder.of(Butterfly::createGlasswingButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.GLASSWING_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_CHALKHILL =
-            INSTANCE.register(Butterfly.CHALKHILL_NAME, () -> EntityType.Builder.of(Butterfly::createChalkhillButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.CHALKHILL_NAME, () -> EntityType.Builder.of(Butterfly::createChalkhillButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.CHALKHILL_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_SWALLOWTAIL =
-            INSTANCE.register(Butterfly.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Butterfly::createSwallowtailButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.SWALLOWTAIL_NAME, () -> EntityType.Builder.of(Butterfly::createSwallowtailButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.SWALLOWTAIL_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_MONARCH =
-            INSTANCE.register(Butterfly.MONARCH_NAME, () -> EntityType.Builder.of(Butterfly::createMonarchButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.MONARCH_NAME, () -> EntityType.Builder.of(Butterfly::createMonarchButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.MONARCH_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_CABBAGE =
-            INSTANCE.register(Butterfly.CABBAGE_NAME, () -> EntityType.Builder.of(Butterfly::createCabbageButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.CABBAGE_NAME, () -> EntityType.Builder.of(Butterfly::createCabbageButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.CABBAGE_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_ADMIRAL =
-            INSTANCE.register(Butterfly.ADMIRAL_NAME, () -> EntityType.Builder.of(Butterfly::createAdmiralButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.ADMIRAL_NAME, () -> EntityType.Builder.of(Butterfly::createAdmiralButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.ADMIRAL_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_LONGWING =
-            INSTANCE.register(Butterfly.LONGWING_NAME, () -> EntityType.Builder.of(Butterfly::createLongwingButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.LONGWING_NAME, () -> EntityType.Builder.of(Butterfly::createLongwingButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.LONGWING_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_CLIPPER =
-            INSTANCE.register(Butterfly.CLIPPER_NAME, () -> EntityType.Builder.of(Butterfly::createClipperButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.CLIPPER_NAME, () -> EntityType.Builder.of(Butterfly::createClipperButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.CLIPPER_NAME));
 
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_BUCKEYE =
-            INSTANCE.register(Butterfly.BUCKEYE_NAME, () -> EntityType.Builder.of(Butterfly::createBuckeyeButterfly, MobCategory.AMBIENT)
+            INSTANCE.register(Butterfly.BUCKEYE_NAME, () -> EntityType.Builder.of(Butterfly::createBuckeyeButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.BUCKEYE_NAME));
 
