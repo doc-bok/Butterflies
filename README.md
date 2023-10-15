@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.3 (2023-10-15)
+-   Made butterfly egg-laying 16 times rarer.
+
 ### 0.8.2 (2023-10-15)
 -   Fixed emperor chrysalis texture.
 
