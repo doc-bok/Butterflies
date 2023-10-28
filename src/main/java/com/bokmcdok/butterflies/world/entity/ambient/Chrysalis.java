@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -243,14 +244,18 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Spawns a chrysalis into the world.
-     *
-     * @param entityId The type of chrysalis to release.
-     * @param position The current position of the player.
+     * @param level The level to spawn the chrysalis.
+     * @param entityId The Entity ID of the chrysalis to spawn.
+     * @param spawnBlock The block to spawn the chrysalis on.
+     * @param surfaceDirection The direction the chrysalis is facing.
+     * @param position The position of the chrysalis.
+     * @param yRotation The y-rotation of the chrysalis.
      */
     public static void spawn(ServerLevel level,
                              String entityId,
-                             BlockPos position,
-                             Direction direction,
+                             BlockPos spawnBlock,
+                             Direction surfaceDirection,
+                             Vec3 position,
                              float yRotation) {
 
         ResourceLocation key = new ResourceLocation(entityId + "_chrysalis");
@@ -259,28 +264,14 @@ public class Chrysalis extends DirectionalCreature {
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Chrysalis chrysalis) {
-                BlockPos spawnPosition;
-                if (direction == Direction.DOWN) {
-                    spawnPosition = position.below();
-                } else if (direction == Direction.UP) {
-                    spawnPosition = position.above();
-                } else if (direction == Direction.NORTH) {
-                    spawnPosition = position.north();
-                } else if (direction == Direction.SOUTH) {
-                    spawnPosition = position.south();
-                } else if (direction == Direction.WEST) {
-                    spawnPosition = position.west();
-                } else {
-                    spawnPosition = position.east();
-                }
 
-                chrysalis.moveTo(position, 0.0F, 0.0F);
+                chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
                 chrysalis.setYRot(yRotation);
-                chrysalis.setSurfaceDirection(direction);
-                chrysalis.setSurfaceBlock(spawnPosition);
+                chrysalis.setSurfaceDirection(surfaceDirection);
+                chrysalis.setSurfaceBlock(spawnBlock);
 
                 chrysalis.finalizeSpawn(level,
-                        level.getCurrentDifficultyAt(position),
+                        level.getCurrentDifficultyAt(spawnBlock),
                         MobSpawnType.NATURAL,
                         null,
                         null);
@@ -345,7 +336,7 @@ public class Chrysalis extends DirectionalCreature {
             kill();
         }
 
-        // Spawn Chrysalis.
+        // Spawn Butterfly.
         if (this.getAge() > 24000 && this.random.nextInt(0, 15) == 0) {
             String encodeId = this.getEncodeId();
             if (encodeId != null) {

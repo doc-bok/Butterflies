@@ -509,8 +509,12 @@ public class Caterpillar extends DirectionalCreature {
                 String encodeId = this.getEncodeId();
                 if (encodeId != null) {
                     String[] splitEncodeId = encodeId.split("_");
-                    Chrysalis.spawn((ServerLevel) this.level(), splitEncodeId[0], this.blockPosition(),
-                                    this.getSurfaceDirection(), this.getYRot());
+                    Chrysalis.spawn((ServerLevel) this.level(),
+                                    splitEncodeId[0],
+                                    this.getSurfaceBlock(),
+                                    this.getSurfaceDirection(),
+                                    this.position(),
+                                    this.getYRot());
                     this.remove(RemovalReason.DISCARDED);
                 }
             }
