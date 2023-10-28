@@ -9,6 +9,9 @@
  
 ## Changelog
 
+### 0.8.5 (2023-10-28)
+-   Chrysalises will now spawn in the correct position.
+
 ### 0.8.4 (2023-10-15)
 -   Moved butterfly eggs to Spawn Eggs section of creative inventory.
 

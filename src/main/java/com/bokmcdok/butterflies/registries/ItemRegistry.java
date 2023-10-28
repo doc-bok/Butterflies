@@ -207,6 +207,7 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_LONGWING_EGG);
             event.accept(BUTTERFLY_CLIPPER_EGG);
             event.accept(BUTTERFLY_BUCKEYE_EGG);
+
             event.accept(CATERPILLAR_MORPHO_EGG);
             event.accept(CATERPILLAR_FORESTER_EGG);
             event.accept(CATERPILLAR_COMMON_EGG);
@@ -223,6 +224,7 @@ public class ItemRegistry {
             event.accept(CATERPILLAR_LONGWING_EGG);
             event.accept(CATERPILLAR_CLIPPER_EGG);
             event.accept(CATERPILLAR_BUCKEYE_EGG);
+
             event.accept(ADMIRAL_BUTTERFLY_EGG);
             event.accept(BUCKEYE_BUTTERFLY_EGG);
             event.accept(CABBAGE_BUTTERFLY_EGG);
