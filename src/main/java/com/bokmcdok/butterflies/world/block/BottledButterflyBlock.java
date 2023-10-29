@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
@@ -142,6 +141,7 @@ public class BottledButterflyBlock extends BaseEntityBlock {
      * @param flag Unknown.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void onRemove(@NotNull BlockState oldBlockState,
                          @NotNull Level level,
                          @NotNull BlockPos position,
