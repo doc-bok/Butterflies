@@ -1,13 +1,27 @@
 # Butterflies
- This mod adds butterflies to the world of Minecraft. Butterflies can be caught
- or released using a butterfly net. Once caught, they can be moved into bottles
- and placed in the world as decorative objects.
+ This mod adds butterflies with a full life cycle to the world of Minecraft.
+ Butterflies can be caught or released using a butterfly net. Once caught, they
+ can be bottled and placed in the world as decorative objects.
 
  Butterflies will also lay eggs in leaves if they get close to them, and if a
  player collects these eggs they can plant them in other leaf blocks. The eggs
  will eventually hatch into caterpillars.
  
+After living on the leaves for a short time, a caterpillar will eventually
+build a chrysalis. These will then hatch into new butterflies within the world.
+
+This mod features 16 butterfly species, mostly based on real-life butterflies
+but a couple of are purely fantasy butterflies.
+
+If you want to breed the butterflies in this mod, then be sure to keep your
+cats away from them!
+
+[Check out the Modding Diaries here!](https://www.bokmcdok.com/minecraft-modding-diaries/)
+ 
 ## Changelog
+
+### 1.0.0 (2023-10-28)
+-   First release of the butterfly mod.
 
 ### 0.8.5 (2023-10-28)
 -   Chrysalises will now spawn in the correct position.
