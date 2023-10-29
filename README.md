@@ -20,6 +20,9 @@ cats away from them!
  
 ## Changelog
 
+### 1.0.1 (2023-10-29)
+-   Updated Forge to current recommended version (47.2.0).
+
 ### 1.0.0 (2023-10-28)
 -   First release of the butterfly mod.
 
