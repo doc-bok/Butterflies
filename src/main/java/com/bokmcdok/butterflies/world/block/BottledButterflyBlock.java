@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.world.block;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
 import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;

@@ -21,14 +21,9 @@ import java.util.List;
 public class ButterflyScrollItem extends Item implements ButterflyContainerItem {
 
     public static final String NAME = "butterfly_scroll";
-
+    
     /**
-     * The species of butterfly on this page
-     */
-    private String entityId;
-
-    /**
-     * Comstruction
+     * Construction
      * @param itemProperties The properties of the item.
      */
     public ButterflyScrollItem(Item.Properties itemProperties) {

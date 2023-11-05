@@ -63,9 +63,8 @@ public class ButterflyScrollScreen extends Screen {
      * Creates a close button for the screen.
      */
     protected void createMenuControls() {
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
-            this.onClose();
-        }).bounds(this.width / 2 - 100, 196, 200, 20).build());
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) ->
+                this.onClose()).bounds(this.width / 2 - 100, 196, 200, 20).build());
     }
 
     /**

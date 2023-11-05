@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.event.entity.player;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;

@@ -47,7 +47,7 @@ public interface ButterflyContainerItem {
      * @param stack The item stack to modify
      * @param entityId The type of butterfly
      */
-    public static void setButterfly(ItemStack stack, String entityId) {
+    static void setButterfly(ItemStack stack, String entityId) {
         CompoundTag tag = stack.getOrCreateTag();
         if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
                 !tag.contains(CompoundTagId.ENTITY_ID)) {
