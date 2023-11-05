@@ -52,7 +52,8 @@
   "item.butterflies.buckeye_egg": "Buckeye Butterfly Egg",
 
   "item.butterflies.butterfly_net": "Butterfly Net",
-  "item.butterflies.bottled_butterfly": "Butterfly Bottle",
+  "item.butterflies.bottled_butterfly": "Bottled Butterfly",
+  "item.butterflies.butterfly_scroll": "Butterfly Scroll",
 
   "block.butterflies.bottled_butterfly": "Butterfly Bottle",
 
@@ -69,5 +70,7 @@
   "advancements.butterfly.find_butterfly_egg.title": "Mini Egg",
   "advancements.butterfly.find_butterfly_egg.description": "Find a butterfly egg.",
   "advancements.butterfly.find_all_butterfly_eggs.title": "Basketfull",
-  "advancements.butterfly.find_all_butterfly_eggs.description": "Find all types of butterfly egg"
+  "advancements.butterfly.find_all_butterfly_eggs.description": "Find all types of butterfly egg",
+  "advancements.butterfly.butterfly_scroll.title": "Butterfly Collector",
+  "advancements.butterfly.butterfly_scroll.description": "Create a butterfly scroll"
 }
