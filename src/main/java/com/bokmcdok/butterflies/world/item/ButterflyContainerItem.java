@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -39,5 +40,19 @@ public interface ButterflyContainerItem {
                 .withItalic(true);
         newComponent.setStyle(style);
         components.add(newComponent);
+    }
+
+    /**
+     * Set the butterfly contained in the bottle
+     * @param stack The item stack to modify
+     * @param entityId The type of butterfly
+     */
+    static void setButterfly(ItemStack stack, String entityId) {
+        CompoundTag tag = stack.getOrCreateTag();
+        if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
+                !tag.contains(CompoundTagId.ENTITY_ID)) {
+            tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, ButterflyIds.EntityIdToIndex(entityId));
+            tag.putString(CompoundTagId.ENTITY_ID, entityId);
+        }
     }
 }
