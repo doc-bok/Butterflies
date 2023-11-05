@@ -1,7 +1,9 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.client.gui.screens.ButterflyPageScreen;
+import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
+import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -64,7 +66,10 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (level.isClientSide()) {
-            Minecraft.getInstance().setScreen(new ButterflyPageScreen(/*entityId*/));
+            CompoundTag tag = itemstack.getTag();
+            if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+                Minecraft.getInstance().setScreen(new ButterflyScrollScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA)));
+            }
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
