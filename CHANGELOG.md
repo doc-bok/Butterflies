@@ -119,4 +119,4 @@
 -   Created butterfly entities that can spawn in the world.
 
 ### 0.0.0 (2023-02-01)
--   Basic configuration and setup for the mod.
+- Basic configuration and setup for the mod.

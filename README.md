@@ -18,22 +18,22 @@ If you want to breed the butterflies in this mod, then be sure to keep your
 cats away from them!
 
 ### Latest Release
-- [Download Link](https://github.com/doc-bok/Butterflies/releases/download/1.0.1/butterflies-1.0.1.jar)
+-   [Download Link](https://github.com/doc-bok/Butterflies/releases/download/1.0.1/butterflies-1.0.1.jar)
 
 ### Development Diary
-- [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
+-   [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ### Older Versions
-- [Bok’s Butterflies v1.0.1](https://github.com/doc-bok/Butterflies/releases/tag/1.0.1)
-- [Bok’s Butterflies v1.0.0](https://github.com/doc-bok/Butterflies/releases/tag/1.0.0)
+-   [Bok’s Butterflies v1.0.1](https://github.com/doc-bok/Butterflies/releases/tag/1.0.1)
+-   [Bok’s Butterflies v1.0.0](https://github.com/doc-bok/Butterflies/releases/tag/1.0.0)
 
 ### Source Code
-- [GitHub Repository](https://github.com/doc-bok/Butterflies)
-- [Report a Bug](https://github.com/doc-bok/Butterflies/issues)
+-   [GitHub Repository](https://github.com/doc-bok/Butterflies)
+-   [Report a Bug](https://github.com/doc-bok/Butterflies/issues)
 
 ### Other Locations
-- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-butterflies)
-- [Minecraft Forums](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/3189366-boks-butterflies-v1-0-1)
-- [Modrinth](https://modrinth.com/mod/boks-butterflies/)
-- [Planet Minecraft](https://www.planetminecraft.com/mod/bok-s-butterflies/)
+-   [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-butterflies)
+-   [Minecraft Forums](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/3189366-boks-butterflies-v1-0-1)
+-   [Modrinth](https://modrinth.com/mod/boks-butterflies/)
+-   [Planet Minecraft](https://www.planetminecraft.com/mod/bok-s-butterflies/)
 
