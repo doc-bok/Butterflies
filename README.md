@@ -20,6 +20,9 @@ cats away from them!
  
 ## Changelog
 
+### 1.0.2 (2023-11-06)
+-   Added names to the entities to better support modpacks.
+
 ### 1.0.1 (2023-10-29)
 -   Updated Forge to current recommended version (47.2.0).
 
