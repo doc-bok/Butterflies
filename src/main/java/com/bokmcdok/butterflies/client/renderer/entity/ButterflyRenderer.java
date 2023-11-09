@@ -1,4 +1,4 @@
-package com.bokmcdok.butterflies.renderer.entity;
+package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.model.ButterflyModel;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;

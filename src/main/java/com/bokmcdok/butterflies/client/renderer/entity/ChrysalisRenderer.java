@@ -1,7 +1,7 @@
-package com.bokmcdok.butterflies.renderer.entity;
+package com.bokmcdok.butterflies.client.renderer.entity;
 
-import com.bokmcdok.butterflies.model.CaterpillarModel;
-import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
+import com.bokmcdok.butterflies.model.ChrysalisModel;
+import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,43 +11,35 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * The renderer for the caterpillar entity.
- */
-public class CaterpillarRenderer
-        extends MobRenderer<Caterpillar, CaterpillarModel> {
+public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
 
     /**
-     * Bakes a new model for the renderer
-     * @param context The current rendering context
+     * Construction
+     * @param context The current rendering context.
      */
-    public CaterpillarRenderer(EntityRendererProvider.Context context) {
-        super(
-                context,
-                new CaterpillarModel(
-                        context.bakeLayer(CaterpillarModel.LAYER_LOCATION)),
-                0.05F);
+    public ChrysalisRenderer(EntityRendererProvider.Context context) {
+        super(context, new ChrysalisModel(context.bakeLayer(ChrysalisModel.LAYER_LOCATION)), 0.05F);
     }
 
     /**
-     * Gets the texture to use
-     * @param entity The butterfly entity
-     * @return The texture to use for this entity
+     * Gets the texture to use.
+     * @param entity The  entity.
+     * @return The texture to use for this entity.
      */
     @Override
     @NotNull
-    public ResourceLocation getTextureLocation(@NotNull Caterpillar entity) {
+    public ResourceLocation getTextureLocation(@NotNull Chrysalis entity) {
         return entity.getTexture();
     }
 
     /**
-     * Scale the entity down
-     * @param entity The butterfly entity
-     * @param poses The current entity pose
-     * @param scale The scale that should be applied
+     * Scale the entity down.
+     * @param entity The  entity.
+     * @param poses The current entity pose.
+     * @param scale The scale that should be applied.
      */
     @Override
-    protected void scale(@NotNull Caterpillar entity,
+    protected void scale(@NotNull Chrysalis entity,
                          PoseStack poses,
                          float scale) {
         float s = entity.getScale();
@@ -64,7 +56,7 @@ public class CaterpillarRenderer
      * @param p_115460_ Unknown.
      */
     @Override
-    public void render(@NotNull Caterpillar entity,
+    public void render(@NotNull Chrysalis entity,
                        float p_115456_,
                        float p_115457_,
                        @NotNull PoseStack poseStack,
