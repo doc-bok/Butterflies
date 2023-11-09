@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyIds;
-import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
+import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;

@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
-import com.bokmcdok.butterflies.world.entity.ambient.Caterpillar;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;

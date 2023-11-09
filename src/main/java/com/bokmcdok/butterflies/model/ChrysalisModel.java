@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.ambient.Chrysalis;
+import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
