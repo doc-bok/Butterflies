@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -82,12 +82,11 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                     (int) lookAngle.z);
 
             Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
-            player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-            return InteractionResultHolder.success(stack);
         }
 
-        return super.use(level, player, hand);
+        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+
+        return InteractionResultHolder.success(stack);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.bokmcdok.butterflies.world.entity.ambient;
+package com.bokmcdok.butterflies.world.entity.animal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
