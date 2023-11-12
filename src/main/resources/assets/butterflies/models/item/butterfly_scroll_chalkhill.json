@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "butterflies:item/bottled_butterfly_scroll/butterfly_scroll_chalkhill"
+    "layer0": "butterflies:item/butterfly_scroll/butterfly_scroll_chalkhill"
   }
 }
