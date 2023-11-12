@@ -75,7 +75,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
         float scale = this.getScale();
         poseStack.scale(scale, -scale, -scale);
 
-        RenderType renderType = RenderType.itemEntityTranslucentCull(getTextureLocation(scroll));
+        RenderType renderType = RenderType.entitySmoothCutout(getTextureLocation(scroll));
         VertexConsumer vertexConsumer = buffers.getBuffer(renderType);
         model.renderToBuffer(poseStack, vertexConsumer, overlay, 0, 1.0f, 1.0f, 1.0f, 1.0f);
         poseStack.popPose();
