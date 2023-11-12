@@ -12,14 +12,11 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
@@ -150,7 +147,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     protected void recalculateBoundingBox() {
 
-        //  Direction can actually be null.
+        //  Direction can actually be null even if intellisense says otherwise.
         if (this.direction != null) {
 
             double x = (double) this.pos.getX() + 0.5D - (double) this.direction.getStepX() * 0.46875D;
@@ -167,6 +164,8 @@ public class ButterflyScroll extends HangingEntity {
                 case X -> width = 1.0D;
                 case Y -> height = 1.0D;
                 case Z -> breadth = 1.0D;
+                default -> {
+                }
             }
 
             width /= 32.0D;

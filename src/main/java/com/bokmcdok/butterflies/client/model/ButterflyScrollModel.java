@@ -21,10 +21,22 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(Dist.CLIENT)
 public class ButterflyScrollModel extends Model {
 
+    /**
+     * The root of the model.
+     */
+    private final ModelPart root;
+
+    /**
+     * The layer location to register with Forge.
+     */
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MODID, "butterfly_scroll"), "main");
 
 
+    /**
+     * Defines a simple model for the Butterfly Scroll.
+     * @return A new layer definition.
+     */
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
@@ -39,13 +51,26 @@ public class ButterflyScrollModel extends Model {
         return LayerDefinition.create(meshDefinition, 256, 256);
     }
 
-    private final ModelPart root;
-
+    /**
+     * Construction.
+     * @param root The root of the model.
+     */
     public ButterflyScrollModel(ModelPart root) {
         super(RenderType::entityCutoutNoCull);
         this.root = root.getChild("main");
     }
 
+    /**
+     * Render the model to the specified buffer.
+     * @param poseStack The current translation stack.
+     * @param vertexConsumer The vertices to render.
+     * @param packedLight The current light.
+     * @param packedOverlay The overlay.
+     * @param red Red tint.
+     * @param green Green tint.
+     * @param blue Blue tint.
+     * @param alpha Alpha tint.
+     */
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack,
                                @NotNull VertexConsumer vertexConsumer,
