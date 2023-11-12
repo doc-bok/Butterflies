@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
+import com.bokmcdok.butterflies.client.texture.ButterflyScrollTexture;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -15,29 +16,6 @@ import org.jetbrains.annotations.NotNull;
  */
 @OnlyIn(Dist.CLIENT)
 public class ButterflyScrollScreen extends Screen {
-
-    /**
-     * The location of the screen textures.
-     */
-    public static final ResourceLocation[] TEXTURES =
-            {
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/admiral.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/buckeye.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/cabbage.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/chalkhill.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/clipper.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/common.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/emperor.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/forester.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/glasswing.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/hairstreak.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/heath.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/longwing.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/monarch.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/morpho.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/rainbow.png"),
-                    new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/swallowtail.png")
-            };
 
     private final int butterflyIndex;
 
@@ -77,7 +55,7 @@ public class ButterflyScrollScreen extends Screen {
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
         this.renderBackground(guiGraphics);
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(TEXTURES[this.butterflyIndex], i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(ButterflyScrollTexture.TEXTURES[this.butterflyIndex], i, 2, 0, 0, 192, 192);
         super.render(guiGraphics, x, y, unknown);
     }
 }
