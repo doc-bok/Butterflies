@@ -35,8 +35,8 @@ public class ItemRegistry {
             () -> new BottledButterflyItem(new Item.Properties().stacksTo(1)));
 
     // Butterfly Scroll
-    public static final RegistryObject<Item> BUTTERFLY_SCROLL = INSTANCE.register(ButterflyScrollItem.NAME,
-            () -> new ButterflyScrollItem(new Item.Properties()));
+    public static final RegistryObject<Item> BUTTERFLY_SCROLL =
+            INSTANCE.register(ButterflyScrollItem.NAME, ButterflyScrollItem::new);
 
     // Butterfly Eggs - Eggs that will eventually hatch into a caterpillar.
     public static final RegistryObject<Item> ADMIRAL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,

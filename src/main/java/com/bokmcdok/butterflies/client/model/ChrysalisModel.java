@@ -1,4 +1,4 @@
-package com.bokmcdok.butterflies.model;
+package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
@@ -14,11 +14,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Model for a chrysalis entity.
  */
+@OnlyIn(Dist.CLIENT)
 public class ChrysalisModel extends EntityModel<Chrysalis> {
 
     // Holds the layers for the model.

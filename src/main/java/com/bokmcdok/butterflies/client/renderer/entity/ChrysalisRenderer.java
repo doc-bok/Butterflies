@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
-import com.bokmcdok.butterflies.model.ChrysalisModel;
+import com.bokmcdok.butterflies.client.model.ChrysalisModel;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

@@ -1,15 +1,18 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.model.ButterflyModel;
-import com.bokmcdok.butterflies.model.CaterpillarModel;
-import com.bokmcdok.butterflies.model.ChrysalisModel;
+import com.bokmcdok.butterflies.client.model.ButterflyModel;
+import com.bokmcdok.butterflies.client.model.ButterflyScrollModel;
+import com.bokmcdok.butterflies.client.model.CaterpillarModel;
+import com.bokmcdok.butterflies.client.model.ChrysalisModel;
+import com.bokmcdok.butterflies.client.renderer.entity.ButterflyScrollRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.ButterflyRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.CaterpillarRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.ChrysalisRenderer;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
+import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -31,11 +34,23 @@ import net.minecraftforge.registries.RegistryObject;
 @Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityTypeRegistry {
 
-    // An instance of a deferred registry we use to register our entity types.
+    /**
+     * An instance of a deferred registry we use to register our entity types.
+     */
     public static final DeferredRegister<EntityType<?>> INSTANCE =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MODID);
 
-    // Register the butterflies.
+    /**
+     * The Butterfly Scroll enitity.
+     */
+    public static final RegistryObject<EntityType<ButterflyScroll>> BUTTERFLY_SCROLL =
+            INSTANCE.register(ButterflyScroll.NAME, () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                    .sized(1.0f, 1.0f)
+                    .build(ButterflyScroll.NAME));
+
+    /**
+     * Register the butterflies.
+     */
     public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_MORPHO =
             INSTANCE.register(Butterfly.MORPHO_NAME, () -> EntityType.Builder.of(Butterfly::createMorphoButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
@@ -285,6 +300,8 @@ public class EntityTypeRegistry {
     @SubscribeEvent
     public static void registerEntityRenders(final EntityRenderersEvent.RegisterRenderers event)
     {
+        event.registerEntityRenderer(BUTTERFLY_SCROLL.get(), ButterflyScrollRenderer::new);
+
         event.registerEntityRenderer(BUTTERFLY_MORPHO.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_COMMON.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_FORESTER.get(), ButterflyRenderer::new);
@@ -698,5 +715,6 @@ public class EntityTypeRegistry {
         event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
         event.registerLayerDefinition(CaterpillarModel.LAYER_LOCATION, CaterpillarModel::createBodyLayer);
         event.registerLayerDefinition(ChrysalisModel.LAYER_LOCATION, ChrysalisModel::createBodyLayer);
+        event.registerLayerDefinition(ButterflyScrollModel.LAYER_LOCATION, ButterflyScrollModel::createBodyLayer);
     }
 }
