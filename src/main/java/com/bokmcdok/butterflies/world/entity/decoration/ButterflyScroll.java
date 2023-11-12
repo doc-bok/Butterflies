@@ -1,26 +1,29 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
-import net.minecraft.network.protocol.game.ClientboundBundlePacket;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * An entity representing a hanging butterfly scroll.
@@ -77,7 +80,9 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        // TODO: Drop the correct scroll.
+        ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_SCROLL.get());
+        ButterflyContainerItem.setButterfly(stack, "butterflies:" + ButterflyIds.IndexToEntityId(this.butterflyIndex));
+        this.spawnAtLocation(stack);
     }
 
     /**
@@ -91,6 +96,10 @@ public class ButterflyScroll extends HangingEntity {
         return new ClientboundAddEntityPacket(this, data, this.getPos());
     }
 
+    /**
+     * Get the index of the butterfly.
+     * @return The butterfly index.
+     */
     public int getButterflyIndex() {
         return this.butterflyIndex;
     }
@@ -182,6 +191,10 @@ public class ButterflyScroll extends HangingEntity {
         this.setDirection(Direction.from3DDataValue(direction));
     }
 
+    /**
+     * Set the butterfly index.
+     * @param index The index of the butterfly.
+     */
     public void setButterflyIndex(int index) {
         this.butterflyIndex = index;
     }
