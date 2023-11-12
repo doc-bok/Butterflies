@@ -15,6 +15,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -69,6 +70,8 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             CompoundTag tag = itemstack.getTag();
             if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
                 Minecraft.getInstance().setScreen(new ButterflyScrollScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA)));
+            } else {
+                replaceWithPaper(player, hand, itemstack);
             }
         }
 
@@ -84,36 +87,44 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     @Override
     @NotNull
     public InteractionResult useOn(@NotNull UseOnContext context) {
-        BlockPos clickedPos = context.getClickedPos();
-        Direction clickedFace = context.getClickedFace();
-        BlockPos blockPos = clickedPos.relative(clickedFace);
         Player player = context.getPlayer();
-        ItemStack itemInHand = context.getItemInHand();
+        if (player != null) {
 
-        if (player != null && !this.mayPlace(player, clickedFace, itemInHand, blockPos)) {
-            return InteractionResult.FAIL;
-        } else {
-            Level level = context.getLevel();
-            ButterflyScroll butterflyScroll = new ButterflyScroll(level, blockPos, clickedFace);
+            BlockPos clickedPos = context.getClickedPos();
+            Direction clickedFace = context.getClickedFace();
+            BlockPos blockPos = clickedPos.relative(clickedFace);
+            ItemStack itemInHand = context.getItemInHand();
 
-            CompoundTag tag = itemInHand.getTag();
-            if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-                butterflyScroll.setButterflyIndex(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
-            }
-
-            if (butterflyScroll.survives()) {
-                if (!level.isClientSide) {
-                    butterflyScroll.playPlacementSound();
-                    level.gameEvent(player, GameEvent.ENTITY_PLACE, butterflyScroll.position());
-                    level.addFreshEntity(butterflyScroll);
-                }
-
-                itemInHand.shrink(1);
-                return InteractionResult.sidedSuccess(level.isClientSide);
+            if (!this.mayPlace(player, clickedFace, itemInHand, blockPos)) {
+                return InteractionResult.FAIL;
             } else {
-                return InteractionResult.CONSUME;
+                Level level = context.getLevel();
+                CompoundTag tag = itemInHand.getTag();
+                if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+                    ButterflyScroll butterflyScroll = new ButterflyScroll(level, blockPos, clickedFace);
+
+                    butterflyScroll.setButterflyIndex(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
+
+                    if (butterflyScroll.survives()) {
+                        if (!level.isClientSide) {
+                            butterflyScroll.playPlacementSound();
+                            level.gameEvent(player, GameEvent.ENTITY_PLACE, butterflyScroll.position());
+                            level.addFreshEntity(butterflyScroll);
+                        }
+
+                        itemInHand.shrink(1);
+                        return InteractionResult.sidedSuccess(level.isClientSide);
+                    } else {
+                        return InteractionResult.CONSUME;
+                    }
+                } else {
+                    replaceWithPaper(player, context.getHand(), itemInHand);
+                    return InteractionResult.sidedSuccess(level.isClientSide);
+                }
             }
         }
+
+        return super.useOn(context);
     }
 
     /**
@@ -126,5 +137,17 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
      */
     protected boolean mayPlace(Player player, Direction direction, ItemStack itemStack, BlockPos blockPos) {
         return !direction.getAxis().isVertical() && player.mayUseItemAt(blockPos, direction, itemStack);
+    }
+
+    /**
+     * For replacing empty scrolls with paper.
+     * @param player The interacting player.
+     * @param hand The hand holding the scrolls.
+     * @param stack The scroll item stack.
+     */
+    private void replaceWithPaper(@NotNull Player player,
+                                  @NotNull InteractionHand hand,
+                                  ItemStack stack) {
+        player.setItemInHand(hand, new ItemStack(Items.PAPER, stack.getCount()));
     }
 }

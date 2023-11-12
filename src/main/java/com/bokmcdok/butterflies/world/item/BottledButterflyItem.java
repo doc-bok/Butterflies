@@ -82,12 +82,11 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                     (int) lookAngle.z);
 
             Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
-            player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-            return InteractionResultHolder.success(stack);
         }
 
-        return super.use(level, player, hand);
+        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+
+        return InteractionResultHolder.success(stack);
     }
 
     /**
