@@ -1,7 +1,10 @@
 ## Changelog
 
+### 1.1.1  (2023-11-12)
+-   Butterfly scrolls can now be placed around the world.
+
 ### 1.1.0  (2023-11-05)
--   Added butterfly scrolls
+-   Added butterfly scrolls.
 
 ### 1.0.2 (2023-11-06)
 -   Added names to the entities to better support modpacks.

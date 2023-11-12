@@ -10,9 +10,11 @@
  into new butterflies within the world.
 
 Butterflies can be caught or released using a butterfly net. Once caught, they
-can be bottled and placed in the world as decorative objects. They can also be
-pinned to a piece of paper to create a scroll where you can look at the
-butterfly in detail.
+can be bottled and placed in the world as decorative objects. 
+
+They can also be pinned to a piece of paper to create a scroll where you can
+look at the butterfly in detail. Unfortunately this kills the butterfly. These
+scrolls can also be placed around your world as decoration. 
 
 If you want to breed the butterflies in this mod, then be sure to keep your
 cats away from them!
