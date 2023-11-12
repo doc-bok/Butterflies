@@ -80,21 +80,21 @@ public class ButterflyScroll extends HangingEntity {
     }
 
     /**
-     * Get the width of the scroll.
-     * @return The width of the scroll.
-     */
-    @Override
-    public int getWidth() {
-        return 16;
-    }
-
-    /**
      * Get the height of the scroll.
      * @return The height of the scroll.
      */
     @Override
     public int getHeight() {
         return 21;
+    }
+
+    /**
+     * Get the width of the scroll.
+     * @return The width of the scroll.
+     */
+    @Override
+    public int getWidth() {
+        return 16;
     }
 
     /**
