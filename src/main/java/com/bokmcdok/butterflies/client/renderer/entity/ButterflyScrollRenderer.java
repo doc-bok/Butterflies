@@ -48,7 +48,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
     @Override
     @NotNull
     public ResourceLocation getTextureLocation(@NotNull ButterflyScroll scroll) {
-        return ButterflyScrollTexture.TEXTURES[12];
+        return ButterflyScrollTexture.TEXTURES[scroll.getButterflyIndex()];
     }
 
     /**

@@ -12,7 +12,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -98,8 +97,8 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             ButterflyScroll butterflyScroll = new ButterflyScroll(level, blockPos, clickedFace);
 
             CompoundTag tag = itemInHand.getTag();
-            if (tag != null) {
-                EntityType.updateCustomEntityTag(level, player, butterflyScroll, tag);
+            if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+                butterflyScroll.setButterflyIndex(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
             }
 
             if (butterflyScroll.survives()) {

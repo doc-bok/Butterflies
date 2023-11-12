@@ -1,12 +1,14 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundBundlePacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +19,9 @@ import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An entity representing a hanging butterfly scroll.
  */
@@ -26,6 +31,11 @@ public class ButterflyScroll extends HangingEntity {
      * The name used for registration.
      */
     public static final String NAME = "butterfly_scroll";
+
+    /**
+     * The index of the butterfly on the scroll.
+     */
+    private int butterflyIndex;
 
     /**
      * Create method, used to register the entity.
@@ -58,6 +68,7 @@ public class ButterflyScroll extends HangingEntity {
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putByte("Facing", (byte)this.direction.get3DDataValue());
+        tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, this.butterflyIndex);
     }
 
     /**
@@ -76,7 +87,12 @@ public class ButterflyScroll extends HangingEntity {
     @NotNull
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return new ClientboundAddEntityPacket(this, this.direction.get3DDataValue(), this.getPos());
+        int data = ((this.direction.get3DDataValue() & 0xFFFF) << 16) | (butterflyIndex & 0xFFFF);
+        return new ClientboundAddEntityPacket(this, data, this.getPos());
+    }
+
+    public int getButterflyIndex() {
+        return this.butterflyIndex;
     }
 
     /**
@@ -113,6 +129,10 @@ public class ButterflyScroll extends HangingEntity {
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         this.setDirection(Direction.from3DDataValue(tag.getByte("Facing")));
+
+        if (tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+            this.butterflyIndex = tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA);
+        }
     }
 
     /**
@@ -155,7 +175,15 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
-        this.setDirection(Direction.from3DDataValue(packet.getData()));
+
+        int data = packet.getData();;
+        int direction = ((data >> 16) & 0xFFFF);
+        this.butterflyIndex = (data & 0xFFFF);
+        this.setDirection(Direction.from3DDataValue(direction));
+    }
+
+    public void setButterflyIndex(int index) {
+        this.butterflyIndex = index;
     }
 
     /**
