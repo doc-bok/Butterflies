@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -305,6 +306,7 @@ public class Caterpillar extends DirectionalCreature {
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
                 caterpillar.setSurfaceBlock(spawnPosition);
+                caterpillar.setAge(-24000);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -355,13 +357,12 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
-     * The main update loop for the entity.
+     * Override so that the bounding box isn't recalculated for "babies".
+     * @param age The age of the entity.
      */
     @Override
-    public void tick() {
-        super.tick();
-        
-        //  TODO: ?
+    public void setAge(int age) {
+        this.age = age;
     }
 
     /**
@@ -505,7 +506,7 @@ public class Caterpillar extends DirectionalCreature {
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
             // Spawn Chrysalis.
-            if (this.getAge() > 24000 && this.random.nextInt(0, 15) == 0) {
+            if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
                 String encodeId = this.getEncodeId();
                 if (encodeId != null) {
                     String[] splitEncodeId = encodeId.split("_");
