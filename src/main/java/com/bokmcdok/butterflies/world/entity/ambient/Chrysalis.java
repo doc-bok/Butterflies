@@ -269,7 +269,7 @@ public class Chrysalis extends DirectionalCreature {
                 chrysalis.setYRot(yRotation);
                 chrysalis.setSurfaceDirection(surfaceDirection);
                 chrysalis.setSurfaceBlock(spawnBlock);
-                caterpillar.setAge(-24000);
+                chrysalis.setAge(-24000);
 
                 chrysalis.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(spawnBlock),
