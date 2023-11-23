@@ -20,6 +20,9 @@ cats away from them!
  
 ## Changelog
 
+### 1.0.4 (2023-11-23)
+-   Fixed crash when hovering over full butterfly net.
+
 ### 1.0.3 (2023-11-22)
 -   Fixed caterpillar and chrysalis aging.
 
