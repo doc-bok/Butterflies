@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.BlockPos;

@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -281,6 +281,24 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
+     * Reduce the size of the caterpillar - they are small!
+     * @return The new size of the caterpillar.
+     */
+    @Override
+    public float getScale() {
+        float scale = (float)getAge() / -24000.0f;
+        scale *= 0.06;
+        scale += 0.1;
+        ResourceLocation location = EntityType.getKey(this.getType());
+        ButterflyData.Size size = ButterflyData.GetSize(location);
+        switch (size) {
+            case SMALL -> { return 0.7f * scale; }
+            case LARGE ->{ return 1.28f * scale; }
+            default -> { return scale; }
+        }
+    }
+
+    /**
      * Overrides how an entity handles triggers such as tripwires and pressure
      * plates. Chrysalises aren't heavy enough to trigger either.
      *
@@ -347,8 +365,8 @@ public class Chrysalis extends DirectionalCreature {
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyIds.LocationToIndex(location);
-            ResourceLocation newLocation = ButterflyIds.IndexToButterflyLocation(index);
+            int index = ButterflyData.LocationToIndex(location);
+            ResourceLocation newLocation = ButterflyData.IndexToButterflyLocation(index);
             if (newLocation != null) {
                 Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
                 this.remove(RemovalReason.DISCARDED);
@@ -375,15 +393,6 @@ public class Chrysalis extends DirectionalCreature {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.NONE;
-    }
-
-    /**
-     * Reduce the size of the caterpillar - they are small!
-     * @return The new size of the caterpillar.
-     */
-    @Override
-    public float getScale() {
-        return 0.1f;
     }
 
     /**
