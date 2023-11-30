@@ -18,7 +18,8 @@
     "minecraft:windswept_savanna",
     "minecraft:meadow",
     "minecraft:mushroom_fields",
-    "minecraft:lush_caves"
+    "minecraft:lush_caves",
+    "minecraft:cherry_grove"
   ],
   "spawners":
   {

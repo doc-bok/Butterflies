@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.1.3  (2023-11-30)
+-   Butterflies can now spawn in cherry groves.
+
 ### 1.1.2  (2023-11-30)
 -   Use ResourceLocations instead of strings for spawning butterfly entities.
 
