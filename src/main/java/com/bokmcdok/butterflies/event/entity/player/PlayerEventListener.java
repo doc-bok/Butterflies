@@ -65,7 +65,7 @@ public class PlayerEventListener {
      * @param event The interaction event
      */
     @SubscribeEvent
-    public static void OnEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
+    public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
         if (event.getTarget() instanceof Cat cat) {
             Player player = event.getEntity();
             InteractionHand hand = event.getHand();
