@@ -9,6 +9,12 @@
 ### 1.1.0  (2023-11-05)
 -   Added butterfly scrolls.
 
+### 1.0.4 (2023-11-23)
+-   Fixed crash when hovering over full butterfly net.
+
+### 1.0.3 (2023-11-22)
+-   Fixed caterpillar and chrysalis aging.
+
 ### 1.0.2 (2023-11-06)
 -   Added names to the entities to better support modpacks.
 
