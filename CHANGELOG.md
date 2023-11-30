@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.1.2  (2023-11-30)
+-   Use ResourceLocations instead of strings for spawning butterfly entities.
+
 ### 1.1.1  (2023-11-12)
 -   Butterfly scrolls can now be placed around the world.
 

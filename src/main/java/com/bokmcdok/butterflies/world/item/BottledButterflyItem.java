@@ -7,6 +7,7 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -73,6 +74,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+            ResourceLocation location = new ResourceLocation(entityId);
 
             //  Move the target position slightly in front of the player
             Vec3 lookAngle = player.getLookAngle();
@@ -81,7 +83,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                     (int) lookAngle.y + 1,
                     (int) lookAngle.z);
 
-            Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
+            Butterfly.spawn(player.level(), location, positionToSpawn, false);
         }
 
         player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
@@ -112,12 +114,13 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         if (result == InteractionResult.CONSUME && entityId != null) {
             Level level = context.getLevel();
             BlockPos position = context.getClickedPos();
+            ResourceLocation location = new ResourceLocation(entityId);
 
-            Butterfly.spawn(player.level(), entityId, position, true);
+            Butterfly.spawn(player.level(), location, position, true);
 
             BlockEntity blockEntity = level.getBlockEntity(position);
             if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
-                butterflyBlockEntity.setEntityId(entityId);
+                butterflyBlockEntity.setEntityLocation(location);
             }
         }
 
