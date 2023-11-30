@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -175,7 +175,7 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
 
         // Try and get the species index and save this state as well.
         if (location != null) {
-            int index = ButterflyIds.LocationToIndex(location);
+            int index = ButterflyData.locationToIndex(location);
             if (index >= 0) {
                 newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
             }

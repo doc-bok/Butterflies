@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -34,13 +35,6 @@ import javax.annotation.Nullable;
  */
 public class Butterfly extends Animal {
 
-    //  Represents the possible sizes of the butterflies.
-    public enum Size {
-        SMALL,
-        MEDIUM,
-        LARGE
-    }
-
     // The unique IDs that are used to reference a butterfly entity.
     public static final String MORPHO_NAME = "morpho";
     public static final String FORESTER_NAME = "forester";
@@ -64,9 +58,6 @@ public class Butterfly extends Animal {
 
     // Helper constant to modify butterfly speed
     private static final double BUTTERFLY_SPEED = 0.0325d;
-
-    //  The size of the butterfly
-    private final Size size;
 
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
@@ -113,7 +104,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_admiral.png",
                 entityType, level);
     }
@@ -129,7 +119,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_buckeye.png",
                 entityType, level);
     }
@@ -145,7 +134,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.LARGE,
                 "butterfly_cabbage.png",
                 entityType, level);
     }
@@ -161,7 +149,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.SMALL,
                 "butterfly_chalkhill.png",
                 entityType, level);
     }
@@ -177,7 +164,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.LARGE,
                 "butterfly_clipper.png",
                 entityType, level);
     }
@@ -193,7 +179,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_common.png",
                 entityType, level);
     }
@@ -209,7 +194,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.LARGE,
                 "butterfly_emperor.png",
                 entityType, level);
     }
@@ -225,7 +209,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_forester.png",
                 entityType, level);
     }
@@ -241,7 +224,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_glasswing.png",
                 entityType, level);
     }
@@ -257,7 +239,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_hairstreak.png",
                 entityType, level);
     }
@@ -273,7 +254,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.SMALL,
                 "butterfly_heath.png",
                 entityType, level);
     }
@@ -289,7 +269,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.SMALL,
                 "butterfly_longwing.png",
                 entityType, level);
     }
@@ -305,7 +284,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.MEDIUM,
                 "butterfly_monarch.png",
                 entityType, level);
     }
@@ -321,7 +299,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.LARGE,
                 "butterfly_morpho.png", entityType, level);
     }
 
@@ -336,7 +313,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.SMALL,
                 "butterfly_rainbow.png",
                 entityType, level);
     }
@@ -352,7 +328,6 @@ public class Butterfly extends Animal {
             EntityType<? extends Butterfly> entityType,
             Level level) {
         return new Butterfly(
-                Size.LARGE,
                 "butterfly_swallowtail.png",
                 entityType, level);
     }
@@ -360,7 +335,7 @@ public class Butterfly extends Animal {
     /**
      * Used to spawn a butterfly into the world.
      * @param level The current level.
-     * @param entityId The type of butterfly to release.
+     * @param location The type of butterfly to release.
      * @param position The current position of the player.
      */
     public static void spawn(Level level,
@@ -402,18 +377,15 @@ public class Butterfly extends Animal {
 
     /**
      * The default constructor.
-     * @param size The size of the butterfly.
      * @param texture The texture the butterfly should use.
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
      */
-    public Butterfly(Size size,
-                     String texture,
+    public Butterfly(String texture,
                      EntityType<? extends Butterfly> entityType,
                      Level level) {
         super(entityType, level);
 
-        this.size = size;
         this.texture = new ResourceLocation(
                 "butterflies:textures/entity/butterfly/" + texture);
     }
@@ -605,6 +577,8 @@ public class Butterfly extends Animal {
      * @return A scale value based on the butterfly's size.
      */
     public float getScale() {
+        ResourceLocation location = EntityType.getKey(this.getType());
+        ButterflyData.Size size = ButterflyData.getSize(location);
         switch (size) {
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }

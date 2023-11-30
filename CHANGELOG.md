@@ -1,7 +1,10 @@
 ## Changelog
 
-### 1.1.3  (2023-11-30)
+### 1.1.4  (2023-11-30)
 -   Butterflies can now spawn in cherry groves.
+
+### 1.1.3  (2023-11-30)
+-   Caterpillar and chrysalis size is now affected by species and age.
 
 ### 1.1.2  (2023-11-30)
 -   Use ResourceLocations instead of strings for spawning butterfly entities.
