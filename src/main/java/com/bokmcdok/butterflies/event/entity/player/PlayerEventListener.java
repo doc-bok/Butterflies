@@ -1,8 +1,7 @@
 package com.bokmcdok.butterflies.event.entity.player;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +39,7 @@ public class PlayerEventListener {
                     // Always use Entity ID for compatibility with butterfly net.
                     if (tag.contains(CompoundTagId.ENTITY_ID)) {
                         ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                        index = ButterflyIds.LocationToIndex(location);
+                        index = ButterflyData.locationToIndex(location);
                     }
 
                     if (index >= 0) {

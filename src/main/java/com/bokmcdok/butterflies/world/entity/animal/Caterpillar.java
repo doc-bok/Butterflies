@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -317,6 +316,24 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Reduce the size of the caterpillar - they are small!
+     * @return The new size of the caterpillar.
+     */
+    @Override
+    public float getScale() {
+        float scale = (float)getAge() / -24000.0f;
+        scale *= 0.04;
+        scale += 0.08;
+        ResourceLocation location = EntityType.getKey(this.getType());
+        ButterflyData.Size size = ButterflyData.getSize(location);
+        switch (size) {
+            case SMALL -> { return 0.7f * scale; }
+            case LARGE ->{ return 1.28f * scale; }
+            default -> { return scale; }
+        }
+    }
+
+    /**
      * Overrides how an entity handles triggers such as tripwires and pressure
      * plates. Caterpillars aren't heavy enough to trigger either.
      * @return Always TRUE, so caterpillars ignore block triggers.
@@ -505,8 +522,8 @@ public class Caterpillar extends DirectionalCreature {
             // Spawn Chrysalis.
             if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
                 ResourceLocation location = EntityType.getKey(this.getType());
-                int index = ButterflyIds.LocationToIndex(location);
-                ResourceLocation newLocation = ButterflyIds.IndexToChrysalisLocation(index);
+                int index = ButterflyData.locationToIndex(location);
+                ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
                 if (newLocation != null) {
                     Chrysalis.spawn((ServerLevel) this.level(),
                                     newLocation,
@@ -539,15 +556,6 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
-    }
-
-    /**
-     * Reduce the size of the caterpillar - they are small!
-     * @return The new size of the caterpillar.
-     */
-    @Override
-    public float getScale() {
-        return 0.1f;
     }
 
     /**

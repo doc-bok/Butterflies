@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -49,7 +49,7 @@ public interface ButterflyContainerItem {
      * @param index The butterfly index
      */
     static void setButterfly(ItemStack stack, int index) {
-        ResourceLocation location = ButterflyIds.IndexToButterflyLocation(index);
+        ResourceLocation location = ButterflyData.indexToButterflyLocation(index);
         if (location != null) {
             CompoundTag tag = stack.getOrCreateTag();
             if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
