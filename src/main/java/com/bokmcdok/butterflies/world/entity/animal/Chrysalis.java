@@ -269,6 +269,7 @@ public class Chrysalis extends DirectionalCreature {
                 chrysalis.setYRot(yRotation);
                 chrysalis.setSurfaceDirection(surfaceDirection);
                 chrysalis.setSurfaceBlock(spawnBlock);
+                chrysalis.setAge(-24000);
 
                 chrysalis.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(spawnBlock),
@@ -312,6 +313,15 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
+     * Override so that the bounding box isn't recalculated for "babies".
+     * @param age The age of the entity.
+     */
+    @Override
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    /**
      * Construction
      *
      * @param texture    The texture used to render the entity.
@@ -337,7 +347,7 @@ public class Chrysalis extends DirectionalCreature {
         }
 
         // Spawn Butterfly.
-        if (this.getAge() > 24000 && this.random.nextInt(0, 15) == 0) {
+        if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             String encodeId = this.getEncodeId();
             if (encodeId != null) {
                 String[] splitEncodeId = encodeId.split("_");
