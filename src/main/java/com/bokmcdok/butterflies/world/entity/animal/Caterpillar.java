@@ -325,7 +325,7 @@ public class Caterpillar extends DirectionalCreature {
         scale *= 0.04;
         scale += 0.08;
         ResourceLocation location = EntityType.getKey(this.getType());
-        ButterflyData.Size size = ButterflyData.GetSize(location);
+        ButterflyData.Size size = ButterflyData.getSize(location);
         switch (size) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
@@ -522,8 +522,8 @@ public class Caterpillar extends DirectionalCreature {
             // Spawn Chrysalis.
             if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
                 ResourceLocation location = EntityType.getKey(this.getType());
-                int index = ButterflyData.LocationToIndex(location);
-                ResourceLocation newLocation = ButterflyData.IndexToChrysalisLocation(index);
+                int index = ButterflyData.locationToIndex(location);
+                ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
                 if (newLocation != null) {
                     Chrysalis.spawn((ServerLevel) this.level(),
                                     newLocation,

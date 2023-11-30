@@ -28,7 +28,7 @@ public interface ButterflyEggHolder {
             @NotNull BlockState blockState,
             @NotNull List<ItemStack> items) {
         int index = blockState.getValue(ButterflyLeavesBlock.BUTTERFLY_INDEX);
-        ResourceLocation location = ButterflyData.IndexToButterflyEggLocation(index);
+        ResourceLocation location = ButterflyData.indexToButterflyEggLocation(index);
         if (location != null) {
             Item entry = ForgeRegistries.ITEMS.getValue(location);
             if (entry != null) {
@@ -87,7 +87,7 @@ public interface ButterflyEggHolder {
 
                 Caterpillar.spawn(
                         level,
-                        ButterflyData.IndexToCaterpillarLocation(index),
+                        ButterflyData.indexToCaterpillarLocation(index),
                         spawnPosition,
                         direction);
 

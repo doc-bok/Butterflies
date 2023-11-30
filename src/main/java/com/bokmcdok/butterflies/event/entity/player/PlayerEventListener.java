@@ -39,7 +39,7 @@ public class PlayerEventListener {
                     // Always use Entity ID for compatibility with butterfly net.
                     if (tag.contains(CompoundTagId.ENTITY_ID)) {
                         ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                        index = ButterflyData.LocationToIndex(location);
+                        index = ButterflyData.locationToIndex(location);
                     }
 
                     if (index >= 0) {

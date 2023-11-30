@@ -3,9 +3,7 @@ package com.bokmcdok.butterflies.world;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.resources.ResourceLocation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +23,14 @@ public class ButterflyData {
     private static final Map<Integer, String> INDEX_TO_ENTITY_ID_MAP = new HashMap<>();
     private static final Map<Integer, Size> BUTTERFLY_SIZES = new HashMap<>();
 
-    private static void AddButterfly(int index, String species, Size size)
+    /**
+     * Create new butterfly data.
+     * @param index The butterfly index.
+     * @param species The species of the butterfly. Used to generate resource
+     *                locations.
+     * @param size The size of the butterfly.
+     */
+    private static void addButterfly(int index, String species, Size size)
     {
         ENTITY_ID_TO_INDEX_MAP.put(species, index);
         INDEX_TO_ENTITY_ID_MAP.put(index, species);
@@ -33,22 +38,22 @@ public class ButterflyData {
     }
 
     static {
-        AddButterfly(0, "admiral", Size.MEDIUM);
-        AddButterfly(1, "buckeye", Size.MEDIUM);
-        AddButterfly(2, "cabbage", Size.LARGE);
-        AddButterfly(3, "chalkhill", Size.SMALL);
-        AddButterfly(4, "clipper", Size.LARGE);
-        AddButterfly(5, "common", Size.MEDIUM);
-        AddButterfly(6, "emperor", Size.LARGE);
-        AddButterfly(7, "forester", Size.MEDIUM);
-        AddButterfly(8, "glasswing", Size.MEDIUM);
-        AddButterfly(9, "hairstreak", Size.MEDIUM);
-        AddButterfly(10, "heath", Size.SMALL);
-        AddButterfly(11, "longwing", Size.SMALL);
-        AddButterfly(12, "monarch", Size.MEDIUM);
-        AddButterfly(13, "morpho", Size.LARGE);
-        AddButterfly(14, "rainbow", Size.SMALL);
-        AddButterfly(15, "swallowtail", Size.LARGE);
+        addButterfly(0, "admiral", Size.MEDIUM);
+        addButterfly(1, "buckeye", Size.MEDIUM);
+        addButterfly(2, "cabbage", Size.LARGE);
+        addButterfly(3, "chalkhill", Size.SMALL);
+        addButterfly(4, "clipper", Size.LARGE);
+        addButterfly(5, "common", Size.MEDIUM);
+        addButterfly(6, "emperor", Size.LARGE);
+        addButterfly(7, "forester", Size.MEDIUM);
+        addButterfly(8, "glasswing", Size.MEDIUM);
+        addButterfly(9, "hairstreak", Size.MEDIUM);
+        addButterfly(10, "heath", Size.SMALL);
+        addButterfly(11, "longwing", Size.SMALL);
+        addButterfly(12, "monarch", Size.MEDIUM);
+        addButterfly(13, "morpho", Size.LARGE);
+        addButterfly(14, "rainbow", Size.SMALL);
+        addButterfly(15, "swallowtail", Size.LARGE);
     }
 
     /**
@@ -56,7 +61,7 @@ public class ButterflyData {
      * @param entityId The entity ID to convert.
      * @return The index of said entity ID.
      */
-    private static int EntityIdToIndex(String entityId) {
+    private static int entityIdToIndex(String entityId) {
         if (entityId.contains(":")) {
             String[] splits = entityId.split(":");
             entityId = splits[1];
@@ -80,8 +85,8 @@ public class ButterflyData {
      * @return The butterfly index for the butterfly species, or -1 if not
      *         found.
      */
-    public static int LocationToIndex(ResourceLocation location) {
-        return EntityIdToIndex(location.toString());
+    public static int locationToIndex(ResourceLocation location) {
+        return entityIdToIndex(location.toString());
     }
 
     /**
@@ -89,7 +94,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the butterfly.
      */
-    public static ResourceLocation IndexToButterflyLocation(int index) {
+    public static ResourceLocation indexToButterflyLocation(int index) {
         if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
             return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index));
         }
@@ -102,7 +107,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the butterfly egg.
      */
-    public static ResourceLocation IndexToButterflyEggLocation(int index) {
+    public static ResourceLocation indexToButterflyEggLocation(int index) {
         if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
             return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_egg");
         }
@@ -115,7 +120,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the caterpillar.
      */
-    public static ResourceLocation IndexToCaterpillarLocation(int index) {
+    public static ResourceLocation indexToCaterpillarLocation(int index) {
         if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
             return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_caterpillar");
         }
@@ -128,7 +133,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the chrysalis.
      */
-    public static ResourceLocation IndexToChrysalisLocation(int index) {
+    public static ResourceLocation indexToChrysalisLocation(int index) {
         if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
             return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_chrysalis");
         }
@@ -136,7 +141,7 @@ public class ButterflyData {
         return null;
     }
 
-    public static Size GetSize(int index) {
+    public static Size getSize(int index) {
         if (BUTTERFLY_SIZES.containsKey(index)) {
             return BUTTERFLY_SIZES.get(index);
         }
@@ -144,8 +149,8 @@ public class ButterflyData {
         return Size.MEDIUM;
     }
 
-    public static Size GetSize(ResourceLocation location) {
-        int index = LocationToIndex(location);
-        return GetSize(index);
+    public static Size getSize(ResourceLocation location) {
+        int index = locationToIndex(location);
+        return getSize(index);
     }
 }

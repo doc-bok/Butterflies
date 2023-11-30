@@ -578,7 +578,7 @@ public class Butterfly extends Animal {
      */
     public float getScale() {
         ResourceLocation location = EntityType.getKey(this.getType());
-        ButterflyData.Size size = ButterflyData.GetSize(location);
+        ButterflyData.Size size = ButterflyData.getSize(location);
         switch (size) {
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }
