@@ -364,14 +364,12 @@ public class Butterfly extends Animal {
      * @param position The current position of the player.
      */
     public static void spawn(Level level,
-                             String entityId,
+                             ResourceLocation location,
                              BlockPos position,
                              Boolean placed) {
         if (level instanceof ServerLevel) {
-
-            ResourceLocation key = new ResourceLocation(entityId);
             EntityType<?> entityType =
-                    ForgeRegistries.ENTITY_TYPES.getValue(key);
+                    ForgeRegistries.ENTITY_TYPES.getValue(location);
             if (entityType != null) {
                 Entity entity = entityType.create(level);
                 if (entity instanceof Butterfly butterfly) {
@@ -577,7 +575,7 @@ public class Butterfly extends Animal {
             ButterflyLeavesBlock.swapLeavesBlock(
                     level,
                     position,
-                    this.getEncodeId());
+                    EntityType.getKey(this.getType()));
         }
     }
 

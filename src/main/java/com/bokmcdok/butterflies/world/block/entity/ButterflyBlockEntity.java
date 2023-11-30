@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,7 @@ public class ButterflyBlockEntity extends BlockEntity {
     public static final String NAME = "butterfly_block";
 
     // The ID of the butterfly contained in this block.
-    private String entityId = "";
+    private ResourceLocation entityId = null;
 
     @NotNull
     public static ButterflyBlockEntity CreateBottledButterflyBlockEntity(BlockPos position,
@@ -40,7 +41,7 @@ public class ButterflyBlockEntity extends BlockEntity {
      * Accessor for the entity ID.
      * @return The entity ID.
      */
-    public String getEntityId() {
+    public ResourceLocation getEntityLocation() {
         return entityId;
     }
 
@@ -48,7 +49,7 @@ public class ButterflyBlockEntity extends BlockEntity {
      * Set the entity ID of the butterfly contained in this block.
      * @param entityId The entity ID of the butterfly contained in this block.
      */
-    public void setEntityId(String entityId) {
+    public void setEntityLocation(ResourceLocation entityId) {
         this.entityId = entityId;
     }
 
@@ -60,7 +61,7 @@ public class ButterflyBlockEntity extends BlockEntity {
     public void load(@NotNull CompoundTag tag) {
         super.load(tag);
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
-            this.entityId = tag.getString(CompoundTagId.ENTITY_ID);
+            this.entityId = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
         }
     }
 
@@ -71,6 +72,6 @@ public class ButterflyBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putString(CompoundTagId.ENTITY_ID, entityId);
+        tag.putString(CompoundTagId.ENTITY_ID, entityId.toString());
     }
 }

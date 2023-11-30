@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyIds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -260,20 +261,17 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
-     * Spawns a caterpillar into the world.
-     * @param entityId The type of caterpillar to release.
-     * @param position The current position of the player.
+     * Spawns a caterpillar at the specified position.
+     * @param level The current level.
+     * @param location The resource location of the caterpillar to spawn.
+     * @param position The position to spawn the caterpillar.
+     * @param direction The direction of "up" for the caterpillar.
      */
     public static void spawn(ServerLevel level,
-                             String entityId,
+                             ResourceLocation location,
                              BlockPos position,
                              Direction direction) {
-
-        ResourceLocation key = new ResourceLocation(
-                ButterfliesMod.MODID,
-                entityId + "_caterpillar");
-
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(key);
+        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Caterpillar caterpillar) {
@@ -506,11 +504,12 @@ public class Caterpillar extends DirectionalCreature {
 
             // Spawn Chrysalis.
             if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-                String encodeId = this.getEncodeId();
-                if (encodeId != null) {
-                    String[] splitEncodeId = encodeId.split("_");
+                ResourceLocation location = EntityType.getKey(this.getType());
+                int index = ButterflyIds.LocationToIndex(location);
+                ResourceLocation newLocation = ButterflyIds.IndexToChrysalisLocation(index);
+                if (newLocation != null) {
                     Chrysalis.spawn((ServerLevel) this.level(),
-                                    splitEncodeId[0],
+                                    newLocation,
                                     this.getSurfaceBlock(),
                                     this.getSurfaceDirection(),
                                     this.position(),

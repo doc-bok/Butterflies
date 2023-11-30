@@ -1,7 +1,9 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +34,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
 
-    private final String entityId;
+    private final ResourceLocation location;
 
     /**
      * Construction
@@ -40,7 +42,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
      */
     public ButterflyEggItem(String entityId, Item.Properties properties) {
         super(properties);
-        this.entityId = entityId;
+        this.location = new ResourceLocation(ButterfliesMod.MODID, entityId);
     }
 
     /**
@@ -54,7 +56,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
         Level level = context.getLevel();
         BlockPos position = context.getClickedPos();
 
-        if (ButterflyLeavesBlock.swapLeavesBlock(level, position, this.entityId)) {
+        if (ButterflyLeavesBlock.swapLeavesBlock(level, position, this.location)) {
             ItemStack itemStack = context.getItemInHand();
             itemStack.shrink(1);
             return InteractionResult.sidedSuccess(level.isClientSide);

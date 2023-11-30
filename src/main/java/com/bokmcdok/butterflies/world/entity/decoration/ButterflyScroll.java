@@ -78,7 +78,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void dropItem(@Nullable Entity entity) {
         ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_SCROLL.get());
-        ButterflyContainerItem.setButterfly(stack, "butterflies:" + ButterflyIds.IndexToEntityId(this.butterflyIndex));
+        ButterflyContainerItem.setButterfly(stack, this.butterflyIndex);
         this.spawnAtLocation(stack);
     }
 
@@ -145,9 +145,10 @@ public class ButterflyScroll extends HangingEntity {
      * Recalculate the bounding box of the scroll.
      */
     @Override
+    @SuppressWarnings("ConstantConditions")
     protected void recalculateBoundingBox() {
 
-        //  Direction can actually be null even if intellisense says otherwise.
+        //  Direction can actually be null here.
         if (this.direction != null) {
 
             double x = (double) this.pos.getX() + 0.5D - (double) this.direction.getStepX() * 0.46875D;
