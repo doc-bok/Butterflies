@@ -31,6 +31,7 @@ cats away from them!
 
 ### Source Code
 -   [GitHub Repository](https://github.com/doc-bok/Butterflies)
+-   [Changelog](https://github.com/doc-bok/Butterflies/blob/main/CHANGELOG.md)
 -   [Report a Bug](https://github.com/doc-bok/Butterflies/issues)
 
 ### Other Locations
