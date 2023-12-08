@@ -1,12 +1,15 @@
 ## Changelog
 
-### 1.1.6 (2023-12-08)
+### 1.3.1 (2023-12-08)
+-   Fixed rendering of butterfly scrolls
+
+### 1.3.0 (2023-12-08)
 -   Modified sizes of butterflies so they're closer to reality
 -   Some butterflies will now move faster
 -   Butterflies now have varying rarities
 -   Caterpillars, chrysalises, and butterflies now have varying lifespans
 
-### 1.1.5  (2023-11-30)
+### 1.2.0  (2023-11-30)
 -   Snow.
 
 ### 1.1.4  (2023-11-30)
