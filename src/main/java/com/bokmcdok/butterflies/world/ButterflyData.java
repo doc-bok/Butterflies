@@ -36,7 +36,6 @@ public class ButterflyData {
         private Entry(String entityId,
                               Size size,
                               Speed speed,
-                              int eggLifespan,
                               int caterpillarLifespan,
                               int chrysalisLifespan,
                               int butterflyLifespan) {
@@ -44,20 +43,18 @@ public class ButterflyData {
             this.size = size;
             this.speed = speed;
 
-            this.eggLifespan = eggLifespan;
             this.caterpillarLifespan = caterpillarLifespan * 2;
             this.chrysalisLifespan = chrysalisLifespan;
             this.butterflyLifespan = butterflyLifespan * 2;
         }
 
-        public String entityId;
-        public Size size;
-        public Speed speed;
+        public final String entityId;
+        public final Size size;
+        public final Speed speed;
 
-        public int eggLifespan;
-        public int caterpillarLifespan;
-        public int chrysalisLifespan;
-        public int butterflyLifespan;
+        public final int caterpillarLifespan;
+        public final int chrysalisLifespan;
+        public final int butterflyLifespan;
     }
 
     //  Helper maps.
@@ -75,7 +72,6 @@ public class ButterflyData {
                                      String species,
                                      Size size,
                                      Speed speed,
-                                     int eggLifespan,
                                      int caterpillarLifespan,
                                      int chrysalisLifespan,
                                      int butterflyLifespan)
@@ -84,7 +80,6 @@ public class ButterflyData {
         BUTTERFLY_ENTRIES.put(index, new Entry(species,
                                                size,
                                                speed,
-                                               eggLifespan,
                                                caterpillarLifespan,
                                                chrysalisLifespan,
                                                butterflyLifespan));
@@ -92,37 +87,37 @@ public class ButterflyData {
 
     static {
         addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
         addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
         addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
         addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST,
-                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
         addButterfly(4, "clipper", Size.LARGE, Speed.FAST,
-                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
+                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
         addButterfly(5, "common", Size.SMALL, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
         addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
         addButterfly(7, "forester", Size.SMALL, Speed.MODERATE,
-                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
         addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
         addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
         addButterfly(10, "heath", Size.SMALL, Speed.MODERATE,
-                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
         addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
         addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
         addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE,
-                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
         addButterfly(14, "rainbow", Size.SMALL, Speed.FAST,
-                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
         addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
     }
 
     /**
