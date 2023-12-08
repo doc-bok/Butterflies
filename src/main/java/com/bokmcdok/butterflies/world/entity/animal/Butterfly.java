@@ -399,12 +399,13 @@ public class Butterfly extends Animal {
         ButterflyData.Entry data = ButterflyData.getEntry(location);
         this.size = data.size;
 
-        ButterflyData.Speed speed = data.speed;
-        if (speed == ButterflyData.Speed.FAST) {
+        if (data.speed == ButterflyData.Speed.FAST) {
             this.speed = BUTTERFLY_SPEED * 1.2d;
         } else {
             this.speed = BUTTERFLY_SPEED;
         }
+
+        setAge(-data.butterflyLifespan);
     }
 
     /**
@@ -462,6 +463,15 @@ public class Butterfly extends Animal {
     @Override
     public boolean isPushable() {
         return false;
+    }
+
+    /**
+     * Override so that the bounding box isn't recalculated for "babies".
+     * @param age The age of the entity.
+     */
+    @Override
+    public void setAge(int age) {
+        this.age = age;
     }
 
     /**
@@ -565,6 +575,14 @@ public class Butterfly extends Animal {
                     level,
                     position,
                     EntityType.getKey(this.getType()));
+        }
+
+        // If the caterpillar gets too old it will die. This won't happen if it
+        // has been set to persistent (e.g. by using a nametag).
+        if (!this.isPersistenceRequired() &&
+                this.getAge() >= 0 &&
+                this.random.nextInt(0, 15) == 0) {
+            this.kill();
         }
     }
 

@@ -24,6 +24,7 @@ public class ButterflyData {
         FAST
     }
 
+    // Constants representing the base life spans of each butterfly cycle.
     public static int LIFESPAN_SHORT = 24000 * 2;
     public static int LIFESPAN_MEDIUM = 24000 * 4;
     public static int LIFESPAN_LONG = 24000 * 7;
@@ -44,7 +45,7 @@ public class ButterflyData {
             this.speed = speed;
 
             this.eggLifespan = eggLifespan;
-            this.caterpillarLifespan = caterpillarLifespan *2;
+            this.caterpillarLifespan = caterpillarLifespan * 2;
             this.chrysalisLifespan = chrysalisLifespan;
             this.butterflyLifespan = butterflyLifespan * 2;
         }
