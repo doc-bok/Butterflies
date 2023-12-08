@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,6 +49,9 @@ public class Caterpillar extends DirectionalCreature {
     @Nullable
     private Vec3 targetPosition;
 
+    // The size of the caterpillar.
+    private final ButterflyData.Size size;
+
     /**
      * Create a Morpho butterfly
      * @param entityType The type of the entity.
@@ -58,7 +62,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createMorphoCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_morpho.png", entityType, level);
+        return new Caterpillar("morpho", entityType, level);
     }
 
     /**
@@ -71,7 +75,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createForesterCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_forester.png", entityType, level);
+        return new Caterpillar("forester", entityType, level);
     }
 
     /**
@@ -84,7 +88,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createCommonCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_common.png", entityType, level);
+        return new Caterpillar("common", entityType, level);
     }
 
     /**
@@ -97,7 +101,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createEmperorCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_emperor.png", entityType, level);
+        return new Caterpillar("emperor", entityType, level);
     }
 
     /**
@@ -110,7 +114,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createHairstreakCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_hairstreak.png", entityType, level);
+        return new Caterpillar("hairstreak", entityType, level);
     }
 
     /**
@@ -123,7 +127,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createRainbowCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_rainbow.png", entityType, level);
+        return new Caterpillar("rainbow", entityType, level);
     }
 
     /**
@@ -136,7 +140,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createHeathCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_heath.png", entityType, level);
+        return new Caterpillar("heath", entityType, level);
     }
 
     /**
@@ -149,7 +153,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createGlasswingCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_glasswing.png", entityType, level);
+        return new Caterpillar("glasswing", entityType, level);
     }
 
     /**
@@ -162,7 +166,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createChalkhillCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_chalkhill.png", entityType, level);
+        return new Caterpillar("chalkhill", entityType, level);
     }
 
     /**
@@ -176,7 +180,7 @@ public class Caterpillar extends DirectionalCreature {
             EntityType<? extends Caterpillar> entityType,
             Level level) {
         return new Caterpillar(
-                "caterpillar_swallowtail.png",
+                "swallowtail",
                 entityType,
                 level);
     }
@@ -191,7 +195,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createMonarchCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_monarch.png", entityType, level);
+        return new Caterpillar("monarch", entityType, level);
     }
 
     /**
@@ -204,7 +208,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createCabbageCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_cabbage.png", entityType, level);
+        return new Caterpillar("cabbage", entityType, level);
     }
 
     /**
@@ -217,7 +221,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createAdmiralCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_admiral.png", entityType, level);
+        return new Caterpillar("admiral", entityType, level);
     }
 
     /**
@@ -230,7 +234,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createLongwingCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_longwing.png", entityType, level);
+        return new Caterpillar("longwing", entityType, level);
     }
 
     /**
@@ -243,7 +247,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createClipperCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_clipper.png", entityType, level);
+        return new Caterpillar("clipper", entityType, level);
     }
 
     /**
@@ -256,7 +260,7 @@ public class Caterpillar extends DirectionalCreature {
     public static Caterpillar createBuckeyeCaterpillar(
             EntityType<? extends Caterpillar> entityType,
             Level level) {
-        return new Caterpillar("caterpillar_buckeye.png", entityType, level);
+        return new Caterpillar("buckeye", entityType, level);
     }
 
     /**
@@ -302,7 +306,7 @@ public class Caterpillar extends DirectionalCreature {
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
                 caterpillar.setSurfaceBlock(spawnPosition);
-                caterpillar.setAge(-24000);
+                //caterpillar.setAge(-24000);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -324,9 +328,8 @@ public class Caterpillar extends DirectionalCreature {
         float scale = (float)getAge() / -24000.0f;
         scale *= 0.04;
         scale += 0.08;
-        ResourceLocation location = EntityType.getKey(this.getType());
-        ButterflyData.Size size = ButterflyData.getSize(location);
-        switch (size) {
+
+        switch (this.size) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
             default -> { return scale; }
@@ -381,13 +384,19 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a caterpillar entity.
+     * @param species The species of the butterfly
      * @param entityType The entity type.
      * @param level The level we are creating the entity in.
      */
-    protected Caterpillar(String texture,
+    protected Caterpillar(String species,
                           EntityType<? extends Caterpillar> entityType,
                           Level level) {
-        super("textures/entity/caterpillar/" + texture, entityType, level);
+        super("textures/entity/caterpillar/caterpillar_" + species + ".png", entityType, level);
+
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        this.size = data.size;
+        setAge(-data.caterpillarLifespan);
     }
 
     /**

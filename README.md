@@ -1,13 +1,16 @@
 # Butterflies
- This mod adds butterflies with a full life cycle to the world of Minecraft. It
- features 16 butterfly species, mostly based on real-life butterflies but a
- couple of them are purely fantasy butterflies.
+This mod adds butterflies with a full life cycle to the world of Minecraft. It
+features 16 butterfly species, mostly based on real-life butterflies but a
+couple of them are purely fantasy butterflies.
 
- Butterflies will lay eggs in leaves if they get close to them, and if a player
- collects these eggs they can plant them in other leaf blocks. The eggs will
- eventually hatch into caterpillars. After living on the leaves for a short
- time, a caterpillar will eventually build a chrysalis. These will then hatch
- into new butterflies within the world.
+Butterflies will lay eggs in leaves if they get close to them, and if a player
+collects these eggs they can plant them in other leaf blocks. The eggs will
+eventually hatch into caterpillars. After living on the leaves for a short
+time, a caterpillar will eventually build a chrysalis. These will then hatch
+into new butterflies within the world.
+
+Each butterfly species has it's own size, speed, rarity and lifespan. Some will
+be larger, some will move faster, some will live longer than others.
 
 Butterflies can be caught or released using a butterfly net. Once caught, they
 can be bottled and placed in the world as decorative objects. 

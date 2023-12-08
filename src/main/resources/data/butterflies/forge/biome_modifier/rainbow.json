@@ -24,8 +24,8 @@
   "spawners":
   {
     "type": "butterflies:rainbow",
-    "weight": 10,
-    "minCount": 3,
-    "maxCount": 5
+    "weight": 5,
+    "minCount": 2,
+    "maxCount": 4
   }
 }

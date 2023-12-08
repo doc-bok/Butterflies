@@ -13,8 +13,8 @@
   "spawners":
   {
     "type": "butterflies:forester",
-    "weight": 10,
-    "minCount": 3,
-    "maxCount": 5
+    "weight": 2,
+    "minCount": 1,
+    "maxCount": 3
   }
 }

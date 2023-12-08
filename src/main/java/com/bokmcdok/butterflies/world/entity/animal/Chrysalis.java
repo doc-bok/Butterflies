@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,6 +36,9 @@ public class Chrysalis extends DirectionalCreature {
     public static final String BUCKEYE_NAME = "buckeye_chrysalis";
     public static final String CLIPPER_NAME = "clipper_chrysalis";
 
+    // The size of the caterpillar.
+    private final ButterflyData.Size size;
+
     /**
      * Create a Admiral chrysalis.
      *
@@ -45,7 +49,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createAdmiral(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_admiral.png", entityType, level);
+        return new Chrysalis("admiral", entityType, level);
     }
 
     /**
@@ -58,7 +62,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createBuckeye(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_buckeye.png", entityType, level);
+        return new Chrysalis("buckeye", entityType, level);
     }
 
     /**
@@ -71,7 +75,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createCabbage(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_cabbage.png", entityType, level);
+        return new Chrysalis("cabbage", entityType, level);
     }
 
     /**
@@ -84,7 +88,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createChalkhill(EntityType<? extends Chrysalis> entityType,
                                             Level level) {
-        return new Chrysalis("chrysalis_chalkhill.png", entityType, level);
+        return new Chrysalis("chalkhill", entityType, level);
     }
 
     /**
@@ -97,7 +101,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createClipper(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_clipper.png", entityType, level);
+        return new Chrysalis("clipper", entityType, level);
     }
 
     /**
@@ -110,7 +114,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createCommon(EntityType<? extends Chrysalis> entityType,
                                          Level level) {
-        return new Chrysalis("chrysalis_common.png", entityType, level);
+        return new Chrysalis("common", entityType, level);
     }
 
     /**
@@ -123,7 +127,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createEmperor(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_emperor.png", entityType, level);
+        return new Chrysalis("emperor", entityType, level);
     }
 
     /**
@@ -136,7 +140,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createForester(EntityType<? extends Chrysalis> entityType,
                                            Level level) {
-        return new Chrysalis("chrysalis_forester.png", entityType, level);
+        return new Chrysalis("forester", entityType, level);
     }
 
     /**
@@ -149,7 +153,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createGlasswing(EntityType<? extends Chrysalis> entityType,
                                             Level level) {
-        return new Chrysalis("chrysalis_glasswing.png", entityType, level);
+        return new Chrysalis("glasswing", entityType, level);
     }
 
     /**
@@ -162,7 +166,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createHairstreak(EntityType<? extends Chrysalis> entityType,
                                              Level level) {
-        return new Chrysalis("chrysalis_hairstreak.png", entityType, level);
+        return new Chrysalis("hairstreak", entityType, level);
     }
 
     /**
@@ -175,7 +179,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createHeath(EntityType<? extends Chrysalis> entityType,
                                         Level level) {
-        return new Chrysalis("chrysalis_heath.png", entityType, level);
+        return new Chrysalis("heath", entityType, level);
     }
 
     /**
@@ -188,7 +192,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createLongwing(EntityType<? extends Chrysalis> entityType,
                                            Level level) {
-        return new Chrysalis("chrysalis_longwing.png", entityType, level);
+        return new Chrysalis("longwing", entityType, level);
     }
 
     /**
@@ -201,7 +205,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createMonarch(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_monarch.png", entityType, level);
+        return new Chrysalis("monarch", entityType, level);
     }
 
     /**
@@ -214,7 +218,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createMorpho(EntityType<? extends Chrysalis> entityType,
                                          Level level) {
-        return new Chrysalis("chrysalis_morpho.png", entityType, level);
+        return new Chrysalis("morpho", entityType, level);
     }
 
     /**
@@ -227,7 +231,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createRainbow(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
-        return new Chrysalis("chrysalis_rainbow.png", entityType, level);
+        return new Chrysalis("rainbow", entityType, level);
     }
 
     /**
@@ -240,7 +244,7 @@ public class Chrysalis extends DirectionalCreature {
     @NotNull
     public static Chrysalis createSwallowtail(EntityType<? extends Chrysalis> entityType,
                                               Level level) {
-        return new Chrysalis("chrysalis_swallowtail.png", entityType, level);
+        return new Chrysalis("swallowtail", entityType, level);
     }
 
     /**
@@ -267,7 +271,6 @@ public class Chrysalis extends DirectionalCreature {
                 chrysalis.setYRot(yRotation);
                 chrysalis.setSurfaceDirection(surfaceDirection);
                 chrysalis.setSurfaceBlock(spawnBlock);
-                chrysalis.setAge(-24000);
 
                 chrysalis.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(spawnBlock),
@@ -289,9 +292,8 @@ public class Chrysalis extends DirectionalCreature {
         float scale = (float)getAge() / -24000.0f;
         scale *= 0.06;
         scale += 0.1;
-        ResourceLocation location = EntityType.getKey(this.getType());
-        ButterflyData.Size size = ButterflyData.getSize(location);
-        switch (size) {
+
+        switch (this.size) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
             default -> { return scale; }
@@ -339,15 +341,19 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Construction
-     *
-     * @param texture    The texture used to render the entity.
+     * @param species The species of the butterfly
      * @param entityType The type of the entity.
      * @param level      The current level.
      */
-    protected Chrysalis(String texture,
+    protected Chrysalis(String species,
                         EntityType<? extends Chrysalis> entityType,
                         Level level) {
-        super("textures/entity/chrysalis/" + texture, entityType, level);
+        super("textures/entity/chrysalis/chrysalis_" + species + ".png", entityType, level);
+
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        this.size = data.size;
+        setAge(-data.chrysalisLifespan);
     }
 
     /**

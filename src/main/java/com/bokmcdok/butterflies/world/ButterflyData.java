@@ -18,10 +18,57 @@ public class ButterflyData {
         LARGE
     }
 
+    // Represents the speed of a butterfly.
+    public enum Speed {
+        MODERATE,
+        FAST
+    }
+
+    // Constants representing the base life spans of each butterfly cycle.
+    public static int LIFESPAN_SHORT = 24000 * 2;
+    public static int LIFESPAN_MEDIUM = 24000 * 4;
+    public static int LIFESPAN_LONG = 24000 * 7;
+
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
-    private static final Map<Integer, String> INDEX_TO_ENTITY_ID_MAP = new HashMap<>();
-    private static final Map<Integer, Size> BUTTERFLY_SIZES = new HashMap<>();
+    private static final Map<Integer, Entry> BUTTERFLY_ENTRIES = new HashMap<>();
+
+    /**
+     * Class to hold all the data for a specific butterfly.
+     */
+    public static class Entry {
+        public final String entityId;
+        public final Size size;
+        public final Speed speed;
+
+        public final int caterpillarLifespan;
+        public final int chrysalisLifespan;
+        public final int butterflyLifespan;
+
+        /**
+         * Construction
+         * @param entityId The id of the butterfly species.
+         * @param size The size of the butterfly.
+         * @param speed The speed of the butterfly.
+         * @param caterpillarLifespan How long it remains in the caterpillar stage.
+         * @param chrysalisLifespan How long it takes for a chrysalis to hatch.
+         * @param butterflyLifespan How long it lives as a butterfly.
+         */
+        private Entry(String entityId,
+                      Size size,
+                      Speed speed,
+                      int caterpillarLifespan,
+                      int chrysalisLifespan,
+                      int butterflyLifespan) {
+            this.entityId = entityId;
+            this.size = size;
+            this.speed = speed;
+
+            this.caterpillarLifespan = caterpillarLifespan * 2;
+            this.chrysalisLifespan = chrysalisLifespan;
+            this.butterflyLifespan = butterflyLifespan * 2;
+        }
+    }
 
     /**
      * Create new butterfly data.
@@ -30,30 +77,56 @@ public class ButterflyData {
      *                locations.
      * @param size The size of the butterfly.
      */
-    private static void addButterfly(int index, String species, Size size)
+    private static void addButterfly(int index,
+                                     String species,
+                                     Size size,
+                                     Speed speed,
+                                     int caterpillarLifespan,
+                                     int chrysalisLifespan,
+                                     int butterflyLifespan)
     {
         ENTITY_ID_TO_INDEX_MAP.put(species, index);
-        INDEX_TO_ENTITY_ID_MAP.put(index, species);
-        BUTTERFLY_SIZES.put(index, size);
+        BUTTERFLY_ENTRIES.put(index, new Entry(species,
+                                               size,
+                                               speed,
+                                               caterpillarLifespan,
+                                               chrysalisLifespan,
+                                               butterflyLifespan));
     }
 
     static {
-        addButterfly(0, "admiral", Size.MEDIUM);
-        addButterfly(1, "buckeye", Size.MEDIUM);
-        addButterfly(2, "cabbage", Size.LARGE);
-        addButterfly(3, "chalkhill", Size.SMALL);
-        addButterfly(4, "clipper", Size.LARGE);
-        addButterfly(5, "common", Size.MEDIUM);
-        addButterfly(6, "emperor", Size.LARGE);
-        addButterfly(7, "forester", Size.MEDIUM);
-        addButterfly(8, "glasswing", Size.MEDIUM);
-        addButterfly(9, "hairstreak", Size.MEDIUM);
-        addButterfly(10, "heath", Size.SMALL);
-        addButterfly(11, "longwing", Size.SMALL);
-        addButterfly(12, "monarch", Size.MEDIUM);
-        addButterfly(13, "morpho", Size.LARGE);
-        addButterfly(14, "rainbow", Size.SMALL);
-        addButterfly(15, "swallowtail", Size.LARGE);
+        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
+        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST,
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(4, "clipper", Size.LARGE, Speed.FAST,
+                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
+        addButterfly(5, "common", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
+        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
+        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST,
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
     }
 
     /**
@@ -80,6 +153,19 @@ public class ButterflyData {
     }
 
     /**
+     * Converts an index to an entity ID.
+     * @param index The index to convert to an entity ID.
+     * @return The entity ID string.
+     */
+    private static String indexToEntityId(int index) {
+        if (BUTTERFLY_ENTRIES.containsKey(index)) {
+            return BUTTERFLY_ENTRIES.get(index).entityId;
+        }
+
+        return null;
+    }
+
+    /**
      * Converts a resource location to a butterfly index.
      * @param location The resource location to convert.
      * @return The butterfly index for the butterfly species, or -1 if not
@@ -95,8 +181,9 @@ public class ButterflyData {
      * @return The resource location of the butterfly.
      */
     public static ResourceLocation indexToButterflyLocation(int index) {
-        if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
-            return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index));
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId);
         }
 
         return null;
@@ -108,8 +195,9 @@ public class ButterflyData {
      * @return The resource location of the butterfly egg.
      */
     public static ResourceLocation indexToButterflyEggLocation(int index) {
-        if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
-            return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_egg");
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
         }
 
         return null;
@@ -121,8 +209,9 @@ public class ButterflyData {
      * @return The resource location of the caterpillar.
      */
     public static ResourceLocation indexToCaterpillarLocation(int index) {
-        if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
-            return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_caterpillar");
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
         }
 
         return null;
@@ -134,23 +223,34 @@ public class ButterflyData {
      * @return The resource location of the chrysalis.
      */
     public static ResourceLocation indexToChrysalisLocation(int index) {
-        if (INDEX_TO_ENTITY_ID_MAP.containsKey(index)) {
-            return new ResourceLocation(ButterfliesMod.MODID, INDEX_TO_ENTITY_ID_MAP.get(index) + "_chrysalis");
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
         }
 
         return null;
     }
 
-    public static Size getSize(int index) {
-        if (BUTTERFLY_SIZES.containsKey(index)) {
-            return BUTTERFLY_SIZES.get(index);
+    /**
+     * Get butterfly data by index.
+     * @param index The butterfly index.
+     * @return The butterfly entry.
+     */
+    public static Entry getEntry(int index) {
+        if (BUTTERFLY_ENTRIES.containsKey(index)) {
+            return BUTTERFLY_ENTRIES.get(index);
         }
 
-        return Size.MEDIUM;
+        return null;
     }
 
-    public static Size getSize(ResourceLocation location) {
+    /**
+     * Get butterfly data by resource location.
+     * @param location The resource location of the butterfly.
+     * @return The butterfly entry.
+     */
+    public static Entry getEntry(ResourceLocation location) {
         int index = locationToIndex(location);
-        return getSize(index);
+        return getEntry(index);
     }
 }
