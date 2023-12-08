@@ -271,7 +271,6 @@ public class Chrysalis extends DirectionalCreature {
                 chrysalis.setYRot(yRotation);
                 chrysalis.setSurfaceDirection(surfaceDirection);
                 chrysalis.setSurfaceBlock(spawnBlock);
-                chrysalis.setAge(-24000);
 
                 chrysalis.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(spawnBlock),
@@ -349,11 +348,12 @@ public class Chrysalis extends DirectionalCreature {
     protected Chrysalis(String species,
                         EntityType<? extends Chrysalis> entityType,
                         Level level) {
-        super("butterflies:textures/entity/butterfly/chrysalis_" + species + ".png", entityType, level);
+        super("textures/entity/chrysalis/chrysalis_" + species + ".png", entityType, level);
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData.Entry data = ButterflyData.getEntry(location);
         this.size = data.size;
+        setAge(-data.chrysalisLifespan);
     }
 
     /**

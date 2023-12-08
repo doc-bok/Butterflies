@@ -306,7 +306,7 @@ public class Caterpillar extends DirectionalCreature {
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
                 caterpillar.setSurfaceBlock(spawnPosition);
-                caterpillar.setAge(-24000);
+                //caterpillar.setAge(-24000);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -391,11 +391,12 @@ public class Caterpillar extends DirectionalCreature {
     protected Caterpillar(String species,
                           EntityType<? extends Caterpillar> entityType,
                           Level level) {
-        super("butterflies:textures/entity/butterfly/caterpillar_" + species + ".png", entityType, level);
+        super("textures/entity/caterpillar/caterpillar_" + species + ".png", entityType, level);
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData.Entry data = ButterflyData.getEntry(location);
         this.size = data.size;
+        setAge(-data.caterpillarLifespan);
     }
 
     /**

@@ -25,7 +25,7 @@ public class ButterflyData {
     }
 
     public static int LIFESPAN_SHORT = 24000 * 2;
-    public static int LIFESPAN_MEDIUM = 24000 * 5;
+    public static int LIFESPAN_MEDIUM = 24000 * 4;
     public static int LIFESPAN_LONG = 24000 * 7;
 
     /**
