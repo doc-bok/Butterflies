@@ -37,7 +37,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
      * @return Around 12%.
      */
     public float getScale() {
-        return 0.123f;
+        return 0.088f;//0.123f;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
     {
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(scroll.getDirection().get2DDataValue() * -90));
-        poseStack.translate(0.5D, -0.5D, 0.0D);
+        poseStack.translate(0.31D, -0.31D, -0.075D);
 
         float scale = this.getScale();
         poseStack.scale(scale, -scale, -scale);

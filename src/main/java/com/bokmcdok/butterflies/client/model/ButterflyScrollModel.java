@@ -41,12 +41,12 @@ public class ButterflyScrollModel extends Model {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();
 
-        partDefinition.addOrReplaceChild(
-                "main",
+
+        partDefinition.addOrReplaceChild("main",
                 CubeListBuilder.create()
                         .texOffs(26, 8)
-                        .addBox(-129.0F, -165.0F, -1.0F, 130.0F, 165.0F, 0.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 24.0F, 0.0F));
+                        .addBox(-128.0F, -165.0F, 0.0F, 128.0F, 165.0F, 0.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(8.0F, 24.0F, -8.0F));
 
         return LayerDefinition.create(meshDefinition, 256, 256);
     }

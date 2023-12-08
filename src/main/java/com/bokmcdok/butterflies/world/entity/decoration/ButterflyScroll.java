@@ -106,7 +106,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public int getHeight() {
-        return 21;
+        return 14;
     }
 
     /**
@@ -115,7 +115,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public int getWidth() {
-        return 16;
+        return 10;
     }
 
     /**
@@ -184,7 +184,7 @@ public class ButterflyScroll extends HangingEntity {
     public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
         super.recreateFromPacket(packet);
 
-        int data = packet.getData();;
+        int data = packet.getData();
         int direction = ((data >> 16) & 0xFFFF);
         this.butterflyIndex = (data & 0xFFFF);
         this.setDirection(Direction.from3DDataValue(direction));
