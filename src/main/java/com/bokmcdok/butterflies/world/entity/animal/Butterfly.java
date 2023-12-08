@@ -68,10 +68,10 @@ public class Butterfly extends Animal {
     @Nullable private BlockPos targetPosition;
 
     // The size of the butterfly.
-    private ButterflyData.Size size;
+    private final ButterflyData.Size size;
 
     // The speed of the butterfly.
-    private double speed;
+    private final double speed;
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -396,13 +396,14 @@ public class Butterfly extends Animal {
         this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        this.size = data.size;
 
-        this.size = ButterflyData.getSize(location);
-
-        this.speed = BUTTERFLY_SPEED;
-        ButterflyData.Speed speed = ButterflyData.getSpeed(location);
+        ButterflyData.Speed speed = data.speed;
         if (speed == ButterflyData.Speed.FAST) {
-            this.speed *= 1.2d;
+            this.speed = BUTTERFLY_SPEED * 1.2d;
+        } else {
+            this.speed = BUTTERFLY_SPEED;
         }
     }
 

@@ -18,26 +18,50 @@ public class ButterflyData {
         LARGE
     }
 
+    // Represents the speed of a butterfly.
     public enum Speed {
         MODERATE,
         FAST
     }
 
-    private static class ButterflyEntry {
-        public ButterflyEntry(String entityId, Size size, Speed speed) {
+    public static int LIFESPAN_SHORT = 24000 * 2;
+    public static int LIFESPAN_MEDIUM = 24000 * 5;
+    public static int LIFESPAN_LONG = 24000 * 7;
+
+    /**
+     * Class to hold all the data for a specific butterfly.
+     */
+    public static class Entry {
+        private Entry(String entityId,
+                              Size size,
+                              Speed speed,
+                              int eggLifespan,
+                              int caterpillarLifespan,
+                              int chrysalisLifespan,
+                              int butterflyLifespan) {
             this.entityId = entityId;
             this.size = size;
             this.speed = speed;
+
+            this.eggLifespan = eggLifespan;
+            this.caterpillarLifespan = caterpillarLifespan *2;
+            this.chrysalisLifespan = chrysalisLifespan;
+            this.butterflyLifespan = butterflyLifespan * 2;
         }
 
         public String entityId;
         public Size size;
         public Speed speed;
+
+        public int eggLifespan;
+        public int caterpillarLifespan;
+        public int chrysalisLifespan;
+        public int butterflyLifespan;
     }
 
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
-    private static final Map<Integer, ButterflyEntry> BUTTERFLY_ENTRIES = new HashMap<>();
+    private static final Map<Integer, Entry> BUTTERFLY_ENTRIES = new HashMap<>();
 
     /**
      * Create new butterfly data.
@@ -46,29 +70,58 @@ public class ButterflyData {
      *                locations.
      * @param size The size of the butterfly.
      */
-    private static void addButterfly(int index, String species, Size size, Speed speed)
+    private static void addButterfly(int index,
+                                     String species,
+                                     Size size,
+                                     Speed speed,
+                                     int eggLifespan,
+                                     int caterpillarLifespan,
+                                     int chrysalisLifespan,
+                                     int butterflyLifespan)
     {
         ENTITY_ID_TO_INDEX_MAP.put(species, index);
-        BUTTERFLY_ENTRIES.put(index, new ButterflyEntry(species, size, speed));
+        BUTTERFLY_ENTRIES.put(index, new Entry(species,
+                                               size,
+                                               speed,
+                                               eggLifespan,
+                                               caterpillarLifespan,
+                                               chrysalisLifespan,
+                                               butterflyLifespan));
     }
 
     static {
-        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST);
-        addButterfly(4, "clipper", Size.LARGE, Speed.FAST);
-        addButterfly(5, "common", Size.SMALL, Speed.MODERATE);
-        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE);
-        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE);
-        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE);
-        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE);
-        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE);
-        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE);
-        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST);
-        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE);
+        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
+        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST,
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(4, "clipper", Size.LARGE, Speed.FAST,
+                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
+        addButterfly(5, "common", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
+        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
+        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
+        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
+        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST,
+                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
+        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE,
+                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
     }
 
     /**
@@ -174,48 +227,25 @@ public class ButterflyData {
     }
 
     /**
-     * Get the size of the butterfly by index.
+     * Get butterfly data by index.
      * @param index The butterfly index.
-     * @return The size of the butterfly.
+     * @return The butterfly entry.
      */
-    public static Size getSize(int index) {
+    public static Entry getEntry(int index) {
         if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index).size;
+            return BUTTERFLY_ENTRIES.get(index);
         }
 
-        return Size.MEDIUM;
+        return null;
     }
 
     /**
-     * Get the size of the butterfly by its resource location.
+     * Get butterfly data by resource location.
      * @param location The resource location of the butterfly.
-     * @return The size of the butterfly.
+     * @return The butterfly entry.
      */
-    public static Size getSize(ResourceLocation location) {
+    public static Entry getEntry(ResourceLocation location) {
         int index = locationToIndex(location);
-        return getSize(index);
-    }
-
-    /**
-     * Get the speed of the butterfly by index.
-     * @param index The butterfly index.
-     * @return The speed of the butterfly.
-     */
-    public static Speed getSpeed(int index) {
-        if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index).speed;
-        }
-
-        return Speed.MODERATE;
-    }
-
-    /**
-     * Get the speed of the butterfly by its resource location.
-     * @param location The resource location of the butterfly.
-     * @return The speed of the butterfly.
-     */
-    public static Speed getSpeed(ResourceLocation location) {
-        int index = locationToIndex(location);
-        return getSpeed(index);
+        return getEntry(index);
     }
 }
