@@ -29,16 +29,37 @@ public class ButterflyData {
     public static int LIFESPAN_MEDIUM = 24000 * 4;
     public static int LIFESPAN_LONG = 24000 * 7;
 
+    //  Helper maps.
+    private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
+    private static final Map<Integer, Entry> BUTTERFLY_ENTRIES = new HashMap<>();
+
     /**
      * Class to hold all the data for a specific butterfly.
      */
     public static class Entry {
+        public final String entityId;
+        public final Size size;
+        public final Speed speed;
+
+        public final int caterpillarLifespan;
+        public final int chrysalisLifespan;
+        public final int butterflyLifespan;
+
+        /**
+         * Construction
+         * @param entityId The id of the butterfly species.
+         * @param size The size of the butterfly.
+         * @param speed The speed of the butterfly.
+         * @param caterpillarLifespan How long it remains in the caterpillar stage.
+         * @param chrysalisLifespan How long it takes for a chrysalis to hatch.
+         * @param butterflyLifespan How long it lives as a butterfly.
+         */
         private Entry(String entityId,
-                              Size size,
-                              Speed speed,
-                              int caterpillarLifespan,
-                              int chrysalisLifespan,
-                              int butterflyLifespan) {
+                      Size size,
+                      Speed speed,
+                      int caterpillarLifespan,
+                      int chrysalisLifespan,
+                      int butterflyLifespan) {
             this.entityId = entityId;
             this.size = size;
             this.speed = speed;
@@ -47,19 +68,7 @@ public class ButterflyData {
             this.chrysalisLifespan = chrysalisLifespan;
             this.butterflyLifespan = butterflyLifespan * 2;
         }
-
-        public final String entityId;
-        public final Size size;
-        public final Speed speed;
-
-        public final int caterpillarLifespan;
-        public final int chrysalisLifespan;
-        public final int butterflyLifespan;
     }
-
-    //  Helper maps.
-    private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
-    private static final Map<Integer, Entry> BUTTERFLY_ENTRIES = new HashMap<>();
 
     /**
      * Create new butterfly data.
