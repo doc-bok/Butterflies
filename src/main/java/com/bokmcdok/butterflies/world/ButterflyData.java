@@ -40,17 +40,17 @@ public class ButterflyData {
     static {
         addButterfly(0, "admiral", Size.MEDIUM);
         addButterfly(1, "buckeye", Size.MEDIUM);
-        addButterfly(2, "cabbage", Size.LARGE);
+        addButterfly(2, "cabbage", Size.MEDIUM);
         addButterfly(3, "chalkhill", Size.SMALL);
         addButterfly(4, "clipper", Size.LARGE);
-        addButterfly(5, "common", Size.MEDIUM);
-        addButterfly(6, "emperor", Size.LARGE);
-        addButterfly(7, "forester", Size.MEDIUM);
+        addButterfly(5, "common", Size.SMALL);
+        addButterfly(6, "emperor", Size.MEDIUM);
+        addButterfly(7, "forester", Size.SMALL);
         addButterfly(8, "glasswing", Size.MEDIUM);
-        addButterfly(9, "hairstreak", Size.MEDIUM);
+        addButterfly(9, "hairstreak", Size.SMALL);
         addButterfly(10, "heath", Size.SMALL);
-        addButterfly(11, "longwing", Size.SMALL);
-        addButterfly(12, "monarch", Size.MEDIUM);
+        addButterfly(11, "longwing", Size.MEDIUM);
+        addButterfly(12, "monarch", Size.LARGE);
         addButterfly(13, "morpho", Size.LARGE);
         addButterfly(14, "rainbow", Size.SMALL);
         addButterfly(15, "swallowtail", Size.LARGE);
