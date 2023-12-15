@@ -5,12 +5,15 @@ import net.minecraft.resources.ResourceLocation;
 /**
  * Holds the textures used for butterfly scrolls.
  */
-public class ButterflyScrollTexture {
+public class ButterflyTextures {
+
+    // The location of the book texture.
+    public static final ResourceLocation BOOK = new ResourceLocation("minecraft", "textures/gui/book.png");
 
     /**
      * The location of the screen textures.
      */
-    public static final ResourceLocation[] TEXTURES = {
+    public static final ResourceLocation[] SCROLLS = {
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/admiral.png"),
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/buckeye.png"),
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/cabbage.png"),

@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
-import com.bokmcdok.butterflies.client.texture.ButterflyScrollTexture;
+import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.client.GameNarrator;
@@ -17,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -34,10 +33,6 @@ import java.util.List;
  * butterfly species.
  */
 public class ButterflyBookScreen extends Screen {
-
-    // The location of the book texture.
-    public static final ResourceLocation BOOK_LOCATION =
-            new ResourceLocation("minecraft", "textures/gui/book.png");
 
     // A cache for the page components.
     private List<FormattedCharSequence> cachedPageComponents = Collections.emptyList();
@@ -189,11 +184,10 @@ public class ButterflyBookScreen extends Screen {
      */
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
-        //super.render(guiGraphics, x, y, unknown);
         renderBackground(guiGraphics, x, y, unknown);
 
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(BOOK_LOCATION, i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
 
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
@@ -204,7 +198,7 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            guiGraphics.blit(ButterflyScrollTexture.TEXTURES[butterflyIndex], i, 2, 0, 0, 192, 192);
+            guiGraphics.blit(ButterflyTextures.SCROLLS[butterflyIndex], i, 2, 0, 0, 192, 192);
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 

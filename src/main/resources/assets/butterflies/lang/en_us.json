@@ -55,6 +55,7 @@
   "item.butterflies.bottled_butterfly": "Bottled Butterfly",
   "item.butterflies.butterfly_scroll": "Butterfly Scroll",
   "item.butterflies.butterfly_book": "Butterfly Book",
+  "item.butterflies.butterfly_zhuangzi": "An Ancient Book About Dreams",
 
   "block.butterflies.bottled_butterfly": "Butterfly Bottle",
 
@@ -168,5 +169,7 @@
   "gui.butterflies.fact.monarch": "Monarch butterflies can be poisonous.",
   "gui.butterflies.fact.morpho": "A morpho's blue colour comes from tiny scales on its wings.",
   "gui.butterflies.fact.rainbow": "Rainbow butterflies have only been recently discovered.",
-  "gui.butterflies.fact.swallowtail": "Swallowtails are the largest butterflies in the world."
+  "gui.butterflies.fact.swallowtail": "Swallowtails are the largest butterflies in the world.",
+
+  "gui.butterflies.zhuangzi": "As I flutter in the breeze\nI think of what my mind's eye sees\nAt night when I'm an old wise man\nContemplating the things I can.\nAm I the one that dreams of he,\nOr is he the one that dreams of me?\n\n- 莊子"
 }
