@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.LootModifierRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -34,5 +35,6 @@ public class ButterfliesMod
         BlockEntityTypeRegistry.INSTANCE.register(modEventBus);
         EntityTypeRegistry.INSTANCE.register(modEventBus);
         ItemRegistry.INSTANCE.register(modEventBus);
+        LootModifierRegistry.INSTANCE.register(modEventBus);
     }
 }

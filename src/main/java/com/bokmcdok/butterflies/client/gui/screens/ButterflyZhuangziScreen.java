@@ -6,25 +6,30 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The GUI screen for a butterfly page.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyScrollScreen extends Screen {
+public class ButterflyZhuangziScreen extends Screen {
 
-    private final int butterflyIndex;
+    // A cache holding the string data.
+    private List<FormattedCharSequence> cache = Collections.emptyList();
 
     /**
      * Constructs a basic butterfly page screen.
      */
-    public ButterflyScrollScreen(int butterflyIndex) {
+    public ButterflyZhuangziScreen() {
         super(GameNarrator.NO_TITLE);
-
-        this.butterflyIndex = butterflyIndex;
     }
 
     /**
@@ -54,6 +59,19 @@ public class ButterflyScrollScreen extends Screen {
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
         super.render(guiGraphics, x, y, unknown);
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyTextures.SCROLLS[this.butterflyIndex], i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
+
+
+        if (this.cache.isEmpty()) {
+            FormattedText formattedText = Component.translatable("gui.butterflies.zhuangzi");
+            this.cache = this.font.split(formattedText, 114);
+        }
+
+        int cachedPageSize = Math.min(128 / 9, this.cache.size());
+
+        for (int line = 0; line < cachedPageSize; ++line) {
+            FormattedCharSequence formattedCharSequence = this.cache.get(line);
+            guiGraphics.drawString(this.font, formattedCharSequence, i + 36, 32 + line * 9, 0, false);
+        }
     }
 }

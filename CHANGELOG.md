@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.5.0 (2023-12-15)
+-   Zhuangzi
+
 ### 1.4.1 (2023-12-15)
 -   Updated to Forge v48.1.0 (Minecraft v1.20.2)
 

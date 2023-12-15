@@ -8,6 +8,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
+import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -42,6 +43,10 @@ public class ItemRegistry {
     // Butterfly Book
     public static final RegistryObject<Item> BUTTERFLY_BOOK =
             INSTANCE.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
+
+    // Zhuangzi
+    public static final RegistryObject<Item> BUTTERFLY_ZHUANGZI =
+            INSTANCE.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
 
     // Butterfly Eggs - Eggs that will eventually hatch into a caterpillar.
     public static final RegistryObject<Item> ADMIRAL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,
@@ -260,6 +265,7 @@ public class ItemRegistry {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BUTTERFLY_NET);
             event.accept(BUTTERFLY_BOOK);
+            event.accept(BUTTERFLY_ZHUANGZI);
         }
     }
 }
