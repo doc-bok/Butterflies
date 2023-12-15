@@ -204,8 +204,6 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     protected void setDirection(@NotNull Direction direction) {
-        Validate.notNull(direction);
-
         this.direction = direction;
 
         this.setXRot(0.0F);
