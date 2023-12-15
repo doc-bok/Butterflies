@@ -1,9 +1,10 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -80,7 +81,7 @@ public class BottledButterflyBlock extends BaseEntityBlock {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
             ItemStack stack = new ItemStack(ItemRegistry.BOTTLED_BUTTERFLY.get());
-            BottledButterflyItem.setButterfly(stack, butterflyBlockEntity.getEntityId());
+            ButterflyContainerItem.setButterfly(stack, ButterflyData.locationToIndex(butterflyBlockEntity.getEntityLocation()));
 
             List<ItemStack> result = Lists.newArrayList();
             result.add(stack);

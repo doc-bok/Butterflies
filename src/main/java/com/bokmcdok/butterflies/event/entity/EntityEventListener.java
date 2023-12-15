@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;

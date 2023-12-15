@@ -1,13 +1,13 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflyIds;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -32,20 +32,6 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
 
     //  The name this item is registered under.
     public static final String NAME = "bottled_butterfly";
-
-    /**
-     * Set the butterfly contained in the bottle
-     * @param stack The item stack to modify
-     * @param entityId The type of butterfly
-     */
-    public static void setButterfly(ItemStack stack, String entityId) {
-        CompoundTag tag = stack.getOrCreateTag();
-        if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
-            !tag.contains(CompoundTagId.ENTITY_ID)) {
-            tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, ButterflyIds.EntityIdToIndex(entityId));
-            tag.putString(CompoundTagId.ENTITY_ID, entityId);
-        }
-    }
 
     /**
      * Construction
@@ -88,6 +74,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains(CompoundTagId.ENTITY_ID)) {
             String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+            ResourceLocation location = new ResourceLocation(entityId);
 
             //  Move the target position slightly in front of the player
             Vec3 lookAngle = player.getLookAngle();
@@ -96,13 +83,12 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                     (int) lookAngle.y + 1,
                     (int) lookAngle.z);
 
-            Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
-            player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-            return InteractionResultHolder.success(stack);
+            Butterfly.spawn(player.level(), location, positionToSpawn, true);
         }
 
-        return super.use(level, player, hand);
+        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+
+        return InteractionResultHolder.success(stack);
     }
 
     /**
@@ -128,12 +114,13 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         if (result == InteractionResult.CONSUME && entityId != null) {
             Level level = context.getLevel();
             BlockPos position = context.getClickedPos();
+            ResourceLocation location = new ResourceLocation(entityId);
 
-            Butterfly.spawn(player.level(), entityId, position, true);
+            Butterfly.spawn(player.level(), location, position, true);
 
             BlockEntity blockEntity = level.getBlockEntity(position);
             if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
-                butterflyBlockEntity.setEntityId(entityId);
+                butterflyBlockEntity.setEntityLocation(location);
             }
         }
 

@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflyIds;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -30,61 +31,61 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
      * Plants an egg on the specified block if it is a leaf block.
      * @param level The current level.
      * @param position The position of the block.
-     * @param entityId The entity ID of the butterfly.
+     * @param location The resource location of the butterfly.
      * @return True if the egg was successfully planted, otherwise false.
      */
     public static boolean swapLeavesBlock(Level level,
                                           BlockPos position,
-                                          String entityId) {
+                                          ResourceLocation location) {
         BlockState blockState = level.getBlockState(position);
 
         if (blockState.getBlock() == Blocks.OAK_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_OAK_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_OAK_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.SPRUCE_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_SPRUCE_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_SPRUCE_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.BIRCH_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_BIRCH_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_BIRCH_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.JUNGLE_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_JUNGLE_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_JUNGLE_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.ACACIA_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_ACACIA_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_ACACIA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.DARK_OAK_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_DARK_OAK_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.AZALEA_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_AZALEA_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_AZALEA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.FLOWERING_AZALEA_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.CHERRY_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get());
             return true;
         }
 
         if (blockState.getBlock() == Blocks.MANGROVE_LEAVES) {
-            swapLeavesBlock(level, position, entityId, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES.get());
+            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES.get());
             return true;
         }
 
@@ -156,11 +157,12 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
      * Plants an egg in the leaf block.
      * @param level The current level.
      * @param position The position of the block.
+     * @param location The resource location of the butterfly.
      * @param block The block to replace the current one with.
      */
     private static void swapLeavesBlock(Level level,
                                         BlockPos position,
-                                        String entityId,
+                                        ResourceLocation location,
                                         Block block) {
         BlockState oldBlockState = level.getBlockState(position);
 
@@ -172,8 +174,8 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
                 .setValue(LeavesBlock.WATERLOGGED, oldBlockState.getValue(LeavesBlock.WATERLOGGED));
 
         // Try and get the species index and save this state as well.
-        if (entityId != null) {
-            int index = ButterflyIds.EntityIdToIndex(entityId);
+        if (location != null) {
+            int index = ButterflyData.locationToIndex(location);
             if (index >= 0) {
                 newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
             }

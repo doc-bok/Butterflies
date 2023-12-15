@@ -18,7 +18,8 @@
     "minecraft:windswept_savanna",
     "minecraft:wooded_badlands",
     "minecraft:meadow",
-    "minecraft:river"
+    "minecraft:river",
+    "minecraft:cherry_grove"
   ],
   "spawners":
   {

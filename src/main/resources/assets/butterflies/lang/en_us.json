@@ -52,7 +52,10 @@
   "item.butterflies.buckeye_egg": "Buckeye Butterfly Egg",
 
   "item.butterflies.butterfly_net": "Butterfly Net",
-  "item.butterflies.bottled_butterfly": "Butterfly Bottle",
+  "item.butterflies.bottled_butterfly": "Bottled Butterfly",
+  "item.butterflies.butterfly_scroll": "Butterfly Scroll",
+  "item.butterflies.butterfly_book": "Butterfly Book",
+  "item.butterflies.butterfly_zhuangzi": "An Ancient Book About Dreams",
 
   "block.butterflies.bottled_butterfly": "Butterfly Bottle",
 
@@ -70,6 +73,10 @@
   "advancements.butterfly.find_butterfly_egg.description": "Find a butterfly egg.",
   "advancements.butterfly.find_all_butterfly_eggs.title": "Basketfull",
   "advancements.butterfly.find_all_butterfly_eggs.description": "Find all types of butterfly egg",
+  "advancements.butterfly.butterfly_scroll.title": "Butterfly Collector",
+  "advancements.butterfly.butterfly_scroll.description": "Create a butterfly scroll",
+  "advancements.butterfly.butterfly_book.title": "Butterfly Scribe",
+  "advancements.butterfly.butterfly_book.description": "Fill a book with butterfly scrolls",
 
   "entity.butterflies.morpho": "Morpho Butterfly",
   "entity.butterflies.forester": "Forester Butterfly",
@@ -120,5 +127,49 @@
   "entity.butterflies.admiral_chrysalis": "Admiral Chrysalis",
   "entity.butterflies.longwing_chrysalis": "Longwing Chrysalis",
   "entity.butterflies.clipper_chrysalis": "Clipper Chrysalis",
-  "entity.butterflies.buckeye_chrysalis": "Buckeye Chrysalis"
+  "entity.butterflies.buckeye_chrysalis": "Buckeye Chrysalis",
+
+  "gui.butterflies.size": "Size: ",
+  "gui.butterflies.size.small": "Small",
+  "gui.butterflies.size.medium": "Medium",
+  "gui.butterflies.size.large": "Large",
+
+  "gui.butterflies.speed": "Speed: ",
+  "gui.butterflies.speed.moderate": "Moderate",
+  "gui.butterflies.speed.fast": "Fast",
+
+  "gui.butterflies.rarity": "Rarity: ",
+  "gui.butterflies.rarity.common": "Common",
+  "gui.butterflies.rarity.uncommon": "Uncommon",
+  "gui.butterflies.rarity.rare": "Rare",
+
+  "gui.butterflies.lifespan": "Lifespan: ",
+  "gui.butterflies.lifespan.short": "Short",
+  "gui.butterflies.lifespan.average": "Average",
+  "gui.butterflies.lifespan.long": "Long",
+
+  "gui.butterflies.habitat": "Habitat: ",
+  "gui.butterflies.habitat.forests": "Forests",
+  "gui.butterflies.habitat.forestsandplains": "Forests/Plains",
+  "gui.butterflies.habitat.jungles": "Jungle",
+  "gui.butterflies.habitat.plains": "Plains",
+
+  "gui.butterflies.fact.admiral": "Admiral butterflies like to perch on sunlit spots.",
+  "gui.butterflies.fact.buckeye": "Buckeye butterflies can lay their eggs on many plants.",
+  "gui.butterflies.fact.cabbage": "Cabbage butterflies can fly erratically.",
+  "gui.butterflies.fact.chalkhill": "Chalkhill caterpillars are often protected by ants.",
+  "gui.butterflies.fact.clipper": "Clipper butterflies can be many different colours.",
+  "gui.butterflies.fact.common": "Th common butterfly can be found almost anywhere.",
+  "gui.butterflies.fact.emperor": "Emperor butterflies like to eat tree sap.",
+  "gui.butterflies.fact.forester": "This pink butterfly isn't scared of cats.",
+  "gui.butterflies.fact.glasswing": "Glasswings can be hard to spot for predators.",
+  "gui.butterflies.fact.hairstreak": "Hairstreaks like to choose a tree to be their home.",
+  "gui.butterflies.fact.heath": "Heath butterflies dislike the dark and like to stay low.",
+  "gui.butterflies.fact.longwing": "A longwing's lifespan is as long as its wings.",
+  "gui.butterflies.fact.monarch": "Monarch butterflies can be poisonous.",
+  "gui.butterflies.fact.morpho": "A morpho's blue colour comes from tiny scales on its wings.",
+  "gui.butterflies.fact.rainbow": "Rainbow butterflies have only been recently discovered.",
+  "gui.butterflies.fact.swallowtail": "Swallowtails are the largest butterflies in the world.",
+
+  "gui.butterflies.zhuangzi": "As I flutter in the breeze\nI think of what my mind's eye sees\nAt night when I'm an old wise man\nContemplating the things I can.\nAm I the one that dreams of he,\nOr is he the one that dreams of me?\n\n- 莊子"
 }

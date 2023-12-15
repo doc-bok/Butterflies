@@ -1,0 +1,41 @@
+{
+  "parent": "butterflies:butterfly/create_butterfly_scroll",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_book"
+    },
+    "title": {
+      "translate": "advancements.butterfly.butterfly_book.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.catch_all_butterflies.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "filled_book": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_book"
+            ],
+            "nbt": "{CustomModelData:1}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "filled_book"
+    ]
+  ]
+}

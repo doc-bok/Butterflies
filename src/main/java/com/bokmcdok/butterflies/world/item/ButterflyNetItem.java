@@ -2,10 +2,11 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.bokmcdok.butterflies.world.entity.ambient.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -126,7 +127,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                         (int) lookAngle.y + 1,
                         (int) lookAngle.z);
 
-            Butterfly.spawn(player.level(), entityId, positionToSpawn, false);
+            Butterfly.spawn(player.level(), new ResourceLocation(entityId), positionToSpawn, false);
             tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
             tag.remove(CompoundTagId.ENTITY_ID);
 
