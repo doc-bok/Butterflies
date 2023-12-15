@@ -371,6 +371,7 @@ public class Butterfly extends Animal {
 
                     if (placed) {
                         butterfly.setInvulnerable(true);
+                        butterfly.setPersistenceRequired();
                     }
 
                     level.addFreshEntity(butterfly);

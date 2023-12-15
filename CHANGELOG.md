@@ -1,5 +1,8 @@
 ## Changelog
 
+### 1.4.0 (2023-12-15)
+-   Added the butterfly book
+
 ### 1.3.1 (2023-12-08)
 -   Fixed rendering of butterfly scrolls
 
