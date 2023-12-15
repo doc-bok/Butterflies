@@ -409,6 +409,7 @@ public class ButterflyBookScreen extends Screen {
                         case RARE -> component.append(Component.translatable("gui.butterflies.rarity.rare"));
                         case UNCOMMON -> component.append(Component.translatable("gui.butterflies.rarity.uncommon"));
                         case COMMON -> component.append(Component.translatable("gui.butterflies.rarity.common"));
+                        default -> {}
                     }
 
                     // Size
@@ -418,6 +419,7 @@ public class ButterflyBookScreen extends Screen {
                         case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
                         case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));
+                        default -> {}
                     }
 
                     // Speed
@@ -426,6 +428,7 @@ public class ButterflyBookScreen extends Screen {
                     switch (entry.speed) {
                         case MODERATE -> component.append(Component.translatable("gui.butterflies.speed.moderate"));
                         case FAST -> component.append(Component.translatable("gui.butterflies.speed.fast"));
+                        default -> {}
                     }
 
                     // Lifespan
@@ -435,6 +438,7 @@ public class ButterflyBookScreen extends Screen {
                         case SHORT -> component.append(Component.translatable("gui.butterflies.lifespan.short"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.lifespan.average"));
                         case LONG -> component.append(Component.translatable("gui.butterflies.lifespan.long"));
+                        default -> {}
                     }
 
                     // Habitat
@@ -445,6 +449,7 @@ public class ButterflyBookScreen extends Screen {
                         case FORESTS_AND_PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
                         case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
                         case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
+                        default -> {}
                     }
 
                     // Fact

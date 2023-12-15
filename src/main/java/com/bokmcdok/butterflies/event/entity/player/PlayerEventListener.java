@@ -70,14 +70,11 @@ public class PlayerEventListener {
                     oldBook = recipeItem;
                 }
 
+                // Always use Entity ID for compatibility with butterfly net.
                 CompoundTag tag = recipeItem.getTag();
-                if (tag != null) {
-
-                    // Always use Entity ID for compatibility with butterfly net.
-                    if (tag.contains(CompoundTagId.ENTITY_ID)) {
-                        ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                        index = ButterflyData.locationToIndex(location);
-                    }
+                if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
+                    ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
+                    index = ButterflyData.locationToIndex(location);
                 }
             }
 
