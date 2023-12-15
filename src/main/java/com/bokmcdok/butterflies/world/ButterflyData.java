@@ -186,18 +186,19 @@ public class ButterflyData {
      * @return The index of said entity ID.
      */
     private static int entityIdToIndex(String entityId) {
-        if (entityId.contains(":")) {
-            String[] splits = entityId.split(":");
-            entityId = splits[1];
+        String species = entityId;
+        if (species.contains(":")) {
+            String[] splits = species.split(":");
+            species = splits[1];
         }
 
-        if (entityId.contains("_")) {
-            String[] splits = entityId.split("_");
-            entityId = splits[0];
+        if (species.contains("_")) {
+            String[] splits = species.split("_");
+            species = splits[0];
         }
 
-        if (ENTITY_ID_TO_INDEX_MAP.containsKey(entityId)) {
-            return ENTITY_ID_TO_INDEX_MAP.get(entityId);
+        if (ENTITY_ID_TO_INDEX_MAP.containsKey(species)) {
+            return ENTITY_ID_TO_INDEX_MAP.get(species);
         }
 
         return -1;
