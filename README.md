@@ -26,7 +26,7 @@ If you want to breed the butterflies in this mod, then be sure to keep your
 cats away from them!
 
 ### Latest Release
--   [Download Link](https://github.com/doc-bok/Butterflies/releases/download/1.0.1/butterflies-1.0.1.jar)
+-   [Download Link](https://github.com/doc-bok/Butterflies/releases/download/2.0.0/butterflies-2.0.0.jar)
 
 ### Development Diary
 -   [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
