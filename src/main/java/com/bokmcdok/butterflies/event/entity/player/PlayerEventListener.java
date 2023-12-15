@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.entity.player;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -56,6 +57,29 @@ public class PlayerEventListener {
 
                     break;
                 }
+            }
+        } else if (craftingItem.getItem() instanceof ButterflyBookItem) {
+            Container craftingMatrix = event.getInventory();
+            int index = -1;
+            ItemStack oldBook = null;
+            for (int i = 0; i < craftingMatrix.getContainerSize(); ++i) {
+
+                // If there is a book then we are adding a page.
+                ItemStack recipeItem = craftingMatrix.getItem(i);
+                if (recipeItem.getItem() instanceof ButterflyBookItem) {
+                    oldBook = recipeItem;
+                }
+
+                // Always use Entity ID for compatibility with butterfly net.
+                CompoundTag tag = recipeItem.getTag();
+                if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
+                    ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
+                    index = ButterflyData.locationToIndex(location);
+                }
+            }
+
+            if (index >= 0) {
+                ButterflyBookItem.addPage(oldBook, craftingItem, index);
             }
         }
     }

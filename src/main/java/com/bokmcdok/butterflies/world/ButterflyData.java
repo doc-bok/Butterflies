@@ -24,6 +24,31 @@ public class ButterflyData {
         FAST
     }
 
+    // Represents the rarity of a butterfly. Note that this only affects the
+    // description. The actual rarity is defined by biome modifiers.
+    public enum Rarity {
+        COMMON,
+        UNCOMMON,
+        RARE
+    }
+
+    // Represents a butterflies preferred habitat.Note that like rarity, this
+    // only affects the description. The biome modifiers will determine where
+    // they will actually spawn.
+    public enum Habitat {
+        FORESTS,
+        FORESTS_AND_PLAINS,
+        JUNGLES,
+        PLAINS
+    }
+
+    // Helper enum to determine a butterflies overall lifespan.
+    public enum Lifespan {
+        SHORT,
+        MEDIUM,
+        LONG
+    }
+
     // Constants representing the base life spans of each butterfly cycle.
     public static int LIFESPAN_SHORT = 24000 * 2;
     public static int LIFESPAN_MEDIUM = 24000 * 4;
@@ -40,16 +65,34 @@ public class ButterflyData {
         public final String entityId;
         public final Size size;
         public final Speed speed;
+        public final Rarity rarity;
+        public final Habitat habitat;
 
         public final int caterpillarLifespan;
         public final int chrysalisLifespan;
         public final int butterflyLifespan;
 
         /**
+         * Get the overall lifespan as a simple enumeration
+         * @return A representation of the lifespan.
+         */
+        public Lifespan getOverallLifeSpan() {
+            int days = (caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
+            if (days < 15) {
+                return Lifespan.SHORT;
+            } else if(days < 25) {
+                return Lifespan.MEDIUM;
+            } else {
+                return Lifespan.LONG;
+            }
+        }
+
+        /**
          * Construction
          * @param entityId The id of the butterfly species.
          * @param size The size of the butterfly.
          * @param speed The speed of the butterfly.
+         * @param rarity The rarity of the butterfly.
          * @param caterpillarLifespan How long it remains in the caterpillar stage.
          * @param chrysalisLifespan How long it takes for a chrysalis to hatch.
          * @param butterflyLifespan How long it lives as a butterfly.
@@ -57,12 +100,16 @@ public class ButterflyData {
         private Entry(String entityId,
                       Size size,
                       Speed speed,
+                      Rarity rarity,
+                      Habitat habitat,
                       int caterpillarLifespan,
                       int chrysalisLifespan,
                       int butterflyLifespan) {
             this.entityId = entityId;
             this.size = size;
             this.speed = speed;
+            this.rarity = rarity;
+            this.habitat = habitat;
 
             this.caterpillarLifespan = caterpillarLifespan * 2;
             this.chrysalisLifespan = chrysalisLifespan;
@@ -81,6 +128,8 @@ public class ButterflyData {
                                      String species,
                                      Size size,
                                      Speed speed,
+                                     Rarity rarity,
+                                     Habitat habitat,
                                      int caterpillarLifespan,
                                      int chrysalisLifespan,
                                      int butterflyLifespan)
@@ -89,43 +138,45 @@ public class ButterflyData {
         BUTTERFLY_ENTRIES.put(index, new Entry(species,
                                                size,
                                                speed,
+                                               rarity,
+                                               habitat,
                                                caterpillarLifespan,
                                                chrysalisLifespan,
                                                butterflyLifespan));
     }
 
     static {
-        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
                 LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
-        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST,
+        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST, Rarity.COMMON, Habitat.PLAINS,
                 LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(4, "clipper", Size.LARGE, Speed.FAST,
+        addButterfly(4, "clipper", Size.LARGE, Speed.FAST, Rarity.RARE, Habitat.FORESTS,
                 LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
-        addButterfly(5, "common", Size.SMALL, Speed.MODERATE,
+        addButterfly(5, "common", Size.SMALL, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
                 LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE,
+        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE, Rarity.RARE, Habitat.FORESTS,
                 LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE, Rarity.UNCOMMON, Habitat.JUNGLES,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
-        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE,
+        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
                 LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
-        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE,
+        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE, Rarity.RARE, Habitat.PLAINS,
                 LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
-        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE,
+        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
-        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE,
+        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
                 LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE,
+        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE, Rarity.RARE, Habitat.JUNGLES,
                 LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST,
+        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST, Rarity.UNCOMMON, Habitat.FORESTS_AND_PLAINS,
                 LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE,
+        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS_AND_PLAINS,
                 LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
     }
 
