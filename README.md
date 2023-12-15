@@ -19,6 +19,9 @@ They can also be pinned to a piece of paper to create a scroll where you can
 look at the butterfly in detail. Unfortunately this kills the butterfly. These
 scrolls can also be placed around your world as decoration. 
 
+Scrolls can also be placed in a book, allowing the player to collect
+information on each butterfly species.
+
 If you want to breed the butterflies in this mod, then be sure to keep your
 cats away from them!
 
@@ -29,6 +32,9 @@ cats away from them!
 -   [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ### Older Versions
+-   [Bok’s Butterflies v1.0.4](https://github.com/doc-bok/Butterflies/releases/tag/1.0.4)
+-   [Bok’s Butterflies v1.0.3](https://github.com/doc-bok/Butterflies/releases/tag/1.0.3)
+-   [Bok’s Butterflies v1.0.2](https://github.com/doc-bok/Butterflies/releases/tag/1.0.2)
 -   [Bok’s Butterflies v1.0.1](https://github.com/doc-bok/Butterflies/releases/tag/1.0.1)
 -   [Bok’s Butterflies v1.0.0](https://github.com/doc-bok/Butterflies/releases/tag/1.0.0)
 
