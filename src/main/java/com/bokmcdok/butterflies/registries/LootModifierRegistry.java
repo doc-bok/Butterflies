@@ -13,7 +13,7 @@ public class LootModifierRegistry {
 
     // An instance of a deferred registry we use to register items.
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> INSTANCE =
-            DeferredRegister.create(ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MODID);
+            DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MODID);
 
     // The loot modifier
     public static final RegistryObject<Codec<ButterflyLootModifier>> BUTTERFLY_LOOT =

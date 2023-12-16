@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.nbt.CompoundTag;
@@ -184,8 +183,8 @@ public class ButterflyBookScreen extends Screen {
      */
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
-        renderBackground(guiGraphics, x, y, unknown);
 
+        this.renderBackground(guiGraphics);
         int i = (this.width - 192) / 2;
         guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
 
@@ -216,9 +215,7 @@ public class ButterflyBookScreen extends Screen {
             guiGraphics.renderComponentHoverEffect(this.font, style, x, y);
         }
 
-        for(Renderable renderable : this.renderables) {
-            renderable.render(guiGraphics, x, y, unknown);
-        }
+        super.render(guiGraphics, x, y, unknown);
     }
 
     /**
