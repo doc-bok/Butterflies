@@ -20,6 +20,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,7 +71,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         if (level.isClientSide()) {
             CompoundTag tag = itemstack.getTag();
             if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-                Minecraft.getInstance().setScreen(new ButterflyScrollScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA)));
+                openScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
             } else {
                 replaceWithPaper(player, hand, itemstack);
             }
@@ -137,6 +139,15 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
      */
     protected boolean mayPlace(Player player, Direction direction, ItemStack itemStack, BlockPos blockPos) {
         return !direction.getAxis().isVertical() && player.mayUseItemAt(blockPos, direction, itemStack);
+    }
+
+    /**
+     * Open the screen. Kept separate so it can be excluded from server builds.
+     * @param butterflyIndex The index of the butterfly.
+     */
+    @OnlyIn(Dist.CLIENT)
+    private void openScreen(int butterflyIndex) {
+        Minecraft.getInstance().setScreen(new ButterflyScrollScreen(butterflyIndex));
     }
 
     /**

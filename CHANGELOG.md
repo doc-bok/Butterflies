@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2.0.1 (2023-12-17)
+-   Fix crash when launching server.
+
+### 2.0.0 (2023-12-15)
+-   Second release of the mod.
+
 ### 1.5.0 (2023-12-15)
 -   Zhuangzi
 
