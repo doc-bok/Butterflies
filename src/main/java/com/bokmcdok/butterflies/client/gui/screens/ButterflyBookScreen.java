@@ -31,6 +31,7 @@ import java.util.List;
  * The UI for the butterfly book, where players can look up information on
  * butterfly species.
  */
+@OnlyIn(Dist.CLIENT)
 public class ButterflyBookScreen extends Screen {
 
     // A cache for the page components.

@@ -9,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class ButterflyZhuangziItem extends Item {
@@ -37,10 +39,18 @@ public class ButterflyZhuangziItem extends Item {
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (level.isClientSide()) {
-            Minecraft.getInstance().setScreen(new ButterflyZhuangziScreen());
+            openScreen();
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+    }
+
+    /**
+     * Open the screen. Kept separate so it can be excluded from server builds.
+     */
+    @OnlyIn(Dist.CLIENT)
+    private void openScreen() {
+        Minecraft.getInstance().setScreen(new ButterflyZhuangziScreen());
     }
 }
