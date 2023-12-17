@@ -6,11 +6,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * This is the renderer for all the butterflies in the game.
  */
+@OnlyIn(Dist.CLIENT)
 public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
     /**
      * Bakes a new model for the renderer

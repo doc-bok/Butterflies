@@ -13,6 +13,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 public class ButterflyBookItem extends Item {
@@ -69,10 +71,19 @@ public class ButterflyBookItem extends Item {
         ItemStack itemStack = player.getItemInHand(hand);
 
         if (level.isClientSide()) {
-            Minecraft.getInstance().setScreen(new ButterflyBookScreen(itemStack));
+            openScreen(itemStack);
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
         return InteractionResultHolder.sidedSuccess(itemStack, level.isClientSide());
+    }
+
+    /**
+     * Open the screen. Kept separate so it can be excluded from server builds.
+     * @param book The book to display.
+     */
+    @OnlyIn(Dist.CLIENT)
+    private void openScreen(ItemStack book) {
+        Minecraft.getInstance().setScreen(new ButterflyBookScreen(book));
     }
 }
