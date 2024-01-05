@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.MangroveLeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class ButterflyMangroveLeavesBlock extends MangroveLeavesBlock implements
     @Override
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(@NotNull BlockState blockState,
-                                    @NotNull LootParams.Builder builder) {
+                                    @NotNull LootContext.Builder builder) {
         return addButterflyEggDrop(blockState, super.getDrops(blockState, builder));
     }
 

@@ -127,7 +127,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                         (int) lookAngle.y + 1,
                         (int) lookAngle.z);
 
-            Butterfly.spawn(player.level(), new ResourceLocation(entityId), positionToSpawn, false);
+            Butterfly.spawn(player.getLevel(), new ResourceLocation(entityId), positionToSpawn, false);
             tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
             tag.remove(CompoundTagId.ENTITY_ID);
 

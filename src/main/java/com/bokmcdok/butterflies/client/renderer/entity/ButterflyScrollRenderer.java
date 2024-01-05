@@ -5,7 +5,7 @@ import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -72,7 +72,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
                        int overlay)
     {
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(scroll.getDirection().get2DDataValue() * -90));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(scroll.getDirection().get2DDataValue() * -90));
         poseStack.translate(0.31D, -0.31D, -0.075D);
 
         float scale = this.getScale();

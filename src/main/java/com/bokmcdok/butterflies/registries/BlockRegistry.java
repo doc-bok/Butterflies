@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.BottledButterflyBlock;
-import com.bokmcdok.butterflies.world.block.ButterflyCherryLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyMangroveLeavesBlock;
 import net.minecraft.client.renderer.BiomeColors;
@@ -15,8 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -72,47 +70,26 @@ public class BlockRegistry {
     public static final RegistryObject<Block> BUTTERFLY_FLOWERING_AZALEA_LEAVES =
             INSTANCE.register("butterfly_flowering_azalea_leaves", () -> butterflyLeaves(SoundType.AZALEA_LEAVES));
 
-    public static final RegistryObject<Block> BUTTERFLY_CHERRY_LEAVES =
-            INSTANCE.register("butterfly_cherry_leaves", () -> new ButterflyCherryLeavesBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.COLOR_PINK)
-                    .strength(0.2F)
-                    .randomTicks()
-                    .sound(SoundType.CHERRY_LEAVES)
-                    .noOcclusion()
-                    .isValidSpawn(BlockRegistry::ocelotOrParrot)
-                    .isSuffocating(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
-                    .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(BlockRegistry::never)));
-
     public static final RegistryObject<Block> BUTTERFLY_MANGROVE_LEAVES =
-            INSTANCE.register("butterfly_mangrove_leaves", () -> new ButterflyMangroveLeavesBlock(BlockBehaviour.Properties.of()
-                    .mapColor(MapColor.PLANT)
-                    .strength(0.2F)
-                    .randomTicks()
-                    .sound(SoundType.GRASS)
-                    .noOcclusion()
-                    .isValidSpawn(BlockRegistry::ocelotOrParrot)
-                    .isSuffocating(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
-                    .ignitedByLava()
-                    .pushReaction(PushReaction.DESTROY)
-                    .isRedstoneConductor(BlockRegistry::never)));
+            INSTANCE.register("butterfly_mangrove_leaves", () ->
+                    new ButterflyMangroveLeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES)
+                            .strength(0.2F)
+                            .randomTicks()
+                            .sound(SoundType.GRASS)
+                            .noOcclusion().isValidSpawn(BlockRegistry::ocelotOrParrot)
+                            .isSuffocating(BlockRegistry::never)
+                            .isViewBlocking(BlockRegistry::never)));
 
     private static ButterflyLeavesBlock butterflyLeaves(SoundType p_152615_) {
-        return new ButterflyLeavesBlock(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.PLANT)
+        return new ButterflyLeavesBlock(BlockBehaviour.Properties
+                .of(Material.LEAVES)
                 .strength(0.2F)
                 .randomTicks()
                 .sound(p_152615_)
                 .noOcclusion()
                 .isValidSpawn(BlockRegistry::ocelotOrParrot)
                 .isSuffocating(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .ignitedByLava()
-                .pushReaction(PushReaction.DESTROY)
-                .isRedstoneConductor(BlockRegistry::never));
+                .isViewBlocking(BlockRegistry::never));
     }
 
     /**

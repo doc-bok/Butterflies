@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -73,11 +73,12 @@ public class BottledButterflyBlock extends BaseEntityBlock {
      * @param builder The loot drop builder.
      * @return The loot dropped by this block.
      */
+
     @NotNull
     @Override
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(@NotNull BlockState blockState,
-                                    @NotNull LootParams.Builder builder) {
+                                    LootContext.@NotNull Builder builder) {
         BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
         if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
             ItemStack stack = new ItemStack(ItemRegistry.BOTTLED_BUTTERFLY.get());

@@ -378,7 +378,7 @@ public class Caterpillar extends DirectionalCreature {
     public boolean isNoGravity() {
         boolean isNoGravity = true;
 
-        if (this.level().isEmptyBlock(getSurfaceBlock())) {
+        if (this.getLevel().isEmptyBlock(getSurfaceBlock())) {
             setSurfaceDirection(Direction.DOWN);
             setSurfaceBlock(this.blockPosition().below());
             this.targetPosition = null;
@@ -405,6 +405,22 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     public void setAge(int age) {
         this.age = age;
+    }
+
+    /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
     }
 
     /**
@@ -559,7 +575,7 @@ public class Caterpillar extends DirectionalCreature {
                 int index = ButterflyData.locationToIndex(location);
                 ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
                 if (newLocation != null) {
-                    Chrysalis.spawn((ServerLevel) this.level(),
+                    Chrysalis.spawn((ServerLevel) this.getLevel(),
                                     newLocation,
                                     this.getSurfaceBlock(),
                                     this.getSurfaceDirection(),

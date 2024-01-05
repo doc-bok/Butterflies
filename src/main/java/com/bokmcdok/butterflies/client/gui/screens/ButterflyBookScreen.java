@@ -3,11 +3,13 @@ package com.bokmcdok.butterflies.client.gui.screens;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.GameNarrator;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.ClickEvent;
@@ -175,19 +177,28 @@ public class ButterflyBookScreen extends Screen {
         return super.mouseClicked(x, y, button);
     }
 
+
+
     /**
      * Render the screen.
-     * @param guiGraphics The graphics buffer for the gui.
+     * @param poseStack The graphics buffer for the gui.
      * @param x The x position of the cursor.
      * @param y The y position of the cursor.
      * @param unknown Unknown.
      */
     @Override
-    public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
+    public void render(@NotNull PoseStack poseStack,
+                       int x, int y,
+                       float unknown) {
 
-        this.renderBackground(guiGraphics);
+        this.renderBackground(poseStack);
+
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, ButterflyTextures.BOOK);
+
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
+        this.blit(poseStack, i, 2, 0, 0, 192, 192);
 
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
@@ -198,25 +209,27 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            guiGraphics.blit(ButterflyTextures.SCROLLS[butterflyIndex], i, 2, 0, 0, 192, 192);
+
+            RenderSystem.setShaderTexture(0, ButterflyTextures.SCROLLS[butterflyIndex]);
+            this.blit(poseStack, i, 2, 0, 0, 192, 192);
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 
             for (int line = 0; line < cachedPageSize; ++line) {
                 FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(line);
-                guiGraphics.drawString(this.font, formattedCharSequence, i + 36, 32 + line * 9, 0, false);
+                this.font.draw(poseStack, formattedCharSequence, (float)i + 36, (float)(32 + line * 9), 0);
             }
         }
 
         int fontWidth = this.font.width(this.pageMsg);
-        guiGraphics.drawString(this.font, this.pageMsg, i - fontWidth + 192 - 44, 18, 0, false);
+        this.font.draw(poseStack, this.pageMsg, (float)i - fontWidth + 192 - 44, (float)(18), 0);
 
         Style style = this.getClickedComponentStyleAt(x,y);
         if (style != null) {
-            guiGraphics.renderComponentHoverEffect(this.font, style, x, y);
+            this.renderComponentHoverEffect(poseStack, style, x, y);
         }
 
-        super.render(guiGraphics, x, y, unknown);
+        super.render(poseStack, x, y, unknown);
     }
 
     /**
@@ -249,8 +262,11 @@ public class ButterflyBookScreen extends Screen {
      * Create the menu controls.
      */
     protected void createMenuControls() {
-        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE,
-                (button) -> this.onClose()).bounds(this.width / 2 - 100, 196, 200, 20).build());
+        this.addRenderableWidget(new Button(this.width / 2 - 100, 196, 200, 20, CommonComponents.GUI_DONE, (p_98299_) -> {
+            if (this.minecraft != null) {
+                this.minecraft.setScreen(null);
+            }
+        }));
     }
 
     /**

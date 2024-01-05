@@ -11,8 +11,7 @@
     "minecraft:windswept_savanna",
     "minecraft:meadow",
     "minecraft:river",
-    "minecraft:mushroom_fields",
-    "minecraft:cherry_grove"
+    "minecraft:mushroom_fields"
   ],
   "spawners":
   {

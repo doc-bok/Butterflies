@@ -5,7 +5,6 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -100,10 +99,7 @@ public class PlayerEventListener {
 
                 //  If the cat is named Snow, then change it to a white cat.
                 if ("Snow".equals(name)) {
-                    CatVariant variant = BuiltInRegistries.CAT_VARIANT.get(CatVariant.WHITE);
-                    if (variant != null) {
-                        cat.setVariant(variant);
-                    }
+                    cat.setCatVariant(CatVariant.WHITE);
                 }
             }
         }

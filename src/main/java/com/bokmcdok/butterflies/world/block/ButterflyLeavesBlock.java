@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -79,11 +79,6 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
             return true;
         }
 
-        if (blockState.getBlock() == Blocks.CHERRY_LEAVES) {
-            swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get());
-            return true;
-        }
-
         if (blockState.getBlock() == Blocks.MANGROVE_LEAVES) {
             swapLeavesBlock(level, position, location, BlockRegistry.BUTTERFLY_MANGROVE_LEAVES.get());
             return true;
@@ -139,11 +134,6 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
 
         if (blockState.getBlock() == BlockRegistry.BUTTERFLY_FLOWERING_AZALEA_LEAVES.get()) {
             swapLeavesBlock(level, position, null, Blocks.FLOWERING_AZALEA_LEAVES);
-            return;
-        }
-
-        if (blockState.getBlock() == BlockRegistry.BUTTERFLY_CHERRY_LEAVES.get()) {
-            swapLeavesBlock(level, position, null, Blocks.CHERRY_LEAVES);
             return;
         }
 
@@ -214,11 +204,12 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
      * @param builder The loot builder.
      * @return The normal loot, plus the butterfly egg held within.
      */
+
     @NotNull
     @Override
     @SuppressWarnings("deprecation")
     public List<ItemStack> getDrops(@NotNull BlockState blockState,
-                                    @NotNull LootParams.Builder builder) {
+                                    LootContext.@NotNull Builder builder) {
         return addButterflyEggDrop(blockState, super.getDrops(blockState, builder));
     }
 
