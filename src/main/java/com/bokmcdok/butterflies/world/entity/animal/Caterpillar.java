@@ -4,15 +4,19 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -306,7 +310,6 @@ public class Caterpillar extends DirectionalCreature {
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
                 caterpillar.setSurfaceBlock(spawnPosition);
-                //caterpillar.setAge(-24000);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -317,6 +320,28 @@ public class Caterpillar extends DirectionalCreature {
                 level.addFreshEntity(caterpillar);
             }
         }
+    }
+
+    /**
+     * Set persistence if we are spawning from a spawn egg.
+     * @param levelAccessor Access to the level.
+     * @param difficulty The local difficulty.
+     * @param spawnType The type of spawn.
+     * @param groupData The group data.
+     * @param compoundTag Tag data for the entity.
+     * @return The updated group data.
+     */
+    @Override
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
+                                        @NotNull DifficultyInstance difficulty,
+                                        @NotNull MobSpawnType spawnType,
+                                        @Nullable SpawnGroupData groupData,
+                                        @Nullable CompoundTag compoundTag) {
+        if (spawnType == MobSpawnType.SPAWN_EGG) {
+            setPersistenceRequired();
+        }
+
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
     }
 
     /**

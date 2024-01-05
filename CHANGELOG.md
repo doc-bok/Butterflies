@@ -1,5 +1,14 @@
 ## Changelog
 
+### 2.0.4 (2024-01-05)
+-   Mobs spawned using spawn eggs will now be persistent.
+
+### 2.0.3 (2024-01-05)
+-   Updated data pack format to 18 (correct version for 1.20.2).
+
+### 2.0.2 (2024-01-04)
+-   Fix butterfly azalea leaves not having a model.
+
 ### 2.0.1 (2023-12-17)
 -   Fix crash when launching server.
 
