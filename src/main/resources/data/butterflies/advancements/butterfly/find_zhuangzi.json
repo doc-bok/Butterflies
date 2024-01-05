@@ -1,0 +1,37 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_zhuangzi"
+    },
+    "title": {
+      "translate": "advancements.butterfly.zhuangzi.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.zhuangzi.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "butterfly_zhuangzi": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_zhuangzi"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_zhuangzi"
+    ]
+  ]
+}

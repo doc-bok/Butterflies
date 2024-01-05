@@ -77,6 +77,8 @@
   "advancements.butterfly.butterfly_scroll.description": "Create a butterfly scroll",
   "advancements.butterfly.butterfly_book.title": "Butterfly Scribe",
   "advancements.butterfly.butterfly_book.description": "Fill a book with butterfly scrolls",
+  "advancements.butterfly.zhuangzi.title": "Who Am I?",
+  "advancements.butterfly.zhuangzi.description": "Find an ancient poem",
 
   "entity.butterflies.morpho": "Morpho Butterfly",
   "entity.butterflies.forester": "Forester Butterfly",
