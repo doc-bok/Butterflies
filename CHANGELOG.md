@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.0.5 (2024-01-05)
+-   Added a secret goal.
+
 ### 2.0.4 (2024-01-05)
 -   Mobs spawned using spawn eggs will now be persistent.
 

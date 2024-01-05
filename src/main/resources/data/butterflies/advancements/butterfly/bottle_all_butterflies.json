@@ -10,7 +10,7 @@
     "description": {
       "translate": "advancements.butterfly.bottle_all_butterflies.description"
     },
-    "frame": "goal",
+    "frame": "challenge",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
