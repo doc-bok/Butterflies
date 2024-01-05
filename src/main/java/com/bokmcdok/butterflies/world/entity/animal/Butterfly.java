@@ -4,12 +4,14 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
@@ -18,6 +20,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -367,8 +370,6 @@ public class Butterfly extends Animal {
                             null,
                             null);
 
-                    butterfly.setPersistenceRequired();
-
                     if (placed) {
                         butterfly.setInvulnerable(true);
                         butterfly.setPersistenceRequired();
@@ -425,6 +426,28 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Set persistence if we are spawning from a spawn egg.
+     * @param levelAccessor Access to the level.
+     * @param difficulty The local difficulty.
+     * @param spawnType The type of spawn.
+     * @param groupData The group data.
+     * @param compoundTag Tag data for the entity.
+     * @return The updated group data.
+     */
+    @Override
+    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
+                                        @NotNull DifficultyInstance difficulty,
+                                        @NotNull MobSpawnType spawnType,
+                                        @Nullable SpawnGroupData groupData,
+                                        @Nullable CompoundTag compoundTag) {
+        if (spawnType == MobSpawnType.SPAWN_EGG) {
+            setPersistenceRequired();
+        }
+
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+    }
+
+    /**
      * Butterflies won't produce offspring: they lay eggs instead.
      * @param level The current level
      * @param mob The parent mod
@@ -435,6 +458,18 @@ public class Butterfly extends Animal {
     public AgeableMob getBreedOffspring(@NotNull ServerLevel level,
                                         @NotNull AgeableMob mob) {
         return null;
+    }
+
+    /**
+     * Get the scale to use for the butterfly.
+     * @return A scale value based on the butterfly's size.
+     */
+    public float getScale() {
+        switch (this.size) {
+            case SMALL -> { return 0.25f; }
+            case LARGE ->{ return 0.45f; }
+            default -> { return 0.35f; }
+        }
     }
 
     /**
@@ -606,18 +641,6 @@ public class Butterfly extends Animal {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
-    }
-
-    /**
-     * Get the scale to use for the butterfly.
-     * @return A scale value based on the butterfly's size.
-     */
-    public float getScale() {
-        switch (this.size) {
-            case SMALL -> { return 0.25f; }
-            case LARGE ->{ return 0.45f; }
-            default -> { return 0.35f; }
-        }
     }
 
     /**

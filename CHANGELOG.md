@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.0.4 (2024-01-05)
+-   Mobs spawned using spawn eggs will now be persistent.
+
 ### 2.0.3 (2024-01-05)
 -   Updated data pack format to 18 (correct version for 1.20.2).
 
