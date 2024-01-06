@@ -32,6 +32,8 @@ cats away from them!
 -   [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ### Older Versions
+-   [Bok’s Butterflies v2.0.5](https://github.com/doc-bok/Butterflies/releases/tag/2.0.5)
+-   [Bok’s Butterflies v2.0.1](https://github.com/doc-bok/Butterflies/releases/tag/2.0.1)
 -   [Bok’s Butterflies v1.0.4](https://github.com/doc-bok/Butterflies/releases/tag/1.0.4)
 -   [Bok’s Butterflies v1.0.3](https://github.com/doc-bok/Butterflies/releases/tag/1.0.3)
 -   [Bok’s Butterflies v1.0.2](https://github.com/doc-bok/Butterflies/releases/tag/1.0.2)
