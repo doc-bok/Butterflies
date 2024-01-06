@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "butterflies:butterfly_net"
+      "item": "butterflies:butterfly_net_full"
     },
     {
       "item": "minecraft:glass_bottle"

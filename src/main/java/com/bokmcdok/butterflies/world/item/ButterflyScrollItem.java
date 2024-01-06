@@ -160,5 +160,6 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                                   @NotNull InteractionHand hand,
                                   ItemStack stack) {
         player.setItemInHand(hand, new ItemStack(Items.PAPER, stack.getCount()));
+        player.addItem(new ItemStack(Items.IRON_NUGGET, stack.getCount()));
     }
 }
