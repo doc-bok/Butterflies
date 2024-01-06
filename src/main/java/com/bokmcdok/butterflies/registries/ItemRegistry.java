@@ -29,7 +29,10 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> INSTANCE = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MODID);
 
     //  Butterfly net - Used to catch butterflies
-    public static final RegistryObject<Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.NAME,
+    public static final RegistryObject<Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.EMPTY_NAME,
+            () -> new ButterflyNetItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> BUTTERFLY_NET_FULL = INSTANCE.register(ButterflyNetItem.FULL_NAME,
             () -> new ButterflyNetItem(new Item.Properties().stacksTo(1)));
 
     // Bottled butterfly - A butterfly trapped in a bottle.
