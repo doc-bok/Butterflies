@@ -3,14 +3,17 @@ package com.bokmcdok.butterflies.event.entity.player;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
+import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -52,11 +55,30 @@ public class PlayerEventListener {
 
                     if (index >= 0) {
                         ButterflyContainerItem.setButterfly(craftingItem, index);
-                    }
 
-                    break;
+                        // Check for shift-clicked item.
+                        Player player = event.getEntity();
+                        if (player != null) {
+                            Inventory inventory = player.getInventory();
+                            for (int j = 0; j < inventory.getContainerSize(); ++j) {
+
+                                ItemStack inventoryItem = inventory.getItem(j);
+                                if (inventoryItem.getItem() instanceof BottledButterflyItem ||
+                                        inventoryItem.getItem() instanceof ButterflyScrollItem) {
+
+                                    CompoundTag inventoryItemTag = inventoryItem.getTag();
+                                    if (inventoryItemTag == null || !inventoryItemTag.contains(CompoundTagId.ENTITY_ID)) {
+                                        ButterflyContainerItem.setButterfly(inventoryItem, index);
+                                    }
+                                }
+                            }
+                        }
+
+                        break;
+                    }
                 }
             }
+
         } else if (craftingItem.getItem() instanceof ButterflyBookItem) {
             Container craftingMatrix = event.getInventory();
             int index = -1;
@@ -74,11 +96,25 @@ public class PlayerEventListener {
                 if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
                     ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
                     index = ButterflyData.locationToIndex(location);
+                    break;
                 }
             }
 
             if (index >= 0) {
                 ButterflyBookItem.addPage(oldBook, craftingItem, index);
+
+                // Check for shift-clicked item.
+                Player player = event.getEntity();
+                if (player != null) {
+                    Inventory inventory = player.getInventory();
+                    for (int j = 0; j < inventory.getContainerSize(); ++j) {
+
+                        ItemStack inventoryItem = inventory.getItem(j);
+                        if (inventoryItem.getItem() instanceof ButterflyBookItem) {
+                            ButterflyBookItem.addPage(oldBook, craftingItem, index);
+                        }
+                    }
+                }
             }
         }
     }

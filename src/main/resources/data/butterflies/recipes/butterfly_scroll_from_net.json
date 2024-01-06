@@ -3,7 +3,7 @@
   "group": "butterfly_scroll",
   "ingredients": [
     {
-      "item": "butterflies:butterfly_net"
+      "item": "butterflies:butterfly_net_full"
     },
     {
       "item": "minecraft:paper"

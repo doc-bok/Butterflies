@@ -29,7 +29,8 @@ import java.util.Objects;
 public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
-    public static final String NAME = "butterfly_net";
+    public static final String EMPTY_NAME = "butterfly_net";
+    public static final String FULL_NAME = "butterfly_net_full";
 
     /**
      * Construction
@@ -85,7 +86,10 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (entity instanceof Butterfly) {
-            CompoundTag tag = stack.getOrCreateTag();
+
+            ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET_FULL.get(), 1);
+
+            CompoundTag tag = newStack.getOrCreateTag();
             if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
                 !tag.contains(CompoundTagId.ENTITY_ID)) {
 
@@ -93,6 +97,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                 tag.putString(CompoundTagId.ENTITY_ID, Objects.requireNonNull(entity.getEncodeId()));
                 entity.discard();
 
+                player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
 
                 return true;
@@ -128,8 +133,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                         (int) lookAngle.z);
 
             Butterfly.spawn(player.getLevel(), new ResourceLocation(entityId), positionToSpawn, false);
-            tag.remove(CompoundTagId.CUSTOM_MODEL_DATA);
-            tag.remove(CompoundTagId.ENTITY_ID);
+
+            ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET.get(), 1);
+            player.setItemInHand(hand, newStack);
 
             return InteractionResultHolder.success(stack);
         }

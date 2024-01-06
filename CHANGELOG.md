@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.0.6 (2024-01-05)
+-   Fixed shift-clicking recipes.
+
 ### 2.0.5 (2024-01-05)
 -   Added a secret goal.
 
