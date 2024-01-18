@@ -1,0 +1,12 @@
+{
+  "index": 8,
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "uncommon",
+  "habitat": "jungles",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "butterfly": "long"
+  }
+}
