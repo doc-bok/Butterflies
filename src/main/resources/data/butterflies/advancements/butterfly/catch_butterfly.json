@@ -22,9 +22,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
-            ],
-            "nbt": "{CustomModelData:1}"
+              "butterflies:butterfly_net_full"
+            ]
           }
         ]
       }
