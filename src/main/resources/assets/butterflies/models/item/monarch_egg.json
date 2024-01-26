@@ -1,5 +1,5 @@
 {
-  "parent": "item/handheld_rod",
+  "parent": "butterflies:item/template_butterfly_egg",
   "textures": {
     "layer0": "butterflies:item/butterfly_egg/monarch_egg"
   }
