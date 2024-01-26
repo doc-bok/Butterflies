@@ -1,5 +1,15 @@
 ## Changelog
 
+### 2.0.9 (2024-01-26)
+-   Fixed butterfly net achievements not working
+
+### 2.0.8 (2024-01-14)
+-   Redesigned the buckeye butterfly texture.
+-   Tweaked cabbage and forester textures.
+
+### 2.0.7 (2024-01-13)
+-   Butterfly eggs are now smaller in size.
+
 ### 2.0.6 (2024-01-05)
 -   Fixed shift-clicking recipes.
 
