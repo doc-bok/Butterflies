@@ -2,8 +2,7 @@
   "parent": "butterflies:butterfly/catch_butterfly",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_net",
-      "nbt": "{CustomModelData:1}"
+      "item": "butterflies:butterfly_net_full"
     },
     "title": {
       "translate": "advancements.butterfly.catch_all_butterflies.title"
@@ -26,7 +25,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:admiral\"}"
           }
@@ -39,7 +38,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:buckeye\"}"
           }
@@ -52,7 +51,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:cabbage\"}"
           }
@@ -65,7 +64,7 @@
         "items": [
           {
             "item": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:chalkhill\"}"
           }
@@ -78,7 +77,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:clipper\"}"
           }
@@ -91,7 +90,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:common\"}"
           }
@@ -104,7 +103,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:emporer\"}"
           }
@@ -117,7 +116,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:forester\"}"
           }
@@ -130,7 +129,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:glasswing\"}"
           }
@@ -143,7 +142,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:hairstreak\"}"
           }
@@ -156,7 +155,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:heath\"}"
           }
@@ -169,7 +168,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:longwing\"}"
           }
@@ -182,7 +181,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:monarch\"}"
           }
@@ -195,7 +194,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:morpho\"}"
           }
@@ -208,7 +207,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:rainbow\"}"
           }
@@ -221,7 +220,7 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net"
+              "butterflies:butterfly_net_full"
             ],
             "nbt": "{EntityId:\"butterflies:swallowtail\"}"
           }
