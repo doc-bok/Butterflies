@@ -1,10 +1,17 @@
 package com.bokmcdok.butterflies.world;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Helper for converting entity ID to index and vice versa.
@@ -56,128 +63,187 @@ public class ButterflyData {
 
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
-    private static final Map<Integer, Entry> BUTTERFLY_ENTRIES = new HashMap<>();
+    private static final Map<Integer, ButterflyData> BUTTERFLY_ENTRIES = new HashMap<>();
+
+    // The index of the butterfly
+    public final int butterflyIndex;
+
+    // The butterfly species
+    public final String entityId;
+
+    // The size of the butterfly
+    public final Size size;
+
+    // The speed of the butterfly
+    public final Speed speed;
+
+    // How rare the butterfly is
+    public final Rarity rarity;
+
+    // The description of the butterfly's habitat
+    public final Habitat habitat;
+
+    // The lifespan of the caterpillar phase
+    public final int caterpillarLifespan;
+
+    // The lifespan of the chrysalis phase
+    public final int chrysalisLifespan;
+
+    // The lifespan of the butterfly phase
+    public final int butterflyLifespan;
 
     /**
-     * Class to hold all the data for a specific butterfly.
+     * Get the overall lifespan as a simple enumeration
+     * @return A representation of the lifespan.
      */
-    public static class Entry {
-        public final String entityId;
-        public final Size size;
-        public final Speed speed;
-        public final Rarity rarity;
-        public final Habitat habitat;
-
-        public final int caterpillarLifespan;
-        public final int chrysalisLifespan;
-        public final int butterflyLifespan;
-
-        /**
-         * Get the overall lifespan as a simple enumeration
-         * @return A representation of the lifespan.
-         */
-        public Lifespan getOverallLifeSpan() {
-            int days = (caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
-            if (days < 15) {
-                return Lifespan.SHORT;
-            } else if(days < 25) {
-                return Lifespan.MEDIUM;
-            } else {
-                return Lifespan.LONG;
-            }
+    public Lifespan getOverallLifeSpan() {
+        int days = (caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
+        if (days < 15) {
+            return Lifespan.SHORT;
+        } else if (days < 25) {
+            return Lifespan.MEDIUM;
+        } else {
+            return Lifespan.LONG;
         }
+    }
+
+    /**
+     * Construction
+     * @param entityId            The id of the butterfly species.
+     * @param size                The size of the butterfly.
+     * @param speed               The speed of the butterfly.
+     * @param rarity              The rarity of the butterfly.
+     * @param caterpillarLifespan How long it remains in the caterpillar stage.
+     * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
+     * @param butterflyLifespan   How long it lives as a butterfly.
+     */
+    private ButterflyData(int butterflyIndex,
+                          String entityId,
+                          Size size,
+                          Speed speed,
+                          Rarity rarity,
+                          Habitat habitat,
+                          int caterpillarLifespan,
+                          int chrysalisLifespan,
+                          int butterflyLifespan) {
+        this.butterflyIndex = butterflyIndex;
+        this.entityId = entityId;
+        this.size = size;
+        this.speed = speed;
+        this.rarity = rarity;
+        this.habitat = habitat;
+
+        this.caterpillarLifespan = caterpillarLifespan * 2;
+        this.chrysalisLifespan = chrysalisLifespan;
+        this.butterflyLifespan = butterflyLifespan * 2;
+    }
+
+    /**
+     * Class to help serialize a butterfly entry.
+     */
+    public static class Serializer implements JsonDeserializer<ButterflyData> {
 
         /**
-         * Construction
-         * @param entityId The id of the butterfly species.
-         * @param size The size of the butterfly.
-         * @param speed The speed of the butterfly.
-         * @param rarity The rarity of the butterfly.
-         * @param caterpillarLifespan How long it remains in the caterpillar stage.
-         * @param chrysalisLifespan How long it takes for a chrysalis to hatch.
-         * @param butterflyLifespan How long it lives as a butterfly.
+         * Deserializes a JSON object into a butterfly entry
+         * @param json The Json data being deserialized
+         * @param typeOfT The type of the Object to deserialize to
+         * @param context Language context (ignored)
+         * @return A new butterfly entry
+         * @throws JsonParseException Unused
          */
-        private Entry(String entityId,
-                      Size size,
-                      Speed speed,
-                      Rarity rarity,
-                      Habitat habitat,
-                      int caterpillarLifespan,
-                      int chrysalisLifespan,
-                      int butterflyLifespan) {
-            this.entityId = entityId;
-            this.size = size;
-            this.speed = speed;
-            this.rarity = rarity;
-            this.habitat = habitat;
+        @Override
+        public ButterflyData deserialize(JsonElement json,
+                                         Type typeOfT,
+                                         JsonDeserializationContext context) throws JsonParseException {
+            ButterflyData entry = null;
 
-            this.caterpillarLifespan = caterpillarLifespan * 2;
-            this.chrysalisLifespan = chrysalisLifespan;
-            this.butterflyLifespan = butterflyLifespan * 2;
+            if (json instanceof final JsonObject object) {
+                int index = object.get("index").getAsInt();
+                String entityId = object.get("entityId").getAsString();
+
+                String sizeStr = object.get("size").getAsString();
+                Size size = Size.MEDIUM;
+                if (Objects.equals(sizeStr, "small")) {
+                    size = Size.SMALL;
+                } else if (Objects.equals(sizeStr, "large")) {
+                    size = Size.LARGE;
+                }
+
+                String speedStr = object.get("speed").getAsString();
+                Speed speed = Speed.MODERATE;
+                if (Objects.equals(speedStr, "fast")) {
+                    speed = Speed.FAST;
+                }
+
+                String rarityStr = object.get("rarity").getAsString();
+                Rarity rarity = Rarity.COMMON;
+                if (Objects.equals(rarityStr, "uncommon")) {
+                    rarity = Rarity.UNCOMMON;
+                } else if (Objects.equals(rarityStr, "rare")) {
+                    rarity = Rarity.RARE;
+                }
+
+                String habitatStr = object.get("habitat").getAsString();
+                Habitat habitat = Habitat.PLAINS;
+                if (Objects.equals(habitatStr, "forests")) {
+                    habitat = Habitat.FORESTS;
+                } else if (Objects.equals(habitatStr, "forests_and_plains")) {
+                    habitat = Habitat.FORESTS_AND_PLAINS;
+                } else if (Objects.equals(habitatStr, "jungles")) {
+                    habitat = Habitat.JUNGLES;
+                }
+
+                JsonObject lifespan = object.get("lifespan").getAsJsonObject();
+
+                String caterpillarStr = lifespan.get("caterpillar").getAsString();
+                int caterpillarLifespan = LIFESPAN_MEDIUM;
+                if (Objects.equals(caterpillarStr, "short")) {
+                    caterpillarLifespan = LIFESPAN_SHORT;
+                } else if (Objects.equals(caterpillarStr, "long")) {
+                    caterpillarLifespan = LIFESPAN_LONG;
+                }
+
+                String chrysalisStr = lifespan.get("chrysalis").getAsString();
+                int chrysalisLifespan = LIFESPAN_MEDIUM;
+                if (Objects.equals(chrysalisStr, "short")) {
+                    chrysalisLifespan = LIFESPAN_SHORT;
+                } else if (Objects.equals(chrysalisStr, "long")) {
+                    chrysalisLifespan = LIFESPAN_LONG;
+                }
+
+                String butterflyStr = lifespan.get("butterfly").getAsString();
+                int butterflyLifespan = LIFESPAN_MEDIUM;
+                if (Objects.equals(butterflyStr, "short")) {
+                    butterflyLifespan = LIFESPAN_SHORT;
+                } else if (Objects.equals(butterflyStr, "long")) {
+                    butterflyLifespan = LIFESPAN_LONG;
+                }
+
+                entry = new ButterflyData(
+                        index,
+                        entityId,
+                        size,
+                        speed,
+                        rarity,
+                        habitat,
+                        caterpillarLifespan,
+                        chrysalisLifespan,
+                        butterflyLifespan
+                );
+            }
+
+            return entry;
         }
     }
 
     /**
      * Create new butterfly data.
-     * @param index The butterfly index.
-     * @param species The species of the butterfly. Used to generate resource
-     *                locations.
-     * @param size The size of the butterfly.
+     * @param entry The butterfly data.
      */
-    private static void addButterfly(int index,
-                                     String species,
-                                     Size size,
-                                     Speed speed,
-                                     Rarity rarity,
-                                     Habitat habitat,
-                                     int caterpillarLifespan,
-                                     int chrysalisLifespan,
-                                     int butterflyLifespan)
+    public static void addButterfly(ButterflyData entry)
     {
-        ENTITY_ID_TO_INDEX_MAP.put(species, index);
-        BUTTERFLY_ENTRIES.put(index, new Entry(species,
-                                               size,
-                                               speed,
-                                               rarity,
-                                               habitat,
-                                               caterpillarLifespan,
-                                               chrysalisLifespan,
-                                               butterflyLifespan));
-    }
-
-    static {
-        addButterfly(0, "admiral", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
-                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(1, "buckeye", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(2, "cabbage", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_SHORT);
-        addButterfly(3, "chalkhill", Size.SMALL, Speed.FAST, Rarity.COMMON, Habitat.PLAINS,
-                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(4, "clipper", Size.LARGE, Speed.FAST, Rarity.RARE, Habitat.FORESTS,
-                LIFESPAN_MEDIUM, LIFESPAN_LONG, LIFESPAN_MEDIUM);
-        addButterfly(5, "common", Size.SMALL, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(6, "emperor", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
-                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(7, "forester", Size.SMALL, Speed.MODERATE, Rarity.RARE, Habitat.FORESTS,
-                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(8, "glasswing", Size.MEDIUM, Speed.MODERATE, Rarity.UNCOMMON, Habitat.JUNGLES,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
-        addButterfly(9, "hairstreak", Size.SMALL, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
-                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
-        addButterfly(10, "heath", Size.SMALL, Speed.MODERATE, Rarity.RARE, Habitat.PLAINS,
-                LIFESPAN_LONG, LIFESPAN_MEDIUM, LIFESPAN_LONG);
-        addButterfly(11, "longwing", Size.MEDIUM, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_LONG);
-        addButterfly(12, "monarch", Size.LARGE, Speed.MODERATE, Rarity.COMMON, Habitat.PLAINS,
-                LIFESPAN_SHORT, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(13, "morpho", Size.LARGE, Speed.MODERATE, Rarity.RARE, Habitat.JUNGLES,
-                LIFESPAN_MEDIUM, LIFESPAN_SHORT, LIFESPAN_MEDIUM);
-        addButterfly(14, "rainbow", Size.SMALL, Speed.FAST, Rarity.UNCOMMON, Habitat.FORESTS_AND_PLAINS,
-                LIFESPAN_MEDIUM, LIFESPAN_MEDIUM, LIFESPAN_MEDIUM);
-        addButterfly(15, "swallowtail", Size.LARGE, Speed.MODERATE, Rarity.COMMON, Habitat.FORESTS_AND_PLAINS,
-                LIFESPAN_SHORT, LIFESPAN_MEDIUM, LIFESPAN_SHORT);
+        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
+        BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
     }
 
     /**
@@ -288,7 +354,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The butterfly entry.
      */
-    public static Entry getEntry(int index) {
+    public static ButterflyData getEntry(int index) {
         if (BUTTERFLY_ENTRIES.containsKey(index)) {
             return BUTTERFLY_ENTRIES.get(index);
         }
@@ -301,7 +367,7 @@ public class ButterflyData {
      * @param location The resource location of the butterfly.
      * @return The butterfly entry.
      */
-    public static Entry getEntry(ResourceLocation location) {
+    public static ButterflyData getEntry(ResourceLocation location) {
         int index = locationToIndex(location);
         return getEntry(index);
     }

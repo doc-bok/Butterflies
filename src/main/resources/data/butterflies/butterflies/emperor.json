@@ -1,0 +1,13 @@
+{
+  "index": 6,
+  "entityId": "emperor",
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "forests",
+  "lifespan": {
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "butterfly": "medium"
+  }
+}

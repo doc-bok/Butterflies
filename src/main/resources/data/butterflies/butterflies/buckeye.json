@@ -1,0 +1,13 @@
+{
+  "index": 1,
+  "entityId": "buckeye",
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "plains",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "butterfly": "medium"
+  }
+}

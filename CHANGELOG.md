@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.1.0 (2024-01-28)
+-   Butterfly data can now be edited via JSON files
+
 ### 2.0.9 (2024-01-26)
 -   Fixed butterfly net achievements not working
 

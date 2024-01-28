@@ -1,0 +1,13 @@
+{
+  "index": 2,
+  "entityId": "cabbage",
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "plains",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "butterfly": "short"
+  }
+}

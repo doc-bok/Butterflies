@@ -1,0 +1,13 @@
+{
+  "index": 5,
+  "entityId": "common",
+  "size": "small",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "plains",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "butterfly": "medium"
+  }
+}

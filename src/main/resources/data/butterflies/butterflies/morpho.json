@@ -1,0 +1,13 @@
+{
+  "index": 13,
+  "entityId": "morpho",
+  "size": "large",
+  "speed": "moderate",
+  "rarity": "rare",
+  "habitat": "jungles",
+  "lifespan": {
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "butterfly": "medium"
+  }
+}

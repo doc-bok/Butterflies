@@ -398,7 +398,7 @@ public class ButterflyBookScreen extends Screen {
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
                 int butterflyIndex = pages.getInt((page - 1) / 2);
-                ButterflyData.Entry entry = ButterflyData.getEntry(butterflyIndex);
+                ButterflyData entry = ButterflyData.getEntry(butterflyIndex);
                 if (entry != null) {
                     //  Butterfly name
                     MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId);
