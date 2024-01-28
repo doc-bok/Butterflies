@@ -398,7 +398,7 @@ public class Butterfly extends Animal {
         this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
 
         if (data.speed == ButterflyData.Speed.FAST) {

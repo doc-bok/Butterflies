@@ -379,7 +379,7 @@ public class Chrysalis extends DirectionalCreature {
         super("textures/entity/chrysalis/chrysalis_" + species + ".png", entityType, level);
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
         setAge(-data.chrysalisLifespan);
     }

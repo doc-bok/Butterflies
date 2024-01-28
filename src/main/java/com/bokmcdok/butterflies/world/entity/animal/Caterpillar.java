@@ -419,7 +419,7 @@ public class Caterpillar extends DirectionalCreature {
         super("textures/entity/caterpillar/caterpillar_" + species + ".png", entityType, level);
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
         setAge(-data.caterpillarLifespan);
     }
