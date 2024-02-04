@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2.2.1 (2024-02-04)
+-   Caterpillars that end up on non-leaf blocks will starve to death instead of
+    creating a chrysalis.
+
 ### 2.2.0 (2024-02-04)
 -   Caterpillars can be picked up and moved by players.
 

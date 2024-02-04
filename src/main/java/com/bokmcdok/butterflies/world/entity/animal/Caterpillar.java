@@ -22,6 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -370,6 +371,27 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * If a player hits a caterpillar it will be converted to an item in their inventory.
+     * @param source The source of the damage.
+     */
+    @Override
+    public void handleDamageEvent(DamageSource source) {
+        if (source.getEntity() instanceof Player player) {
+            this.remove(RemovalReason.DISCARDED);
+
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+
+            Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
+            if (caterpillarItem != null) {
+                ItemStack itemStack = new ItemStack(caterpillarItem);
+                player.addItem(itemStack);
+            }
+        } else {
+            super.handleDamageEvent(source);
+        }
+    }
+
+    /**
      * Overrides how an entity handles triggers such as tripwires and pressure
      * plates. Caterpillars aren't heavy enough to trigger either.
      * @return Always TRUE, so caterpillars ignore block triggers.
@@ -564,17 +586,24 @@ public class Caterpillar extends DirectionalCreature {
 
             // Spawn Chrysalis.
             if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-                ResourceLocation location = EntityType.getKey(this.getType());
-                int index = ButterflyData.locationToIndex(location);
-                ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
-                if (newLocation != null) {
-                    Chrysalis.spawn((ServerLevel) this.level(),
-                                    newLocation,
-                                    this.getSurfaceBlock(),
-                                    this.getSurfaceDirection(),
-                                    this.position(),
-                                    this.getYRot());
-                    this.remove(RemovalReason.DISCARDED);
+                BlockPos surfaceBlockPos = this.getSurfaceBlock();
+
+                // If the caterpillar is not on a leaf block it will starve instead.
+                if (level().getBlockState(surfaceBlockPos).getBlock() instanceof LeavesBlock) {
+                    ResourceLocation location = EntityType.getKey(this.getType());
+                    int index = ButterflyData.locationToIndex(location);
+                    ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
+                    if (newLocation != null) {
+                        Chrysalis.spawn((ServerLevel) this.level(),
+                                newLocation,
+                                this.getSurfaceBlock(),
+                                this.getSurfaceDirection(),
+                                this.position(),
+                                this.getYRot());
+                        this.remove(RemovalReason.DISCARDED);
+                    }
+                } else {
+                    this.hurt(this.damageSources().starve(), 1.0f);
                 }
             }
         }
@@ -629,26 +658,5 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
-    }
-
-    /**
-     * If a player hits a caterpillar it will be converted to an item in their inventory.
-     * @param source The source of the damage.
-     */
-    @Override
-    public void handleDamageEvent(DamageSource source) {
-        if (source.getEntity() instanceof Player player) {
-            this.remove(RemovalReason.DISCARDED);
-
-            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-
-            Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
-            if (caterpillarItem != null) {
-                ItemStack itemStack = new ItemStack(caterpillarItem);
-                player.addItem(itemStack);
-            }
-        } else {
-            super.handleDamageEvent(source);
-        }
     }
 }
