@@ -7,14 +7,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -55,6 +60,9 @@ public class Caterpillar extends DirectionalCreature {
 
     // The size of the caterpillar.
     private final ButterflyData.Size size;
+
+    // The caterpillar item location.
+    private final ResourceLocation caterpillarItem;
 
     /**
      * Create a Morpho butterfly
@@ -421,6 +429,7 @@ public class Caterpillar extends DirectionalCreature {
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
+        this.caterpillarItem = ButterflyData.indexToCaterpillarItemLocation(data.butterflyIndex);
         setAge(-data.caterpillarLifespan);
     }
 
@@ -620,5 +629,26 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * If a player hits a caterpillar it will be converted to an item in their inventory.
+     * @param source The source of the damage.
+     */
+    @Override
+    public void handleDamageEvent(DamageSource source) {
+        if (source.getEntity() instanceof Player player) {
+            this.remove(RemovalReason.DISCARDED);
+
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+
+            Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
+            if (caterpillarItem != null) {
+                ItemStack itemStack = new ItemStack(caterpillarItem);
+                player.addItem(itemStack);
+            }
+        } else {
+            super.handleDamageEvent(source);
+        }
     }
 }

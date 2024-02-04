@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.2.0 (2024-02-04)
+-   Caterpillars can be picked up and moved by players.
+
 ### 2.1.0 (2024-01-28)
 -   Butterfly data can now be edited via JSON files
 
