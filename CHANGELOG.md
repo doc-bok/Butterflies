@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.2.2 (2024-02-04)
+-   Advancements for collecting caterpillars.
+
 ### 2.2.1 (2024-02-04)
 -   Caterpillars that end up on non-leaf blocks will starve to death instead of
     creating a chrysalis.
