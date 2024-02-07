@@ -1,0 +1,13 @@
+{
+  "index": 15,
+  "entityId": "swallowtail",
+  "size": "large",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "forests_and_plains",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "medium",
+    "butterfly": "short"
+  }
+}

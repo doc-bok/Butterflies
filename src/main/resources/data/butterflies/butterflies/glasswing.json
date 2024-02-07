@@ -1,0 +1,13 @@
+{
+  "index": 8,
+  "entityId": "glasswing",
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "uncommon",
+  "habitat": "jungles",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "butterfly": "long"
+  }
+}

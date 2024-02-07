@@ -1,0 +1,13 @@
+{
+  "index": 14,
+  "entityId": "rainbow",
+  "size": "small",
+  "speed": "fast",
+  "rarity": "uncommon",
+  "habitat": "forests_and_plains",
+  "lifespan": {
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "butterfly": "medium"
+  }
+}

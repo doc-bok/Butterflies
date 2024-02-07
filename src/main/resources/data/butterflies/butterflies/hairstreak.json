@@ -1,0 +1,13 @@
+{
+  "index": 9,
+  "entityId": "hairstreak",
+  "size": "small",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "forests",
+  "lifespan": {
+    "caterpillar": "short",
+    "chrysalis": "medium",
+    "butterfly": "short"
+  }
+}
