@@ -368,6 +368,22 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
+    }
+
+    /**
      * Construction
      * @param species The species of the butterfly
      * @param entityType The type of the entity.

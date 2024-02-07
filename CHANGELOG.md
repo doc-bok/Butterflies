@@ -1,10 +1,13 @@
 ## Changelog
 
+### 2.1.1 (2024-02-07)
+-   Expanded culling boxes for butterfly entities for compatibility with optimisation mods.
+
 ### 2.1.0 (2024-01-28)
--   Butterfly data can now be edited via JSON files
+-   Butterfly data can now be edited via JSON files.
 
 ### 2.0.9 (2024-01-26)
--   Fixed butterfly net achievements not working
+-   Fixed butterfly net achievements not working.
 
 ### 2.0.8 (2024-01-14)
 -   Redesigned the buckeye butterfly texture.
