@@ -1,0 +1,17 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:dark_forest",
+    "minecraft:windswept_forest",
+    "minecraft:wooded_badlands"
+  ],
+  "spawners":
+  {
+    "type": "butterflies:hairstreak_chrysalis",
+    "weight": 10,
+    "minCount": 3,
+    "maxCount": 5
+  }
+}

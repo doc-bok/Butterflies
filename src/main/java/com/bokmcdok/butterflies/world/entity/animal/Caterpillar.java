@@ -4,24 +4,20 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -59,6 +55,9 @@ public class Caterpillar extends DirectionalCreature {
     @Nullable
     private Vec3 targetPosition;
 
+    // Whether or not gravity is being applied.
+    private boolean isNoGravity = true;
+
     // The size of the caterpillar.
     private final ButterflyData.Size size;
 
@@ -67,8 +66,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Morpho butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed entity.
      */
     @NotNull
@@ -80,8 +80,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Forester butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -93,8 +94,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Common butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -106,8 +108,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create an Emperor butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -119,8 +122,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Hairstreak butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -132,8 +136,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Rainbow butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -145,8 +150,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Heath butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -158,8 +164,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Glasswing butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -171,8 +178,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Chalkhill butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -184,8 +192,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Swallowtail butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -200,8 +209,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Monarch butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -213,8 +223,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Cabbage butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -226,8 +237,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create an Admiral butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -239,8 +251,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Longwing butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -252,8 +265,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Clipper butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -265,8 +279,9 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Buckeye butterfly
+     *
      * @param entityType The type of the entity.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A newly constructed butterfly.
      */
     @NotNull
@@ -278,9 +293,10 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Spawns a caterpillar at the specified position.
-     * @param level The current level.
-     * @param location The resource location of the caterpillar to spawn.
-     * @param position The position to spawn the caterpillar.
+     *
+     * @param level     The current level.
+     * @param location  The resource location of the caterpillar to spawn.
+     * @param position  The position to spawn the caterpillar.
      * @param direction The direction of "up" for the caterpillar.
      */
     public static void spawn(ServerLevel level,
@@ -291,34 +307,42 @@ public class Caterpillar extends DirectionalCreature {
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Caterpillar caterpillar) {
-                double  x = position.getX() + 0.45D;
-                double  y = position.getY() + 0.2D;
-                double  z = position.getZ() + 0.5D;
+                double x = position.getX() + 0.45D;
+                double y = position.getY() + 0.4D;
+                double z = position.getZ() + 0.5D;
 
-                BlockPos spawnPosition;
-                if (direction == Direction.DOWN) {
-                    y = Math.floor(position.getY());
-                    spawnPosition = position.below();
-                } else if (direction == Direction.UP) {
-                    y = Math.floor(position.getY()) + 1.0d;
-                    spawnPosition = position.above();
-                } else if (direction == Direction.NORTH) {
-                    z = Math.floor(position.getZ());
-                    spawnPosition = position.north();
-                } else if (direction == Direction.SOUTH) {
-                    z = Math.floor(position.getZ()) + 1.0d;
-                    spawnPosition = position.south();
-                } else if (direction == Direction.WEST) {
-                    x = Math.floor(position.getX());
-                    spawnPosition = position.west();
-                } else {
-                    x = Math.floor(position.getX()) + 1.0d;
-                    spawnPosition = position.east();
+                BlockPos spawnPosition = position.above();
+
+                switch (direction) {
+                    case DOWN -> {
+                        y = Math.floor(position.getY());
+                        spawnPosition = position.below();
+                    }
+                    case UP -> {
+                        y = Math.floor(position.getY()) + 1.0d;
+                        spawnPosition = position.above();
+                    }
+                    case NORTH -> {
+                        z = Math.floor(position.getZ());
+                        spawnPosition = position.north();
+                    }
+                    case SOUTH -> {
+                        z = Math.floor(position.getZ()) + 1.0d;
+                        spawnPosition = position.south();
+                    }
+                    case WEST -> {
+                        x = Math.floor(position.getX());
+                        spawnPosition = position.west();
+                    }
+                    case EAST -> {
+                        x = Math.floor(position.getX()) + 1.0d;
+                        spawnPosition = position.east();
+                    }
                 }
 
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
-                caterpillar.setSurfaceBlock(spawnPosition);
+                caterpillar.setSurfaceBlockPos(spawnPosition);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -332,46 +356,32 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
-     * Set persistence if we are spawning from a spawn egg.
-     * @param levelAccessor Access to the level.
-     * @param difficulty The local difficulty.
-     * @param spawnType The type of spawn.
-     * @param groupData The group data.
-     * @param compoundTag Tag data for the entity.
-     * @return The updated group data.
-     */
-    @Override
-    public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
-                                        @NotNull DifficultyInstance difficulty,
-                                        @NotNull MobSpawnType spawnType,
-                                        @Nullable SpawnGroupData groupData,
-                                        @Nullable CompoundTag compoundTag) {
-        if (spawnType == MobSpawnType.SPAWN_EGG) {
-            setPersistenceRequired();
-        }
-
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
-    }
-
-    /**
      * Reduce the size of the caterpillar - they are small!
+     *
      * @return The new size of the caterpillar.
      */
     @Override
     public float getScale() {
-        float scale = (float)getAge() / -24000.0f;
+        float scale = (float) getAge() / -24000.0f;
         scale *= 0.04;
         scale += 0.08;
 
         switch (this.size) {
-            case SMALL -> { return 0.7f * scale; }
-            case LARGE ->{ return 1.28f * scale; }
-            default -> { return scale; }
+            case SMALL -> {
+                return 0.7f * scale;
+            }
+            case LARGE -> {
+                return 1.28f * scale;
+            }
+            default -> {
+                return scale;
+            }
         }
     }
 
     /**
      * If a player hits a caterpillar it will be converted to an item in their inventory.
+     *
      * @param source The source of the damage.
      */
     @Override
@@ -394,6 +404,7 @@ public class Caterpillar extends DirectionalCreature {
     /**
      * Overrides how an entity handles triggers such as tripwires and pressure
      * plates. Caterpillars aren't heavy enough to trigger either.
+     *
      * @return Always TRUE, so caterpillars ignore block triggers.
      */
     @Override
@@ -406,21 +417,13 @@ public class Caterpillar extends DirectionalCreature {
      */
     @Override
     public boolean isNoGravity() {
-        boolean isNoGravity = true;
-
-        if (this.level().isEmptyBlock(getSurfaceBlock())) {
-            setSurfaceDirection(Direction.DOWN);
-            setSurfaceBlock(this.blockPosition().below());
-            this.targetPosition = null;
-            isNoGravity = false;
-        }
-
-        return isNoGravity;
+        return this.isNoGravity;
     }
 
     /**
      * Override this to control if an entity can be pushed or not. Caterpillars
      * can't be pushed by other entities.
+     *
      * @return Always FALSE, so caterpillars cannot be pushed.
      */
     @Override
@@ -430,6 +433,7 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Override so that the bounding box isn't recalculated for "babies".
+     *
      * @param age The age of the entity.
      */
     @Override
@@ -439,9 +443,10 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a caterpillar entity.
-     * @param species The species of the butterfly
+     *
+     * @param species    The species of the butterfly
      * @param entityType The entity type.
-     * @param level The level we are creating the entity in.
+     * @param level      The level we are creating the entity in.
      */
     protected Caterpillar(String species,
                           EntityType<? extends Caterpillar> entityType,
@@ -473,8 +478,8 @@ public class Caterpillar extends DirectionalCreature {
             //  2. After a 1/30 random chance
             //  3. We get too close to the current target position
             if (this.targetPosition == null ||
-                this.targetPosition.distanceToSqr(this.position()) < 0.007d ||
-                this.random.nextInt(30) == 0) {
+                    this.targetPosition.distanceToSqr(this.position()) < 0.007d ||
+                    this.random.nextInt(30) == 0) {
 
                 if (this.targetPosition == null) {
                     this.targetPosition = this.position();
@@ -547,46 +552,59 @@ public class Caterpillar extends DirectionalCreature {
                         (Mth.atan2(
                                 updatedDeltaMovement.z,
                                 updatedDeltaMovement.x)
-                        * (180.0d / Math.PI)) - 90.0d;
+                                * (180.0d / Math.PI)) - 90.0d;
             } else if (direction == Direction.UP) {
                 updatedRotation =
                         (Mth.atan2(
                                 updatedDeltaMovement.x,
                                 updatedDeltaMovement.z)
-                        * (180.0d / Math.PI)) - 180.0d;
+                                * (180.0d / Math.PI)) - 180.0d;
             } else if (direction == Direction.NORTH) {
                 updatedRotation =
                         (Mth.atan2(
                                 updatedDeltaMovement.x,
                                 updatedDeltaMovement.y)
-                        * (180.0d / Math.PI)) - 180.0d;
+                                * (180.0d / Math.PI)) - 180.0d;
             } else if (direction == Direction.SOUTH) {
                 updatedRotation =
                         (Mth.atan2(
                                 updatedDeltaMovement.y,
                                 updatedDeltaMovement.x)
-                        * (180.0d / Math.PI)) - 90.0d;
+                                * (180.0d / Math.PI)) - 90.0d;
             } else if (direction == Direction.EAST) {
                 updatedRotation =
                         (Mth.atan2(
                                 updatedDeltaMovement.z,
                                 updatedDeltaMovement.y)
-                        * (180.0d / Math.PI)) - 90.0d;
+                                * (180.0d / Math.PI)) - 90.0d;
             } else {
                 updatedRotation =
                         (Mth.atan2(
                                 updatedDeltaMovement.y,
                                 updatedDeltaMovement.z)
-                        * (180.0d / Math.PI));
+                                * (180.0d / Math.PI));
             }
 
             double rotationDelta =
                     Mth.wrapDegrees(updatedRotation - this.getYRot());
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
+            // Update gravity
+            isNoGravity = true;
+
+            if (this.level().hasChunkAt(getSurfaceBlockPos())) {
+                if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
+
+                    setSurfaceDirection(Direction.DOWN);
+                    setSurfaceBlockPos(this.blockPosition().below());
+                    this.targetPosition = null;
+                    isNoGravity = false;
+                }
+            }
+
             // Spawn Chrysalis.
             if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-                BlockPos surfaceBlockPos = this.getSurfaceBlock();
+                BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
                 // If the caterpillar is not on a leaf block it will starve instead.
                 if (level().getBlockState(surfaceBlockPos).getBlock() instanceof LeavesBlock) {
@@ -596,7 +614,7 @@ public class Caterpillar extends DirectionalCreature {
                     if (newLocation != null) {
                         Chrysalis.spawn((ServerLevel) this.level(),
                                 newLocation,
-                                this.getSurfaceBlock(),
+                                this.getSurfaceBlockPos(),
                                 this.getSurfaceDirection(),
                                 this.position(),
                                 this.getYRot());

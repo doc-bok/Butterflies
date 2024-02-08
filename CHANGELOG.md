@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.3.0 (2024-02-08)
+-   Caterpillars and Chrysalises will now spawn naturally.
+
 ### 2.2.2 (2024-02-04)
 -   Advancements for collecting caterpillars.
 
