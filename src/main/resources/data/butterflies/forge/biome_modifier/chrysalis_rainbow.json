@@ -16,16 +16,16 @@
     "minecraft:windswept_hills",
     "minecraft:windswept_forest",
     "minecraft:windswept_savanna",
-    "minecraft:wooded_badlands",
     "minecraft:meadow",
-    "minecraft:river",
+    "minecraft:mushroom_fields",
+    "minecraft:lush_caves",
     "minecraft:cherry_grove"
   ],
   "spawners":
   {
-    "type": "butterflies:swallowtail",
-    "weight": 10,
-    "minCount": 3,
-    "maxCount": 5
+    "type": "butterflies:rainbow_chrysalis",
+    "weight": 5,
+    "minCount": 2,
+    "maxCount": 4
   }
 }

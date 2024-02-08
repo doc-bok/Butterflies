@@ -15,7 +15,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import org.jetbrains.annotations.NotNull;
 
-public class CaterpillarItem extends Item implements ButterflyContainerItem  {
+/**
+ * A class to represent a caterpillar in the player's inventory.
+ */
+public class CaterpillarItem extends Item {
     
     public static final String ADMIRAL_NAME = "caterpillar_admiral";    
     public static final String BUCKEYE_NAME = "caterpillar_buckeye";
