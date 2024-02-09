@@ -23,7 +23,7 @@
   ],
   "spawners":
   {
-    "type": "butterflies:swallowtail",
+    "type": "butterflies:swallowtail_chrysalis",
     "weight": 10,
     "minCount": 3,
     "maxCount": 5

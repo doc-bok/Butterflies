@@ -9,6 +9,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
+import com.bokmcdok.butterflies.world.item.CaterpillarItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -52,151 +53,140 @@ public class ItemRegistry {
             INSTANCE.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
 
     // Butterfly Eggs - Eggs that will eventually hatch into a caterpillar.
-    public static final RegistryObject<Item> ADMIRAL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_ADMIRAL = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,
             () -> new ButterflyEggItem(Butterfly.ADMIRAL_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> BUCKEYE_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.BUCKEYE_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_BUCKEYE = INSTANCE.register(ButterflyEggItem.BUCKEYE_NAME,
             () -> new ButterflyEggItem(Butterfly.BUCKEYE_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> CABBAGE_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CABBAGE_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_CABBAGE = INSTANCE.register(ButterflyEggItem.CABBAGE_NAME,
             () -> new ButterflyEggItem(Butterfly.CABBAGE_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> CHALKHILL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CHALKHILL_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_CHALKHILL = INSTANCE.register(ButterflyEggItem.CHALKHILL_NAME,
             () -> new ButterflyEggItem(Butterfly.CHALKHILL_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> CLIPPER_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.CLIPPER_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_CLIPPER = INSTANCE.register(ButterflyEggItem.CLIPPER_NAME,
             () -> new ButterflyEggItem(Butterfly.CLIPPER_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> COMMON_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.COMMON_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_COMMON = INSTANCE.register(ButterflyEggItem.COMMON_NAME,
             () -> new ButterflyEggItem(Butterfly.COMMON_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> EMPEROR_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.EMPEROR_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_EMPEROR = INSTANCE.register(ButterflyEggItem.EMPEROR_NAME,
             () -> new ButterflyEggItem(Butterfly.EMPEROR_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> FORESTER_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.FORESTER_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_FORESTER = INSTANCE.register(ButterflyEggItem.FORESTER_NAME,
             () -> new ButterflyEggItem(Butterfly.FORESTER_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> GLASSWING_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.GLASSWING_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_GLASSWING = INSTANCE.register(ButterflyEggItem.GLASSWING_NAME,
             () -> new ButterflyEggItem(Butterfly.GLASSWING_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> HAIRSTREAK_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.HAIRSTREAK_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_HAIRSTREAK = INSTANCE.register(ButterflyEggItem.HAIRSTREAK_NAME,
             () -> new ButterflyEggItem(Butterfly.HAIRSTREAK_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> HEATH_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.HEATH_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_HEATH = INSTANCE.register(ButterflyEggItem.HEATH_NAME,
             () -> new ButterflyEggItem(Butterfly.HEATH_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> LONGWING_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.LONGWING_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_LONGWING = INSTANCE.register(ButterflyEggItem.LONGWING_NAME,
             () -> new ButterflyEggItem(Butterfly.LONGWING_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> MONARCH_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.MONARCH_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_MONARCH = INSTANCE.register(ButterflyEggItem.MONARCH_NAME,
             () -> new ButterflyEggItem(Butterfly.MONARCH_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> MORPHO_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.MORPHO_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_MORPHO = INSTANCE.register(ButterflyEggItem.MORPHO_NAME,
             () -> new ButterflyEggItem(Butterfly.MORPHO_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> RAINBOW_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.RAINBOW_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_RAINBOW = INSTANCE.register(ButterflyEggItem.RAINBOW_NAME,
             () -> new ButterflyEggItem(Butterfly.RAINBOW_NAME, new Item.Properties()));
-
-    public static final RegistryObject<Item> SWALLOWTAIL_BUTTERFLY_EGG = INSTANCE.register(ButterflyEggItem.SWALLOWTAIL_NAME,
+    public static final RegistryObject<Item> BUTTERFLY_EGG_SWALLOWTAIL = INSTANCE.register(ButterflyEggItem.SWALLOWTAIL_NAME,
             () -> new ButterflyEggItem(Butterfly.SWALLOWTAIL_NAME, new Item.Properties()));
 
-    //  Spawn eggs
-    private static final RegistryObject<Item> BUTTERFLY_MORPHO_EGG = INSTANCE.register(Butterfly.MORPHO_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_MORPHO, 0x0000aa, 0x0088ff, new Item.Properties()));
+    //  Caterpillars
+    public static final RegistryObject<Item> CATERPILLAR_ADMIRAL = INSTANCE.register(CaterpillarItem.ADMIRAL_NAME,
+            () -> new CaterpillarItem(Caterpillar.ADMIRAL_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_BUCKEYE = INSTANCE.register(CaterpillarItem.BUCKEYE_NAME,
+            () -> new CaterpillarItem(Caterpillar.BUCKEYE_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_CABBAGE = INSTANCE.register(CaterpillarItem.CABBAGE_NAME,
+            () -> new CaterpillarItem(Caterpillar.CABBAGE_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_CHALKHILL = INSTANCE.register(CaterpillarItem.CHALKHILL_NAME,
+            () -> new CaterpillarItem(Caterpillar.CHALKHILL_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_CLIPPER = INSTANCE.register(CaterpillarItem.CLIPPER_NAME,
+            () -> new CaterpillarItem(Caterpillar.CLIPPER_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_COMMON = INSTANCE.register(CaterpillarItem.COMMON_NAME,
+            () -> new CaterpillarItem(Caterpillar.COMMON_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_EMPEROR = INSTANCE.register(CaterpillarItem.EMPEROR_NAME,
+            () -> new CaterpillarItem(Caterpillar.EMPEROR_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_FORESTER = INSTANCE.register(CaterpillarItem.FORESTER_NAME,
+            () -> new CaterpillarItem(Caterpillar.FORESTER_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_GLASSWING = INSTANCE.register(CaterpillarItem.GLASSWING_NAME,
+            () -> new CaterpillarItem(Caterpillar.GLASSWING_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_HAIRSTREAK = INSTANCE.register(CaterpillarItem.HAIRSTREAK_NAME,
+            () -> new CaterpillarItem(Caterpillar.HAIRSTREAK_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_HEATH = INSTANCE.register(CaterpillarItem.HEATH_NAME,
+            () -> new CaterpillarItem(Caterpillar.HEATH_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_LONGWING = INSTANCE.register(CaterpillarItem.LONGWING_NAME,
+            () -> new CaterpillarItem(Caterpillar.LONGWING_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_MONARCH = INSTANCE.register(CaterpillarItem.MONARCH_NAME,
+            () -> new CaterpillarItem(Caterpillar.MONARCH_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_MORPHO = INSTANCE.register(CaterpillarItem.MORPHO_NAME,
+            () -> new CaterpillarItem(Caterpillar.MORPHO_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_RAINBOW = INSTANCE.register(CaterpillarItem.RAINBOW_NAME,
+            () -> new CaterpillarItem(Caterpillar.RAINBOW_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_SWALLOWTAIL = INSTANCE.register(CaterpillarItem.SWALLOWTAIL_NAME,
+            () -> new CaterpillarItem(Caterpillar.SWALLOWTAIL_NAME));
 
-    private static final RegistryObject<Item> BUTTERFLY_FORESTER_EGG = INSTANCE.register(Butterfly.FORESTER_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_FORESTER, 0xeeee77, 0xff7777, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_COMMON_EGG = INSTANCE.register(Butterfly.COMMON_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_COMMON, 0xaaff66, 0xeeee77, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_EMPEROR_EGG = INSTANCE.register(Butterfly.EMPEROR_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_EMPEROR, 0xcc44cc, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_HAIRSTREAK_EGG = INSTANCE.register(Butterfly.HAIRSTREAK_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_HAIRSTREAK, 0xcc44cc, 0x880000, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_RAINBOW_EGG = INSTANCE.register(Butterfly.RAINBOW_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_HEATH_EGG = INSTANCE.register(Butterfly.HEATH_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_HEATH, 0x880000, 0x000000, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_GLASSWING_EGG = INSTANCE.register(Butterfly.GLASSWING_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_GLASSWING, 0x880000, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_CHALKHILL_EGG = INSTANCE.register(Butterfly.CHALKHILL_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CHALKHILL, 0x0088ff, 0x00cc55, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_SWALLOWTAIL_EGG = INSTANCE.register(Butterfly.SWALLOWTAIL_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_MONARCH_EGG = INSTANCE.register(Butterfly.MONARCH_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_MONARCH, 0xdd8855, 0x000000, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_CABBAGE_EGG = INSTANCE.register(Butterfly.CABBAGE_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CABBAGE, 0xeeee77, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_ADMIRAL_EGG = INSTANCE.register(Butterfly.ADMIRAL_NAME,
+    //  Spawn eggs - Butterflies
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_ADMIRAL = INSTANCE.register(Butterfly.ADMIRAL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_ADMIRAL, 0x880000, 0x0088ff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_LONGWING_EGG = INSTANCE.register(Butterfly.LONGWING_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_LONGWING, 0x000000, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_CLIPPER_EGG = INSTANCE.register(Butterfly.CLIPPER_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CLIPPER, 0x0044aa, 0x004488, new Item.Properties()));
-
-    private static final RegistryObject<Item> BUTTERFLY_BUCKEYE_EGG = INSTANCE.register(Butterfly.BUCKEYE_NAME,
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_BUCKEYE = INSTANCE.register(Butterfly.BUCKEYE_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_BUCKEYE, 0xcccc88, 0x8888cc, new Item.Properties()));
-
-    //  Spawn eggs
-    private static final RegistryObject<Item> CATERPILLAR_MORPHO_EGG = INSTANCE.register(Caterpillar.MORPHO_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_MORPHO, 0x0000aa, 0x0088ff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_FORESTER_EGG = INSTANCE.register(Caterpillar.FORESTER_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_FORESTER, 0xeeee77, 0xff7777, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_COMMON_EGG = INSTANCE.register(Caterpillar.COMMON_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_COMMON, 0xaaff66, 0xeeee77, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_EMPEROR_EGG = INSTANCE.register(Caterpillar.EMPEROR_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_EMPEROR, 0xcc44cc, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_HAIRSTREAK_EGG = INSTANCE.register(Caterpillar.HAIRSTREAK_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_HAIRSTREAK, 0xcc44cc, 0x880000, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_RAINBOW_EGG = INSTANCE.register(Caterpillar.RAINBOW_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_HEATH_EGG = INSTANCE.register(Caterpillar.HEATH_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_HEATH, 0x880000, 0x000000, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_GLASSWING_EGG = INSTANCE.register(Caterpillar.GLASSWING_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_GLASSWING, 0x880000, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_CHALKHILL_EGG = INSTANCE.register(Caterpillar.CHALKHILL_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CHALKHILL, 0x0088ff, 0x00cc55, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_SWALLOWTAIL_EGG = INSTANCE.register(Caterpillar.SWALLOWTAIL_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_MONARCH_EGG = INSTANCE.register(Caterpillar.MONARCH_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_MONARCH, 0xdd8855, 0x000000, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_CABBAGE_EGG = INSTANCE.register(Caterpillar.CABBAGE_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CABBAGE, 0xeeee77, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_ADMIRAL_EGG = INSTANCE.register(Caterpillar.ADMIRAL_NAME,
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_CABBAGE = INSTANCE.register(Butterfly.CABBAGE_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CABBAGE, 0xeeee77, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_CHALKHILL = INSTANCE.register(Butterfly.CHALKHILL_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CHALKHILL, 0x0088ff, 0x00cc55, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_CLIPPER = INSTANCE.register(Butterfly.CLIPPER_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_CLIPPER, 0x0044aa, 0x004488, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_COMMON = INSTANCE.register(Butterfly.COMMON_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_COMMON, 0xaaff66, 0xeeee77, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_EMPEROR = INSTANCE.register(Butterfly.EMPEROR_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_EMPEROR, 0xcc44cc, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_FORESTER = INSTANCE.register(Butterfly.FORESTER_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_FORESTER, 0xeeee77, 0xff7777, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_GLASSWING = INSTANCE.register(Butterfly.GLASSWING_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_GLASSWING, 0x880000, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_HAIRSTREAK = INSTANCE.register(Butterfly.HAIRSTREAK_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_HAIRSTREAK, 0xcc44cc, 0x880000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_HEATH = INSTANCE.register(Butterfly.HEATH_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_HEATH, 0x880000, 0x000000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_LONGWING = INSTANCE.register(Butterfly.LONGWING_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_LONGWING, 0x000000, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_MONARCH = INSTANCE.register(Butterfly.MONARCH_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_MONARCH, 0xdd8855, 0x000000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_MORPHO = INSTANCE.register(Butterfly.MORPHO_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_MORPHO, 0x0000aa, 0x0088ff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_RAINBOW = INSTANCE.register(Butterfly.RAINBOW_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_SWALLOWTAIL = INSTANCE.register(Butterfly.SWALLOWTAIL_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
+    
+    //  Spawn eggs - Caterpillars
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_ADMIRAL = INSTANCE.register(Caterpillar.ADMIRAL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_ADMIRAL, 0x880000, 0x0088ff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_LONGWING_EGG = INSTANCE.register(Caterpillar.LONGWING_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_LONGWING, 0x000000, 0xffffff, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_CLIPPER_EGG = INSTANCE.register(Caterpillar.CLIPPER_NAME,
-            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CLIPPER, 0x0044aa, 0x004488, new Item.Properties()));
-
-    private static final RegistryObject<Item> CATERPILLAR_BUCKEYE_EGG = INSTANCE.register(Caterpillar.BUCKEYE_NAME,
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_BUCKEYE = INSTANCE.register(Caterpillar.BUCKEYE_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_BUCKEYE, 0xcccc88, 0x8888cc, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_CABBAGE = INSTANCE.register(Caterpillar.CABBAGE_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CABBAGE, 0xeeee77, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_CHALKHILL = INSTANCE.register(Caterpillar.CHALKHILL_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CHALKHILL, 0x0088ff, 0x00cc55, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_CLIPPER = INSTANCE.register(Caterpillar.CLIPPER_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_CLIPPER, 0x0044aa, 0x004488, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_COMMON = INSTANCE.register(Caterpillar.COMMON_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_COMMON, 0xaaff66, 0xeeee77, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_EMPEROR = INSTANCE.register(Caterpillar.EMPEROR_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_EMPEROR, 0xcc44cc, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_FORESTER = INSTANCE.register(Caterpillar.FORESTER_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_FORESTER, 0xeeee77, 0xff7777, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_GLASSWING = INSTANCE.register(Caterpillar.GLASSWING_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_GLASSWING, 0x880000, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_HAIRSTREAK = INSTANCE.register(Caterpillar.HAIRSTREAK_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_HAIRSTREAK, 0xcc44cc, 0x880000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_HEATH = INSTANCE.register(Caterpillar.HEATH_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_HEATH, 0x880000, 0x000000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_LONGWING = INSTANCE.register(Caterpillar.LONGWING_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_LONGWING, 0x000000, 0xffffff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_MONARCH = INSTANCE.register(Caterpillar.MONARCH_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_MONARCH, 0xdd8855, 0x000000, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_MORPHO = INSTANCE.register(Caterpillar.MORPHO_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_MORPHO, 0x0000aa, 0x0088ff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_RAINBOW = INSTANCE.register(Caterpillar.RAINBOW_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_SWALLOWTAIL = INSTANCE.register(Caterpillar.SWALLOWTAIL_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
 
     /**
      * Registers items with the relevant creative tab
@@ -204,69 +194,84 @@ public class ItemRegistry {
      */
     @SubscribeEvent
     public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(BOTTLED_BUTTERFLY);
-        }
 
         if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            event.accept(BUTTERFLY_MORPHO_EGG);
-            event.accept(BUTTERFLY_FORESTER_EGG);
-            event.accept(BUTTERFLY_COMMON_EGG);
-            event.accept(BUTTERFLY_EMPEROR_EGG);
-            event.accept(BUTTERFLY_HAIRSTREAK_EGG);
-            event.accept(BUTTERFLY_RAINBOW_EGG);
-            event.accept(BUTTERFLY_HEATH_EGG);
-            event.accept(BUTTERFLY_GLASSWING_EGG);
-            event.accept(BUTTERFLY_CHALKHILL_EGG);
-            event.accept(BUTTERFLY_SWALLOWTAIL_EGG);
-            event.accept(BUTTERFLY_MONARCH_EGG);
-            event.accept(BUTTERFLY_CABBAGE_EGG);
-            event.accept(BUTTERFLY_ADMIRAL_EGG);
-            event.accept(BUTTERFLY_LONGWING_EGG);
-            event.accept(BUTTERFLY_CLIPPER_EGG);
-            event.accept(BUTTERFLY_BUCKEYE_EGG);
+            event.accept(SPAWN_EGG_BUTTERFLY_ADMIRAL);
+            event.accept(SPAWN_EGG_BUTTERFLY_BUCKEYE);
+            event.accept(SPAWN_EGG_BUTTERFLY_CABBAGE);
+            event.accept(SPAWN_EGG_BUTTERFLY_CHALKHILL);
+            event.accept(SPAWN_EGG_BUTTERFLY_CLIPPER);
+            event.accept(SPAWN_EGG_BUTTERFLY_COMMON);
+            event.accept(SPAWN_EGG_BUTTERFLY_EMPEROR);
+            event.accept(SPAWN_EGG_BUTTERFLY_FORESTER);
+            event.accept(SPAWN_EGG_BUTTERFLY_GLASSWING);
+            event.accept(SPAWN_EGG_BUTTERFLY_HAIRSTREAK);
+            event.accept(SPAWN_EGG_BUTTERFLY_HEATH);
+            event.accept(SPAWN_EGG_BUTTERFLY_LONGWING);
+            event.accept(SPAWN_EGG_BUTTERFLY_MONARCH);
+            event.accept(SPAWN_EGG_BUTTERFLY_MORPHO);
+            event.accept(SPAWN_EGG_BUTTERFLY_RAINBOW);
+            event.accept(SPAWN_EGG_BUTTERFLY_SWALLOWTAIL);
 
-            event.accept(CATERPILLAR_MORPHO_EGG);
-            event.accept(CATERPILLAR_FORESTER_EGG);
-            event.accept(CATERPILLAR_COMMON_EGG);
-            event.accept(CATERPILLAR_EMPEROR_EGG);
-            event.accept(CATERPILLAR_HAIRSTREAK_EGG);
-            event.accept(CATERPILLAR_RAINBOW_EGG);
-            event.accept(CATERPILLAR_HEATH_EGG);
-            event.accept(CATERPILLAR_GLASSWING_EGG);
-            event.accept(CATERPILLAR_CHALKHILL_EGG);
-            event.accept(CATERPILLAR_SWALLOWTAIL_EGG);
-            event.accept(CATERPILLAR_MONARCH_EGG);
-            event.accept(CATERPILLAR_CABBAGE_EGG);
-            event.accept(CATERPILLAR_ADMIRAL_EGG);
-            event.accept(CATERPILLAR_LONGWING_EGG);
-            event.accept(CATERPILLAR_CLIPPER_EGG);
-            event.accept(CATERPILLAR_BUCKEYE_EGG);
-
-            event.accept(ADMIRAL_BUTTERFLY_EGG);
-            event.accept(BUCKEYE_BUTTERFLY_EGG);
-            event.accept(CABBAGE_BUTTERFLY_EGG);
-            event.accept(CHALKHILL_BUTTERFLY_EGG);
-            event.accept(CLIPPER_BUTTERFLY_EGG);
-            event.accept(COMMON_BUTTERFLY_EGG);
-            event.accept(EMPEROR_BUTTERFLY_EGG);
-            event.accept(FORESTER_BUTTERFLY_EGG);
-            event.accept(GLASSWING_BUTTERFLY_EGG);
-            event.accept(HAIRSTREAK_BUTTERFLY_EGG);
-            event.accept(HEATH_BUTTERFLY_EGG);
-            event.accept(LONGWING_BUTTERFLY_EGG);
-            event.accept(MONARCH_BUTTERFLY_EGG);
-            event.accept(MORPHO_BUTTERFLY_EGG);
-            event.accept(RAINBOW_BUTTERFLY_EGG);
-            event.accept(SWALLOWTAIL_BUTTERFLY_EGG);
+            event.accept(SPAWN_EGG_CATERPILLAR_ADMIRAL);
+            event.accept(SPAWN_EGG_CATERPILLAR_BUCKEYE);
+            event.accept(SPAWN_EGG_CATERPILLAR_CABBAGE);
+            event.accept(SPAWN_EGG_CATERPILLAR_CHALKHILL);
+            event.accept(SPAWN_EGG_CATERPILLAR_CLIPPER);
+            event.accept(SPAWN_EGG_CATERPILLAR_COMMON);
+            event.accept(SPAWN_EGG_CATERPILLAR_EMPEROR);
+            event.accept(SPAWN_EGG_CATERPILLAR_FORESTER);
+            event.accept(SPAWN_EGG_CATERPILLAR_GLASSWING);
+            event.accept(SPAWN_EGG_CATERPILLAR_HAIRSTREAK);
+            event.accept(SPAWN_EGG_CATERPILLAR_HEATH);
+            event.accept(SPAWN_EGG_CATERPILLAR_LONGWING);
+            event.accept(SPAWN_EGG_CATERPILLAR_MONARCH);
+            event.accept(SPAWN_EGG_CATERPILLAR_MORPHO);
+            event.accept(SPAWN_EGG_CATERPILLAR_RAINBOW);
+            event.accept(SPAWN_EGG_CATERPILLAR_SWALLOWTAIL);
         }
 
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.accept(BUTTERFLY_SCROLL);
+
+            event.accept(BUTTERFLY_EGG_ADMIRAL);
+            event.accept(BUTTERFLY_EGG_BUCKEYE);
+            event.accept(BUTTERFLY_EGG_CABBAGE);
+            event.accept(BUTTERFLY_EGG_CHALKHILL);
+            event.accept(BUTTERFLY_EGG_CLIPPER);
+            event.accept(BUTTERFLY_EGG_COMMON);
+            event.accept(BUTTERFLY_EGG_EMPEROR);
+            event.accept(BUTTERFLY_EGG_FORESTER);
+            event.accept(BUTTERFLY_EGG_GLASSWING);
+            event.accept(BUTTERFLY_EGG_HAIRSTREAK);
+            event.accept(BUTTERFLY_EGG_HEATH);
+            event.accept(BUTTERFLY_EGG_LONGWING);
+            event.accept(BUTTERFLY_EGG_MONARCH);
+            event.accept(BUTTERFLY_EGG_MORPHO);
+            event.accept(BUTTERFLY_EGG_RAINBOW);
+            event.accept(BUTTERFLY_EGG_SWALLOWTAIL);
+
+            event.accept(CATERPILLAR_ADMIRAL);
+            event.accept(CATERPILLAR_BUCKEYE);
+            event.accept(CATERPILLAR_CABBAGE);
+            event.accept(CATERPILLAR_CHALKHILL);
+            event.accept(CATERPILLAR_CLIPPER);
+            event.accept(CATERPILLAR_COMMON);
+            event.accept(CATERPILLAR_EMPEROR);
+            event.accept(CATERPILLAR_FORESTER);
+            event.accept(CATERPILLAR_GLASSWING);
+            event.accept(CATERPILLAR_HAIRSTREAK);
+            event.accept(CATERPILLAR_HEATH);
+            event.accept(CATERPILLAR_LONGWING);
+            event.accept(CATERPILLAR_MONARCH);
+            event.accept(CATERPILLAR_MORPHO);
+            event.accept(CATERPILLAR_RAINBOW);
+            event.accept(CATERPILLAR_SWALLOWTAIL);
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BUTTERFLY_NET);
+            event.accept(BOTTLED_BUTTERFLY);
             event.accept(BUTTERFLY_BOOK);
             event.accept(BUTTERFLY_ZHUANGZI);
         }

@@ -258,13 +258,11 @@ public class ButterflyData {
             species = splits[1];
         }
 
-        if (species.contains("_")) {
-            String[] splits = species.split("_");
-            species = splits[0];
-        }
-
-        if (ENTITY_ID_TO_INDEX_MAP.containsKey(species)) {
-            return ENTITY_ID_TO_INDEX_MAP.get(species);
+        String[] components = species.split("_");
+        for (String component : components) {
+            if (ENTITY_ID_TO_INDEX_MAP.containsKey(component)) {
+                return ENTITY_ID_TO_INDEX_MAP.get(component);
+            }
         }
 
         return -1;
@@ -344,6 +342,20 @@ public class ButterflyData {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the resource location for the caterpillar item at the specified index.
+     * @param index The butterfly index.
+     * @return The resource location of the caterpillar item.
+     */
+    public static ResourceLocation indexToCaterpillarItemLocation(int index) {
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + entityId);
         }
 
         return null;

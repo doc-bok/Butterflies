@@ -1,0 +1,20 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_savanna",
+    "minecraft:meadow",
+    "minecraft:cherry_grove"
+  ],
+  "spawners":
+  {
+    "type": "butterflies:common_chrysalis",
+    "weight": 10,
+    "minCount": 3,
+    "maxCount": 5
+  }
+}
