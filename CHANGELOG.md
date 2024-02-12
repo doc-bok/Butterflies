@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.4.0 (2024-02-12)
+-   Caterpillars can now be stored in jars.
+
 ### 2.3.0 (2024-02-08)
 -   Caterpillars and Chrysalises will now spawn naturally.
 
@@ -13,11 +16,14 @@
 ### 2.2.0 (2024-02-04)
 -   Caterpillars can be picked up and moved by players.
 
+### 2.1.1 (2024-02-07)
+-   Expanded culling boxes for butterfly entities for compatibility with optimisation mods.
+
 ### 2.1.0 (2024-01-28)
--   Butterfly data can now be edited via JSON files
+-   Butterfly data can now be edited via JSON files.
 
 ### 2.0.9 (2024-01-26)
--   Fixed butterfly net achievements not working
+-   Fixed butterfly net achievements not working.
 
 ### 2.0.8 (2024-01-14)
 -   Redesigned the buckeye butterfly texture.

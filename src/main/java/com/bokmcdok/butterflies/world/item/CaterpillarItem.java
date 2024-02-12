@@ -68,7 +68,7 @@ public class CaterpillarItem extends Item {
             } else {
                 if (!context.getLevel().isClientSide()) {
                     Direction clickedFace = context.getClickedFace();
-                    Caterpillar.spawn((ServerLevel) context.getLevel(), this.species, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+                    Caterpillar.spawn((ServerLevel) context.getLevel(), this.species, clickedPos.relative(clickedFace), clickedFace.getOpposite(), false);
                 } else {
                     player.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1F, 1F);
                 }

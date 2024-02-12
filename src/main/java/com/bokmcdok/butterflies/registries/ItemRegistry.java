@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
+import com.bokmcdok.butterflies.world.item.BottledCaterpillarItem;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
 import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
@@ -120,6 +121,40 @@ public class ItemRegistry {
     public static final RegistryObject<Item> CATERPILLAR_SWALLOWTAIL = INSTANCE.register(CaterpillarItem.SWALLOWTAIL_NAME,
             () -> new CaterpillarItem(Caterpillar.SWALLOWTAIL_NAME));
 
+    // Bottled Caterpillars
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_ADMIRAL = INSTANCE.register(BottledCaterpillarItem.ADMIRAL_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_ADMIRAL, Caterpillar.ADMIRAL_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_BUCKEYE = INSTANCE.register(BottledCaterpillarItem.BUCKEYE_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BUCKEYE, Caterpillar.BUCKEYE_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CABBAGE = INSTANCE.register(BottledCaterpillarItem.CABBAGE_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CABBAGE, Caterpillar.CABBAGE_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CHALKHILL = INSTANCE.register(BottledCaterpillarItem.CHALKHILL_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CHALKHILL, Caterpillar.CHALKHILL_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CLIPPER = INSTANCE.register(BottledCaterpillarItem.CLIPPER_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CLIPPER, Caterpillar.CLIPPER_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_COMMON = INSTANCE.register(BottledCaterpillarItem.COMMON_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_COMMON, Caterpillar.COMMON_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_EMPEROR = INSTANCE.register(BottledCaterpillarItem.EMPEROR_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_EMPEROR, Caterpillar.EMPEROR_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_FORESTER = INSTANCE.register(BottledCaterpillarItem.FORESTER_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_FORESTER, Caterpillar.FORESTER_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_GLASSWING = INSTANCE.register(BottledCaterpillarItem.GLASSWING_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_GLASSWING, Caterpillar.GLASSWING_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_HAIRSTREAK = INSTANCE.register(BottledCaterpillarItem.HAIRSTREAK_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HAIRSTREAK, Caterpillar.HAIRSTREAK_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_HEATH = INSTANCE.register(BottledCaterpillarItem.HEATH_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HEATH, Caterpillar.HEATH_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_LONGWING = INSTANCE.register(BottledCaterpillarItem.LONGWING_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_LONGWING, Caterpillar.LONGWING_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_MONARCH = INSTANCE.register(BottledCaterpillarItem.MONARCH_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MONARCH, Caterpillar.MONARCH_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_MORPHO = INSTANCE.register(BottledCaterpillarItem.MORPHO_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MORPHO, Caterpillar.MORPHO_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_RAINBOW = INSTANCE.register(BottledCaterpillarItem.RAINBOW_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_RAINBOW, Caterpillar.RAINBOW_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_SWALLOWTAIL = INSTANCE.register(BottledCaterpillarItem.SWALLOWTAIL_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_SWALLOWTAIL, Caterpillar.SWALLOWTAIL_NAME));
+    
     //  Spawn eggs - Butterflies
     private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_ADMIRAL = INSTANCE.register(Butterfly.ADMIRAL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_ADMIRAL, 0x880000, 0x0088ff, new Item.Properties()));
@@ -232,7 +267,6 @@ public class ItemRegistry {
         }
 
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(BUTTERFLY_SCROLL);
 
             event.accept(BUTTERFLY_EGG_ADMIRAL);
             event.accept(BUTTERFLY_EGG_BUCKEYE);
@@ -272,6 +306,25 @@ public class ItemRegistry {
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(BUTTERFLY_NET);
             event.accept(BOTTLED_BUTTERFLY);
+
+            event.accept(BOTTLED_CATERPILLAR_ADMIRAL);
+            event.accept(BOTTLED_CATERPILLAR_BUCKEYE);
+            event.accept(BOTTLED_CATERPILLAR_CABBAGE);
+            event.accept(BOTTLED_CATERPILLAR_CHALKHILL);
+            event.accept(BOTTLED_CATERPILLAR_CLIPPER);
+            event.accept(BOTTLED_CATERPILLAR_COMMON);
+            event.accept(BOTTLED_CATERPILLAR_EMPEROR);
+            event.accept(BOTTLED_CATERPILLAR_FORESTER);
+            event.accept(BOTTLED_CATERPILLAR_GLASSWING);
+            event.accept(BOTTLED_CATERPILLAR_HAIRSTREAK);
+            event.accept(BOTTLED_CATERPILLAR_HEATH);
+            event.accept(BOTTLED_CATERPILLAR_LONGWING);
+            event.accept(BOTTLED_CATERPILLAR_MONARCH);
+            event.accept(BOTTLED_CATERPILLAR_MORPHO);
+            event.accept(BOTTLED_CATERPILLAR_RAINBOW);
+            event.accept(BOTTLED_CATERPILLAR_SWALLOWTAIL);
+            
+            event.accept(BUTTERFLY_SCROLL);
             event.accept(BUTTERFLY_BOOK);
             event.accept(BUTTERFLY_ZHUANGZI);
         }

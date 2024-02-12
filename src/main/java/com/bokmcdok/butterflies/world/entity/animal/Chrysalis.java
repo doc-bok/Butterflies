@@ -16,8 +16,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
 public class Chrysalis extends DirectionalCreature {
 
     // The unique IDs that are used to reference a chrysalis entity.
@@ -342,6 +340,22 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
+    }
+
+    /**
      * Construction
      * @param species The species of the butterfly
      * @param entityType The type of the entity.
@@ -373,8 +387,8 @@ public class Chrysalis extends DirectionalCreature {
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyData.locationToIndex(location);
-            ResourceLocation newLocation = ButterflyData.indexToButterflyLocation(index);
+            int index = ButterflyData.getButterflyIndex(location);
+            ResourceLocation newLocation = ButterflyData.indexToButterflyEntity(index);
             if (newLocation != null) {
                 Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
                 this.remove(RemovalReason.DISCARDED);

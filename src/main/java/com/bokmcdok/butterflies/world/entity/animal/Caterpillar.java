@@ -4,6 +4,10 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -47,6 +51,13 @@ public class Caterpillar extends DirectionalCreature {
     public static final String LONGWING_NAME = "longwing_caterpillar";
     public static final String BUCKEYE_NAME = "buckeye_caterpillar";
     public static final String CLIPPER_NAME = "clipper_caterpillar";
+
+    // Serializers for data stored in the save data.
+    protected static final EntityDataAccessor<Boolean> DATA_IS_BOTTLED =
+            SynchedEntityData.defineId(Caterpillar.class, EntityDataSerializers.BOOLEAN);
+
+    // Names of the attributes stored in the save data.
+    protected static final String IS_BOTTLED = "is_bottled";
 
     // Helper constant to modify speed
     private static final double CATERPILLAR_SPEED = 0.00325d;
@@ -293,7 +304,6 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Spawns a caterpillar at the specified position.
-     *
      * @param level     The current level.
      * @param location  The resource location of the caterpillar to spawn.
      * @param position  The position to spawn the caterpillar.
@@ -302,41 +312,53 @@ public class Caterpillar extends DirectionalCreature {
     public static void spawn(ServerLevel level,
                              ResourceLocation location,
                              BlockPos position,
-                             Direction direction) {
+                             Direction direction,
+                             boolean isBottled) {
         EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Caterpillar caterpillar) {
+                caterpillar.setIsBottled(isBottled);
+
                 double x = position.getX() + 0.45D;
                 double y = position.getY() + 0.4D;
                 double z = position.getZ() + 0.5D;
 
                 BlockPos spawnPosition = position.above();
 
-                switch (direction) {
-                    case DOWN -> {
-                        y = Math.floor(position.getY());
-                        spawnPosition = position.below();
-                    }
-                    case UP -> {
-                        y = Math.floor(position.getY()) + 1.0d;
-                        spawnPosition = position.above();
-                    }
-                    case NORTH -> {
-                        z = Math.floor(position.getZ());
-                        spawnPosition = position.north();
-                    }
-                    case SOUTH -> {
-                        z = Math.floor(position.getZ()) + 1.0d;
-                        spawnPosition = position.south();
-                    }
-                    case WEST -> {
-                        x = Math.floor(position.getX());
-                        spawnPosition = position.west();
-                    }
-                    case EAST -> {
-                        x = Math.floor(position.getX()) + 1.0d;
-                        spawnPosition = position.east();
+                if (isBottled) {
+                    direction = Direction.DOWN;
+                    y = Math.floor(position.getY()) + 0.07d;
+                    spawnPosition = position.below();
+
+                    caterpillar.setInvulnerable(true);
+                    caterpillar.setPersistenceRequired();
+                } else {
+                    switch (direction) {
+                        case DOWN -> {
+                            y = Math.floor(position.getY());
+                            spawnPosition = position.below();
+                        }
+                        case UP -> {
+                            y = Math.floor(position.getY()) + 1.0d;
+                            spawnPosition = position.above();
+                        }
+                        case NORTH -> {
+                            z = Math.floor(position.getZ());
+                            spawnPosition = position.north();
+                        }
+                        case SOUTH -> {
+                            z = Math.floor(position.getZ()) + 1.0d;
+                            spawnPosition = position.south();
+                        }
+                        case WEST -> {
+                            x = Math.floor(position.getX());
+                            spawnPosition = position.west();
+                        }
+                        case EAST -> {
+                            x = Math.floor(position.getX()) + 1.0d;
+                            spawnPosition = position.east();
+                        }
                     }
                 }
 
@@ -354,6 +376,17 @@ public class Caterpillar extends DirectionalCreature {
             }
         }
     }
+
+    /**
+     * Used to add extra parameters to the entity's save data.
+     * @param tag The tag containing the extra save data.
+     */
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean(IS_BOTTLED, this.entityData.get(DATA_IS_BOTTLED));
+    }
+
 
     /**
      * Reduce the size of the caterpillar - they are small!
@@ -432,6 +465,20 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Override to read any additional save data.
+     * @param tag The tag containing the entity's save data.
+     */
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+
+        // Get the bottle state
+        if (tag.contains(IS_BOTTLED)) {
+            this.entityData.set(DATA_IS_BOTTLED, tag.getBoolean(IS_BOTTLED));
+        }
+    }
+
+    /**
      * Override so that the bounding box isn't recalculated for "babies".
      *
      * @param age The age of the entity.
@@ -439,6 +486,22 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     public void setAge(int age) {
         this.age = age;
+    }
+
+    /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
     }
 
     /**
@@ -456,7 +519,7 @@ public class Caterpillar extends DirectionalCreature {
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
-        this.caterpillarItem = ButterflyData.indexToCaterpillarItemLocation(data.butterflyIndex);
+        this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex);
         setAge(-data.caterpillarLifespan);
     }
 
@@ -466,6 +529,18 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
+
+        // Update gravity
+        isNoGravity = true;
+
+        if (this.getIsBottled()
+                && this.level().hasChunkAt(getSurfaceBlockPos())
+                && this.level().isEmptyBlock(getSurfaceBlockPos())) {
+            setSurfaceDirection(Direction.DOWN);
+            setSurfaceBlockPos(this.blockPosition().below());
+            this.targetPosition = null;
+            isNoGravity = false;
+        }
 
         // If the caterpillar is falling then it can't crawl.
         if (this.isNoGravity()) {
@@ -589,28 +664,17 @@ public class Caterpillar extends DirectionalCreature {
                     Mth.wrapDegrees(updatedRotation - this.getYRot());
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
-            // Update gravity
-            isNoGravity = true;
-
-            if (this.level().hasChunkAt(getSurfaceBlockPos())) {
-                if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
-
-                    setSurfaceDirection(Direction.DOWN);
-                    setSurfaceBlockPos(this.blockPosition().below());
-                    this.targetPosition = null;
-                    isNoGravity = false;
-                }
-            }
-
             // Spawn Chrysalis.
-            if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
+            if (this.getIsBottled()
+                    && this.getAge() >= 0
+                    && this.random.nextInt(0, 15) == 0) {
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
                 // If the caterpillar is not on a leaf block it will starve instead.
                 if (level().getBlockState(surfaceBlockPos).getBlock() instanceof LeavesBlock) {
                     ResourceLocation location = EntityType.getKey(this.getType());
-                    int index = ButterflyData.locationToIndex(location);
-                    ResourceLocation newLocation = ButterflyData.indexToChrysalisLocation(index);
+                    int index = ButterflyData.getButterflyIndex(location);
+                    ResourceLocation newLocation = ButterflyData.indexToChrysalisEntity(index);
                     if (newLocation != null) {
                         Chrysalis.spawn((ServerLevel) this.level(),
                                 newLocation,
@@ -628,6 +692,15 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Override to define extra data to be synced between server and client.
+     */
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_IS_BOTTLED, false);
+    }
+
+    /**
      * Override to change how pushing other entities affects them. Caterpillars
      * don't push other entities.
      * @param otherEntity The other entity pushing/being pushed.
@@ -635,6 +708,15 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void doPush(@NotNull Entity otherEntity) {
         // No-op
+    }
+
+    /**
+     * Check if the caterpillar is in a bottle or not.
+     * @return TRUE if the caterpillar is in a bottle.
+     */
+    @Override
+    protected boolean getIsBottled() {
+        return entityData.get(DATA_IS_BOTTLED);
     }
 
     /**
@@ -676,5 +758,13 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Set whether or not the caterpillar is in a bottle.
+     * @param isBottled TRUE if the caterpillar is bottled.
+     */
+    private void setIsBottled(boolean isBottled) {
+        entityData.set(DATA_IS_BOTTLED, isBottled);
     }
 }
