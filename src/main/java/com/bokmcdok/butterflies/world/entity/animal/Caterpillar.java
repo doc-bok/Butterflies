@@ -533,7 +533,7 @@ public class Caterpillar extends DirectionalCreature {
         // Update gravity
         isNoGravity = true;
 
-        if (this.getIsBottled()
+        if (!this.getIsBottled()
                 && this.level().hasChunkAt(getSurfaceBlockPos())
                 && this.level().isEmptyBlock(getSurfaceBlockPos())) {
             setSurfaceDirection(Direction.DOWN);
@@ -665,7 +665,7 @@ public class Caterpillar extends DirectionalCreature {
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
             // Spawn Chrysalis.
-            if (this.getIsBottled()
+            if (!this.getIsBottled()
                     && this.getAge() >= 0
                     && this.random.nextInt(0, 15) == 0) {
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
