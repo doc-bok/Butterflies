@@ -287,7 +287,7 @@ public class ButterflyData {
      * @return The butterfly index for the butterfly species, or -1 if not
      *         found.
      */
-    public static int locationToIndex(ResourceLocation location) {
+    public static int getButterflyIndex(ResourceLocation location) {
         return entityIdToIndex(location.toString());
     }
 
@@ -296,7 +296,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the butterfly.
      */
-    public static ResourceLocation indexToButterflyLocation(int index) {
+    public static ResourceLocation indexToButterflyEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId);
@@ -310,7 +310,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the butterfly egg.
      */
-    public static ResourceLocation indexToButterflyEggLocation(int index) {
+    public static ResourceLocation indexToButterflyEggItem(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
@@ -324,7 +324,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the caterpillar.
      */
-    public static ResourceLocation indexToCaterpillarLocation(int index) {
+    public static ResourceLocation indexToCaterpillarEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
@@ -338,7 +338,7 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the chrysalis.
      */
-    public static ResourceLocation indexToChrysalisLocation(int index) {
+    public static ResourceLocation indexToChrysalisEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
@@ -352,10 +352,24 @@ public class ButterflyData {
      * @param index The butterfly index.
      * @return The resource location of the caterpillar item.
      */
-    public static ResourceLocation indexToCaterpillarItemLocation(int index) {
+    public static ResourceLocation indexToCaterpillarItem(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + entityId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the resource location for the caterpillar item at the specified index.
+     * @param index The butterfly index.
+     * @return The resource location of the caterpillar item.
+     */
+    public static ResourceLocation indexToBottledCaterpillarItem(int index) {
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, "bottled_caterpillar_" + entityId);
         }
 
         return null;
@@ -380,7 +394,7 @@ public class ButterflyData {
      * @return The butterfly entry.
      */
     public static ButterflyData getEntry(ResourceLocation location) {
-        int index = locationToIndex(location);
+        int index = getButterflyIndex(location);
         return getEntry(index);
     }
 }

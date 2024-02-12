@@ -122,34 +122,36 @@ public abstract class DirectionalCreature extends Animal {
             this.setSurfaceDirection(Direction.DOWN);
         }
 
-        if (levelAccessor.hasChunkAt(getSurfaceBlockPos()) &&
-                !levelAccessor.getBlockState(getSurfaceBlockPos()).is(BlockTags.LEAVES)) {
+        if (!getIsBottled()) {
+            if (levelAccessor.hasChunkAt(getSurfaceBlockPos()) &&
+                    !levelAccessor.getBlockState(getSurfaceBlockPos()).is(BlockTags.LEAVES)) {
 
-            for (Direction direction : Direction.values()) {
-                BlockPos surfacePosition = this.blockPosition().relative(direction);
-                if (levelAccessor.hasChunkAt(surfacePosition) &&
-                        levelAccessor.getBlockState(surfacePosition).is(BlockTags.LEAVES)) {
+                for (Direction direction : Direction.values()) {
+                    BlockPos surfacePosition = this.blockPosition().relative(direction);
+                    if (levelAccessor.hasChunkAt(surfacePosition) &&
+                            levelAccessor.getBlockState(surfacePosition).is(BlockTags.LEAVES)) {
 
-                    this.setSurfaceDirection(direction);
-                    this.setSurfaceBlockPos(surfacePosition);
+                        this.setSurfaceDirection(direction);
+                        this.setSurfaceBlockPos(surfacePosition);
 
-                    Vec3 position = this.position();
-                    double x = position.x();
-                    double y = position.y();
-                    double z = position.z();
+                        Vec3 position = this.position();
+                        double x = position.x();
+                        double y = position.y();
+                        double z = position.z();
 
-                    switch (direction) {
-                        case DOWN -> y = Math.floor(position.y());
-                        case UP -> y = Math.floor(position.y()) + 1.0d;
-                        case NORTH -> z = Math.floor(position.z());
-                        case SOUTH -> z = Math.floor(position.z()) + 1.0d;
-                        case WEST -> x = Math.floor(position.x());
-                        case EAST -> x = Math.floor(position.x()) + 1.0d;
+                        switch (direction) {
+                            case DOWN -> y = Math.floor(position.y());
+                            case UP -> y = Math.floor(position.y()) + 1.0d;
+                            case NORTH -> z = Math.floor(position.z());
+                            case SOUTH -> z = Math.floor(position.z()) + 1.0d;
+                            case WEST -> x = Math.floor(position.x());
+                            case EAST -> x = Math.floor(position.x()) + 1.0d;
+                        }
+
+                        this.moveTo(x, y, z, 0.0F, 0.0F);
+
+                        break;
                     }
-
-                    this.moveTo(x, y, z, 0.0F, 0.0F);
-
-                    break;
                 }
             }
         }
@@ -251,6 +253,14 @@ public abstract class DirectionalCreature extends Animal {
         super.defineSynchedData();
         this.entityData.define(DATA_DIRECTION, Direction.DOWN);
         this.entityData.define(DATA_SURFACE_BLOCK, new BlockPos(0,0,0));
+    }
+
+    /**
+     * Check if the caterpillar is in a bottle or not.
+     * @return TRUE if the caterpillar is in a bottle.
+     */
+    protected boolean getIsBottled() {
+        return false;
     }
 
     /**

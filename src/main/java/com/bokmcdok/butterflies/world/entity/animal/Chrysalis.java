@@ -16,8 +16,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
-
 public class Chrysalis extends DirectionalCreature {
 
     // The unique IDs that are used to reference a chrysalis entity.
@@ -389,8 +387,8 @@ public class Chrysalis extends DirectionalCreature {
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyData.locationToIndex(location);
-            ResourceLocation newLocation = ButterflyData.indexToButterflyLocation(index);
+            int index = ButterflyData.getButterflyIndex(location);
+            ResourceLocation newLocation = ButterflyData.indexToButterflyEntity(index);
             if (newLocation != null) {
                 Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
                 this.remove(RemovalReason.DISCARDED);

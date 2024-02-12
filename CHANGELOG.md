@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2.4.0 (2024-02-12)
+-   Caterpillars can now be stored in jars.
+
 ### 2.3.0 (2024-02-08)
 -   Caterpillars and Chrysalises will now spawn naturally.
 
