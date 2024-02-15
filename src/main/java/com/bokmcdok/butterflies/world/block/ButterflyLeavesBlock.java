@@ -175,7 +175,7 @@ public class ButterflyLeavesBlock extends LeavesBlock implements ButterflyEggHol
 
         // Try and get the species index and save this state as well.
         if (location != null) {
-            int index = ButterflyData.locationToIndex(location);
+            int index = ButterflyData.getButterflyIndex(location);
             if (index >= 0) {
                 newBlockState = newBlockState.setValue(ButterflyLeavesBlock.BUTTERFLY_INDEX, index);
             }

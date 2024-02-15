@@ -1,0 +1,262 @@
+{
+  "parent": "butterflies:butterfly/bottle_caterpillar",
+  "display": {
+    "icon": {
+      "item": "butterflies:bottled_caterpillar_forester"
+    },
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_caterpillars.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_caterpillars.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "admiral": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_admiral"
+            ]
+          }
+        ]
+      }
+    },
+    "buckeye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_buckeye"
+            ]
+          }
+        ]
+      }
+    },
+    "cabbage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_cabbage"
+            ]
+          }
+        ]
+      }
+    },
+    "chalkhill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_chalkhill"
+            ]
+          }
+        ]
+      }
+    },
+    "clipper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_clipper"
+            ]
+          }
+        ]
+      }
+    },
+    "common": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_common"
+            ]
+          }
+        ]
+      }
+    },
+    "emperor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_emperor"
+            ]
+          }
+        ]
+      }
+    },
+    "forester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_forester"
+            ]
+          }
+        ]
+      }
+    },
+    "glasswing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_glasswing"
+            ]
+          }
+        ]
+      }
+    },
+    "hairstreak": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_hairstreak"
+            ]
+          }
+        ]
+      }
+    },
+    "heath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_heath"
+            ]
+          }
+        ]
+      }
+    },
+    "longwing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_longwing"
+            ]
+          }
+        ]
+      }
+    },
+    "monarch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_monarch"
+            ]
+          }
+        ]
+      }
+    },
+    "morpho": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_morpho"
+            ]
+          }
+        ]
+      }
+    },
+    "rainbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_rainbow"
+            ]
+          }
+        ]
+      }
+    },
+    "swallowtail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_swallowtail"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "admiral"
+    ],
+    [
+      "buckeye"
+    ],
+    [
+      "cabbage"
+    ],
+    [
+      "chalkhill"
+    ],
+    [
+      "clipper"
+    ],
+    [
+      "common"
+    ],
+    [
+      "emperor"
+    ],
+    [
+      "forester"
+    ],
+    [
+      "glasswing"
+    ],
+    [
+      "hairstreak"
+    ],
+    [
+      "heath"
+    ],
+    [
+      "longwing"
+    ],
+    [
+      "monarch"
+    ],
+    [
+      "morpho"
+    ],
+    [
+      "rainbow"
+    ],
+    [
+      "swallowtail"
+    ]
+  ]
+}

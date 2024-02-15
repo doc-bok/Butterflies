@@ -1,0 +1,31 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:sunflower_plains",
+    "minecraft:forest",
+    "minecraft:flower_forest",
+    "minecraft:birch_forest",
+    "minecraft:dark_forest",
+    "minecraft:old_growth_birch_forest",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga",
+    "minecraft:taiga",
+    "minecraft:savanna",
+    "minecraft:savanna_plateau",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_forest",
+    "minecraft:windswept_savanna",
+    "minecraft:wooded_badlands",
+    "minecraft:meadow",
+    "minecraft:river",
+    "minecraft:cherry_grove"
+  ],
+  "spawners":
+  {
+    "type": "butterflies:swallowtail_chrysalis",
+    "weight": 10,
+    "minCount": 3,
+    "maxCount": 5
+  }
+}

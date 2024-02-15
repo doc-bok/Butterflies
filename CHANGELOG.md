@@ -1,5 +1,21 @@
 ## Changelog
 
+### 2.4.0 (2024-02-12)
+-   Caterpillars can now be stored in jars.
+
+### 2.3.0 (2024-02-08)
+-   Caterpillars and Chrysalises will now spawn naturally.
+
+### 2.2.2 (2024-02-04)
+-   Advancements for collecting caterpillars.
+
+### 2.2.1 (2024-02-04)
+-   Caterpillars that end up on non-leaf blocks will starve to death instead of
+    creating a chrysalis.
+
+### 2.2.0 (2024-02-04)
+-   Caterpillars can be picked up and moved by players.
+
 ### 2.1.1 (2024-02-07)
 -   Expanded culling boxes for butterfly entities for compatibility with optimisation mods.
 
