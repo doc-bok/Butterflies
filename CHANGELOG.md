@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.0.0 (2024-02-15)
+-   Caterpillar Release.
+
 ### 2.4.0 (2024-02-12)
 -   Caterpillars can now be stored in jars.
 
