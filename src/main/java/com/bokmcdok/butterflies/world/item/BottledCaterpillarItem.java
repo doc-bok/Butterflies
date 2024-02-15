@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -64,7 +65,7 @@ public class BottledCaterpillarItem extends BlockItem {
      */
     public BottledCaterpillarItem(RegistryObject<Block> block,
                                   String species) {
-        super(block.get(), new Item.Properties().stacksTo(1));
+        super(block.get(), new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
 
         this.species = new ResourceLocation(ButterfliesMod.MODID, species);
     }

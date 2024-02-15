@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.block.Block;
@@ -44,7 +45,7 @@ public class CaterpillarItem extends Item {
      * @param species The species of the caterpillar
      */
     public CaterpillarItem(String species) {
-        super(new Item.Properties());
+        super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
 
         this.species = new ResourceLocation(ButterfliesMod.MODID, species);
     }
