@@ -83,7 +83,7 @@ using the bottle while not highlighting a block.
 
 ## Other Locations
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-butterflies)
-- [Minecraft Forums](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/3189366-boks-butterflies-v1-0-1)
+- [Minecraft Forums](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/3195810-boks-butterflies-v3-0-0-caterpillar-release)
 - [Modrinth](https://modrinth.com/mod/boks-butterflies/)
 - [Planet Minecraft](https://www.planetminecraft.com/mod/bok-s-butterflies/)
 
