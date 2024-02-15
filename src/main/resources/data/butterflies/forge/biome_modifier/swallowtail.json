@@ -22,7 +22,7 @@
   ],
   "spawners":
   {
-    "type": "butterflies:chalkhill",
+    "type": "butterflies:swallowtail",
     "weight": 10,
     "minCount": 3,
     "maxCount": 5

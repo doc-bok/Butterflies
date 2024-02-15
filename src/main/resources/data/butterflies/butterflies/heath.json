@@ -1,0 +1,13 @@
+{
+  "index": 10,
+  "entityId": "heath",
+  "size": "small",
+  "speed": "moderate",
+  "rarity": "rare",
+  "habitat": "plains",
+  "lifespan": {
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "butterfly": "long"
+  }
+}

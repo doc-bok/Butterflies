@@ -1,0 +1,13 @@
+{
+  "index": 7,
+  "entityId": "forester",
+  "size": "small",
+  "speed": "moderate",
+  "rarity": "rare",
+  "habitat": "forests",
+  "lifespan": {
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "butterfly": "medium"
+  }
+}

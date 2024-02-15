@@ -1,0 +1,13 @@
+{
+  "index": 4,
+  "entityId": "clipper",
+  "size": "large",
+  "speed": "fast",
+  "rarity": "rare",
+  "habitat": "forests",
+  "lifespan": {
+    "caterpillar": "medium",
+    "chrysalis": "long",
+    "butterfly": "medium"
+  }
+}

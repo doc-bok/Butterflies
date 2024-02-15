@@ -398,7 +398,7 @@ public class Butterfly extends Animal {
         this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData.Entry data = ButterflyData.getEntry(location);
+        ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
 
         if (data.speed == ButterflyData.Speed.FAST) {
@@ -508,6 +508,22 @@ public class Butterfly extends Animal {
     @Override
     public void setAge(int age) {
         this.age = age;
+    }
+
+    /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 10.0D;
+        if (Double.isNaN(d0)) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
     }
 
     /**

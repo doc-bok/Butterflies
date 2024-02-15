@@ -50,7 +50,7 @@ public class PlayerEventListener {
                     // Always use Entity ID for compatibility with butterfly net.
                     if (tag.contains(CompoundTagId.ENTITY_ID)) {
                         ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                        index = ButterflyData.locationToIndex(location);
+                        index = ButterflyData.getButterflyIndex(location);
                     }
 
                     if (index >= 0) {
@@ -95,7 +95,7 @@ public class PlayerEventListener {
                 CompoundTag tag = recipeItem.getTag();
                 if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
                     ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                    index = ButterflyData.locationToIndex(location);
+                    index = ButterflyData.getButterflyIndex(location);
                     break;
                 }
             }

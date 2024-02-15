@@ -1,0 +1,13 @@
+{
+  "index": 3,
+  "entityId": "chalkhill",
+  "size": "small",
+  "speed": "fast",
+  "rarity": "common",
+  "habitat": "plains",
+  "lifespan": {
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "butterfly": "medium"
+  }
+}

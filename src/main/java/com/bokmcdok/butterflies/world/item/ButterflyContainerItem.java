@@ -49,7 +49,7 @@ public interface ButterflyContainerItem {
      * @param index The butterfly index
      */
     static void setButterfly(ItemStack stack, int index) {
-        ResourceLocation location = ButterflyData.indexToButterflyLocation(index);
+        ResourceLocation location = ButterflyData.indexToButterflyEntity(index);
         if (location != null) {
             CompoundTag tag = stack.getOrCreateTag();
             if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||

@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.BottledButterflyBlock;
+import com.bokmcdok.butterflies.world.block.BottledCaterpillarBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyMangroveLeavesBlock;
 import net.minecraft.client.renderer.BiomeColors;
@@ -44,6 +45,40 @@ public class BlockRegistry {
                     .noOcclusion()
                     .sound(SoundType.GLASS)
                     .strength(0.3F)));
+
+    // Bottled Caterpillars
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_ADMIRAL =
+            INSTANCE.register(BottledCaterpillarBlock.ADMIRAL_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_BUCKEYE =
+            INSTANCE.register(BottledCaterpillarBlock.BUCKEYE_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CABBAGE =
+            INSTANCE.register(BottledCaterpillarBlock.CABBAGE_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CHALKHILL =
+            INSTANCE.register(BottledCaterpillarBlock.CHALKHILL_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CLIPPER =
+            INSTANCE.register(BottledCaterpillarBlock.CLIPPER_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_COMMON =
+            INSTANCE.register(BottledCaterpillarBlock.COMMON_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_EMPEROR =
+            INSTANCE.register(BottledCaterpillarBlock.EMPEROR_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_FORESTER =
+            INSTANCE.register(BottledCaterpillarBlock.FORESTER_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_GLASSWING =
+            INSTANCE.register(BottledCaterpillarBlock.GLASSWING_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_HAIRSTREAK =
+            INSTANCE.register(BottledCaterpillarBlock.HAIRSTREAK_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_HEATH =
+            INSTANCE.register(BottledCaterpillarBlock.HEATH_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_LONGWING =
+            INSTANCE.register(BottledCaterpillarBlock.LONGWING_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_MONARCH =
+            INSTANCE.register(BottledCaterpillarBlock.MONARCH_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_MORPHO =
+            INSTANCE.register(BottledCaterpillarBlock.MORPHO_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_RAINBOW =
+            INSTANCE.register(BottledCaterpillarBlock.RAINBOW_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_SWALLOWTAIL =
+            INSTANCE.register(BottledCaterpillarBlock.SWALLOWTAIL_NAME, BlockRegistry::bottledCaterpillarBlock);
 
     // Represent leaves that have butterfly eggs in them.
     public static final RegistryObject<Block> BUTTERFLY_OAK_LEAVES =
@@ -90,6 +125,17 @@ public class BlockRegistry {
                 .isValidSpawn(BlockRegistry::ocelotOrParrot)
                 .isSuffocating(BlockRegistry::never)
                 .isViewBlocking(BlockRegistry::never));
+    }
+
+    private static BottledCaterpillarBlock bottledCaterpillarBlock() {
+        return new BottledCaterpillarBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F));
     }
 
     /**
