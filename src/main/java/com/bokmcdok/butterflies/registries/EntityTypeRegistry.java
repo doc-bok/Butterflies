@@ -12,11 +12,11 @@ import com.bokmcdok.butterflies.client.renderer.entity.ChrysalisRenderer;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
+import com.bokmcdok.butterflies.world.entity.animal.DirectionalCreature;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -418,291 +418,291 @@ public class EntityTypeRegistry {
     @SubscribeEvent
     public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
         event.register(BUTTERFLY_MORPHO.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_COMMON.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_FORESTER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_EMPEROR.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_HAIRSTREAK.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_RAINBOW.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_HEATH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_GLASSWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_CHALKHILL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_SWALLOWTAIL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_MONARCH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_CABBAGE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_ADMIRAL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_LONGWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_CLIPPER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_BUCKEYE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_MORPHO.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_COMMON.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_FORESTER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_EMPEROR.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_HAIRSTREAK.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_RAINBOW.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_HEATH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_GLASSWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_CHALKHILL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_SWALLOWTAIL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_MONARCH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_CABBAGE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_ADMIRAL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_LONGWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_CLIPPER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CATERPILLAR_BUCKEYE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_MORPHO.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_COMMON.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_FORESTER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_EMPEROR.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_HAIRSTREAK.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_RAINBOW.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_HEATH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_GLASSWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_CHALKHILL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_SWALLOWTAIL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_MONARCH.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_CABBAGE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_ADMIRAL.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_LONGWING.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_CLIPPER.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_BUCKEYE.get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                AmbientCreature::checkMobSpawnRules,
+                DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
     }
 
