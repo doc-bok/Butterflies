@@ -293,6 +293,6 @@ public abstract class DirectionalCreature extends Animal {
      */
     protected BlockState getSurfaceBlockState() {
         BlockPos position = getSurfaceBlockPos();
-        return this.level().getBlockState(position);
+        return this.getLevel().getBlockState(position);
     }
 }

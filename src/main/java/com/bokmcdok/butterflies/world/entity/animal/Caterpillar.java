@@ -23,6 +23,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -754,6 +755,16 @@ public class Caterpillar extends DirectionalCreature {
         return dimensions.height / 2.0f;
     }
 
+    /**
+     * Overriding so we can increase the bounding box for the caterpillar.
+     * @return A bounding box that is bigger than the default.
+     */
+    @Override
+    @NotNull
+    protected AABB makeBoundingBox() {
+        AABB boundingBox = super.makeBoundingBox();
+        return boundingBox.inflate(0.05);
+    }
     /**
      * Override to change how pushing other entities affects them. Caterpillars
      * don't push other entities.
