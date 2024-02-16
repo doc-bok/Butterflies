@@ -5,12 +5,15 @@ import com.bokmcdok.butterflies.network.protocol.common.custom.ClientboundButter
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
+import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkConstants;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.event.EventNetworkChannel;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +24,13 @@ import java.util.List;
  */
 @Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class NetworkEventListener {
+
+    public static final EventNetworkChannel BUTTERFLY_NETWORK_CHANNEL = NetworkRegistry.ChannelBuilder.
+            named(ClientboundButterflyDataPacket.ID).
+            clientAcceptedVersions(a -> true).
+            serverAcceptedVersions(a -> true).
+            networkProtocolVersion(() -> NetworkConstants.NETVERSION).
+            eventNetworkChannel();
 
     /**
      * Called when there is a datapack sync requested. Used to send butterfly
@@ -37,7 +47,7 @@ public class NetworkEventListener {
         ClientboundButterflyDataPacket packet = new ClientboundButterflyDataPacket(butterflyDataCollection);
 
         // Create the payload.
-        Packet<?> payload = new ClientboundCustomPayloadPacket(packet);
+        Packet<?> payload = new ClientboundCustomPayloadPacket(packet.getBuffer());
 
         // Handle a single player.
         if (event.getPlayer() != null) {
@@ -56,17 +66,13 @@ public class NetworkEventListener {
      * Called when a custom payload is received.
      * @param event The payload event.
      */
-    @SubscribeEvent
-    public static void onCustomPayload(CustomPayloadEvent event) {
+    public static void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
 
-        // Handle a butterfly data collection.
-        if (event.getChannel().compareTo(ClientboundButterflyDataPacket.ID) == 0) {
-
-            // Extract the data from the payload.
-            FriendlyByteBuf payload = event.getPayload();
-            if (payload != null) {
-                List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
-                        (buffer) -> new ButterflyData(buffer.readInt(),
+        // Extract the data from the payload.
+        FriendlyByteBuf payload = event.getPayload();
+        if (payload != null) {
+            List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
+                    (buffer) -> new ButterflyData(buffer.readInt(),
                             buffer.readUtf(),
                             buffer.readEnum(ButterflyData.Size.class),
                             buffer.readEnum(ButterflyData.Speed.class),
@@ -76,10 +82,9 @@ public class NetworkEventListener {
                             buffer.readInt(),
                             buffer.readInt()));
 
-                // Register the new data.
-                for (ButterflyData butterfly : butterflyData) {
-                    ButterflyData.addButterfly(butterfly);
-                }
+            // Register the new data.
+            for (ButterflyData butterfly : butterflyData) {
+                ButterflyData.addButterfly(butterfly);
             }
         }
     }
