@@ -270,7 +270,6 @@ public class Chrysalis extends DirectionalCreature {
                 chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
                 chrysalis.setYRot(yRotation);
                 chrysalis.setSurfaceDirection(surfaceDirection);
-                chrysalis.setSurfaceBlockPos(spawnBlock);
 
                 chrysalis.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(spawnBlock),
