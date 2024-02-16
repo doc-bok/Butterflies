@@ -66,7 +66,7 @@ public class Caterpillar extends DirectionalCreature {
     @Nullable
     private Vec3 targetPosition;
 
-    // Whether or not gravity is being applied.
+    // Whether gravity is being applied.
     private boolean isNoGravity = true;
 
     // The size of the caterpillar.
@@ -324,47 +324,25 @@ public class Caterpillar extends DirectionalCreature {
                 double y = position.getY() + 0.4D;
                 double z = position.getZ() + 0.5D;
 
-                BlockPos spawnPosition = position.above();
-
                 if (isBottled) {
                     direction = Direction.DOWN;
                     y = Math.floor(position.getY()) + 0.07d;
-                    spawnPosition = position.below();
 
                     caterpillar.setInvulnerable(true);
                     caterpillar.setPersistenceRequired();
                 } else {
                     switch (direction) {
-                        case DOWN -> {
-                            y = Math.floor(position.getY());
-                            spawnPosition = position.below();
-                        }
-                        case UP -> {
-                            y = Math.floor(position.getY()) + 1.0d;
-                            spawnPosition = position.above();
-                        }
-                        case NORTH -> {
-                            z = Math.floor(position.getZ());
-                            spawnPosition = position.north();
-                        }
-                        case SOUTH -> {
-                            z = Math.floor(position.getZ()) + 1.0d;
-                            spawnPosition = position.south();
-                        }
-                        case WEST -> {
-                            x = Math.floor(position.getX());
-                            spawnPosition = position.west();
-                        }
-                        case EAST -> {
-                            x = Math.floor(position.getX()) + 1.0d;
-                            spawnPosition = position.east();
-                        }
+                        case DOWN -> y = Math.floor(position.getY());
+                        case UP -> y = Math.floor(position.getY()) + 1.0d;
+                        case NORTH -> z = Math.floor(position.getZ());
+                        case SOUTH -> z = Math.floor(position.getZ()) + 1.0d;
+                        case WEST -> x = Math.floor(position.getX());
+                        case EAST -> x = Math.floor(position.getX()) + 1.0d;
                     }
                 }
 
                 caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
                 caterpillar.setSurfaceDirection(direction);
-                caterpillar.setSurfaceBlockPos(spawnPosition);
 
                 caterpillar.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(position),
@@ -386,7 +364,6 @@ public class Caterpillar extends DirectionalCreature {
         super.addAdditionalSaveData(tag);
         tag.putBoolean(IS_BOTTLED, this.entityData.get(DATA_IS_BOTTLED));
     }
-
 
     /**
      * Reduce the size of the caterpillar - they are small!
@@ -527,19 +504,35 @@ public class Caterpillar extends DirectionalCreature {
      * A custom step for the AI update loop.
      */
     @Override
+    @SuppressWarnings("deprecation")
     protected void customServerAiStep() {
         super.customServerAiStep();
 
         // Update gravity
         isNoGravity = true;
 
-        if (!this.getIsBottled()
-                && this.level().hasChunkAt(getSurfaceBlockPos())
-                && this.level().isEmptyBlock(getSurfaceBlockPos())) {
-            setSurfaceDirection(Direction.DOWN);
-            setSurfaceBlockPos(this.blockPosition().below());
-            this.targetPosition = null;
-            isNoGravity = false;
+        if (this.getIsReleased()) {
+            BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
+            if (this.level().hasChunkAt(surfaceBlockPos)) {
+
+                // If the surface block is empty then we try to look for one below.
+                if (this.level().isEmptyBlock(surfaceBlockPos)) {
+                    setSurfaceDirection(Direction.DOWN);
+                }
+
+                // Caterpillars will only fall if their surface direction is
+                // down.
+                if (getSurfaceDirection() == Direction.DOWN) {
+
+                    // If the surface block is still empty, or the caterpillar is
+                    // too far above the surface block, then it should fall.
+                    if (this.level().isEmptyBlock(surfaceBlockPos)
+                            || this.position().y() - (double) this.blockPosition().getY() > 0.01) {
+                        this.targetPosition = null;
+                        isNoGravity = false;
+                    }
+                }
+            }
         }
 
         // If the caterpillar is falling then it can't crawl.
@@ -665,7 +658,7 @@ public class Caterpillar extends DirectionalCreature {
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
             // Spawn Chrysalis.
-            if (!this.getIsBottled()
+            if (this.getIsReleased()
                     && this.getAge() >= 0
                     && this.random.nextInt(0, 15) == 0) {
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
@@ -712,11 +705,11 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Check if the caterpillar is in a bottle or not.
-     * @return TRUE if the caterpillar is in a bottle.
+     * @return TRUE if the caterpillar is free.
      */
     @Override
-    protected boolean getIsBottled() {
-        return entityData.get(DATA_IS_BOTTLED);
+    protected boolean getIsReleased() {
+        return !entityData.get(DATA_IS_BOTTLED);
     }
 
     /**
@@ -761,7 +754,7 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
-     * Set whether or not the caterpillar is in a bottle.
+     * Set whether the caterpillar is in a bottle.
      * @param isBottled TRUE if the caterpillar is bottled.
      */
     private void setIsBottled(boolean isBottled) {

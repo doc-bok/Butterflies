@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.network;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientboundButterflyDataPacket;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -62,21 +63,23 @@ public class NetworkEventListener {
         if (event.getChannel().compareTo(ClientboundButterflyDataPacket.ID) == 0) {
 
             // Extract the data from the payload.
-            List<ButterflyData> butterflyData = event.getPayload().readCollection(ArrayList::new, (buffer) -> {
-                return new ButterflyData(buffer.readInt(),
-                        buffer.readUtf(),
-                        buffer.readEnum(ButterflyData.Size.class),
-                        buffer.readEnum(ButterflyData.Speed.class),
-                        buffer.readEnum(ButterflyData.Rarity.class),
-                        buffer.readEnum(ButterflyData.Habitat.class),
-                        buffer.readInt(),
-                        buffer.readInt(),
-                        buffer.readInt());
-            });
+            FriendlyByteBuf payload = event.getPayload();
+            if (payload != null) {
+                List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
+                        (buffer) -> new ButterflyData(buffer.readInt(),
+                            buffer.readUtf(),
+                            buffer.readEnum(ButterflyData.Size.class),
+                            buffer.readEnum(ButterflyData.Speed.class),
+                            buffer.readEnum(ButterflyData.Rarity.class),
+                            buffer.readEnum(ButterflyData.Habitat.class),
+                            buffer.readInt(),
+                            buffer.readInt(),
+                            buffer.readInt()));
 
-            // Register the new data.
-            for (ButterflyData butterfly : butterflyData) {
-                ButterflyData.addButterfly(butterfly);
+                // Register the new data.
+                for (ButterflyData butterfly : butterflyData) {
+                    ButterflyData.addButterfly(butterfly);
+                }
             }
         }
     }
