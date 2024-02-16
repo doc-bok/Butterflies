@@ -57,14 +57,15 @@ If you want to get the butterfly or caterpillar back, they can be released by
 using the bottle while not highlighting a block.
 
 ## Latest Release
-- [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.0.0/butterflies-3.0.0-for-1.20.2.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.0/butterflies-3.0.0-for-1.20.1.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.0/butterflies-3.0.0-for-1.19.2.jar)
+- [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.20.2.jar)
+- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.20.1.jar)
+- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
+- [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/3.0.0)
 - [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/2.1.1)
 - [Bok’s Butterflies v2.0.9](https://github.com/doc-bok/Butterflies/releases/tag/2.0.9)
 - [Bok’s Butterflies v2.0.6](https://github.com/doc-bok/Butterflies/releases/tag/2.0.6)
