@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -117,7 +118,7 @@ public class ButterflyData {
      * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
      * @param butterflyLifespan   How long it lives as a butterfly.
      */
-    private ButterflyData(int butterflyIndex,
+    public ButterflyData(int butterflyIndex,
                           String entityId,
                           Size size,
                           Speed speed,
@@ -279,6 +280,14 @@ public class ButterflyData {
         }
 
         return null;
+    }
+
+    /**
+     * Get all butterfly data. Used for network synchronisation.
+     * @return The butterfly entries as a collection.
+     */
+    public static Collection<ButterflyData> getButterflyDataCollection() {
+        return BUTTERFLY_ENTRIES.values();
     }
 
     /**
