@@ -1,6 +1,9 @@
 ## Changelog
 
-### 3.0.1 (2024-02-15)
+### 3.0.2 (2024-02-16)
+-   Caterpillars remembered how to fall.
+
+### 3.0.1 (2024-02-16)
 -   Fixed Butterfly Data not being synced with clients correctly.
 
 ### 3.0.0 (2024-02-15)

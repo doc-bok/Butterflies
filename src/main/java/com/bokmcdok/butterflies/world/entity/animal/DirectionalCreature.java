@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -24,11 +23,8 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 
@@ -38,15 +34,8 @@ public abstract class DirectionalCreature extends Animal {
     protected static final EntityDataAccessor<Direction> DATA_DIRECTION =
             SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.DIRECTION);
 
-    protected static final EntityDataAccessor<BlockPos> DATA_SURFACE_BLOCK =
-            SynchedEntityData.defineId(DirectionalCreature.class, EntityDataSerializers.BLOCK_POS);
-
     // Names of the attributes stored in the save data.
     protected static final String DIRECTION = "direction";
-    protected static final String SURFACE_BLOCK = "surface_block";
-
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     // The location of the texture that the renderer should use.
     private final ResourceLocation texture;
@@ -60,6 +49,7 @@ public abstract class DirectionalCreature extends Animal {
      * @param random A random source.
      * @return TRUE if there is a leaf block nearby.
      */
+    @SuppressWarnings("deprecation, unused")
     public static boolean checkDirectionalSpawnRules(EntityType<? extends Mob> entityType,
                                                      LevelAccessor level,
                                                      MobSpawnType spawnType,
@@ -94,7 +84,6 @@ public abstract class DirectionalCreature extends Animal {
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString(DIRECTION, this.entityData.get(DATA_DIRECTION).getName());
-        tag.putString(SURFACE_BLOCK, this.entityData.get(DATA_SURFACE_BLOCK).toShortString());
     }
 
     /**
@@ -108,6 +97,7 @@ public abstract class DirectionalCreature extends Animal {
      * @return The updated group data.
      */
     @Override
+    @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
                                         @NotNull MobSpawnType spawnType,
@@ -118,11 +108,10 @@ public abstract class DirectionalCreature extends Animal {
         }
 
         if (!levelAccessor.hasChunkAt(getSurfaceBlockPos())) {
-            this.setSurfaceBlockPos(this.blockPosition().below());
             this.setSurfaceDirection(Direction.DOWN);
         }
 
-        if (!getIsBottled()) {
+        if (getIsReleased()) {
             if (levelAccessor.hasChunkAt(getSurfaceBlockPos()) &&
                     !levelAccessor.getBlockState(getSurfaceBlockPos()).is(BlockTags.LEAVES)) {
 
@@ -132,7 +121,6 @@ public abstract class DirectionalCreature extends Animal {
                             levelAccessor.getBlockState(surfacePosition).is(BlockTags.LEAVES)) {
 
                         this.setSurfaceDirection(direction);
-                        this.setSurfaceBlockPos(surfacePosition);
 
                         Vec3 position = this.position();
                         double x = position.x();
@@ -197,25 +185,6 @@ public abstract class DirectionalCreature extends Animal {
                 this.entityData.set(DATA_DIRECTION, direction);
             }
         }
-
-        // Get the surface block
-        if (tag.contains(SURFACE_BLOCK)) {
-            String data = tag.getString(SURFACE_BLOCK);
-            String[] values = data.split(",");
-            BlockPos position = new BlockPos(
-                    Integer.parseInt(values[0].trim()),
-                    Integer.parseInt(values[1].trim()),
-                    Integer.parseInt(values[2].trim()));
-            this.entityData.set(DATA_SURFACE_BLOCK, position);
-        }
-    }
-
-    /**
-     * Set the position of the block the caterpillar is crawling on.
-     * @param position The position of the block.
-     */
-    public void setSurfaceBlockPos(BlockPos position) {
-        this.entityData.set(DATA_SURFACE_BLOCK, position);
     }
 
     /**
@@ -252,15 +221,14 @@ public abstract class DirectionalCreature extends Animal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_DIRECTION, Direction.DOWN);
-        this.entityData.define(DATA_SURFACE_BLOCK, new BlockPos(0,0,0));
     }
 
     /**
-     * Check if the caterpillar is in a bottle or not.
-     * @return TRUE if the caterpillar is in a bottle.
+     * Check if the entity is free to move around.
+     * @return TRUE if the entity is free.
      */
-    protected boolean getIsBottled() {
-        return false;
+    protected boolean getIsReleased() {
+        return true;
     }
 
     /**
@@ -272,27 +240,10 @@ public abstract class DirectionalCreature extends Animal {
     }
 
     /**
-     * Get the block the caterpillar is crawling on.
-     * @return The position of the block.
-     */
-    protected Block getSurfaceBlock() {
-        return getSurfaceBlockState().getBlock();
-    }
-
-    /**
      * Get the position of the block the caterpillar is crawling on.
      * @return The position of the block.
      */
     protected BlockPos getSurfaceBlockPos() {
-        return this.entityData.get(DATA_SURFACE_BLOCK);
-    }
-
-    /**
-     * Get the block the caterpillar is crawling on.
-     * @return The position of the block.
-     */
-    protected BlockState getSurfaceBlockState() {
-        BlockPos position = getSurfaceBlockPos();
-        return this.level().getBlockState(position);
+        return this.blockPosition().relative(this.getSurfaceDirection());
     }
 }
