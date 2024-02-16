@@ -46,7 +46,9 @@ public class LevelEventListener {
             resourceManager = Minecraft.getInstance().getResourceManager();
         } else {
             MinecraftServer server = event.getLevel().getServer();
-            if (server != null) {
+            if (server == null) {
+                LOGGER.error("Failed to get Minecraft Server");
+            } else {
                 resourceManager = server.getResourceManager();
             }
         }
