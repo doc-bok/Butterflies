@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.0.3 (2024-02-29)
+-   Caterpillar items now get added to the inventory on the server side.
+
 ### 3.0.2 (2024-02-16)
 -   Caterpillars remembered how to fall.
 
