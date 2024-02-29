@@ -391,24 +391,30 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * If a player hits a caterpillar it will be converted to an item in their inventory.
-     *
-     * @param source The source of the damage.
+     * @param damageSource The source of the damage.
+     * @param damage The amount of damage.
+     * @return The result from hurting the caterpillar.
      */
     @Override
-    public void handleDamageEvent(DamageSource source) {
-        if (source.getEntity() instanceof Player player) {
-            this.remove(RemovalReason.DISCARDED);
+    public boolean hurt(@NotNull DamageSource damageSource,
+                        float damage) {
+        if (damageSource.getEntity() instanceof Player player) {
+            if (this.level().isClientSide) {
+                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+            } else {
+                this.remove(RemovalReason.DISCARDED);
 
-            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-
-            Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
-            if (caterpillarItem != null) {
-                ItemStack itemStack = new ItemStack(caterpillarItem);
-                player.addItem(itemStack);
+                Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
+                if (caterpillarItem != null) {
+                    ItemStack itemStack = new ItemStack(caterpillarItem);
+                    player.addItem(itemStack);
+                }
             }
-        } else {
-            super.handleDamageEvent(source);
+
+            return true;
         }
+
+        return super.hurt(damageSource, damage);
     }
 
     /**
