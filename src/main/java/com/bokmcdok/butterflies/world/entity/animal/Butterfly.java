@@ -616,15 +616,9 @@ public class Butterfly extends Animal {
                 || this.targetPosition.closerToCenterThan(
                         this.position(), 2.0d)) {
             this.targetPosition = new BlockPos(
-                    (int) this.getX()
-                            + this.random.nextInt(7)
-                            - this.random.nextInt(7),
-                    (int) this.getY()
-                            + this.random.nextInt(6)
-                            - 2,
-                    (int) this.getZ()
-                            + this.random.nextInt(7)
-                            - this.random.nextInt(7));
+                    (int) this.getX() + this.random.nextInt(8) - 4,
+                    (int) this.getY() + this.random.nextInt(6) - 2,
+                    (int) this.getZ() + this.random.nextInt(8) - 4);
         }
 
         // Calculate an updated movement delta.
