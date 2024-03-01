@@ -5,6 +5,9 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -23,6 +26,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -32,6 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -56,6 +61,13 @@ public class Butterfly extends Animal {
     public static final String LONGWING_NAME = "longwing";
     public static final String BUCKEYE_NAME = "buckeye";
     public static final String CLIPPER_NAME = "clipper";
+
+    // Serializers for data stored in the save data.
+    protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
+
+    // Names of the attributes stored in the save data.
+    protected static final String IS_FERTILE = "is_fertile";
 
     // The number of ticks per flap. Used for event emissions.
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
@@ -411,6 +423,16 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Used to add extra parameters to the entity's save data.
+     * @param tag The tag containing the extra save data.
+     */
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
+    }
+
+    /**
      * Overrides how fall damage is applied to the entity. Butterflies ignore
      * all fall damage.
      * @param fallDistance The distance fallen.
@@ -499,6 +521,20 @@ public class Butterfly extends Animal {
     @Override
     public boolean isPushable() {
         return false;
+    }
+
+    /**
+     * Override to read any additional save data.
+     * @param tag The tag containing the entity's save data.
+     */
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+
+        // Get the bottle state
+        if (tag.contains(IS_FERTILE)) {
+            this.entityData.set(DATA_IS_FERTILE, tag.getBoolean(IS_FERTILE));
+        }
     }
 
     /**
@@ -611,8 +647,9 @@ public class Butterfly extends Animal {
         double yRotDelta = Mth.wrapDegrees(yRot - this.getYRot());
         this.setYRot(this.getYRot() + (float)yRotDelta);
 
-        // Attempt to lay an egg.
-        if (this.random.nextInt(320) == 1) {
+        if (this.getIsFertile() && this.random.nextInt(320) == 1) {
+
+            // Attempt to lay an egg.
             BlockPos position = this.blockPosition();
             position = switch (this.random.nextInt(6)) {
                 default -> position.above();
@@ -627,15 +664,40 @@ public class Butterfly extends Animal {
                     level,
                     position,
                     EntityType.getKey(this.getType()));
+
+            setIsFertile(false);
+        } else {
+            // Attempt to mate
+            List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
+                    Butterfly.class,
+                    TargetingConditions.forNonCombat(),
+                    this,
+                    this.getBoundingBox().inflate(2.0D));
+
+            for(Butterfly i : nearbyButterflies) {
+                if (i.getType() == this.getType()) {
+                    setIsFertile(true);
+                    break;
+                }
+            }
         }
 
         // If the caterpillar gets too old it will die. This won't happen if it
-        // has been set to persistent (e.g. by using a nametag).
+        // has been set to persistent (e.g. by using a name tag).
         if (!this.isPersistenceRequired() &&
                 this.getAge() >= 0 &&
                 this.random.nextInt(0, 15) == 0) {
             this.kill();
         }
+    }
+
+    /**
+     * Override to define extra data to be synced between server and client.
+     */
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_IS_FERTILE, false);
     }
 
     /**
@@ -646,6 +708,14 @@ public class Butterfly extends Animal {
     @Override
     protected void doPush(@NotNull Entity otherEntity) {
         // No-op
+    }
+
+    /**
+     * Check if the butterfly can lay an egg.
+     * @return TRUE if the butterfly is fertile.
+     */
+    protected boolean getIsFertile() {
+        return entityData.get(DATA_IS_FERTILE);
     }
 
     /**
@@ -695,5 +765,13 @@ public class Butterfly extends Animal {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Set whether the butterfly can lay an egg.
+     * @param isFertile Whether the butterfly is fertile.
+     */
+    private void setIsFertile(boolean isFertile) {
+        entityData.set(DATA_IS_FERTILE, isFertile);
     }
 }
