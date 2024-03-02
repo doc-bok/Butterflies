@@ -65,9 +65,12 @@ public class Butterfly extends Animal {
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Integer> DATA_NUM_EGGS =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
 
     // Names of the attributes stored in the save data.
     protected static final String IS_FERTILE = "is_fertile";
+    protected static final String NUM_EGGS = "num_eggs";
 
     // The number of ticks per flap. Used for event emissions.
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
@@ -430,6 +433,7 @@ public class Butterfly extends Animal {
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
+        tag.putInt(NUM_EGGS, this.entityData.get(DATA_NUM_EGGS));
     }
 
     /**
@@ -464,6 +468,11 @@ public class Butterfly extends Animal {
                                         @Nullable CompoundTag compoundTag) {
         if (spawnType == MobSpawnType.SPAWN_EGG) {
             setPersistenceRequired();
+        }
+
+        //  Small chance the butterfly has more eggs.
+        if (this.random.nextInt(16) == 1) {
+            this.setNumEggs(2);
         }
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
@@ -534,6 +543,11 @@ public class Butterfly extends Animal {
         // Get the bottle state
         if (tag.contains(IS_FERTILE)) {
             this.entityData.set(DATA_IS_FERTILE, tag.getBoolean(IS_FERTILE));
+        }
+
+        // Get the number of remaining eggs
+        if (tag.contains(NUM_EGGS)) {
+            this.entityData.set(DATA_NUM_EGGS, tag.getInt(NUM_EGGS));
         }
     }
 
@@ -641,37 +655,40 @@ public class Butterfly extends Animal {
         double yRotDelta = Mth.wrapDegrees(yRot - this.getYRot());
         this.setYRot(this.getYRot() + (float)yRotDelta);
 
-        if (this.getIsFertile() && this.random.nextInt(320) == 1) {
+        if (getNumEggs() > 0) {
+            if (getIsFertile() && this.random.nextInt(320) == 1) {
 
-            // Attempt to lay an egg.
-            BlockPos position = this.blockPosition();
-            position = switch (this.random.nextInt(6)) {
-                default -> position.above();
-                case 1 -> position.below();
-                case 2 -> position.north();
-                case 3 -> position.east();
-                case 4 -> position.south();
-                case 5 -> position.west();
-            };
+                // Attempt to lay an egg.
+                BlockPos position = this.blockPosition();
+                position = switch (this.random.nextInt(6)) {
+                    default -> position.above();
+                    case 1 -> position.below();
+                    case 2 -> position.north();
+                    case 3 -> position.east();
+                    case 4 -> position.south();
+                    case 5 -> position.west();
+                };
 
-            ButterflyLeavesBlock.swapLeavesBlock(
-                    level,
-                    position,
-                    EntityType.getKey(this.getType()));
+                ButterflyLeavesBlock.swapLeavesBlock(
+                        level,
+                        position,
+                        EntityType.getKey(this.getType()));
 
-            setIsFertile(false);
-        } else {
-            // Attempt to mate
-            List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
-                    Butterfly.class,
-                    TargetingConditions.forNonCombat(),
-                    this,
-                    this.getBoundingBox().inflate(2.0D));
+                setIsFertile(false);
+                useEgg();
+            } else {
+                // Attempt to mate
+                List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
+                        Butterfly.class,
+                        TargetingConditions.forNonCombat(),
+                        this,
+                        this.getBoundingBox().inflate(2.0D));
 
-            for(Butterfly i : nearbyButterflies) {
-                if (i.getType() == this.getType()) {
-                    setIsFertile(true);
-                    break;
+                for (Butterfly i : nearbyButterflies) {
+                    if (i.getType() == this.getType()) {
+                        setIsFertile(true);
+                        break;
+                    }
                 }
             }
         }
@@ -692,6 +709,7 @@ public class Butterfly extends Animal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_IS_FERTILE, false);
+        this.entityData.define(DATA_NUM_EGGS, 1);
     }
 
     /**
@@ -721,6 +739,14 @@ public class Butterfly extends Animal {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
+    }
+
+    /**
+     * Get the number of eggs this butterfly can lay.
+     * @return The number of eggs left for this butterfly.
+     */
+    protected int getNumEggs() {
+        return entityData.get(DATA_NUM_EGGS);
     }
 
     /**
@@ -767,5 +793,20 @@ public class Butterfly extends Animal {
      */
     private void setIsFertile(boolean isFertile) {
         entityData.set(DATA_IS_FERTILE, isFertile);
+    }
+
+    /**
+     * Set the number of eggs this butterfly can lay.
+     * @param numEggs The number of eggs remaining.
+     */
+    private void setNumEggs(int numEggs) {
+        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
+    }
+
+    /**
+     * Reduce the number of eggs the butterfly can lay by 1.
+     */
+    private void useEgg() {
+        setNumEggs(getNumEggs() - 1);
     }
 }
