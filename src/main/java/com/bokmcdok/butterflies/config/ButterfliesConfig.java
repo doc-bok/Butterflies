@@ -29,8 +29,8 @@ public class ButterfliesConfig {
                 .defineInRange("egg_limit", 1, 0, 1024);
 
         maxDensity = builder
-                .comment("Defines how many butterflies can be in a 32x32 region" +
-                        " before breeding is disabled. If set to zero, this is disabled")
+                .comment("Defines how many butterflies can be in a 32x32x32 region" +
+                        " before breeding is disabled. If set to zero, this is ignored.")
                 .defineInRange("max_density", 16, 0, 1024);
 
         enableLifespan = builder

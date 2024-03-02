@@ -56,15 +56,34 @@ this way will not die, lay eggs or create chrysalises.
 If you want to get the butterfly or caterpillar back, they can be released by
 using the bottle while not highlighting a block.
 
+### Server Config
+
+There are now server config options to help manage butterfly growth. You can
+find them in your world folder, under `/serverconfig/butterflies-server.toml`.
+
+The available options are:
+
+**double_egg_chance:** Defines the chance a butterfly has double the eggs
+(default: `0.0625`).
+
+**egg_limit:** Defines how many eggs each butterfly can lay (default: `1`).
+
+**max_density:** Defines how many butterflies can be in a 32x32x32 region
+before breeding is disabled. If set to zero, this is ignored (default: `16`).
+
+**enable_lifespan:** If set to TRUE butterflies will die naturally
+(default: `true`).
+
 ## Latest Release
-- [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.20.2.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.20.1.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.0.2/butterflies-3.0.2-for-1.19.2.jar)
+- [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.20.2.jar)
+- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.20.1.jar)
+- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
+- [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/3.0.2)
 - [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/3.0.0)
 - [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/2.1.1)
 - [Bok’s Butterflies v2.0.9](https://github.com/doc-bok/Butterflies/releases/tag/2.0.9)
