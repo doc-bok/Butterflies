@@ -656,38 +656,50 @@ public class Butterfly extends Animal {
         this.setYRot(this.getYRot() + (float)yRotDelta);
 
         if (getNumEggs() > 0) {
-            if (getIsFertile() && this.random.nextInt(320) == 1) {
 
-                // Attempt to lay an egg.
-                BlockPos position = this.blockPosition();
-                position = switch (this.random.nextInt(6)) {
-                    default -> position.above();
-                    case 1 -> position.below();
-                    case 2 -> position.north();
-                    case 3 -> position.east();
-                    case 4 -> position.south();
-                    case 5 -> position.west();
-                };
+            // Don't mate if there are too many butterflies in the area already.
+            List<Butterfly> numButterflies = this.level().getNearbyEntities(
+                    Butterfly.class,
+                    TargetingConditions.forNonCombat(),
+                    this,
+                    this.getBoundingBox().inflate(32.0D));
 
-                ButterflyLeavesBlock.swapLeavesBlock(
-                        level,
-                        position,
-                        EntityType.getKey(this.getType()));
+            if (numButterflies.size() < 32) {
 
-                setIsFertile(false);
-                useEgg();
-            } else {
-                // Attempt to mate
-                List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
-                        Butterfly.class,
-                        TargetingConditions.forNonCombat(),
-                        this,
-                        this.getBoundingBox().inflate(2.0D));
+                if (getIsFertile() && this.random.nextInt(320) == 1) {
 
-                for (Butterfly i : nearbyButterflies) {
-                    if (i.getType() == this.getType()) {
-                        setIsFertile(true);
-                        break;
+                    // Attempt to lay an egg.
+                    BlockPos position = this.blockPosition();
+                    position = switch (this.random.nextInt(6)) {
+                        default -> position.above();
+                        case 1 -> position.below();
+                        case 2 -> position.north();
+                        case 3 -> position.east();
+                        case 4 -> position.south();
+                        case 5 -> position.west();
+                    };
+
+                    if (ButterflyLeavesBlock.swapLeavesBlock(
+                            level,
+                            position,
+                            EntityType.getKey(this.getType()))) {
+                        setIsFertile(false);
+                        useEgg();
+                    }
+
+                } else {
+                    // Attempt to mate
+                    List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
+                            Butterfly.class,
+                            TargetingConditions.forNonCombat(),
+                            this,
+                            this.getBoundingBox().inflate(2.0D));
+
+                    for (Butterfly i : nearbyButterflies) {
+                        if (i.getType() == this.getType()) {
+                            setIsFertile(true);
+                            break;
+                        }
                     }
                 }
             }
