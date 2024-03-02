@@ -661,7 +661,7 @@ public class Butterfly extends Animal {
         if (getNumEggs() > 0) {
 
             // Don't mate if there are too many butterflies in the area already.
-            List<Butterfly> numButterflies = this.level().getNearbyEntities(
+            List<Butterfly> numButterflies = this.getLevel().getNearbyEntities(
                     Butterfly.class,
                     TargetingConditions.forNonCombat(),
                     this,
@@ -693,7 +693,7 @@ public class Butterfly extends Animal {
 
                 } else {
                     // Attempt to mate
-                    List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
+                    List<Butterfly> nearbyButterflies = this.getLevel().getNearbyEntities(
                             Butterfly.class,
                             TargetingConditions.forNonCombat(),
                             this,

@@ -410,7 +410,7 @@ public class Caterpillar extends DirectionalCreature {
                     player.addItem(itemStack);
                 }
             }
-            
+
             return true;
         }
 
