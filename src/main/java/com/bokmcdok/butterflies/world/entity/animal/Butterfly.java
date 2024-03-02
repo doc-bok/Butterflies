@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
@@ -471,8 +472,10 @@ public class Butterfly extends Animal {
         }
 
         //  Small chance the butterfly has more eggs.
-        if (this.random.nextInt(16) == 1) {
-            this.setNumEggs(2);
+        if (this.random.nextDouble() < ButterfliesConfig.doubleEggChance.get()) {
+            this.setNumEggs(ButterfliesConfig.eggLimit.get() * 2);
+        } else {
+            this.setNumEggs(ButterfliesConfig.eggLimit.get());
         }
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
@@ -664,7 +667,8 @@ public class Butterfly extends Animal {
                     this,
                     this.getBoundingBox().inflate(32.0D));
 
-            if (numButterflies.size() < 32) {
+            int maxDensity = ButterfliesConfig.maxDensity.get();
+            if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
 
                 if (getIsFertile() && this.random.nextInt(320) == 1) {
 
@@ -706,11 +710,13 @@ public class Butterfly extends Animal {
         }
 
         // If the caterpillar gets too old it will die. This won't happen if it
-        // has been set to persistent (e.g. by using a name tag).
-        if (!this.isPersistenceRequired() &&
-                this.getAge() >= 0 &&
-                this.random.nextInt(0, 15) == 0) {
-            this.kill();
+        // has been set to persistent (e.g. by using a name tag).'
+        if (ButterfliesConfig.enableLifespan.get()) {
+            if (!this.isPersistenceRequired() &&
+                    this.getAge() >= 0 &&
+                    this.random.nextInt(0, 15) == 0) {
+                this.kill();
+            }
         }
     }
 

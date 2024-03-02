@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies;
 
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
@@ -7,7 +8,9 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.LootModifierRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
@@ -36,5 +39,8 @@ public class ButterfliesMod
         EntityTypeRegistry.INSTANCE.register(modEventBus);
         ItemRegistry.INSTANCE.register(modEventBus);
         LootModifierRegistry.INSTANCE.register(modEventBus);
+
+        // Mod Config Settings
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
     }
 }
