@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.BottledCaterpillarItem;
@@ -55,37 +56,37 @@ public class ItemRegistry {
 
     // Butterfly Eggs - Eggs that will eventually hatch into a caterpillar.
     public static final RegistryObject<Item> BUTTERFLY_EGG_ADMIRAL = INSTANCE.register(ButterflyEggItem.ADMIRAL_NAME,
-            () -> new ButterflyEggItem(Butterfly.ADMIRAL_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.ADMIRAL_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_BUCKEYE = INSTANCE.register(ButterflyEggItem.BUCKEYE_NAME,
-            () -> new ButterflyEggItem(Butterfly.BUCKEYE_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.BUCKEYE_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_CABBAGE = INSTANCE.register(ButterflyEggItem.CABBAGE_NAME,
-            () -> new ButterflyEggItem(Butterfly.CABBAGE_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.CABBAGE_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_CHALKHILL = INSTANCE.register(ButterflyEggItem.CHALKHILL_NAME,
-            () -> new ButterflyEggItem(Butterfly.CHALKHILL_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.CHALKHILL_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_CLIPPER = INSTANCE.register(ButterflyEggItem.CLIPPER_NAME,
-            () -> new ButterflyEggItem(Butterfly.CLIPPER_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.CLIPPER_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_COMMON = INSTANCE.register(ButterflyEggItem.COMMON_NAME,
-            () -> new ButterflyEggItem(Butterfly.COMMON_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.COMMON_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_EMPEROR = INSTANCE.register(ButterflyEggItem.EMPEROR_NAME,
-            () -> new ButterflyEggItem(Butterfly.EMPEROR_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.EMPEROR_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_FORESTER = INSTANCE.register(ButterflyEggItem.FORESTER_NAME,
-            () -> new ButterflyEggItem(Butterfly.FORESTER_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.FORESTER_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_GLASSWING = INSTANCE.register(ButterflyEggItem.GLASSWING_NAME,
-            () -> new ButterflyEggItem(Butterfly.GLASSWING_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.GLASSWING_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_HAIRSTREAK = INSTANCE.register(ButterflyEggItem.HAIRSTREAK_NAME,
-            () -> new ButterflyEggItem(Butterfly.HAIRSTREAK_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.HAIRSTREAK_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_HEATH = INSTANCE.register(ButterflyEggItem.HEATH_NAME,
-            () -> new ButterflyEggItem(Butterfly.HEATH_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.HEATH_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_LONGWING = INSTANCE.register(ButterflyEggItem.LONGWING_NAME,
-            () -> new ButterflyEggItem(Butterfly.LONGWING_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.LONGWING_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_MONARCH = INSTANCE.register(ButterflyEggItem.MONARCH_NAME,
-            () -> new ButterflyEggItem(Butterfly.MONARCH_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.MONARCH_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_MORPHO = INSTANCE.register(ButterflyEggItem.MORPHO_NAME,
-            () -> new ButterflyEggItem(Butterfly.MORPHO_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.MORPHO_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_RAINBOW = INSTANCE.register(ButterflyEggItem.RAINBOW_NAME,
-            () -> new ButterflyEggItem(Butterfly.RAINBOW_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.RAINBOW_NAME, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_SWALLOWTAIL = INSTANCE.register(ButterflyEggItem.SWALLOWTAIL_NAME,
-            () -> new ButterflyEggItem(Butterfly.SWALLOWTAIL_NAME, new Item.Properties()));
+            () -> new ButterflyEggItem(ButterflyEgg.SWALLOWTAIL_NAME, new Item.Properties()));
 
     //  Caterpillars
     public static final RegistryObject<Item> CATERPILLAR_ADMIRAL = INSTANCE.register(CaterpillarItem.ADMIRAL_NAME,

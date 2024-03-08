@@ -1,14 +1,18 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
+import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -34,7 +38,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
 
-    private final ResourceLocation location;
+    private final ResourceLocation species;
 
     /**
      * Construction
@@ -42,7 +46,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
      */
     public ButterflyEggItem(String entityId, Item.Properties properties) {
         super(properties);
-        this.location = new ResourceLocation(ButterfliesMod.MODID, entityId);
+        this.species = new ResourceLocation(ButterfliesMod.MODID, entityId);
     }
 
     /**
@@ -53,13 +57,26 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     @NotNull
     @Override
     public InteractionResult useOn(@NotNull UseOnContext context) {
-        Level level = context.getLevel();
-        BlockPos position = context.getClickedPos();
+        Player player = context.getPlayer();
+        if (player != null) {
 
-        if (ButterflyLeavesBlock.swapLeavesBlock(level, position, this.location)) {
-            ItemStack itemStack = context.getItemInHand();
-            itemStack.shrink(1);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            BlockPos clickedPos = context.getClickedPos();
+
+            Block block = context.getLevel().getBlockState(clickedPos).getBlock();
+            if (!(block instanceof LeavesBlock)) {
+                return InteractionResult.FAIL;
+            } else {
+                if (!context.getLevel().isClientSide()) {
+                    Direction clickedFace = context.getClickedFace();
+                    ButterflyEgg.spawn((ServerLevel) context.getLevel(), this.species, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+                } else {
+                    player.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1F, 1F);
+                }
+
+                context.getItemInHand().shrink(1);
+
+                return InteractionResult.CONSUME;
+            }
         }
 
         return super.useOn(context);

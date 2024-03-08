@@ -3,8 +3,8 @@ package com.bokmcdok.butterflies.world.entity.animal;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -88,6 +89,9 @@ public class Butterfly extends Animal {
 
     // The size of the butterfly.
     private final ButterflyData.Size size;
+
+    // The butterfly index
+    private final int butterflyIndex;
 
     // The speed of the butterfly.
     private final double speed;
@@ -423,6 +427,8 @@ public class Butterfly extends Animal {
             this.speed = BUTTERFLY_SPEED;
         }
 
+        this.butterflyIndex = data.butterflyIndex;
+
         setAge(-data.butterflyLifespan);
     }
 
@@ -673,20 +679,20 @@ public class Butterfly extends Animal {
                 if (getIsFertile() && this.random.nextInt(320) == 1) {
 
                     // Attempt to lay an egg.
-                    BlockPos position = this.blockPosition();
-                    position = switch (this.random.nextInt(6)) {
-                        default -> position.above();
-                        case 1 -> position.below();
-                        case 2 -> position.north();
-                        case 3 -> position.east();
-                        case 4 -> position.south();
-                        case 5 -> position.west();
+                    Direction direction = switch (this.random.nextInt(6)) {
+                        default -> Direction.UP;
+                        case 1 -> Direction.DOWN;
+                        case 2 -> Direction.NORTH;
+                        case 3 -> Direction.EAST;
+                        case 4 -> Direction.SOUTH;
+                        case 5 -> Direction.WEST;
                     };
 
-                    if (ButterflyLeavesBlock.swapLeavesBlock(
-                            level,
-                            position,
-                            EntityType.getKey(this.getType()))) {
+                    BlockPos position = this.blockPosition().relative(direction.getOpposite());
+
+                    if (level.getBlockState(position).is(BlockTags.LEAVES)) {
+                        ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
+                        ButterflyEgg.spawn((ServerLevel)level, eggEntity, position, direction);
                         setIsFertile(false);
                         useEgg();
                     }

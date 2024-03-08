@@ -74,6 +74,7 @@ public class NetworkEventListener {
                             buffer.readEnum(ButterflyData.Habitat.class),
                             buffer.readInt(),
                             buffer.readInt(),
+                            buffer.readInt(),
                             buffer.readInt()));
 
                 // Register the new data.
