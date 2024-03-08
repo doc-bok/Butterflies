@@ -85,6 +85,9 @@ public class ButterflyData {
     public final Habitat habitat;
 
     // The lifespan of the caterpillar phase
+    public final int eggLifespan;
+
+    // The lifespan of the caterpillar phase
     public final int caterpillarLifespan;
 
     // The lifespan of the chrysalis phase
@@ -98,10 +101,10 @@ public class ButterflyData {
      * @return A representation of the lifespan.
      */
     public Lifespan getOverallLifeSpan() {
-        int days = (caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
-        if (days < 15) {
+        int days = (eggLifespan + caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
+        if (days < 18) {
             return Lifespan.SHORT;
-        } else if (days < 25) {
+        } else if (days < 30) {
             return Lifespan.MEDIUM;
         } else {
             return Lifespan.LONG;
@@ -124,6 +127,7 @@ public class ButterflyData {
                           Speed speed,
                           Rarity rarity,
                           Habitat habitat,
+                          int eggLifespan,
                           int caterpillarLifespan,
                           int chrysalisLifespan,
                           int butterflyLifespan) {
@@ -134,6 +138,7 @@ public class ButterflyData {
         this.rarity = rarity;
         this.habitat = habitat;
 
+        this.eggLifespan = eggLifespan;
         this.caterpillarLifespan = caterpillarLifespan * 2;
         this.chrysalisLifespan = chrysalisLifespan;
         this.butterflyLifespan = butterflyLifespan * 2;
@@ -196,6 +201,14 @@ public class ButterflyData {
 
                 JsonObject lifespan = object.get("lifespan").getAsJsonObject();
 
+                String eggStr = lifespan.get("egg").getAsString();
+                int eggLifespan = LIFESPAN_MEDIUM;
+                if (Objects.equals(eggStr, "short")) {
+                    eggLifespan = LIFESPAN_SHORT;
+                } else if (Objects.equals(eggStr, "long")) {
+                    eggLifespan = LIFESPAN_LONG;
+                }
+
                 String caterpillarStr = lifespan.get("caterpillar").getAsString();
                 int caterpillarLifespan = LIFESPAN_MEDIUM;
                 if (Objects.equals(caterpillarStr, "short")) {
@@ -227,6 +240,7 @@ public class ButterflyData {
                         speed,
                         rarity,
                         habitat,
+                        eggLifespan,
                         caterpillarLifespan,
                         chrysalisLifespan,
                         butterflyLifespan
@@ -309,6 +323,20 @@ public class ButterflyData {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the resource location for the butterfly egg at the specified index.
+     * @param index The butterfly index.
+     * @return The resource location of the butterfly egg.
+     */
+    public static ResourceLocation indexToButterflyEggEntity(int index) {
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
         }
 
         return null;
