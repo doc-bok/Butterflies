@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.2.1 (2024-03-12)
+- Rewrote butterfly items and recipes so they don't rely on NBT data to work.
+
 ### 3.2.0 (2024-03-08)
 - Butterfly eggs now spawn as entities.
 

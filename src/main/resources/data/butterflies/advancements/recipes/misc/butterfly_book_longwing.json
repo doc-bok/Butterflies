@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_book_longwing",
+      "butterflies:butterfly_book_add_page_longwing"
+    ]
+  },
+  "criteria": {
+    "has_scroll": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_longwing"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:butterfly_book_longwing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_scroll",
+      "has_the_recipe"
+    ]
+  ]
+}

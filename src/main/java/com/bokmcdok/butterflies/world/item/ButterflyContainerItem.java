@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -21,6 +20,12 @@ import java.util.List;
 public interface ButterflyContainerItem {
 
     /**
+     * Get the index for the species of butterfly related to this item.
+     * @return The butterfly index.
+     */
+    int getButterflyIndex();
+
+    /**
      * Adds some helper text that tells us what butterfly is in the net (if any).
      * @param stack The item stack.
      * @param components The current text components.
@@ -28,12 +33,10 @@ public interface ButterflyContainerItem {
     default void appendButterflyNameToHoverText(@NotNull ItemStack stack,
                                                 @NotNull List<Component> components) {
         String translatable = "item.butterflies.empty";
-        CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains(CompoundTagId.ENTITY_ID)) {
-            String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-            if (StringUtils.isNotBlank(entityId)) {
-                translatable = "item." + entityId.replace(':', '.');
-            }
+        ResourceLocation entity = getButterflyEntity(stack);
+
+        if (entity != null) {
+            translatable = "item." + entity.toString().replace(':', '.');
         }
 
         MutableComponent newComponent = Component.translatable(translatable);
@@ -44,19 +47,27 @@ public interface ButterflyContainerItem {
     }
 
     /**
-     * Set the butterfly contained in the bottle
-     * @param stack The item stack to modify
-     * @param index The butterfly index
+     * Helper method to get the entity from an item stack
+     * @param stack The item stack.
+     * @return The entity held in this item, if any.
      */
-    static void setButterfly(ItemStack stack, int index) {
-        ResourceLocation location = ButterflyData.indexToButterflyEntity(index);
-        if (location != null) {
+    default ResourceLocation getButterflyEntity(ItemStack stack) {
+        ResourceLocation entity = null;
+
+        //  TODO: Compound tags are checked for backwards compatibility. This
+        //        code should be removed in a future version.
+        if (stack != null) {
             CompoundTag tag = stack.getOrCreateTag();
-            if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
-                    !tag.contains(CompoundTagId.ENTITY_ID)) {
-                tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, index);
-                tag.putString(CompoundTagId.ENTITY_ID, location.toString());
+            if (tag.contains(CompoundTagId.ENTITY_ID)) {
+                String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+                entity = new ResourceLocation(entityId);
             }
         }
+
+        if (entity == null) {
+            entity = ButterflyData.indexToButterflyEntity(getButterflyIndex());
+        }
+
+        return entity;
     }
 }

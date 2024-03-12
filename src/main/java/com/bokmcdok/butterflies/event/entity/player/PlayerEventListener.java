@@ -31,56 +31,14 @@ import net.minecraftforge.fml.common.Mod;
 public class PlayerEventListener {
 
     /**
-     * Transfer butterfly data when crafting items that contain a butterfly.
+     * Handles adding new pages to a butterfly book.
      * @param event The event data
      */
     @SubscribeEvent
     public static void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
 
         ItemStack craftingItem = event.getCrafting();
-        if (craftingItem.getItem() instanceof ButterflyContainerItem) {
-
-            Container craftingMatrix = event.getInventory();
-            for (int i = 0; i < craftingMatrix.getContainerSize(); ++i) {
-
-                ItemStack recipeItem = craftingMatrix.getItem(i);
-                CompoundTag tag = recipeItem.getTag();
-                if (tag != null) {
-                    int index = -1;
-
-                    // Always use Entity ID for compatibility with butterfly net.
-                    if (tag.contains(CompoundTagId.ENTITY_ID)) {
-                        ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                        index = ButterflyData.getButterflyIndex(location);
-                    }
-
-                    if (index >= 0) {
-                        ButterflyContainerItem.setButterfly(craftingItem, index);
-
-                        // Check for shift-clicked item.
-                        Player player = event.getEntity();
-                        if (player != null) {
-                            Inventory inventory = player.getInventory();
-                            for (int j = 0; j < inventory.getContainerSize(); ++j) {
-
-                                ItemStack inventoryItem = inventory.getItem(j);
-                                if (inventoryItem.getItem() instanceof BottledButterflyItem ||
-                                        inventoryItem.getItem() instanceof ButterflyScrollItem) {
-
-                                    CompoundTag inventoryItemTag = inventoryItem.getTag();
-                                    if (inventoryItemTag == null || !inventoryItemTag.contains(CompoundTagId.ENTITY_ID)) {
-                                        ButterflyContainerItem.setButterfly(inventoryItem, index);
-                                    }
-                                }
-                            }
-                        }
-
-                        break;
-                    }
-                }
-            }
-
-        } else if (craftingItem.getItem() instanceof ButterflyBookItem) {
+        if (craftingItem.getItem() instanceof ButterflyBookItem) {
             Container craftingMatrix = event.getInventory();
             int index = -1;
             ItemStack oldBook = null;
@@ -92,7 +50,15 @@ public class PlayerEventListener {
                     oldBook = recipeItem;
                 }
 
+                //  Get the index from the scroll.
+                if (recipeItem.getItem() instanceof ButterflyScrollItem scroll) {
+                    if (index == -1) {
+                        index = scroll.getButterflyIndex();
+                    }
+                }
+
                 // Always use Entity ID for compatibility with butterfly net.
+                // TODO: Remove in a future version.
                 CompoundTag tag = recipeItem.getTag();
                 if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
                     ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
@@ -105,6 +71,7 @@ public class PlayerEventListener {
                 ButterflyBookItem.addPage(oldBook, craftingItem, index);
 
                 // Check for shift-clicked item.
+                // TODO: This is still hacky - is there a better way to add pages?
                 Player player = event.getEntity();
                 if (player != null) {
                     Inventory inventory = player.getInventory();
