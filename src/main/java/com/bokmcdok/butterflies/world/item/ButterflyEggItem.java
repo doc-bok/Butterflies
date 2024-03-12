@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,15 +38,27 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
 
-    private final ResourceLocation species;
+    //  The index of the butterfly species.
+    private final int butterflyIndex;
 
     /**
      * Construction
+     * @param butterflyIndex The butterfly index of this item.
      * @param properties The item properties.
      */
-    public ButterflyEggItem(String entityId, Item.Properties properties) {
+    public ButterflyEggItem(int butterflyIndex,
+                            Item.Properties properties) {
         super(properties);
-        this.species = new ResourceLocation(ButterfliesMod.MODID, entityId);
+        this.butterflyIndex = butterflyIndex;
+    }
+
+    /**
+     * Get the butterfly index.
+     * @return The butterfly index.
+     */
+    @Override
+    public int getButterflyIndex() {
+        return this.butterflyIndex;
     }
 
     /**
@@ -68,7 +80,9 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
             } else {
                 if (!context.getLevel().isClientSide()) {
                     Direction clickedFace = context.getClickedFace();
-                    ButterflyEgg.spawn((ServerLevel) context.getLevel(), this.species, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+
+                    ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
+                    ButterflyEgg.spawn((ServerLevel) context.getLevel(), eggEntity, clickedPos.relative(clickedFace), clickedFace.getOpposite());
                 } else {
                     player.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1F, 1F);
                 }

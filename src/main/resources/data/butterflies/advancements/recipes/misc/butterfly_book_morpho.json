@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_book_morpho",
+      "butterflies:butterfly_book_add_page_morpho"
+    ]
+  },
+  "criteria": {
+    "has_scroll": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_morpho"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:butterfly_book_morpho"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_scroll",
+      "has_the_recipe"
+    ]
+  ]
+}

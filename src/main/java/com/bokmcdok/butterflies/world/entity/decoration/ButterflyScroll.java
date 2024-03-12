@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -75,8 +74,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_SCROLL.get());
-        ButterflyContainerItem.setButterfly(stack, this.butterflyIndex);
+        ItemStack stack = new ItemStack(ItemRegistry.getButterflyScrollFromIndex(this.butterflyIndex).get());
         this.spawnAtLocation(stack);
     }
 

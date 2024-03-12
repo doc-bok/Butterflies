@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_book_swallowtail",
+      "butterflies:butterfly_book_add_page_swallowtail"
+    ]
+  },
+  "criteria": {
+    "has_scroll": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_swallowtail"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:butterfly_book_swallowtail"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_scroll",
+      "has_the_recipe"
+    ]
+  ]
+}

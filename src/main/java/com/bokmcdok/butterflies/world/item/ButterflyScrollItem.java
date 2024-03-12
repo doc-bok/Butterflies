@@ -29,13 +29,37 @@ import java.util.List;
 
 public class ButterflyScrollItem extends Item implements ButterflyContainerItem {
 
+    //  The name this item is registered under.
+    public static final String ADMIRAL_NAME = "butterfly_scroll_admiral";
+    public static final String BUCKEYE_NAME = "butterfly_scroll_buckeye";
+    public static final String CABBAGE_NAME = "butterfly_scroll_cabbage";
+    public static final String CHALKHILL_NAME = "butterfly_scroll_chalkhill";
+    public static final String CLIPPER_NAME = "butterfly_scroll_clipper";
+    public static final String COMMON_NAME = "butterfly_scroll_common";
+    public static final String EMPEROR_NAME = "butterfly_scroll_emperor";
+    public static final String FORESTER_NAME = "butterfly_scroll_forester";
+    public static final String GLASSWING_NAME = "butterfly_scroll_glasswing";
+    public static final String HAIRSTREAK_NAME = "butterfly_scroll_hairstreak";
+    public static final String HEATH_NAME = "butterfly_scroll_heath";
+    public static final String LONGWING_NAME = "butterfly_scroll_longwing";
+    public static final String MONARCH_NAME = "butterfly_scroll_monarch";
+    public static final String MORPHO_NAME = "butterfly_scroll_morpho";
+    public static final String RAINBOW_NAME = "butterfly_scroll_rainbow";
+    public static final String SWALLOWTAIL_NAME = "butterfly_scroll_swallowtail";
+    
+    //  TODO: Remove in future version.
     public static final String NAME = "butterfly_scroll";
+
+    //  The index of the butterfly species.
+    private final int butterflyIndex;
     
     /**
      * Construction
      */
-    public ButterflyScrollItem() {
+    public ButterflyScrollItem(int butterflyIndex) {
         super(new Item.Properties());
+
+        this.butterflyIndex = butterflyIndex;
     }
 
     /**
@@ -52,6 +76,15 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
         super.appendHoverText(stack, level, components, tooltipFlag);
+    }
+
+    /**
+     * Get the butterfly index.
+     * @return The butterfly index.
+     */
+    @Override
+    public int getButterflyIndex() {
+        return this.butterflyIndex;
     }
 
     /**
@@ -72,6 +105,8 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             CompoundTag tag = itemstack.getTag();
             if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
                 openScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
+            } else if (getButterflyIndex() >= 0) {
+                openScreen(getButterflyIndex());
             } else {
                 replaceWithPaper(player, hand, itemstack);
             }
@@ -101,11 +136,19 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                 return InteractionResult.FAIL;
             } else {
                 Level level = context.getLevel();
+                int butterflyIndex = getButterflyIndex();
                 CompoundTag tag = itemInHand.getTag();
-                if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+
+                if (butterflyIndex < 0) {
+                    if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
+                        butterflyIndex = tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA);
+                    }
+                }
+
+                if (butterflyIndex >= 0) {
                     ButterflyScroll butterflyScroll = new ButterflyScroll(level, blockPos, clickedFace);
 
-                    butterflyScroll.setButterflyIndex(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
+                    butterflyScroll.setButterflyIndex(butterflyIndex);
 
                     if (butterflyScroll.survives()) {
                         if (!level.isClientSide) {

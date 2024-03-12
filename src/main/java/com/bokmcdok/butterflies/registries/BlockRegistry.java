@@ -37,16 +37,45 @@ public class BlockRegistry {
             DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MODID);
 
     // The bottled butterfly block when it is in the world.
+
+    // Bottled Caterpillars
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_ADMIRAL =
+            INSTANCE.register(BottledButterflyBlock.ADMIRAL_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_BUCKEYE =
+            INSTANCE.register(BottledButterflyBlock.BUCKEYE_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CABBAGE =
+            INSTANCE.register(BottledButterflyBlock.CABBAGE_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CHALKHILL =
+            INSTANCE.register(BottledButterflyBlock.CHALKHILL_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CLIPPER =
+            INSTANCE.register(BottledButterflyBlock.CLIPPER_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_COMMON =
+            INSTANCE.register(BottledButterflyBlock.COMMON_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_EMPEROR =
+            INSTANCE.register(BottledButterflyBlock.EMPEROR_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_FORESTER =
+            INSTANCE.register(BottledButterflyBlock.FORESTER_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_GLASSWING =
+            INSTANCE.register(BottledButterflyBlock.GLASSWING_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_HAIRSTREAK =
+            INSTANCE.register(BottledButterflyBlock.HAIRSTREAK_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_HEATH =
+            INSTANCE.register(BottledButterflyBlock.HEATH_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_LONGWING =
+            INSTANCE.register(BottledButterflyBlock.LONGWING_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_MONARCH =
+            INSTANCE.register(BottledButterflyBlock.MONARCH_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_MORPHO =
+            INSTANCE.register(BottledButterflyBlock.MORPHO_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_RAINBOW =
+            INSTANCE.register(BottledButterflyBlock.RAINBOW_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_SWALLOWTAIL =
+            INSTANCE.register(BottledButterflyBlock.SWALLOWTAIL_NAME, BottledButterflyBlock::new);
+    
+    //  TODO: This is here for backward compatibility. It should be removed in
+    //         future versions.
     public static final RegistryObject<Block> BOTTLED_BUTTERFLY_BLOCK =
-            INSTANCE.register(BottledButterflyBlock.NAME,
-            () -> new BottledButterflyBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::never)
-                    .isSuffocating(BlockRegistry::never)
-                    .isValidSpawn(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
-                    .noOcclusion()
-                    .sound(SoundType.GLASS)
-                    .strength(0.3F)));
+            INSTANCE.register(BottledButterflyBlock.NAME, BottledButterflyBlock::new);
 
     // Bottled Caterpillars
     public static final RegistryObject<Block> BOTTLED_CATERPILLAR_ADMIRAL =
@@ -169,7 +198,7 @@ public class BlockRegistry {
      * @param entityType The entity type trying to spawn.
      * @return Always FALSE.
      */
-    private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, EntityType<?> entityType) {
+    public static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, EntityType<?> entityType) {
         return false;
     }
 
@@ -180,7 +209,7 @@ public class BlockRegistry {
      * @param blockPos The block's position.
      * @return Always FALSE.
      */
-    private static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
+    public static boolean never(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
         return false;
     }
 

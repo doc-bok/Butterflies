@@ -501,6 +501,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Get the butterfly's index.
+     * @return The butterfly index.
+     */
+    public int getButterflyIndex() {
+        return butterflyIndex;
+    }
+
+    /**
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
