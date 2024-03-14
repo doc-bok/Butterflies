@@ -17,13 +17,193 @@
     "hidden": false
   },
   "criteria": {
-    "butterfly_scroll": {
+    "admiral": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:butterfly_scroll"
+              "butterflies:butterfly_scroll_admiral"
+            ]
+          }
+        ]
+      }
+    },
+    "buckeye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_buckeye"
+            ]
+          }
+        ]
+      }
+    },
+    "cabbage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_cabbage"
+            ]
+          }
+        ]
+      }
+    },
+    "chalkhill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_chalkhill"
+            ]
+          }
+        ]
+      }
+    },
+    "clipper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipper"
+            ]
+          }
+        ]
+      }
+    },
+    "common": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_common"
+            ]
+          }
+        ]
+      }
+    },
+    "emperor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_emperor"
+            ]
+          }
+        ]
+      }
+    },
+    "forester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_forester"
+            ]
+          }
+        ]
+      }
+    },
+    "glasswing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_glasswing"
+            ]
+          }
+        ]
+      }
+    },
+    "hairstreak": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_hairstreak"
+            ]
+          }
+        ]
+      }
+    },
+    "heath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_heath"
+            ]
+          }
+        ]
+      }
+    },
+    "longwing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_longwing"
+            ]
+          }
+        ]
+      }
+    },
+    "monarch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_monarch"
+            ]
+          }
+        ]
+      }
+    },
+    "morpho": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_morpho"
+            ]
+          }
+        ]
+      }
+    },
+    "rainbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_rainbow"
+            ]
+          }
+        ]
+      }
+    },
+    "swallowtail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_swallowtail"
             ]
           }
         ]
@@ -32,7 +212,22 @@
   },
   "requirements": [
     [
-      "butterfly_scroll"
+      "admiral",
+      "buckeye",
+      "cabbage",
+      "chalkhill",
+      "clipper",
+      "common",
+      "emperor",
+      "forester",
+      "glasswing",
+      "hairstreak",
+      "heath",
+      "longwing",
+      "monarch",
+      "morpho",
+      "rainbow",
+      "swallowtail"
     ]
   ]
 }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.2.2 (2024-03-14)
+- Advancements now work with new items.
+
 ### 3.2.1 (2024-03-12)
 - Rewrote butterfly items and recipes so they don't rely on NBT data to work.
 
