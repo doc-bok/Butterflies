@@ -1,0 +1,30 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#forge:is_dense",
+  "spawners": [
+    {
+      "type": "butterflies:glasswing",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_caterpillar",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_chrysalis",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_egg",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    }
+  ]
+}
