@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.3.0 (2024-03-08)
+- Reworked biome modifiers, so butterflies can spawn in other mod's biomes.
+
 ### 3.2.2 (2024-03-14)
 - Advancements now work with new items.
 
