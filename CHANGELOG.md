@@ -1,6 +1,9 @@
 ## Changelog
 
-### 3.1.0 (2014-03-02)
+### 3.1.1 (2024-03-19)
+- Fixed server crash when destroying bottled butterflies.
+
+### 3.1.0 (2024-03-02)
 - Butterflies now need to 'mate' before they can lay eggs.
 - Butterfly movement now allows more freedom.
 - Frogs will now eat butterflies.
