@@ -11,6 +11,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -289,14 +290,24 @@ public class Chrysalis extends DirectionalCreature {
     @Override
     public float getScale() {
         float scale = (float)getAge() / -24000.0f;
-        scale *= 0.06;
-        scale += 0.1;
+        scale = scale * 0.06f;
+        scale = scale + 0.1f;
 
         switch (this.size) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
             default -> { return scale; }
         }
+    }
+
+    /**
+     * Chrysalises can't be fed by players.
+     * @param stack The item stack the player tried to feed the chrysalis.
+     * @return FALSE, indicating it isn't food.
+     */
+    @Override
+    public boolean isFood(@NotNull ItemStack stack) {
+        return false;
     }
 
     /**

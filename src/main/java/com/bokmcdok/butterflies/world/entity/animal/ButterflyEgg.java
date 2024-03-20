@@ -47,7 +47,7 @@ public class ButterflyEgg extends DirectionalCreature {
     private final ResourceLocation butterflyEggItem;
 
     /**
-     * Create a Admiral butterfly egg.
+     * Create an Admiral butterfly egg.
      *
      * @param entityType The type of the entity.
      * @param level      The current level.
@@ -275,12 +275,12 @@ public class ButterflyEgg extends DirectionalCreature {
                 double z = spawnBlock.getZ() + level.random.nextDouble();
 
                 switch (surfaceDirection) {
-                    case WEST -> x = Math.floor(spawnBlock.getX());
-                    case EAST -> x = Math.floor(spawnBlock.getX()) + 1.0d;
-                    case DOWN -> y = Math.floor(spawnBlock.getY());
-                    case UP -> y = Math.floor(spawnBlock.getY()) + 1.0d;
-                    case NORTH -> z = Math.floor(spawnBlock.getZ());
-                    case SOUTH -> z = Math.floor(spawnBlock.getZ()) + 1.0d;
+                    case WEST -> x = spawnBlock.getX();
+                    case EAST -> x = spawnBlock.getX() + 1.0d;
+                    case DOWN -> y = spawnBlock.getY();
+                    case UP -> y = spawnBlock.getY() + 1.0d;
+                    case NORTH -> z = spawnBlock.getZ();
+                    case SOUTH -> z = spawnBlock.getZ() + 1.0d;
                 }
 
                 egg.moveTo(x, y, z, 0.0F, 0.0F);
@@ -337,6 +337,16 @@ public class ButterflyEgg extends DirectionalCreature {
         }
 
         return super.hurt(damageSource, damage);
+    }
+
+    /**
+     * Eggs can't be fed by players.
+     * @param stack The item stack the player tried to feed the butterfly egg.
+     * @return FALSE, indicating it isn't food.
+     */
+    @Override
+    public boolean isFood(@NotNull ItemStack stack) {
+        return false;
     }
 
     /**
