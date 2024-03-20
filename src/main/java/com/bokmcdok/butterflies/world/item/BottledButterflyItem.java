@@ -1,8 +1,12 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -65,7 +69,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     }
 
     /**
-     * Adds some helper text that tells us what butterfly is in the net (if any).
+     * Adds some helper text.
      * @param stack The item stack.
      * @param level The current level.
      * @param components The current text components.
@@ -77,6 +81,13 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
+
+        MutableComponent newComponent = Component.translatable("tooltip.butterflies.release_butterfly");
+        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                .withItalic(true);
+        newComponent.setStyle(style);
+        components.add(newComponent);
+
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 

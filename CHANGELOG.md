@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.3.2 (2024-03-20)
+- Added tooltips to butterfly items.
+
 ### 3.3.1 (2024-03-20)
 - Butterflies now release heart particles when they become fertile.
 

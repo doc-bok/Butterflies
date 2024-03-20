@@ -178,7 +178,7 @@
   "advancements.butterfly.butterfly_scroll.title": "Butterfly Collector",
   "advancements.butterfly.butterfly_scroll.description": "Create a butterfly scroll",
   "advancements.butterfly.butterfly_book.title": "Butterfly Scribe",
-  "advancements.butterfly.butterfly_book.deswcription": "Fill a book with butterfly scrolls",
+  "advancements.butterfly.butterfly_book.description": "Fill a book with butterfly scrolls",
   "advancements.butterfly.find_caterpillar.title": "This isn't Grub",
   "advancements.butterfly.find_caterpillar.description": "Find a caterpillar",
   "advancements.butterfly.find_all_caterpillars.title": "Worm Salad",
@@ -283,5 +283,12 @@
   "gui.butterflies.fact.rainbow": "Rainbow butterflies have only been recently discovered.",
   "gui.butterflies.fact.swallowtail": "Swallowtails are the largest butterflies in the world.",
 
-  "gui.butterflies.zhuangzi": "As I flutter in the breeze\nI think of what my mind's eye sees\nAt night when I'm an old wise man\nContemplating the things I can.\nAm I the one that dreams of he,\nOr is he the one that dreams of me?\n\n- 莊子"
+  "gui.butterflies.zhuangzi": "As I flutter in the breeze\nI think of what my mind's eye sees\nAt night when I'm an old wise man\nContemplating the things I can.\nAm I the one that dreams of he,\nOr is he the one that dreams of me?\n\n- 莊子",
+
+  "tooltip.butterflies.butterfly_net": "Swing (left-click) at a butterfly to catch it",
+  "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
+  "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
+  "tooltip.butterflies.place_caterpillar": "Right-click on leaves to place the caterpillar",
+  "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
 }

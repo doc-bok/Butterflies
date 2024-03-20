@@ -2,8 +2,12 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -74,6 +78,18 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
+
+        String localisation = "tooltip.butterflies.release_butterfly";
+        if (butterflyIndex < 0) {
+            localisation = "tooltip.butterflies.butterfly_net";
+        }
+
+        MutableComponent newComponent = Component.translatable(localisation);
+        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                .withItalic(true);
+        newComponent.setStyle(style);
+        components.add(newComponent);
+
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 
