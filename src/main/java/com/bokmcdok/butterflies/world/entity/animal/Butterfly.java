@@ -30,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -439,7 +440,6 @@ public class Butterfly extends Animal {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
         tag.putInt(NUM_EGGS, this.entityData.get(DATA_NUM_EGGS));
     }
 
@@ -521,6 +521,16 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Butterflies can't be fed by players.
+     * @param stack The item stack the player tried to feed the butterfly.
+     * @return FALSE, indicating it isn't food.
+     */
+    @Override
+    public boolean isFood(@NotNull ItemStack stack) {
+        return false;
+    }
+
+    /**
      * Controls when a flapping event should be emitted.
      * @return TRUE when a flapping event should be emitted.
      */
@@ -557,12 +567,12 @@ public class Butterfly extends Animal {
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
-        // Get the bottle state
+        // Get the fertile state.
         if (tag.contains(IS_FERTILE)) {
             this.entityData.set(DATA_IS_FERTILE, tag.getBoolean(IS_FERTILE));
         }
 
-        // Get the number of remaining eggs
+        // Get the number of remaining eggs.
         if (tag.contains(NUM_EGGS)) {
             this.entityData.set(DATA_NUM_EGGS, tag.getInt(NUM_EGGS));
         }
@@ -653,15 +663,13 @@ public class Butterfly extends Animal {
         }
 
         // Calculate an updated movement delta.
-        double dx = this.targetPosition.getX() + 0.5d - this.getX();
-        double dy = this.targetPosition.getY() + 0.1d - this.getY();
-        double dz = this.targetPosition.getZ() + 0.5d - this.getZ();
+        Vec3 updatedMovementDelta = targetPosition.getCenter().subtract(this.position());
 
         Vec3 deltaMovement = this.getDeltaMovement();
         Vec3 updatedDeltaMovement = deltaMovement.add(
-                (Math.signum(dx) * 0.5d - deltaMovement.x) * this.speed,
-                (Math.signum(dy) * 0.7d - deltaMovement.y) * 0.1d,
-                (Math.signum(dz) * 0.5d - deltaMovement.z) * this.speed);
+                (Math.signum(updatedMovementDelta.x) * 0.5d - deltaMovement.x) * this.speed,
+                (Math.signum(updatedMovementDelta.y) * 0.7d - deltaMovement.y) * 0.1d,
+                (Math.signum(updatedMovementDelta.z) * 0.5d - deltaMovement.z) * this.speed);
         this.setDeltaMovement(updatedDeltaMovement);
 
         this.zza = 0.5f;
@@ -684,25 +692,27 @@ public class Butterfly extends Animal {
             int maxDensity = ButterfliesConfig.maxDensity.get();
             if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
 
-                if (getIsFertile() && this.random.nextInt(320) == 1) {
+                if (getIsFertile()) {
+                    if (this.random.nextInt(320) == 1){
 
-                    // Attempt to lay an egg.
-                    Direction direction = switch (this.random.nextInt(6)) {
-                        default -> Direction.UP;
-                        case 1 -> Direction.DOWN;
-                        case 2 -> Direction.NORTH;
-                        case 3 -> Direction.EAST;
-                        case 4 -> Direction.SOUTH;
-                        case 5 -> Direction.WEST;
-                    };
+                        // Attempt to lay an egg.
+                        Direction direction = switch (this.random.nextInt(6)) {
+                            default -> Direction.UP;
+                            case 1 -> Direction.DOWN;
+                            case 2 -> Direction.NORTH;
+                            case 3 -> Direction.EAST;
+                            case 4 -> Direction.SOUTH;
+                            case 5 -> Direction.WEST;
+                        };
 
-                    BlockPos position = this.blockPosition().relative(direction.getOpposite());
+                        BlockPos position = this.blockPosition().relative(direction.getOpposite());
 
-                    if (level.getBlockState(position).is(BlockTags.LEAVES)) {
-                        ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
-                        ButterflyEgg.spawn((ServerLevel)level, eggEntity, position, direction);
-                        setIsFertile(false);
-                        useEgg();
+                        if (level.getBlockState(position).is(BlockTags.LEAVES)) {
+                            ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
+                            ButterflyEgg.spawn((ServerLevel) level, eggEntity, position, direction);
+                            setIsFertile(false);
+                            useEgg();
+                        }
                     }
 
                 } else {
@@ -716,6 +726,7 @@ public class Butterfly extends Animal {
                     for (Butterfly i : nearbyButterflies) {
                         if (i.getType() == this.getType()) {
                             setIsFertile(true);
+                            setInLove(null);
                             break;
                         }
                     }
@@ -723,8 +734,8 @@ public class Butterfly extends Animal {
             }
         }
 
-        // If the caterpillar gets too old it will die. This won't happen if it
-        // has been set to persistent (e.g. by using a name tag).'
+        // If the butterfly gets too old it will die. This won't happen if it
+        // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.enableLifespan.get()) {
             if (!this.isPersistenceRequired() &&
                     this.getAge() >= 0 &&
