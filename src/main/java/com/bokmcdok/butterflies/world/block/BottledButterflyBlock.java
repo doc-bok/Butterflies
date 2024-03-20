@@ -26,10 +26,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.apache.commons.compress.utils.Lists;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BottledButterflyBlock extends BaseEntityBlock {
@@ -116,7 +116,7 @@ public class BottledButterflyBlock extends BaseEntityBlock {
             if (entity != null) {
                 int butterflyIndex = ButterflyData.getButterflyIndex(butterflyBlockEntity.getEntityLocation());
                 ItemStack stack = new ItemStack(ItemRegistry.getBottledButterflyFromIndex(butterflyIndex).get());
-                List<ItemStack> result = Lists.newArrayList();
+                List<ItemStack> result = new ArrayList<>();
                 result.add(stack);
                 return result;
             }

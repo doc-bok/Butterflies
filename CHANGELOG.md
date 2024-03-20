@@ -12,6 +12,9 @@
 ### 3.2.0 (2024-03-08)
 - Butterfly eggs now spawn as entities.
 
+### 3.1.1 (2024-03-19)
+- Fixed server crash when destroying bottled butterflies.
+
 ### 3.1.0 (2024-03-02)
 - Butterflies now need to 'mate' before they can lay eggs.
 - Butterfly movement now allows more freedom.
