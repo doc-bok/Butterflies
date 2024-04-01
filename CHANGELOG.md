@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.3.3 (2024-04-01)
+- Fixed butterfly tag code that was accidentally removed.
+
 ### 3.3.2 (2024-03-20)
 - Added tooltips to butterfly items.
 

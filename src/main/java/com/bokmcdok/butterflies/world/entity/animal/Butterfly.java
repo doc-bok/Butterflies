@@ -440,6 +440,7 @@ public class Butterfly extends Animal {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
         tag.putInt(NUM_EGGS, this.entityData.get(DATA_NUM_EGGS));
     }
 
