@@ -31,6 +31,7 @@ public record ClientboundButterflyDataPacket(Collection<ButterflyData> data) imp
             collectionBuffer.writeEnum(i.speed);
             collectionBuffer.writeEnum(i.rarity);
             collectionBuffer.writeEnum(i.habitat);
+            collectionBuffer.writeInt(i.eggLifespan);
             collectionBuffer.writeInt(i.caterpillarLifespan);
             collectionBuffer.writeInt(i.chrysalisLifespan);
             collectionBuffer.writeInt(i.butterflyLifespan);

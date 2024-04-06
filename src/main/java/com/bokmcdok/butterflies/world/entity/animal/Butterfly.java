@@ -3,8 +3,8 @@ package com.bokmcdok.butterflies.world.entity.animal;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -29,6 +30,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -88,6 +90,9 @@ public class Butterfly extends Animal {
 
     // The size of the butterfly.
     private final ButterflyData.Size size;
+
+    // The butterfly index
+    private final int butterflyIndex;
 
     // The speed of the butterfly.
     private final double speed;
@@ -423,6 +428,8 @@ public class Butterfly extends Animal {
             this.speed = BUTTERFLY_SPEED;
         }
 
+        this.butterflyIndex = data.butterflyIndex;
+
         setAge(-data.butterflyLifespan);
     }
 
@@ -495,6 +502,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Get the butterfly's index.
+     * @return The butterfly index.
+     */
+    public int getButterflyIndex() {
+        return butterflyIndex;
+    }
+
+    /**
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
@@ -504,6 +519,16 @@ public class Butterfly extends Animal {
             case LARGE ->{ return 0.45f; }
             default -> { return 0.35f; }
         }
+    }
+
+    /**
+     * Butterflies can't be fed by players.
+     * @param stack The item stack the player tried to feed the butterfly.
+     * @return FALSE, indicating it isn't food.
+     */
+    @Override
+    public boolean isFood(@NotNull ItemStack stack) {
+        return false;
     }
 
     /**
@@ -543,12 +568,12 @@ public class Butterfly extends Animal {
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
 
-        // Get the bottle state
+        // Get the fertile state.
         if (tag.contains(IS_FERTILE)) {
             this.entityData.set(DATA_IS_FERTILE, tag.getBoolean(IS_FERTILE));
         }
 
-        // Get the number of remaining eggs
+        // Get the number of remaining eggs.
         if (tag.contains(NUM_EGGS)) {
             this.entityData.set(DATA_NUM_EGGS, tag.getInt(NUM_EGGS));
         }
@@ -639,15 +664,13 @@ public class Butterfly extends Animal {
         }
 
         // Calculate an updated movement delta.
-        double dx = this.targetPosition.getX() + 0.5d - this.getX();
-        double dy = this.targetPosition.getY() + 0.1d - this.getY();
-        double dz = this.targetPosition.getZ() + 0.5d - this.getZ();
+        Vec3 updatedMovementDelta = targetPosition.getCenter().subtract(this.position());
 
         Vec3 deltaMovement = this.getDeltaMovement();
         Vec3 updatedDeltaMovement = deltaMovement.add(
-                (Math.signum(dx) * 0.5d - deltaMovement.x) * this.speed,
-                (Math.signum(dy) * 0.7d - deltaMovement.y) * 0.1d,
-                (Math.signum(dz) * 0.5d - deltaMovement.z) * this.speed);
+                (Math.signum(updatedMovementDelta.x) * 0.5d - deltaMovement.x) * this.speed,
+                (Math.signum(updatedMovementDelta.y) * 0.7d - deltaMovement.y) * 0.1d,
+                (Math.signum(updatedMovementDelta.z) * 0.5d - deltaMovement.z) * this.speed);
         this.setDeltaMovement(updatedDeltaMovement);
 
         this.zza = 0.5f;
@@ -670,25 +693,27 @@ public class Butterfly extends Animal {
             int maxDensity = ButterfliesConfig.maxDensity.get();
             if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
 
-                if (getIsFertile() && this.random.nextInt(320) == 1) {
+                if (getIsFertile()) {
+                    if (this.random.nextInt(320) == 1){
 
-                    // Attempt to lay an egg.
-                    BlockPos position = this.blockPosition();
-                    position = switch (this.random.nextInt(6)) {
-                        default -> position.above();
-                        case 1 -> position.below();
-                        case 2 -> position.north();
-                        case 3 -> position.east();
-                        case 4 -> position.south();
-                        case 5 -> position.west();
-                    };
+                        // Attempt to lay an egg.
+                        Direction direction = switch (this.random.nextInt(6)) {
+                            default -> Direction.UP;
+                            case 1 -> Direction.DOWN;
+                            case 2 -> Direction.NORTH;
+                            case 3 -> Direction.EAST;
+                            case 4 -> Direction.SOUTH;
+                            case 5 -> Direction.WEST;
+                        };
 
-                    if (ButterflyLeavesBlock.swapLeavesBlock(
-                            level,
-                            position,
-                            EntityType.getKey(this.getType()))) {
-                        setIsFertile(false);
-                        useEgg();
+                        BlockPos position = this.blockPosition().relative(direction.getOpposite());
+
+                        if (level.getBlockState(position).is(BlockTags.LEAVES)) {
+                            ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
+                            ButterflyEgg.spawn((ServerLevel) level, eggEntity, position, direction);
+                            setIsFertile(false);
+                            useEgg();
+                        }
                     }
 
                 } else {
@@ -702,6 +727,7 @@ public class Butterfly extends Animal {
                     for (Butterfly i : nearbyButterflies) {
                         if (i.getType() == this.getType()) {
                             setIsFertile(true);
+                            setInLove(null);
                             break;
                         }
                     }
@@ -709,8 +735,8 @@ public class Butterfly extends Animal {
             }
         }
 
-        // If the caterpillar gets too old it will die. This won't happen if it
-        // has been set to persistent (e.g. by using a name tag).'
+        // If the butterfly gets too old it will die. This won't happen if it
+        // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.enableLifespan.get()) {
             if (!this.isPersistenceRequired() &&
                     this.getAge() >= 0 &&

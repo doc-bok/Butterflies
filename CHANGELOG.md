@@ -1,5 +1,29 @@
 ## Changelog
 
+### 3.4.0 (2024-04-06)
+- Compatibility Release.
+
+### 3.3.3 (2024-04-01)
+- Fixed butterfly tag code that was accidentally removed.
+
+### 3.3.2 (2024-03-20)
+- Added tooltips to butterfly items.
+
+### 3.3.1 (2024-03-20)
+- Butterflies now release heart particles when they become fertile.
+
+### 3.3.0 (2024-03-08)
+- Reworked biome modifiers, so butterflies can spawn in other mod's biomes.
+
+### 3.2.2 (2024-03-14)
+- Advancements now work with new items.
+
+### 3.2.1 (2024-03-12)
+- Rewrote butterfly items and recipes, so they don't rely on NBT data to work.
+
+### 3.2.0 (2024-03-08)
+- Butterfly eggs now spawn as entities.
+
 ### 3.1.1 (2024-03-19)
 - Fixed server crash when destroying bottled butterflies.
 
@@ -54,7 +78,7 @@
 - Tweaked cabbage and forester textures.
 
 ### 2.0.7 (2024-01-13)
-- Butterfly eggs are now smaller in size.
+- Butterfly eggs are now smaller.
 
 ### 2.0.6 (2024-01-05)
 - Fixed shift-clicking recipes.
@@ -120,7 +144,7 @@
 - Fixed caterpillar and chrysalis aging.
 
 ### 1.0.2 (2023-11-06)
-- Added names to the entities to better support modpacks.
+- Added names to the entities to better support mod packs.
 
 ### 1.0.1 (2023-10-29)
 - Updated Forge to current recommended version (47.2.0).
