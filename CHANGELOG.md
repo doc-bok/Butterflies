@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.0 (2024-04-06)
+- Compatibility Release.
+
 ### 3.3.3 (2024-04-01)
 - Fixed butterfly tag code that was accidentally removed.
 
