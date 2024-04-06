@@ -25,9 +25,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:admiral\"}"
+              "butterflies:butterfly_net_admiral"
+            ]
           }
         ]
       }
@@ -38,9 +37,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:buckeye\"}"
+              "butterflies:butterfly_net_buckeye"
+            ]
           }
         ]
       }
@@ -51,9 +49,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:cabbage\"}"
+              "butterflies:butterfly_net_cabbage"
+            ]
           }
         ]
       }
@@ -64,9 +61,8 @@
         "items": [
           {
             "item": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:chalkhill\"}"
+              "butterflies:butterfly_net_chalkhill"
+            ]
           }
         ]
       }
@@ -77,9 +73,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:clipper\"}"
+              "butterflies:butterfly_net_clipper"
+            ]
           }
         ]
       }
@@ -90,22 +85,20 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:common\"}"
+              "butterflies:butterfly_net_common"
+            ]
           }
         ]
       }
     },
-    "caught_emporer": {
+    "caught_emperor": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:emporer\"}"
+              "butterflies:butterfly_net_emperor"
+            ]
           }
         ]
       }
@@ -116,9 +109,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:forester\"}"
+              "butterflies:butterfly_net_forester"
+            ]
           }
         ]
       }
@@ -129,9 +121,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:glasswing\"}"
+              "butterflies:butterfly_net_glasswing"
+            ]
           }
         ]
       }
@@ -142,9 +133,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:hairstreak\"}"
+              "butterflies:butterfly_net_hairstreak"
+            ]
           }
         ]
       }
@@ -155,9 +145,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:heath\"}"
+              "butterflies:butterfly_net_heath"
+            ]
           }
         ]
       }
@@ -168,9 +157,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:longwing\"}"
+              "butterflies:butterfly_net_longwing"
+            ]
           }
         ]
       }
@@ -181,9 +169,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:monarch\"}"
+              "butterflies:butterfly_net_monarch"
+            ]
           }
         ]
       }
@@ -194,9 +181,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:morpho\"}"
+              "butterflies:butterfly_net_morpho"
+            ]
           }
         ]
       }
@@ -207,9 +193,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:rainbow\"}"
+              "butterflies:butterfly_net_rainbow"
+            ]
           }
         ]
       }
@@ -220,9 +205,8 @@
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
-            ],
-            "nbt": "{EntityId:\"butterflies:swallowtail\"}"
+              "butterflies:butterfly_net_swallowtail"
+            ]
           }
         ]
       }
@@ -248,7 +232,7 @@
       "caught_common"
     ],
     [
-      "caught_emporer"
+      "caught_emperor"
     ],
     [
       "caught_forester"

@@ -6,6 +6,7 @@
   "rarity": "common",
   "habitat": "plains",
   "lifespan": {
+    "egg": "short",
     "caterpillar": "short",
     "chrysalis": "short",
     "butterfly": "short"

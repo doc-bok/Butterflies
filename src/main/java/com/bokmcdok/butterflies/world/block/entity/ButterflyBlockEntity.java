@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Class to represent a block that contains a butterfly.
+ * TODO: This class is only here for backward compatibility and should be
+ *       removed in a future version.
  */
 public class ButterflyBlockEntity extends BlockEntity {
 

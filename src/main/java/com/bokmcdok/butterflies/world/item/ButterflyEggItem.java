@@ -1,15 +1,30 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
+import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LeavesBlock;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * An egg that will eventually hatch into a caterpillar.
@@ -34,15 +49,49 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
 
-    private final ResourceLocation location;
+    //  The index of the butterfly species.
+    private final int butterflyIndex;
 
     /**
      * Construction
+     * @param butterflyIndex The butterfly index of this item.
      * @param properties The item properties.
      */
-    public ButterflyEggItem(String entityId, Item.Properties properties) {
+    public ButterflyEggItem(int butterflyIndex,
+                            Item.Properties properties) {
         super(properties);
-        this.location = new ResourceLocation(ButterfliesMod.MODID, entityId);
+        this.butterflyIndex = butterflyIndex;
+    }
+
+    /**
+     * Adds some tooltips.
+     * @param stack The item stack.
+     * @param level The current level.
+     * @param components The current text components.
+     * @param tooltipFlag Is this a tooltip?
+     */
+    @Override
+    public void appendHoverText(@NotNull ItemStack stack,
+                                @Nullable Level level,
+                                @NotNull List<Component> components,
+                                @NotNull TooltipFlag tooltipFlag) {
+
+        MutableComponent newComponent = Component.translatable("tooltip.butterflies.place_egg");
+        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                .withItalic(true);
+        newComponent.setStyle(style);
+        components.add(newComponent);
+
+        super.appendHoverText(stack, level, components, tooltipFlag);
+    }
+
+    /**
+     * Get the butterfly index.
+     * @return The butterfly index.
+     */
+    @Override
+    public int getButterflyIndex() {
+        return this.butterflyIndex;
     }
 
     /**
@@ -53,13 +102,28 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     @NotNull
     @Override
     public InteractionResult useOn(@NotNull UseOnContext context) {
-        Level level = context.getLevel();
-        BlockPos position = context.getClickedPos();
+        Player player = context.getPlayer();
+        if (player != null) {
 
-        if (ButterflyLeavesBlock.swapLeavesBlock(level, position, this.location)) {
-            ItemStack itemStack = context.getItemInHand();
-            itemStack.shrink(1);
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            BlockPos clickedPos = context.getClickedPos();
+
+            Block block = context.getLevel().getBlockState(clickedPos).getBlock();
+            if (!(block instanceof LeavesBlock)) {
+                return InteractionResult.FAIL;
+            } else {
+                if (!context.getLevel().isClientSide()) {
+                    Direction clickedFace = context.getClickedFace();
+
+                    ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
+                    ButterflyEgg.spawn((ServerLevel) context.getLevel(), eggEntity, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+                } else {
+                    player.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1F, 1F);
+                }
+
+                context.getItemInHand().shrink(1);
+
+                return InteractionResult.CONSUME;
+            }
         }
 
         return super.useOn(context);

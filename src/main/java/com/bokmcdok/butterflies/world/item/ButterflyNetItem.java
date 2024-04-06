@@ -1,11 +1,13 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -17,11 +19,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * An item that allows players to catch butterflies.
@@ -30,14 +32,37 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
+    public static final String ADMIRAL_NAME = "butterfly_net_admiral";
+    public static final String BUCKEYE_NAME = "butterfly_net_buckeye";
+    public static final String CABBAGE_NAME = "butterfly_net_cabbage";
+    public static final String CHALKHILL_NAME = "butterfly_net_chalkhill";
+    public static final String CLIPPER_NAME = "butterfly_net_clipper";
+    public static final String COMMON_NAME = "butterfly_net_common";
+    public static final String EMPEROR_NAME = "butterfly_net_emperor";
+    public static final String FORESTER_NAME = "butterfly_net_forester";
+    public static final String GLASSWING_NAME = "butterfly_net_glasswing";
+    public static final String HAIRSTREAK_NAME = "butterfly_net_hairstreak";
+    public static final String HEATH_NAME = "butterfly_net_heath";
+    public static final String LONGWING_NAME = "butterfly_net_longwing";
+    public static final String MONARCH_NAME = "butterfly_net_monarch";
+    public static final String MORPHO_NAME = "butterfly_net_morpho";
+    public static final String RAINBOW_NAME = "butterfly_net_rainbow";
+    public static final String SWALLOWTAIL_NAME = "butterfly_net_swallowtail";
+
+    //  TODO: Remove this item
     public static final String FULL_NAME = "butterfly_net_full";
+
+    //  The index of the butterfly species.
+    private final int butterflyIndex;
 
     /**
      * Construction
-     * @param properties The item properties.
+     * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(Properties properties) {
-        super(properties);
+    public ButterflyNetItem(int butterflyIndex) {
+        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
+
+        this.butterflyIndex = butterflyIndex;
     }
 
     /**
@@ -53,7 +78,28 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
+
+        String localisation = "tooltip.butterflies.release_butterfly";
+        if (butterflyIndex < 0) {
+            localisation = "tooltip.butterflies.butterfly_net";
+        }
+
+        MutableComponent newComponent = Component.translatable(localisation);
+        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                .withItalic(true);
+        newComponent.setStyle(style);
+        components.add(newComponent);
+
         super.appendHoverText(stack, level, components, tooltipFlag);
+    }
+
+    /**
+     * Get the butterfly index.
+     * @return The butterfly index.
+     */
+    @Override
+    public int getButterflyIndex() {
+        return this.butterflyIndex;
     }
 
     /**
@@ -85,16 +131,12 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if (entity instanceof Butterfly) {
+        if (entity instanceof Butterfly butterfly) {
 
-            ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET_FULL.get(), 1);
+            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            if (item != null) {
+                ItemStack newStack = new ItemStack(item.get(), 1);
 
-            CompoundTag tag = newStack.getOrCreateTag();
-            if (!tag.contains(CompoundTagId.CUSTOM_MODEL_DATA) ||
-                !tag.contains(CompoundTagId.ENTITY_ID)) {
-
-                tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA,1);
-                tag.putString(CompoundTagId.ENTITY_ID, Objects.requireNonNull(entity.getEncodeId()));
                 entity.discard();
 
                 player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
@@ -121,10 +163,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                                    @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains(CompoundTagId.ENTITY_ID)) {
-            String entityId = tag.getString(CompoundTagId.ENTITY_ID);
+        ResourceLocation entity = getButterflyEntity(stack);
 
+        if (entity != null) {
             //  Move the target position slightly in front of the player
             Vec3 lookAngle = player.getLookAngle();
             BlockPos positionToSpawn = player.blockPosition().offset(
@@ -132,7 +173,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                         (int) lookAngle.y + 1,
                         (int) lookAngle.z);
 
-            Butterfly.spawn(player.getLevel(), new ResourceLocation(entityId), positionToSpawn, false);
+            Butterfly.spawn(player.getLevel(), entity, positionToSpawn, false);
 
             ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET.get(), 1);
             player.setItemInHand(hand, newStack);

@@ -6,6 +6,7 @@
   "rarity": "rare",
   "habitat": "forests",
   "lifespan": {
+    "egg": "medium",
     "caterpillar": "long",
     "chrysalis": "medium",
     "butterfly": "medium"
