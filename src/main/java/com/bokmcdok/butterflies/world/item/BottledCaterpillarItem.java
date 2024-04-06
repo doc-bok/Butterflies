@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -70,7 +69,7 @@ public class BottledCaterpillarItem extends BlockItem {
     }
 
     /**
-     * Adds some helper text that tells us what butterfly is in the net (if any).
+     * Adds some helper text.
      * @param stack The item stack.
      * @param level The current level.
      * @param components The current text components.
@@ -83,11 +82,17 @@ public class BottledCaterpillarItem extends BlockItem {
                                 @NotNull TooltipFlag tooltipFlag) {
         String translatable = "item." + species.toString().replace(':', '.');
 
-        MutableComponent newComponent = Component.translatable(translatable);
-        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
+        MutableComponent speciesComponent = Component.translatable(translatable);
+        Style speciesStyle = speciesComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
                 .withItalic(true);
-        newComponent.setStyle(style);
-        components.add(newComponent);
+        speciesComponent.setStyle(speciesStyle);
+        components.add(speciesComponent);
+
+        MutableComponent tooltipComponent = Component.translatable("tooltip.butterflies.release_caterpillar");
+        Style tooltipStyle = tooltipComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                .withItalic(true);
+        tooltipComponent.setStyle(tooltipStyle);
+        components.add(tooltipComponent);
 
         super.appendHoverText(stack, level, components, tooltipFlag);
     }

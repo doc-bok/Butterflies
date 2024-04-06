@@ -1,0 +1,30 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#forge:is_lush",
+  "spawners": [
+    {
+      "type": "butterflies:admiral",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    }
+  ]
+}

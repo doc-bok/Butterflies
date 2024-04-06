@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_net_hairstreak"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_scroll_hairstreak"
+  }
+}

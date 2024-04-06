@@ -1,0 +1,50 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_butterfly_emperor"
+    ]
+  },
+  "criteria": {
+    "has_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:glass_bottle"
+            ]
+          }
+        ]
+      }
+    },
+    "has_net": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_emperor"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:bottled_butterfly_emperor"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bottle",
+      "has_the_recipe"
+    ],
+    [
+      "has_net",
+      "has_the_recipe"
+    ]
+  ]
+}

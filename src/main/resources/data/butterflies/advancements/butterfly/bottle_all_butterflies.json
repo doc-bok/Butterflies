@@ -25,9 +25,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:admiral\"}"
+              "butterflies:bottled_butterfly_admiral"
+            ]
           }
         ]
       }
@@ -38,9 +37,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:buckeye\"}"
+              "butterflies:bottled_butterfly_buckeye"
+            ]
           }
         ]
       }
@@ -51,9 +49,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:cabbage\"}"
+              "butterflies:bottled_butterfly_cabbage"
+            ]
           }
         ]
       }
@@ -64,9 +61,8 @@
         "items": [
           {
             "item": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:chalkhill\"}"
+              "butterflies:bottled_butterfly_chalkhill"
+            ]
           }
         ]
       }
@@ -77,9 +73,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:clipper\"}"
+              "butterflies:bottled_butterfly_clipper"
+            ]
           }
         ]
       }
@@ -90,22 +85,20 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:common\"}"
+              "butterflies:bottled_butterfly_common"
+            ]
           }
         ]
       }
     },
-    "bottled_emporer": {
+    "bottled_emperor": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:emporer\"}"
+              "butterflies:bottled_butterfly_emperor"
+            ]
           }
         ]
       }
@@ -116,9 +109,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:forester\"}"
+              "butterflies:bottled_butterfly_forester"
+            ]
           }
         ]
       }
@@ -129,9 +121,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:glasswing\"}"
+              "butterflies:bottled_butterfly_glasswing"
+            ]
           }
         ]
       }
@@ -142,9 +133,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:hairstreak\"}"
+              "butterflies:bottled_butterfly_hairstreak"
+            ]
           }
         ]
       }
@@ -155,9 +145,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:heath\"}"
+              "butterflies:bottled_butterfly_heath"
+            ]
           }
         ]
       }
@@ -168,9 +157,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:longwing\"}"
+              "butterflies:bottled_butterfly_longwing"
+            ]
           }
         ]
       }
@@ -181,9 +169,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:monarch\"}"
+              "butterflies:bottled_butterfly_monarch"
+            ]
           }
         ]
       }
@@ -194,9 +181,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:morpho\"}"
+              "butterflies:bottled_butterfly_morpho"
+            ]
           }
         ]
       }
@@ -207,9 +193,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:rainbow\"}"
+              "butterflies:bottled_butterfly_rainbow"
+            ]
           }
         ]
       }
@@ -220,9 +205,8 @@
         "items": [
           {
             "items": [
-              "butterflies:bottled_butterfly"
-            ],
-            "nbt": "{EntityId:\"butterflies:swallowtail\"}"
+              "butterflies:bottled_butterfly_swallowtail"
+            ]
           }
         ]
       }
@@ -248,7 +232,7 @@
       "bottled_common"
     ],
     [
-      "bottled_emporer"
+      "bottled_emperor"
     ],
     [
       "bottled_forester"

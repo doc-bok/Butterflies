@@ -16,13 +16,193 @@
     "hidden": false
   },
   "criteria": {
-    "caught_butterfly": {
+    "admiral": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:butterfly_net_full"
+              "butterflies:butterfly_net_admiral"
+            ]
+          }
+        ]
+      }
+    },
+    "buckeye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_buckeye"
+            ]
+          }
+        ]
+      }
+    },
+    "cabbage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_cabbage"
+            ]
+          }
+        ]
+      }
+    },
+    "chalkhill": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_chalkhill"
+            ]
+          }
+        ]
+      }
+    },
+    "clipper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_clipper"
+            ]
+          }
+        ]
+      }
+    },
+    "common": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_common"
+            ]
+          }
+        ]
+      }
+    },
+    "emperor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_emperor"
+            ]
+          }
+        ]
+      }
+    },
+    "forester": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_forester"
+            ]
+          }
+        ]
+      }
+    },
+    "glasswing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_glasswing"
+            ]
+          }
+        ]
+      }
+    },
+    "hairstreak": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_hairstreak"
+            ]
+          }
+        ]
+      }
+    },
+    "heath": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_heath"
+            ]
+          }
+        ]
+      }
+    },
+    "longwing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_longwing"
+            ]
+          }
+        ]
+      }
+    },
+    "monarch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_monarch"
+            ]
+          }
+        ]
+      }
+    },
+    "morpho": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_morpho"
+            ]
+          }
+        ]
+      }
+    },
+    "rainbow": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_rainbow"
+            ]
+          }
+        ]
+      }
+    },
+    "swallowtail": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_swallowtail"
             ]
           }
         ]
@@ -31,7 +211,22 @@
   },
   "requirements": [
     [
-      "caught_butterfly"
+      "admiral",
+      "buckeye",
+      "cabbage",
+      "chalkhill",
+      "clipper",
+      "common",
+      "emperor",
+      "forester",
+      "glasswing",
+      "hairstreak",
+      "heath",
+      "longwing",
+      "monarch",
+      "morpho",
+      "rainbow",
+      "swallowtail"
     ]
   ]
 }

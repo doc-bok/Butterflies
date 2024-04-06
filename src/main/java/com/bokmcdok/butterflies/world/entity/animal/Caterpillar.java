@@ -326,18 +326,18 @@ public class Caterpillar extends DirectionalCreature {
 
                 if (isBottled) {
                     direction = Direction.DOWN;
-                    y = Math.floor(position.getY()) + 0.07d;
+                    y = position.getY() + 0.07d;
 
                     caterpillar.setInvulnerable(true);
                     caterpillar.setPersistenceRequired();
                 } else {
                     switch (direction) {
-                        case DOWN -> y = Math.floor(position.getY());
-                        case UP -> y = Math.floor(position.getY()) + 1.0d;
-                        case NORTH -> z = Math.floor(position.getZ());
-                        case SOUTH -> z = Math.floor(position.getZ()) + 1.0d;
-                        case WEST -> x = Math.floor(position.getX());
-                        case EAST -> x = Math.floor(position.getX()) + 1.0d;
+                        case DOWN -> y = position.getY();
+                        case UP -> y = position.getY() + 1.0d;
+                        case NORTH -> z = position.getZ();
+                        case SOUTH -> z = position.getZ() + 1.0d;
+                        case WEST -> x = position.getX();
+                        case EAST -> x = position.getX() + 1.0d;
                     }
                 }
 
@@ -367,14 +367,13 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Reduce the size of the caterpillar - they are small!
-     *
      * @return The new size of the caterpillar.
      */
     @Override
     public float getScale() {
         float scale = (float) getAge() / -24000.0f;
-        scale *= 0.04;
-        scale += 0.08;
+        scale = scale * 0.04f;
+        scale = scale + 0.08f;
 
         switch (this.size) {
             case SMALL -> {
@@ -415,6 +414,16 @@ public class Caterpillar extends DirectionalCreature {
         }
 
         return super.hurt(damageSource, damage);
+    }
+
+    /**
+     * Caterpillars can't be fed by players.
+     * @param stack The item stack the player tried to feed the caterpillar.
+     * @return FALSE, indicating it isn't food.
+     */
+    @Override
+    public boolean isFood(@NotNull ItemStack stack) {
+        return false;
     }
 
     /**
@@ -584,83 +593,13 @@ public class Caterpillar extends DirectionalCreature {
                 }
             }
 
-            Vec3 deltaMovement = this.getDeltaMovement();
-            Vec3 updatedDeltaMovement;
-            if (axis == Direction.Axis.X) {
-                double dy = this.targetPosition.y() + 0.1d - this.getY();
-                double dz = this.targetPosition.z() + 0.1d - this.getZ();
-                updatedDeltaMovement = deltaMovement.add(
-                        0.0,
-                        (Math.signum(dy) * 0.5d - deltaMovement.y)
-                                * CATERPILLAR_SPEED,
-                        (Math.signum(dz) * 0.5d - deltaMovement.z)
-                                * CATERPILLAR_SPEED);
-            } else if (axis == Direction.Axis.Y) {
-                double dx = this.targetPosition.x() + 0.1d - this.getX();
-                double dz = this.targetPosition.z() + 0.1d - this.getZ();
-                updatedDeltaMovement = deltaMovement.add(
-                        (Math.signum(dx) * 0.5d - deltaMovement.x)
-                                * CATERPILLAR_SPEED,
-                        0.0,
-                        (Math.signum(dz) * 0.5d - deltaMovement.z)
-                                * CATERPILLAR_SPEED);
-            } else {
-                double dx = this.targetPosition.x() + 0.1d - this.getX();
-                double dy = this.targetPosition.y() + 0.1d - this.getY();
-                updatedDeltaMovement = deltaMovement.add(
-                        (Math.signum(dx) * 0.5d - deltaMovement.x)
-                                * CATERPILLAR_SPEED,
-                        (Math.signum(dy) * 0.5d - deltaMovement.y)
-                                * CATERPILLAR_SPEED,
-                        0.0);
-            }
-
+            Vec3 updatedDeltaMovement = getUpdatedDeltaMovement(axis);
             this.setDeltaMovement(updatedDeltaMovement);
 
             this.zza = 0.5f;
 
             // Calculate the rotational velocity.
-            double updatedRotation;
-            if (direction == Direction.DOWN) {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.z,
-                                updatedDeltaMovement.x)
-                                * (180.0d / Math.PI)) - 90.0d;
-            } else if (direction == Direction.UP) {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.x,
-                                updatedDeltaMovement.z)
-                                * (180.0d / Math.PI)) - 180.0d;
-            } else if (direction == Direction.NORTH) {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.x,
-                                updatedDeltaMovement.y)
-                                * (180.0d / Math.PI)) - 180.0d;
-            } else if (direction == Direction.SOUTH) {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.y,
-                                updatedDeltaMovement.x)
-                                * (180.0d / Math.PI)) - 90.0d;
-            } else if (direction == Direction.EAST) {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.z,
-                                updatedDeltaMovement.y)
-                                * (180.0d / Math.PI)) - 90.0d;
-            } else {
-                updatedRotation =
-                        (Mth.atan2(
-                                updatedDeltaMovement.y,
-                                updatedDeltaMovement.z)
-                                * (180.0d / Math.PI));
-            }
-
-            double rotationDelta =
-                    Mth.wrapDegrees(updatedRotation - this.getYRot());
+            double rotationDelta = getRotationDelta(direction, updatedDeltaMovement);
             this.setYRot(this.getYRot() + (float) rotationDelta);
 
             // Spawn Chrysalis.
@@ -757,6 +696,91 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Get this frame's change in orientation
+     * @param direction The direction of the "ground" for the caterpillar
+     * @param updatedDeltaMovement This frame's updated movement delta.
+     * @return The rotational velocity of the caterpillar.
+     */
+    private double getRotationDelta(Direction direction, Vec3 updatedDeltaMovement) {
+        double updatedRotation;
+        if (direction == Direction.DOWN) {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.z,
+                            updatedDeltaMovement.x)
+                            * (180.0d / Math.PI)) - 90.0d;
+        } else if (direction == Direction.UP) {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.x,
+                            updatedDeltaMovement.z)
+                            * (180.0d / Math.PI)) - 180.0d;
+        } else if (direction == Direction.NORTH) {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.x,
+                            updatedDeltaMovement.y)
+                            * (180.0d / Math.PI)) - 180.0d;
+        } else if (direction == Direction.SOUTH) {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.y,
+                            updatedDeltaMovement.x)
+                            * (180.0d / Math.PI)) - 90.0d;
+        } else if (direction == Direction.EAST) {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.z,
+                            updatedDeltaMovement.y)
+                            * (180.0d / Math.PI)) - 90.0d;
+        } else {
+            updatedRotation =
+                    (Mth.atan2(
+                            updatedDeltaMovement.y,
+                            updatedDeltaMovement.z)
+                            * (180.0d / Math.PI));
+        }
+
+        return Mth.wrapDegrees(updatedRotation - this.getYRot());
+    }
+
+    /**
+     * Get this frame's updated movement delta.
+     * @param axis The axis the caterpillar is aligned to.
+     * @return The caterpillar's velocity.
+     */
+    @NotNull
+    private Vec3 getUpdatedDeltaMovement(Direction.Axis axis) {
+        Vec3 updatedDeltaMovement = Vec3.ZERO;
+        if (this.targetPosition != null) {
+            Vec3 updatedMovementDelta = targetPosition.subtract(this.position()).add(0.1d, 0.1d, 0.1d);
+            double signumX = Math.signum(updatedMovementDelta.x);
+            double signumY = Math.signum(updatedMovementDelta.y);
+            double signumZ = Math.signum(updatedMovementDelta.z);
+            Vec3 deltaMovement = this.getDeltaMovement();
+            if (axis == Direction.Axis.X) {
+                updatedDeltaMovement = deltaMovement.add(
+                        0.0,
+                        (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
+                        (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
+            } else if (axis == Direction.Axis.Y) {
+                updatedDeltaMovement = deltaMovement.add(
+                        (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
+                        0.0,
+                        (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
+            } else {
+
+                updatedDeltaMovement = deltaMovement.add(
+                        (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
+                        (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
+                        0.0);
+            }
+        }
+
+        return updatedDeltaMovement;
     }
 
     /**

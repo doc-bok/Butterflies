@@ -1,0 +1,102 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#forge:is_lush",
+  "spawners": [
+    {
+      "type": "butterflies:admiral",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:admiral_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:glasswing",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_caterpillar",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_chrysalis",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:glasswing_egg",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:rainbow",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:rainbow_caterpillar",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:rainbow_chrysalis",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:rainbow_egg",
+      "weight": 5,
+      "minCount": 2,
+      "maxCount": 4
+    },
+    {
+      "type": "butterflies:swallowtail",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:swallowtail_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:swallowtail_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:swallowtail_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    }
+  ]
+}
