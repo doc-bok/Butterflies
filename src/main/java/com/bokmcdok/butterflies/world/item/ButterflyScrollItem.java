@@ -61,7 +61,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     /**
      * Construction
      */
-    public ButterflyScrollItem() {
+    public ButterflyScrollItem(int butterflyIndex) {
         super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
 
         this.butterflyIndex = butterflyIndex;

@@ -664,7 +664,10 @@ public class Butterfly extends Animal {
         }
 
         // Calculate an updated movement delta.
-        Vec3 updatedMovementDelta = targetPosition.getCenter().subtract(this.position());
+        Vec3 center = new Vec3(targetPosition.getX() + 0.5d,
+                               targetPosition.getY() + 0.5d,
+                               targetPosition.getZ() + 0.5d);
+        Vec3 updatedMovementDelta = center.subtract(this.position());
 
         Vec3 deltaMovement = this.getDeltaMovement();
         Vec3 updatedDeltaMovement = deltaMovement.add(

@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.client.model.ButterflyEggModel;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -53,7 +53,7 @@ public class ButterflyEggRenderer extends MobRenderer<ButterflyEgg, ButterflyEgg
     }
 
     /**
-     * Rotates the butterfly egg so it's attached to its block.
+     * Rotates the butterfly egg, so it's attached to its block.
      * @param entity The butterfly egg entity.
      * @param p_115456_ Unknown.
      * @param p_115457_ Unknown.
@@ -70,15 +70,15 @@ public class ButterflyEggRenderer extends MobRenderer<ButterflyEgg, ButterflyEgg
                        int p_115460_) {
         Direction direction = entity.getSurfaceDirection();
         if (direction == Direction.UP) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
+            poseStack.mulPose(Vector3f.XP.rotationDegrees(180.f));
         } else if (direction == Direction.NORTH) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
+            poseStack.mulPose(Vector3f.XP.rotationDegrees(90.f));
         } else if (direction == Direction.SOUTH) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
+            poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.f));
         } else if (direction == Direction.WEST) {
-            poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+            poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.f));
         } else if (direction == Direction.EAST){
-            poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
+            poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.f));
         }
 
         super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
