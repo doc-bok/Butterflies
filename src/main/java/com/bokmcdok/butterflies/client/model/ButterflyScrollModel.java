@@ -14,8 +14,8 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
@@ -30,7 +30,7 @@ public class ButterflyScrollModel extends Model {
      * The layer location to register with Forge.
      */
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MODID, "butterfly_scroll"), "main");
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_scroll"), "main");
 
 
     /**

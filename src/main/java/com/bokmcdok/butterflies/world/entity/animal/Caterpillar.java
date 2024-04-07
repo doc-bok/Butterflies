@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,7 +25,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -314,44 +314,42 @@ public class Caterpillar extends DirectionalCreature {
                              BlockPos position,
                              Direction direction,
                              boolean isBottled) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
-        if (entityType != null) {
-            Entity entity = entityType.create(level);
-            if (entity instanceof Caterpillar caterpillar) {
-                caterpillar.setIsBottled(isBottled);
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        Entity entity = entityType.create(level);
+        if (entity instanceof Caterpillar caterpillar) {
+            caterpillar.setIsBottled(isBottled);
 
-                double x = position.getX() + 0.45D;
-                double y = position.getY() + 0.4D;
-                double z = position.getZ() + 0.5D;
+            double x = position.getX() + 0.45D;
+            double y = position.getY() + 0.4D;
+            double z = position.getZ() + 0.5D;
 
-                if (isBottled) {
-                    direction = Direction.DOWN;
-                    y = position.getY() + 0.07d;
+            if (isBottled) {
+                direction = Direction.DOWN;
+                y = position.getY() + 0.07d;
 
-                    caterpillar.setInvulnerable(true);
-                    caterpillar.setPersistenceRequired();
-                } else {
-                    switch (direction) {
-                        case DOWN -> y = position.getY();
-                        case UP -> y = position.getY() + 1.0d;
-                        case NORTH -> z = position.getZ();
-                        case SOUTH -> z = position.getZ() + 1.0d;
-                        case WEST -> x = position.getX();
-                        case EAST -> x = position.getX() + 1.0d;
-                    }
+                caterpillar.setInvulnerable(true);
+                caterpillar.setPersistenceRequired();
+            } else {
+                switch (direction) {
+                    case DOWN -> y = position.getY();
+                    case UP -> y = position.getY() + 1.0d;
+                    case NORTH -> z = position.getZ();
+                    case SOUTH -> z = position.getZ() + 1.0d;
+                    case WEST -> x = position.getX();
+                    case EAST -> x = position.getX() + 1.0d;
                 }
-
-                caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
-                caterpillar.setSurfaceDirection(direction);
-
-                caterpillar.finalizeSpawn(level,
-                        level.getCurrentDifficultyAt(position),
-                        MobSpawnType.NATURAL,
-                        null,
-                        null);
-
-                level.addFreshEntity(caterpillar);
             }
+
+            caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
+            caterpillar.setSurfaceDirection(direction);
+
+            caterpillar.finalizeSpawn(level,
+                    level.getCurrentDifficultyAt(position),
+                    MobSpawnType.NATURAL,
+                    null,
+                    null);
+
+            level.addFreshEntity(caterpillar);
         }
     }
 
@@ -403,11 +401,9 @@ public class Caterpillar extends DirectionalCreature {
             } else {
                 this.remove(RemovalReason.DISCARDED);
 
-                Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
-                if (caterpillarItem != null) {
-                    ItemStack itemStack = new ItemStack(caterpillarItem);
-                    player.addItem(itemStack);
-                }
+                Item caterpillarItem = BuiltInRegistries.ITEM.get(this.caterpillarItem);
+                ItemStack itemStack = new ItemStack(caterpillarItem);
+                player.addItem(itemStack);
             }
 
             return true;
@@ -508,7 +504,7 @@ public class Caterpillar extends DirectionalCreature {
                           Level level) {
         super("textures/entity/caterpillar/caterpillar_" + species + ".png", entityType, level);
 
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
         this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex);

@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -23,8 +24,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,11 +61,11 @@ public class BottledCaterpillarItem extends BlockItem {
      * @param block The block to place in the world.
      * @param species The species of caterpillar in the bottle.
      */
-    public BottledCaterpillarItem(RegistryObject<Block> block,
+    public BottledCaterpillarItem(DeferredHolder<Block, Block> block,
                                   String species) {
         super(block.get(), new Item.Properties().stacksTo(1));
 
-        this.species = new ResourceLocation(ButterfliesMod.MODID, species);
+        this.species = new ResourceLocation(ButterfliesMod.MOD_ID, species);
     }
 
     /**
@@ -113,11 +113,9 @@ public class BottledCaterpillarItem extends BlockItem {
         ItemStack stack = player.getItemInHand(hand);
         int butterflyIndex = ButterflyData.getButterflyIndex(species);
         ResourceLocation location = ButterflyData.indexToCaterpillarItem(butterflyIndex);
-        Item caterpillarItem = ForgeRegistries.ITEMS.getValue(location);
-        if (caterpillarItem != null) {
-            ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
-            player.addItem(caterpillarStack);
-        }
+        Item caterpillarItem = BuiltInRegistries.ITEM.get(location);
+        ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
+        player.addItem(caterpillarStack);
 
         player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
 

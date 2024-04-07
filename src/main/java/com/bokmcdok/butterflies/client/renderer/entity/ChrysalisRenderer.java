@@ -9,8 +9,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
@@ -50,8 +50,8 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
     }
 
     /**
-     * Rotates the caterpillar so it's attached to its block.
-     * @param entity The caterpillar entity.
+     * Rotates the chrysalis, so it's attached to its block.
+     * @param entity The entity.
      * @param p_115456_ Unknown.
      * @param p_115457_ Unknown.
      * @param poseStack The posed model to render.

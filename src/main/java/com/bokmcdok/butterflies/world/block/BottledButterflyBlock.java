@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.world.block;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.block.entity.ButterflyBlockEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
@@ -27,12 +25,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottledButterflyBlock extends BaseEntityBlock {
+public class BottledButterflyBlock extends Block {
 
     //  The name this item is registered under.
 
@@ -72,7 +69,7 @@ public class BottledButterflyBlock extends BaseEntityBlock {
      * Create a butterfly block
      */
     public BottledButterflyBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)
@@ -95,34 +92,6 @@ public class BottledButterflyBlock extends BaseEntityBlock {
         super.destroy(level, position, state);
 
         removeButterfly(level, position, Entity.RemovalReason.DISCARDED);
-    }
-
-    /**
-     * Transfer the NBT data to the drops when the block is destroyed.
-     * TODO: Included only for backward compatibility. This should be removed
-     *       in a future version.
-     * @param blockState The current block state.
-     * @param builder The loot drop builder.
-     * @return The loot dropped by this block.
-     */
-    @NotNull
-    @Override
-    @SuppressWarnings("deprecation")
-    public List<ItemStack> getDrops(@NotNull BlockState blockState,
-                                    @NotNull LootParams.Builder builder) {
-        BlockEntity blockEntity = builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY);
-        if (blockEntity instanceof ButterflyBlockEntity butterflyBlockEntity) {
-            ResourceLocation entity = butterflyBlockEntity.getEntityLocation();
-            if (entity != null) {
-                int butterflyIndex = ButterflyData.getButterflyIndex(butterflyBlockEntity.getEntityLocation());
-                ItemStack stack = new ItemStack(ItemRegistry.getBottledButterflyFromIndex(butterflyIndex).get());
-                List<ItemStack> result = new ArrayList<>();
-                result.add(stack);
-                return result;
-            }
-        }
-
-        return super.getDrops(blockState, builder);
     }
 
     /**
@@ -152,19 +121,6 @@ public class BottledButterflyBlock extends BaseEntityBlock {
     @NotNull
     public RenderShape getRenderShape(@NotNull BlockState blockState) {
         return RenderShape.MODEL;
-    }
-
-    /**
-     * Create the block's entity data.
-     * @param position The block's position.
-     * @param blockState The current block state.
-     * @return The new block entity.
-     */
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos position,
-                                      @NotNull BlockState blockState) {
-        return ButterflyBlockEntity.CreateBottledButterflyBlockEntity(position, blockState);
     }
 
     /**

@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class Chrysalis extends DirectionalCreature {
@@ -263,23 +263,21 @@ public class Chrysalis extends DirectionalCreature {
                              Direction surfaceDirection,
                              Vec3 position,
                              float yRotation) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
-        if (entityType != null) {
-            Entity entity = entityType.create(level);
-            if (entity instanceof Chrysalis chrysalis) {
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        Entity entity = entityType.create(level);
+        if (entity instanceof Chrysalis chrysalis) {
 
-                chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
-                chrysalis.setYRot(yRotation);
-                chrysalis.setSurfaceDirection(surfaceDirection);
+            chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
+            chrysalis.setYRot(yRotation);
+            chrysalis.setSurfaceDirection(surfaceDirection);
 
-                chrysalis.finalizeSpawn(level,
-                        level.getCurrentDifficultyAt(spawnBlock),
-                        MobSpawnType.NATURAL,
-                        null,
-                        null);
+            chrysalis.finalizeSpawn(level,
+                    level.getCurrentDifficultyAt(spawnBlock),
+                    MobSpawnType.NATURAL,
+                    null,
+                    null);
 
-                level.addFreshEntity(chrysalis);
-            }
+            level.addFreshEntity(chrysalis);
         }
     }
 
@@ -376,7 +374,7 @@ public class Chrysalis extends DirectionalCreature {
                         Level level) {
         super("textures/entity/chrysalis/chrysalis_" + species + ".png", entityType, level);
 
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
         setAge(-data.chrysalisLifespan);

@@ -8,6 +8,7 @@ import com.bokmcdok.butterflies.world.block.ButterflyLeavesBlock;
 import com.bokmcdok.butterflies.world.block.ButterflyMangroveLeavesBlock;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.FoliageColor;
@@ -18,125 +19,124 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Registers the blocks used by the mod.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
     // An instance of a deferred registry we use to register items.
     public static final DeferredRegister<Block> INSTANCE =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MODID);
+            DeferredRegister.create(BuiltInRegistries.BLOCK, ButterfliesMod.MOD_ID);
 
     // The bottled butterfly block when it is in the world.
 
     // Bottled Caterpillars
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_ADMIRAL =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_ADMIRAL =
             INSTANCE.register(BottledButterflyBlock.ADMIRAL_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_BUCKEYE =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_BUCKEYE =
             INSTANCE.register(BottledButterflyBlock.BUCKEYE_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CABBAGE =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_CABBAGE =
             INSTANCE.register(BottledButterflyBlock.CABBAGE_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CHALKHILL =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_CHALKHILL =
             INSTANCE.register(BottledButterflyBlock.CHALKHILL_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_CLIPPER =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_CLIPPER =
             INSTANCE.register(BottledButterflyBlock.CLIPPER_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_COMMON =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_COMMON =
             INSTANCE.register(BottledButterflyBlock.COMMON_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_EMPEROR =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_EMPEROR =
             INSTANCE.register(BottledButterflyBlock.EMPEROR_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_FORESTER =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_FORESTER =
             INSTANCE.register(BottledButterflyBlock.FORESTER_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_GLASSWING =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_GLASSWING =
             INSTANCE.register(BottledButterflyBlock.GLASSWING_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_HAIRSTREAK =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_HAIRSTREAK =
             INSTANCE.register(BottledButterflyBlock.HAIRSTREAK_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_HEATH =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_HEATH =
             INSTANCE.register(BottledButterflyBlock.HEATH_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_LONGWING =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_LONGWING =
             INSTANCE.register(BottledButterflyBlock.LONGWING_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_MONARCH =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_MONARCH =
             INSTANCE.register(BottledButterflyBlock.MONARCH_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_MORPHO =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_MORPHO =
             INSTANCE.register(BottledButterflyBlock.MORPHO_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_RAINBOW =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_RAINBOW =
             INSTANCE.register(BottledButterflyBlock.RAINBOW_NAME, BottledButterflyBlock::new);
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_SWALLOWTAIL =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_SWALLOWTAIL =
             INSTANCE.register(BottledButterflyBlock.SWALLOWTAIL_NAME, BottledButterflyBlock::new);
     
     //  TODO: This is here for backward compatibility. It should be removed in
     //         future versions.
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_BLOCK =
+    public static final DeferredHolder<Block, Block> BOTTLED_BUTTERFLY_BLOCK =
             INSTANCE.register(BottledButterflyBlock.NAME, BottledButterflyBlock::new);
 
     // Bottled Caterpillars
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_ADMIRAL =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_ADMIRAL =
             INSTANCE.register(BottledCaterpillarBlock.ADMIRAL_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_BUCKEYE =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_BUCKEYE =
             INSTANCE.register(BottledCaterpillarBlock.BUCKEYE_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CABBAGE =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_CABBAGE =
             INSTANCE.register(BottledCaterpillarBlock.CABBAGE_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CHALKHILL =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_CHALKHILL =
             INSTANCE.register(BottledCaterpillarBlock.CHALKHILL_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_CLIPPER =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_CLIPPER =
             INSTANCE.register(BottledCaterpillarBlock.CLIPPER_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_COMMON =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_COMMON =
             INSTANCE.register(BottledCaterpillarBlock.COMMON_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_EMPEROR =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_EMPEROR =
             INSTANCE.register(BottledCaterpillarBlock.EMPEROR_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_FORESTER =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_FORESTER =
             INSTANCE.register(BottledCaterpillarBlock.FORESTER_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_GLASSWING =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_GLASSWING =
             INSTANCE.register(BottledCaterpillarBlock.GLASSWING_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_HAIRSTREAK =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_HAIRSTREAK =
             INSTANCE.register(BottledCaterpillarBlock.HAIRSTREAK_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_HEATH =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_HEATH =
             INSTANCE.register(BottledCaterpillarBlock.HEATH_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_LONGWING =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_LONGWING =
             INSTANCE.register(BottledCaterpillarBlock.LONGWING_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_MONARCH =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_MONARCH =
             INSTANCE.register(BottledCaterpillarBlock.MONARCH_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_MORPHO =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_MORPHO =
             INSTANCE.register(BottledCaterpillarBlock.MORPHO_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_RAINBOW =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_RAINBOW =
             INSTANCE.register(BottledCaterpillarBlock.RAINBOW_NAME, BlockRegistry::bottledCaterpillarBlock);
-    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_SWALLOWTAIL =
+    public static final DeferredHolder<Block, Block> BOTTLED_CATERPILLAR_SWALLOWTAIL =
             INSTANCE.register(BottledCaterpillarBlock.SWALLOWTAIL_NAME, BlockRegistry::bottledCaterpillarBlock);
 
     // Represent leaves that have butterfly eggs in them.
-    public static final RegistryObject<Block> BUTTERFLY_OAK_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_OAK_LEAVES =
             INSTANCE.register("butterfly_oak_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_SPRUCE_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_SPRUCE_LEAVES =
             INSTANCE.register("butterfly_spruce_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_BIRCH_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_BIRCH_LEAVES =
             INSTANCE.register("butterfly_birch_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_JUNGLE_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_JUNGLE_LEAVES =
             INSTANCE.register("butterfly_jungle_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_ACACIA_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_ACACIA_LEAVES =
             INSTANCE.register("butterfly_acacia_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_DARK_OAK_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_DARK_OAK_LEAVES =
             INSTANCE.register("butterfly_dark_oak_leaves", () -> butterflyLeaves(SoundType.GRASS));
 
-    public static final RegistryObject<Block> BUTTERFLY_AZALEA_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_AZALEA_LEAVES =
             INSTANCE.register("butterfly_azalea_leaves", () -> butterflyLeaves(SoundType.AZALEA_LEAVES));
 
-    public static final RegistryObject<Block> BUTTERFLY_FLOWERING_AZALEA_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_FLOWERING_AZALEA_LEAVES =
             INSTANCE.register("butterfly_flowering_azalea_leaves", () -> butterflyLeaves(SoundType.AZALEA_LEAVES));
 
-    public static final RegistryObject<Block> BUTTERFLY_CHERRY_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_CHERRY_LEAVES =
             INSTANCE.register("butterfly_cherry_leaves", () -> new ButterflyCherryLeavesBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_PINK)
                     .strength(0.2F)
@@ -150,7 +150,7 @@ public class BlockRegistry {
                     .pushReaction(PushReaction.DESTROY)
                     .isRedstoneConductor(BlockRegistry::never)));
 
-    public static final RegistryObject<Block> BUTTERFLY_MANGROVE_LEAVES =
+    public static final DeferredHolder<Block, Block> BUTTERFLY_MANGROVE_LEAVES =
             INSTANCE.register("butterfly_mangrove_leaves", () -> new ButterflyMangroveLeavesBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.PLANT)
                     .strength(0.2F)
@@ -180,7 +180,7 @@ public class BlockRegistry {
     }
 
     private static BottledCaterpillarBlock bottledCaterpillarBlock() {
-        return new BottledCaterpillarBlock(BlockBehaviour.Properties.copy(Blocks.GLASS)
+        return new BottledCaterpillarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)

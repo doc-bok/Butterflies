@@ -211,7 +211,7 @@ public abstract class DirectionalCreature extends Animal {
                                   EntityType<? extends DirectionalCreature> entityType,
                                   Level level) {
         super(entityType, level);
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, texture);
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, texture);
     }
 
     /**

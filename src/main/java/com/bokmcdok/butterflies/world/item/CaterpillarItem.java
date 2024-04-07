@@ -57,7 +57,7 @@ public class CaterpillarItem extends Item {
     public CaterpillarItem(String species) {
         super(new Item.Properties());
 
-        this.species = new ResourceLocation(ButterfliesMod.MODID, species);
+        this.species = new ResourceLocation(ButterfliesMod.MOD_ID, species);
     }
 
     /**

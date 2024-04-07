@@ -7,6 +7,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -16,7 +17,25 @@ import java.util.Collection;
 public record ClientboundButterflyDataPacket(Collection<ButterflyData> data) implements CustomPacketPayload {
 
     //  The ID of this packet.
-    public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MODID, "butterfly_data");
+    public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_data");
+
+    /**
+     * Construct from a byte buffer. Reads the data ready for use.
+     * @param buffer The buffer to read the data from.
+     */
+    public ClientboundButterflyDataPacket(final FriendlyByteBuf buffer) {
+        this((Collection<ButterflyData>) buffer.readCollection(ArrayList::new,
+            (entry) -> new ButterflyData(entry.readInt(),
+                    entry.readUtf(),
+                    entry.readEnum(ButterflyData.Size.class),
+                    entry.readEnum(ButterflyData.Speed.class),
+                    entry.readEnum(ButterflyData.Rarity.class),
+                    entry.readEnum(ButterflyData.Habitat.class),
+                    entry.readInt(),
+                    entry.readInt(),
+                    entry.readInt(),
+                    entry.readInt())));
+    }
 
     /**
      * Write the data to a network buffer.

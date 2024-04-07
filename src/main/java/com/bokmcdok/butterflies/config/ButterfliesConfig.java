@@ -1,22 +1,23 @@
 package com.bokmcdok.butterflies.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ButterfliesConfig {
-    public static final ForgeConfigSpec SERVER_CONFIG;
+    public static final ModConfigSpec SERVER_CONFIG;
 
-    public static ForgeConfigSpec.DoubleValue doubleEggChance;
-    public static ForgeConfigSpec.IntValue eggLimit;
-    public static ForgeConfigSpec.IntValue maxDensity;
-    public static ForgeConfigSpec.BooleanValue enableLifespan;
+    public static ModConfigSpec.DoubleValue doubleEggChance;
+    public static ModConfigSpec.IntValue eggLimit;
+    public static ModConfigSpec.IntValue maxDensity;
+    public static ModConfigSpec.BooleanValue enableLifespan;
 
     static {
-        ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
+        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupServerConfig(configBuilder);
         SERVER_CONFIG = configBuilder.build();
     }
 
-    private static void setupServerConfig(ForgeConfigSpec.Builder builder) {
+    private static void setupServerConfig(ModConfigSpec.Builder builder) {
         builder.comment("This category holds configs for the butterflies mod.");
         builder.push("Butterfly Options");
 

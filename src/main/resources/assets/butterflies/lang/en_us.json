@@ -290,5 +290,7 @@
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
   "tooltip.butterflies.place_caterpillar": "Right-click on leaves to place the caterpillar",
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
+
+  "networking.butterflies.data_sync_failed": "Failed to sync butterfly data: %s"
 }

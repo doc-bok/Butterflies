@@ -322,7 +322,7 @@ public class ButterflyData {
     public static ResourceLocation indexToButterflyEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId);
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
         }
 
         return null;
@@ -336,7 +336,7 @@ public class ButterflyData {
     public static ResourceLocation indexToButterflyEggEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
         }
 
         return null;
@@ -350,7 +350,7 @@ public class ButterflyData {
     public static ResourceLocation indexToButterflyEggItem(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
         }
 
         return null;
@@ -364,7 +364,7 @@ public class ButterflyData {
     public static ResourceLocation indexToCaterpillarEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_caterpillar");
         }
 
         return null;
@@ -378,7 +378,7 @@ public class ButterflyData {
     public static ResourceLocation indexToChrysalisEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_chrysalis");
         }
 
         return null;
@@ -392,7 +392,7 @@ public class ButterflyData {
     public static ResourceLocation indexToCaterpillarItem(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + entityId);
+            return new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar_" + entityId);
         }
 
         return null;
@@ -406,7 +406,7 @@ public class ButterflyData {
     public static ResourceLocation indexToBottledCaterpillarItem(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, "bottled_caterpillar_" + entityId);
+            return new ResourceLocation(ButterfliesMod.MOD_ID, "bottled_caterpillar_" + entityId);
         }
 
         return null;

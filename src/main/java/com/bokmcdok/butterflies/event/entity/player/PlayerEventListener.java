@@ -3,9 +3,7 @@ package com.bokmcdok.butterflies.event.entity.player;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
-import com.bokmcdok.butterflies.world.item.ButterflyContainerItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -19,15 +17,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * Holds event listeners for player actions.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEventListener {
 
     /**
@@ -73,14 +71,12 @@ public class PlayerEventListener {
                 // Check for shift-clicked item.
                 // TODO: This is still hacky - is there a better way to add pages?
                 Player player = event.getEntity();
-                if (player != null) {
-                    Inventory inventory = player.getInventory();
-                    for (int j = 0; j < inventory.getContainerSize(); ++j) {
+                Inventory inventory = player.getInventory();
+                for (int j = 0; j < inventory.getContainerSize(); ++j) {
 
-                        ItemStack inventoryItem = inventory.getItem(j);
-                        if (inventoryItem.getItem() instanceof ButterflyBookItem) {
-                            ButterflyBookItem.addPage(oldBook, craftingItem, index);
-                        }
+                    ItemStack inventoryItem = inventory.getItem(j);
+                    if (inventoryItem.getItem() instanceof ButterflyBookItem) {
+                        ButterflyBookItem.addPage(oldBook, craftingItem, index);
                     }
                 }
             }

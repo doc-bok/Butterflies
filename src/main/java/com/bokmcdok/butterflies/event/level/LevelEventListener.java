@@ -10,9 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.event.level.LevelEvent;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Listens for events on loading a level.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LevelEventListener {
 
 
@@ -58,7 +58,7 @@ public class LevelEventListener {
         } else {
             // Get the butterfly JSON files
             Map<ResourceLocation, Resource> resourceMap =
-                    resourceManager.listResources(ButterfliesMod.MODID, (x) -> x.getPath().endsWith(".json"));
+                    resourceManager.listResources(ButterfliesMod.MOD_ID, (x) -> x.getPath().endsWith(".json"));
 
             // Parse each one and generate the data.
             for (ResourceLocation location : resourceMap.keySet()) {

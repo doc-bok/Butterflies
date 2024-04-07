@@ -21,7 +21,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,7 +61,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
      * @param block The block related to this item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public BottledButterflyItem(RegistryObject<Block> block,
+    public BottledButterflyItem(DeferredHolder<Block, Block> block,
                                 int butterflyIndex) {
         super(block.get(), new Item.Properties().stacksTo(1));
 

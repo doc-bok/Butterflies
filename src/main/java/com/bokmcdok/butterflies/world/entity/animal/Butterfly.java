@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -35,7 +36,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -375,29 +375,27 @@ public class Butterfly extends Animal {
                              Boolean placed) {
         if (level instanceof ServerLevel) {
             EntityType<?> entityType =
-                    ForgeRegistries.ENTITY_TYPES.getValue(location);
-            if (entityType != null) {
-                Entity entity = entityType.create(level);
-                if (entity instanceof Butterfly butterfly) {
+                    BuiltInRegistries.ENTITY_TYPE.get(location);
+            Entity entity = entityType.create(level);
+            if (entity instanceof Butterfly butterfly) {
 
-                    butterfly.moveTo(position.getX() + 0.45D,
-                            position.getY() + 0.2D,
-                            position.getZ() + 0.5D,
-                            0.0F, 0.0F);
+                butterfly.moveTo(position.getX() + 0.45D,
+                        position.getY() + 0.2D,
+                        position.getZ() + 0.5D,
+                        0.0F, 0.0F);
 
-                    butterfly.finalizeSpawn((ServerLevel) level,
-                            level.getCurrentDifficultyAt(position),
-                            MobSpawnType.NATURAL,
-                            null,
-                            null);
+                butterfly.finalizeSpawn((ServerLevel) level,
+                        level.getCurrentDifficultyAt(position),
+                        MobSpawnType.NATURAL,
+                        null,
+                        null);
 
-                    if (placed) {
-                        butterfly.setInvulnerable(true);
-                        butterfly.setPersistenceRequired();
-                    }
-
-                    level.addFreshEntity(butterfly);
+                if (placed) {
+                    butterfly.setInvulnerable(true);
+                    butterfly.setPersistenceRequired();
                 }
+
+                level.addFreshEntity(butterfly);
             }
         } else {
             level.playSound(null, position.getX(), position.getY(), position.getZ(), SoundEvents.PLAYER_ATTACK_WEAK,
@@ -418,7 +416,7 @@ public class Butterfly extends Animal {
 
         this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
 
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
 

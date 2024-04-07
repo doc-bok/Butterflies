@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -17,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 public class ButterflyEgg extends DirectionalCreature {
@@ -265,35 +265,33 @@ public class ButterflyEgg extends DirectionalCreature {
                              ResourceLocation location,
                              BlockPos spawnBlock,
                              Direction surfaceDirection) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
-        if (entityType != null) {
-            Entity entity = entityType.create(level);
-            if (entity instanceof ButterflyEgg egg) {
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        Entity entity = entityType.create(level);
+        if (entity instanceof ButterflyEgg egg) {
 
-                double x = spawnBlock.getX() + level.random.nextDouble();
-                double y = spawnBlock.getY() + level.random.nextDouble();
-                double z = spawnBlock.getZ() + level.random.nextDouble();
+            double x = spawnBlock.getX() + level.random.nextDouble();
+            double y = spawnBlock.getY() + level.random.nextDouble();
+            double z = spawnBlock.getZ() + level.random.nextDouble();
 
-                switch (surfaceDirection) {
-                    case WEST -> x = spawnBlock.getX();
-                    case EAST -> x = spawnBlock.getX() + 1.0d;
-                    case DOWN -> y = spawnBlock.getY();
-                    case UP -> y = spawnBlock.getY() + 1.0d;
-                    case NORTH -> z = spawnBlock.getZ();
-                    case SOUTH -> z = spawnBlock.getZ() + 1.0d;
-                }
-
-                egg.moveTo(x, y, z, 0.0F, 0.0F);
-                egg.setSurfaceDirection(surfaceDirection);
-
-                egg.finalizeSpawn(level,
-                        level.getCurrentDifficultyAt(spawnBlock),
-                        MobSpawnType.NATURAL,
-                        null,
-                        null);
-
-                level.addFreshEntity(egg);
+            switch (surfaceDirection) {
+                case WEST -> x = spawnBlock.getX();
+                case EAST -> x = spawnBlock.getX() + 1.0d;
+                case DOWN -> y = spawnBlock.getY();
+                case UP -> y = spawnBlock.getY() + 1.0d;
+                case NORTH -> z = spawnBlock.getZ();
+                case SOUTH -> z = spawnBlock.getZ() + 1.0d;
             }
+
+            egg.moveTo(x, y, z, 0.0F, 0.0F);
+            egg.setSurfaceDirection(surfaceDirection);
+
+            egg.finalizeSpawn(level,
+                    level.getCurrentDifficultyAt(spawnBlock),
+                    MobSpawnType.NATURAL,
+                    null,
+                    null);
+
+            level.addFreshEntity(egg);
         }
     }
 
@@ -326,11 +324,9 @@ public class ButterflyEgg extends DirectionalCreature {
             } else {
                 this.remove(RemovalReason.DISCARDED);
 
-                Item itemToAdd = ForgeRegistries.ITEMS.getValue(this.butterflyEggItem);
-                if (itemToAdd != null) {
-                    ItemStack itemStack = new ItemStack(itemToAdd);
-                    player.addItem(itemStack);
-                }
+                Item itemToAdd = BuiltInRegistries.ITEM.get(this.butterflyEggItem);
+                ItemStack itemStack = new ItemStack(itemToAdd);
+                player.addItem(itemStack);
             }
 
             return true;
@@ -414,7 +410,7 @@ public class ButterflyEgg extends DirectionalCreature {
                            Level level) {
         super("textures/item/butterfly_egg/" + species + "_egg.png", entityType, level);
 
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size;
         setAge(-data.eggLifespan);
