@@ -207,6 +207,18 @@
           }
         ]
       }
+    },
+    "peacock_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:peacock_egg"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -257,6 +269,9 @@
     ],
     [
       "swallowtail_egg"
+    ],
+    [
+      "peacock_egg"
     ]
   ]
 }

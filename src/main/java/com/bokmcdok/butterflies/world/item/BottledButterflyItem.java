@@ -49,6 +49,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     public static final String MORPHO_NAME = "bottled_butterfly_morpho";
     public static final String RAINBOW_NAME = "bottled_butterfly_rainbow";
     public static final String SWALLOWTAIL_NAME = "bottled_butterfly_swallowtail";
+    public static final String PEACOCK_NAME = "bottled_butterfly_peacock";
 
     //  TODO: Remove in future version.
     public static final String NAME = "bottled_butterfly";

@@ -19,7 +19,8 @@ BUTTERFLIES = [
     'monarch',
     'morpho',
     'rainbow',
-    'swallowtail'
+    'swallowtail',
+    'peacock'
 ]
 
 # Generate butterfly data files that don't exist yet

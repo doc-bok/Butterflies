@@ -50,7 +50,8 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     public static final String MORPHO_NAME = "butterfly_scroll_morpho";
     public static final String RAINBOW_NAME = "butterfly_scroll_rainbow";
     public static final String SWALLOWTAIL_NAME = "butterfly_scroll_swallowtail";
-    
+    public static final String PEACOCK_NAME = "butterfly_scroll_peacock";
+
     //  TODO: Remove in future version.
     public static final String NAME = "butterfly_scroll";
 

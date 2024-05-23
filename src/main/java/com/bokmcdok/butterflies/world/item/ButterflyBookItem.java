@@ -44,7 +44,7 @@ public class ButterflyBookItem extends Item {
         CompoundTag newTag = newBook.getOrCreateTag();
         newTag.put(CompoundTagId.PAGES, newPages);
 
-        if (newPages.size()  >= 16) {
+        if (newPages.size()  >= 17) {
             newTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
         }
     }

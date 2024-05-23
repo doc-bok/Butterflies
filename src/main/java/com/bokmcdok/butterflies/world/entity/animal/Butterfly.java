@@ -64,6 +64,7 @@ public class Butterfly extends Animal {
     public static final String LONGWING_NAME = "longwing";
     public static final String BUCKEYE_NAME = "buckeye";
     public static final String CLIPPER_NAME = "clipper";
+    public static final String PEACOCK_NAME = "peacock";
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
@@ -151,6 +152,21 @@ public class Butterfly extends Animal {
             Level level) {
         return new Butterfly(
                 "buckeye",
+                entityType, level);
+    }
+
+    /**
+     * Create a Peacock butterfly
+     * @param entityType The type of the entity.
+     * @param level The current level.
+     * @return A newly constructed butterfly.
+     */
+    @NotNull
+    public static Butterfly createPeacockButterfly(
+            EntityType<? extends Butterfly> entityType,
+            Level level) {
+        return new Butterfly(
+                "peacock",
                 entityType, level);
     }
 
