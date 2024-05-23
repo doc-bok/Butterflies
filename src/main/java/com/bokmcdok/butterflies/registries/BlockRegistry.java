@@ -71,6 +71,8 @@ public class BlockRegistry {
             INSTANCE.register(BottledButterflyBlock.RAINBOW_NAME, BottledButterflyBlock::new);
     public static final RegistryObject<Block> BOTTLED_BUTTERFLY_SWALLOWTAIL =
             INSTANCE.register(BottledButterflyBlock.SWALLOWTAIL_NAME, BottledButterflyBlock::new);
+    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_PEACOCK =
+            INSTANCE.register(BottledButterflyBlock.PEACOCK_NAME, BottledButterflyBlock::new);
     
     //  TODO: This is here for backward compatibility. It should be removed in
     //         future versions.
@@ -110,6 +112,8 @@ public class BlockRegistry {
             INSTANCE.register(BottledCaterpillarBlock.RAINBOW_NAME, BlockRegistry::bottledCaterpillarBlock);
     public static final RegistryObject<Block> BOTTLED_CATERPILLAR_SWALLOWTAIL =
             INSTANCE.register(BottledCaterpillarBlock.SWALLOWTAIL_NAME, BlockRegistry::bottledCaterpillarBlock);
+    public static final RegistryObject<Block> BOTTLED_CATERPILLAR_PEACOCK =
+            INSTANCE.register(BottledCaterpillarBlock.PEACOCK_NAME, BlockRegistry::bottledCaterpillarBlock);
 
     // Represent leaves that have butterfly eggs in them.
     public static final RegistryObject<Block> BUTTERFLY_OAK_LEAVES =

@@ -48,6 +48,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     public static final String MORPHO_NAME = "butterfly_net_morpho";
     public static final String RAINBOW_NAME = "butterfly_net_rainbow";
     public static final String SWALLOWTAIL_NAME = "butterfly_net_swallowtail";
+    public static final String PEACOCK_NAME = "butterfly_net_peacock";
 
     //  TODO: Remove this item
     public static final String FULL_NAME = "butterfly_net_full";

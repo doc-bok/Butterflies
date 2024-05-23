@@ -118,6 +118,10 @@ public class EntityTypeRegistry {
             INSTANCE.register(Butterfly.BUCKEYE_NAME, () -> EntityType.Builder.of(Butterfly::createBuckeyeButterfly, MobCategory.CREATURE)
                     .sized(0.3f, 0.4f)
                     .build(Butterfly.BUCKEYE_NAME));
+    public static final RegistryObject<EntityType<Butterfly>> BUTTERFLY_PEACOCK =
+            INSTANCE.register(Butterfly.PEACOCK_NAME, () -> EntityType.Builder.of(Butterfly::createPeacockButterfly, MobCategory.CREATURE)
+                    .sized(0.3f, 0.4f)
+                    .build(Butterfly.PEACOCK_NAME));
 
     // Register the caterpillars.
     public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_MORPHO =
@@ -184,6 +188,10 @@ public class EntityTypeRegistry {
             INSTANCE.register(Caterpillar.BUCKEYE_NAME, () -> EntityType.Builder.of(Caterpillar::createBuckeyeCaterpillar, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Caterpillar.BUCKEYE_NAME));
+    public static final RegistryObject<EntityType<Caterpillar>> CATERPILLAR_PEACOCK =
+            INSTANCE.register(Caterpillar.PEACOCK_NAME, () -> EntityType.Builder.of(Caterpillar::createPeacockCaterpillar, MobCategory.CREATURE)
+                    .sized(0.1f, 0.1f)
+                    .build(Caterpillar.PEACOCK_NAME));
 
     // Register the chrysalises.
     public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_MORPHO =
@@ -250,6 +258,10 @@ public class EntityTypeRegistry {
             INSTANCE.register(Chrysalis.BUCKEYE_NAME, () -> EntityType.Builder.of(Chrysalis::createBuckeye, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(Chrysalis.BUCKEYE_NAME));
+    public static final RegistryObject<EntityType<Chrysalis>> CHRYSALIS_PEACOCK =
+            INSTANCE.register(Chrysalis.PEACOCK_NAME, () -> EntityType.Builder.of(Chrysalis::createPeacock, MobCategory.CREATURE)
+                    .sized(0.1f, 0.1f)
+                    .build(Chrysalis.PEACOCK_NAME));
 
     // Register the butterfly eggs.
     public static final RegistryObject<EntityType<ButterflyEgg>> BUTTERFLY_EGG_MORPHO =
@@ -316,6 +328,10 @@ public class EntityTypeRegistry {
             INSTANCE.register(ButterflyEgg.BUCKEYE_NAME, () -> EntityType.Builder.of(ButterflyEgg::createBuckeye, MobCategory.CREATURE)
                     .sized(0.1f, 0.1f)
                     .build(ButterflyEgg.BUCKEYE_NAME));
+    public static final RegistryObject<EntityType<ButterflyEgg>> BUTTERFLY_EGG_PEACOCK =
+            INSTANCE.register(ButterflyEgg.PEACOCK_NAME, () -> EntityType.Builder.of(ButterflyEgg::createPeacock, MobCategory.CREATURE)
+                    .sized(0.1f, 0.1f)
+                    .build(ButterflyEgg.PEACOCK_NAME));
 
     /**
      * Register the renderers for our entities
@@ -342,6 +358,7 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(BUTTERFLY_LONGWING.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_CLIPPER.get(), ButterflyRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_BUCKEYE.get(), ButterflyRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_PEACOCK.get(), ButterflyRenderer::new);
 
         event.registerEntityRenderer(CATERPILLAR_MORPHO.get(), CaterpillarRenderer::new);
         event.registerEntityRenderer(CATERPILLAR_COMMON.get(), CaterpillarRenderer::new);
@@ -359,6 +376,7 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(CATERPILLAR_LONGWING.get(), CaterpillarRenderer::new);
         event.registerEntityRenderer(CATERPILLAR_CLIPPER.get(), CaterpillarRenderer::new);
         event.registerEntityRenderer(CATERPILLAR_BUCKEYE.get(), CaterpillarRenderer::new);
+        event.registerEntityRenderer(CATERPILLAR_PEACOCK.get(), CaterpillarRenderer::new);
 
         event.registerEntityRenderer(CHRYSALIS_MORPHO.get(), ChrysalisRenderer::new);
         event.registerEntityRenderer(CHRYSALIS_COMMON.get(), ChrysalisRenderer::new);
@@ -376,6 +394,7 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(CHRYSALIS_LONGWING.get(), ChrysalisRenderer::new);
         event.registerEntityRenderer(CHRYSALIS_CLIPPER.get(), ChrysalisRenderer::new);
         event.registerEntityRenderer(CHRYSALIS_BUCKEYE.get(), ChrysalisRenderer::new);
+        event.registerEntityRenderer(CHRYSALIS_PEACOCK.get(), ChrysalisRenderer::new);
 
         event.registerEntityRenderer(BUTTERFLY_EGG_MORPHO.get(), ButterflyEggRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_EGG_COMMON.get(), ButterflyEggRenderer::new);
@@ -393,6 +412,7 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(BUTTERFLY_EGG_LONGWING.get(), ButterflyEggRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_EGG_CLIPPER.get(), ButterflyEggRenderer::new);
         event.registerEntityRenderer(BUTTERFLY_EGG_BUCKEYE.get(), ButterflyEggRenderer::new);
+        event.registerEntityRenderer(BUTTERFLY_EGG_PEACOCK.get(), ButterflyEggRenderer::new);
     }
 
     /**
@@ -416,6 +436,7 @@ public class EntityTypeRegistry {
         event.put(BUTTERFLY_LONGWING.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_CLIPPER.get(), Butterfly.createAttributes().build());
         event.put(BUTTERFLY_BUCKEYE.get(), Butterfly.createAttributes().build());
+        event.put(BUTTERFLY_PEACOCK.get(), Butterfly.createAttributes().build());
 
         event.put(CATERPILLAR_MORPHO.get(), Caterpillar.createAttributes().build());
         event.put(CATERPILLAR_COMMON.get(), Caterpillar.createAttributes().build());
@@ -433,6 +454,7 @@ public class EntityTypeRegistry {
         event.put(CATERPILLAR_LONGWING.get(), Caterpillar.createAttributes().build());
         event.put(CATERPILLAR_CLIPPER.get(), Caterpillar.createAttributes().build());
         event.put(CATERPILLAR_BUCKEYE.get(), Caterpillar.createAttributes().build());
+        event.put(CATERPILLAR_PEACOCK.get(), Caterpillar.createAttributes().build());
 
         event.put(CHRYSALIS_MORPHO.get(), Chrysalis.createAttributes().build());
         event.put(CHRYSALIS_COMMON.get(), Chrysalis.createAttributes().build());
@@ -450,6 +472,7 @@ public class EntityTypeRegistry {
         event.put(CHRYSALIS_LONGWING.get(), Chrysalis.createAttributes().build());
         event.put(CHRYSALIS_CLIPPER.get(), Chrysalis.createAttributes().build());
         event.put(CHRYSALIS_BUCKEYE.get(), Chrysalis.createAttributes().build());
+        event.put(CHRYSALIS_PEACOCK.get(), Chrysalis.createAttributes().build());
 
         event.put(BUTTERFLY_EGG_MORPHO.get(), ButterflyEgg.createAttributes().build());
         event.put(BUTTERFLY_EGG_COMMON.get(), ButterflyEgg.createAttributes().build());
@@ -467,6 +490,7 @@ public class EntityTypeRegistry {
         event.put(BUTTERFLY_EGG_LONGWING.get(), ButterflyEgg.createAttributes().build());
         event.put(BUTTERFLY_EGG_CLIPPER.get(), ButterflyEgg.createAttributes().build());
         event.put(BUTTERFLY_EGG_BUCKEYE.get(), ButterflyEgg.createAttributes().build());
+        event.put(BUTTERFLY_EGG_PEACOCK.get(), ButterflyEgg.createAttributes().build());
     }
 
     /**
@@ -571,6 +595,12 @@ public class EntityTypeRegistry {
                 Butterfly::checkButterflySpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
+        event.register(BUTTERFLY_PEACOCK.get(),
+                SpawnPlacements.Type.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING,
+                Butterfly::checkButterflySpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
         event.register(CATERPILLAR_MORPHO.get(),
                 SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
@@ -664,7 +694,13 @@ public class EntityTypeRegistry {
         event.register(CATERPILLAR_BUCKEYE.get(),
                 SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
-                 DirectionalCreature::checkDirectionalSpawnRules,
+                DirectionalCreature::checkDirectionalSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(CATERPILLAR_PEACOCK.get(),
+                SpawnPlacements.Type.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING,
+                DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(CHRYSALIS_MORPHO.get(),
@@ -763,6 +799,12 @@ public class EntityTypeRegistry {
                 DirectionalCreature::checkDirectionalSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
+        event.register(CHRYSALIS_PEACOCK.get(),
+                SpawnPlacements.Type.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING,
+                DirectionalCreature::checkDirectionalSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
         event.register(BUTTERFLY_EGG_MORPHO.get(),
                 SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
@@ -854,6 +896,12 @@ public class EntityTypeRegistry {
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(BUTTERFLY_EGG_BUCKEYE.get(),
+                SpawnPlacements.Type.NO_RESTRICTIONS,
+                Heightmap.Types.MOTION_BLOCKING,
+                DirectionalCreature::checkDirectionalSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(BUTTERFLY_EGG_PEACOCK.get(),
                 SpawnPlacements.Type.NO_RESTRICTIONS,
                 Heightmap.Types.MOTION_BLOCKING,
                 DirectionalCreature::checkDirectionalSpawnRules,

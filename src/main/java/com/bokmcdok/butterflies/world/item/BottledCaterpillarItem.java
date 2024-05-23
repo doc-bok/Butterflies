@@ -52,6 +52,7 @@ public class BottledCaterpillarItem extends BlockItem {
     public static final String MORPHO_NAME = "bottled_caterpillar_morpho";
     public static final String RAINBOW_NAME = "bottled_caterpillar_rainbow";
     public static final String SWALLOWTAIL_NAME = "bottled_caterpillar_swallowtail";
+    public static final String PEACOCK_NAME = "bottled_caterpillar_peacock";
 
     // The butterfly index for this species.
     private final ResourceLocation species;

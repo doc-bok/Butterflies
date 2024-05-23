@@ -207,6 +207,18 @@
           }
         ]
       }
+    },
+    "peacock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_peacock"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -226,7 +238,8 @@
       "monarch",
       "morpho",
       "rainbow",
-      "swallowtail"
+      "swallowtail",
+      "peacock"
     ]
   ]
 }

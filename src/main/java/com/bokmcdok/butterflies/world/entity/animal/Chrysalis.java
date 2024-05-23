@@ -36,6 +36,7 @@ public class Chrysalis extends DirectionalCreature {
     public static final String LONGWING_NAME = "longwing_chrysalis";
     public static final String BUCKEYE_NAME = "buckeye_chrysalis";
     public static final String CLIPPER_NAME = "clipper_chrysalis";
+    public static final String PEACOCK_NAME = "peacock_chrysalis";
 
     // The size of the caterpillar.
     private final ButterflyData.Size size;
@@ -55,7 +56,6 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Create a Buckeye chrysalis.
-     *
      * @param entityType The type of the entity.
      * @param level      The current level.
      * @return A newly constructed entity.
@@ -64,6 +64,18 @@ public class Chrysalis extends DirectionalCreature {
     public static Chrysalis createBuckeye(EntityType<? extends Chrysalis> entityType,
                                           Level level) {
         return new Chrysalis("buckeye", entityType, level);
+    }
+
+    /**
+     * Create a Peacock chrysalis.
+     * @param entityType The type of the entity.
+     * @param level      The current level.
+     * @return A newly constructed entity.
+     */
+    @NotNull
+    public static Chrysalis createPeacock(EntityType<? extends Chrysalis> entityType,
+                                          Level level) {
+        return new Chrysalis("peacock", entityType, level);
     }
 
     /**

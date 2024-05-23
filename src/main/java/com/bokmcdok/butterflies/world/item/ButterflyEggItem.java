@@ -48,6 +48,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     public static final String MORPHO_NAME = "morpho_egg";
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
+    public static final String PEACOCK_NAME = "peacock_egg";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;

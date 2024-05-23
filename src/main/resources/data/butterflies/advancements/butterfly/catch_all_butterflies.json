@@ -210,6 +210,18 @@
           }
         ]
       }
+    },
+    "caught_peacock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peacock"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -260,6 +272,9 @@
     ],
     [
       "caught_swallowtail"
+    ],
+    [
+      "caught_peacock"
     ]
   ]
 }

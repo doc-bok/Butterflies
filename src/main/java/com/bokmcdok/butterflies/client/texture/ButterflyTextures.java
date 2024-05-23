@@ -32,6 +32,7 @@ public class ButterflyTextures {
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/monarch.png"),
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/morpho.png"),
             new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/rainbow.png"),
-            new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/swallowtail.png")
+            new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/swallowtail.png"),
+            new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/peacock.png")
     };
 }

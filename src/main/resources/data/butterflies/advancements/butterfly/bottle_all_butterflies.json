@@ -210,6 +210,18 @@
           }
         ]
       }
+    },
+    "bottled_peacock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_peacock"
+            ]
+          }
+        ]
+      }
     }
   },
   "requirements": [
@@ -260,6 +272,9 @@
     ],
     [
       "bottled_swallowtail"
+    ],
+    [
+      "bottled_peacock"
     ]
   ]
 }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.1 (2024-05-23)
+- Added the Peacock Butterfly.
+
 ### 3.4.0 (2024-04-06)
 - Compatibility Release.
 

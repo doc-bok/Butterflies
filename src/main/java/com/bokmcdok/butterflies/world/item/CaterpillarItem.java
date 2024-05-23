@@ -47,6 +47,7 @@ public class CaterpillarItem extends Item {
     public static final String MORPHO_NAME = "caterpillar_morpho";
     public static final String RAINBOW_NAME = "caterpillar_rainbow";
     public static final String SWALLOWTAIL_NAME = "caterpillar_swallowtail";
+    public static final String PEACOCK_NAME = "caterpillar_peacock";
 
     private final ResourceLocation species;
 

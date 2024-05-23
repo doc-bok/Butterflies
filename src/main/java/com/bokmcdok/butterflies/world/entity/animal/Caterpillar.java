@@ -51,6 +51,7 @@ public class Caterpillar extends DirectionalCreature {
     public static final String LONGWING_NAME = "longwing_caterpillar";
     public static final String BUCKEYE_NAME = "buckeye_caterpillar";
     public static final String CLIPPER_NAME = "clipper_caterpillar";
+    public static final String PEACOCK_NAME = "peacock_caterpillar";
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_BOTTLED =
@@ -290,7 +291,6 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a Buckeye butterfly
-     *
      * @param entityType The type of the entity.
      * @param level      The current level.
      * @return A newly constructed butterfly.
@@ -300,6 +300,19 @@ public class Caterpillar extends DirectionalCreature {
             EntityType<? extends Caterpillar> entityType,
             Level level) {
         return new Caterpillar("buckeye", entityType, level);
+    }
+
+    /**
+     * Create a Peacock butterfly
+     * @param entityType The type of the entity.
+     * @param level      The current level.
+     * @return A newly constructed butterfly.
+     */
+    @NotNull
+    public static Caterpillar createPeacockCaterpillar(
+            EntityType<? extends Caterpillar> entityType,
+            Level level) {
+        return new Caterpillar("peacock", entityType, level);
     }
 
     /**

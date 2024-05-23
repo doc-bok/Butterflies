@@ -65,6 +65,8 @@ public class ItemRegistry {
             () -> new ButterflyNetItem(14));
     public static final RegistryObject<Item> BUTTERFLY_NET_SWALLOWTAIL = INSTANCE.register(ButterflyNetItem.SWALLOWTAIL_NAME,
             () -> new ButterflyNetItem(15));
+    public static final RegistryObject<Item> BUTTERFLY_NET_PEACOCK = INSTANCE.register(ButterflyNetItem.PEACOCK_NAME,
+            () -> new ButterflyNetItem(16));
 
     // TODO: This is the old implementation, included for backwards
     //       compatibility. This needs to be removed in a future version.
@@ -104,6 +106,8 @@ public class ItemRegistry {
             () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_RAINBOW, 14));
     public static final RegistryObject<Item> BOTTLED_BUTTERFLY_SWALLOWTAIL = INSTANCE.register(BottledButterflyItem.SWALLOWTAIL_NAME,
             () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_SWALLOWTAIL, 15));
+    public static final RegistryObject<Item> BOTTLED_BUTTERFLY_PEACOCK = INSTANCE.register(BottledButterflyItem.PEACOCK_NAME,
+            () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_PEACOCK, 16));
 
     // TODO: This is the old implementation, included for backwards
     //       compatibility. This needs to be removed in a future version.
@@ -143,6 +147,8 @@ public class ItemRegistry {
             () -> new ButterflyScrollItem(14));
     public static final RegistryObject<Item> BUTTERFLY_SCROLL_SWALLOWTAIL = INSTANCE.register(ButterflyScrollItem.SWALLOWTAIL_NAME,
             () -> new ButterflyScrollItem(15));
+    public static final RegistryObject<Item> BUTTERFLY_SCROLL_PEACOCK = INSTANCE.register(ButterflyScrollItem.PEACOCK_NAME,
+            () -> new ButterflyScrollItem(16));
 
     // TODO: This is the old implementation, included for backwards
     //       compatibility. This needs to be removed in a future version.
@@ -190,6 +196,8 @@ public class ItemRegistry {
             () -> new ButterflyEggItem(14, new Item.Properties()));
     public static final RegistryObject<Item> BUTTERFLY_EGG_SWALLOWTAIL = INSTANCE.register(ButterflyEggItem.SWALLOWTAIL_NAME,
             () -> new ButterflyEggItem(15, new Item.Properties()));
+    public static final RegistryObject<Item> BUTTERFLY_EGG_PEACOCK = INSTANCE.register(ButterflyEggItem.PEACOCK_NAME,
+            () -> new ButterflyEggItem(16, new Item.Properties()));
 
     //  Caterpillars
     public static final RegistryObject<Item> CATERPILLAR_ADMIRAL = INSTANCE.register(CaterpillarItem.ADMIRAL_NAME,
@@ -224,6 +232,8 @@ public class ItemRegistry {
             () -> new CaterpillarItem(Caterpillar.RAINBOW_NAME));
     public static final RegistryObject<Item> CATERPILLAR_SWALLOWTAIL = INSTANCE.register(CaterpillarItem.SWALLOWTAIL_NAME,
             () -> new CaterpillarItem(Caterpillar.SWALLOWTAIL_NAME));
+    public static final RegistryObject<Item> CATERPILLAR_PEACOCK = INSTANCE.register(CaterpillarItem.PEACOCK_NAME,
+            () -> new CaterpillarItem(Caterpillar.PEACOCK_NAME));
 
     // Bottled Caterpillars
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_ADMIRAL = INSTANCE.register(BottledCaterpillarItem.ADMIRAL_NAME,
@@ -258,6 +268,8 @@ public class ItemRegistry {
             () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_RAINBOW, Caterpillar.RAINBOW_NAME));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_SWALLOWTAIL = INSTANCE.register(BottledCaterpillarItem.SWALLOWTAIL_NAME,
             () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_SWALLOWTAIL, Caterpillar.SWALLOWTAIL_NAME));
+    public static final RegistryObject<Item> BOTTLED_CATERPILLAR_PEACOCK = INSTANCE.register(BottledCaterpillarItem.PEACOCK_NAME,
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_PEACOCK, Caterpillar.PEACOCK_NAME));
     
     //  Spawn eggs - Butterflies
     private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_ADMIRAL = INSTANCE.register(Butterfly.ADMIRAL_NAME,
@@ -292,6 +304,8 @@ public class ItemRegistry {
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
     private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_SWALLOWTAIL = INSTANCE.register(Butterfly.SWALLOWTAIL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_PEACOCK = INSTANCE.register(Butterfly.PEACOCK_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_PEACOCK, 0x2222ff, 0xee0011, new Item.Properties()));
     
     //  Spawn eggs - Caterpillars
     private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_ADMIRAL = INSTANCE.register(Caterpillar.ADMIRAL_NAME,
@@ -326,6 +340,8 @@ public class ItemRegistry {
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_RAINBOW, 0xff7777, 0x0088ff, new Item.Properties()));
     private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_SWALLOWTAIL = INSTANCE.register(Caterpillar.SWALLOWTAIL_NAME,
             () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_SWALLOWTAIL, 0xffffff, 0xeeee77, new Item.Properties()));
+    private static final RegistryObject<Item> SPAWN_EGG_CATERPILLAR_PEACOCK = INSTANCE.register(Caterpillar.PEACOCK_NAME,
+            () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLAR_PEACOCK, 0x2222ff, 0xee0011, new Item.Properties()));
 
     /**
      * Helper method to get the correct butterfly net item.
@@ -351,6 +367,7 @@ public class ItemRegistry {
             case 13 -> BUTTERFLY_NET_MORPHO;
             case 14 -> BUTTERFLY_NET_RAINBOW;
             case 15 -> BUTTERFLY_NET_SWALLOWTAIL;
+            case 16 -> BUTTERFLY_NET_PEACOCK;
             default -> null;
         };
     }
@@ -378,6 +395,7 @@ public class ItemRegistry {
             case 13 -> BOTTLED_BUTTERFLY_MORPHO;
             case 14 -> BOTTLED_BUTTERFLY_RAINBOW;
             case 15 -> BOTTLED_BUTTERFLY_SWALLOWTAIL;
+            case 16 -> BOTTLED_BUTTERFLY_PEACOCK;
             default -> null;
         };
     }
@@ -405,6 +423,7 @@ public class ItemRegistry {
             case 13 -> BUTTERFLY_SCROLL_MORPHO;
             case 14 -> BUTTERFLY_SCROLL_RAINBOW;
             case 15 -> BUTTERFLY_SCROLL_SWALLOWTAIL;
+            case 16 -> BUTTERFLY_SCROLL_PEACOCK;
             default -> null;
         };
     }
@@ -433,6 +452,7 @@ public class ItemRegistry {
             event.accept(SPAWN_EGG_BUTTERFLY_MORPHO);
             event.accept(SPAWN_EGG_BUTTERFLY_RAINBOW);
             event.accept(SPAWN_EGG_BUTTERFLY_SWALLOWTAIL);
+            event.accept(SPAWN_EGG_BUTTERFLY_PEACOCK);
 
             event.accept(SPAWN_EGG_CATERPILLAR_ADMIRAL);
             event.accept(SPAWN_EGG_CATERPILLAR_BUCKEYE);
@@ -450,6 +470,7 @@ public class ItemRegistry {
             event.accept(SPAWN_EGG_CATERPILLAR_MORPHO);
             event.accept(SPAWN_EGG_CATERPILLAR_RAINBOW);
             event.accept(SPAWN_EGG_CATERPILLAR_SWALLOWTAIL);
+            event.accept(SPAWN_EGG_CATERPILLAR_PEACOCK);
         }
 
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
@@ -470,6 +491,7 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_EGG_MORPHO);
             event.accept(BUTTERFLY_EGG_RAINBOW);
             event.accept(BUTTERFLY_EGG_SWALLOWTAIL);
+            event.accept(BUTTERFLY_EGG_PEACOCK);
 
             event.accept(CATERPILLAR_ADMIRAL);
             event.accept(CATERPILLAR_BUCKEYE);
@@ -487,6 +509,7 @@ public class ItemRegistry {
             event.accept(CATERPILLAR_MORPHO);
             event.accept(CATERPILLAR_RAINBOW);
             event.accept(CATERPILLAR_SWALLOWTAIL);
+            event.accept(CATERPILLAR_PEACOCK);
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
@@ -508,6 +531,7 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_NET_MORPHO);
             event.accept(BUTTERFLY_NET_RAINBOW);
             event.accept(BUTTERFLY_NET_SWALLOWTAIL);
+            event.accept(BUTTERFLY_NET_PEACOCK);
 
             //event.accept(BOTTLED_BUTTERFLY);
             event.accept(BOTTLED_BUTTERFLY_ADMIRAL);
@@ -526,6 +550,7 @@ public class ItemRegistry {
             event.accept(BOTTLED_BUTTERFLY_MORPHO);
             event.accept(BOTTLED_BUTTERFLY_RAINBOW);
             event.accept(BOTTLED_BUTTERFLY_SWALLOWTAIL);
+            event.accept(BOTTLED_BUTTERFLY_PEACOCK);
 
             event.accept(BOTTLED_CATERPILLAR_ADMIRAL);
             event.accept(BOTTLED_CATERPILLAR_BUCKEYE);
@@ -543,6 +568,7 @@ public class ItemRegistry {
             event.accept(BOTTLED_CATERPILLAR_MORPHO);
             event.accept(BOTTLED_CATERPILLAR_RAINBOW);
             event.accept(BOTTLED_CATERPILLAR_SWALLOWTAIL);
+            event.accept(BOTTLED_CATERPILLAR_PEACOCK);
 
             //event.accept(BUTTERFLY_SCROLL);
             event.accept(BUTTERFLY_SCROLL_ADMIRAL);
@@ -561,6 +587,7 @@ public class ItemRegistry {
             event.accept(BUTTERFLY_SCROLL_MORPHO);
             event.accept(BUTTERFLY_SCROLL_RAINBOW);
             event.accept(BUTTERFLY_SCROLL_SWALLOWTAIL);
+            event.accept(BUTTERFLY_SCROLL_PEACOCK);
 
             event.accept(BUTTERFLY_BOOK);
             event.accept(BUTTERFLY_ZHUANGZI);

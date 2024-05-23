@@ -74,6 +74,10 @@ public class ButterflyBlockEntity extends BlockEntity {
     @Override
     protected void saveAdditional(@NotNull CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putString(CompoundTagId.ENTITY_ID, entityId.toString());
+
+        // In future this will always be null and will eventually be removed.
+        if (entityId != null) {
+            tag.putString(CompoundTagId.ENTITY_ID, entityId.toString());
+        }
     }
 }

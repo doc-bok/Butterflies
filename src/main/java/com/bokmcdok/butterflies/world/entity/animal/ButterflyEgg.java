@@ -39,6 +39,7 @@ public class ButterflyEgg extends DirectionalCreature {
     public static final String MORPHO_NAME = "morpho_egg";
     public static final String RAINBOW_NAME = "rainbow_egg";
     public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
+    public static final String PEACOCK_NAME = "peacock_egg";
 
     // The size of the butterfly egg.
     private final ButterflyData.Size size;
@@ -61,7 +62,6 @@ public class ButterflyEgg extends DirectionalCreature {
 
     /**
      * Create a Buckeye butterfly egg.
-     *
      * @param entityType The type of the entity.
      * @param level      The current level.
      * @return A newly constructed entity.
@@ -70,6 +70,18 @@ public class ButterflyEgg extends DirectionalCreature {
     public static ButterflyEgg createBuckeye(EntityType<? extends ButterflyEgg> entityType,
                                              Level level) {
         return new ButterflyEgg("buckeye", entityType, level);
+    }
+
+    /**
+     * Create a Peacock butterfly egg.
+     * @param entityType The type of the entity.
+     * @param level      The current level.
+     * @return A newly constructed entity.
+     */
+    @NotNull
+    public static ButterflyEgg createPeacock(EntityType<? extends ButterflyEgg> entityType,
+                                             Level level) {
+        return new ButterflyEgg("peacock", entityType, level);
     }
 
     /**
