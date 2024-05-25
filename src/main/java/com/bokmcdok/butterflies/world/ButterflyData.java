@@ -16,8 +16,28 @@ import java.util.Objects;
 
 /**
  * Helper for converting entity ID to index and vice versa.
+ *
+ * @param butterflyIndex      The index of the butterfly
+ * @param entityId            The butterfly species
+ * @param size                The size of the butterfly
+ * @param speed               The speed of the butterfly
+ * @param rarity              How rare the butterfly is
+ * @param habitat             The description of the butterfly's habitat
+ * @param eggLifespan         The lifespan of the caterpillar phase
+ * @param caterpillarLifespan The lifespan of the caterpillar phase
+ * @param chrysalisLifespan   The lifespan of the chrysalis phase
+ * @param butterflyLifespan   The lifespan of the butterfly phase
  */
-public class ButterflyData {
+public record ButterflyData(int butterflyIndex,
+                            String entityId,
+                            Size size,
+                            Speed speed,
+                            Rarity rarity,
+                            Habitat habitat,
+                            int eggLifespan,
+                            int caterpillarLifespan,
+                            int chrysalisLifespan,
+                            int butterflyLifespan) {
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
@@ -66,38 +86,9 @@ public class ButterflyData {
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
     private static final Map<Integer, ButterflyData> BUTTERFLY_ENTRIES = new HashMap<>();
 
-    // The index of the butterfly
-    public final int butterflyIndex;
-
-    // The butterfly species
-    public final String entityId;
-
-    // The size of the butterfly
-    public final Size size;
-
-    // The speed of the butterfly
-    public final Speed speed;
-
-    // How rare the butterfly is
-    public final Rarity rarity;
-
-    // The description of the butterfly's habitat
-    public final Habitat habitat;
-
-    // The lifespan of the caterpillar phase
-    public final int eggLifespan;
-
-    // The lifespan of the caterpillar phase
-    public final int caterpillarLifespan;
-
-    // The lifespan of the chrysalis phase
-    public final int chrysalisLifespan;
-
-    // The lifespan of the butterfly phase
-    public final int butterflyLifespan;
-
     /**
      * Get the overall lifespan as a simple enumeration
+     *
      * @return A representation of the lifespan.
      */
     public Lifespan getOverallLifeSpan() {
@@ -113,6 +104,7 @@ public class ButterflyData {
 
     /**
      * Construction
+     *
      * @param entityId            The id of the butterfly species.
      * @param size                The size of the butterfly.
      * @param speed               The speed of the butterfly.
@@ -122,15 +114,15 @@ public class ButterflyData {
      * @param butterflyLifespan   How long it lives as a butterfly.
      */
     public ButterflyData(int butterflyIndex,
-                          String entityId,
-                          Size size,
-                          Speed speed,
-                          Rarity rarity,
-                          Habitat habitat,
-                          int eggLifespan,
-                          int caterpillarLifespan,
-                          int chrysalisLifespan,
-                          int butterflyLifespan) {
+                         String entityId,
+                         Size size,
+                         Speed speed,
+                         Rarity rarity,
+                         Habitat habitat,
+                         int eggLifespan,
+                         int caterpillarLifespan,
+                         int chrysalisLifespan,
+                         int butterflyLifespan) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -151,7 +143,8 @@ public class ButterflyData {
 
         /**
          * Deserializes a JSON object into a butterfly entry
-         * @param json The Json data being deserialized
+         *
+         * @param json    The Json data being deserialized
          * @param typeOfT The type of the Object to deserialize to
          * @param context Language context (ignored)
          * @return A new butterfly entry
@@ -253,16 +246,17 @@ public class ButterflyData {
 
     /**
      * Create new butterfly data.
+     *
      * @param entry The butterfly data.
      */
-    public static void addButterfly(ButterflyData entry)
-    {
+    public static void addButterfly(ButterflyData entry) {
         ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
         BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
     }
 
     /**
      * Converts an Entity ID to an index.
+     *
      * @param entityId The entity ID to convert.
      * @return The index of said entity ID.
      */
@@ -285,6 +279,7 @@ public class ButterflyData {
 
     /**
      * Converts an index to an entity ID.
+     *
      * @param index The index to convert to an entity ID.
      * @return The entity ID string.
      */
@@ -298,6 +293,7 @@ public class ButterflyData {
 
     /**
      * Get all butterfly data. Used for network synchronisation.
+     *
      * @return The butterfly entries as a collection.
      */
     public static Collection<ButterflyData> getButterflyDataCollection() {
@@ -306,9 +302,10 @@ public class ButterflyData {
 
     /**
      * Converts a resource location to a butterfly index.
+     *
      * @param location The resource location to convert.
      * @return The butterfly index for the butterfly species, or -1 if not
-     *         found.
+     * found.
      */
     public static int getButterflyIndex(ResourceLocation location) {
         return entityIdToIndex(location.toString());
@@ -316,6 +313,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the butterfly at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the butterfly.
      */
@@ -330,6 +328,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the butterfly egg at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the butterfly egg.
      */
@@ -344,6 +343,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the butterfly egg at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the butterfly egg.
      */
@@ -358,6 +358,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the caterpillar at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the caterpillar.
      */
@@ -372,6 +373,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the chrysalis at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the chrysalis.
      */
@@ -386,6 +388,7 @@ public class ButterflyData {
 
     /**
      * Gets the resource location for the caterpillar item at the specified index.
+     *
      * @param index The butterfly index.
      * @return The resource location of the caterpillar item.
      */
@@ -399,21 +402,8 @@ public class ButterflyData {
     }
 
     /**
-     * Gets the resource location for the caterpillar item at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the caterpillar item.
-     */
-    public static ResourceLocation indexToBottledCaterpillarItem(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, "bottled_caterpillar_" + entityId);
-        }
-
-        return null;
-    }
-
-    /**
      * Get butterfly data by index.
+     *
      * @param index The butterfly index.
      * @return The butterfly entry.
      */
@@ -427,11 +417,20 @@ public class ButterflyData {
 
     /**
      * Get butterfly data by resource location.
+     *
      * @param location The resource location of the butterfly.
      * @return The butterfly entry.
      */
     public static ButterflyData getEntry(ResourceLocation location) {
         int index = getButterflyIndex(location);
         return getEntry(index);
+    }
+
+    /**
+     * Returns the total number of butterfly species in the mod.
+     * @return The total number of butterflies.
+     */
+    public static int getNumButterflySpecies() {
+        return BUTTERFLY_ENTRIES.size();
     }
 }
