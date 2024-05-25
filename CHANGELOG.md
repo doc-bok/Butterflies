@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.2 (2024-05-25)
+- Fixed the Butterfly Book challenge.
+
 ### 3.4.1 (2024-05-23)
 - Added the Peacock Butterfly.
 

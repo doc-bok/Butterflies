@@ -97,6 +97,7 @@ public class BottledCaterpillarBlock extends Block {
      */
     @Override
     @NotNull
+    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(@NotNull BlockState blockState) {
         return RenderShape.MODEL;
     }

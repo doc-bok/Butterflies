@@ -436,17 +436,17 @@ public class Butterfly extends Animal {
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size;
+        this.size = data.size();
 
-        if (data.speed == ButterflyData.Speed.FAST) {
+        if (data.speed() == ButterflyData.Speed.FAST) {
             this.speed = BUTTERFLY_SPEED * 1.2d;
         } else {
             this.speed = BUTTERFLY_SPEED;
         }
 
-        this.butterflyIndex = data.butterflyIndex;
+        this.butterflyIndex = data.butterflyIndex();
 
-        setAge(-data.butterflyLifespan);
+        setAge(-data.butterflyLifespan());
     }
 
     /**

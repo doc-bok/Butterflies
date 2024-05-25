@@ -523,9 +523,9 @@ public class Caterpillar extends DirectionalCreature {
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size;
-        this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex);
-        setAge(-data.caterpillarLifespan);
+        this.size = data.size();
+        this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex());
+        setAge(-data.caterpillarLifespan());
     }
 
     /**

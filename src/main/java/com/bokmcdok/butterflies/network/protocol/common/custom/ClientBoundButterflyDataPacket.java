@@ -13,7 +13,7 @@ import java.util.Collection;
  * A network packet used to send butterfly data to the clients.
  * @param data A collection of all the butterfly data the server has.
  */
-public record ClientboundButterflyDataPacket(Collection<ButterflyData> data) implements CustomPacketPayload {
+public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) implements CustomPacketPayload {
 
     //  The ID of this packet.
     public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MODID, "butterfly_data");
@@ -25,16 +25,16 @@ public record ClientboundButterflyDataPacket(Collection<ButterflyData> data) imp
     @Override
     public void write(@NotNull FriendlyByteBuf buffer) {
         buffer.writeCollection(data, (collectionBuffer, i) -> {
-            collectionBuffer.writeInt(i.butterflyIndex);
-            collectionBuffer.writeUtf(i.entityId);
-            collectionBuffer.writeEnum(i.size);
-            collectionBuffer.writeEnum(i.speed);
-            collectionBuffer.writeEnum(i.rarity);
-            collectionBuffer.writeEnum(i.habitat);
-            collectionBuffer.writeInt(i.eggLifespan);
-            collectionBuffer.writeInt(i.caterpillarLifespan);
-            collectionBuffer.writeInt(i.chrysalisLifespan);
-            collectionBuffer.writeInt(i.butterflyLifespan);
+            collectionBuffer.writeInt(i.butterflyIndex());
+            collectionBuffer.writeUtf(i.entityId());
+            collectionBuffer.writeEnum(i.size());
+            collectionBuffer.writeEnum(i.speed());
+            collectionBuffer.writeEnum(i.rarity());
+            collectionBuffer.writeEnum(i.habitat());
+            collectionBuffer.writeInt(i.eggLifespan());
+            collectionBuffer.writeInt(i.caterpillarLifespan());
+            collectionBuffer.writeInt(i.chrysalisLifespan());
+            collectionBuffer.writeInt(i.butterflyLifespan());
         });
     }
 

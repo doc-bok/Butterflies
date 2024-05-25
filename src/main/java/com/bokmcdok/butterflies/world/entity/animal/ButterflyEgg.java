@@ -428,9 +428,9 @@ public class ButterflyEgg extends DirectionalCreature {
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size;
-        setAge(-data.eggLifespan);
-        this.butterflyEggItem = ButterflyData.indexToButterflyEggItem(data.butterflyIndex);
+        this.size = data.size();
+        setAge(-data.eggLifespan());
+        this.butterflyEggItem = ButterflyData.indexToButterflyEggItem(data.butterflyIndex());
     }
 
     /**
