@@ -84,6 +84,18 @@ public class CaterpillarItem extends Item {
     }
 
     /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable("entity." + species.toString().replace(":", "."));
+    }
+
+    /**
      * Places the butterfly scroll on a block.
      * @param context Contains information about the block the user clicked on.
      * @return The result of the interaction.

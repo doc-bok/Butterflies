@@ -51,8 +51,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     public static final String SWALLOWTAIL_NAME = "bottled_butterfly_swallowtail";
     public static final String PEACOCK_NAME = "bottled_butterfly_peacock";
 
-    //  TODO: Remove in future version.
-    public static final String NAME = "bottled_butterfly";
+    private static final String NAME = "block.butterflies.bottled_butterfly";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -99,6 +98,18 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @Override
     public int getButterflyIndex() {
         return this.butterflyIndex;
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable(NAME);
     }
 
     /**

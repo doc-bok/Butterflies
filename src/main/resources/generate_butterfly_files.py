@@ -26,6 +26,7 @@ BUTTERFLIES = [
 
 # File locations
 FROG_FOOD = "data/minecraft/tags/entity_types/frog_food.json"
+LOCALISATION = "assets/butterflies/lang/en_us.json"
 
 
 # Generate butterfly data files that don't exist yet
@@ -103,7 +104,41 @@ def generate_frog_food():
         file.write(frog_food.to_json())
 
 
+# Generates localisation strings if they don't already exist.
+def generate_localisation_strings():
+    with open(LOCALISATION, 'r', encoding="utf8") as input_file:
+        json_data = json.load(input_file)
+
+    for i in BUTTERFLIES:
+        test_key = "item.butterflies." + i + "_egg"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Butterfly Egg"
+
+        test_key = "entity.butterflies." + i
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Butterfly"
+
+        test_key = "entity.butterflies." + i + "_caterpillar"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Caterpillar"
+
+        test_key = "entity.butterflies." + i + "_chrysalis"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Chrysalis"
+
+        test_key = "gui.butterflies.fact." + i
+        if test_key not in json_data:
+            json_data[test_key] = ""
+
+    with open(LOCALISATION, 'w', encoding="utf8") as file:
+        file.write(json.dumps(json_data,
+                              default=lambda o: o.__dict__,
+                              sort_keys=True,
+                              indent=4))
+
+
 # Python's main entry point
 if __name__ == "__main__":
-    generate_butterfly_files()
-    generate_frog_food()
+    # generate_butterfly_files()
+    # generate_frog_food()
+    generate_localisation_strings()

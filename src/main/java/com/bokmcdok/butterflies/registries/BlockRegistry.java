@@ -73,11 +73,6 @@ public class BlockRegistry {
             INSTANCE.register(BottledButterflyBlock.SWALLOWTAIL_NAME, BottledButterflyBlock::new);
     public static final RegistryObject<Block> BOTTLED_BUTTERFLY_PEACOCK =
             INSTANCE.register(BottledButterflyBlock.PEACOCK_NAME, BottledButterflyBlock::new);
-    
-    //  TODO: This is here for backward compatibility. It should be removed in
-    //         future versions.
-    public static final RegistryObject<Block> BOTTLED_BUTTERFLY_BLOCK =
-            INSTANCE.register(BottledButterflyBlock.NAME, BottledButterflyBlock::new);
 
     // Bottled Caterpillars
     public static final RegistryObject<Block> BOTTLED_CATERPILLAR_ADMIRAL =

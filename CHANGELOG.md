@@ -1,5 +1,9 @@
 ## Changelog
 
+### 3.4.5 (2024-05-26)
+- Reduced number of localisation strings needed.
+- Can now generate localisation strings.
+
 ### 3.4.4 (2024-05-26)
 - Texture locations for butterfly scrolls are automatically generated.
 
