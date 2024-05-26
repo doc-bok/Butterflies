@@ -1,3 +1,4 @@
+import json
 import os
 import pathlib
 import shutil
@@ -22,6 +23,9 @@ BUTTERFLIES = [
     'swallowtail',
     'peacock'
 ]
+
+# File locations
+FROG_FOOD = "data/minecraft/tags/entity_types/frog_food.json"
 
 # Generate butterfly data files that don't exist yet
 def generate_butterfly_files():
@@ -64,6 +68,38 @@ def generate_butterfly_files():
                 with open(newfile, 'w') as file:
                   file.write(filedata)
 
+# Frog food class used to generate JSON.
+class FrogFood(object):
+    replace = False
+    values = []
+
+    # Initialise with a set of values.
+    def __init__(self, values):
+        self.values = values
+        self.replace = False
+
+    # Convert the class to a JSON string.
+    def toJSON(self):
+        return json.dumps(
+            self,
+            default=lambda o: o.__dict__,
+            sort_keys=True,
+            indent=4)
+
+# Generate list of entities to add to frog food.
+def generate_frog_food():
+    values = []
+    for i in BUTTERFLIES:
+        values.append("butterflies:" + i)
+
+    print(values)
+
+    frog_food = FrogFood(values)
+
+    with open(FROG_FOOD, 'w') as file:
+        file.write(frog_food.toJSON())
+
 # Python's main entry point
 if __name__ == "__main__":
     generate_butterfly_files()
+    generate_frog_food()
