@@ -278,20 +278,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Converts an index to an entity ID.
-     *
-     * @param index The index to convert to an entity ID.
-     * @return The entity ID string.
-     */
-    private static String indexToEntityId(int index) {
-        if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index).entityId;
-        }
-
-        return null;
-    }
-
-    /**
      * Get all butterfly data. Used for network synchronisation.
      *
      * @return The butterfly entries as a collection.
@@ -309,6 +295,39 @@ public record ButterflyData(int butterflyIndex,
      */
     public static int getButterflyIndex(ResourceLocation location) {
         return entityIdToIndex(location.toString());
+    }
+
+    /**
+     * Get butterfly data by index.
+     *
+     * @param index The butterfly index.
+     * @return The butterfly entry.
+     */
+    public static ButterflyData getEntry(int index) {
+        if (BUTTERFLY_ENTRIES.containsKey(index)) {
+            return BUTTERFLY_ENTRIES.get(index);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get butterfly data by resource location.
+     *
+     * @param location The resource location of the butterfly.
+     * @return The butterfly entry.
+     */
+    public static ButterflyData getEntry(ResourceLocation location) {
+        int index = getButterflyIndex(location);
+        return getEntry(index);
+    }
+
+    /**
+     * Returns the total number of butterfly species in the mod.
+     * @return The total number of butterflies.
+     */
+    public static int getNumButterflySpecies() {
+        return BUTTERFLY_ENTRIES.size();
     }
 
     /**
@@ -357,6 +376,16 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Gets the texture to use for a specific butterfly
+     * @param butterflyIndex The butterfly index.
+     * @return The resource location of the texture to use.
+     */
+    public static ResourceLocation indexToButterflyScrollTexture(int butterflyIndex) {
+        String entityId = indexToEntityId(butterflyIndex);
+        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + entityId + ".png");
+    }
+
+    /**
      * Gets the resource location for the caterpillar at the specified index.
      *
      * @param index The butterfly index.
@@ -366,21 +395,6 @@ public record ButterflyData(int butterflyIndex,
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the chrysalis at the specified index.
-     *
-     * @param index The butterfly index.
-     * @return The resource location of the chrysalis.
-     */
-    public static ResourceLocation indexToChrysalisEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
         }
 
         return null;
@@ -402,35 +416,31 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Get butterfly data by index.
+     * Gets the resource location for the chrysalis at the specified index.
      *
      * @param index The butterfly index.
-     * @return The butterfly entry.
+     * @return The resource location of the chrysalis.
      */
-    public static ButterflyData getEntry(int index) {
-        if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index);
+    public static ResourceLocation indexToChrysalisEntity(int index) {
+        String entityId = indexToEntityId(index);
+        if (entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
         }
 
         return null;
     }
 
     /**
-     * Get butterfly data by resource location.
+     * Converts an index to an entity ID.
      *
-     * @param location The resource location of the butterfly.
-     * @return The butterfly entry.
+     * @param index The index to convert to an entity ID.
+     * @return The entity ID string.
      */
-    public static ButterflyData getEntry(ResourceLocation location) {
-        int index = getButterflyIndex(location);
-        return getEntry(index);
-    }
+    private static String indexToEntityId(int index) {
+        if (BUTTERFLY_ENTRIES.containsKey(index)) {
+            return BUTTERFLY_ENTRIES.get(index).entityId;
+        }
 
-    /**
-     * Returns the total number of butterfly species in the mod.
-     * @return The total number of butterflies.
-     */
-    public static int getNumButterflySpecies() {
-        return BUTTERFLY_ENTRIES.size();
+        return null;
     }
 }

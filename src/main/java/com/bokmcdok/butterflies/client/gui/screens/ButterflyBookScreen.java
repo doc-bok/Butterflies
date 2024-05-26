@@ -200,7 +200,7 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            guiGraphics.blit(ButterflyTextures.SCROLLS[butterflyIndex], i, 2, 0, 0, 192, 192);
+            guiGraphics.blit(ButterflyData.indexToButterflyScrollTexture(butterflyIndex), i, 2, 0, 0, 192, 192);
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 

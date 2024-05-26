@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.4 (2024-05-26)
+- Texture locations for butterfly scrolls are automatically generated.
+
 ### 3.4.3 (2024-05-26)
 - Frog food JSON data can now be generated.
 
