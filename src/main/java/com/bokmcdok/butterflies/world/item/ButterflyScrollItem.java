@@ -53,7 +53,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     public static final String PEACOCK_NAME = "butterfly_scroll_peacock";
 
     //  TODO: Remove in future version.
-    public static final String NAME = "butterfly_scroll";
+    public static final String NAME = "item.butterflies.butterfly_scroll";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -97,6 +97,18 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     @Override
     public int getButterflyIndex() {
         return this.butterflyIndex;
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable(NAME);
     }
 
     /**

@@ -109,11 +109,6 @@ public class ItemRegistry {
     public static final RegistryObject<Item> BOTTLED_BUTTERFLY_PEACOCK = INSTANCE.register(BottledButterflyItem.PEACOCK_NAME,
             () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_PEACOCK, 16));
 
-    // TODO: This is the old implementation, included for backwards
-    //       compatibility. This needs to be removed in a future version.
-    public static final RegistryObject<Item> BOTTLED_BUTTERFLY = INSTANCE.register(BottledButterflyItem.NAME,
-            () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_BLOCK, -1));
-
     // Butterfly Scroll
     public static final RegistryObject<Item> BUTTERFLY_SCROLL_ADMIRAL = INSTANCE.register(ButterflyScrollItem.ADMIRAL_NAME,
             () -> new ButterflyScrollItem(0));
@@ -149,11 +144,6 @@ public class ItemRegistry {
             () -> new ButterflyScrollItem(15));
     public static final RegistryObject<Item> BUTTERFLY_SCROLL_PEACOCK = INSTANCE.register(ButterflyScrollItem.PEACOCK_NAME,
             () -> new ButterflyScrollItem(16));
-
-    // TODO: This is the old implementation, included for backwards
-    //       compatibility. This needs to be removed in a future version.
-    public static final RegistryObject<Item> BUTTERFLY_SCROLL = INSTANCE.register(ButterflyScrollItem.NAME,
-            () -> new ButterflyScrollItem(-1));
 
     // Butterfly Book
     public static final RegistryObject<Item> BUTTERFLY_BOOK =
@@ -237,39 +227,39 @@ public class ItemRegistry {
 
     // Bottled Caterpillars
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_ADMIRAL = INSTANCE.register(BottledCaterpillarItem.ADMIRAL_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_ADMIRAL, Caterpillar.ADMIRAL_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_ADMIRAL, 0));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_BUCKEYE = INSTANCE.register(BottledCaterpillarItem.BUCKEYE_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BUCKEYE, Caterpillar.BUCKEYE_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BUCKEYE, 1));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CABBAGE = INSTANCE.register(BottledCaterpillarItem.CABBAGE_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CABBAGE, Caterpillar.CABBAGE_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CABBAGE, 2));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CHALKHILL = INSTANCE.register(BottledCaterpillarItem.CHALKHILL_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CHALKHILL, Caterpillar.CHALKHILL_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CHALKHILL, 3));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_CLIPPER = INSTANCE.register(BottledCaterpillarItem.CLIPPER_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CLIPPER, Caterpillar.CLIPPER_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_CLIPPER, 4));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_COMMON = INSTANCE.register(BottledCaterpillarItem.COMMON_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_COMMON, Caterpillar.COMMON_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_COMMON, 5));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_EMPEROR = INSTANCE.register(BottledCaterpillarItem.EMPEROR_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_EMPEROR, Caterpillar.EMPEROR_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_EMPEROR, 6));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_FORESTER = INSTANCE.register(BottledCaterpillarItem.FORESTER_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_FORESTER, Caterpillar.FORESTER_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_FORESTER, 7));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_GLASSWING = INSTANCE.register(BottledCaterpillarItem.GLASSWING_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_GLASSWING, Caterpillar.GLASSWING_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_GLASSWING, 8));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_HAIRSTREAK = INSTANCE.register(BottledCaterpillarItem.HAIRSTREAK_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HAIRSTREAK, Caterpillar.HAIRSTREAK_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HAIRSTREAK, 9));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_HEATH = INSTANCE.register(BottledCaterpillarItem.HEATH_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HEATH, Caterpillar.HEATH_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_HEATH, 10));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_LONGWING = INSTANCE.register(BottledCaterpillarItem.LONGWING_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_LONGWING, Caterpillar.LONGWING_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_LONGWING, 11));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_MONARCH = INSTANCE.register(BottledCaterpillarItem.MONARCH_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MONARCH, Caterpillar.MONARCH_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MONARCH, 12));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_MORPHO = INSTANCE.register(BottledCaterpillarItem.MORPHO_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MORPHO, Caterpillar.MORPHO_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_MORPHO, 13));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_RAINBOW = INSTANCE.register(BottledCaterpillarItem.RAINBOW_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_RAINBOW, Caterpillar.RAINBOW_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_RAINBOW, 14));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_SWALLOWTAIL = INSTANCE.register(BottledCaterpillarItem.SWALLOWTAIL_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_SWALLOWTAIL, Caterpillar.SWALLOWTAIL_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_SWALLOWTAIL, 15));
     public static final RegistryObject<Item> BOTTLED_CATERPILLAR_PEACOCK = INSTANCE.register(BottledCaterpillarItem.PEACOCK_NAME,
-            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_PEACOCK, Caterpillar.PEACOCK_NAME));
+            () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_PEACOCK, 16));
     
     //  Spawn eggs - Butterflies
     private static final RegistryObject<Item> SPAWN_EGG_BUTTERFLY_ADMIRAL = INSTANCE.register(Butterfly.ADMIRAL_NAME,

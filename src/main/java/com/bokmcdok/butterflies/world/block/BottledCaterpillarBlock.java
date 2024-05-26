@@ -2,6 +2,8 @@ package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -38,6 +40,8 @@ public class BottledCaterpillarBlock extends Block {
     public static final String SWALLOWTAIL_NAME = "bottled_caterpillar_swallowtail";
     public static final String PEACOCK_NAME = "bottled_caterpillar_peacock";
 
+    private static final String NAME = "block.butterflies.bottled_caterpillar";
+
     //  The bottle's "model".
     private static final VoxelShape SHAPE = Shapes.or(
             Block.box(5.0, 0.0, 5.0, 10.0, 1.0, 10.0),
@@ -70,6 +74,17 @@ public class BottledCaterpillarBlock extends Block {
         super.destroy(level, position, state);
 
         removeEntity(level, position, Entity.RemovalReason.DISCARDED);
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public MutableComponent getName() {
+        return Component.translatable(NAME);
     }
 
     /**

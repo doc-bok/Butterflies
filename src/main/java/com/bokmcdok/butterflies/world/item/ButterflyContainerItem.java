@@ -36,7 +36,7 @@ public interface ButterflyContainerItem {
         ResourceLocation entity = getButterflyEntity(stack);
 
         if (entity != null) {
-            translatable = "item." + entity.toString().replace(':', '.');
+            translatable = "entity." + entity.toString().replace(':', '.');
         }
 
         MutableComponent newComponent = Component.translatable(translatable);
