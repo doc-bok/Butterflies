@@ -139,6 +139,6 @@ def generate_localisation_strings():
 
 # Python's main entry point
 if __name__ == "__main__":
-    # generate_butterfly_files()
-    # generate_frog_food()
+    generate_butterfly_files()
+    generate_frog_food()
     generate_localisation_strings()
