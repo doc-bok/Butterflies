@@ -1,22 +1,22 @@
 {
-  "replace": false,
-  "values": [
-    "butterflies:admiral",
-    "butterflies:buckeye",
-    "butterflies:cabbage",
-    "butterflies:chalkhill",
-    "butterflies:clipper",
-    "butterflies:common",
-    "butterflies:emperor",
-    "butterflies:forester",
-    "butterflies:glasswing",
-    "butterflies:hairstreak",
-    "butterflies:heath",
-    "butterflies:longwing",
-    "butterflies:monarch",
-    "butterflies:morpho",
-    "butterflies:rainbow",
-    "butterflies:swallowtail",
-    "butterflies:peacock"
-  ]
+    "replace": false,
+    "values": [
+        "butterflies:admiral",
+        "butterflies:buckeye",
+        "butterflies:cabbage",
+        "butterflies:chalkhill",
+        "butterflies:clipper",
+        "butterflies:common",
+        "butterflies:emperor",
+        "butterflies:forester",
+        "butterflies:glasswing",
+        "butterflies:hairstreak",
+        "butterflies:heath",
+        "butterflies:longwing",
+        "butterflies:monarch",
+        "butterflies:morpho",
+        "butterflies:rainbow",
+        "butterflies:swallowtail",
+        "butterflies:peacock"
+    ]
 }

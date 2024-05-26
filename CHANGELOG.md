@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.3 (2024-05-26)
+- Frog food JSON data can now be generated.
+
 ### 3.4.2 (2024-05-25)
 - Fixed the Butterfly Book challenge.
 
