@@ -1,26 +1,6 @@
 {
-  "parent": "butterflies:butterfly/bottle_butterfly",
-  "display": {
-    "icon": {
-      "item": "butterflies:bottled_butterfly"
-    },
-    "title": {
-      "translate": "advancements.butterfly.bottle_all_butterflies.title"
-    },
-    "description": {
-      "translate": "advancements.butterfly.bottle_all_butterflies.description"
-    },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "rewards": {
-    "experience": 100
-  },
   "criteria": {
-    "bottled_admiral": {
-      "trigger": "minecraft:inventory_changed",
+    "admiral": {
       "conditions": {
         "items": [
           {
@@ -29,10 +9,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_buckeye": {
-      "trigger": "minecraft:inventory_changed",
+    "buckeye": {
       "conditions": {
         "items": [
           {
@@ -41,10 +21,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_cabbage": {
-      "trigger": "minecraft:inventory_changed",
+    "cabbage": {
       "conditions": {
         "items": [
           {
@@ -53,22 +33,22 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_chalkhill": {
-      "trigger": "minecraft:inventory_changed",
+    "chalkhill": {
       "conditions": {
         "items": [
           {
-            "item": [
+            "items": [
               "butterflies:bottled_butterfly_chalkhill"
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_clipper": {
-      "trigger": "minecraft:inventory_changed",
+    "clipper": {
       "conditions": {
         "items": [
           {
@@ -77,10 +57,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_common": {
-      "trigger": "minecraft:inventory_changed",
+    "common": {
       "conditions": {
         "items": [
           {
@@ -89,10 +69,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_emperor": {
-      "trigger": "minecraft:inventory_changed",
+    "emperor": {
       "conditions": {
         "items": [
           {
@@ -101,10 +81,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_forester": {
-      "trigger": "minecraft:inventory_changed",
+    "forester": {
       "conditions": {
         "items": [
           {
@@ -113,10 +93,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_glasswing": {
-      "trigger": "minecraft:inventory_changed",
+    "glasswing": {
       "conditions": {
         "items": [
           {
@@ -125,10 +105,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_hairstreak": {
-      "trigger": "minecraft:inventory_changed",
+    "hairstreak": {
       "conditions": {
         "items": [
           {
@@ -137,10 +117,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_heath": {
-      "trigger": "minecraft:inventory_changed",
+    "heath": {
       "conditions": {
         "items": [
           {
@@ -149,10 +129,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_longwing": {
-      "trigger": "minecraft:inventory_changed",
+    "longwing": {
       "conditions": {
         "items": [
           {
@@ -161,10 +141,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_monarch": {
-      "trigger": "minecraft:inventory_changed",
+    "monarch": {
       "conditions": {
         "items": [
           {
@@ -173,10 +153,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_morpho": {
-      "trigger": "minecraft:inventory_changed",
+    "morpho": {
       "conditions": {
         "items": [
           {
@@ -185,34 +165,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "bottled_rainbow": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:bottled_butterfly_rainbow"
-            ]
-          }
-        ]
-      }
-    },
-    "bottled_swallowtail": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:bottled_butterfly_swallowtail"
-            ]
-          }
-        ]
-      }
-    },
-    "bottled_peacock": {
-      "trigger": "minecraft:inventory_changed",
+    "peacock": {
       "conditions": {
         "items": [
           {
@@ -221,60 +177,104 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rainbow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_rainbow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "swallowtail": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_swallowtail"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:bottled_butterfly"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.title"
+    }
+  },
+  "parent": "butterflies:butterfly/bottle_butterfly",
   "requirements": [
     [
-      "bottled_admiral"
+      "admiral"
     ],
     [
-      "bottled_buckeye"
+      "buckeye"
     ],
     [
-      "bottled_cabbage"
+      "cabbage"
     ],
     [
-      "bottled_chalkhill"
+      "chalkhill"
     ],
     [
-      "bottled_clipper"
+      "clipper"
     ],
     [
-      "bottled_common"
+      "common"
     ],
     [
-      "bottled_emperor"
+      "emperor"
     ],
     [
-      "bottled_forester"
+      "forester"
     ],
     [
-      "bottled_glasswing"
+      "glasswing"
     ],
     [
-      "bottled_hairstreak"
+      "hairstreak"
     ],
     [
-      "bottled_heath"
+      "heath"
     ],
     [
-      "bottled_longwing"
+      "longwing"
     ],
     [
-      "bottled_monarch"
+      "monarch"
     ],
     [
-      "bottled_morpho"
+      "morpho"
     ],
     [
-      "bottled_rainbow"
+      "rainbow"
     ],
     [
-      "bottled_swallowtail"
+      "swallowtail"
     ],
     [
-      "bottled_peacock"
+      "peacock"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
 }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.6 (2024-05-31)
+- Butterfly based advancements can now be generated.
+
 ### 3.4.5 (2024-05-26)
 - Reduced number of localisation strings needed.
 - Can now generate localisation strings.

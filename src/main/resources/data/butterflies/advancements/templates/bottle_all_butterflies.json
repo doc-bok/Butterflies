@@ -1,0 +1,26 @@
+{
+  "parent": "butterflies:butterfly/bottle_butterfly",
+  "display": {
+    "icon": {
+      "item": "butterflies:bottled_butterfly"
+    },
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_butterflies.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:bottled_butterfly_",
+  "item_ext": "",
+  "requires_all": true
+}
