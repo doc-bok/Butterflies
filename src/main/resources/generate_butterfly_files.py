@@ -27,6 +27,8 @@ BUTTERFLIES = [
 # File locations
 FROG_FOOD = "data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "assets/butterflies/lang/en_us.json"
+ACHIEVEMENTS = "data/butterflies/advancements/butterfly/"
+ACHIEVEMENT_TEMPLATES = "data/butterflies/advancements/templates/"
 
 
 # Generate butterfly data files that don't exist yet
@@ -87,7 +89,7 @@ class FrogFood(object):
             self,
             default=lambda o: o.__dict__,
             sort_keys=True,
-            indent=4)
+            indent=2)
 
 
 # Generate list of entities to add to frog food.
@@ -134,7 +136,49 @@ def generate_localisation_strings():
         file.write(json.dumps(json_data,
                               default=lambda o: o.__dict__,
                               sort_keys=True,
-                              indent=4))
+                              indent=2))
+
+
+def generate_advancements():
+    files = []
+    for (_, _, filenames) in os.walk(ACHIEVEMENT_TEMPLATES):
+        files.extend(filenames)
+        break
+
+    for file in files:
+        with open(ACHIEVEMENT_TEMPLATES + file, 'r', encoding="utf8") as input_file:
+            json_data = json.load(input_file)
+
+        for butterfly in BUTTERFLIES:
+            json_data["criteria"][butterfly] = {
+                "trigger": "minecraft:inventory_changed",
+                "conditions": {
+                    "items": [
+                        {
+                            "items": [
+                                json_data["base_item"] + butterfly + json_data["item_ext"]
+                            ]
+                        }
+                    ]
+                }
+            }
+
+            if json_data["requires_all"]:
+                json_data["requirements"].append([butterfly])
+
+        if not json_data["requires_all"]:
+            json_data["requirements"] = [BUTTERFLIES]
+
+        # Remove the extra keys to avoid errors.
+        json_data.pop("base_item", None)
+        json_data.pop("requires_all", None)
+        json_data.pop("item_ext", None)
+
+        with open(ACHIEVEMENTS + file, 'w', encoding="utf8") as output_file:
+            output_file.write(json.dumps(json_data,
+                                         default=lambda o: o.__dict__,
+                                         sort_keys=True,
+                                         indent=2))
 
 
 # Python's main entry point
@@ -142,3 +186,4 @@ if __name__ == "__main__":
     generate_butterfly_files()
     generate_frog_food()
     generate_localisation_strings()
+    generate_advancements()

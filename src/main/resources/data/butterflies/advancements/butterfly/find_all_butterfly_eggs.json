@@ -1,23 +1,6 @@
 {
-  "parent": "butterflies:butterfly/find_butterfly_egg",
-  "display": {
-    "icon": {
-      "item": "butterflies:swallowtail_egg"
-    },
-    "title": {
-      "translate": "advancements.butterfly.find_all_butterfly_eggs.title"
-    },
-    "description": {
-      "translate": "advancements.butterfly.find_all_butterfly_eggs.description"
-    },
-    "frame": "challenge",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "admiral_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "admiral": {
       "conditions": {
         "items": [
           {
@@ -26,10 +9,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "buckeye_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "buckeye": {
       "conditions": {
         "items": [
           {
@@ -38,10 +21,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "cabbage_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "cabbage": {
       "conditions": {
         "items": [
           {
@@ -50,10 +33,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "chalkhill_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "chalkhill": {
       "conditions": {
         "items": [
           {
@@ -62,10 +45,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "clipper_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "clipper": {
       "conditions": {
         "items": [
           {
@@ -74,10 +57,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "common_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "common": {
       "conditions": {
         "items": [
           {
@@ -86,10 +69,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "emperor_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "emperor": {
       "conditions": {
         "items": [
           {
@@ -98,10 +81,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "forester_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "forester": {
       "conditions": {
         "items": [
           {
@@ -110,10 +93,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "glasswing_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "glasswing": {
       "conditions": {
         "items": [
           {
@@ -122,10 +105,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "hairstreak_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "hairstreak": {
       "conditions": {
         "items": [
           {
@@ -134,10 +117,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "heath_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "heath": {
       "conditions": {
         "items": [
           {
@@ -146,10 +129,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "longwing_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "longwing": {
       "conditions": {
         "items": [
           {
@@ -158,10 +141,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "monarch_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "monarch": {
       "conditions": {
         "items": [
           {
@@ -170,10 +153,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "morpho_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "morpho": {
       "conditions": {
         "items": [
           {
@@ -182,34 +165,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
-    "rainbow_egg": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:rainbow_egg"
-            ]
-          }
-        ]
-      }
-    },
-    "swallowtail_egg": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:swallowtail_egg"
-            ]
-          }
-        ]
-      }
-    },
-    "peacock_egg": {
-      "trigger": "minecraft:inventory_changed",
+    "peacock": {
       "conditions": {
         "items": [
           {
@@ -218,60 +177,101 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rainbow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:rainbow_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "swallowtail": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:swallowtail_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.find_all_butterfly_eggs.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:swallowtail_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.find_all_butterfly_eggs.title"
+    }
+  },
+  "parent": "butterflies:butterfly/find_butterfly_egg",
   "requirements": [
     [
-      "admiral_egg"
+      "admiral"
     ],
     [
-      "buckeye_egg"
+      "buckeye"
     ],
     [
-      "cabbage_egg"
+      "cabbage"
     ],
     [
-      "chalkhill_egg"
+      "chalkhill"
     ],
     [
-      "clipper_egg"
+      "clipper"
     ],
     [
-      "common_egg"
+      "common"
     ],
     [
-      "emperor_egg"
+      "emperor"
     ],
     [
-      "forester_egg"
+      "forester"
     ],
     [
-      "glasswing_egg"
+      "glasswing"
     ],
     [
-      "hairstreak_egg"
+      "hairstreak"
     ],
     [
-      "heath_egg"
+      "heath"
     ],
     [
-      "longwing_egg"
+      "longwing"
     ],
     [
-      "monarch_egg"
+      "monarch"
     ],
     [
-      "morpho_egg"
+      "morpho"
     ],
     [
-      "rainbow_egg"
+      "rainbow"
     ],
     [
-      "swallowtail_egg"
+      "swallowtail"
     ],
     [
-      "peacock_egg"
+      "peacock"
     ]
   ]
 }
