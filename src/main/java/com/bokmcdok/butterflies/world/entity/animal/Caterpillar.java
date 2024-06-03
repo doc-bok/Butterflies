@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -34,24 +35,10 @@ import javax.annotation.Nullable;
  */
 public class Caterpillar extends DirectionalCreature {
 
-    // The unique IDs that are used to reference a caterpillar entity.
-    public static final String MORPHO_NAME = "morpho_caterpillar";
-    public static final String FORESTER_NAME = "forester_caterpillar";
-    public static final String COMMON_NAME = "common_caterpillar";
-    public static final String EMPEROR_NAME = "emperor_caterpillar";
-    public static final String HAIRSTREAK_NAME = "hairstreak_caterpillar";
-    public static final String RAINBOW_NAME = "rainbow_caterpillar";
-    public static final String HEATH_NAME = "heath_caterpillar";
-    public static final String GLASSWING_NAME = "glasswing_caterpillar";
-    public static final String CHALKHILL_NAME = "chalkhill_caterpillar";
-    public static final String SWALLOWTAIL_NAME = "swallowtail_caterpillar";
-    public static final String MONARCH_NAME = "monarch_caterpillar";
-    public static final String CABBAGE_NAME = "cabbage_caterpillar";
-    public static final String ADMIRAL_NAME = "admiral_caterpillar";
-    public static final String LONGWING_NAME = "longwing_caterpillar";
-    public static final String BUCKEYE_NAME = "buckeye_caterpillar";
-    public static final String CLIPPER_NAME = "clipper_caterpillar";
-    public static final String PEACOCK_NAME = "peacock_caterpillar";
+    //  The name this block is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_caterpillar";
+    }
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_BOTTLED =
@@ -75,245 +62,6 @@ public class Caterpillar extends DirectionalCreature {
 
     // The caterpillar item location.
     private final ResourceLocation caterpillarItem;
-
-    /**
-     * Create a Morpho butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Caterpillar createMorphoCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("morpho", entityType, level);
-    }
-
-    /**
-     * Create a Forester butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createForesterCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("forester", entityType, level);
-    }
-
-    /**
-     * Create a Common butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createCommonCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("common", entityType, level);
-    }
-
-    /**
-     * Create an Emperor butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createEmperorCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("emperor", entityType, level);
-    }
-
-    /**
-     * Create a Hairstreak butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createHairstreakCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("hairstreak", entityType, level);
-    }
-
-    /**
-     * Create a Rainbow butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createRainbowCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("rainbow", entityType, level);
-    }
-
-    /**
-     * Create a Heath butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createHeathCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("heath", entityType, level);
-    }
-
-    /**
-     * Create a Glasswing butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createGlasswingCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("glasswing", entityType, level);
-    }
-
-    /**
-     * Create a Chalkhill butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createChalkhillCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("chalkhill", entityType, level);
-    }
-
-    /**
-     * Create a Swallowtail butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createSwallowtailCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar(
-                "swallowtail",
-                entityType,
-                level);
-    }
-
-    /**
-     * Create a Monarch butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createMonarchCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("monarch", entityType, level);
-    }
-
-    /**
-     * Create a Cabbage butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createCabbageCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("cabbage", entityType, level);
-    }
-
-    /**
-     * Create an Admiral butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createAdmiralCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("admiral", entityType, level);
-    }
-
-    /**
-     * Create a Longwing butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createLongwingCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("longwing", entityType, level);
-    }
-
-    /**
-     * Create a Clipper butterfly
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createClipperCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("clipper", entityType, level);
-    }
-
-    /**
-     * Create a Buckeye butterfly
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createBuckeyeCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("buckeye", entityType, level);
-    }
-
-    /**
-     * Create a Peacock butterfly
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed butterfly.
-     */
-    @NotNull
-    public static Caterpillar createPeacockCaterpillar(
-            EntityType<? extends Caterpillar> entityType,
-            Level level) {
-        return new Caterpillar("peacock", entityType, level);
-    }
 
     /**
      * Spawns a caterpillar at the specified position.
@@ -511,15 +259,23 @@ public class Caterpillar extends DirectionalCreature {
 
     /**
      * Create a caterpillar entity.
-     *
-     * @param species    The species of the butterfly
      * @param entityType The entity type.
      * @param level      The level we are creating the entity in.
      */
-    protected Caterpillar(String species,
-                          EntityType<? extends Caterpillar> entityType,
+    public Caterpillar(EntityType<? extends Caterpillar> entityType,
                           Level level) {
-        super("textures/entity/caterpillar/caterpillar_" + species + ".png", entityType, level);
+        super(entityType, level);
+
+        String species = "undiscovered";
+        String encodeId = this.getEncodeId();
+        if (encodeId != null) {
+            String[] split = encodeId.split(":");
+            if (split.length >= 2) {
+                species = split[1];
+            }
+        }
+
+        setTexture("textures/entity/caterpillar/caterpillar_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);

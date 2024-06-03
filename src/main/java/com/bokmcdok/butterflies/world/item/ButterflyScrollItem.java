@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.ChatFormatting;
@@ -34,23 +35,9 @@ import java.util.List;
 public class ButterflyScrollItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "butterfly_scroll_admiral";
-    public static final String BUCKEYE_NAME = "butterfly_scroll_buckeye";
-    public static final String CABBAGE_NAME = "butterfly_scroll_cabbage";
-    public static final String CHALKHILL_NAME = "butterfly_scroll_chalkhill";
-    public static final String CLIPPER_NAME = "butterfly_scroll_clipper";
-    public static final String COMMON_NAME = "butterfly_scroll_common";
-    public static final String EMPEROR_NAME = "butterfly_scroll_emperor";
-    public static final String FORESTER_NAME = "butterfly_scroll_forester";
-    public static final String GLASSWING_NAME = "butterfly_scroll_glasswing";
-    public static final String HAIRSTREAK_NAME = "butterfly_scroll_hairstreak";
-    public static final String HEATH_NAME = "butterfly_scroll_heath";
-    public static final String LONGWING_NAME = "butterfly_scroll_longwing";
-    public static final String MONARCH_NAME = "butterfly_scroll_monarch";
-    public static final String MORPHO_NAME = "butterfly_scroll_morpho";
-    public static final String RAINBOW_NAME = "butterfly_scroll_rainbow";
-    public static final String SWALLOWTAIL_NAME = "butterfly_scroll_swallowtail";
-    public static final String PEACOCK_NAME = "butterfly_scroll_peacock";
+    public static String getRegistryId(int butterflyIndex) {
+        return "butterfly_scroll_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
     //  TODO: Remove in future version.
     public static final String NAME = "item.butterflies.butterfly_scroll";

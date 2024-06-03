@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.7 (2024-06-03)
+- Butterfly registration now happens automatically. 
+
 ### 3.4.6 (2024-05-31)
 - Butterfly based advancements can now be generated.
 
