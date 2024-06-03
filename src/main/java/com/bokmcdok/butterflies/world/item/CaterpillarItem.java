@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -30,24 +31,11 @@ import java.util.List;
  * A class to represent a caterpillar in the player's inventory.
  */
 public class CaterpillarItem extends Item {
-    
-    public static final String ADMIRAL_NAME = "caterpillar_admiral";    
-    public static final String BUCKEYE_NAME = "caterpillar_buckeye";
-    public static final String CABBAGE_NAME = "caterpillar_cabbage";
-    public static final String CHALKHILL_NAME = "caterpillar_chalkhill";
-    public static final String CLIPPER_NAME = "caterpillar_clipper";
-    public static final String COMMON_NAME = "caterpillar_common";
-    public static final String EMPEROR_NAME = "caterpillar_emperor";
-    public static final String FORESTER_NAME = "caterpillar_forester";
-    public static final String GLASSWING_NAME = "caterpillar_glasswing";
-    public static final String HAIRSTREAK_NAME = "caterpillar_hairstreak";
-    public static final String HEATH_NAME = "caterpillar_heath";
-    public static final String LONGWING_NAME = "caterpillar_longwing";
-    public static final String MONARCH_NAME = "caterpillar_monarch";
-    public static final String MORPHO_NAME = "caterpillar_morpho";
-    public static final String RAINBOW_NAME = "caterpillar_rainbow";
-    public static final String SWALLOWTAIL_NAME = "caterpillar_swallowtail";
-    public static final String PEACOCK_NAME = "caterpillar_peacock";
+
+    //  The name this item is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
     private final ResourceLocation species;
 

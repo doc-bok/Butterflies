@@ -25,10 +25,11 @@ BUTTERFLIES = [
 ]
 
 # File locations
-FROG_FOOD = "data/minecraft/tags/entity_types/frog_food.json"
-LOCALISATION = "assets/butterflies/lang/en_us.json"
-ACHIEVEMENTS = "data/butterflies/advancements/butterfly/"
-ACHIEVEMENT_TEMPLATES = "data/butterflies/advancements/templates/"
+FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
+LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
+ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
+ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/"
+CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 
 
 # Generate butterfly data files that don't exist yet
@@ -124,6 +125,14 @@ def generate_localisation_strings():
         if test_key not in json_data:
             json_data[test_key] = i.capitalize() + " Caterpillar"
 
+        test_key = "item.butterflies." + i
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Butterfly"
+
+        test_key = "item.butterflies." + i + "_caterpillar"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Caterpillar"
+
         test_key = "entity.butterflies." + i + "_chrysalis"
         if test_key not in json_data:
             json_data[test_key] = i.capitalize() + " Chrysalis"
@@ -181,9 +190,30 @@ def generate_advancements():
                                          indent=2))
 
 
+def generate_code():
+    with open(CODE_GENERATION, 'w', encoding="utf8") as output_file:
+        output_file.write("""package com.bokmcdok.butterflies.world;
+
+/**
+ * Generated code - do not modify
+ */
+public class ButterflySpeciesList {
+    public static final String[] SPECIES = {
+""")
+
+        for butterfly in BUTTERFLIES:
+            output_file.write("""            \"""" + butterfly + """\",
+""")
+
+        output_file.write("""    };
+}
+""")
+
+
 # Python's main entry point
 if __name__ == "__main__":
     generate_butterfly_files()
     generate_frog_food()
     generate_localisation_strings()
     generate_advancements()
+    generate_code()

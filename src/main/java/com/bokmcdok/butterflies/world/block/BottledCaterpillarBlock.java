@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -21,24 +22,10 @@ import java.util.List;
 
 public class BottledCaterpillarBlock extends Block {
 
-    //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "bottled_caterpillar_admiral";
-    public static final String BUCKEYE_NAME = "bottled_caterpillar_buckeye";
-    public static final String CABBAGE_NAME = "bottled_caterpillar_cabbage";
-    public static final String CHALKHILL_NAME = "bottled_caterpillar_chalkhill";
-    public static final String CLIPPER_NAME = "bottled_caterpillar_clipper";
-    public static final String COMMON_NAME = "bottled_caterpillar_common";
-    public static final String EMPEROR_NAME = "bottled_caterpillar_emperor";
-    public static final String FORESTER_NAME = "bottled_caterpillar_forester";
-    public static final String GLASSWING_NAME = "bottled_caterpillar_glasswing";
-    public static final String HAIRSTREAK_NAME = "bottled_caterpillar_hairstreak";
-    public static final String HEATH_NAME = "bottled_caterpillar_heath";
-    public static final String LONGWING_NAME = "bottled_caterpillar_longwing";
-    public static final String MONARCH_NAME = "bottled_caterpillar_monarch";
-    public static final String MORPHO_NAME = "bottled_caterpillar_morpho";
-    public static final String RAINBOW_NAME = "bottled_caterpillar_rainbow";
-    public static final String SWALLOWTAIL_NAME = "bottled_caterpillar_swallowtail";
-    public static final String PEACOCK_NAME = "bottled_caterpillar_peacock";
+    //  The name this block is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
     private static final String NAME = "block.butterflies.bottled_caterpillar";
 

@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -32,23 +33,9 @@ import java.util.List;
 public class ButterflyEggItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "admiral_egg";
-    public static final String BUCKEYE_NAME = "buckeye_egg";
-    public static final String CABBAGE_NAME = "cabbage_egg";
-    public static final String CHALKHILL_NAME = "chalkhill_egg";
-    public static final String CLIPPER_NAME = "clipper_egg";
-    public static final String COMMON_NAME = "common_egg";
-    public static final String EMPEROR_NAME = "emperor_egg";
-    public static final String FORESTER_NAME = "forester_egg";
-    public static final String GLASSWING_NAME = "glasswing_egg";
-    public static final String HAIRSTREAK_NAME = "hairstreak_egg";
-    public static final String HEATH_NAME = "heath_egg";
-    public static final String LONGWING_NAME = "longwing_egg";
-    public static final String MONARCH_NAME = "monarch_egg";
-    public static final String MORPHO_NAME = "morpho_egg";
-    public static final String RAINBOW_NAME = "rainbow_egg";
-    public static final String SWALLOWTAIL_NAME = "swallowtail_egg";
-    public static final String PEACOCK_NAME = "peacock_egg";
+    public static String getRegistryId(int butterflyIndex) {
+        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_egg";
+    }
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
