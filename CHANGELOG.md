@@ -1,7 +1,10 @@
 ## Changelog
 
+### 3.4.8 (2024-06-03)
+- Fixed species extraction for butterfly entities.
+
 ### 3.4.7 (2024-06-03)
-- Butterfly registration now happens automatically. 
+- Butterfly registration now happens automatically.
 
 ### 3.4.6 (2024-05-31)
 - Butterfly based advancements can now be generated.

@@ -198,6 +198,10 @@ public class ButterflyEgg extends DirectionalCreature {
             String[] split = encodeId.split(":");
             if (split.length >= 2) {
                 species = split[1];
+                split = species.split("_");
+                if (split.length >=2) {
+                    species = split[0];
+                }
             }
         }
 
