@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -29,13 +30,15 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,11 +50,6 @@ import java.util.List;
  * fertilising plants.
  */
 public class Butterfly extends Animal {
-
-    //  The name this block is registered under.
-    public static String getRegistryId(int butterflyIndex) {
-        return ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
@@ -67,14 +65,14 @@ public class Butterfly extends Animal {
     private static final int TICKS_PER_FLAP = Mth.ceil(2.4166098f);
 
     // Helper constant to modify butterfly speed
-    private static final double BUTTERFLY_SPEED = 0.0325d;
+    private static final double BUTTERFLY_SPEED = 1.8d;
 
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
 
     // The position the butterfly is flying towards. Butterflies can spawn
     // anywhere the light level is above 8.
-    @Nullable private BlockPos targetPosition;
+    //@Nullable private BlockPos targetPosition;
 
     // The size of the butterfly.
     private final ButterflyData.Size size;
@@ -83,7 +81,8 @@ public class Butterfly extends Animal {
     private final int butterflyIndex;
 
     // The speed of the butterfly.
-    private final double speed;
+    private final ButterflyData.Speed speed;
+    //private final double speed;
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -109,7 +108,18 @@ public class Butterfly extends Animal {
      * @return The butterfly attribute supplier.
      */
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 3d);
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 3d)
+                .add(Attributes.FLYING_SPEED, BUTTERFLY_SPEED);
+    }
+
+    /**
+     * Returns the ID to use in the registry.
+     * @param butterflyIndex The butterfly index of this species.
+     * @return The Registry ID of this entity type.
+     */
+    public static String getRegistryId(int butterflyIndex) {
+        return ButterflySpeciesList.SPECIES[butterflyIndex];
     }
 
     /**
@@ -163,6 +173,8 @@ public class Butterfly extends Animal {
                      Level level) {
         super(entityType, level);
 
+        this.moveControl = new FlyingMoveControl(this, 20, true);
+
         String species = "undiscovered";
         String encodeId = this.getEncodeId();
         if (encodeId != null) {
@@ -177,12 +189,7 @@ public class Butterfly extends Animal {
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size();
-
-        if (data.speed() == ButterflyData.Speed.FAST) {
-            this.speed = BUTTERFLY_SPEED * 1.2d;
-        } else {
-            this.speed = BUTTERFLY_SPEED;
-        }
+        this.speed = data.speed();
 
         this.butterflyIndex = data.butterflyIndex();
 
@@ -288,6 +295,31 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Create a flying navigator for the butterfly.
+     * @param level The current level.
+     * @return The flying navigation.
+     */
+    @Override
+    @NotNull
+    protected PathNavigation createNavigation(@NotNull Level level) {
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
+            public boolean isStableDestination(@NotNull BlockPos blockPos) {
+                return this.level.getBlockState(blockPos).isAir();
+            }
+        };
+
+        if (speed == ButterflyData.Speed.FAST) {
+
+            navigation.setSpeedModifier(1.2);
+        }
+
+        navigation.setCanOpenDoors(false);
+        navigation.setCanFloat(false);
+        navigation.setCanPassDoors(true);
+        return navigation;
+    }
+
+    /**
      * Controls when a flapping event should be emitted.
      * @return TRUE when a flapping event should be emitted.
      */
@@ -333,6 +365,21 @@ public class Butterfly extends Animal {
         if (tag.contains(NUM_EGGS)) {
             this.entityData.set(DATA_NUM_EGGS, tag.getInt(NUM_EGGS));
         }
+    }
+
+    /**
+     * Register the goals for the entity.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+
+        // TODO: Register a wander goal
+        this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
+
+        // TODO: Register a move to block goal
+        // TODO: Register a landing goal
+        // TODO: Register a flee goal
     }
 
     /**
@@ -397,45 +444,6 @@ public class Butterfly extends Animal {
         super.customServerAiStep();
 
         Level level = this.level();
-
-        // Check the current move target is still an empty block.
-        if (this.targetPosition != null
-                && (!level.isEmptyBlock(this.targetPosition)
-                || this.targetPosition.getY() <= level.getMinBuildHeight())) {
-            this.targetPosition = null;
-        }
-
-        // Set a new target position if:
-        //  1. We don't have one already
-        //  2. After a 1/30 random chance
-        //  3. We get too close to the current target position
-        if (this.targetPosition == null
-                || this.random.nextInt(30) == 0
-                || this.targetPosition.closerToCenterThan(
-                        this.position(), 2.0d)) {
-            this.targetPosition = new BlockPos(
-                    (int) this.getX() + this.random.nextInt(8) - 4,
-                    (int) this.getY() + this.random.nextInt(6) - 2,
-                    (int) this.getZ() + this.random.nextInt(8) - 4);
-        }
-
-        // Calculate an updated movement delta.
-        Vec3 updatedMovementDelta = targetPosition.getCenter().subtract(this.position());
-
-        Vec3 deltaMovement = this.getDeltaMovement();
-        Vec3 updatedDeltaMovement = deltaMovement.add(
-                (Math.signum(updatedMovementDelta.x) * 0.5d - deltaMovement.x) * this.speed,
-                (Math.signum(updatedMovementDelta.y) * 0.7d - deltaMovement.y) * 0.1d,
-                (Math.signum(updatedMovementDelta.z) * 0.5d - deltaMovement.z) * this.speed);
-        this.setDeltaMovement(updatedDeltaMovement);
-
-        this.zza = 0.5f;
-
-        // Calculate the rotational velocity.
-        double yRot = (Mth.atan2(updatedDeltaMovement.z, updatedDeltaMovement.x)
-                * (180.0d / Math.PI)) - 90.0d;
-        double yRotDelta = Mth.wrapDegrees(yRot - this.getYRot());
-        this.setYRot(this.getYRot() + (float)yRotDelta);
 
         if (getNumEggs() > 0) {
 
