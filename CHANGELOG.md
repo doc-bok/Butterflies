@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.9 (2024-06-11)
+- Added new AI goals for butterfly landings.
+
 ### 3.4.8 (2024-06-03)
 - Fixed species extraction for butterfly entities.
 
