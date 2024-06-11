@@ -2,9 +2,9 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
 
@@ -47,20 +47,31 @@ public class ButterflyWanderGoal extends Goal {
      */
     @Override
     public void start() {
-        Vec3 vec3 = this.findPos();
-        this.butterfly.getNavigation().moveTo(this.butterfly.getNavigation().createPath(BlockPos.containing(vec3), 1), 1.0);
+        this.butterfly.setLanded(false);
 
+        //  Try to find a target.
+        BlockPos targetPosition = this.findPos();
+        if (targetPosition != null) {
+            Path path = this.butterfly.getNavigation().createPath(targetPosition, 1);
+            this.butterfly.getNavigation().moveTo(path, 1.0);
+        }
     }
 
     /**
      * Gets a random position for our butterfly to fly to.
      * @return A random position.
      */
-    @NotNull
-    private Vec3 findPos() {
-        Vec3 position = butterfly.position();
-        return position.add(butterfly.getRandom().nextInt(8) - 4,
-                            butterfly.getRandom().nextInt(6) - 2,
-                            butterfly.getRandom().nextInt(8) - 4);
+    private BlockPos findPos() {
+        BlockPos position = butterfly.blockPosition();
+        BlockPos targetPosition =  position.offset(butterfly.getRandom().nextInt(8) - 4,
+                                                   butterfly.getRandom().nextInt(6) - 2,
+                                                   butterfly.getRandom().nextInt(8) - 4);
+
+        //  Make sure this is an air block.
+        if (butterfly.level().getBlockState(targetPosition).isAir()) {
+            return targetPosition;
+        }
+
+        return null;
     }
 }

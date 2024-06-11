@@ -4,6 +4,8 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.ai.ButterflyLayEggGoal;
+import com.bokmcdok.butterflies.world.entity.ai.ButterflyPollinateFlowerGoal;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,6 +41,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,11 +57,14 @@ public class Butterfly extends Animal {
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
+    protected static final EntityDataAccessor<Boolean> DATA_LANDED =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> DATA_NUM_EGGS =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
 
     // Names of the attributes stored in the save data.
     protected static final String IS_FERTILE = "is_fertile";
+    protected static final String LANDED = "landed";
     protected static final String NUM_EGGS = "num_eggs";
 
     // The number of ticks per flap. Used for event emissions.
@@ -67,22 +73,19 @@ public class Butterfly extends Animal {
     // Helper constant to modify butterfly speed
     private static final double BUTTERFLY_SPEED = 1.8d;
 
-    //  The location of the texture that the renderer should use.
-    private final ResourceLocation texture;
-
-    // The position the butterfly is flying towards. Butterflies can spawn
-    // anywhere the light level is above 8.
-    //@Nullable private BlockPos targetPosition;
+    // The butterfly index
+    private final int butterflyIndex;
 
     // The size of the butterfly.
     private final ButterflyData.Size size;
 
-    // The butterfly index
-    private final int butterflyIndex;
-
     // The speed of the butterfly.
     private final ButterflyData.Speed speed;
-    //private final double speed;
+
+    //  The location of the texture that the renderer should use.
+    private final ResourceLocation texture;
+
+
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -110,7 +113,8 @@ public class Butterfly extends Animal {
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 3d)
-                .add(Attributes.FLYING_SPEED, BUTTERFLY_SPEED);
+                .add(Attributes.FLYING_SPEED, BUTTERFLY_SPEED)
+                .add(Attributes.MOVEMENT_SPEED, BUTTERFLY_SPEED * 05.d);
     }
 
     /**
@@ -174,6 +178,7 @@ public class Butterfly extends Animal {
         super(entityType, level);
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
+        this.setNoGravity(true);
 
         String species = "undiscovered";
         String encodeId = this.getEncodeId();
@@ -194,6 +199,7 @@ public class Butterfly extends Animal {
         this.butterflyIndex = data.butterflyIndex();
 
         setAge(-data.butterflyLifespan());
+        setLanded(false);
     }
 
     /**
@@ -204,6 +210,7 @@ public class Butterfly extends Animal {
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
+        tag.putBoolean(LANDED, this.entityData.get(DATA_LANDED));
         tag.putInt(NUM_EGGS, this.entityData.get(DATA_NUM_EGGS));
     }
 
@@ -273,6 +280,22 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Check if the butterfly can lay an egg.
+     * @return TRUE if the butterfly is fertile.
+     */
+    public boolean getIsFertile() {
+        return getNumEggs() > 0 && entityData.get(DATA_IS_FERTILE);
+    }
+
+    /**
+     * Check if the butterfly has landed.
+     * @return TRUE if the butterfly has landed.
+     */
+    public boolean getLanded() {
+        return entityData.get(DATA_LANDED);
+    }
+
+    /**
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
@@ -304,7 +327,8 @@ public class Butterfly extends Animal {
     protected PathNavigation createNavigation(@NotNull Level level) {
         FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
             public boolean isStableDestination(@NotNull BlockPos blockPos) {
-                return this.level.getBlockState(blockPos).isAir();
+                return this.level.getBlockState(blockPos).isAir() ||
+                       this.level.getBlockState(blockPos).is(BlockTags.FLOWERS);
             }
         };
 
@@ -361,6 +385,11 @@ public class Butterfly extends Animal {
             this.entityData.set(DATA_IS_FERTILE, tag.getBoolean(IS_FERTILE));
         }
 
+        // Get the landed state.
+        if (tag.contains(LANDED)) {
+            this.entityData.set(DATA_LANDED, tag.getBoolean(LANDED));
+        }
+
         // Get the number of remaining eggs.
         if (tag.contains(NUM_EGGS)) {
             this.entityData.set(DATA_NUM_EGGS, tag.getInt(NUM_EGGS));
@@ -374,11 +403,9 @@ public class Butterfly extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        // TODO: Register a wander goal
+        this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8d, 8, 8));
+        this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
         this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
-
-        // TODO: Register a move to block goal
-        // TODO: Register a landing goal
         // TODO: Register a flee goal
     }
 
@@ -389,6 +416,39 @@ public class Butterfly extends Animal {
     @Override
     public void setAge(int age) {
         this.age = age;
+    }
+
+    /**
+     * Set whether the butterfly can lay an egg.
+     * @param isFertile Whether the butterfly is fertile.
+     */
+    public void setIsFertile(boolean isFertile) {
+        entityData.set(DATA_IS_FERTILE, isFertile);
+    }
+
+    /**
+     * Set whether the butterfly has landed.
+     * @param landed TRUE if the butterfly has landed.
+     */
+    public void setLanded(boolean landed) {
+        entityData.set(DATA_LANDED, landed);
+        this.setNoGravity(!landed);
+    }
+
+    /**
+     * Hacky fix to stop butterflies teleporting.
+     * TODO: We need a better fix than this.
+     * @param x The x-position.
+     * @param y The y-position.
+     * @param z The z-position.
+     */
+    @Override
+    public void setPos(double x, double y, double z) {
+        Vec3 delta = new Vec3(x, y, z).subtract(this.position());
+        if (delta.lengthSqr() <= 2 ||
+                this.position().lengthSqr() == 0) {
+            super.setPos(x, y, z);
+        }
     }
 
     /**
@@ -408,16 +468,10 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * The main update loop for the entity.
+     * Reduce the number of eggs the butterfly can lay by 1.
      */
-    @Override
-    public void tick() {
-        super.tick();
-
-        //  Reduce the vertical movement to keep the butterfly close to the
-        //  same height.
-        this.setDeltaMovement(
-                this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
+    public void useEgg() {
+        setNumEggs(getNumEggs() - 1);
     }
 
     /**
@@ -443,58 +497,19 @@ public class Butterfly extends Animal {
     protected void customServerAiStep() {
         super.customServerAiStep();
 
-        Level level = this.level();
-
-        if (getNumEggs() > 0) {
-
-            // Don't mate if there are too many butterflies in the area already.
-            List<Butterfly> numButterflies = this.level().getNearbyEntities(
+        // Attempt to mate
+        if (getNumEggs() > 0 && !getIsFertile()) {
+            List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
                     Butterfly.class,
                     TargetingConditions.forNonCombat(),
                     this,
-                    this.getBoundingBox().inflate(32.0D));
+                    this.getBoundingBox().inflate(2.0D));
 
-            int maxDensity = ButterfliesConfig.maxDensity.get();
-            if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
-
-                if (getIsFertile()) {
-                    if (this.random.nextInt(320) == 1){
-
-                        // Attempt to lay an egg.
-                        Direction direction = switch (this.random.nextInt(6)) {
-                            default -> Direction.UP;
-                            case 1 -> Direction.DOWN;
-                            case 2 -> Direction.NORTH;
-                            case 3 -> Direction.EAST;
-                            case 4 -> Direction.SOUTH;
-                            case 5 -> Direction.WEST;
-                        };
-
-                        BlockPos position = this.blockPosition().relative(direction.getOpposite());
-
-                        if (level.getBlockState(position).is(BlockTags.LEAVES)) {
-                            ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
-                            ButterflyEgg.spawn((ServerLevel) level, eggEntity, position, direction);
-                            setIsFertile(false);
-                            useEgg();
-                        }
-                    }
-
-                } else {
-                    // Attempt to mate
-                    List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
-                            Butterfly.class,
-                            TargetingConditions.forNonCombat(),
-                            this,
-                            this.getBoundingBox().inflate(2.0D));
-
-                    for (Butterfly i : nearbyButterflies) {
-                        if (i.getType() == this.getType()) {
-                            setIsFertile(true);
-                            setInLove(null);
-                            break;
-                        }
-                    }
+            for (Butterfly i : nearbyButterflies) {
+                if (i.getType() == this.getType()) {
+                    setIsFertile(true);
+                    setInLove(null);
+                    break;
                 }
             }
         }
@@ -517,6 +532,7 @@ public class Butterfly extends Animal {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_IS_FERTILE, false);
+        this.entityData.define(DATA_LANDED, false);
         this.entityData.define(DATA_NUM_EGGS, 1);
     }
 
@@ -531,14 +547,6 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * Check if the butterfly can lay an egg.
-     * @return TRUE if the butterfly is fertile.
-     */
-    protected boolean getIsFertile() {
-        return entityData.get(DATA_IS_FERTILE);
-    }
-
-    /**
      * Override to control what kind of movement events the entity will emit.
      * Butterflies will not emit sounds.
      * @return Movement events only.
@@ -547,14 +555,6 @@ public class Butterfly extends Animal {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
-    }
-
-    /**
-     * Get the number of eggs this butterfly can lay.
-     * @return The number of eggs left for this butterfly.
-     */
-    protected int getNumEggs() {
-        return entityData.get(DATA_NUM_EGGS);
     }
 
     /**
@@ -596,11 +596,11 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * Set whether the butterfly can lay an egg.
-     * @param isFertile Whether the butterfly is fertile.
+     * Get the number of eggs this butterfly can lay.
+     * @return The number of eggs left for this butterfly.
      */
-    private void setIsFertile(boolean isFertile) {
-        entityData.set(DATA_IS_FERTILE, isFertile);
+    private int getNumEggs() {
+        return entityData.get(DATA_NUM_EGGS);
     }
 
     /**
@@ -609,12 +609,5 @@ public class Butterfly extends Animal {
      */
     private void setNumEggs(int numEggs) {
         entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
-    }
-
-    /**
-     * Reduce the number of eggs the butterfly can lay by 1.
-     */
-    private void useEgg() {
-        setNumEggs(getNumEggs() - 1);
     }
 }
