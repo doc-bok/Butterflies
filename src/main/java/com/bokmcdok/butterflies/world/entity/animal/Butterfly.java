@@ -8,7 +8,6 @@ import com.bokmcdok.butterflies.world.entity.ai.ButterflyLayEggGoal;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyPollinateFlowerGoal;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

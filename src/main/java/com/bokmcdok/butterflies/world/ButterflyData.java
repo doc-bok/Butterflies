@@ -27,6 +27,7 @@ import java.util.Objects;
  * @param caterpillarLifespan The lifespan of the caterpillar phase
  * @param chrysalisLifespan   The lifespan of the chrysalis phase
  * @param butterflyLifespan   The lifespan of the butterfly phase
+ * @param preferredFlower     The flower this butterfly prefers
  */
 public record ButterflyData(int butterflyIndex,
                             String entityId,
@@ -37,7 +38,8 @@ public record ButterflyData(int butterflyIndex,
                             int eggLifespan,
                             int caterpillarLifespan,
                             int chrysalisLifespan,
-                            int butterflyLifespan) {
+                            int butterflyLifespan,
+                            ResourceLocation preferredFlower) {
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
@@ -112,6 +114,7 @@ public record ButterflyData(int butterflyIndex,
      * @param caterpillarLifespan How long it remains in the caterpillar stage.
      * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
      * @param butterflyLifespan   How long it lives as a butterfly.
+     * @param preferredFlower     The flower this butterfly prefers
      */
     public ButterflyData(int butterflyIndex,
                          String entityId,
@@ -122,7 +125,8 @@ public record ButterflyData(int butterflyIndex,
                          int eggLifespan,
                          int caterpillarLifespan,
                          int chrysalisLifespan,
-                         int butterflyLifespan) {
+                         int butterflyLifespan,
+                         ResourceLocation preferredFlower) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -134,6 +138,8 @@ public record ButterflyData(int butterflyIndex,
         this.caterpillarLifespan = caterpillarLifespan * 2;
         this.chrysalisLifespan = chrysalisLifespan;
         this.butterflyLifespan = butterflyLifespan * 2;
+
+        this.preferredFlower = preferredFlower;
     }
 
     /**
@@ -226,6 +232,8 @@ public record ButterflyData(int butterflyIndex,
                     butterflyLifespan = LIFESPAN_LONG;
                 }
 
+                String preferredFlower = object.get("preferredFlower").getAsString();
+
                 entry = new ButterflyData(
                         index,
                         entityId,
@@ -236,7 +244,8 @@ public record ButterflyData(int butterflyIndex,
                         eggLifespan,
                         caterpillarLifespan,
                         chrysalisLifespan,
-                        butterflyLifespan
+                        butterflyLifespan,
+                        new ResourceLocation(preferredFlower)
                 );
             }
 

@@ -75,7 +75,8 @@ public class NetworkEventListener {
                             buffer.readInt(),
                             buffer.readInt(),
                             buffer.readInt(),
-                            buffer.readInt()));
+                            buffer.readInt(),
+                            buffer.readResourceLocation()));
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {

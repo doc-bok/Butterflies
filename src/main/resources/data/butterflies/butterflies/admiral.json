@@ -10,5 +10,6 @@
     "caterpillar": "short",
     "chrysalis": "medium",
     "butterfly": "medium"
-  }
+  },
+  "preferredFlower": "blue_orchid"
 }

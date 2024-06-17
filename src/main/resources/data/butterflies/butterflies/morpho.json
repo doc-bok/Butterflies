@@ -10,5 +10,6 @@
     "caterpillar": "medium",
     "chrysalis": "short",
     "butterfly": "medium"
-  }
+  },
+  "preferredFlower": "pink_tulip"
 }
