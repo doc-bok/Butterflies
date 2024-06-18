@@ -61,7 +61,7 @@ public class EntityTypeRegistry {
     private static RegistryObject<EntityType<Butterfly>> registerButterfly(int butterflyIndex) {
         return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
-                .sized(0.3f, 0.4f)
+                .sized(0.4f, 0.3f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));
     }
 

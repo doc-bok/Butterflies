@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.Path;
 
@@ -19,7 +18,7 @@ public class ButterflyWanderGoal extends Goal {
      * @param butterfly The entity this goal belongs to.
      */
     public ButterflyWanderGoal(Butterfly butterfly) {
-        this.setFlags(EnumSet.of(Flag.MOVE));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.JUMP));
         this.butterfly = butterfly;
     }
 

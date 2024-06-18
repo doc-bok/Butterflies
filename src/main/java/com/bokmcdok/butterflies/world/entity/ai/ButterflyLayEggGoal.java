@@ -17,6 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Goal that allows butterflies to lay eggs on leaves.
+ */
 public class ButterflyLayEggGoal extends MoveToBlockGoal {
 
     //  The butterfly using this goal.

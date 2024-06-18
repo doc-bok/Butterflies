@@ -269,18 +269,6 @@ public class ButterflyEgg extends DirectionalCreature {
     }
 
     /**
-     * Override to set the entity's eye height.
-     * @param pose The current pose of the entity.
-     * @param dimensions The dimensions of the entity.
-     * @return The height of the entity's eyes.
-     */
-    @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         EntityDimensions dimensions) {
-        return dimensions.height / 2.0f;
-    }
-
-    /**
      * Override to change how pushing other entities affects them. Butterfly eggs
      * don't push other entities.
      */

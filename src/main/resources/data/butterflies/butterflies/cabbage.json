@@ -10,5 +10,6 @@
     "caterpillar": "short",
     "chrysalis": "short",
     "butterfly": "short"
-  }
+  },
+  "preferredFlower": "dandelion"
 }
