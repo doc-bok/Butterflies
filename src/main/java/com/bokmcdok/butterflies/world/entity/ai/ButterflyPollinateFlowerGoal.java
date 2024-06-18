@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -85,7 +87,8 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
             // Don't stay in the landed state for too long.
             this.tryTicks -= 11;
-            this.butterfly.setDeltaMovement(0.0, 0.0, 0.0);
+            Vec3 deltaMovement = this.butterfly.getDeltaMovement();
+            this.butterfly.setDeltaMovement(0.0, deltaMovement.y, 0.0);
 
             if (!attemptedToPollinate) {
                 attemptedToPollinate = true;
@@ -94,7 +97,10 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                     BlockPos spawnPos = findNearestFlowerSpot();
                     if (spawnPos != null) {
                         BlockState blockState = this.mob.level().getBlockState(this.blockPos);
-                        this.mob.level().setBlockAndUpdate(spawnPos, blockState.getBlock().defaultBlockState());
+                        Block budBlock = BlockRegistry.getFlowerBud(blockState.getBlock());
+                        if (budBlock != null) {
+                            this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                        }
                     }
                 }
             }

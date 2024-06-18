@@ -23,11 +23,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -199,6 +197,10 @@ public class Butterfly extends Animal {
 
         setAge(-data.butterflyLifespan());
         setLanded(false);
+
+        // Register the goals again since they rely on the butterfly index.
+        this.goalSelector.removeAllGoals((x) -> true);
+        registerGoals();
     }
 
     /**
@@ -444,7 +446,7 @@ public class Butterfly extends Animal {
     @Override
     public void setPos(double x, double y, double z) {
         Vec3 delta = new Vec3(x, y, z).subtract(this.position());
-        if (delta.lengthSqr() <= 2 ||
+        if (delta.lengthSqr() <= 1 ||
                 this.position().lengthSqr() == 0) {
             super.setPos(x, y, z);
         }
@@ -563,18 +565,6 @@ public class Butterfly extends Animal {
     @Override
     protected float getSoundVolume() {
         return 0.0f;
-    }
-
-    /**
-     * Override to set the entity's eye height.
-     * @param pose The current pose of the entity.
-     * @param dimensions The dimensions of the entity.
-     * @return The height of the entity's eyes.
-     */
-    @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         EntityDimensions dimensions) {
-        return dimensions.height / 2.0f;
     }
 
     /**

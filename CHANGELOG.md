@@ -1,5 +1,11 @@
 ## Changelog
 
+### 3.4.10 (2024-06-18)
+- Butterflies will pollinate flowers and cause new ones to grow.
+- Flower crops will bloom into flowers.
+- Some fixes for butterfly bounding boxes.
+- Fixed goals not having access to butterfly data when created.
+
 ### 3.4.9 (2024-06-11)
 - Added new AI goals for butterfly landings.
 

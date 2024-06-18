@@ -24,6 +24,24 @@ BUTTERFLIES = [
     'peacock'
 ]
 
+# List of files to generate json files for.
+FLOWERS = [
+    'allium',
+    'azure_bluet',
+    'blue_orchid',
+    'cornflower',
+    'dandelion',
+    'lily_of_the_valley',
+    'orange_tulip',
+    'oxeye_daisy',
+    'pink_tulip',
+    'poppy',
+    'red_tulip',
+    'torchflower',
+    'white_tulip',
+    'wither_rose'
+]
+
 # File locations
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
@@ -32,42 +50,41 @@ ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 
 
-# Generate butterfly data files that don't exist yet
-def generate_butterfly_files():
-    # Get list of files containing BUTTERFLIES[0]
+def generate_data_files(input):
+    # Get list of files containing input[0]
     files = []
     for (path, _, filenames) in os.walk(os.getcwd()):
-    
+
         # We only want json
-        filenames = [f for f in filenames if f.endswith(".json") and BUTTERFLIES[0] in f]
-        
+        filenames = [f for f in filenames if f.endswith(".json") and input[0] in f]
+
         for name in filenames:
             files.append(pathlib.Path(path, name))
-    
+
     # Loop Start
-    for butterfly in BUTTERFLIES:
-        
+    for entry in input:
+
         # We don't need to do this for the template
-        if butterfly == BUTTERFLIES[0]:
+        if entry == input[0]:
             continue
-            
+
         for file in files:
-            
+
             # Get the new filename
-            new_file = pathlib.Path(str(file).replace(BUTTERFLIES[0], butterfly))
-            
-            # Check if the file exists            
+            new_file = pathlib.Path(str(file).replace(input[0], entry))
+
+            # Check if the file exists
             if not new_file.is_file():
-                
+
                 # Create the new file if it doesn't exist
                 shutil.copy(file, new_file)
-                
+
                 # Read in the new file
                 with open(new_file, 'r') as input_file:
                     file_data = input_file.read()
 
                 # Replace the butterfly species
-                file_data = file_data.replace(BUTTERFLIES[0], butterfly)
+                file_data = file_data.replace(input[0], entry)
 
                 # Write the file out again
                 with open(new_file, 'w') as output_file:
@@ -210,9 +227,12 @@ public class ButterflySpeciesList {
 """)
 
 
+
+
 # Python's main entry point
 if __name__ == "__main__":
-    generate_butterfly_files()
+    generate_data_files(BUTTERFLIES)
+    # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
     generate_frog_food()
     generate_localisation_strings()
     generate_advancements()
