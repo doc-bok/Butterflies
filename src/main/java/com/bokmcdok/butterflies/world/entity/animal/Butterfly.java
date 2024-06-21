@@ -405,7 +405,12 @@ public class Butterfly extends Animal {
         super.registerGoals();
 
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8d, 8, 8));
-        this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+
+        // Pollination can be configured to be off.
+        if (ButterfliesConfig.enablePollination.get()) {
+            this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+        }
+
         this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
         // TODO: Register a flee goal
     }

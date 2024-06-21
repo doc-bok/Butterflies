@@ -9,6 +9,7 @@ public class ButterfliesConfig {
     public static ForgeConfigSpec.IntValue eggLimit;
     public static ForgeConfigSpec.IntValue maxDensity;
     public static ForgeConfigSpec.BooleanValue enableLifespan;
+    public static ForgeConfigSpec.BooleanValue enablePollination;
 
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
@@ -36,6 +37,10 @@ public class ButterfliesConfig {
         enableLifespan = builder
                 .comment("If set to TRUE butterflies will die naturally.")
                 .define("enable_lifespan", true);
+
+        enablePollination = builder
+                .comment("If set to TRUE butterflies will pollinate flowers and cause new ones to grow.")
+                        .define("enable_pollination", true);
 
         builder.pop();
     }
