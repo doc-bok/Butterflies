@@ -147,8 +147,15 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                 for(int xOffset = 0; xOffset <= range; xOffset = xOffset > 0 ? -xOffset : 1 - xOffset) {
                     for(int zOffset = xOffset < range && xOffset > -range ? range : 0; zOffset <= range; zOffset = zOffset > 0 ? -zOffset : 1 - zOffset) {
                         mutableBlockPos.setWithOffset(this.blockPos, xOffset, yOffset - 1, zOffset);
+
+                        // Torchflowers require farmland.
+                        Block requiredBlock = Blocks.GRASS_BLOCK;
+                        if (this.mob.level().getBlockState(this.blockPos).is(Blocks.TORCHFLOWER)) {
+                            requiredBlock = Blocks.FARMLAND;
+                        }
+
                         if (this.mob.level().getBlockState(mutableBlockPos).isAir() &&
-                            this.mob.level().getBlockState(mutableBlockPos.below()).is(Blocks.GRASS_BLOCK)) {
+                            this.mob.level().getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
 
                             return mutableBlockPos;
                         }
