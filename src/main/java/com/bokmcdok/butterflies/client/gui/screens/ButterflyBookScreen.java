@@ -9,6 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.ClickEvent;
@@ -396,6 +397,7 @@ public class ButterflyBookScreen extends Screen {
          * @param page The page number to get.
          * @return The formatted text for the page.
          */
+        @SuppressWarnings("deprecation")
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
                 int butterflyIndex = pages.getInt((page - 1) / 2);
@@ -453,6 +455,13 @@ public class ButterflyBookScreen extends Screen {
                         case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
                         default -> {}
                     }
+
+                    // Preferred Flower
+                    component.append("\n");
+                    component.append(Component.translatable("gui.butterflies.preferred_flower"));
+                    Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
+                    component.append(description);
+
 
                     // Fact
                     component.append("\n\n");
