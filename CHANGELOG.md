@@ -1,5 +1,10 @@
 ## Changelog
 
+### 3.4.11 (2024-06-21)
+- Torchflowers will now use the vanilla crops and require farmland to spread.
+- Config option to disable the pollination entirely.
+- Added preferred flowers to butterfly book descriptions.
+
 ### 3.4.10 (2024-06-18)
 - Butterflies will pollinate flowers and cause new ones to grow.
 - Flower crops will bloom into flowers.
