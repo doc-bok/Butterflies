@@ -37,7 +37,6 @@ FLOWERS = [
     'pink_tulip',
     'poppy',
     'red_tulip',
-    'torchflower',
     'white_tulip',
     'wither_rose'
 ]

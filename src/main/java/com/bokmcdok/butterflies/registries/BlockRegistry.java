@@ -103,10 +103,6 @@ public class BlockRegistry {
             "bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP)
     );
 
-    public static final RegistryObject<Block> TORCHFLOWER_BUD = INSTANCE.register(
-            "bud_torchflower", () -> new FlowerCropBlock(Blocks.TORCHFLOWER)
-    );
-
     public static final RegistryObject<Block> WHITE_TULIP_BUD = INSTANCE.register(
             "bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP)
     );
@@ -166,7 +162,7 @@ public class BlockRegistry {
         }
 
         if (flowerBlock == Blocks.TORCHFLOWER) {
-            return TORCHFLOWER_BUD.get();
+            return Blocks.TORCHFLOWER_CROP;
         }
 
         if (flowerBlock == Blocks.WHITE_TULIP) {
