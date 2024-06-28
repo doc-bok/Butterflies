@@ -78,8 +78,6 @@ public class Butterfly extends Animal {
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
 
-
-
     /**
      * Checks custom rules to determine if the entity can spawn.
      * @param entityType (Unused) The type of the entity to spawn.
@@ -320,6 +318,18 @@ public class Butterfly extends Animal {
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
         return false;
+    }
+
+    /**
+     * Reduce vertical movement to minimise collision errors.
+     */
+    @Override
+    public void tick() {
+        super.tick();
+
+        //  Reduce the vertical movement to keep the butterfly close to the
+        //  same height.
+        this.setDeltaMovement(this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
     }
 
     /**

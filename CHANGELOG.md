@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.5.1 (2024-06-28)
+- Fixed butterflies colliding with the ground too often.
+
 ### 3.5.0 (2024-06-28)
 - Butterflies will now avoid other entities.
 
