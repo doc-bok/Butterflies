@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.5.0 (2024-06-28)
+- Butterflies will now avoid other entities.
+
 ### 3.4.12 (2024-06-28)
 - Butterflies now mate using a goal rather than by pure chance.
 
