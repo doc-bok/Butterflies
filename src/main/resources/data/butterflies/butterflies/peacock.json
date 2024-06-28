@@ -1,0 +1,15 @@
+{
+  "index": 16,
+  "entityId": "peacock",
+  "size": "medium",
+  "speed": "moderate",
+  "rarity": "common",
+  "habitat": "forests_and_plains",
+  "lifespan": {
+    "egg": "short",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "butterfly": "medium"
+  },
+  "preferredFlower": "blue_orchid"
+}

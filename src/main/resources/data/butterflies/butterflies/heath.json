@@ -10,5 +10,6 @@
     "caterpillar": "long",
     "chrysalis": "medium",
     "butterfly": "long"
-  }
+  },
+  "preferredFlower": "white_tulip"
 }

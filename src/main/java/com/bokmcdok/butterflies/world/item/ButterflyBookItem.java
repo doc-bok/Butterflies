@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyBookScreen;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -44,7 +45,7 @@ public class ButterflyBookItem extends Item {
         CompoundTag newTag = newBook.getOrCreateTag();
         newTag.put(CompoundTagId.PAGES, newPages);
 
-        if (newPages.size()  >= 16) {
+        if (newPages.size()  >= ButterflyData.getNumButterflySpecies()) {
             newTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
         }
     }
@@ -79,7 +80,7 @@ public class ButterflyBookItem extends Item {
     }
 
     /**
-     * Open the screen. Kept separate so it can be excluded from server builds.
+     * Open the screen. Kept separate, so it can be excluded from server builds.
      * @param book The book to display.
      */
     @OnlyIn(Dist.CLIENT)

@@ -38,7 +38,7 @@ public abstract class DirectionalCreature extends Animal {
     protected static final String DIRECTION = "direction";
 
     // The location of the texture that the renderer should use.
-    private final ResourceLocation texture;
+    private ResourceLocation texture;
 
     /**
      * Check if a directional creature can spawn in this position.
@@ -203,14 +203,19 @@ public abstract class DirectionalCreature extends Animal {
 
     /**
      * Construction
-     * @param texture The location of the texture used to render the entity.
-     * @param entityType The entity's type.
-     * @param level The current level.
+     * @param entityType The type of the entity.
+     * @param level      The current level.
      */
-    protected DirectionalCreature(String texture,
-                                  EntityType<? extends DirectionalCreature> entityType,
+    protected DirectionalCreature(EntityType<? extends DirectionalCreature> entityType,
                                   Level level) {
         super(entityType, level);
+    }
+
+    /**
+     * Set the texture to use.
+     * @param texture The entity's texture.
+     */
+    protected void setTexture(String texture) {
         this.texture = new ResourceLocation(ButterfliesMod.MODID, texture);
     }
 

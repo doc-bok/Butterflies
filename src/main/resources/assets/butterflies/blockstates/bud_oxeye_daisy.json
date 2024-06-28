@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage0"
+    },
+    "age=1": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage1"
+    },
+    "age=2": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage2"
+    },
+    "age=3": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage3"
+    },
+    "age=4": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage4"
+    },
+    "age=5": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage5"
+    },
+    "age=6": {
+      "model": "butterflies:block/flower_buds/oxeye_daisy_stage6"
+    }
+  }
+}

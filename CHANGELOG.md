@@ -1,5 +1,53 @@
 ## Changelog
 
+### 3.5.1 (2024-06-28)
+- Fixed butterflies colliding with the ground too often.
+
+### 3.5.0 (2024-06-28)
+- Butterflies will now avoid other entities.
+
+### 3.4.12 (2024-06-28)
+- Butterflies now mate using a goal rather than by pure chance.
+
+### 3.4.11 (2024-06-21)
+- Torchflowers will now use the vanilla crops and require farmland to spread.
+- Config option to disable the pollination entirely.
+- Added preferred flowers to butterfly book descriptions.
+
+### 3.4.10 (2024-06-18)
+- Butterflies will pollinate flowers and cause new ones to grow.
+- Flower crops will bloom into flowers.
+- Some fixes for butterfly bounding boxes.
+- Fixed goals not having access to butterfly data when created.
+
+### 3.4.9 (2024-06-11)
+- Added new AI goals for butterfly landings.
+
+### 3.4.8 (2024-06-03)
+- Fixed species extraction for butterfly entities.
+
+### 3.4.7 (2024-06-03)
+- Butterfly registration now happens automatically.
+
+### 3.4.6 (2024-05-31)
+- Butterfly based advancements can now be generated.
+
+### 3.4.5 (2024-05-26)
+- Reduced number of localisation strings needed.
+- Can now generate localisation strings.
+
+### 3.4.4 (2024-05-26)
+- Texture locations for butterfly scrolls are automatically generated.
+
+### 3.4.3 (2024-05-26)
+- Frog food JSON data can now be generated.
+
+### 3.4.2 (2024-05-25)
+- Fixed the Butterfly Book challenge.
+
+### 3.4.1 (2024-05-23)
+- Added the Peacock Butterfly.
+
 ### 3.4.0 (2024-04-06)
 - Compatibility Release.
 

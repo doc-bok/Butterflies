@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.event.network;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.network.protocol.common.custom.ClientboundButterflyDataPacket;
+import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -34,7 +34,7 @@ public class NetworkEventListener {
         Collection<ButterflyData> butterflyDataCollection = ButterflyData.getButterflyDataCollection();
 
         // Create our packet.
-        ClientboundButterflyDataPacket packet = new ClientboundButterflyDataPacket(butterflyDataCollection);
+        ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
 
         // Create the payload.
         Packet<?> payload = new ClientboundCustomPayloadPacket(packet);
@@ -60,7 +60,7 @@ public class NetworkEventListener {
     public static void onCustomPayload(CustomPayloadEvent event) {
 
         // Handle a butterfly data collection.
-        if (event.getChannel().compareTo(ClientboundButterflyDataPacket.ID) == 0) {
+        if (event.getChannel().compareTo(ClientBoundButterflyDataPacket.ID) == 0) {
 
             // Extract the data from the payload.
             FriendlyByteBuf payload = event.getPayload();
@@ -75,7 +75,8 @@ public class NetworkEventListener {
                             buffer.readInt(),
                             buffer.readInt(),
                             buffer.readInt(),
-                            buffer.readInt()));
+                            buffer.readInt(),
+                            buffer.readResourceLocation()));
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {

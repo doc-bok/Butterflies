@@ -20,8 +20,8 @@ cats away from them!
 ### Eggs
 
 Butterflies will lay eggs in leaves if they get close to them. The eggs will
-eventually hatch into caterpillars. If a player breaks the leaves, the eggs
-will drop. Players can then replant these eggs on other leaves.
+eventually hatch into caterpillars. If a player breaks the eggs, they will
+drop. Players can then replant these eggs on other leaves.
 
 ### Caterpillars
 
@@ -56,6 +56,11 @@ this way will not die, lay eggs or create chrysalises.
 If you want to get the butterfly or caterpillar back, they can be released by
 using the bottle while not highlighting a block.
 
+### Flower Pollination
+
+Butterflies will occasionally fly toward and pollinate flowers. This will spawn
+flower buds that will eventually bloom into full flowers. 
+
 ### Server Config
 
 There are now server config options to help manage butterfly growth. You can
@@ -73,6 +78,9 @@ before breeding is disabled. If set to zero, this is ignored (default: `16`).
 
 **enable_lifespan:** If set to TRUE butterflies will die naturally
 (default: `true`).
+
+**enable_pollination:** If set to TRUE butterflies will pollinate flowers and
+cause them to spread (default: `true`)
 
 ## Latest Release
 - [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.20.2.jar)

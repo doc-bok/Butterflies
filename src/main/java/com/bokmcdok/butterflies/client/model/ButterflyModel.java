@@ -60,7 +60,7 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
 
         PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 23.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
 
-        body.addOrReplaceChild("body_r1", CubeListBuilder.create()
+        body.addOrReplaceChild("body", CubeListBuilder.create()
                 .texOffs(0, 20).addBox(-5.0F, -1.0F, -1.0F, 10.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(0.0F, 1.0F, 1.0F, 0.0F, 3.1416F, 0.0F));
 
@@ -73,11 +73,11 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                         .texOffs(0, 10).addBox(-8.0F, 1.0F, -10.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
                 PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        PartDefinition antannae = body.addOrReplaceChild("antannae", CubeListBuilder.create()
+        PartDefinition antennae = body.addOrReplaceChild("left_antenna", CubeListBuilder.create()
                 .texOffs(0, 2).addBox(5.0F, -2.0F, 0.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
                 PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        antannae.addOrReplaceChild("antenna_r1", CubeListBuilder.create()
+        antennae.addOrReplaceChild("right_antenna", CubeListBuilder.create()
                 .texOffs(0, 0).addBox(-1.0F, 0.0F, 0.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(6.0F, 0.0F, 2.0F, 3.1416F, 0.0F, 0.0F));
 
@@ -100,8 +100,16 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                           float ageInTicks,
                           float netHeadYaw,
                           float headPitch) {
-        this.body.yRot = 0.7853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
-        this.right_wing.xRot = Mth.sin(ageInTicks * 1.3F) * Mth.PI * 0.25F;
+
+        //  When landed butterflies hold their wings together.
+        if (entity.getLanded()) {
+            this.body.yRot = 0.7853982F;
+            this.right_wing.xRot = -Mth.PI * 0.5F;
+        } else {
+            this.body.yRot = 0.7853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
+            this.right_wing.xRot = Mth.sin(ageInTicks * 1.3F) * Mth.PI * 0.25F;
+        }
+
         this.left_wing.xRot = -right_wing.xRot;
     }
 

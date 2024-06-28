@@ -74,7 +74,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        ItemStack stack = new ItemStack(ItemRegistry.getButterflyScrollFromIndex(this.butterflyIndex).get());
+        ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_SCROLL_ITEMS.get(this.butterflyIndex).get());
         this.spawnAtLocation(stack);
     }
 
