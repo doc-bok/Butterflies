@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.4.12 (2024-06-28)
+- Butterflies now mate using a goal rather than by pure chance.
+
 ### 3.4.11 (2024-06-21)
 - Torchflowers will now use the vanilla crops and require farmland to spread.
 - Config option to disable the pollination entirely.

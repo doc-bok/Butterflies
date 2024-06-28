@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyLayEggGoal;
+import com.bokmcdok.butterflies.world.entity.ai.ButterflyMatingGoal;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyPollinateFlowerGoal;
 import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
 import net.minecraft.core.BlockPos;
@@ -30,9 +31,9 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -43,7 +44,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -297,6 +297,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Get the number of eggs this butterfly can lay.
+     * @return The number of eggs left for this butterfly.
+     */
+    public int getNumEggs() {
+        return entityData.get(DATA_NUM_EGGS);
+    }
+
+    /**
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
@@ -404,7 +412,10 @@ public class Butterfly extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8d, 8, 8));
+        // TODO: Register a flee goal
+
+        this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
+        this.goalSelector.addGoal(3, new ButterflyMatingGoal(this, 1.1, 8));
 
         // Pollination can be configured to be off.
         if (ButterfliesConfig.enablePollination.get()) {
@@ -412,7 +423,17 @@ public class Butterfly extends Animal {
         }
 
         this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
-        // TODO: Register a flee goal
+
+        // Butterflies use targets to select mates.
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
+                if (target instanceof Butterfly butterfly) {
+                    return butterfly.getButterflyIndex() == this.getButterflyIndex() &&
+                           butterfly.getNumEggs() > 0 &&
+                           !butterfly.getIsFertile();
+                }
+
+                return false;
+            }));
     }
 
     /**
@@ -503,23 +524,6 @@ public class Butterfly extends Animal {
     protected void customServerAiStep() {
         super.customServerAiStep();
 
-        // Attempt to mate
-        if (getNumEggs() > 0 && !getIsFertile()) {
-            List<Butterfly> nearbyButterflies = this.level().getNearbyEntities(
-                    Butterfly.class,
-                    TargetingConditions.forNonCombat(),
-                    this,
-                    this.getBoundingBox().inflate(2.0D));
-
-            for (Butterfly i : nearbyButterflies) {
-                if (i.getType() == this.getType()) {
-                    setIsFertile(true);
-                    setInLove(null);
-                    break;
-                }
-            }
-        }
-
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.enableLifespan.get()) {
@@ -587,14 +591,6 @@ public class Butterfly extends Animal {
     @Override
     protected void pushEntities() {
         // No-op
-    }
-
-    /**
-     * Get the number of eggs this butterfly can lay.
-     * @return The number of eggs left for this butterfly.
-     */
-    private int getNumEggs() {
-        return entityData.get(DATA_NUM_EGGS);
     }
 
     /**
