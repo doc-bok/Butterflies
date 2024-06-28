@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.5.2 (2024-06-28)
+- Improved butterfly data reading.
+
 ### 3.5.1 (2024-06-28)
 - Fixed butterflies colliding with the ground too often.
 

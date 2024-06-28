@@ -12,11 +12,11 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+
+import static com.bokmcdok.butterflies.lang.EnumExtensions.searchEnum;
 
 /**
  * Helper for converting entity ID to index and vice versa.
- *
  * @param butterflyIndex      The index of the butterfly
  * @param entityId            The butterfly species
  * @param size                The size of the butterfly
@@ -41,17 +41,21 @@ public record ButterflyData(int butterflyIndex,
                             int butterflyLifespan,
                             ResourceLocation preferredFlower) {
 
-    //  Represents the possible sizes of the butterflies.
-    public enum Size {
-        SMALL,
-        MEDIUM,
-        LARGE
-    }
+    // Helper enum to determine a butterflies overall lifespan.
+    public enum Lifespan {
+        SHORT(0),
+        MEDIUM(1),
+        LONG(2);
 
-    // Represents the speed of a butterfly.
-    public enum Speed {
-        MODERATE,
-        FAST
+        private final int value;
+
+        Lifespan(int value) {
+            this.value = value;
+        }
+
+        public int getIndex() {
+            return this.value;
+        }
     }
 
     // Represents the rarity of a butterfly. Note that this only affects the
@@ -72,17 +76,25 @@ public record ButterflyData(int butterflyIndex,
         PLAINS
     }
 
-    // Helper enum to determine a butterflies overall lifespan.
-    public enum Lifespan {
-        SHORT,
+    //  Represents the possible sizes of the butterflies.
+    public enum Size {
+        SMALL,
         MEDIUM,
-        LONG
+        LARGE
+    }
+
+    // Represents the speed of a butterfly.
+    public enum Speed {
+        MODERATE,
+        FAST
     }
 
     // Constants representing the base life spans of each butterfly cycle.
-    public static int LIFESPAN_SHORT = 24000 * 2;
-    public static int LIFESPAN_MEDIUM = 24000 * 4;
-    public static int LIFESPAN_LONG = 24000 * 7;
+    public static int[] LIFESPAN = {
+            24000 * 2,
+            24000 * 4,
+            24000 * 7
+    };
 
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
@@ -167,70 +179,30 @@ public record ButterflyData(int butterflyIndex,
                 String entityId = object.get("entityId").getAsString();
 
                 String sizeStr = object.get("size").getAsString();
-                Size size = Size.MEDIUM;
-                if (Objects.equals(sizeStr, "small")) {
-                    size = Size.SMALL;
-                } else if (Objects.equals(sizeStr, "large")) {
-                    size = Size.LARGE;
-                }
+                Size size = searchEnum(Size.class, sizeStr, Size.MEDIUM);
 
                 String speedStr = object.get("speed").getAsString();
-                Speed speed = Speed.MODERATE;
-                if (Objects.equals(speedStr, "fast")) {
-                    speed = Speed.FAST;
-                }
+                Speed speed = searchEnum(Speed.class, speedStr, Speed.MODERATE);
 
                 String rarityStr = object.get("rarity").getAsString();
-                Rarity rarity = Rarity.COMMON;
-                if (Objects.equals(rarityStr, "uncommon")) {
-                    rarity = Rarity.UNCOMMON;
-                } else if (Objects.equals(rarityStr, "rare")) {
-                    rarity = Rarity.RARE;
-                }
+                Rarity rarity = searchEnum(Rarity.class, rarityStr, Rarity.COMMON);
 
                 String habitatStr = object.get("habitat").getAsString();
-                Habitat habitat = Habitat.PLAINS;
-                if (Objects.equals(habitatStr, "forests")) {
-                    habitat = Habitat.FORESTS;
-                } else if (Objects.equals(habitatStr, "forests_and_plains")) {
-                    habitat = Habitat.FORESTS_AND_PLAINS;
-                } else if (Objects.equals(habitatStr, "jungles")) {
-                    habitat = Habitat.JUNGLES;
-                }
+                Habitat habitat = searchEnum(Habitat.class, habitatStr, Habitat.PLAINS);
 
                 JsonObject lifespan = object.get("lifespan").getAsJsonObject();
 
                 String eggStr = lifespan.get("egg").getAsString();
-                int eggLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(eggStr, "short")) {
-                    eggLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(eggStr, "long")) {
-                    eggLifespan = LIFESPAN_LONG;
-                }
+                Lifespan eggLifespan = searchEnum(Lifespan.class, eggStr, Lifespan.MEDIUM);
 
                 String caterpillarStr = lifespan.get("caterpillar").getAsString();
-                int caterpillarLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(caterpillarStr, "short")) {
-                    caterpillarLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(caterpillarStr, "long")) {
-                    caterpillarLifespan = LIFESPAN_LONG;
-                }
+                Lifespan caterpillarLifespan = searchEnum(Lifespan.class, caterpillarStr, Lifespan.MEDIUM);
 
                 String chrysalisStr = lifespan.get("chrysalis").getAsString();
-                int chrysalisLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(chrysalisStr, "short")) {
-                    chrysalisLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(chrysalisStr, "long")) {
-                    chrysalisLifespan = LIFESPAN_LONG;
-                }
+                Lifespan chrysalisLifespan = searchEnum(Lifespan.class, chrysalisStr, Lifespan.MEDIUM);
 
                 String butterflyStr = lifespan.get("butterfly").getAsString();
-                int butterflyLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(butterflyStr, "short")) {
-                    butterflyLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(butterflyStr, "long")) {
-                    butterflyLifespan = LIFESPAN_LONG;
-                }
+                Lifespan butterflyLifespan = searchEnum(Lifespan.class, butterflyStr, Lifespan.MEDIUM);
 
                 String preferredFlower = object.get("preferredFlower").getAsString();
 
@@ -241,10 +213,10 @@ public record ButterflyData(int butterflyIndex,
                         speed,
                         rarity,
                         habitat,
-                        eggLifespan,
-                        caterpillarLifespan,
-                        chrysalisLifespan,
-                        butterflyLifespan,
+                        LIFESPAN[eggLifespan.getIndex()],
+                        LIFESPAN[caterpillarLifespan.getIndex()],
+                        LIFESPAN[chrysalisLifespan.getIndex()],
+                        LIFESPAN[butterflyLifespan.getIndex()],
                         new ResourceLocation(preferredFlower)
                 );
             }
