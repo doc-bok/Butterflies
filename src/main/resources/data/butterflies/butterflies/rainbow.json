@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "medium"
   },
-  "preferredFlower": "allium"
+  "preferredFlower": "allium",
+  "type": "butterfly"
 }

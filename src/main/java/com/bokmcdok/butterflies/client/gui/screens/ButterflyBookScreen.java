@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.client.gui.screens;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -406,6 +407,10 @@ public class ButterflyBookScreen extends Screen {
                     //  Butterfly name
                     MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId());
 
+                    if (entry.type() == ButterflyData.ButterflyType.SPECIAL) {
+                        component.withStyle(ChatFormatting.DARK_BLUE);
+                    }
+
                     // Rarity
                     component.append("\n\n");
                     component.append(Component.translatable("gui.butterflies.rarity"));
@@ -453,6 +458,7 @@ public class ButterflyBookScreen extends Screen {
                         case FORESTS_AND_PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
                         case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
                         case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
+                        case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
                         default -> {}
                     }
 

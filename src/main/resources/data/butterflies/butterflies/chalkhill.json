@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "medium"
   },
-  "preferredFlower": "oxeye_daisy"
+  "preferredFlower": "oxeye_daisy",
+  "type": "butterfly"
 }

@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "short"
   },
-  "preferredFlower": "poppy"
+  "preferredFlower": "poppy",
+  "type": "butterfly"
 }

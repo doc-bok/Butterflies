@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "long"
   },
-  "preferredFlower": "white_tulip"
+  "preferredFlower": "white_tulip",
+  "type": "butterfly"
 }

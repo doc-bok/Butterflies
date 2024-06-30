@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -42,10 +43,21 @@ public class ButterflyBookItem extends Item {
             newPages.add(IntTag.valueOf(index));
         }
 
+        // Calculate the actual number of butterflies in the book.
+        int numButterflies = 0;
+        for (Tag i : newPages) {
+            if (i instanceof IntTag intTag) {
+                ButterflyData data = ButterflyData.getEntry(intTag.getAsInt());
+                if (data != null && data.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                    numButterflies += 1;
+                }
+            }
+        }
+
         CompoundTag newTag = newBook.getOrCreateTag();
         newTag.put(CompoundTagId.PAGES, newPages);
 
-        if (newPages.size()  >= ButterflyData.getNumButterflySpecies()) {
+        if (numButterflies  >= ButterflyData.getNumButterflySpecies()) {
             newTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
         }
     }

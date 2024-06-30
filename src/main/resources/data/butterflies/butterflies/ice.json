@@ -1,5 +1,5 @@
 {
-  "index": 0,
+  "index": 17,
   "entityId": "ice",
   "size": "medium",
   "speed": "fast",
@@ -11,5 +11,6 @@
     "chrysalis": "long",
     "butterfly": "long"
   },
-  "preferredFlower": "wither_rose"
+  "preferredFlower": "wither_rose",
+  "type": "special"
 }
