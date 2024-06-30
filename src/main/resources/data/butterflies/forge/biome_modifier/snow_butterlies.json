@@ -1,27 +1,27 @@
 {
   "type": "forge:add_spawns",
-  "biomes": "#forge:is_icy",
+  "biomes": "#forge:is_snowy",
   "spawners": [
     {
-      "type": "butterflies:clipper",
+      "type": "butterflies:ice",
       "weight": 2,
       "minCount": 1,
       "maxCount": 3
     },
     {
-      "type": "butterflies:clipper_caterpillar",
+      "type": "butterflies:ice_caterpillar",
       "weight": 2,
       "minCount": 1,
       "maxCount": 3
     },
     {
-      "type": "butterflies:clipper_chrysalis",
+      "type": "butterflies:ice_chrysalis",
       "weight": 2,
       "minCount": 1,
       "maxCount": 3
     },
     {
-      "type": "butterflies:clipper_egg",
+      "type": "butterflies:ice_egg",
       "weight": 2,
       "minCount": 1,
       "maxCount": 3
