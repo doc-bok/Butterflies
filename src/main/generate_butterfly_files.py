@@ -21,7 +21,8 @@ BUTTERFLIES = [
     'morpho',
     'rainbow',
     'swallowtail',
-    'peacock'
+    'peacock',
+    'ice'
 ]
 
 # List of files to generate json files for.
