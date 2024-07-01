@@ -10,5 +10,7 @@
     "caterpillar": "short",
     "chrysalis": "short",
     "butterfly": "long"
-  }
+  },
+  "preferredFlower": "orange_tulip",
+  "type": "butterfly"
 }

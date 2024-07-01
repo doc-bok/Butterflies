@@ -10,6 +10,7 @@ public class ButterfliesConfig {
     public static ModConfigSpec.IntValue eggLimit;
     public static ModConfigSpec.IntValue maxDensity;
     public static ModConfigSpec.BooleanValue enableLifespan;
+    public static ModConfigSpec.BooleanValue enablePollination;
 
     static {
         ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
@@ -37,6 +38,10 @@ public class ButterfliesConfig {
         enableLifespan = builder
                 .comment("If set to TRUE butterflies will die naturally.")
                 .define("enable_lifespan", true);
+
+        enablePollination = builder
+                .comment("If set to TRUE butterflies will pollinate flowers and cause new ones to grow.")
+                        .define("enable_pollination", true);
 
         builder.pop();
     }

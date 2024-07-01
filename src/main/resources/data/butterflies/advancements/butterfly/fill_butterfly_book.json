@@ -8,7 +8,7 @@
       "translate": "advancements.butterfly.butterfly_book.title"
     },
     "description": {
-      "translate": "advancements.butterfly.catch_all_butterflies.description"
+      "translate": "advancements.butterfly.butterfly_book.description"
     },
     "frame": "challenge",
     "show_toast": true,

@@ -1,13 +1,12 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -15,44 +14,24 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BottledButterflyBlock extends Block {
 
-    //  The name this item is registered under.
+    //  The name this block is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
-    //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "bottled_butterfly_admiral";
-    public static final String BUCKEYE_NAME = "bottled_butterfly_buckeye";
-    public static final String CABBAGE_NAME = "bottled_butterfly_cabbage";
-    public static final String CHALKHILL_NAME = "bottled_butterfly_chalkhill";
-    public static final String CLIPPER_NAME = "bottled_butterfly_clipper";
-    public static final String COMMON_NAME = "bottled_butterfly_common";
-    public static final String EMPEROR_NAME = "bottled_butterfly_emperor";
-    public static final String FORESTER_NAME = "bottled_butterfly_forester";
-    public static final String GLASSWING_NAME = "bottled_butterfly_glasswing";
-    public static final String HAIRSTREAK_NAME = "bottled_butterfly_hairstreak";
-    public static final String HEATH_NAME = "bottled_butterfly_heath";
-    public static final String LONGWING_NAME = "bottled_butterfly_longwing";
-    public static final String MONARCH_NAME = "bottled_butterfly_monarch";
-    public static final String MORPHO_NAME = "bottled_butterfly_morpho";
-    public static final String RAINBOW_NAME = "bottled_butterfly_rainbow";
-    public static final String SWALLOWTAIL_NAME = "bottled_butterfly_swallowtail";
-    
-    //  TODO: Remove in future version
-    public static final String NAME = "bottled_butterfly";
+    private static final String NAME = "block.butterflies.bottled_butterfly";
 
     //  The bottle's "model".
     private static final VoxelShape SHAPE = Shapes.or(
@@ -95,6 +74,17 @@ public class BottledButterflyBlock extends Block {
     }
 
     /**
+     * Overridden, so we can use a single localisation string for all instances.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public MutableComponent getName() {
+        return Component.translatable(NAME);
+    }
+
+    /**
      * Get the shape of the block.
      * @param blockState The current block state.
      * @param blockGetter Access to the block.
@@ -119,6 +109,7 @@ public class BottledButterflyBlock extends Block {
      */
     @Override
     @NotNull
+    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(@NotNull BlockState blockState) {
         return RenderShape.MODEL;
     }

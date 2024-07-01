@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.event.network;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientPayloadHandler;
-import com.bokmcdok.butterflies.network.protocol.common.custom.ClientboundButterflyDataPacket;
+import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
@@ -35,7 +35,7 @@ public class NetworkEventListener {
             Collection<ButterflyData> butterflyDataCollection = ButterflyData.getButterflyDataCollection();
 
             // Create our packet.
-            ClientboundButterflyDataPacket packet = new ClientboundButterflyDataPacket(butterflyDataCollection);
+            ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
 
             // Create the payload.
             Packet<?> payload = new ClientboundCustomPayloadPacket(packet);
@@ -63,7 +63,7 @@ public class NetworkEventListener {
         @SubscribeEvent
         public static void register(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(ButterfliesMod.MOD_ID);
-            registrar.play(ClientboundButterflyDataPacket.ID, ClientboundButterflyDataPacket::new, handler -> handler
+            registrar.play(ClientBoundButterflyDataPacket.ID, ClientBoundButterflyDataPacket::new, handler -> handler
                     .client(ClientPayloadHandler.getInstance()::handleButterflyData));
         }
     }

@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -31,26 +32,17 @@ import java.util.List;
 public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "butterfly_net_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
+
+    //  The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
-    public static final String ADMIRAL_NAME = "butterfly_net_admiral";
-    public static final String BUCKEYE_NAME = "butterfly_net_buckeye";
-    public static final String CABBAGE_NAME = "butterfly_net_cabbage";
-    public static final String CHALKHILL_NAME = "butterfly_net_chalkhill";
-    public static final String CLIPPER_NAME = "butterfly_net_clipper";
-    public static final String COMMON_NAME = "butterfly_net_common";
-    public static final String EMPEROR_NAME = "butterfly_net_emperor";
-    public static final String FORESTER_NAME = "butterfly_net_forester";
-    public static final String GLASSWING_NAME = "butterfly_net_glasswing";
-    public static final String HAIRSTREAK_NAME = "butterfly_net_hairstreak";
-    public static final String HEATH_NAME = "butterfly_net_heath";
-    public static final String LONGWING_NAME = "butterfly_net_longwing";
-    public static final String MONARCH_NAME = "butterfly_net_monarch";
-    public static final String MORPHO_NAME = "butterfly_net_morpho";
-    public static final String RAINBOW_NAME = "butterfly_net_rainbow";
-    public static final String SWALLOWTAIL_NAME = "butterfly_net_swallowtail";
 
     //  TODO: Remove this item
     public static final String FULL_NAME = "butterfly_net_full";
+
+    private static final String NAME = "item.butterflies.butterfly_net";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -110,6 +102,18 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
         return new ItemStack(ItemRegistry.BUTTERFLY_NET.get());
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable(NAME);
     }
 
     /**

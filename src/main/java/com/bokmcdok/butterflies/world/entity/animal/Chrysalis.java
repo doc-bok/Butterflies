@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,234 +20,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class Chrysalis extends DirectionalCreature {
 
-    // The unique IDs that are used to reference a chrysalis entity.
-    public static final String MORPHO_NAME = "morpho_chrysalis";
-    public static final String FORESTER_NAME = "forester_chrysalis";
-    public static final String COMMON_NAME = "common_chrysalis";
-    public static final String EMPEROR_NAME = "emperor_chrysalis";
-    public static final String HAIRSTREAK_NAME = "hairstreak_chrysalis";
-    public static final String RAINBOW_NAME = "rainbow_chrysalis";
-    public static final String HEATH_NAME = "heath_chrysalis";
-    public static final String GLASSWING_NAME = "glasswing_chrysalis";
-    public static final String CHALKHILL_NAME = "chalkhill_chrysalis";
-    public static final String SWALLOWTAIL_NAME = "swallowtail_chrysalis";
-    public static final String MONARCH_NAME = "monarch_chrysalis";
-    public static final String CABBAGE_NAME = "cabbage_chrysalis";
-    public static final String ADMIRAL_NAME = "admiral_chrysalis";
-    public static final String LONGWING_NAME = "longwing_chrysalis";
-    public static final String BUCKEYE_NAME = "buckeye_chrysalis";
-    public static final String CLIPPER_NAME = "clipper_chrysalis";
+    //  The name this block is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_chrysalis";
+    }
 
     // The size of the caterpillar.
     private final ButterflyData.Size size;
-
-    /**
-     * Create a Admiral chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createAdmiral(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("admiral", entityType, level);
-    }
-
-    /**
-     * Create a Buckeye chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createBuckeye(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("buckeye", entityType, level);
-    }
-
-    /**
-     * Create a Cabbage chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createCabbage(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("cabbage", entityType, level);
-    }
-
-    /**
-     * Create a Chalkhill chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createChalkhill(EntityType<? extends Chrysalis> entityType,
-                                            Level level) {
-        return new Chrysalis("chalkhill", entityType, level);
-    }
-
-    /**
-     * Create a Clipper chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createClipper(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("clipper", entityType, level);
-    }
-
-    /**
-     * Create a Common chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createCommon(EntityType<? extends Chrysalis> entityType,
-                                         Level level) {
-        return new Chrysalis("common", entityType, level);
-    }
-
-    /**
-     * Create an Emperor chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createEmperor(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("emperor", entityType, level);
-    }
-
-    /**
-     * Create a Forester chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createForester(EntityType<? extends Chrysalis> entityType,
-                                           Level level) {
-        return new Chrysalis("forester", entityType, level);
-    }
-
-    /**
-     * Create a Glasswing chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createGlasswing(EntityType<? extends Chrysalis> entityType,
-                                            Level level) {
-        return new Chrysalis("glasswing", entityType, level);
-    }
-
-    /**
-     * Create a Hairstreak chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createHairstreak(EntityType<? extends Chrysalis> entityType,
-                                             Level level) {
-        return new Chrysalis("hairstreak", entityType, level);
-    }
-
-    /**
-     * Create a Heath chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createHeath(EntityType<? extends Chrysalis> entityType,
-                                        Level level) {
-        return new Chrysalis("heath", entityType, level);
-    }
-
-    /**
-     * Create a Longwing chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createLongwing(EntityType<? extends Chrysalis> entityType,
-                                           Level level) {
-        return new Chrysalis("longwing", entityType, level);
-    }
-
-    /**
-     * Create a Monarch chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createMonarch(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("monarch", entityType, level);
-    }
-
-    /**
-     * Create a Morpho chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createMorpho(EntityType<? extends Chrysalis> entityType,
-                                         Level level) {
-        return new Chrysalis("morpho", entityType, level);
-    }
-
-    /**
-     * Create a Rainbow chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createRainbow(EntityType<? extends Chrysalis> entityType,
-                                          Level level) {
-        return new Chrysalis("rainbow", entityType, level);
-    }
-
-    /**
-     * Create a Swallowtail chrysalis.
-     *
-     * @param entityType The type of the entity.
-     * @param level      The current level.
-     * @return A newly constructed entity.
-     */
-    @NotNull
-    public static Chrysalis createSwallowtail(EntityType<? extends Chrysalis> entityType,
-                                              Level level) {
-        return new Chrysalis("swallowtail", entityType, level);
-    }
 
     /**
      * Spawns a chrysalis into the world.
@@ -365,19 +145,32 @@ public class Chrysalis extends DirectionalCreature {
 
     /**
      * Construction
-     * @param species The species of the butterfly
      * @param entityType The type of the entity.
      * @param level      The current level.
      */
-    protected Chrysalis(String species,
-                        EntityType<? extends Chrysalis> entityType,
+    public Chrysalis(EntityType<? extends Chrysalis> entityType,
                         Level level) {
-        super("textures/entity/chrysalis/chrysalis_" + species + ".png", entityType, level);
+        super(entityType, level);
+
+        String species = "undiscovered";
+        String encodeId = this.getEncodeId();
+        if (encodeId != null) {
+            String[] split = encodeId.split(":");
+            if (split.length >= 2) {
+                species = split[1];
+                split = species.split("_");
+                if (split.length >=2) {
+                    species = split[0];
+                }
+            }
+        }
+
+        setTexture("textures/entity/chrysalis/chrysalis_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size;
-        setAge(-data.chrysalisLifespan);
+        this.size = data.size();
+        setAge(-data.chrysalisLifespan());
     }
 
     /**
@@ -432,18 +225,6 @@ public class Chrysalis extends DirectionalCreature {
     @Override
     protected float getSoundVolume() {
         return 0.0f;
-    }
-
-    /**
-     * Override to set the entity's eye height.
-     * @param pose The current pose of the entity.
-     * @param dimensions The dimensions of the entity.
-     * @return The height of the entity's eyes.
-     */
-    @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         EntityDimensions dimensions) {
-        return dimensions.height / 2.0f;
     }
 
     /**

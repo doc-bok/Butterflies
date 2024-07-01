@@ -10,5 +10,7 @@
     "caterpillar": "short",
     "chrysalis": "medium",
     "butterfly": "short"
-  }
+  },
+  "preferredFlower": "poppy",
+  "type": "butterfly"
 }

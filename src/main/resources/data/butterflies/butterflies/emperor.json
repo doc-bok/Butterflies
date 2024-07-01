@@ -10,5 +10,7 @@
     "caterpillar": "medium",
     "chrysalis": "short",
     "butterfly": "medium"
-  }
+  },
+  "preferredFlower": "red_tulip",
+  "type": "butterfly"
 }

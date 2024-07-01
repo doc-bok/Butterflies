@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -54,6 +55,6 @@ public class ButterflyScrollScreen extends Screen {
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
         super.render(guiGraphics, x, y, unknown);
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyTextures.SCROLLS[this.butterflyIndex], i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(ButterflyData.indexToButterflyScrollTexture(butterflyIndex), i, 2, 0, 0, 192, 192);
     }
 }

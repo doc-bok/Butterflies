@@ -1,23 +1,82 @@
 package com.bokmcdok.butterflies.world;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Helper for converting entity ID to index and vice versa.
+ * @param butterflyIndex      The index of the butterfly
+ * @param entityId            The butterfly species
+ * @param size                The size of the butterfly
+ * @param speed               The speed of the butterfly
+ * @param rarity              How rare the butterfly is
+ * @param habitat             The description of the butterfly's habitat
+ * @param eggLifespan         The lifespan of the caterpillar phase
+ * @param caterpillarLifespan The lifespan of the caterpillar phase
+ * @param chrysalisLifespan   The lifespan of the chrysalis phase
+ * @param butterflyLifespan   The lifespan of the butterfly phase
+ * @param preferredFlower     The flower this butterfly prefers
  */
-public class ButterflyData {
+public record ButterflyData(int butterflyIndex,
+                            String entityId,
+                            Size size,
+                            Speed speed,
+                            Rarity rarity,
+                            Habitat habitat,
+                            int eggLifespan,
+                            int caterpillarLifespan,
+                            int chrysalisLifespan,
+                            int butterflyLifespan,
+                            ResourceLocation preferredFlower,
+                            ButterflyType type) {
+
+    // Represents a butterflies preferred habitat.Note that like rarity, this
+    // only affects the description. The biome modifiers will determine where
+    // they will actually spawn.
+    public enum Habitat {
+        FORESTS,
+        FORESTS_AND_PLAINS,
+        ICE,
+        JUNGLES,
+        PLAINS
+    }
+
+    // Helper enum to determine a butterflies overall lifespan.
+    public enum Lifespan {
+        SHORT(0),
+        MEDIUM(1),
+        LONG(2);
+
+        private final int value;
+
+        Lifespan(int value) {
+            this.value = value;
+        }
+
+        public int getIndex() {
+            return this.value;
+        }
+    }
+
+    // Represents the rarity of a butterfly. Note that this only affects the
+    // description. The actual rarity is defined by biome modifiers.
+    public enum Rarity {
+        COMMON,
+        UNCOMMON,
+        RARE
+    }
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
@@ -31,70 +90,24 @@ public class ButterflyData {
         MODERATE,
         FAST
     }
-
-    // Represents the rarity of a butterfly. Note that this only affects the
-    // description. The actual rarity is defined by biome modifiers.
-    public enum Rarity {
-        COMMON,
-        UNCOMMON,
-        RARE
-    }
-
-    // Represents a butterflies preferred habitat.Note that like rarity, this
-    // only affects the description. The biome modifiers will determine where
-    // they will actually spawn.
-    public enum Habitat {
-        FORESTS,
-        FORESTS_AND_PLAINS,
-        JUNGLES,
-        PLAINS
-    }
-
-    // Helper enum to determine a butterflies overall lifespan.
-    public enum Lifespan {
-        SHORT,
-        MEDIUM,
-        LONG
+    
+    public enum ButterflyType {
+        BUTTERFLY,
+        SPECIAL
     }
 
     // Constants representing the base life spans of each butterfly cycle.
-    public static int LIFESPAN_SHORT = 24000 * 2;
-    public static int LIFESPAN_MEDIUM = 24000 * 4;
-    public static int LIFESPAN_LONG = 24000 * 7;
+    public static int[] LIFESPAN = {
+            24000 * 2,
+            24000 * 4,
+            24000 * 7
+    };
 
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
     private static final Map<Integer, ButterflyData> BUTTERFLY_ENTRIES = new HashMap<>();
 
-    // The index of the butterfly
-    public final int butterflyIndex;
-
-    // The butterfly species
-    public final String entityId;
-
-    // The size of the butterfly
-    public final Size size;
-
-    // The speed of the butterfly
-    public final Speed speed;
-
-    // How rare the butterfly is
-    public final Rarity rarity;
-
-    // The description of the butterfly's habitat
-    public final Habitat habitat;
-
-    // The lifespan of the caterpillar phase
-    public final int eggLifespan;
-
-    // The lifespan of the caterpillar phase
-    public final int caterpillarLifespan;
-
-    // The lifespan of the chrysalis phase
-    public final int chrysalisLifespan;
-
-    // The lifespan of the butterfly phase
-    public final int butterflyLifespan;
+    private static int NUM_BUTTERFLIES;
 
     /**
      * Get the overall lifespan as a simple enumeration
@@ -120,17 +133,20 @@ public class ButterflyData {
      * @param caterpillarLifespan How long it remains in the caterpillar stage.
      * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
      * @param butterflyLifespan   How long it lives as a butterfly.
+     * @param preferredFlower     The flower this butterfly prefers
      */
     public ButterflyData(int butterflyIndex,
-                          String entityId,
-                          Size size,
-                          Speed speed,
-                          Rarity rarity,
-                          Habitat habitat,
-                          int eggLifespan,
-                          int caterpillarLifespan,
-                          int chrysalisLifespan,
-                          int butterflyLifespan) {
+                         String entityId,
+                         Size size,
+                         Speed speed,
+                         Rarity rarity,
+                         Habitat habitat,
+                         int eggLifespan,
+                         int caterpillarLifespan,
+                         int chrysalisLifespan,
+                         int butterflyLifespan,
+                         ResourceLocation preferredFlower,
+                         ButterflyType type) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -142,6 +158,10 @@ public class ButterflyData {
         this.caterpillarLifespan = caterpillarLifespan * 2;
         this.chrysalisLifespan = chrysalisLifespan;
         this.butterflyLifespan = butterflyLifespan * 2;
+
+        this.preferredFlower = preferredFlower;
+        
+        this.type = type;
     }
 
     /**
@@ -151,7 +171,7 @@ public class ButterflyData {
 
         /**
          * Deserializes a JSON object into a butterfly entry
-         * @param json The Json data being deserialized
+         * @param json    The Json data being deserialized
          * @param typeOfT The type of the Object to deserialize to
          * @param context Language context (ignored)
          * @return A new butterfly entry
@@ -167,71 +187,20 @@ public class ButterflyData {
                 int index = object.get("index").getAsInt();
                 String entityId = object.get("entityId").getAsString();
 
-                String sizeStr = object.get("size").getAsString();
-                Size size = Size.MEDIUM;
-                if (Objects.equals(sizeStr, "small")) {
-                    size = Size.SMALL;
-                } else if (Objects.equals(sizeStr, "large")) {
-                    size = Size.LARGE;
-                }
-
-                String speedStr = object.get("speed").getAsString();
-                Speed speed = Speed.MODERATE;
-                if (Objects.equals(speedStr, "fast")) {
-                    speed = Speed.FAST;
-                }
-
-                String rarityStr = object.get("rarity").getAsString();
-                Rarity rarity = Rarity.COMMON;
-                if (Objects.equals(rarityStr, "uncommon")) {
-                    rarity = Rarity.UNCOMMON;
-                } else if (Objects.equals(rarityStr, "rare")) {
-                    rarity = Rarity.RARE;
-                }
-
-                String habitatStr = object.get("habitat").getAsString();
-                Habitat habitat = Habitat.PLAINS;
-                if (Objects.equals(habitatStr, "forests")) {
-                    habitat = Habitat.FORESTS;
-                } else if (Objects.equals(habitatStr, "forests_and_plains")) {
-                    habitat = Habitat.FORESTS_AND_PLAINS;
-                } else if (Objects.equals(habitatStr, "jungles")) {
-                    habitat = Habitat.JUNGLES;
-                }
+                Size size = getEnumValue(object, Size.class, "size", Size.MEDIUM);
+                Speed speed = getEnumValue(object, Speed.class, "speed", Speed.MODERATE);
+                Rarity rarity = getEnumValue(object, Rarity.class, "rarity", Rarity.COMMON);
+                Habitat habitat = getEnumValue(object, Habitat.class, "habitat", Habitat.PLAINS);
 
                 JsonObject lifespan = object.get("lifespan").getAsJsonObject();
+                Lifespan eggLifespan = getEnumValue(lifespan, Lifespan.class, "egg", Lifespan.MEDIUM);
+                Lifespan caterpillarLifespan = getEnumValue(lifespan, Lifespan.class, "caterpillar", Lifespan.MEDIUM);
+                Lifespan chrysalisLifespan = getEnumValue(lifespan, Lifespan.class, "chrysalis", Lifespan.MEDIUM);
+                Lifespan butterflyLifespan = getEnumValue(lifespan, Lifespan.class, "butterfly", Lifespan.MEDIUM);
 
-                String eggStr = lifespan.get("egg").getAsString();
-                int eggLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(eggStr, "short")) {
-                    eggLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(eggStr, "long")) {
-                    eggLifespan = LIFESPAN_LONG;
-                }
+                String preferredFlower = object.get("preferredFlower").getAsString();
 
-                String caterpillarStr = lifespan.get("caterpillar").getAsString();
-                int caterpillarLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(caterpillarStr, "short")) {
-                    caterpillarLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(caterpillarStr, "long")) {
-                    caterpillarLifespan = LIFESPAN_LONG;
-                }
-
-                String chrysalisStr = lifespan.get("chrysalis").getAsString();
-                int chrysalisLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(chrysalisStr, "short")) {
-                    chrysalisLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(chrysalisStr, "long")) {
-                    chrysalisLifespan = LIFESPAN_LONG;
-                }
-
-                String butterflyStr = lifespan.get("butterfly").getAsString();
-                int butterflyLifespan = LIFESPAN_MEDIUM;
-                if (Objects.equals(butterflyStr, "short")) {
-                    butterflyLifespan = LIFESPAN_SHORT;
-                } else if (Objects.equals(butterflyStr, "long")) {
-                    butterflyLifespan = LIFESPAN_LONG;
-                }
+                ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
 
                 entry = new ButterflyData(
                         index,
@@ -240,14 +209,34 @@ public class ButterflyData {
                         speed,
                         rarity,
                         habitat,
-                        eggLifespan,
-                        caterpillarLifespan,
-                        chrysalisLifespan,
-                        butterflyLifespan
+                        LIFESPAN[eggLifespan.getIndex()],
+                        LIFESPAN[caterpillarLifespan.getIndex()],
+                        LIFESPAN[chrysalisLifespan.getIndex()],
+                        LIFESPAN[butterflyLifespan.getIndex()],
+                        new ResourceLocation(preferredFlower),
+                        type
                 );
             }
 
             return entry;
+        }
+
+        /**
+         * Helper method for pulling out enumerated values.
+         * @param object The JSON object to read the value from.
+         * @param enumeration The enumerated type to extract.
+         * @param key The key to look for.
+         * @param fallback The fallback value if a value isn't found.
+         * @return A value of the enumerated type.
+         * @param <T> (Inferred) The type of the enumeration.
+         */
+        @NotNull
+        private static <T extends Enum<?>> T getEnumValue(JsonObject object,
+                                                          Class<T> enumeration,
+                                                          String key,
+                                                          T fallback) {
+            String value = object.get(key).getAsString();
+            return EnumExtensions.searchEnum(enumeration, value, fallback);
         }
     }
 
@@ -255,10 +244,19 @@ public class ButterflyData {
      * Create new butterfly data.
      * @param entry The butterfly data.
      */
-    public static void addButterfly(ButterflyData entry)
-    {
+    public static void addButterfly(ButterflyData entry) {
         ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
         BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
+
+        //  Recount the butterflies
+        if (entry.type == ButterflyType.BUTTERFLY) {
+            NUM_BUTTERFLIES = 0;
+            for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
+                if (i.type == ButterflyType.BUTTERFLY) {
+                    ++NUM_BUTTERFLIES;
+                }
+            }
+        }
     }
 
     /**
@@ -284,19 +282,6 @@ public class ButterflyData {
     }
 
     /**
-     * Converts an index to an entity ID.
-     * @param index The index to convert to an entity ID.
-     * @return The entity ID string.
-     */
-    private static String indexToEntityId(int index) {
-        if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index).entityId;
-        }
-
-        return null;
-    }
-
-    /**
      * Get all butterfly data. Used for network synchronisation.
      * @return The butterfly entries as a collection.
      */
@@ -308,10 +293,41 @@ public class ButterflyData {
      * Converts a resource location to a butterfly index.
      * @param location The resource location to convert.
      * @return The butterfly index for the butterfly species, or -1 if not
-     *         found.
+     * found.
      */
     public static int getButterflyIndex(ResourceLocation location) {
         return entityIdToIndex(location.toString());
+    }
+
+    /**
+     * Get butterfly data by index.
+     * @param index The butterfly index.
+     * @return The butterfly entry.
+     */
+    public static ButterflyData getEntry(int index) {
+        if (BUTTERFLY_ENTRIES.containsKey(index)) {
+            return BUTTERFLY_ENTRIES.get(index);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get butterfly data by resource location.
+     * @param location The resource location of the butterfly.
+     * @return The butterfly entry.
+     */
+    public static ButterflyData getEntry(ResourceLocation location) {
+        int index = getButterflyIndex(location);
+        return getEntry(index);
+    }
+
+    /**
+     * Returns the total number of butterfly species in the mod.
+     * @return The total number of butterflies.
+     */
+    public static int getNumButterflySpecies() {
+        return NUM_BUTTERFLIES;
     }
 
     /**
@@ -357,6 +373,16 @@ public class ButterflyData {
     }
 
     /**
+     * Gets the texture to use for a specific butterfly
+     * @param butterflyIndex The butterfly index.
+     * @return The resource location of the texture to use.
+     */
+    public static ResourceLocation indexToButterflyScrollTexture(int butterflyIndex) {
+        String entityId = indexToEntityId(butterflyIndex);
+        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + entityId + ".png");
+    }
+
+    /**
      * Gets the resource location for the caterpillar at the specified index.
      * @param index The butterfly index.
      * @return The resource location of the caterpillar.
@@ -365,20 +391,6 @@ public class ButterflyData {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
             return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_caterpillar");
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the chrysalis at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the chrysalis.
-     */
-    public static ResourceLocation indexToChrysalisEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_chrysalis");
         }
 
         return null;
@@ -399,39 +411,29 @@ public class ButterflyData {
     }
 
     /**
-     * Gets the resource location for the caterpillar item at the specified index.
+     * Gets the resource location for the chrysalis at the specified index.
      * @param index The butterfly index.
-     * @return The resource location of the caterpillar item.
+     * @return The resource location of the chrysalis.
      */
-    public static ResourceLocation indexToBottledCaterpillarItem(int index) {
+    public static ResourceLocation indexToChrysalisEntity(int index) {
         String entityId = indexToEntityId(index);
         if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, "bottled_caterpillar_" + entityId);
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_chrysalis");
         }
 
         return null;
     }
 
     /**
-     * Get butterfly data by index.
-     * @param index The butterfly index.
-     * @return The butterfly entry.
+     * Converts an index to an entity ID.
+     * @param index The index to convert to an entity ID.
+     * @return The entity ID string.
      */
-    public static ButterflyData getEntry(int index) {
+    private static String indexToEntityId(int index) {
         if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index);
+            return BUTTERFLY_ENTRIES.get(index).entityId;
         }
 
         return null;
-    }
-
-    /**
-     * Get butterfly data by resource location.
-     * @param location The resource location of the butterfly.
-     * @return The butterfly entry.
-     */
-    public static ButterflyData getEntry(ResourceLocation location) {
-        int index = getButterflyIndex(location);
-        return getEntry(index);
     }
 }
