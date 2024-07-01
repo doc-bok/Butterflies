@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.0.0 (2024-07-01)
+- Pollination Release of Bok's Banging Butterflies.
+
 ### 3.6.0 (2024-07-01)
 - Added the Ice Butterfly.
 
