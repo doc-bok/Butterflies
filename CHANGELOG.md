@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.6.0 (2024-07-01)
+- Added the Ice Butterfly.
+
 ### 3.5.2 (2024-06-28)
 - Improved butterfly data reading.
 
