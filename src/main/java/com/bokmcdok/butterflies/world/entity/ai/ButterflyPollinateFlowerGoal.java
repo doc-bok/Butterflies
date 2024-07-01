@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,7 +39,6 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyPollinateFlowerGoal(Butterfly mob,
                                         double speedModifier,
                                         int searchRange,
@@ -49,7 +48,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
-            this.preferredFlower = BuiltInRegistries.BLOCK.get(data.preferredFlower());
+            this.preferredFlower = ForgeRegistries.BLOCKS.getValue(data.preferredFlower());
         } else {
             this.preferredFlower = null;
         }
@@ -96,10 +95,10 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                 if (this.random.nextInt() % 5 == 0) {
                     BlockPos spawnPos = findNearestFlowerSpot();
                     if (spawnPos != null) {
-                        BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                        BlockState blockState = this.mob.level.getBlockState(this.blockPos);
                         Block budBlock = BlockRegistry.getFlowerBud(blockState.getBlock());
                         if (budBlock != null) {
-                            this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                            this.mob.level.setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
                         }
                     }
                 }
@@ -150,12 +149,9 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
                         // Torchflowers require farmland.
                         Block requiredBlock = Blocks.GRASS_BLOCK;
-                        if (this.mob.level().getBlockState(this.blockPos).is(Blocks.TORCHFLOWER)) {
-                            requiredBlock = Blocks.FARMLAND;
-                        }
 
-                        if (this.mob.level().getBlockState(mutableBlockPos).isAir() &&
-                            this.mob.level().getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
+                        if (this.mob.level.getBlockState(mutableBlockPos).isAir() &&
+                            this.mob.level.getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
 
                             return mutableBlockPos;
                         }

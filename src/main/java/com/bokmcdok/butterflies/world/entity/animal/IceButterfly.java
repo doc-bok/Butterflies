@@ -19,7 +19,7 @@ public class IceButterfly extends Butterfly {
     public void aiStep() {
         super.aiStep();
 
-        this.level().addParticle(ParticleTypes.ELECTRIC_SPARK,
+        this.level.addParticle(ParticleTypes.ELECTRIC_SPARK,
                 this.getRandomX(0.6),
                 this.getRandomY(),
                 this.getRandomZ(0.6),

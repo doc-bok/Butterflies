@@ -76,7 +76,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
             if (this.butterfly.getIsFertile()) {
 
                 // Don't lay an egg if there are too many butterflies in the area already.
-                List<Butterfly> numButterflies = this.butterfly.level().getNearbyEntities(
+                List<Butterfly> numButterflies = this.butterfly.level.getNearbyEntities(
                         Butterfly.class,
                         TargetingConditions.forNonCombat(),
                         butterfly,
@@ -95,9 +95,9 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
                         case 5 -> Direction.WEST;
                     };
 
-                    if (this.butterfly.level().getBlockState(this.blockPos.relative(direction)).isAir()) {
+                    if (this.butterfly.level.getBlockState(this.blockPos.relative(direction)).isAir()) {
                         ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterfly.getButterflyIndex());
-                        ButterflyEgg.spawn((ServerLevel) this.butterfly.level(), eggEntity, this.blockPos, direction);
+                        ButterflyEgg.spawn((ServerLevel) this.butterfly.level, eggEntity, this.blockPos, direction);
                         this.butterfly.setIsFertile(false);
                         this.butterfly.useEgg();
                     }

@@ -67,7 +67,7 @@ public class ButterflyWanderGoal extends Goal {
                                                    butterfly.getRandom().nextInt(8) - 4);
 
         //  Make sure this is an air block.
-        if (butterfly.level().getBlockState(targetPosition).isAir()) {
+        if (butterfly.level.getBlockState(targetPosition).isAir()) {
             return targetPosition;
         }
 
