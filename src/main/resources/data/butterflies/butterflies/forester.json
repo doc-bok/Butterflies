@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "medium"
   },
-  "preferredFlower": "lily_of_the_valley"
+  "preferredFlower": "lily_of_the_valley",
+  "type": "butterfly"
 }

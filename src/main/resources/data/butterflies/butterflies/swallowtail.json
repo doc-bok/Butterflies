@@ -11,5 +11,6 @@
     "chrysalis": "medium",
     "butterfly": "short"
   },
-  "preferredFlower": "azure_bluet"
+  "preferredFlower": "azure_bluet",
+  "type": "butterfly"
 }

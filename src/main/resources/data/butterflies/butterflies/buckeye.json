@@ -11,5 +11,6 @@
     "chrysalis": "short",
     "butterfly": "medium"
   },
-  "preferredFlower": "blue_orchid"
+  "preferredFlower": "blue_orchid",
+  "type": "butterfly"
 }

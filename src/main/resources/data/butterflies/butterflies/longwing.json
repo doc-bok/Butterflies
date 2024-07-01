@@ -11,5 +11,6 @@
     "chrysalis": "short",
     "butterfly": "long"
   },
-  "preferredFlower": "dandelion"
+  "preferredFlower": "dandelion",
+  "type": "butterfly"
 }

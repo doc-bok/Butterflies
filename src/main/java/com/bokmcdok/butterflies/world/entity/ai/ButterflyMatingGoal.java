@@ -4,6 +4,9 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
 
+/**
+ * A goal for butterflies that want to mate.
+ */
 public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
 
     // The squared distance at which butterflies can mate.

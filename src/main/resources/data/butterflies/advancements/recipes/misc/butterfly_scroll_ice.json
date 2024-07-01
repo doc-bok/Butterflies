@@ -1,0 +1,49 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_scroll_from_bottle_ice",
+      "butterflies:butterfly_scroll_from_net_ice"
+
+    ]
+  },
+  "criteria": {
+    "has_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_ice"
+            ]
+          }
+        ]
+      }
+    },
+    "has_net": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_ice"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:bottled_butterfly_ice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bottle",
+      "has_net",
+      "has_the_recipe"
+    ]
+  ]
+}

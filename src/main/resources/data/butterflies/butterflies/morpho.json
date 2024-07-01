@@ -11,5 +11,6 @@
     "chrysalis": "short",
     "butterfly": "medium"
   },
-  "preferredFlower": "pink_tulip"
+  "preferredFlower": "pink_tulip",
+  "type": "butterfly"
 }
