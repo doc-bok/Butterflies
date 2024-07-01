@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "butterflies:block/flower_buds/tulip_stage0"
+    },
+    "age=1": {
+      "model": "butterflies:block/flower_buds/tulip_stage1"
+    },
+    "age=2": {
+      "model": "butterflies:block/flower_buds/tulip_stage2"
+    },
+    "age=3": {
+      "model": "butterflies:block/flower_buds/tulip_stage3"
+    },
+    "age=4": {
+      "model": "butterflies:block/flower_buds/tulip_stage4"
+    },
+    "age=5": {
+      "model": "butterflies:block/flower_buds/red_tulip_stage5"
+    },
+    "age=6": {
+      "model": "butterflies:block/flower_buds/red_tulip_stage6"
+    }
+  }
+}

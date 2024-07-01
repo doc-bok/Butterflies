@@ -10,5 +10,7 @@
     "caterpillar": "medium",
     "chrysalis": "medium",
     "butterfly": "medium"
-  }
+  },
+  "preferredFlower": "oxeye_daisy",
+  "type": "butterfly"
 }

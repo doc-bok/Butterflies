@@ -1,0 +1,30 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#forge:is_snowy",
+  "spawners": [
+    {
+      "type": "butterflies:ice",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:ice_caterpillar",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:ice_chrysalis",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:ice_egg",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    }
+  ]
+}

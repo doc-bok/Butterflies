@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
@@ -36,36 +36,26 @@ import java.util.List;
 public class BottledCaterpillarItem extends BlockItem {
 
     //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "bottled_caterpillar_admiral";
-    public static final String BUCKEYE_NAME = "bottled_caterpillar_buckeye";
-    public static final String CABBAGE_NAME = "bottled_caterpillar_cabbage";
-    public static final String CHALKHILL_NAME = "bottled_caterpillar_chalkhill";
-    public static final String CLIPPER_NAME = "bottled_caterpillar_clipper";
-    public static final String COMMON_NAME = "bottled_caterpillar_common";
-    public static final String EMPEROR_NAME = "bottled_caterpillar_emperor";
-    public static final String FORESTER_NAME = "bottled_caterpillar_forester";
-    public static final String GLASSWING_NAME = "bottled_caterpillar_glasswing";
-    public static final String HAIRSTREAK_NAME = "bottled_caterpillar_hairstreak";
-    public static final String HEATH_NAME = "bottled_caterpillar_heath";
-    public static final String LONGWING_NAME = "bottled_caterpillar_longwing";
-    public static final String MONARCH_NAME = "bottled_caterpillar_monarch";
-    public static final String MORPHO_NAME = "bottled_caterpillar_morpho";
-    public static final String RAINBOW_NAME = "bottled_caterpillar_rainbow";
-    public static final String SWALLOWTAIL_NAME = "bottled_caterpillar_swallowtail";
+    //  The name this item is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
+
+    private static final String NAME = "block.butterflies.bottled_caterpillar";
 
     // The butterfly index for this species.
-    private final ResourceLocation species;
+    private final int butterflyIndex;
 
     /**
      * Construction
      * @param block The block to place in the world.
-     * @param species The species of caterpillar in the bottle.
+     * @param butterflyIndex The butterfly index of the species.
      */
     public BottledCaterpillarItem(RegistryObject<Block> block,
-                                  String species) {
+                                  int butterflyIndex) {
         super(block.get(), new Item.Properties().stacksTo(1));
 
-        this.species = new ResourceLocation(ButterfliesMod.MODID, species);
+        this.butterflyIndex = butterflyIndex;
     }
 
     /**
@@ -80,21 +70,56 @@ public class BottledCaterpillarItem extends BlockItem {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        String translatable = "item." + species.toString().replace(':', '.');
+        ResourceLocation caterpillarEntity = ButterflyData.indexToCaterpillarEntity(this.butterflyIndex);
+        if (caterpillarEntity != null) {
+            String translatable = "entity." + caterpillarEntity.toString().replace(':', '.');
 
-        MutableComponent speciesComponent = Component.translatable(translatable);
-        Style speciesStyle = speciesComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
-                .withItalic(true);
-        speciesComponent.setStyle(speciesStyle);
-        components.add(speciesComponent);
+            MutableComponent speciesComponent = Component.translatable(translatable);
+            Style speciesStyle = speciesComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
+                    .withItalic(true);
+            speciesComponent.setStyle(speciesStyle);
+            components.add(speciesComponent);
 
-        MutableComponent tooltipComponent = Component.translatable("tooltip.butterflies.release_caterpillar");
-        Style tooltipStyle = tooltipComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
-                .withItalic(true);
-        tooltipComponent.setStyle(tooltipStyle);
-        components.add(tooltipComponent);
+            MutableComponent tooltipComponent = Component.translatable("tooltip.butterflies.release_caterpillar");
+            Style tooltipStyle = tooltipComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
+                    .withItalic(true);
+            tooltipComponent.setStyle(tooltipStyle);
+            components.add(tooltipComponent);
 
-        super.appendHoverText(stack, level, components, tooltipFlag);
+            super.appendHoverText(stack, level, components, tooltipFlag);
+        }
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable(NAME);
+    }
+
+    /**
+     * Placing the item will create an in-world bottle with a butterfly inside.
+     * @param context The context in which the block is being placed.
+     * @return The interaction result.
+     */
+    @Override
+    @NotNull
+    public InteractionResult place(@NotNull BlockPlaceContext context) {
+
+        InteractionResult result = super.place(context);
+        if (result == InteractionResult.CONSUME) {
+            Caterpillar.spawn((ServerLevel)context.getLevel(),
+                    ButterflyData.indexToCaterpillarEntity(this.butterflyIndex),
+                    context.getClickedPos(),
+                    Direction.DOWN, true);
+        }
+
+        return result;
     }
 
     /**
@@ -111,8 +136,7 @@ public class BottledCaterpillarItem extends BlockItem {
                                                   @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        int butterflyIndex = ButterflyData.getButterflyIndex(species);
-        ResourceLocation location = ButterflyData.indexToCaterpillarItem(butterflyIndex);
+        ResourceLocation location = ButterflyData.indexToCaterpillarItem(this.butterflyIndex);
         Item caterpillarItem = ForgeRegistries.ITEMS.getValue(location);
         if (caterpillarItem != null) {
             ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
@@ -122,22 +146,5 @@ public class BottledCaterpillarItem extends BlockItem {
         player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
 
         return InteractionResultHolder.success(stack);
-    }
-
-    /**
-     * Placing the item will create an in-world bottle with a butterfly inside.
-     * @param context The context in which the block is being placed.
-     * @return The interaction result.
-     */
-    @Override
-    @NotNull
-    public InteractionResult place(@NotNull BlockPlaceContext context) {
-
-        InteractionResult result = super.place(context);
-        if (result == InteractionResult.CONSUME) {
-            Caterpillar.spawn((ServerLevel)context.getLevel(), species, context.getClickedPos(), Direction.DOWN, true);
-        }
-
-        return result;
     }
 }

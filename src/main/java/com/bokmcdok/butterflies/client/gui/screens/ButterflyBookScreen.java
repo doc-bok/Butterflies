@@ -3,11 +3,13 @@ package com.bokmcdok.butterflies.client.gui.screens;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.ClickEvent;
@@ -143,16 +145,17 @@ public class ButterflyBookScreen extends Screen {
         if (super.keyPressed(key, mod1, mod2)) {
             return true;
         } else {
-            switch (key) {
-                case 266:
+            return switch (key) {
+                case 266 -> {
                     this.backButton.onPress();
-                    return true;
-                case 267:
+                    yield true;
+                }
+                case 267 -> {
                     this.forwardButton.onPress();
-                    return true;
-                default:
-                    return false;
-            }
+                    yield true;
+                }
+                default -> false;
+            };
         }
     }
 
@@ -198,7 +201,7 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            guiGraphics.blit(ButterflyTextures.SCROLLS[butterflyIndex], i, 2, 0, 0, 192, 192);
+            guiGraphics.blit(ButterflyData.indexToButterflyScrollTexture(butterflyIndex), i, 2, 0, 0, 192, 192);
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 
@@ -392,18 +395,23 @@ public class ButterflyBookScreen extends Screen {
          * @param page The page number to get.
          * @return The formatted text for the page.
          */
+        @SuppressWarnings("deprecation")
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
                 int butterflyIndex = pages.getInt((page - 1) / 2);
                 ButterflyData entry = ButterflyData.getEntry(butterflyIndex);
                 if (entry != null) {
                     //  Butterfly name
-                    MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId);
+                    MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId());
+
+                    if (entry.type() == ButterflyData.ButterflyType.SPECIAL) {
+                        component.withStyle(ChatFormatting.DARK_BLUE);
+                    }
 
                     // Rarity
                     component.append("\n\n");
                     component.append(Component.translatable("gui.butterflies.rarity"));
-                    switch (entry.rarity) {
+                    switch (entry.rarity()) {
                         case RARE -> component.append(Component.translatable("gui.butterflies.rarity.rare"));
                         case UNCOMMON -> component.append(Component.translatable("gui.butterflies.rarity.uncommon"));
                         case COMMON -> component.append(Component.translatable("gui.butterflies.rarity.common"));
@@ -413,7 +421,7 @@ public class ButterflyBookScreen extends Screen {
                     // Size
                     component.append("\n");
                     component.append(Component.translatable("gui.butterflies.size"));
-                    switch (entry.size) {
+                    switch (entry.size()) {
                         case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
                         case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));
@@ -423,7 +431,7 @@ public class ButterflyBookScreen extends Screen {
                     // Speed
                     component.append("\n");
                     component.append(Component.translatable("gui.butterflies.speed"));
-                    switch (entry.speed) {
+                    switch (entry.speed()) {
                         case MODERATE -> component.append(Component.translatable("gui.butterflies.speed.moderate"));
                         case FAST -> component.append(Component.translatable("gui.butterflies.speed.fast"));
                         default -> {}
@@ -442,17 +450,25 @@ public class ButterflyBookScreen extends Screen {
                     // Habitat
                     component.append("\n");
                     component.append(Component.translatable("gui.butterflies.habitat"));
-                    switch (entry.habitat) {
+                    switch (entry.habitat()) {
                         case FORESTS -> component.append(Component.translatable("gui.butterflies.habitat.forests"));
                         case FORESTS_AND_PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
                         case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
                         case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
+                        case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
                         default -> {}
                     }
 
+                    // Preferred Flower
+                    component.append("\n");
+                    component.append(Component.translatable("gui.butterflies.preferred_flower"));
+                    Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
+                    component.append(description);
+
+
                     // Fact
                     component.append("\n\n");
-                    component.append(Component.translatable("gui.butterflies.fact." + entry.entityId));
+                    component.append(Component.translatable("gui.butterflies.fact." + entry.entityId()));
 
                     return component;
                 }

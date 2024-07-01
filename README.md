@@ -1,4 +1,4 @@
-# Butterflies
+# Bok's Banging Butterflies
 This mod adds butterflies with a full life cycle to the world of Minecraft. It
 features 16 butterfly species, mostly based on real-life butterflies but a
 couple of them are purely fantasy butterflies.
@@ -20,8 +20,8 @@ cats away from them!
 ### Eggs
 
 Butterflies will lay eggs in leaves if they get close to them. The eggs will
-eventually hatch into caterpillars. If a player breaks the leaves, the eggs
-will drop. Players can then replant these eggs on other leaves.
+eventually hatch into caterpillars. If a player breaks the eggs, they will
+drop. Players can then replant these eggs on other leaves.
 
 ### Caterpillars
 
@@ -56,6 +56,11 @@ this way will not die, lay eggs or create chrysalises.
 If you want to get the butterfly or caterpillar back, they can be released by
 using the bottle while not highlighting a block.
 
+### Flower Pollination
+
+Butterflies will occasionally fly toward and pollinate flowers. This will spawn
+flower buds that will eventually bloom into full flowers. 
+
 ### Server Config
 
 There are now server config options to help manage butterfly growth. You can
@@ -74,17 +79,23 @@ before breeding is disabled. If set to zero, this is ignored (default: `16`).
 **enable_lifespan:** If set to TRUE butterflies will die naturally
 (default: `true`).
 
+**enable_pollination:** If set to TRUE butterflies will pollinate flowers and
+cause them to spread (default: `true`)
+
 ## Latest Release
-- [Minecraft 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.20.2.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.20.1.jar)
-- [Minecraft 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/3.1.0/butterflies-3.1.0-for-1.19.2.jar)
+- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.4.jar)
+- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.2.jar)
+- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.1.jar)
+- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
-- [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/3.0.2)
-- [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/3.0.0)
+- [Bok’s Butterflies v3.4.0](https://github.com/doc-bok/Butterflies/releases/tag/3.4.0)
+- [Bok’s Butterflies v3.1.0](https://github.com/doc-bok/Butterflies/releases/tag/3.1.0)
+- [Bok’s Butterflies v3.0.2](https://github.com/doc-bok/Butterflies/releases/tag/3.0.2)
+- [Bok’s Butterflies v3.0.0](https://github.com/doc-bok/Butterflies/releases/tag/3.0.0)
 - [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/2.1.1)
 - [Bok’s Butterflies v2.0.9](https://github.com/doc-bok/Butterflies/releases/tag/2.0.9)
 - [Bok’s Butterflies v2.0.6](https://github.com/doc-bok/Butterflies/releases/tag/2.0.6)
