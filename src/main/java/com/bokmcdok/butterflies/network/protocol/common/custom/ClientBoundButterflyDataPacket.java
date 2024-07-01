@@ -23,7 +23,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
      * Construct from a byte buffer. Reads the data ready for use.
      * @param buffer The buffer to read the data from.
      */
-    public ClientboundButterflyDataPacket(final FriendlyByteBuf buffer) {
+    public ClientBoundButterflyDataPacket(final FriendlyByteBuf buffer) {
         this((Collection<ButterflyData>) buffer.readCollection(ArrayList::new,
             (entry) -> new ButterflyData(entry.readInt(),
                     entry.readUtf(),
@@ -34,7 +34,9 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
-                    entry.readInt())));
+                    entry.readInt(),
+                    entry.readResourceLocation(),
+                    entry.readEnum(ButterflyData.ButterflyType.class))));
     }
 
     /**

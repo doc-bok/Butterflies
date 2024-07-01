@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -29,20 +30,20 @@ public class FlowerCropBlock extends CropBlock {
      * @param block The flower block.
      */
     public FlowerCropBlock(Block block) {
-        super(BlockBehaviour.Properties.copy(block));
+        super(BlockBehaviour.Properties.ofFullCopy(block));
         this.flowerBlock = block;
     }
 
     /**
      * Flower crops cannot be cloned or placed, even in creative mode.
-     * @param blockGetter The block getter.
+     * @param levelReader Reads the level.
      * @param blockPos The block position.
      * @param blockState The block state.
      * @return An empty item stack.
      */
     @NotNull
     @Override
-    public ItemStack getCloneItemStack(@NotNull BlockGetter blockGetter,
+    public ItemStack getCloneItemStack(@NotNull LevelReader levelReader,
                                        @NotNull BlockPos blockPos,
                                        @NotNull BlockState blockState) {
         return ItemStack.EMPTY;

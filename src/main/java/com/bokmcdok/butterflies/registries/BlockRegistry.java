@@ -25,7 +25,6 @@ import java.util.List;
 /**
  * Registers the blocks used by the mod.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class BlockRegistry {
 
     // An instance of a deferred registry we use to register items.

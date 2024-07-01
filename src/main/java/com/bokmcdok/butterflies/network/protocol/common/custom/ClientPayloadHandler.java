@@ -28,7 +28,7 @@ public class ClientPayloadHandler {
      * @param data The inbound data record.
      * @param context The context in which the payload was received.
      */
-    public void handleButterflyData(@NotNull final ClientboundButterflyDataPacket data,
+    public void handleButterflyData(@NotNull final ClientBoundButterflyDataPacket data,
                                     final PlayPayloadContext context) {
 
         // Do something with the data, on the main thread
