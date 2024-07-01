@@ -3,7 +3,8 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.client.model.ButterflyModel;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.culling.Frustum;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -32,6 +33,32 @@ public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull Butterfly entity) {
         return entity.getTexture();
+    }
+
+    /**
+     * Override to fix a bug with the model's orientation.
+     * @param entity The butterfly entity.
+     * @param p_115456_ Unknown.
+     * @param p_115457_ Unknown.
+     * @param poseStack The pose stack.
+     * @param multiBufferSource The render buffer (I think...)
+     * @param p_115460_ Unknown.
+     */
+    @Override
+    public void render(@NotNull Butterfly entity,
+                       float p_115456_,
+                       float p_115457_,
+                       @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource multiBufferSource,
+                       int p_115460_) {
+
+        // When the models were initially created no thought was given as to
+        // what orientation they needed to be in. Rotating them here allows
+        // them to use Minecraft's pathfinding systems without having to redo
+        // the model from scratch.
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.f));
+
+        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
     }
 
     /**

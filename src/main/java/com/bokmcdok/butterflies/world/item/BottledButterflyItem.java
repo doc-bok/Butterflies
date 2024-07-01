@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -29,25 +30,11 @@ import java.util.List;
 public class BottledButterflyItem extends BlockItem implements ButterflyContainerItem {
 
     //  The name this item is registered under.
-    public static final String ADMIRAL_NAME = "bottled_butterfly_admiral";
-    public static final String BUCKEYE_NAME = "bottled_butterfly_buckeye";
-    public static final String CABBAGE_NAME = "bottled_butterfly_cabbage";
-    public static final String CHALKHILL_NAME = "bottled_butterfly_chalkhill";
-    public static final String CLIPPER_NAME = "bottled_butterfly_clipper";
-    public static final String COMMON_NAME = "bottled_butterfly_common";
-    public static final String EMPEROR_NAME = "bottled_butterfly_emperor";
-    public static final String FORESTER_NAME = "bottled_butterfly_forester";
-    public static final String GLASSWING_NAME = "bottled_butterfly_glasswing";
-    public static final String HAIRSTREAK_NAME = "bottled_butterfly_hairstreak";
-    public static final String HEATH_NAME = "bottled_butterfly_heath";
-    public static final String LONGWING_NAME = "bottled_butterfly_longwing";
-    public static final String MONARCH_NAME = "bottled_butterfly_monarch";
-    public static final String MORPHO_NAME = "bottled_butterfly_morpho";
-    public static final String RAINBOW_NAME = "bottled_butterfly_rainbow";
-    public static final String SWALLOWTAIL_NAME = "bottled_butterfly_swallowtail";
+    public static String getRegistryId(int butterflyIndex) {
+        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
-    //  TODO: Remove in future version.
-    public static final String NAME = "bottled_butterfly";
+    private static final String NAME = "block.butterflies.bottled_butterfly";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -94,6 +81,18 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @Override
     public int getButterflyIndex() {
         return this.butterflyIndex;
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable(NAME);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyScrollModel;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -51,7 +52,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
     @Override
     @NotNull
     public ResourceLocation getTextureLocation(@NotNull ButterflyScroll scroll) {
-        return ButterflyTextures.SCROLLS[scroll.getButterflyIndex()];
+        return ButterflyData.indexToButterflyScrollTexture(scroll.getButterflyIndex());
     }
 
     /**

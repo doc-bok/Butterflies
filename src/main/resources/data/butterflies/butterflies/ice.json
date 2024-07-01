@@ -1,0 +1,16 @@
+{
+  "index": 17,
+  "entityId": "ice",
+  "size": "medium",
+  "speed": "fast",
+  "rarity": "rare",
+  "habitat": "ice",
+  "lifespan": {
+    "egg": "long",
+    "caterpillar": "long",
+    "chrysalis": "long",
+    "butterfly": "long"
+  },
+  "preferredFlower": "wither_rose",
+  "type": "special"
+}

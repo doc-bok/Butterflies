@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -31,23 +32,11 @@ import java.util.List;
  * A class to represent a caterpillar in the player's inventory.
  */
 public class CaterpillarItem extends Item {
-    
-    public static final String ADMIRAL_NAME = "caterpillar_admiral";    
-    public static final String BUCKEYE_NAME = "caterpillar_buckeye";
-    public static final String CABBAGE_NAME = "caterpillar_cabbage";
-    public static final String CHALKHILL_NAME = "caterpillar_chalkhill";
-    public static final String CLIPPER_NAME = "caterpillar_clipper";
-    public static final String COMMON_NAME = "caterpillar_common";
-    public static final String EMPEROR_NAME = "caterpillar_emperor";
-    public static final String FORESTER_NAME = "caterpillar_forester";
-    public static final String GLASSWING_NAME = "caterpillar_glasswing";
-    public static final String HAIRSTREAK_NAME = "caterpillar_hairstreak";
-    public static final String HEATH_NAME = "caterpillar_heath";
-    public static final String LONGWING_NAME = "caterpillar_longwing";
-    public static final String MONARCH_NAME = "caterpillar_monarch";
-    public static final String MORPHO_NAME = "caterpillar_morpho";
-    public static final String RAINBOW_NAME = "caterpillar_rainbow";
-    public static final String SWALLOWTAIL_NAME = "caterpillar_swallowtail";
+
+    //  The name this item is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
     private final ResourceLocation species;
 
@@ -81,6 +70,18 @@ public class CaterpillarItem extends Item {
         components.add(newComponent);
 
         super.appendHoverText(stack, level, components, tooltipFlag);
+    }
+
+    /**
+     * Overridden so we can use a single localisation string for all instances.
+     * @param itemStack The stack to get the name for.
+     * @return The description ID, which is a reference to the localisation
+     *         string.
+     */
+    @NotNull
+    @Override
+    public Component getName(@NotNull ItemStack itemStack) {
+        return Component.translatable("entity." + species.toString().replace(":", "."));
     }
 
     /**

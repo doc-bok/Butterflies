@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
-import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
@@ -61,7 +61,7 @@ public class ButterflyScrollScreen extends Screen {
 
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ButterflyTextures.SCROLLS[this.butterflyIndex]);
+        RenderSystem.setShaderTexture(0, ButterflyData.indexToButterflyScrollTexture(this.butterflyIndex));
 
         int i = (this.width - 192) / 2;
         this.blit(guiGraphics, i, 2, 0, 0, 192, 192);
