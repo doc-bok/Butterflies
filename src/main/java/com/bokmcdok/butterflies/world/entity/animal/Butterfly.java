@@ -88,7 +88,7 @@ public class Butterfly extends Animal {
      * @return TRUE if the butterfly can spawn.
      */
     public static boolean checkButterflySpawnRules(
-            @SuppressWarnings("unused") EntityType<Butterfly> entityType,
+            @SuppressWarnings("unused") EntityType<? extends Butterfly> entityType,
             ServerLevelAccessor level,
             @SuppressWarnings("unused") MobSpawnType spawnType,
             BlockPos position,

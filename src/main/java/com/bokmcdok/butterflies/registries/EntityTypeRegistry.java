@@ -6,18 +6,16 @@ import com.bokmcdok.butterflies.client.model.ButterflyModel;
 import com.bokmcdok.butterflies.client.model.ButterflyScrollModel;
 import com.bokmcdok.butterflies.client.model.CaterpillarModel;
 import com.bokmcdok.butterflies.client.model.ChrysalisModel;
-import com.bokmcdok.butterflies.client.renderer.entity.ButterflyEggRenderer;
-import com.bokmcdok.butterflies.client.renderer.entity.ButterflyScrollRenderer;
-import com.bokmcdok.butterflies.client.renderer.entity.ButterflyRenderer;
-import com.bokmcdok.butterflies.client.renderer.entity.CaterpillarRenderer;
-import com.bokmcdok.butterflies.client.renderer.entity.ChrysalisRenderer;
+import com.bokmcdok.butterflies.client.renderer.entity.*;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.world.entity.animal.IceButterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.bokmcdok.butterflies.world.entity.animal.DirectionalCreature;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -58,14 +56,23 @@ public class EntityTypeRegistry {
     /**
      * Register the butterflies.
      */
-    private static RegistryObject<EntityType<Butterfly>> registerButterfly(int butterflyIndex) {
+    private static RegistryObject<EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
+
+        // Ice Butterfly
+        if (butterflyIndex == 17) {
+            return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
+                    () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
+                            .sized(0.4f, 0.3f)
+                            .build(Butterfly.getRegistryId(butterflyIndex)));
+        }
+
         return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
                 .sized(0.4f, 0.3f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));
     }
 
-    public static final List<RegistryObject<EntityType<Butterfly>>> BUTTERFLY_ENTITIES = new ArrayList<>() {
+    public static final List<RegistryObject<EntityType<? extends Butterfly>>> BUTTERFLY_ENTITIES = new ArrayList<>() {
         {
             for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
                 add(registerButterfly(i));
@@ -126,12 +133,17 @@ public class EntityTypeRegistry {
      * @param event The event information
      */
     @SubscribeEvent
+    @SuppressWarnings("unused")
     public static void registerEntityRenders(final EntityRenderersEvent.RegisterRenderers event)
     {
         event.registerEntityRenderer(BUTTERFLY_SCROLL.get(), ButterflyScrollRenderer::new);
 
-        for (RegistryObject<EntityType<Butterfly>> i : BUTTERFLY_ENTITIES) {
-            event.registerEntityRenderer(i.get(), ButterflyRenderer::new);
+        for (RegistryObject<EntityType<? extends Butterfly>> i : BUTTERFLY_ENTITIES) {
+            if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MODID, "ice")) == 0) {
+                event.registerEntityRenderer(i.get(), IceButterflyRenderer::new);
+            } else {
+                event.registerEntityRenderer(i.get(), ButterflyRenderer::new);
+            }
         }
 
         for (RegistryObject<EntityType<Caterpillar>> i : CATERPILLAR_ENTITIES) {
@@ -151,8 +163,9 @@ public class EntityTypeRegistry {
      * Register the attributes for living entities
      */
     @SubscribeEvent
+    @SuppressWarnings("unused")
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        for (RegistryObject<EntityType<Butterfly>> i : BUTTERFLY_ENTITIES) {
+        for (RegistryObject<EntityType<? extends Butterfly>> i : BUTTERFLY_ENTITIES) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
@@ -174,9 +187,10 @@ public class EntityTypeRegistry {
      * @param event The event information
      */
     @SubscribeEvent
+    @SuppressWarnings("unused")
     public static void registerEntitySpawnPlacement(SpawnPlacementRegisterEvent event) {
 
-        for (RegistryObject<EntityType<Butterfly>> i : BUTTERFLY_ENTITIES) {
+        for (RegistryObject<EntityType<? extends Butterfly>> i : BUTTERFLY_ENTITIES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -214,6 +228,7 @@ public class EntityTypeRegistry {
      * @param event The event information
      */
     @SubscribeEvent
+    @SuppressWarnings("unused")
     public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
         event.registerLayerDefinition(CaterpillarModel.LAYER_LOCATION, CaterpillarModel::createBodyLayer);
