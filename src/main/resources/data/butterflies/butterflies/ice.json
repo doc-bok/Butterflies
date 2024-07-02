@@ -12,5 +12,6 @@
     "butterfly": "long"
   },
   "preferredFlower": "wither_rose",
-  "type": "special"
+  "type": "special",
+  "diurnality": "cathemeral"
 }

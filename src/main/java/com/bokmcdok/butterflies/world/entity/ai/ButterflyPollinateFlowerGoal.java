@@ -67,6 +67,24 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Stop using if time of day changes to inactive.
+     * @return Whether the goal can continue being active.
+     */
+    @Override
+    public boolean canContinueToUse() {
+        return this.butterfly.getIsActive() && super.canContinueToUse();
+    }
+
+    /**
+     * Butterflies can only pollinate when active.
+     * @return TRUE if the butterfly can pollinate right now.
+     */
+    @Override
+    public boolean canUse() {
+        return this.butterfly.getIsActive() && super.canUse();
+    }
+
+    /**
      * Start using the goal - ensure the butterfly is not landed.
      */
     @Override

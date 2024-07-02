@@ -40,7 +40,17 @@ public record ButterflyData(int butterflyIndex,
                             int chrysalisLifespan,
                             int butterflyLifespan,
                             ResourceLocation preferredFlower,
-                            ButterflyType type) {
+                            ButterflyType type,
+                            Diurnality diurnality) {
+
+    // Represents where in the day/night cycle a butterfly is most active.
+    @SuppressWarnings("unused")
+    public enum Diurnality {
+        DIURNAL,
+        NOCTURNAL,
+        CREPUSCULAR,
+        CATHEMERAL
+    }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
     // only affects the description. The biome modifiers will determine where
@@ -146,7 +156,8 @@ public record ButterflyData(int butterflyIndex,
                          int chrysalisLifespan,
                          int butterflyLifespan,
                          ResourceLocation preferredFlower,
-                         ButterflyType type) {
+                         ButterflyType type,
+                         Diurnality diurnality) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -162,6 +173,7 @@ public record ButterflyData(int butterflyIndex,
         this.preferredFlower = preferredFlower;
         
         this.type = type;
+        this.diurnality = diurnality;
     }
 
     /**
@@ -201,6 +213,7 @@ public record ButterflyData(int butterflyIndex,
                 String preferredFlower = object.get("preferredFlower").getAsString();
 
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
+                Diurnality diurnality =getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
 
                 entry = new ButterflyData(
                         index,
@@ -214,7 +227,8 @@ public record ButterflyData(int butterflyIndex,
                         LIFESPAN[chrysalisLifespan.getIndex()],
                         LIFESPAN[butterflyLifespan.getIndex()],
                         new ResourceLocation(preferredFlower),
-                        type
+                        type,
+                        diurnality
                 );
             }
 

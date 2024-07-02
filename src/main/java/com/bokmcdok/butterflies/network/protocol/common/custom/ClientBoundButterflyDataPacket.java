@@ -37,6 +37,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
             collectionBuffer.writeInt(i.butterflyLifespan());
             collectionBuffer.writeResourceLocation(i.preferredFlower());
             collectionBuffer.writeEnum(i.type());
+            collectionBuffer.writeEnum(i.diurnality());
         });
     }
 

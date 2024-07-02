@@ -12,5 +12,6 @@
     "butterfly": "medium"
   },
   "preferredFlower": "blue_orchid",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

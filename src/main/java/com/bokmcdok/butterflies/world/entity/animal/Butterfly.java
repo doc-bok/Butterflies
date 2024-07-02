@@ -4,10 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyLayEggGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyMatingGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyPollinateFlowerGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
+import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -74,6 +71,9 @@ public class Butterfly extends Animal {
 
     // The speed of the butterfly.
     private final ButterflyData.Speed speed;
+
+    // The diurnality of the butterfly.
+    private final ButterflyData.Diurnality diurnality;
 
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
@@ -186,6 +186,7 @@ public class Butterfly extends Animal {
         ButterflyData data = ButterflyData.getEntry(location);
         this.size = data.size();
         this.speed = data.speed();
+        this.diurnality = data.diurnality();
 
         this.butterflyIndex = data.butterflyIndex();
 
@@ -272,6 +273,32 @@ public class Butterfly extends Animal {
      */
     public int getButterflyIndex() {
         return butterflyIndex;
+    }
+
+    /**
+     * Checks the time of day to see if the butterfly is active based on its
+     * diurnality.
+     * @return TRUE if the butterfly is active at this time of day.
+     */
+    public boolean getIsActive() {
+        switch (diurnality) {
+            case DIURNAL -> {
+                return this.level().isDay();
+            }
+
+            case NOCTURNAL -> {
+                return this.level().isNight();
+            }
+
+            case CREPUSCULAR -> {
+                return !this.level().dimensionType().hasFixedTime() &&
+                        this.level().getSkyDarken() == 4;
+            }
+
+            default -> {
+                return true;
+            }
+        }
     }
 
     /**
@@ -427,6 +454,7 @@ public class Butterfly extends Animal {
             this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
         }
 
+        this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
 
         // Butterflies use targets to select mates.

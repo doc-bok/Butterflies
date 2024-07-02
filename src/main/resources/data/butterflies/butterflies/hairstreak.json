@@ -12,5 +12,6 @@
     "butterfly": "short"
   },
   "preferredFlower": "poppy",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

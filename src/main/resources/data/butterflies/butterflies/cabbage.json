@@ -12,5 +12,6 @@
     "butterfly": "short"
   },
   "preferredFlower": "dandelion",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }
