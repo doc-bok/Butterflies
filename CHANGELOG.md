@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.1.0 (2024-07-02)
+- Added diurnality to butterflies.
+
 ### 4.0.0 (2024-07-01)
 - Pollination Release of Bok's Banging Butterflies.
 

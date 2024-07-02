@@ -12,5 +12,6 @@
     "butterfly": "medium"
   },
   "preferredFlower": "red_tulip",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

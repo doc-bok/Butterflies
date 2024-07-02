@@ -27,12 +27,22 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
     }
 
     /**
+     * Stop using if time of day changes to inactive.
+     * @return Whether the goal can continue being active.
+     */
+    @Override
+    public boolean canContinueToUse() {
+        return this.butterfly.getIsActive() && super.canContinueToUse();
+    }
+
+    /**
      * Can only use the goal if butterflies have eggs that need fertilising.
      * @return TRUE if the butterfly can mate.
      */
     @Override
     public boolean canUse() {
-        return this.butterfly.getNumEggs() > 0 &&
+        return this.butterfly.getIsActive() &&
+               this.butterfly.getNumEggs() > 0 &&
                !this.butterfly.getIsFertile() &&
                super.canUse();
     }

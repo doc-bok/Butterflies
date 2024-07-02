@@ -12,5 +12,6 @@
     "butterfly": "medium"
   },
   "preferredFlower": "oxeye_daisy",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

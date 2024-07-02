@@ -12,5 +12,6 @@
     "butterfly": "short"
   },
   "preferredFlower": "azure_bluet",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

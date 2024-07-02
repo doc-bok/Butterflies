@@ -12,5 +12,6 @@
     "butterfly": "long"
   },
   "preferredFlower": "orange_tulip",
-  "type": "butterfly"
+  "type": "butterfly",
+  "diurnality": "diurnal"
 }

@@ -41,12 +41,21 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Stop using if time of day changes to inactive.
+     * @return Whether the goal can continue being active.
+     */
+    @Override
+    public boolean canContinueToUse() {
+        return this.butterfly.getIsActive() && super.canContinueToUse();
+    }
+
+    /**
      * We can only use this goal if the butterfly has an egg to lay.
      * @return TRUE if we can use this goal.
      */
     @Override
     public boolean canUse() {
-        return butterfly.getIsFertile() && super.canUse();
+        return this.butterfly.getIsActive() && butterfly.getIsFertile() && super.canUse();
     }
 
     /**
