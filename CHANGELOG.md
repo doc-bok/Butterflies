@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.0.1 (2024-07-05)
+- Fixed bounding box for butterflies, so they won't escape bottles.
+
 ### 4.0.0 (2024-07-01)
 - Pollination Release of Bok's Banging Butterflies.
 
