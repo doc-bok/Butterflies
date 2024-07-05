@@ -62,13 +62,13 @@ public class EntityTypeRegistry {
         if (butterflyIndex == 17) {
             return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
                     () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
-                            .sized(0.4f, 0.3f)
+                            .sized(0.3f, 0.2f)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
         return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
-                .sized(0.4f, 0.3f)
+                .sized(0.3f, 0.2f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));
     }
 
