@@ -139,6 +139,8 @@ public class Butterfly extends Animal {
                             position.getZ() + 0.5D,
                             0.0F, 0.0F);
 
+                    butterfly.setYBodyRot(butterfly.random.nextFloat());
+
                     butterfly.finalizeSpawn((ServerLevel) level,
                             level.getCurrentDifficultyAt(position),
                             MobSpawnType.NATURAL,
@@ -195,6 +197,7 @@ public class Butterfly extends Animal {
 
         // Register the goals again since they rely on the butterfly index.
         this.goalSelector.removeAllGoals((x) -> true);
+        this.targetSelector.removeAllGoals((x) -> true);
         registerGoals();
     }
 
@@ -459,14 +462,14 @@ public class Butterfly extends Animal {
 
         // Butterflies use targets to select mates.
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
-                if (target instanceof Butterfly butterfly) {
-                    return butterfly.getButterflyIndex() == this.getButterflyIndex() &&
-                           butterfly.getNumEggs() > 0 &&
-                           !butterfly.getIsFertile();
-                }
+            if (target instanceof Butterfly butterfly) {
+                return butterfly.getButterflyIndex() == this.getButterflyIndex() &&
+                        butterfly.getNumEggs() > 0 &&
+                        !butterfly.getIsFertile();
+            }
 
-                return false;
-            }));
+            return false;
+        }));
     }
 
     /**
@@ -505,8 +508,7 @@ public class Butterfly extends Animal {
     @Override
     public void setPos(double x, double y, double z) {
         Vec3 delta = new Vec3(x, y, z).subtract(this.position());
-        if (delta.lengthSqr() <= 1 ||
-                this.position().lengthSqr() == 0) {
+        if (delta.lengthSqr() <= 1 || this.position().lengthSqr() == 0) {
             super.setPos(x, y, z);
         }
     }
