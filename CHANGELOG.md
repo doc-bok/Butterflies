@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.3.0 (2024-07-11)
+- Moths will spread their wings when they land rather than hold them straight
+up.
+
 ### 4.2.0 (2024-07-11)
 - Moths will now be drawn to brighter areas.
 
