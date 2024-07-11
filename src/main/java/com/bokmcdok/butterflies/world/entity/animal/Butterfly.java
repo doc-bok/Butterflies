@@ -63,17 +63,8 @@ public class Butterfly extends Animal {
     // Helper constant to modify butterfly speed
     private static final double BUTTERFLY_SPEED = 1.8d;
 
-    // The butterfly index
-    private final int butterflyIndex;
-
-    // The size of the butterfly.
-    private final ButterflyData.Size size;
-
-    // The speed of the butterfly.
-    private final ButterflyData.Speed speed;
-
-    // The diurnality of the butterfly.
-    private final ButterflyData.Diurnality diurnality;
+    // The butterfly's data - created on access.
+    private ButterflyData data = null;
 
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
@@ -173,32 +164,10 @@ public class Butterfly extends Animal {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-            }
-        }
+        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + getSpeciesString() + ".png");
 
-        this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        this.speed = data.speed();
-        this.diurnality = data.diurnality();
-
-        this.butterflyIndex = data.butterflyIndex();
-
-        setAge(-data.butterflyLifespan());
+        setAge(-getData().butterflyLifespan());
         setLanded(false);
-
-        // Register the goals again since they rely on the butterfly index.
-        this.goalSelector.removeAllGoals((x) -> true);
-        this.targetSelector.removeAllGoals((x) -> true);
-        registerGoals();
     }
 
     /**
@@ -275,7 +244,7 @@ public class Butterfly extends Animal {
      * @return The butterfly index.
      */
     public int getButterflyIndex() {
-        return butterflyIndex;
+        return getData().butterflyIndex();
     }
 
     /**
@@ -284,7 +253,7 @@ public class Butterfly extends Animal {
      * @return TRUE if the butterfly is active at this time of day.
      */
     public boolean getIsActive() {
-        switch (diurnality) {
+        switch (getData().diurnality()) {
             case DIURNAL -> {
                 return this.level().isDay();
             }
@@ -333,7 +302,7 @@ public class Butterfly extends Animal {
      * @return A scale value based on the butterfly's size.
      */
     public float getScale() {
-        switch (this.size) {
+        switch (getData().size()) {
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }
             default -> { return 0.35f; }
@@ -377,7 +346,7 @@ public class Butterfly extends Animal {
             }
         };
 
-        if (speed == ButterflyData.Speed.FAST) {
+        if (getData().speed() == ButterflyData.Speed.FAST) {
 
             navigation.setSpeedModifier(1.2);
         }
@@ -458,7 +427,12 @@ public class Butterfly extends Animal {
         }
 
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
-        this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
+
+        if (getData().type() == ButterflyData.ButterflyType.MOTH) {
+            this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
+        } else {
+            this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
+        }
 
         // Butterflies use targets to select mates.
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
@@ -626,6 +600,38 @@ public class Butterfly extends Animal {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    private ButterflyData getData() {
+        if (this.data == null) {
+            String species = getSpeciesString();
+
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+            this.data = ButterflyData.getEntry(location);
+        }
+
+        return this.data;
+    }
+
+    /**
+     * Helper method to get the species string for creating resource locations.
+     * @return A valid species string.
+     */
+    private String getSpeciesString() {
+        String species = "undiscovered";
+        String encodeId = this.getEncodeId();
+        if (encodeId != null) {
+            String[] split = encodeId.split(":");
+            if (split.length >= 2) {
+                species = split[1];
+            }
+        }
+
+        return species;
     }
 
     /**

@@ -89,7 +89,6 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
      */
     @Override
     public void start() {
-        this.butterfly.setLanded(false);
         attemptedToPollinate = false;
         super.start();
     }

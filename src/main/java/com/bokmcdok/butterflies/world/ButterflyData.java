@@ -103,6 +103,7 @@ public record ButterflyData(int butterflyIndex,
     
     public enum ButterflyType {
         BUTTERFLY,
+        MOTH,
         SPECIAL
     }
 

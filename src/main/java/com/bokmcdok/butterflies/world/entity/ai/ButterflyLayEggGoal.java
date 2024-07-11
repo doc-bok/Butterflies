@@ -68,6 +68,15 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Ensure the butterfly isn't in the landed state when the goal ends.
+     */
+    @Override
+    public void stop() {
+        this.butterfly.setLanded(false);
+        super.stop();
+    }
+
+    /**
      * Update the butterfly after it has landed.
      */
     @Override

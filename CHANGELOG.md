@@ -1,8 +1,11 @@
 ## Changelog
 
+### 4.2.0 (2024-07-11)
+- Moths will now be drawn to brighter areas.
+
 ### 4.1.0 (2024-07-02)
 - Added diurnality to butterflies.
-- 
+
 ### 4.0.1 (2024-07-05)
 - Fixed bounding box for butterflies, so they won't escape bottles.
 
