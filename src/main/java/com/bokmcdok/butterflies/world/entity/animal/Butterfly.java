@@ -282,6 +282,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Check if this is actually a moth.
+     * @return TRUE if this is actually a moth.
+     */
+    public boolean getIsMoth() {
+        return getData().type() == ButterflyData.ButterflyType.MOTH;
+    }
+
+    /**
      * Check if the butterfly has landed.
      * @return TRUE if the butterfly has landed.
      */
