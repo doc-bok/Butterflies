@@ -190,5 +190,8 @@
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
+  "item.butterflies.silk": "Silk",
+  "advancements.butterfly.farm_silk.title": "Precious Material",
+  "advancements.butterfly.farm_silk.description": "Farm some silk from a moth larva"
 }

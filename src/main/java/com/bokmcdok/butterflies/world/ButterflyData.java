@@ -100,7 +100,8 @@ public record ButterflyData(int butterflyIndex,
         MODERATE,
         FAST
     }
-    
+
+    // Represents the type of "butterfly"
     public enum ButterflyType {
         BUTTERFLY,
         MOTH,
