@@ -159,6 +159,9 @@ public class ItemRegistry {
         }
     };
 
+    // Silk dropped by some moths.
+    public static final RegistryObject<Item> SILK = INSTANCE.register("silk", () -> new Item(new Item.Properties()));
+
     /**
      * Helper method to get the correct butterfly net item.
      * @param butterflyIndex The butterfly index.
@@ -179,14 +182,8 @@ public class ItemRegistry {
     @SubscribeEvent
     public static void registerCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
 
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            for (RegistryObject<Item> i : BUTTERFLY_SPAWN_EGGS) {
-                event.accept(i);
-            }
-
-            for (RegistryObject<Item> i : CATERPILLAR_SPAWN_EGGS) {
-                event.accept(i);
-            }
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(SILK);
         }
 
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
@@ -196,6 +193,16 @@ public class ItemRegistry {
             }
 
             for (RegistryObject<Item> i : CATERPILLAR_ITEMS) {
+                event.accept(i);
+            }
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            for (RegistryObject<Item> i : BUTTERFLY_SPAWN_EGGS) {
+                event.accept(i);
+            }
+
+            for (RegistryObject<Item> i : CATERPILLAR_SPAWN_EGGS) {
                 event.accept(i);
             }
         }
