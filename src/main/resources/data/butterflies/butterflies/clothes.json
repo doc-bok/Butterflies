@@ -1,0 +1,17 @@
+{
+  "diurnality": "nocturnal",
+  "entityId": "clothes",
+  "habitat": "villages",
+  "index": 17,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "preferredFlower": "cornflower",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}

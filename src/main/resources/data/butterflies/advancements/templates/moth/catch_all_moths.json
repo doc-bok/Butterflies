@@ -1,14 +1,14 @@
 {
-  "parent": "butterflies:butterfly/bottle_butterfly",
+  "parent": "butterflies:butterfly/catch_moth",
   "display": {
     "icon": {
-      "item": "butterflies:bottled_butterfly"
+      "item": "butterflies:butterfly_net_full"
     },
     "title": {
-      "translate": "advancements.butterfly.bottle_all_butterflies.title"
+      "translate": "advancements.butterfly.catch_all_moths.title"
     },
     "description": {
-      "translate": "advancements.butterfly.bottle_all_butterflies.description"
+      "translate": "advancements.butterfly.catch_all_moths.description"
     },
     "frame": "challenge",
     "show_toast": true,
@@ -20,7 +20,7 @@
   },
   "criteria": {},
   "requirements": [],
-  "base_item": "butterflies:bottled_butterfly_",
+  "base_item": "butterflies:butterfly_net_",
   "item_ext": "",
   "requires_all": true
 }

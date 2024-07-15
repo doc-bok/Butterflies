@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clothes_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.find_moth_egg.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:cloth_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.find_moth_egg.title"
+    }
+  },
+  "parent": "butterflies:butterfly/root",
+  "requirements": [
+    [
+      "clothes"
+    ]
+  ]
+}

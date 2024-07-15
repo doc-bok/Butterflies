@@ -1,13 +1,6 @@
 {
-  "parent": "minecraft:recipes/root",
-  "rewards": {
-    "recipes": [
-      "butterflies:bottled_butterfly_hairstreak"
-    ]
-  },
   "criteria": {
     "has_bottle": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -16,10 +9,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_net": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -28,15 +21,17 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "has_the_recipe": {
-      "trigger": "minecraft:recipe_unlocked",
       "conditions": {
         "recipe": "butterflies:bottled_butterfly_hairstreak"
-      }
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
+  "parent": "minecraft:recipes/root",
   "requirements": [
     [
       "has_bottle",
@@ -46,5 +41,10 @@
       "has_net",
       "has_the_recipe"
     ]
-  ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_butterfly_hairstreak"
+    ]
+  }
 }

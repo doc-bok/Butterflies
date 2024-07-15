@@ -1,17 +1,17 @@
 {
-  "index": 17,
+  "diurnality": "cathemeral",
   "entityId": "ice",
-  "size": "medium",
-  "speed": "fast",
-  "rarity": "rare",
   "habitat": "ice",
+  "index": 18,
   "lifespan": {
-    "egg": "long",
+    "butterfly": "long",
     "caterpillar": "long",
     "chrysalis": "long",
-    "butterfly": "long"
+    "egg": "long"
   },
   "preferredFlower": "wither_rose",
-  "type": "special",
-  "diurnality": "cathemeral"
+  "rarity": "rare",
+  "size": "medium",
+  "speed": "fast",
+  "type": "special"
 }

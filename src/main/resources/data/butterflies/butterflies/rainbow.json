@@ -1,17 +1,17 @@
 {
-  "index": 14,
+  "diurnality": "diurnal",
   "entityId": "rainbow",
-  "size": "small",
-  "speed": "fast",
-  "rarity": "uncommon",
   "habitat": "forests_and_plains",
+  "index": 14,
   "lifespan": {
-    "egg": "medium",
+    "butterfly": "medium",
     "caterpillar": "medium",
     "chrysalis": "medium",
-    "butterfly": "medium"
+    "egg": "medium"
   },
   "preferredFlower": "allium",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "uncommon",
+  "size": "small",
+  "speed": "fast",
+  "type": "butterfly"
 }

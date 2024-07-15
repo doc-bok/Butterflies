@@ -1,17 +1,17 @@
 {
-  "index": 10,
+  "diurnality": "diurnal",
   "entityId": "heath",
-  "size": "small",
-  "speed": "moderate",
-  "rarity": "rare",
   "habitat": "plains",
+  "index": 10,
   "lifespan": {
-    "egg": "long",
+    "butterfly": "long",
     "caterpillar": "long",
     "chrysalis": "medium",
-    "butterfly": "long"
+    "egg": "long"
   },
   "preferredFlower": "white_tulip",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "rare",
+  "size": "small",
+  "speed": "moderate",
+  "type": "butterfly"
 }

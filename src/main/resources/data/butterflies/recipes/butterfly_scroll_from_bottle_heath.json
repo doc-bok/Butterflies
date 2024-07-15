@@ -1,5 +1,4 @@
 {
-  "type": "minecraft:crafting_shapeless",
   "group": "butterfly_scroll",
   "ingredients": [
     {
@@ -14,5 +13,6 @@
   ],
   "result": {
     "item": "butterflies:butterfly_scroll_heath"
-  }
+  },
+  "type": "minecraft:crafting_shapeless"
 }

@@ -1,17 +1,17 @@
 {
-  "index": 7,
+  "diurnality": "diurnal",
   "entityId": "forester",
-  "size": "small",
-  "speed": "moderate",
-  "rarity": "rare",
   "habitat": "forests",
+  "index": 7,
   "lifespan": {
-    "egg": "medium",
+    "butterfly": "medium",
     "caterpillar": "long",
     "chrysalis": "medium",
-    "butterfly": "medium"
+    "egg": "medium"
   },
   "preferredFlower": "lily_of_the_valley",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "rare",
+  "size": "small",
+  "speed": "moderate",
+  "type": "butterfly"
 }

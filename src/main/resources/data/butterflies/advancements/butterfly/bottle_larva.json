@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.bottle_larva.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:bottled_caterpillar_cloth"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.bottle_larva.title"
+    }
+  },
+  "parent": "butterflies:butterfly/find_larva",
+  "requirements": [
+    [
+      "clothes"
+    ]
+  ]
+}

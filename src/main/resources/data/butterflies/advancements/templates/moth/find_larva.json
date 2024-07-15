@@ -1,0 +1,23 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "display": {
+    "icon": {
+      "item": "butterflies:caterpillar_cloth"
+    },
+    "title": {
+      "translate": "advancements.butterfly.find_larva.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.find_larva.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:caterpillar_",
+  "item_ext": "",
+  "requires_all": false
+}

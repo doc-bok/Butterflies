@@ -1,17 +1,17 @@
 {
-  "index": 13,
+  "diurnality": "diurnal",
   "entityId": "morpho",
-  "size": "large",
-  "speed": "moderate",
-  "rarity": "rare",
   "habitat": "jungles",
+  "index": 13,
   "lifespan": {
-    "egg": "medium",
+    "butterfly": "medium",
     "caterpillar": "medium",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "medium"
   },
   "preferredFlower": "pink_tulip",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "rare",
+  "size": "large",
+  "speed": "moderate",
+  "type": "butterfly"
 }

@@ -1,0 +1,23 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_net"
+    },
+    "title": {
+      "translate": "advancements.butterfly.catch_moth.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.catch_moth.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:butterfly_net_",
+  "item_ext": "",
+  "requires_all": false
+}

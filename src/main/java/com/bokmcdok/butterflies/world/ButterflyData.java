@@ -120,6 +120,7 @@ public record ButterflyData(int butterflyIndex,
     private static final Map<Integer, ButterflyData> BUTTERFLY_ENTRIES = new HashMap<>();
 
     private static int NUM_BUTTERFLIES;
+    private static int NUM_MOTHS;
 
     /**
      * Get the overall lifespan as a simple enumeration
@@ -265,12 +266,18 @@ public record ButterflyData(int butterflyIndex,
         BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
 
         //  Recount the butterflies
-        if (entry.type == ButterflyType.BUTTERFLY) {
-            NUM_BUTTERFLIES = 0;
+        if (entry.type != ButterflyType.SPECIAL) {
+            int total = 0;
             for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
-                if (i.type == ButterflyType.BUTTERFLY) {
-                    ++NUM_BUTTERFLIES;
+                if (i.type == entry.type) {
+                    ++total;
                 }
+            }
+
+            if (entry.type == ButterflyType.BUTTERFLY) {
+                NUM_BUTTERFLIES = total;
+            } else if (entry.type == ButterflyType.MOTH) {
+                NUM_MOTHS = total;
             }
         }
     }
@@ -344,6 +351,14 @@ public record ButterflyData(int butterflyIndex,
      */
     public static int getNumButterflySpecies() {
         return NUM_BUTTERFLIES;
+    }
+
+    /**
+     * Returns the total number of butterfly species in the mod.
+     * @return The total number of butterflies.
+     */
+    public static int getNumMothSpecies() {
+        return NUM_MOTHS;
     }
 
     /**

@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.catch_all_moths.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:butterfly_net_full"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_all_moths.title"
+    }
+  },
+  "parent": "butterflies:butterfly/catch_moth",
+  "requirements": [
+    [
+      "clothes"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}
