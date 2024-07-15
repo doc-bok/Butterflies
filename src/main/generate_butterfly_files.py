@@ -100,9 +100,12 @@ def generate_data_files(input):
                 json_data = json.load(input_file)
 
             global BUTTERFLY_INDEX
-            if "index"  in json_data:
+            if "index" in json_data:
                 json_data["index"] = BUTTERFLY_INDEX
                 BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
+
+                if "extraLandingBlocks" not in json_data:
+                    json_data["extraLandingBlocks"] = "none"
 
             with open(new_file, 'w', encoding="utf8") as file:
                 file.write(json.dumps(json_data,

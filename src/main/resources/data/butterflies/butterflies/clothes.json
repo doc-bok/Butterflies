@@ -1,6 +1,7 @@
 {
   "diurnality": "nocturnal",
   "entityId": "clothes",
+  "extraLandingBlocks": "wool",
   "habitat": "villages",
   "index": 17,
   "lifespan": {

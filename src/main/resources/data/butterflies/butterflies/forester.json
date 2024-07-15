@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "forester",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 7,
   "lifespan": {

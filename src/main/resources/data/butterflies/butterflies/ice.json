@@ -1,6 +1,7 @@
 {
   "diurnality": "cathemeral",
   "entityId": "ice",
+  "extraLandingBlocks": "none",
   "habitat": "ice",
   "index": 18,
   "lifespan": {

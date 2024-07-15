@@ -97,7 +97,7 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
                                     @NotNull BlockPos blockPos) {
 
         if (levelReader.isEmptyBlock(blockPos.above()) &&
-                levelReader.getBlockState(blockPos).is(BlockTags.LEAVES)) {
+                this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos))) {
             return blockPos.getY() < this.butterfly.getBlockY();
         }
 

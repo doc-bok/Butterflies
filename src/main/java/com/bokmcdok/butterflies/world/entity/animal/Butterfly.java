@@ -176,7 +176,7 @@ public class Butterfly extends Animal {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + getSpeciesString() + ".png");
+        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
 
         setAge(-getData().butterflyLifespan());
         setLanded(false);
@@ -337,6 +337,10 @@ public class Butterfly extends Animal {
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
         return false;
+    }
+
+    public boolean isValidLandingBlock(BlockState blockState) {
+        return this.getData().isValidLandingBlock(blockState);
     }
 
     /**
@@ -628,30 +632,10 @@ public class Butterfly extends Animal {
      */
     private ButterflyData getData() {
         if (this.data == null) {
-            String species = getSpeciesString();
-
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-            this.data = ButterflyData.getEntry(location);
+            this.data = ButterflyData.getButterflyDataForEntity(this);
         }
 
         return this.data;
-    }
-
-    /**
-     * Helper method to get the species string for creating resource locations.
-     * @return A valid species string.
-     */
-    private String getSpeciesString() {
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-            }
-        }
-
-        return species;
     }
 
     /**

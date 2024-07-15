@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "heath",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
   "index": 10,
   "lifespan": {

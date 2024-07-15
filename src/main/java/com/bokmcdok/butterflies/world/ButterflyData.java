@@ -8,8 +8,13 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.text.html.parser.Entity;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,7 +46,8 @@ public record ButterflyData(int butterflyIndex,
                             int butterflyLifespan,
                             ResourceLocation preferredFlower,
                             ButterflyType type,
-                            Diurnality diurnality) {
+                            Diurnality diurnality,
+                            ExtraLandingBlocks extraLandingBlocks) {
 
     // Represents where in the day/night cycle a butterfly is most active.
     @SuppressWarnings("unused")
@@ -50,6 +56,12 @@ public record ButterflyData(int butterflyIndex,
         NOCTURNAL,
         CREPUSCULAR,
         CATHEMERAL
+    }
+
+    // Used to indicate any extra landing blocks that the butterflies can use.
+    public enum ExtraLandingBlocks {
+        NONE,
+        WOOL
     }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
@@ -160,7 +172,8 @@ public record ButterflyData(int butterflyIndex,
                          int butterflyLifespan,
                          ResourceLocation preferredFlower,
                          ButterflyType type,
-                         Diurnality diurnality) {
+                         Diurnality diurnality,
+                         ExtraLandingBlocks extraLandingBlocks) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -177,6 +190,7 @@ public record ButterflyData(int butterflyIndex,
         
         this.type = type;
         this.diurnality = diurnality;
+        this.extraLandingBlocks = extraLandingBlocks;
     }
 
     /**
@@ -216,7 +230,8 @@ public record ButterflyData(int butterflyIndex,
                 String preferredFlower = object.get("preferredFlower").getAsString();
 
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
-                Diurnality diurnality =getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
+                Diurnality diurnality = getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
+                ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
 
                 entry = new ButterflyData(
                         index,
@@ -231,7 +246,8 @@ public record ButterflyData(int butterflyIndex,
                         LIFESPAN[butterflyLifespan.getIndex()],
                         new ResourceLocation(preferredFlower),
                         type,
-                        diurnality
+                        diurnality,
+                        extraLandingBlocks
                 );
             }
 
@@ -302,6 +318,37 @@ public record ButterflyData(int butterflyIndex,
         }
 
         return -1;
+    }
+
+    /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    public static ButterflyData getButterflyDataForEntity(LivingEntity entity) {
+        String species = getSpeciesString(entity);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        return getEntry(location);
+    }
+
+    /**
+     * Helper method to get the species string for creating resource locations.
+     * @return A valid species string.
+     */
+    public static String getSpeciesString(LivingEntity entity) {
+        String species = "undiscovered";
+        String encodeId = entity.getEncodeId();
+        if (encodeId != null) {
+            String[] split = encodeId.split(":");
+            if (split.length >= 2) {
+                species = split[1];
+                split = species.split("_");
+                if (split.length >=2) {
+                    species = split[0];
+                }
+            }
+        }
+
+        return species;
     }
 
     /**
@@ -428,20 +475,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Gets the resource location for the caterpillar item at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the caterpillar item.
-     */
-    public static ResourceLocation indexToCaterpillarItem(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + entityId);
-        }
-
-        return null;
-    }
-
-    /**
      * Gets the resource location for the chrysalis at the specified index.
      * @param index The butterfly index.
      * @return The resource location of the chrysalis.
@@ -466,5 +499,31 @@ public record ButterflyData(int butterflyIndex,
         }
 
         return null;
+    }
+
+    /**
+     * Gets the resource location for the caterpillar item.
+     * @return The resource location of the caterpillar item.
+     */
+    public ResourceLocation getCaterpillarItem() {
+        if (this.entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + this.entityId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Check if the current block is a valid landing block.
+     * @param blockState The block state to check.
+     * @return TRUE if the butterfly can land on the block.
+     */
+    public boolean isValidLandingBlock(BlockState blockState) {
+        if (blockState.is(BlockTags.LEAVES)) {
+            return true;
+        }
+
+        return extraLandingBlocks == ExtraLandingBlocks.WOOL &&
+                blockState.is(BlockTags.WOOL);
     }
 }

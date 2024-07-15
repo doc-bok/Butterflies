@@ -123,7 +123,7 @@ public class BottledCaterpillarItem extends BlockItem {
     }
 
     /**
-     * Right-clicking with a full bottle will release the butterfly.
+     * Right-clicking with a full bottle will release the caterpillar.
      * @param level The current level.
      * @param player The player holding the net.
      * @param hand The player's hand.
@@ -136,15 +136,19 @@ public class BottledCaterpillarItem extends BlockItem {
                                                   @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation location = ButterflyData.indexToCaterpillarItem(this.butterflyIndex);
-        Item caterpillarItem = ForgeRegistries.ITEMS.getValue(location);
-        if (caterpillarItem != null) {
-            ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
-            player.addItem(caterpillarStack);
+        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        if (data != null) {
+            ResourceLocation location = data.getCaterpillarItem();
+            Item caterpillarItem = ForgeRegistries.ITEMS.getValue(location);
+            if (caterpillarItem != null) {
+                ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
+                player.addItem(caterpillarStack);
+            }
+
+            player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+            return InteractionResultHolder.success(stack);
         }
 
-        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-        return InteractionResultHolder.success(stack);
+        return InteractionResultHolder.fail(stack);
     }
 }

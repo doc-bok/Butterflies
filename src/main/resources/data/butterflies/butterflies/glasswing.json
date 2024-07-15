@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "glasswing",
+  "extraLandingBlocks": "none",
   "habitat": "jungles",
   "index": 8,
   "lifespan": {

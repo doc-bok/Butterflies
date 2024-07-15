@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "monarch",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
   "index": 12,
   "lifespan": {

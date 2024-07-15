@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "longwing",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 11,
   "lifespan": {

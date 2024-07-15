@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "clipper",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 4,
   "lifespan": {

@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "peacock",
+  "extraLandingBlocks": "none",
   "habitat": "forests_and_plains",
   "index": 16,
   "lifespan": {

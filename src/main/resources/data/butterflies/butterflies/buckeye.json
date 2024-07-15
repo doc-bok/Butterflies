@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "buckeye",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
   "index": 1,
   "lifespan": {

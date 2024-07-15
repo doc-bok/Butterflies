@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "cabbage",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
   "index": 2,
   "lifespan": {

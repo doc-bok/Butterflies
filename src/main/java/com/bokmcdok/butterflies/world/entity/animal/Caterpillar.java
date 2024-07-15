@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
@@ -55,11 +54,8 @@ public class Caterpillar extends DirectionalCreature {
     // Whether gravity is being applied.
     private boolean isNoGravity = true;
 
-    // The size of the caterpillar.
-    private final ButterflyData.Size size;
-
-    // The caterpillar item location.
-    private final ResourceLocation caterpillarItem;
+    // The butterfly's data - created on access.
+    private ButterflyData data = null;
 
     /**
      * Spawns a caterpillar at the specified position.
@@ -134,7 +130,7 @@ public class Caterpillar extends DirectionalCreature {
         scale = scale * 0.04f;
         scale = scale + 0.08f;
 
-        switch (this.size) {
+        switch (this.getData().size()) {
             case SMALL -> {
                 return 0.7f * scale;
             }
@@ -162,7 +158,7 @@ public class Caterpillar extends DirectionalCreature {
             } else {
                 this.remove(RemovalReason.DISCARDED);
 
-                Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.caterpillarItem);
+                Item caterpillarItem = ForgeRegistries.ITEMS.getValue(this.getData().getCaterpillarItem());
                 if (caterpillarItem != null) {
                     ItemStack itemStack = new ItemStack(caterpillarItem);
                     player.addItem(itemStack);
@@ -264,26 +260,8 @@ public class Caterpillar extends DirectionalCreature {
                           Level level) {
         super(entityType, level);
 
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-                split = species.split("_");
-                if (split.length >=2) {
-                    species = split[0];
-                }
-            }
-        }
-
-        setTexture("textures/entity/caterpillar/caterpillar_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex());
-        setAge(-data.caterpillarLifespan());
+        setTexture("textures/entity/caterpillar/caterpillar_" + ButterflyData.getSpeciesString(this) + ".png");
+        setAge(-getData().caterpillarLifespan());
     }
 
     /**
@@ -379,8 +357,8 @@ public class Caterpillar extends DirectionalCreature {
                     && this.random.nextInt(0, 15) == 0) {
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
-                // If the caterpillar is not on a leaf block it will starve instead.
-                if (level().getBlockState(surfaceBlockPos).getBlock() instanceof LeavesBlock) {
+                // If the caterpillar is not on a valid block it will starve instead.
+                if (getData().isValidLandingBlock(level().getBlockState(surfaceBlockPos))) {
                     ResourceLocation location = EntityType.getKey(this.getType());
                     int index = ButterflyData.getButterflyIndex(location);
                     ResourceLocation newLocation = ButterflyData.indexToChrysalisEntity(index);
@@ -504,6 +482,18 @@ public class Caterpillar extends DirectionalCreature {
         }
 
         return Mth.wrapDegrees(updatedRotation - this.getYRot());
+    }
+
+    /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    private ButterflyData getData() {
+        if (this.data == null) {
+            this.data = ButterflyData.getButterflyDataForEntity(this);
+        }
+
+        return this.data;
     }
 
     /**

@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "admiral",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 0,
   "lifespan": {

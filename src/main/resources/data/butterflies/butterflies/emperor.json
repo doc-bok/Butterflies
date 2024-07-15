@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "emperor",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 6,
   "lifespan": {

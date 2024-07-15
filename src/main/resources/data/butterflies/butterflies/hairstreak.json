@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "hairstreak",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
   "index": 9,
   "lifespan": {

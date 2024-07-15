@@ -1,6 +1,7 @@
 {
   "diurnality": "diurnal",
   "entityId": "chalkhill",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
   "index": 3,
   "lifespan": {
