@@ -1,17 +1,18 @@
 {
-  "index": 5,
+  "diurnality": "diurnal",
   "entityId": "common",
-  "size": "small",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
+  "index": 5,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "short"
   },
   "preferredFlower": "dandelion",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "butterfly"
 }

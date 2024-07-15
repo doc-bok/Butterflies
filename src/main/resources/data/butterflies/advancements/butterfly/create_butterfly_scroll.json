@@ -60,6 +60,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
@@ -213,8 +225,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:butterfly_scroll",
-      "nbt": "{CustomModelData:1}"
+      "item": "butterflies:butterfly_scroll_admiral"
     },
     "show_toast": true,
     "title": {
@@ -240,7 +251,8 @@
       "morpho",
       "rainbow",
       "swallowtail",
-      "peacock"
+      "peacock",
+      "clothes"
     ]
   ]
 }

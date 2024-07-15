@@ -96,14 +96,20 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
     protected boolean isValidTarget(@NotNull LevelReader levelReader,
                                     @NotNull BlockPos blockPos) {
 
-        if (!levelReader.isEmptyBlock(blockPos.above())) {
-            return false;
-        }
-
-        if (levelReader.getBlockState(blockPos).is(BlockTags.LEAVES)) {
+        if (levelReader.isEmptyBlock(blockPos.above()) &&
+                this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos))) {
             return blockPos.getY() < this.butterfly.getBlockY();
         }
 
         return false;
+    }
+
+    /**
+     * Increase the accepted distance.
+     * @return A distance of 2 blocks.
+     */
+    @Override
+    public double acceptedDistance() {
+        return 0.5;
     }
 }

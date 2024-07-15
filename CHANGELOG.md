@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.5.0 (2024-07-15)
+- Added the Clothes Moth.
+
 ### 4.4.0 (2024-07-14)
 - Added silk.
 

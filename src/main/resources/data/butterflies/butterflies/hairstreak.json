@@ -1,17 +1,18 @@
 {
-  "index": 9,
+  "diurnality": "diurnal",
   "entityId": "hairstreak",
-  "size": "small",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
+  "index": 9,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "short",
     "caterpillar": "short",
     "chrysalis": "medium",
-    "butterfly": "short"
+    "egg": "short"
   },
   "preferredFlower": "poppy",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "butterfly"
 }

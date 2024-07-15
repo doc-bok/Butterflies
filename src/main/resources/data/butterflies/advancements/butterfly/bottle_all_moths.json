@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_moths.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:bottled_butterfly_clothes"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_moths.title"
+    }
+  },
+  "parent": "butterflies:butterfly/bottle_moth",
+  "requirements": [
+    [
+      "clothes"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

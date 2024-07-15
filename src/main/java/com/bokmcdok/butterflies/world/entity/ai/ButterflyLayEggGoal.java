@@ -141,7 +141,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
             return false;
         }
 
-        if (levelReader.getBlockState(blockPos).is(BlockTags.LEAVES)) {
+        if (this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos))) {
             return blockPos.getY() < this.butterfly.getBlockY();
         }
 

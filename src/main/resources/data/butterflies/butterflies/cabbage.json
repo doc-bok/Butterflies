@@ -1,17 +1,18 @@
 {
-  "index": 2,
+  "diurnality": "diurnal",
   "entityId": "cabbage",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
+  "index": 2,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "short",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "short"
+    "egg": "short"
   },
   "preferredFlower": "dandelion",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
 }

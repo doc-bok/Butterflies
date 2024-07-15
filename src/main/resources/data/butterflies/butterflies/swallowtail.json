@@ -1,17 +1,18 @@
 {
-  "index": 15,
+  "diurnality": "diurnal",
   "entityId": "swallowtail",
-  "size": "large",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "forests_and_plains",
+  "index": 15,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "short",
     "caterpillar": "short",
     "chrysalis": "medium",
-    "butterfly": "short"
+    "egg": "short"
   },
   "preferredFlower": "azure_bluet",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "large",
+  "speed": "moderate",
+  "type": "butterfly"
 }

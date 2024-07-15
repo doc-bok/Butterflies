@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.find_all_larvae.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:caterpillar_cloth"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.find_all_larvae.title"
+    }
+  },
+  "parent": "butterflies:butterfly/find_larva",
+  "requirements": [
+    [
+      "clothes"
+    ]
+  ]
+}

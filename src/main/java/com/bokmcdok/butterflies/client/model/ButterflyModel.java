@@ -102,7 +102,7 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                           float headPitch) {
 
         //  When landed butterflies hold their wings together.
-        if (entity.getLanded()) {
+        if (entity.getIsLanded()) {
             this.body.yRot = 0.7853982F;
             if (entity.getIsMoth()) {
                 this.right_wing.xRot = 0;

@@ -21,7 +21,14 @@ BUTTERFLIES = [
     'morpho',
     'rainbow',
     'swallowtail',
-    'peacock',
+    'peacock'
+]
+
+MOTHS = [
+    'clothes'
+]
+
+SPECIAL = [
     'ice'
 ]
 
@@ -46,11 +53,17 @@ FLOWERS = [
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
-ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/"
+BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/butterfly/"
+MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/moth/"
+BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/both/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 
+# Initial index
+BUTTERFLY_INDEX = 0
 
 def generate_data_files(input):
+    print("Generating data files...")
+
     # Get list of files containing input[0]
     files = []
     for (path, _, filenames) in os.walk(os.getcwd()):
@@ -64,32 +77,41 @@ def generate_data_files(input):
     # Loop Start
     for entry in input:
 
-        # We don't need to do this for the template
-        if entry == input[0]:
-            continue
-
         for file in files:
 
             # Get the new filename
             new_file = pathlib.Path(str(file).replace(input[0], entry))
 
-            # Check if the file exists
-            if not new_file.is_file():
+            if entry != input[0]:
+                # Check if the file exists
+                if not new_file.is_file():
 
-                # Create the new file if it doesn't exist
-                shutil.copy(file, new_file)
+                    # Create the new file if it doesn't exist
+                    shutil.copy(file, new_file)
 
-                # Read in the new file
-                with open(new_file, 'r') as input_file:
-                    file_data = input_file.read()
+                    # Read in the new file
+                    with open(new_file, 'r') as input_file:
+                        file_data = input_file.read()
 
-                # Replace the butterfly species
-                file_data = file_data.replace(input[0], entry)
+                    # Replace the butterfly species
+                    file_data = file_data.replace(input[0], entry)
 
-                # Write the file out again
-                with open(new_file, 'w') as output_file:
-                    output_file.write(file_data)
+            with open(new_file, 'r', encoding="utf8") as input_file:
+                json_data = json.load(input_file)
 
+            global BUTTERFLY_INDEX
+            if "index" in json_data:
+                json_data["index"] = BUTTERFLY_INDEX
+                BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
+
+                if "extraLandingBlocks" not in json_data:
+                    json_data["extraLandingBlocks"] = "none"
+
+            with open(new_file, 'w', encoding="utf8") as file:
+                file.write(json.dumps(json_data,
+                                      default=lambda o: o.__dict__,
+                                      sort_keys=True,
+                                      indent=2))
 
 # Frog food class used to generate JSON.
 class FrogFood(object):
@@ -112,11 +134,16 @@ class FrogFood(object):
 
 # Generate list of entities to add to frog food.
 def generate_frog_food():
+    print("Generating frog food...")
     values = []
     for i in BUTTERFLIES:
         values.append("butterflies:" + i)
 
-    print(values)
+    for i in MOTHS:
+        values.append("butterflies:" + i)
+
+    for i in SPECIAL:
+        values.append("butterflies:" + i)
 
     frog_food = FrogFood(values)
 
@@ -126,10 +153,12 @@ def generate_frog_food():
 
 # Generates localisation strings if they don't already exist.
 def generate_localisation_strings():
+    print("Generating localisation strings...")
+
     with open(LOCALISATION, 'r', encoding="utf8") as input_file:
         json_data = json.load(input_file)
 
-    for i in BUTTERFLIES:
+    for i in BUTTERFLIES + SPECIAL:
         test_key = "item.butterflies." + i + "_egg"
         if test_key not in json_data:
             json_data[test_key] = i.capitalize() + " Butterfly Egg"
@@ -154,6 +183,32 @@ def generate_localisation_strings():
         if test_key not in json_data:
             json_data[test_key] = i.capitalize() + " Chrysalis"
 
+    for i in MOTHS:
+        test_key = "item.butterflies." + i + "_egg"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Moth Egg"
+
+        test_key = "entity.butterflies." + i
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Moth"
+
+        test_key = "entity.butterflies." + i + "_caterpillar"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Larva"
+
+        test_key = "item.butterflies." + i
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Moth"
+
+        test_key = "item.butterflies." + i + "_caterpillar"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Larva"
+
+        test_key = "entity.butterflies." + i + "_chrysalis"
+        if test_key not in json_data:
+            json_data[test_key] = i.capitalize() + " Cocoon"
+
+    for i in BUTTERFLIES + MOTHS:
         test_key = "gui.butterflies.fact." + i
         if test_key not in json_data:
             json_data[test_key] = ""
@@ -165,17 +220,19 @@ def generate_localisation_strings():
                               indent=2))
 
 
-def generate_advancements():
+def generate_advancements(entities, templates):
+    print("Generating advancements...")
+
     files = []
-    for (_, _, filenames) in os.walk(ACHIEVEMENT_TEMPLATES):
+    for (_, _, filenames) in os.walk(templates):
         files.extend(filenames)
         break
 
     for file in files:
-        with open(ACHIEVEMENT_TEMPLATES + file, 'r', encoding="utf8") as input_file:
+        with open(templates + file, 'r', encoding="utf8") as input_file:
             json_data = json.load(input_file)
 
-        for butterfly in BUTTERFLIES:
+        for butterfly in entities:
             json_data["criteria"][butterfly] = {
                 "trigger": "minecraft:inventory_changed",
                 "conditions": {
@@ -193,7 +250,7 @@ def generate_advancements():
                 json_data["requirements"].append([butterfly])
 
         if not json_data["requires_all"]:
-            json_data["requirements"] = [BUTTERFLIES]
+            json_data["requirements"] = [entities]
 
         # Remove the extra keys to avoid errors.
         json_data.pop("base_item", None)
@@ -208,6 +265,8 @@ def generate_advancements():
 
 
 def generate_code():
+    print("Generating code...")
+
     with open(CODE_GENERATION, 'w', encoding="utf8") as output_file:
         output_file.write("""package com.bokmcdok.butterflies.world;
 
@@ -222,6 +281,14 @@ public class ButterflySpeciesList {
             output_file.write("""            \"""" + butterfly + """\",
 """)
 
+        for moth in MOTHS:
+            output_file.write("""            \"""" + moth + """\",
+""")
+
+        for special in SPECIAL:
+            output_file.write("""            \"""" + special + """\",
+""")
+
         output_file.write("""    };
 }
 """)
@@ -232,8 +299,12 @@ public class ButterflySpeciesList {
 # Python's main entry point
 if __name__ == "__main__":
     generate_data_files(BUTTERFLIES)
+    generate_data_files(MOTHS)
+    generate_data_files(SPECIAL)
     # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
     generate_frog_food()
     generate_localisation_strings()
-    generate_advancements()
+    generate_advancements(BUTTERFLIES, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(MOTHS, MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(BUTTERFLIES + MOTHS, BOTH_ACHIEVEMENT_TEMPLATES)
     generate_code()

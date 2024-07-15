@@ -1,5 +1,4 @@
 {
-  "type": "minecraft:block",
   "pools": [
     {
       "bonus_rolls": 0.0,
@@ -10,12 +9,13 @@
       ],
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "butterflies:bottled_butterfly_heath"
+          "name": "butterflies:bottled_butterfly_heath",
+          "type": "minecraft:item"
         }
       ],
       "rolls": 1
     }
   ],
-  "random_sequence": "butterflies:blocks/bottled_butterfly_heath"
+  "random_sequence": "butterflies:blocks/bottled_butterfly_heath",
+  "type": "minecraft:block"
 }

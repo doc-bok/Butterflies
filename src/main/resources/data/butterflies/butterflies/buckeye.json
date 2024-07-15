@@ -1,17 +1,18 @@
 {
-  "index": 1,
+  "diurnality": "diurnal",
   "entityId": "buckeye",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
+  "index": 1,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "short"
   },
   "preferredFlower": "blue_orchid",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
 }

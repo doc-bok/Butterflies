@@ -1,17 +1,18 @@
 {
-  "index": 11,
+  "diurnality": "diurnal",
   "entityId": "longwing",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "forests",
+  "index": 11,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "long",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "long"
+    "egg": "short"
   },
   "preferredFlower": "dandelion",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
 }

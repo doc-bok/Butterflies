@@ -58,15 +58,17 @@ public class EntityTypeRegistry {
      */
     private static RegistryObject<EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
 
+        String registryId = Butterfly.getRegistryId(butterflyIndex);
+
         // Ice Butterfly
-        if (butterflyIndex == 17) {
-            return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
+        if (registryId.equals("ice")) {
+            return INSTANCE.register(registryId,
                     () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
-        return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
+        return INSTANCE.register(registryId,
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
                 .sized(0.3f, 0.2f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));

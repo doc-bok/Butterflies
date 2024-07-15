@@ -153,6 +153,18 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Check if the butterfly is scared of this entity.
+     * @param entity The entity that is too close.
+     * @return TRUE if butterflies are scared of the entity.
+     */
+    private static boolean isScaredOf(LivingEntity entity) {
+        return !(entity instanceof Butterfly ||
+                entity instanceof Caterpillar ||
+                entity instanceof ButterflyEgg ||
+                entity instanceof Chrysalis);
+    }
+
+    /**
      * The default constructor.
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
@@ -164,7 +176,7 @@ public class Butterfly extends Animal {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + getSpeciesString() + ".png");
+        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
 
         setAge(-getData().butterflyLifespan());
         setLanded(false);
@@ -282,19 +294,19 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Check if the butterfly has landed.
+     * @return TRUE if the butterfly has landed.
+     */
+    public boolean getIsLanded() {
+        return entityData.get(DATA_LANDED);
+    }
+
+    /**
      * Check if this is actually a moth.
      * @return TRUE if this is actually a moth.
      */
     public boolean getIsMoth() {
         return getData().type() == ButterflyData.ButterflyType.MOTH;
-    }
-
-    /**
-     * Check if the butterfly has landed.
-     * @return TRUE if the butterfly has landed.
-     */
-    public boolean getLanded() {
-        return entityData.get(DATA_LANDED);
     }
 
     /**
@@ -325,6 +337,10 @@ public class Butterfly extends Animal {
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
         return false;
+    }
+
+    public boolean isValidLandingBlock(BlockState blockState) {
+        return this.getData().isValidLandingBlock(blockState);
     }
 
     /**
@@ -425,7 +441,7 @@ public class Butterfly extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, LivingEntity.class, 3, 0.8, 1.33, (x) -> !(x instanceof Butterfly)));
+        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, LivingEntity.class, 3, 0.8, 1.33, Butterfly::isScaredOf));
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(2, new ButterflyMatingGoal(this, 1.1, 8));
 
@@ -616,30 +632,10 @@ public class Butterfly extends Animal {
      */
     private ButterflyData getData() {
         if (this.data == null) {
-            String species = getSpeciesString();
-
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-            this.data = ButterflyData.getEntry(location);
+            this.data = ButterflyData.getButterflyDataForEntity(this);
         }
 
         return this.data;
-    }
-
-    /**
-     * Helper method to get the species string for creating resource locations.
-     * @return A valid species string.
-     */
-    private String getSpeciesString() {
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-            }
-        }
-
-        return species;
     }
 
     /**

@@ -22,6 +22,7 @@ public class ButterflySpeciesList {
             "rainbow",
             "swallowtail",
             "peacock",
+            "clothes",
             "ice",
     };
 }

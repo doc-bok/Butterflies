@@ -1,17 +1,18 @@
 {
-  "index": 16,
+  "diurnality": "diurnal",
   "entityId": "peacock",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "forests_and_plains",
+  "index": 16,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "medium",
     "chrysalis": "medium",
-    "butterfly": "medium"
+    "egg": "short"
   },
   "preferredFlower": "blue_orchid",
-  "type": "butterfly",
-  "diurnality": "diurnal"
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
 }
