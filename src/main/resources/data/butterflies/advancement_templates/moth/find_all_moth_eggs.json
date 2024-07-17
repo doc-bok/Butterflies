@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/find_moth_egg",
   "display": {
     "icon": {
-      "item": "butterflies:cloth_egg"
+      "item": "butterflies:clothes_egg"
     },
     "title": {
       "translate": "advancements.butterfly.find_all_moth_eggs.title"

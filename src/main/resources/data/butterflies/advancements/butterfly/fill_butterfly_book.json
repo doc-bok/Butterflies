@@ -30,25 +30,25 @@
             "nbt": "{CustomModelData:1}"
           }
         ]
-      },
-      "filled_book_both": {
-        "trigger": "minecraft:inventory_changed",
-        "conditions": {
-          "items": [
-            {
-              "items": [
-                "butterflies:butterfly_book"
-              ],
-              "nbt": "{CustomModelData:3}"
-            }
-          ]
-        }
+      }
+    },
+    "filled_book_both": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_book"
+            ],
+            "nbt": "{CustomModelData:3}"
+          }
+        ]
       }
     }
   },
   "requirements": [
     [
-      "filled_book",
+      "filled_book_butterfly",
       "filled_book_both"
     ]
   ]
