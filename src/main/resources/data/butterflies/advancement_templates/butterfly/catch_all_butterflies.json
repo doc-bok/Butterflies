@@ -1,14 +1,14 @@
 {
-  "parent": "butterflies:butterfly/catch_moth",
+  "parent": "butterflies:butterfly/catch_butterfly",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_net_full"
+      "item": "butterflies:butterfly_net_admiral"
     },
     "title": {
-      "translate": "advancements.butterfly.catch_all_moths.title"
+      "translate": "advancements.butterfly.catch_all_butterflies.title"
     },
     "description": {
-      "translate": "advancements.butterfly.catch_all_moths.description"
+      "translate": "advancements.butterfly.catch_all_butterflies.description"
     },
     "frame": "challenge",
     "show_toast": true,

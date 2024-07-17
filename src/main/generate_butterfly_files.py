@@ -53,9 +53,9 @@ FLOWERS = [
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
-BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/butterfly/"
-MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/moth/"
-BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancements/templates/both/"
+BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/butterfly/"
+MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/moth/"
+BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/both/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 
 # Initial index
