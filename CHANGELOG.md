@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.5.1 (2024-07-17)
+- Fixed some advancement related bugs.
+
 ### 4.5.0 (2024-07-15)
 - Added the Clothes Moth.
 
