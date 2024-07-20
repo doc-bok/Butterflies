@@ -5,7 +5,7 @@ import shutil
 
 # The list of butterfly species included in the mod.
 BUTTERFLIES = [
-    'admiral', 
+    'admiral',
     'buckeye',
     'cabbage',
     'chalkhill',
@@ -24,10 +24,12 @@ BUTTERFLIES = [
     'peacock'
 ]
 
+# The list of moth species included in the mod.
 MOTHS = [
     'clothes'
 ]
 
+# The list of special butterflies included in the mod.
 SPECIAL = [
     'ice'
 ]
@@ -61,7 +63,9 @@ CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java
 # Initial index
 BUTTERFLY_INDEX = 0
 
-def generate_data_files(input):
+# Generates data files from the input array based on the first entry in the#
+# array.
+def generate_data_files(entries):
     print("Generating data files...")
 
     # Get list of files containing input[0]
@@ -69,20 +73,21 @@ def generate_data_files(input):
     for (path, _, filenames) in os.walk(os.getcwd()):
 
         # We only want json
-        filenames = [f for f in filenames if f.endswith(".json") and input[0] in f]
+        filenames = [f for f in filenames if f.endswith(".json") and entries[0] in f]
 
         for name in filenames:
             files.append(pathlib.Path(path, name))
 
     # Loop Start
-    for entry in input:
+    for entry in entries:
 
         for file in files:
 
             # Get the new filename
-            new_file = pathlib.Path(str(file).replace(input[0], entry))
+            new_file = pathlib.Path(str(file).replace(entries[0], entry))
 
-            if entry != input[0]:
+            if entry != entries[0]:
+
                 # Check if the file exists
                 if not new_file.is_file():
 
@@ -94,7 +99,11 @@ def generate_data_files(input):
                         file_data = input_file.read()
 
                     # Replace the butterfly species
-                    file_data = file_data.replace(input[0], entry)
+                    file_data = file_data.replace(entries[0], entry)
+
+                    # Write the file out again
+                    with open(new_file, 'w') as output_file:
+                        output_file.write(file_data)
 
             with open(new_file, 'r', encoding="utf8") as input_file:
                 json_data = json.load(input_file)
@@ -103,9 +112,6 @@ def generate_data_files(input):
             if "index" in json_data:
                 json_data["index"] = BUTTERFLY_INDEX
                 BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
-
-                if "extraLandingBlocks" not in json_data:
-                    json_data["extraLandingBlocks"] = "none"
 
             with open(new_file, 'w', encoding="utf8") as file:
                 file.write(json.dumps(json_data,
@@ -135,6 +141,7 @@ class FrogFood(object):
 # Generate list of entities to add to frog food.
 def generate_frog_food():
     print("Generating frog food...")
+
     values = []
     for i in BUTTERFLIES:
         values.append("butterflies:" + i)
@@ -151,6 +158,13 @@ def generate_frog_food():
         file.write(frog_food.to_json())
 
 
+# Add a value to the specified JSON data, but only if the key doesn't already
+# exist.
+def try_add_localisation_string(json_data, key, value):
+    if key not in json_data:
+        json_data[key] = value
+
+
 # Generates localisation strings if they don't already exist.
 def generate_localisation_strings():
     print("Generating localisation strings...")
@@ -159,59 +173,25 @@ def generate_localisation_strings():
         json_data = json.load(input_file)
 
     for i in BUTTERFLIES + SPECIAL:
-        test_key = "item.butterflies." + i + "_egg"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Butterfly Egg"
-
-        test_key = "entity.butterflies." + i
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Butterfly"
-
-        test_key = "entity.butterflies." + i + "_caterpillar"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Caterpillar"
-
-        test_key = "item.butterflies." + i
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Butterfly"
-
-        test_key = "item.butterflies." + i + "_caterpillar"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Caterpillar"
-
-        test_key = "entity.butterflies." + i + "_chrysalis"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Chrysalis"
+        name = i.capitalize
+        try_add_localisation_string(json_data, "entity.butterflies." + i, name + "Butterfly")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + "Caterpillar")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + "Chrysalis")
+        try_add_localisation_string(json_data, "item.butterflies." + i, name + "Butterfly")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + "Butterfly Egg")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + "Caterpillar")
 
     for i in MOTHS:
-        test_key = "item.butterflies." + i + "_egg"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Moth Egg"
+        name = i.capitalize
+        try_add_localisation_string(json_data, "entity.butterflies." + i, name + "Moth")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + "Larva")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + "Cocoon")
+        try_add_localisation_string(json_data, "item.butterflies." + i, name + "Moth")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + "Moth Egg")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + "Larva")
 
-        test_key = "entity.butterflies." + i
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Moth"
-
-        test_key = "entity.butterflies." + i + "_caterpillar"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Larva"
-
-        test_key = "item.butterflies." + i
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Moth"
-
-        test_key = "item.butterflies." + i + "_caterpillar"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Larva"
-
-        test_key = "entity.butterflies." + i + "_chrysalis"
-        if test_key not in json_data:
-            json_data[test_key] = i.capitalize() + " Cocoon"
-
-    for i in BUTTERFLIES + MOTHS:
-        test_key = "gui.butterflies.fact." + i
-        if test_key not in json_data:
-            json_data[test_key] = ""
+    for i in BUTTERFLIES + MOTHS + SPECIAL:
+        try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")
 
     with open(LOCALISATION, 'w', encoding="utf8") as file:
         file.write(json.dumps(json_data,
@@ -220,6 +200,8 @@ def generate_localisation_strings():
                               indent=2))
 
 
+# Generates advancements based on templates that can be found in the specified#
+# location.
 def generate_advancements(entities, templates):
     print("Generating advancements...")
 
@@ -264,6 +246,10 @@ def generate_advancements(entities, templates):
                                          indent=2))
 
 
+# Generates a Java file with an array containing every species. This array is
+# then used to create all the entities and items related to each butterfly,
+# saving a ton of new code needing to be written every time we add a new
+# butterfly or moth.
 def generate_code():
     print("Generating code...")
 
@@ -292,8 +278,6 @@ public class ButterflySpeciesList {
         output_file.write("""    };
 }
 """)
-
-
 
 
 # Python's main entry point

@@ -192,7 +192,7 @@ public abstract class DirectionalCreature extends Animal {
      * @param direction The direction of the surface block.
      */
     public void setSurfaceDirection(Direction direction) {
-        this.entityData.set(DATA_DIRECTION, direction);
+            this.entityData.set(DATA_DIRECTION, direction);
     }
 
     @Override
@@ -249,6 +249,9 @@ public abstract class DirectionalCreature extends Animal {
      * @return The position of the block.
      */
     protected BlockPos getSurfaceBlockPos() {
-        return this.blockPosition().relative(this.getSurfaceDirection());
+        return switch (this.getSurfaceDirection()) {
+            case UP, SOUTH, EAST -> this.blockPosition();
+            default -> this.blockPosition().relative(this.getSurfaceDirection());
+        };
     }
 }
