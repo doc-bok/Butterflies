@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.5.2 (2024-07-20)
+- Fixed directional creatures not getting their spawn block properly.
+
 ### 4.5.1 (2024-07-17)
 - Fixed some advancement related bugs.
 
