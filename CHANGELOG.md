@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.5.3 (2024-07-21)
+- Fixed butterfly landing state not being saved correctly.
+
 ### 4.5.2 (2024-07-20)
 - Fixed directional creatures not getting their spawn block properly.
 
