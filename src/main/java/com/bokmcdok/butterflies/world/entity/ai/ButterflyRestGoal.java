@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
@@ -59,7 +58,6 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
      */
     @Override
     public void start() {
-        this.butterfly.setLanded(false);
         super.start();
     }
 
