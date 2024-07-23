@@ -249,9 +249,9 @@ public abstract class DirectionalCreature extends Animal {
      * @return The position of the block.
      */
     protected BlockPos getSurfaceBlockPos() {
-        return switch (this.getSurfaceDirection()) {
-            case UP, SOUTH, EAST -> this.blockPosition();
-            default -> this.blockPosition().relative(this.getSurfaceDirection());
+        return switch (this.getSurfaceDirection().getAxisDirection()) {
+            case POSITIVE -> this.blockPosition();
+            case NEGATIVE -> this.blockPosition().relative(this.getSurfaceDirection());
         };
     }
 }

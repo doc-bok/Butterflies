@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.5.4 (2024-07-23)
+- Some minor adjustments to butterfly animations when landed.
+
 ### 4.5.3 (2024-07-21)
 - Fixed butterfly landing state not being saved correctly.
 
