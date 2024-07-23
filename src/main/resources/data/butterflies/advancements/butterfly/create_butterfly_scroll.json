@@ -156,6 +156,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_luna"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "monarch": {
       "conditions": {
         "items": [
@@ -252,7 +264,8 @@
       "rainbow",
       "swallowtail",
       "peacock",
-      "clothes"
+      "clothes",
+      "luna"
     ]
   ]
 }

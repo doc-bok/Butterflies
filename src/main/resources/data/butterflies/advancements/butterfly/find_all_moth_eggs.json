@@ -11,6 +11,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:luna_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -32,6 +44,9 @@
   "requirements": [
     [
       "clothes"
+    ],
+    [
+      "luna"
     ]
   ]
 }

@@ -11,6 +11,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_luna"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -31,7 +43,8 @@
   "parent": "butterflies:butterfly/find_larva",
   "requirements": [
     [
-      "clothes"
+      "clothes",
+      "luna"
     ]
   ]
 }

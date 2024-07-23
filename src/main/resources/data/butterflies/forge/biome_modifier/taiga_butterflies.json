@@ -217,6 +217,30 @@
       "weight": 10,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:luna",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:luna_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:luna_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:luna_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

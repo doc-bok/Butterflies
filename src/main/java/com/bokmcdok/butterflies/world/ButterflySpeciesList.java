@@ -23,6 +23,7 @@ public class ButterflySpeciesList {
             "swallowtail",
             "peacock",
             "clothes",
+            "luna",
             "ice",
     };
 }
