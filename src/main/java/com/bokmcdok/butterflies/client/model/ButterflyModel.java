@@ -101,9 +101,9 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
         if (entity.getIsLanded()) {
             this.body.yRot = 0.7853982F;
             if (entity.getIsMoth()) {
-                this.right_wing.xRot = 0;
+                this.right_wing.xRot = 0.15F;
             } else {
-                this.right_wing.xRot = -Mth.PI * 0.5F;
+                this.right_wing.xRot = (0.15F - Mth.PI) * 0.5F;
             }
 
         } else {

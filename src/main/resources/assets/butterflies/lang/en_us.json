@@ -95,6 +95,9 @@
   "entity.butterflies.longwing": "Longwing Butterfly",
   "entity.butterflies.longwing_caterpillar": "Longwing Caterpillar",
   "entity.butterflies.longwing_chrysalis": "Longwing Chrysalis",
+  "entity.butterflies.luna": "Luna Moth",
+  "entity.butterflies.luna_caterpillar": "Luna Larva",
+  "entity.butterflies.luna_chrysalis": "Luna Cocoon",
   "entity.butterflies.monarch": "Monarch Butterfly",
   "entity.butterflies.monarch_caterpillar": "Monarch Caterpillar",
   "entity.butterflies.monarch_chrysalis": "Monarch Chrysalis",
@@ -124,6 +127,7 @@
   "gui.butterflies.fact.heath": "Heath butterflies dislike the dark and like to stay low.",
   "gui.butterflies.fact.ice": "Ice butterflies have evolved to be able to move when frozen.",
   "gui.butterflies.fact.longwing": "A longwing's lifespan is as long as its wings.",
+  "gui.butterflies.fact.luna": "Their green larvae will make clicking noises when threatened.",
   "gui.butterflies.fact.monarch": "Monarch butterflies can be poisonous.",
   "gui.butterflies.fact.morpho": "A morpho's blue colour comes from tiny scales on its wings.",
   "gui.butterflies.fact.peacock": "Peacock butterflies like to fly around stinging nettles.",
@@ -201,6 +205,9 @@
   "item.butterflies.longwing": "Longwing Butterfly",
   "item.butterflies.longwing_caterpillar": "Longwing Caterpillar",
   "item.butterflies.longwing_egg": "Longwing Butterfly Egg",
+  "item.butterflies.luna": "Luna Moth",
+  "item.butterflies.luna_caterpillar": "Luna Larva",
+  "item.butterflies.luna_egg": "Luna Moth Egg",
   "item.butterflies.monarch": "Monarch Butterfly",
   "item.butterflies.monarch_caterpillar": "Monarch Caterpillar",
   "item.butterflies.monarch_egg": "Monarch Butterfly Egg",
@@ -222,5 +229,6 @@
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
+  "butterflies.subtitle.luna_caterpillar": "Luna Caterpillar Clicking"
 }

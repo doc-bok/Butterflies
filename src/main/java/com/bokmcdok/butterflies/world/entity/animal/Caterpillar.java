@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -397,6 +399,17 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Return an ambient sound for the caterpillar. If the sound doesn't exist
+     * it just won't play.
+     * @return A reference to the ambient sound.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MODID, ButterflyData.getSpeciesString(this)));
+    }
+
+    /**
      * Check if the caterpillar is in a bottle or not.
      * @return TRUE if the caterpillar is free.
      */
@@ -414,15 +427,6 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
-    }
-
-    /**
-     * Override to control an entity's relative volume. Caterpillars are silent.
-     * @return Always zero, so caterpillars are silent.
-     */
-    @Override
-    protected float getSoundVolume() {
-        return 0.0f;
     }
 
     /**

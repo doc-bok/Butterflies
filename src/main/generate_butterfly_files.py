@@ -26,7 +26,8 @@ BUTTERFLIES = [
 
 # The list of moth species included in the mod.
 MOTHS = [
-    'clothes'
+    'clothes',
+    'luna'
 ]
 
 # The list of special butterflies included in the mod.
@@ -173,22 +174,22 @@ def generate_localisation_strings():
         json_data = json.load(input_file)
 
     for i in BUTTERFLIES + SPECIAL:
-        name = i.capitalize
-        try_add_localisation_string(json_data, "entity.butterflies." + i, name + "Butterfly")
-        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + "Caterpillar")
-        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + "Chrysalis")
-        try_add_localisation_string(json_data, "item.butterflies." + i, name + "Butterfly")
-        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + "Butterfly Egg")
-        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + "Caterpillar")
+        name = i.capitalize()
+        try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Caterpillar")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Chrysalis")
+        try_add_localisation_string(json_data, "item.butterflies." + i, name + " Butterfly")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Butterfly Egg")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Caterpillar")
 
     for i in MOTHS:
-        name = i.capitalize
-        try_add_localisation_string(json_data, "entity.butterflies." + i, name + "Moth")
-        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + "Larva")
-        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + "Cocoon")
-        try_add_localisation_string(json_data, "item.butterflies." + i, name + "Moth")
-        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + "Moth Egg")
-        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + "Larva")
+        name = i.capitalize()
+        try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Moth")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")
+        try_add_localisation_string(json_data, "item.butterflies." + i, name + " Moth")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
+        try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
 
     for i in BUTTERFLIES + MOTHS + SPECIAL:
         try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")

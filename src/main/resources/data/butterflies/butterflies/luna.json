@@ -1,0 +1,18 @@
+{
+  "diurnality": "nocturnal",
+  "entityId": "luna",
+  "extraLandingBlocks": "none",
+  "habitat": "plains",
+  "index": 18,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "preferredFlower": "oxeye_daisy",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}
