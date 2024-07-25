@@ -4,6 +4,7 @@ import pathlib
 import shutil
 
 # The list of butterfly species included in the mod.
+# NOTE: Avoid using underscores in these names.
 BUTTERFLIES = [
     'admiral',
     'buckeye',
@@ -25,12 +26,15 @@ BUTTERFLIES = [
 ]
 
 # The list of moth species included in the mod.
+# NOTE: Avoid using underscores in these names.
 MOTHS = [
     'clothes',
-    'luna'
+    'luna',
+    'domestic_silk'
 ]
 
 # The list of special butterflies included in the mod.
+# NOTE: Avoid using underscores in these names.
 SPECIAL = [
     'ice'
 ]
@@ -174,7 +178,8 @@ def generate_localisation_strings():
         json_data = json.load(input_file)
 
     for i in BUTTERFLIES + SPECIAL:
-        name = i.capitalize()
+        name = i.replace('_', ' ')
+        name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Caterpillar")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Chrysalis")
@@ -183,7 +188,8 @@ def generate_localisation_strings():
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Caterpillar")
 
     for i in MOTHS:
-        name = i.capitalize()
+        name = i.replace('_', ' ')
+        name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Moth")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")

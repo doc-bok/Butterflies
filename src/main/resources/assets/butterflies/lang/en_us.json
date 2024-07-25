@@ -53,6 +53,7 @@
   "advancements.butterfly.zhuangzi.title": "Who Am I?",
   "block.butterflies.bottled_butterfly": "Bottled Butterfly",
   "block.butterflies.bottled_caterpillar": "Bottled Caterpillar",
+  "butterflies.subtitle.luna_caterpillar": "Luna Caterpillar Clicking",
   "entity.butterflies.admiral": "Admiral Butterfly",
   "entity.butterflies.admiral_caterpillar": "Admiral Caterpillar",
   "entity.butterflies.admiral_chrysalis": "Admiral Chrysalis",
@@ -74,6 +75,9 @@
   "entity.butterflies.common": "Birdwing Butterfly",
   "entity.butterflies.common_caterpillar": "Birdwing Caterpillar",
   "entity.butterflies.common_chrysalis": "Birdwing Chrysalis",
+  "entity.butterflies.domestic_silk": "Domestic Silk Moth",
+  "entity.butterflies.domestic_silk_caterpillar": "Domestic Silk Larva",
+  "entity.butterflies.domestic_silk_chrysalis": "Domestic Silk Cocoon",
   "entity.butterflies.emperor": "Emperor Butterfly",
   "entity.butterflies.emperor_caterpillar": "Emperor Caterpillar",
   "entity.butterflies.emperor_chrysalis": "Emperor Chrysalis",
@@ -120,6 +124,7 @@
   "gui.butterflies.fact.clipper": "Clipper butterflies can be many different colours.",
   "gui.butterflies.fact.clothes": "These moth's larva like to munch on clothes.",
   "gui.butterflies.fact.common": "Th common butterfly can be found almost anywhere.",
+  "gui.butterflies.fact.domestic_silk": "These moths don't fly long distances.",
   "gui.butterflies.fact.emperor": "Emperor butterflies like to eat tree sap.",
   "gui.butterflies.fact.forester": "This pink butterfly isn't scared of cats.",
   "gui.butterflies.fact.glasswing": "Glasswings can be hard to spot for predators.",
@@ -183,6 +188,9 @@
   "item.butterflies.common": "Common Butterfly",
   "item.butterflies.common_caterpillar": "Common Caterpillar",
   "item.butterflies.common_egg": "Common Butterfly Egg",
+  "item.butterflies.domestic_silk": "Domestic Silk Moth",
+  "item.butterflies.domestic_silk_caterpillar": "Domestic Silk Larva",
+  "item.butterflies.domestic_silk_egg": "Domestic Silk Moth Egg",
   "item.butterflies.emperor": "Emperor Butterfly",
   "item.butterflies.emperor_caterpillar": "Emperor Caterpillar",
   "item.butterflies.emperor_egg": "Emperor Butterfly Egg",
@@ -229,6 +237,5 @@
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
-  "butterflies.subtitle.luna_caterpillar": "Luna Caterpillar Clicking"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
 }

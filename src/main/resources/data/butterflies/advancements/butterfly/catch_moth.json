@@ -12,6 +12,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "domestic_silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_domestic_silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "luna": {
       "conditions": {
         "items": [
@@ -44,7 +56,8 @@
   "requirements": [
     [
       "clothes",
-      "luna"
+      "luna",
+      "domestic_silk"
     ]
   ]
 }
