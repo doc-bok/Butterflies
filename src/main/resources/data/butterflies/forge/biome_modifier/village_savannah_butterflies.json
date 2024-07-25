@@ -25,6 +25,30 @@
       "weight": 10,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

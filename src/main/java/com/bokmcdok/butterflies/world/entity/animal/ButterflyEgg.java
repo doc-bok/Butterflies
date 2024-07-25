@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
@@ -26,11 +25,8 @@ public class ButterflyEgg extends DirectionalCreature {
         return ButterflySpeciesList.SPECIES[butterflyIndex] + "_egg";
     }
 
-    // The size of the butterfly egg.
-    private final ButterflyData.Size size;
-
-    // The butterfly egg item location.
-    private final ResourceLocation butterflyEggItem;
+    // The butterfly's data - created on access.
+    private ButterflyData data = null;
 
     /**
      * Spawns a butterfly egg into the world.
@@ -82,7 +78,7 @@ public class ButterflyEgg extends DirectionalCreature {
     @Override
     public float getScale() {
         float scale = 0.05f;
-        switch (this.size) {
+        switch (this.getData().size()) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
             default -> { return scale; }
@@ -104,7 +100,7 @@ public class ButterflyEgg extends DirectionalCreature {
             } else {
                 this.remove(RemovalReason.DISCARDED);
 
-                Item itemToAdd = ForgeRegistries.ITEMS.getValue(this.butterflyEggItem);
+                Item itemToAdd = ForgeRegistries.ITEMS.getValue(this.getData().getButterflyEggItem());
                 if (itemToAdd != null) {
                     ItemStack itemStack = new ItemStack(itemToAdd);
                     player.addItem(itemStack);
@@ -187,29 +183,12 @@ public class ButterflyEgg extends DirectionalCreature {
      * @param level      The current level.
      */
     public ButterflyEgg(EntityType<? extends ButterflyEgg> entityType,
-                           Level level) {
+                        Level level) {
         super(entityType, level);
 
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-                split = species.split("_");
-                if (split.length >=2) {
-                    species = split[0];
-                }
-            }
-        }
-
+        String species = ButterflyData.getSpeciesString(this);
         setTexture("textures/item/butterfly_egg/" + species + "_egg.png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        setAge(-data.eggLifespan());
-        this.butterflyEggItem = ButterflyData.indexToButterflyEggItem(data.butterflyIndex());
+        setAge(-getData().eggLifespan());
     }
 
     /**
@@ -273,5 +252,17 @@ public class ButterflyEgg extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    private ButterflyData getData() {
+        if (this.data == null) {
+            this.data = ButterflyData.getButterflyDataForEntity(this);
+        }
+
+        return this.data;
     }
 }

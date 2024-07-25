@@ -11,10 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.text.html.parser.Entity;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
@@ -52,10 +50,10 @@ public record ButterflyData(int butterflyIndex,
     // Represents where in the day/night cycle a butterfly is most active.
     @SuppressWarnings("unused")
     public enum Diurnality {
-        DIURNAL,
-        NOCTURNAL,
-        CREPUSCULAR,
-        CATHEMERAL
+        DIURNAL,        // Active during the day
+        NOCTURNAL,      // Active during the night
+        CREPUSCULAR,    // Active during twilight
+        CATHEMERAL      // Always active
     }
 
     // Used to indicate any extra landing blocks that the butterflies can use.
@@ -310,6 +308,12 @@ public record ButterflyData(int butterflyIndex,
             species = splits[1];
         }
 
+        // Another workaround. In the future don't use underscores in butterfly
+        // IDs.
+        if (species.contains("domestic_silk")) {
+            return ENTITY_ID_TO_INDEX_MAP.get("domestic_silk");
+        }
+
         String[] components = species.split("_");
         for (String component : components) {
             if (ENTITY_ID_TO_INDEX_MAP.containsKey(component)) {
@@ -341,6 +345,14 @@ public record ButterflyData(int butterflyIndex,
             String[] split = encodeId.split(":");
             if (split.length >= 2) {
                 species = split[1];
+
+                // Kind of hacky. We should avoid butterfly IDs with
+                // underscores in the future. Making an exception here, so we
+                // don't lose work done before we realised it was a problem.
+                if (species.contains("domestic_silk")) {
+                    return "domestic_silk";
+                }
+
                 split = species.split("_");
                 if (split.length >=2) {
                     species = split[0];
@@ -437,20 +449,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Gets the resource location for the butterfly egg at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the butterfly egg.
-     */
-    public static ResourceLocation indexToButterflyEggItem(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
-        }
-
-        return null;
-    }
-
-    /**
      * Gets the texture to use for a specific butterfly
      * @param butterflyIndex The butterfly index.
      * @return The resource location of the texture to use.
@@ -508,6 +506,18 @@ public record ButterflyData(int butterflyIndex,
     public ResourceLocation getCaterpillarItem() {
         if (this.entityId != null) {
             return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + this.entityId);
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the resource location for the butterfly egg item.
+     * @return The resource location of the butterfly egg.
+     */
+    public ResourceLocation getButterflyEggItem() {
+        if (this.entityId != null) {
+            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
         }
 
         return null;

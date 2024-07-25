@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.6.0 (2024-07-25)
+- Added the Domestic Silk Moth.
+
 ### 4.5.4 (2024-07-23)
 - Some minor adjustments to butterfly animations when landed.
 

@@ -1,0 +1,18 @@
+{
+  "diurnality": "crepuscular",
+  "entityId": "domestic_silk",
+  "extraLandingBlocks": "none",
+  "habitat": "villages",
+  "index": 19,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "preferredFlower": "red_tulip",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "moth"
+}

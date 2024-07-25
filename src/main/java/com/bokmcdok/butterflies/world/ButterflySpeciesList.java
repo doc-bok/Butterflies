@@ -24,6 +24,7 @@ public class ButterflySpeciesList {
             "peacock",
             "clothes",
             "luna",
+            "domestic_silk",
             "ice",
     };
 }
