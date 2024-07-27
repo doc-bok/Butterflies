@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.7.0 (2024-07-25)
+- Added the Peppered Moth.
+
 ### 4.6.0 (2024-07-25)
 - Added the Domestic Silk Moth.
 

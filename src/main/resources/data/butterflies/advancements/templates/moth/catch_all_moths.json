@@ -1,0 +1,26 @@
+{
+  "parent": "butterflies:butterfly/catch_moth",
+  "display": {
+    "icon": {
+      "item": "butterflies:butterfly_net_full"
+    },
+    "title": {
+      "translate": "advancements.butterfly.catch_all_moths.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.catch_all_moths.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:butterfly_net_",
+  "item_ext": "",
+  "requires_all": true
+}

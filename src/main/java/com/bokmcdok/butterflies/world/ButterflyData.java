@@ -59,7 +59,8 @@ public record ButterflyData(int butterflyIndex,
     // Used to indicate any extra landing blocks that the butterflies can use.
     public enum ExtraLandingBlocks {
         NONE,
-        WOOL
+        WOOL,
+        LOGS
     }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
@@ -533,7 +534,11 @@ public record ButterflyData(int butterflyIndex,
             return true;
         }
 
-        return extraLandingBlocks == ExtraLandingBlocks.WOOL &&
-                blockState.is(BlockTags.WOOL);
+        // Handle extra block types
+        return switch (extraLandingBlocks) {
+            case WOOL -> blockState.is(BlockTags.WOOL);
+            case LOGS -> blockState.is(BlockTags.LOGS);
+            default -> false;
+        };
     }
 }

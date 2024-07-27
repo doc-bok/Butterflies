@@ -1,0 +1,23 @@
+{
+  "parent": "butterflies:butterfly/bottle_caterpillar",
+  "display": {
+    "icon": {
+      "item": "butterflies:bottled_caterpillar_forester"
+    },
+    "title": {
+      "translate": "advancements.butterfly.bottle_all_caterpillars.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.bottle_all_caterpillars.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:bottled_caterpillar_",
+  "item_ext": "",
+  "requires_all": true
+}

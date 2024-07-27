@@ -1,0 +1,18 @@
+{
+  "diurnality": "nocturnal",
+  "entityId": "peppered",
+  "extraLandingBlocks": "logs",
+  "habitat": "forests",
+  "index": 20,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "preferredFlower": "lily_of_the_valley",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}
