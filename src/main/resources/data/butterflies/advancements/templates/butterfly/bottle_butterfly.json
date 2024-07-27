@@ -1,0 +1,23 @@
+{
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "display": {
+    "icon": {
+      "item": "minecraft:glass_bottle"
+    },
+    "title": {
+      "translate": "advancements.butterfly.bottle_butterfly.title"
+    },
+    "description": {
+      "translate": "advancements.butterfly.bottle_butterfly.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {},
+  "requirements": [],
+  "base_item": "butterflies:bottled_butterfly_",
+  "item_ext": "",
+  "requires_all": false
+}

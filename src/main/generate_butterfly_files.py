@@ -30,7 +30,8 @@ BUTTERFLIES = [
 MOTHS = [
     'clothes',
     'luna',
-    'domestic_silk'
+    'domestic_silk',
+    'peppered'
 ]
 
 # The list of special butterflies included in the mod.

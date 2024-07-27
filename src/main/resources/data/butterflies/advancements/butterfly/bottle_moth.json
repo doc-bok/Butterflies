@@ -35,6 +35,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "peppered": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_peppered"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -57,7 +69,8 @@
     [
       "clothes",
       "luna",
-      "domestic_silk"
+      "domestic_silk",
+      "peppered"
     ]
   ]
 }
