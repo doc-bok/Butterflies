@@ -24,6 +24,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "indianmeal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_indianmeal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "luna": {
       "conditions": {
         "items": [
@@ -77,6 +89,9 @@
     ],
     [
       "peppered"
+    ],
+    [
+      "indianmeal"
     ]
   ]
 }

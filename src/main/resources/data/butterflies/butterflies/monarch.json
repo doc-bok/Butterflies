@@ -10,6 +10,7 @@
     "chrysalis": "short",
     "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "poppy",
   "rarity": "common",
   "size": "large",

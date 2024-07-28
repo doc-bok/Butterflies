@@ -31,7 +31,8 @@ MOTHS = [
     'clothes',
     'luna',
     'domestic_silk',
-    'peppered'
+    'peppered',
+    'indianmeal'
 ]
 
 # The list of special butterflies included in the mod.

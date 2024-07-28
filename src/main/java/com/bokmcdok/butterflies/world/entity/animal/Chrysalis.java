@@ -8,10 +8,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -20,13 +18,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class Chrysalis extends DirectionalCreature {
 
-    //  The name this block is registered under.
+    //  The name this entity is registered under.
     public static String getRegistryId(int butterflyIndex) {
         return ButterflySpeciesList.SPECIES[butterflyIndex] + "_chrysalis";
     }
-
-    // The size of the caterpillar.
-    private final ButterflyData.Size size;
 
     /**
      * Spawns a chrysalis into the world.
@@ -73,7 +68,7 @@ public class Chrysalis extends DirectionalCreature {
         scale = scale * 0.06f;
         scale = scale + 0.1f;
 
-        switch (this.size) {
+        switch (this.getData().size()) {
             case SMALL -> { return 0.7f * scale; }
             case LARGE ->{ return 1.28f * scale; }
             default -> { return scale; }
@@ -170,9 +165,7 @@ public class Chrysalis extends DirectionalCreature {
         setTexture("textures/entity/chrysalis/chrysalis_" + species + ".png");
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        setAge(-data.chrysalisLifespan());
+        setAge(-getData().chrysalisLifespan());
     }
 
     /**

@@ -10,6 +10,7 @@
     "chrysalis": "medium",
     "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "blue_orchid",
   "rarity": "common",
   "size": "medium",

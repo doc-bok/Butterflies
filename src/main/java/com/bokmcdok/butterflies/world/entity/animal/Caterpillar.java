@@ -55,9 +55,6 @@ public class Caterpillar extends DirectionalCreature {
     // Whether gravity is being applied.
     private boolean isNoGravity = true;
 
-    // The butterfly's data - created on access.
-    private ButterflyData data = null;
-
     /**
      * Spawns a caterpillar at the specified position.
      * @param level     The current level.
@@ -485,18 +482,6 @@ public class Caterpillar extends DirectionalCreature {
         }
 
         return Mth.wrapDegrees(updatedRotation - this.getYRot());
-    }
-
-    /**
-     * Accessor to help get butterfly data when needed.
-     * @return A valid butterfly data entry.
-     */
-    private ButterflyData getData() {
-        if (this.data == null) {
-            this.data = ButterflyData.getButterflyDataForEntity(this);
-        }
-
-        return this.data;
     }
 
     /**

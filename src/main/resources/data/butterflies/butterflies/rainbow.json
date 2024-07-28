@@ -10,6 +10,7 @@
     "chrysalis": "medium",
     "egg": "medium"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "allium",
   "rarity": "uncommon",
   "size": "small",

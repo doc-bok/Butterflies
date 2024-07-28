@@ -10,6 +10,7 @@
     "chrysalis": "medium",
     "egg": "long"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "white_tulip",
   "rarity": "rare",
   "size": "small",

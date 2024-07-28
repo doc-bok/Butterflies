@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -9,7 +10,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
@@ -37,6 +37,9 @@ public abstract class DirectionalCreature extends Animal {
     // Names of the attributes stored in the save data.
     protected static final String DIRECTION = "direction";
 
+    // The butterfly's data - created on access.
+    private ButterflyData data = null;
+
     // The location of the texture that the renderer should use.
     private ResourceLocation texture;
 
@@ -55,10 +58,24 @@ public abstract class DirectionalCreature extends Animal {
                                                      MobSpawnType spawnType,
                                                      BlockPos blockPos,
                                                      RandomSource random) {
+
+        // Get the relevant butterfly data.
+        String descriptionId = entityType.getDescriptionId();
+        String[] components = descriptionId.split("\\.");
+        ButterflyData data = ButterflyData.getEntry(new ResourceLocation(ButterfliesMod.MODID, components[2]));
+
+        // Check each direction.
         for (Direction direction : Direction.values()) {
-            BlockPos surfacePosition = blockPos.relative(direction);
+
+            // Get the surface block properly.
+            BlockPos surfacePosition = blockPos;
+            if (direction.getAxisDirection() == Direction.AxisDirection.NEGATIVE) {
+                surfacePosition = surfacePosition.relative(direction);
+            }
+
+            // Check if the entity can spawn on this surface.
             if (level.hasChunkAt(surfacePosition)) {
-                if (level.getBlockState(surfacePosition).is(BlockTags.LEAVES)) {
+                if (data.isValidLandingBlock(level.getBlockState(surfacePosition))) {
                     return true;
                 }
             }
@@ -113,12 +130,12 @@ public abstract class DirectionalCreature extends Animal {
 
         if (getIsReleased()) {
             if (levelAccessor.hasChunkAt(getSurfaceBlockPos()) &&
-                    !levelAccessor.getBlockState(getSurfaceBlockPos()).is(BlockTags.LEAVES)) {
+                    !this.getData().isValidLandingBlock(levelAccessor.getBlockState(getSurfaceBlockPos()))) {
 
                 for (Direction direction : Direction.values()) {
                     BlockPos surfacePosition = this.blockPosition().relative(direction);
                     if (levelAccessor.hasChunkAt(surfacePosition) &&
-                            levelAccessor.getBlockState(surfacePosition).is(BlockTags.LEAVES)) {
+                            this.getData().isValidLandingBlock(levelAccessor.getBlockState(surfacePosition))) {
 
                         this.setSurfaceDirection(direction);
 
@@ -229,19 +246,23 @@ public abstract class DirectionalCreature extends Animal {
     }
 
     /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    protected ButterflyData getData() {
+        if (this.data == null) {
+            this.data = ButterflyData.getButterflyDataForEntity(this);
+        }
+
+        return this.data;
+    }
+
+    /**
      * Check if the entity is free to move around.
      * @return TRUE if the entity is free.
      */
     protected boolean getIsReleased() {
         return true;
-    }
-
-    /**
-     * Get the texture to use for rendering.
-     * @return The resource location of the texture.
-     */
-    public ResourceLocation getTexture() {
-        return texture;
     }
 
     /**
@@ -253,5 +274,13 @@ public abstract class DirectionalCreature extends Animal {
             case POSITIVE -> this.blockPosition();
             case NEGATIVE -> this.blockPosition().relative(this.getSurfaceDirection());
         };
+    }
+
+    /**
+     * Get the texture to use for rendering.
+     * @return The resource location of the texture.
+     */
+    public ResourceLocation getTexture() {
+        return texture;
     }
 }

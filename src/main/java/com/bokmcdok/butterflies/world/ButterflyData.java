@@ -10,6 +10,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,7 +46,8 @@ public record ButterflyData(int butterflyIndex,
                             ResourceLocation preferredFlower,
                             ButterflyType type,
                             Diurnality diurnality,
-                            ExtraLandingBlocks extraLandingBlocks) {
+                            ExtraLandingBlocks extraLandingBlocks,
+                            PlantEffect plantEffect) {
 
     // Represents where in the day/night cycle a butterfly is most active.
     @SuppressWarnings("unused")
@@ -59,8 +61,9 @@ public record ButterflyData(int butterflyIndex,
     // Used to indicate any extra landing blocks that the butterflies can use.
     public enum ExtraLandingBlocks {
         NONE,
-        WOOL,
-        LOGS
+        HAY_BALE,
+        LOGS,
+        WOOL
     }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
@@ -89,6 +92,13 @@ public record ButterflyData(int butterflyIndex,
         public int getIndex() {
             return this.value;
         }
+    }
+
+    // The effect the butterfly has on plants.
+    public enum PlantEffect {
+        NONE,
+        POLLINATE,
+        CONSUME
     }
 
     // Represents the rarity of a butterfly. Note that this only affects the
@@ -172,7 +182,8 @@ public record ButterflyData(int butterflyIndex,
                          ResourceLocation preferredFlower,
                          ButterflyType type,
                          Diurnality diurnality,
-                         ExtraLandingBlocks extraLandingBlocks) {
+                         ExtraLandingBlocks extraLandingBlocks,
+                         PlantEffect plantEffect) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -190,6 +201,7 @@ public record ButterflyData(int butterflyIndex,
         this.type = type;
         this.diurnality = diurnality;
         this.extraLandingBlocks = extraLandingBlocks;
+        this.plantEffect = plantEffect;
     }
 
     /**
@@ -231,6 +243,7 @@ public record ButterflyData(int butterflyIndex,
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
                 Diurnality diurnality = getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
                 ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
+                PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
                 entry = new ButterflyData(
                         index,
@@ -246,7 +259,8 @@ public record ButterflyData(int butterflyIndex,
                         new ResourceLocation(preferredFlower),
                         type,
                         diurnality,
-                        extraLandingBlocks
+                        extraLandingBlocks,
+                        plantEffect
                 );
             }
 
@@ -536,8 +550,9 @@ public record ButterflyData(int butterflyIndex,
 
         // Handle extra block types
         return switch (extraLandingBlocks) {
-            case WOOL -> blockState.is(BlockTags.WOOL);
+            case HAY_BALE -> blockState.is(Blocks.HAY_BLOCK);
             case LOGS -> blockState.is(BlockTags.LOGS);
+            case WOOL -> blockState.is(BlockTags.WOOL);
             default -> false;
         };
     }
