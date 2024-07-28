@@ -156,6 +156,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "indianmeal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_indianmeal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "longwing": {
       "conditions": {
         "items": [
@@ -291,7 +303,8 @@
       "clothes",
       "luna",
       "domestic_silk",
-      "peppered"
+      "peppered",
+      "indianmeal"
     ]
   ]
 }

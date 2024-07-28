@@ -10,6 +10,7 @@
     "chrysalis": "short",
     "egg": "medium"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "pink_tulip",
   "rarity": "rare",
   "size": "large",

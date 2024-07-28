@@ -25,9 +25,6 @@ public class ButterflyEgg extends DirectionalCreature {
         return ButterflySpeciesList.SPECIES[butterflyIndex] + "_egg";
     }
 
-    // The butterfly's data - created on access.
-    private ButterflyData data = null;
-
     /**
      * Spawns a butterfly egg into the world.
      * @param level The level to spawn the entity.
@@ -252,17 +249,5 @@ public class ButterflyEgg extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
-    }
-
-    /**
-     * Accessor to help get butterfly data when needed.
-     * @return A valid butterfly data entry.
-     */
-    private ButterflyData getData() {
-        if (this.data == null) {
-            this.data = ButterflyData.getButterflyDataForEntity(this);
-        }
-
-        return this.data;
     }
 }

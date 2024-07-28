@@ -10,6 +10,7 @@
     "chrysalis": "long",
     "egg": "medium"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "poppy",
   "rarity": "rare",
   "size": "large",

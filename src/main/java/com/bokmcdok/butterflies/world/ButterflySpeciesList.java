@@ -26,6 +26,7 @@ public class ButterflySpeciesList {
             "luna",
             "domestic_silk",
             "peppered",
+            "indianmeal",
             "ice",
     };
 }

@@ -3,13 +3,14 @@
   "entityId": "ice",
   "extraLandingBlocks": "none",
   "habitat": "ice",
-  "index": 21,
+  "index": 22,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
     "chrysalis": "long",
     "egg": "long"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "wither_rose",
   "rarity": "rare",
   "size": "medium",

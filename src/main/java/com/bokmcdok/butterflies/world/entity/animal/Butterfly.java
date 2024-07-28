@@ -446,7 +446,18 @@ public class Butterfly extends Animal {
 
         // Pollination can be configured to be off.
         if (ButterfliesConfig.enablePollination.get()) {
-            this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+            switch (this.getData().plantEffect()) {
+                case NONE:
+                    break;
+
+                case POLLINATE:
+                    this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+                    break;
+
+                case CONSUME:
+                    this.goalSelector.addGoal(4, new ButterflyEatCropGoal(this, 0.8d, 8, 8));
+                    break;
+            }
         }
 
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));

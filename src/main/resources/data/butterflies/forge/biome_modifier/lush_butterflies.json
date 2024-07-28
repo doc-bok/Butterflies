@@ -145,6 +145,30 @@
       "weight": 10,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

@@ -1,5 +1,11 @@
 ## Changelog
 
+### 4.8.0 (2024-07-28)
+- Added the Indian Meal Moth.
+- New goal for butterflies/moths that eat plants.
+- Hay bales are now an option for butterflies to use as landing blocks. 
+- Fixed the spawn code so it takes advantage of `extraLandingBlocks`.
+
 ### 4.7.0 (2024-07-25)
 - Added the Peppered Moth.
 

@@ -10,6 +10,7 @@
     "chrysalis": "medium",
     "egg": "medium"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "lily_of_the_valley",
   "rarity": "rare",
   "size": "small",

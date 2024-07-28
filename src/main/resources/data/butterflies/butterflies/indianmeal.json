@@ -1,0 +1,19 @@
+{
+  "diurnality": "nocturnal",
+  "entityId": "indianmeal",
+  "extraLandingBlocks": "hay_bale",
+  "habitat": "jungles",
+  "index": 21,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "medium"
+  },
+  "plantEffect": "consume",
+  "preferredFlower": "wheat",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}
