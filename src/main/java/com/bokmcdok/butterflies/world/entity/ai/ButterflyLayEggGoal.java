@@ -112,7 +112,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
                     };
 
                     if (this.butterfly.level().getBlockState(this.blockPos.relative(direction)).isAir()) {
-                        ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterfly.getButterflyIndex());
+                        ResourceLocation eggEntity = this.butterfly.getData().getButterflyEggEntity();
                         ButterflyEgg.spawn((ServerLevel) this.butterfly.level(), eggEntity, this.blockPos, direction);
                         this.butterfly.setIsFertile(false);
                         this.butterfly.useEgg();

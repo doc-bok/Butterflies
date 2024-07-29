@@ -27,6 +27,8 @@ public class ButterflySpeciesList {
             "domestic_silk",
             "peppered",
             "indianmeal",
+            "spongy",
+            "spongymale",
             "ice",
     };
 }

@@ -202,13 +202,9 @@ public class ButterflyEgg extends DirectionalCreature {
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-            ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyData.getButterflyIndex(location);
-            ResourceLocation newLocation = ButterflyData.indexToCaterpillarEntity(index);
-            if (newLocation != null) {
-                Caterpillar.spawn((ServerLevel)this.level(), newLocation, this.blockPosition(), this.getDirection(), false);
-                this.remove(RemovalReason.DISCARDED);
-            }
+            ResourceLocation newLocation = this.getData().getCaterpillarEntity();
+            Caterpillar.spawn((ServerLevel) this.level(), newLocation, this.blockPosition(), this.getDirection(), false);
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 

@@ -59,6 +59,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:spongy_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -92,6 +104,9 @@
     ],
     [
       "indianmeal"
+    ],
+    [
+      "spongy"
     ]
   ]
 }

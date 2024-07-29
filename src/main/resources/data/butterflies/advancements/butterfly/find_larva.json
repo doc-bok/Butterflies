@@ -59,6 +59,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_spongy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -83,7 +95,8 @@
       "luna",
       "domestic_silk",
       "peppered",
-      "indianmeal"
+      "indianmeal",
+      "spongy"
     ]
   ]
 }

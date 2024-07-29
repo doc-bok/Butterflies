@@ -32,7 +32,12 @@ MOTHS = [
     'luna',
     'domestic_silk',
     'peppered',
-    'indianmeal'
+    'indianmeal',
+    'spongy'
+]
+
+MALE_MOTHS = [
+    'spongymale'
 ]
 
 # The list of special butterflies included in the mod.
@@ -64,11 +69,13 @@ LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
 BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/butterfly/"
 MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/moth/"
+MALE_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/moth_male/"
 BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/both/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 
 # Initial index
 BUTTERFLY_INDEX = 0
+
 
 # Generates data files from the input array based on the first entry in the#
 # array.
@@ -120,11 +127,12 @@ def generate_data_files(entries):
                 json_data["index"] = BUTTERFLY_INDEX
                 BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
 
-            with open(new_file, 'w', encoding="utf8") as file:
-                file.write(json.dumps(json_data,
-                                      default=lambda o: o.__dict__,
-                                      sort_keys=True,
-                                      indent=2))
+            with open(new_file, 'w', encoding="utf8") as new_file:
+                new_file.write(json.dumps(json_data,
+                                          default=lambda o: o.__dict__,
+                                          sort_keys=True,
+                                          indent=2))
+
 
 # Frog food class used to generate JSON.
 class FrogFood(object):
@@ -154,6 +162,9 @@ def generate_frog_food():
         values.append("butterflies:" + i)
 
     for i in MOTHS:
+        values.append("butterflies:" + i)
+
+    for i in MALE_MOTHS:
         values.append("butterflies:" + i)
 
     for i in SPECIAL:
@@ -192,14 +203,18 @@ def generate_localisation_strings():
     for i in MOTHS:
         name = i.replace('_', ' ')
         name = name.title()
-        try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Moth")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")
-        try_add_localisation_string(json_data, "item.butterflies." + i, name + " Moth")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
 
-    for i in BUTTERFLIES + MOTHS + SPECIAL:
+    for i in MOTHS + MALE_MOTHS:
+        name = i.replace('_', ' ')
+        name = name.title()
+        try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Moth")
+        try_add_localisation_string(json_data, "item.butterflies." + i, name + " Moth")
+
+    for i in BUTTERFLIES + MOTHS + MALE_MOTHS + SPECIAL:
         try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")
 
     with open(LOCALISATION, 'w', encoding="utf8") as file:
@@ -280,6 +295,10 @@ public class ButterflySpeciesList {
             output_file.write("""            \"""" + moth + """\",
 """)
 
+        for moth in MALE_MOTHS:
+            output_file.write("""            \"""" + moth + """\",
+""")
+
         for special in SPECIAL:
             output_file.write("""            \"""" + special + """\",
 """)
@@ -293,11 +312,13 @@ public class ButterflySpeciesList {
 if __name__ == "__main__":
     generate_data_files(BUTTERFLIES)
     generate_data_files(MOTHS)
+    generate_data_files(MALE_MOTHS)
     generate_data_files(SPECIAL)
     # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
     generate_frog_food()
     generate_localisation_strings()
     generate_advancements(BUTTERFLIES, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
     generate_advancements(MOTHS, MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(MOTHS + MALE_MOTHS, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
     generate_advancements(BUTTERFLIES + MOTHS, BOTH_ACHIEVEMENT_TEMPLATES)
     generate_code()

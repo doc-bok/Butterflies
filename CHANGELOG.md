@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.9.0 (2024-07-29)
+- Added support for dimorphic species.
+- Added the Spongy Moth.
+
 ### 4.8.0 (2024-07-28)
 - Added the Indian Meal Moth.
 - New goal for butterflies/moths that eat plants.

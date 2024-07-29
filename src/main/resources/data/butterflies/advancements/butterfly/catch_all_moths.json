@@ -59,6 +59,30 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_spongy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "spongymale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_spongymale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -92,6 +116,12 @@
     ],
     [
       "indianmeal"
+    ],
+    [
+      "spongy"
+    ],
+    [
+      "spongymale"
     ]
   ],
   "rewards": {

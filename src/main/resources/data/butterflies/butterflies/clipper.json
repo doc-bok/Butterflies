@@ -1,5 +1,7 @@
 {
+  "breedTarget": "none",
   "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "clipper",
   "extraLandingBlocks": "none",
   "habitat": "forests",

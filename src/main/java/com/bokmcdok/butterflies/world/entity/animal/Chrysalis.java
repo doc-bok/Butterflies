@@ -1,7 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,6 +14,9 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a chrysalis that will eventually morph into a butterfly.
+ */
 public class Chrysalis extends DirectionalCreature {
 
     //  The name this entity is registered under.
@@ -163,8 +164,6 @@ public class Chrysalis extends DirectionalCreature {
         }
 
         setTexture("textures/entity/chrysalis/chrysalis_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
         setAge(-getData().chrysalisLifespan());
     }
 
@@ -182,13 +181,9 @@ public class Chrysalis extends DirectionalCreature {
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-            ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyData.getButterflyIndex(location);
-            ResourceLocation newLocation = ButterflyData.indexToButterflyEntity(index);
-            if (newLocation != null) {
-                Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
-                this.remove(RemovalReason.DISCARDED);
-            }
+            ResourceLocation newLocation = getData().getMateButterflyEntity(this.random);
+            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 

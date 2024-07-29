@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -202,7 +203,10 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            guiGraphics.blit(ButterflyData.indexToButterflyScrollTexture(butterflyIndex), i, 2, 0, 0, 192, 192);
+            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            if (data != null) {
+                guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
+            }
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 
