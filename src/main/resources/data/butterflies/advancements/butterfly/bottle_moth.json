@@ -59,6 +59,30 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_spongy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "spongymale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_spongymale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -83,7 +107,9 @@
       "luna",
       "domestic_silk",
       "peppered",
-      "indianmeal"
+      "indianmeal",
+      "spongy",
+      "spongymale"
     ]
   ]
 }

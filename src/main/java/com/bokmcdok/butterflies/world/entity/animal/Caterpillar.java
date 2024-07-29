@@ -357,18 +357,14 @@ public class Caterpillar extends DirectionalCreature {
 
                 // If the caterpillar is not on a valid block it will starve instead.
                 if (getData().isValidLandingBlock(level().getBlockState(surfaceBlockPos))) {
-                    ResourceLocation location = EntityType.getKey(this.getType());
-                    int index = ButterflyData.getButterflyIndex(location);
-                    ResourceLocation newLocation = ButterflyData.indexToChrysalisEntity(index);
-                    if (newLocation != null) {
-                        Chrysalis.spawn((ServerLevel) this.level(),
-                                newLocation,
-                                this.getSurfaceBlockPos(),
-                                this.getSurfaceDirection(),
-                                this.position(),
-                                this.getYRot());
-                        this.remove(RemovalReason.DISCARDED);
-                    }
+                    ResourceLocation newLocation = this.getData().getChrysalisEntity();
+                    Chrysalis.spawn((ServerLevel) this.level(),
+                            newLocation,
+                            this.getSurfaceBlockPos(),
+                            this.getSurfaceDirection(),
+                            this.position(),
+                            this.getYRot());
+                    this.remove(RemovalReason.DISCARDED);
                 } else {
                     this.hurt(this.damageSources().starve(), 1.0f);
                 }

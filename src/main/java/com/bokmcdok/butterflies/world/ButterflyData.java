@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -47,7 +48,16 @@ public record ButterflyData(int butterflyIndex,
                             ButterflyType type,
                             Diurnality diurnality,
                             ExtraLandingBlocks extraLandingBlocks,
-                            PlantEffect plantEffect) {
+                            PlantEffect plantEffect,
+                            ResourceLocation breedTarget,
+                            EggMultiplier eggMultiplier) {
+
+    // Represents the type of "butterfly"
+    public enum ButterflyType {
+        BUTTERFLY,
+        MOTH,
+        SPECIAL
+    }
 
     // Represents where in the day/night cycle a butterfly is most active.
     @SuppressWarnings("unused")
@@ -56,6 +66,13 @@ public record ButterflyData(int butterflyIndex,
         NOCTURNAL,      // Active during the night
         CREPUSCULAR,    // Active during twilight
         CATHEMERAL      // Always active
+    }
+
+    // Some dimorphic butterflies will have different amounts of eggs.
+    public enum EggMultiplier {
+        NONE,
+        NORMAL,
+        DOUBLE
     }
 
     // Used to indicate any extra landing blocks that the butterflies can use.
@@ -122,13 +139,6 @@ public record ButterflyData(int butterflyIndex,
         FAST
     }
 
-    // Represents the type of "butterfly"
-    public enum ButterflyType {
-        BUTTERFLY,
-        MOTH,
-        SPECIAL
-    }
-
     // Constants representing the base life spans of each butterfly cycle.
     public static int[] LIFESPAN = {
             24000 * 2,
@@ -183,7 +193,9 @@ public record ButterflyData(int butterflyIndex,
                          ButterflyType type,
                          Diurnality diurnality,
                          ExtraLandingBlocks extraLandingBlocks,
-                         PlantEffect plantEffect) {
+                         PlantEffect plantEffect,
+                         ResourceLocation breedTarget,
+                         EggMultiplier eggMultiplier) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -202,6 +214,9 @@ public record ButterflyData(int butterflyIndex,
         this.diurnality = diurnality;
         this.extraLandingBlocks = extraLandingBlocks;
         this.plantEffect = plantEffect;
+
+        this.breedTarget = breedTarget;
+        this.eggMultiplier = eggMultiplier;
     }
 
     /**
@@ -245,6 +260,9 @@ public record ButterflyData(int butterflyIndex,
                 ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
                 PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
+                String breedTarget = object.get("breedTarget").getAsString();
+                EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
+
                 entry = new ButterflyData(
                         index,
                         entityId,
@@ -260,7 +278,9 @@ public record ButterflyData(int butterflyIndex,
                         type,
                         diurnality,
                         extraLandingBlocks,
-                        plantEffect
+                        plantEffect,
+                        new ResourceLocation(ButterfliesMod.MODID, breedTarget),
+                        eggMultiplier
                 );
             }
 
@@ -436,85 +456,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Gets the resource location for the butterfly at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the butterfly.
-     */
-    public static ResourceLocation indexToButterflyEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the butterfly egg at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the butterfly egg.
-     */
-    public static ResourceLocation indexToButterflyEggEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the texture to use for a specific butterfly
-     * @param butterflyIndex The butterfly index.
-     * @return The resource location of the texture to use.
-     */
-    public static ResourceLocation indexToButterflyScrollTexture(int butterflyIndex) {
-        String entityId = indexToEntityId(butterflyIndex);
-        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + entityId + ".png");
-    }
-
-    /**
-     * Gets the resource location for the caterpillar at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the caterpillar.
-     */
-    public static ResourceLocation indexToCaterpillarEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_caterpillar");
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the chrysalis at the specified index.
-     * @param index The butterfly index.
-     * @return The resource location of the chrysalis.
-     */
-    public static ResourceLocation indexToChrysalisEntity(int index) {
-        String entityId = indexToEntityId(index);
-        if (entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_chrysalis");
-        }
-
-        return null;
-    }
-
-    /**
-     * Converts an index to an entity ID.
-     * @param index The index to convert to an entity ID.
-     * @return The entity ID string.
-     */
-    private static String indexToEntityId(int index) {
-        if (BUTTERFLY_ENTRIES.containsKey(index)) {
-            return BUTTERFLY_ENTRIES.get(index).entityId;
-        }
-
-        return null;
-    }
-
-    /**
      * Gets the resource location for the caterpillar item.
      * @return The resource location of the caterpillar item.
      */
@@ -536,6 +477,77 @@ public record ButterflyData(int butterflyIndex,
         }
 
         return null;
+    }
+
+    /**
+     * Gets the resource location for the butterfly entity.
+     * @return The resource location of the butterfly.
+     */
+    public ResourceLocation getButterflyEntity() {
+        return new ResourceLocation(ButterfliesMod.MODID, this.entityId);
+    }
+
+    /**
+     * Gets the resource location for the butterfly egg at the specified index.
+     * @return The resource location of the butterfly egg.
+     */
+    public ResourceLocation getButterflyEggEntity() {
+        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_egg");
+    }
+
+    /**
+     * Gets the resource location for the caterpillar at the specified index.
+     * @return The resource location of the caterpillar.
+     */
+    public ResourceLocation getCaterpillarEntity() {
+        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_caterpillar");
+    }
+
+    /**
+     * Gets the resource location for the chrysalis at the specified index.
+     * @return The resource location of the chrysalis.
+     */
+    public  ResourceLocation getChrysalisEntity() {
+        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_chrysalis");
+    }
+
+    /**
+     * Returns the butterfly index of the butterfly's mate.
+     * @return The index of the butterfly to try and mate with.
+     */
+    public int getMateButterflyIndex() {
+        int mateIndex = getButterflyIndex(this.breedTarget);
+        if (mateIndex < 0) {
+            mateIndex = this.butterflyIndex;
+        }
+
+        return mateIndex;
+    }
+
+    /**
+     * Gets the entity that a chrysalis will spawn. For dimorphic species there
+     * is a 50/50 chance it will be male or female.
+     * @param random A random source used to determine the sex of dimorphic species.
+     * @return The entity ID of the butterfly that should spawn.
+     */
+    public ResourceLocation getMateButterflyEntity(RandomSource random) {
+        int mateIndex = getMateButterflyIndex();
+        if (random.nextInt() % 2 == 0) {
+            ButterflyData entry = getEntry(mateIndex);
+            if (entry != null) {
+                return entry.getButterflyEntity();
+            }
+        }
+
+        return this.getButterflyEntity();
+    }
+
+    /**
+     * Gets the texture to use for a specific butterfly
+     * @return The resource location of the texture to use.
+     */
+    public ResourceLocation getScrollTexture() {
+        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
     }
 
     /**

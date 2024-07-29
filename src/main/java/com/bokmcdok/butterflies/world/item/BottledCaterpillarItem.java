@@ -70,8 +70,9 @@ public class BottledCaterpillarItem extends BlockItem {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        ResourceLocation caterpillarEntity = ButterflyData.indexToCaterpillarEntity(this.butterflyIndex);
-        if (caterpillarEntity != null) {
+        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        if (data != null) {
+            ResourceLocation caterpillarEntity = data.getCaterpillarEntity();
             String translatable = "entity." + caterpillarEntity.toString().replace(':', '.');
 
             MutableComponent speciesComponent = Component.translatable(translatable);
@@ -113,10 +114,13 @@ public class BottledCaterpillarItem extends BlockItem {
 
         InteractionResult result = super.place(context);
         if (result == InteractionResult.CONSUME) {
-            Caterpillar.spawn((ServerLevel)context.getLevel(),
-                    ButterflyData.indexToCaterpillarEntity(this.butterflyIndex),
-                    context.getClickedPos(),
-                    Direction.DOWN, true);
+            ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+            if (data != null) {
+                Caterpillar.spawn((ServerLevel) context.getLevel(),
+                        data.getCaterpillarEntity(),
+                        context.getClickedPos(),
+                        Direction.DOWN, true);
+            }
         }
 
         return result;

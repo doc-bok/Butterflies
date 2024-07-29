@@ -1,5 +1,7 @@
 {
+  "breedTarget": "none",
   "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "forester",
   "extraLandingBlocks": "none",
   "habitat": "forests",

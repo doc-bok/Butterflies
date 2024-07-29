@@ -19,7 +19,7 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
      * Construction
      * @param pathfinderMob The mob that owns this goal.
      * @param speedModifier The speed modifier applied when using this goal.
-     * @param within The distance within which to search for a target.
+     * @param within        The distance within which to search for a target.
      */
     public ButterflyMatingGoal(Butterfly pathfinderMob, double speedModifier, float within) {
         super(pathfinderMob, speedModifier, within);
@@ -41,10 +41,7 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
      */
     @Override
     public boolean canUse() {
-        return this.butterfly.getIsActive() &&
-               this.butterfly.getNumEggs() > 0 &&
-               !this.butterfly.getIsFertile() &&
-               super.canUse();
+        return this.butterfly.getIsActive() && super.canUse();
     }
 
     /**
@@ -54,11 +51,13 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
     public void tick() {
         super.tick();
 
-        if (!this.butterfly.getIsFertile()) {
-            LivingEntity target = this.butterfly.getTarget();
-            if (target != null && this.butterfly.distanceToSqr(target) < MATING_DISTANCE_SQUARED) {
-                this.butterfly.setIsFertile(true);
-                this.butterfly.setInLove(null);
+        LivingEntity target = this.butterfly.getTarget();
+        if (target instanceof Butterfly mate) {
+            if (!mate.getIsFertile()) {
+                if (this.butterfly.distanceToSqr(target) < MATING_DISTANCE_SQUARED) {
+                    mate.setIsFertile(true);
+                    mate.setInLove(null);
+                }
             }
         }
     }

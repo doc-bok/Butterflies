@@ -1,5 +1,7 @@
 {
+  "breedTarget": "none",
   "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "swallowtail",
   "extraLandingBlocks": "none",
   "habitat": "forests_and_plains",

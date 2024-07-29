@@ -1,5 +1,7 @@
 {
+  "breedTarget": "none",
   "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
   "entityId": "luna",
   "extraLandingBlocks": "none",
   "habitat": "plains",

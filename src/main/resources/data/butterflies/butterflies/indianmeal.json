@@ -1,5 +1,7 @@
 {
+  "breedTarget": "none",
   "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
   "entityId": "indianmeal",
   "extraLandingBlocks": "hay_bale",
   "habitat": "jungles",

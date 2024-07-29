@@ -228,11 +228,19 @@ public class Butterfly extends Animal {
         }
 
         //  Small chance the butterfly has more eggs.
+        int numEggs = ButterfliesConfig.eggLimit.get();
         if (this.random.nextDouble() < ButterfliesConfig.doubleEggChance.get()) {
-            this.setNumEggs(ButterfliesConfig.eggLimit.get() * 2);
-        } else {
-            this.setNumEggs(ButterfliesConfig.eggLimit.get());
+            numEggs *= 2;
         }
+
+        switch (getData().eggMultiplier()) {
+            case NONE -> numEggs = 0;
+            case NORMAL -> {
+            }
+            case DOUBLE -> numEggs *= 2;
+        }
+
+        setNumEggs(numEggs);
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
     }
@@ -471,7 +479,7 @@ public class Butterfly extends Animal {
         // Butterflies use targets to select mates.
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
             if (target instanceof Butterfly butterfly) {
-                return butterfly.getButterflyIndex() == this.getButterflyIndex() &&
+                return butterfly.getButterflyIndex() == this.getData().getMateButterflyIndex() &&
                         butterfly.getNumEggs() > 0 &&
                         !butterfly.getIsFertile();
             }
@@ -640,7 +648,7 @@ public class Butterfly extends Animal {
      * Accessor to help get butterfly data when needed.
      * @return A valid butterfly data entry.
      */
-    private ButterflyData getData() {
+    public ButterflyData getData() {
         if (this.data == null) {
             this.data = ButterflyData.getButterflyDataForEntity(this);
         }

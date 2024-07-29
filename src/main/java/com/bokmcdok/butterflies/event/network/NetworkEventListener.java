@@ -81,7 +81,9 @@ public class NetworkEventListener {
                                                       buffer.readEnum(ButterflyData.ButterflyType.class),
                                                       buffer.readEnum(ButterflyData.Diurnality.class),
                                                       buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
-                                                      buffer.readEnum(ButterflyData.PlantEffect.class)));
+                                                      buffer.readEnum(ButterflyData.PlantEffect.class),
+                                                      buffer.readResourceLocation(),
+                                                      buffer.readEnum(ButterflyData.EggMultiplier.class)));
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {
