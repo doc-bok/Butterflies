@@ -1,5 +1,29 @@
 {
   "criteria": {
+    "atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_atlas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_carpet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clothes": {
       "conditions": {
         "items": [
@@ -96,7 +120,9 @@
       "domestic_silk",
       "peppered",
       "indianmeal",
-      "spongy"
+      "spongy",
+      "atlas",
+      "carpet"
     ]
   ]
 }
