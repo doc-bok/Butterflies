@@ -1,5 +1,29 @@
 {
   "criteria": {
+    "atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_atlas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_carpet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clothes": {
       "conditions": {
         "items": [
@@ -107,6 +131,12 @@
     ],
     [
       "spongy"
+    ],
+    [
+      "atlas"
+    ],
+    [
+      "carpet"
     ]
   ]
 }

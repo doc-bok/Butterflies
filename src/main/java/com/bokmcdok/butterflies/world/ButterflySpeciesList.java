@@ -28,6 +28,8 @@ public class ButterflySpeciesList {
             "peppered",
             "indianmeal",
             "spongy",
+            "atlas",
+            "carpet",
             "spongymale",
             "ice",
     };

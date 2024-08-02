@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.10.0 (2024-08-02)
+- Added the Atlas and Carpet Moths.
+
 ### 4.9.0 (2024-07-29)
 - Added support for dimorphic species.
 - Added the Spongy Moth.

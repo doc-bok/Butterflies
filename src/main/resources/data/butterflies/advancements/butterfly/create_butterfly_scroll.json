@@ -12,6 +12,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_atlas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "buckeye": {
       "conditions": {
         "items": [
@@ -30,6 +42,18 @@
           {
             "items": [
               "butterflies:butterfly_scroll_cabbage"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_carpet"
             ]
           }
         ]
@@ -317,7 +341,9 @@
       "domestic_silk",
       "peppered",
       "indianmeal",
-      "spongy"
+      "spongy",
+      "atlas",
+      "carpet"
     ]
   ]
 }

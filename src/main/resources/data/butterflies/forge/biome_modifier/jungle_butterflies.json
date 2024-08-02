@@ -73,6 +73,30 @@
       "weight": 2,
       "minCount": 1,
       "maxCount": 3
+    },
+    {
+      "type": "butterflies:atlas",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:atlas_caterpillar",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:atlas_chrysalis",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:atlas_egg",
+      "weight": 2,
+      "minCount": 1,
+      "maxCount": 3
     }
   ]
 }
