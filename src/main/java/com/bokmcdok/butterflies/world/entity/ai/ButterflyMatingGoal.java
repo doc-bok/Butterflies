@@ -53,7 +53,7 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
 
         LivingEntity target = this.butterfly.getTarget();
         if (target instanceof Butterfly mate) {
-            if (!mate.getIsFertile()) {
+            if (!mate.getIsFertile() && mate.getNumEggs() > 0) {
                 if (this.butterfly.distanceToSqr(target) < MATING_DISTANCE_SQUARED) {
                     mate.setIsFertile(true);
                     mate.setInLove(null);

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.11.3 (2024-08-03)
+- Fixed mating goal fertilising butterflies with zero eggs.
+
 ### 4.11.2 (2024-08-03)
 - Fixed missing `spongmale` textures and models.
 
