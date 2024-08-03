@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.11.2 (2024-08-03)
+- Fixed missing `spongmale` textures and models.
+
 ### 4.11.1 (2024-08-03)
 - Added Infested Apples.
 
