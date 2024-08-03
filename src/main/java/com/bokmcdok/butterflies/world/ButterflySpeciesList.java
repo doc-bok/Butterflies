@@ -30,6 +30,7 @@ public class ButterflySpeciesList {
             "spongy",
             "atlas",
             "carpet",
+            "codling",
             "spongymale",
             "ice",
     };

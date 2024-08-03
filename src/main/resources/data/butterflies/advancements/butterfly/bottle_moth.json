@@ -36,6 +36,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_codling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "domestic_silk": {
       "conditions": {
         "items": [
@@ -135,6 +147,7 @@
       "spongy",
       "atlas",
       "carpet",
+      "codling",
       "spongymale"
     ]
   ]
