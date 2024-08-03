@@ -241,6 +241,30 @@
       "weight": 5,
       "minCount": 2,
       "maxCount": 4
+    },
+    {
+      "type": "butterflies:diamondback",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_caterpillar",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_chrysalis",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_egg",
+      "weight": 10,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }
