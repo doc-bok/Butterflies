@@ -1,0 +1,14 @@
+{
+  "ingredients": [
+    {
+      "item": "butterflies:caterpillar_codling"
+    },
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "result": {
+    "item": "butterflies:infested_apple"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

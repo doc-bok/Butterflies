@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.11.1 (2024-08-03)
+- Added Infested Apples.
+
 ### 4.11.0 (2024-08-03)
 - Added the Codling Moth.
 

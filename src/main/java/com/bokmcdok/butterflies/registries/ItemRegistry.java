@@ -162,6 +162,11 @@ public class ItemRegistry {
     // Silk dropped by some moths.
     public static final RegistryObject<Item> SILK = INSTANCE.register("silk", () -> new Item(new Item.Properties()));
 
+    // Apples infested with a Codling Larva.
+    public static final RegistryObject<Item> INFESTED_APPLE =
+            INSTANCE.register("infested_apple", () -> new Item(new Item.Properties()));
+
+
     /**
      * Helper method to get the correct butterfly net item.
      * @param butterflyIndex The butterfly index.
