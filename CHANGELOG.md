@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.11.0 (2024-08-03)
+- Added the Codling Moth.
+
 ### 4.10.0 (2024-08-02)
 - Added the Atlas and Carpet Moths.
 

@@ -96,6 +96,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_codling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
@@ -343,7 +355,8 @@
       "indianmeal",
       "spongy",
       "atlas",
-      "carpet"
+      "carpet",
+      "codling"
     ]
   ]
 }

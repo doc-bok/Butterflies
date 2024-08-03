@@ -36,6 +36,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_codling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "domestic_silk": {
       "conditions": {
         "items": [
@@ -137,6 +149,9 @@
     ],
     [
       "carpet"
+    ],
+    [
+      "codling"
     ]
   ]
 }

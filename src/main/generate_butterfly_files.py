@@ -35,7 +35,8 @@ MOTHS = [
     'indianmeal',
     'spongy',
     'atlas',
-    'carpet'
+    'carpet',
+    'codling'
 ]
 
 MALE_MOTHS = [
