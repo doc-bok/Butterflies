@@ -80,7 +80,8 @@ public record ButterflyData(int butterflyIndex,
         NONE,
         HAY_BALE,
         LOGS,
-        WOOL
+        WOOL,
+        FRUIT
     }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
@@ -565,6 +566,7 @@ public record ButterflyData(int butterflyIndex,
             case HAY_BALE -> blockState.is(Blocks.HAY_BLOCK);
             case LOGS -> blockState.is(BlockTags.LOGS);
             case WOOL -> blockState.is(BlockTags.WOOL);
+            case FRUIT -> blockState.is(Blocks.PUMPKIN) || blockState.is(Blocks.MELON);
             default -> false;
         };
     }

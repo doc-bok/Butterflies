@@ -31,6 +31,7 @@ public class ButterflySpeciesList {
             "atlas",
             "carpet",
             "codling",
+            "diamondback",
             "spongymale",
             "ice",
     };

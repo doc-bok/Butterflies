@@ -36,7 +36,8 @@ MOTHS = [
     'spongy',
     'atlas',
     'carpet',
-    'codling'
+    'codling',
+    'diamondback'
 ]
 
 MALE_MOTHS = [
@@ -203,19 +204,13 @@ def generate_localisation_strings():
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Butterfly Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Caterpillar")
 
-    for i in MOTHS:
+    for i in MOTHS + MALE_MOTHS:
         name = i.replace('_', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
-
-    for i in MOTHS + MALE_MOTHS:
-        name = i.replace('_', ' ')
-        name = name.title()
-        try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Moth")
-        try_add_localisation_string(json_data, "item.butterflies." + i, name + " Moth")
 
     for i in BUTTERFLIES + MOTHS + MALE_MOTHS + SPECIAL:
         try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")

@@ -48,6 +48,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "diamondback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_diamondback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "domestic_silk": {
       "conditions": {
         "items": [
@@ -148,6 +160,7 @@
       "atlas",
       "carpet",
       "codling",
+      "diamondback",
       "spongymale"
     ]
   ]

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.12.0 (2024-08-03)
+- Added the Diamondback Moth.
+
 ### 4.11.3 (2024-08-03)
 - Fixed mating goal fertilising butterflies with zero eggs.
 
