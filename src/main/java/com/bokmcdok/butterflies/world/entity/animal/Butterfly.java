@@ -84,7 +84,7 @@ public class Butterfly extends Animal {
             @SuppressWarnings("unused") MobSpawnType spawnType,
             BlockPos position,
             @SuppressWarnings("unused") RandomSource rng) {
-        return level.getRawBrightness(position, 0) > 8;
+        return true;
     }
 
     /**
@@ -138,7 +138,7 @@ public class Butterfly extends Animal {
                             null,
                             null);
 
-                    if (placed) {
+                    if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
                         butterfly.setInvulnerable(true);
                         butterfly.setPersistenceRequired();
                     }

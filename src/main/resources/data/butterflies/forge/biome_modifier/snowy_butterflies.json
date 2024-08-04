@@ -4,25 +4,25 @@
   "spawners": [
     {
       "type": "butterflies:ice",
-      "weight": 2,
+      "weight": 1,
       "minCount": 1,
       "maxCount": 3
     },
     {
       "type": "butterflies:ice_caterpillar",
-      "weight": 2,
+      "weight": 1,
       "minCount": 1,
       "maxCount": 3
     },
     {
       "type": "butterflies:ice_chrysalis",
-      "weight": 2,
+      "weight": 1,
       "minCount": 1,
       "maxCount": 3
     },
     {
       "type": "butterflies:ice_egg",
-      "weight": 2,
+      "weight": 1,
       "minCount": 1,
       "maxCount": 3
     }

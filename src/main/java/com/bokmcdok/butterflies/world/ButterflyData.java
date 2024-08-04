@@ -99,7 +99,8 @@ public record ButterflyData(int butterflyIndex,
     public enum Lifespan {
         SHORT(0),
         MEDIUM(1),
-        LONG(2);
+        LONG(2),
+        IMMORTAL(3);
 
         private final int value;
 
@@ -144,7 +145,8 @@ public record ButterflyData(int butterflyIndex,
     public static int[] LIFESPAN = {
             24000 * 2,
             24000 * 4,
-            24000 * 7
+            24000 * 7,
+            Integer.MAX_VALUE
     };
 
     //  Helper maps.
@@ -159,6 +161,10 @@ public record ButterflyData(int butterflyIndex,
      * @return A representation of the lifespan.
      */
     public Lifespan getOverallLifeSpan() {
+        if (butterflyLifespan == Integer.MAX_VALUE) {
+            return Lifespan.IMMORTAL;
+        }
+
         int days = (eggLifespan + caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
         if (days < 18) {
             return Lifespan.SHORT;

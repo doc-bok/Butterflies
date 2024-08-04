@@ -47,7 +47,8 @@ MALE_MOTHS = [
 # The list of special butterflies included in the mod.
 # NOTE: Avoid using underscores in these names.
 SPECIAL = [
-    'ice'
+    'ice',
+    'lava'
 ]
 
 # List of files to generate json files for.

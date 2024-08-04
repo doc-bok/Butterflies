@@ -12,6 +12,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -24,6 +25,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class registers items with Forge's Item Registry
@@ -50,6 +52,10 @@ public class ItemRegistry {
 
     public static final RegistryObject<Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.EMPTY_NAME,
             () -> new ButterflyNetItem(-1));
+
+    // Apples infested with a Codling Larva.
+    public static final RegistryObject<Item> BUTTERFLY_NET_BURNT =
+            INSTANCE.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
     // Bottled butterfly - A butterfly trapped in a bottle.
     private static RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
@@ -175,6 +181,8 @@ public class ItemRegistry {
     public static RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return BUTTERFLY_NET;
+        } else if (Objects.equals(ButterflySpeciesList.SPECIES[butterflyIndex], "lava")) {
+                return BUTTERFLY_NET_BURNT;
         } else {
             return BUTTERFLY_NET_ITEMS.get(butterflyIndex);
         }
@@ -218,6 +226,8 @@ public class ItemRegistry {
             for (RegistryObject<Item> i : BUTTERFLY_NET_ITEMS) {
                 event.accept(i);
             }
+
+            event.accept(BUTTERFLY_NET_BURNT);
 
             for (RegistryObject<Item> i : BOTTLED_BUTTERFLY_ITEMS) {
                 event.accept(i);
