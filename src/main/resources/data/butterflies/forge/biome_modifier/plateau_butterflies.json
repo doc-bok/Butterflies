@@ -5,145 +5,145 @@
 
     {
       "type": "butterflies:cabbage",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:common",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:common_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:common_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:common_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:monarch",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:monarch_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:monarch_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:monarch_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:rainbow",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_caterpillar",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_chrysalis",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_egg",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:swallowtail",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:swallowtail_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:swallowtail_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:swallowtail_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:peacock",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:peacock_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:peacock_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:peacock_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     }

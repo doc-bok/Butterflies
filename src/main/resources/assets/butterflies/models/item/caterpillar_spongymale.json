@@ -1,6 +1,6 @@
 {
   "parent": "butterflies:item/template_caterpillar",
   "textures": {
-    "layer0": "butterflies:item/caterpillar/caterpillar_spongymale"
+    "layer0": "butterflies:item/caterpillar/caterpillar_spongy"
   }
 }

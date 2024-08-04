@@ -3,16 +3,15 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public class IceButterflyRenderer extends ButterflyRenderer {
+public class GlowButterflyRenderer extends ButterflyRenderer {
 
     /**
      * Bakes a new model for the renderer
      * @param context The current rendering context
      */
-    public IceButterflyRenderer(EntityRendererProvider.Context context) {
+    public GlowButterflyRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 

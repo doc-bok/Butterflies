@@ -451,6 +451,7 @@ public class ButterflyBookScreen extends Screen {
                         case SHORT -> component.append(Component.translatable("gui.butterflies.lifespan.short"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.lifespan.average"));
                         case LONG -> component.append(Component.translatable("gui.butterflies.lifespan.long"));
+                        case IMMORTAL -> component.append(Component.translatable("gui.butterflies.lifespan.immortal"));
                         default -> {}
                     }
 

@@ -34,5 +34,6 @@ public class ButterflySpeciesList {
             "diamondback",
             "spongymale",
             "ice",
+            "lava",
     };
 }
