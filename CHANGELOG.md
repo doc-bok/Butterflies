@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.13.1 (2024-08-05)
+- Admiral butterflies are now crepuscular.
+
 ### 4.13.0 (2024-08-05)
 - Added butterfly breeding.
 
