@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld_rod",
+  "textures": {
+    "layer0": "butterflies:item/bottled_caterpillar/bottled_caterpillar_clippermagenta"
+  }
+}
