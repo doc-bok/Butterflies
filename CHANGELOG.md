@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.15.2 (2024-08-05)
+- Monarch Caterpillars can be brewed into poison.
+
 ### 4.15.1 (2024-08-05)
 - Heath butterflies now use `MothWanderGoal`.
 
