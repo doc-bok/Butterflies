@@ -27,28 +27,388 @@
       "maxCount": 5
     },
     {
+      "maxCount": 3,
+      "minCount": 1,
       "type": "butterflies:clipper",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
+      "weight": 1
     },
     {
+      "maxCount": 3,
+      "minCount": 1,
       "type": "butterflies:clipper_caterpillar",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
+      "weight": 1
     },
     {
+      "maxCount": 3,
+      "minCount": 1,
       "type": "butterflies:clipper_chrysalis",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
+      "weight": 1
     },
     {
-      "type": "butterflies:clipper_egg",
-      "weight": 1,
+      "maxCount": 3,
       "minCount": 1,
-      "maxCount": 3
+      "type": "butterflies:clipper_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperwhite",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperwhite_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperwhite_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperwhite_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlightgray",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlightgray_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlightgray_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlightgray_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergray",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergray_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergray_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergray_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblack",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblack_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblack_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblack_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperbrown",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperbrown_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperbrown_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperbrown_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperred",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperred_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperred_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperred_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperorange",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperorange_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperorange_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperorange_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperyellow",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperyellow_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperyellow_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperyellow_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlime",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlime_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlime_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperlime_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergreen",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergreen_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergreen_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippergreen_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippercyan",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippercyan_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippercyan_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippercyan_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblue",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblue_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblue_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperblue_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpurple",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpurple_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpurple_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpurple_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippermagenta",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippermagenta_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippermagenta_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clippermagenta_egg",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpink",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpink_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpink_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clipperpink_egg",
+      "weight": 1
     },
     {
       "type": "butterflies:emperor",

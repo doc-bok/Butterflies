@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.14.0 (2024-08-05)
+- Added Clipper Butterfly variants.
+
 ### 4.13.3 (2024-08-05)
 - Cabbage butterflies are now fast.
 

@@ -11,6 +11,21 @@ BUTTERFLIES = [
     'cabbage',
     'chalkhill',
     'clipper',
+    'clipperwhite',
+    'clipperlightgray',
+    'clippergray',
+    'clipperblack',
+    'clipperbrown',
+    'clipperred',
+    'clipperorange',
+    'clipperyellow',
+    'clipperlime',
+    'clippergreen',
+    'clippercyan',
+    'clipperblue',
+    'clipperpurple',
+    'clippermagenta',
+    'clipperpink',
     'common',
     'emperor',
     'forester',
@@ -307,12 +322,41 @@ public class ButterflySpeciesList {
 """)
 
 
+# Generates placeholder textures
+def generate_textures(entries, base):
+    print("Generating textures...")
+
+    # Get list of files containing input[0]
+    files = []
+    for (path, _, filenames) in os.walk(os.getcwd()):
+
+        # We only want json
+        filenames = [f for f in filenames if f.endswith(".png") and base in f]
+
+        for name in filenames:
+            files.append(pathlib.Path(path, name))
+
+    # Loop Start
+    for entry in entries:
+
+        for file in files:
+
+            # Get the new filename
+            new_file = pathlib.Path(str(file).replace(base, entry))
+
+            # Create the new file if it doesn't exist
+            if entry != base:
+                if not new_file.is_file():
+                    shutil.copy(file, new_file)
+
+
 # Python's main entry point
 if __name__ == "__main__":
     generate_data_files(BUTTERFLIES)
     generate_data_files(MOTHS)
     generate_data_files(MALE_MOTHS)
     generate_data_files(SPECIAL)
+    #generate_textures(BUTTERFLIES, "clipper") # Change this to use a different base for textures
     # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
     generate_frog_food()
     generate_localisation_strings()

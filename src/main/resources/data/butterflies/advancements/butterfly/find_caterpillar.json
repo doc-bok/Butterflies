@@ -60,6 +60,186 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "clipperblack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperblack"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperblue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperblue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperbrown": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperbrown"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippercyan": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clippercyan"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippergray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clippergray"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippergreen": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clippergreen"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperlightgray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperlightgray"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperlime": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperlime"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippermagenta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clippermagenta"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperorange": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperorange"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperpink": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperpink"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperpurple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperpurple"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperred": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperred"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperwhite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperwhite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperyellow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
@@ -228,6 +408,21 @@
       "cabbage",
       "chalkhill",
       "clipper",
+      "clipperwhite",
+      "clipperlightgray",
+      "clippergray",
+      "clipperblack",
+      "clipperbrown",
+      "clipperred",
+      "clipperorange",
+      "clipperyellow",
+      "clipperlime",
+      "clippergreen",
+      "clippercyan",
+      "clipperblue",
+      "clipperpurple",
+      "clippermagenta",
+      "clipperpink",
       "common",
       "emperor",
       "forester",
