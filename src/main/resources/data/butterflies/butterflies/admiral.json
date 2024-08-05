@@ -1,6 +1,6 @@
 {
   "breedTarget": "none",
-  "diurnality": "diurnal",
+  "diurnality": "crepuscular",
   "eggMultiplier": "normal",
   "entityId": "admiral",
   "extraLandingBlocks": "none",
