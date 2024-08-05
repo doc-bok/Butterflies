@@ -6,10 +6,7 @@ import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.LootModifierRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import com.mojang.logging.LogUtils;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
@@ -22,7 +19,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
 
 import java.util.Arrays;
 
@@ -32,9 +28,6 @@ public class ButterfliesMod
 {
     // Define mod id in a common place for everything to reference
     public static final String MODID = "butterflies";
-
-    // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
 
     /**
      * Constructor - The main entry point for the mod.
