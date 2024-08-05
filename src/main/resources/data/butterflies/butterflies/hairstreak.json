@@ -3,7 +3,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hairstreak",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": "wood",
   "habitat": "forests",
   "index": 24,
   "lifespan": {

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.14.1 (2024-08-05)
+- Emperor and Hairstreak butterflies can now use wood blocks.
+
 ### 4.14.0 (2024-08-05)
 - Added Clipper Butterfly variants.
 
