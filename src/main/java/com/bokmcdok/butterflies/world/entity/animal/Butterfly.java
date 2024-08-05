@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -18,6 +19,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -28,6 +31,8 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -78,12 +83,13 @@ public class Butterfly extends Animal {
      * @param rng (Unused) The global random number generator.
      * @return TRUE if the butterfly can spawn.
      */
+    @SuppressWarnings("unused")
     public static boolean checkButterflySpawnRules(
-            @SuppressWarnings("unused") EntityType<? extends Butterfly> entityType,
+            EntityType<? extends Butterfly> entityType,
             ServerLevelAccessor level,
-            @SuppressWarnings("unused") MobSpawnType spawnType,
+            MobSpawnType spawnType,
             BlockPos position,
-            @SuppressWarnings("unused") RandomSource rng) {
+            RandomSource rng) {
         return true;
     }
 
@@ -337,15 +343,24 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * Butterflies can't be fed by players.
+     * Butterflies can be fed to increase the number of eggs available,
+     * allowing players to breed them as they can other animals.
      * @param stack The item stack the player tried to feed the butterfly.
      * @return FALSE, indicating it isn't food.
      */
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
-        return false;
+        ResourceLocation location = this.getData().preferredFlower();
+        @SuppressWarnings("deprecation")
+        Item item = BuiltInRegistries.ITEM.get(location);
+        return stack.is(item);
     }
 
+    /**
+     * Determine if a block can be landed on.
+     * @param blockState The block state we want to check.
+     * @return TRUE if the block can be landed on by this butterfly.
+     */
     public boolean isValidLandingBlock(BlockState blockState) {
         return this.getData().isValidLandingBlock(blockState);
     }
@@ -360,6 +375,34 @@ public class Butterfly extends Animal {
         //  Reduce the vertical movement to keep the butterfly close to the
         //  same height.
         this.setDeltaMovement(this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
+    }
+
+    /**
+     * Butterflies can be fed their preferred flower, allowing players to breed
+     * them manually.
+     * @param player The player interacting with the entity.
+     * @param interactionHand The hand that is interacting with the entity.
+     * @return The result of the interaction.
+     */
+    @Override
+    public @NotNull InteractionResult mobInteract(@NotNull Player player,
+                                                  @NotNull InteractionHand interactionHand) {
+        ItemStack itemstack = player.getItemInHand(interactionHand);
+        if (getData().eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
+            if (this.isFood(itemstack)) {
+                if (!this.level().isClientSide && this.getNumEggs() == 0) {
+                    this.usePlayerItem(player, interactionHand, itemstack);
+                    setNumEggs(1);
+                    return InteractionResult.SUCCESS;
+                }
+
+                if (this.level().isClientSide) {
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+
+        return InteractionResult.PASS;
     }
 
     /**
