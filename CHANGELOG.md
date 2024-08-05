@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.15.1 (2024-08-05)
+- Heath butterflies now use `MothWanderGoal`.
+
 ### 4.15.0 (2024-08-05)
 - Cats and forester butterflies are no longer enemies.
 
