@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.13.0 (2024-08-05)
+- Added butterfly breeding.
+
 ### 4.12.0 (2024-08-03)
 - Added the Diamondback Moth.
 
