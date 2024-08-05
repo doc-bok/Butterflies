@@ -543,7 +543,9 @@ public class Butterfly extends Animal {
 
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
 
-        if (getData().type() == ButterflyData.ButterflyType.MOTH) {
+        // Heath butterflies and moths are drawn to light.
+        if (getData().type() == ButterflyData.ButterflyType.MOTH ||
+                Objects.equals(getData().entityId(), "heath")) {
             this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
         } else {
             this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
