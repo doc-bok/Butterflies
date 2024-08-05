@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.13.2 (2024-08-05)
+- Buckeye butterflies can now use melon and pumpkin blocks.
+
 ### 4.13.1 (2024-08-05)
 - Admiral butterflies are now crepuscular.
 
