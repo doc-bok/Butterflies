@@ -13,7 +13,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "blue_orchid",
+  "preferredFlower": "sweet_berry_bush",
   "rarity": "common",
   "size": "medium",
   "speed": "moderate",

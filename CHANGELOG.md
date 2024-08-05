@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.15.3 (2024-08-05)
+- Peacock butterflies can pollinate sweet berry bushes.
+
 ### 4.15.2 (2024-08-05)
 - Monarch Caterpillars can be brewed into poison.
 

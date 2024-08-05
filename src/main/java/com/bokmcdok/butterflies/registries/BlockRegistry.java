@@ -173,6 +173,10 @@ public class BlockRegistry {
             return WITHER_ROSE_BUD.get();
         }
 
+        if (flowerBlock == Blocks.SWEET_BERRY_BUSH) {
+            return Blocks.SWEET_BERRY_BUSH;
+        }
+
         return null;
     }
 
