@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.15.0 (2024-08-05)
+- Cats and forester butterflies are no longer enemies.
+
 ### 4.14.1 (2024-08-05)
 - Emperor and Hairstreak butterflies can now use wood blocks.
 

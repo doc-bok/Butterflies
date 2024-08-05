@@ -31,6 +31,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -42,6 +43,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -163,11 +165,25 @@ public class Butterfly extends Animal {
      * @param entity The entity that is too close.
      * @return TRUE if butterflies are scared of the entity.
      */
-    private static boolean isScaredOf(LivingEntity entity) {
+    private static boolean isScaredOfEverything(LivingEntity entity) {
         return !(entity instanceof Butterfly ||
                 entity instanceof Caterpillar ||
                 entity instanceof ButterflyEgg ||
                 entity instanceof Chrysalis);
+    }
+
+    /**
+     * Check if the butterfly is scared of this entity. Used by foresters, so
+     * they aren't scared of cats.
+     * @param entity The entity that is too close.
+     * @return TRUE if butterflies are scared of the entity.
+     */
+    private static boolean isNotScaredOfCats(LivingEntity entity) {
+        return !(entity instanceof Butterfly ||
+                entity instanceof Caterpillar ||
+                entity instanceof ButterflyEgg ||
+                entity instanceof Chrysalis ||
+                entity instanceof Cat);
     }
 
     /**
@@ -491,7 +507,21 @@ public class Butterfly extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, LivingEntity.class, 3, 0.8, 1.33, Butterfly::isScaredOf));
+        // Forester butterflies are not scared of cats.
+        if (Objects.equals(getData().entityId(), "forester")) {
+            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+                    LivingEntity.class,
+                    3,
+                    0.8,
+                    1.33, Butterfly::isNotScaredOfCats));
+        } else {
+            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+                    LivingEntity.class,
+                    3,
+                    0.8,
+                    1.33, Butterfly::isScaredOfEverything));
+        }
+
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(2, new ButterflyMatingGoal(this, 1.1, 8));
 

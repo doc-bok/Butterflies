@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
@@ -16,6 +17,8 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.Objects;
 
 /**
  * Holds event listeners for entities.
@@ -33,7 +36,7 @@ public class EntityEventListener {
         //  Cat
         if (event.getEntity() instanceof Cat cat) {
             cat.targetSelector.addGoal(1, new NonTameRandomTargetGoal<>(
-                    cat, Butterfly.class, false, null));
+                    cat, Butterfly.class, false, EntityEventListener::isButterflyAttackableByCat));
         }
 
         //  Foxes
@@ -66,5 +69,18 @@ public class EntityEventListener {
             wolf.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(
                     wolf, Butterfly.class, false, null));
         }
+    }
+
+    /**
+     * Used to stop cats from attacking forester butterflies.
+     * @param entity The entity the cat wants to target.
+     * @return TRUE if the entity is any butterfly except for a Forester.
+     */
+    private static boolean isButterflyAttackableByCat(LivingEntity entity) {
+        if (entity instanceof Butterfly butterfly) {
+            return !Objects.equals(butterfly.getData().entityId(), "forester");
+        }
+
+        return false;
     }
 }
