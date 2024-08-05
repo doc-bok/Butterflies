@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.13.3 (2024-08-05)
+- Cabbage butterflies are now fast.
+
 ### 4.13.2 (2024-08-05)
 - Buckeye butterflies can now use melon and pumpkin blocks.
 
