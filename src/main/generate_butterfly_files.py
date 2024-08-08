@@ -37,7 +37,8 @@ BUTTERFLIES = [
     'morpho',
     'rainbow',
     'swallowtail',
-    'peacock'
+    'peacock',
+    'commongrassyellow'
 ]
 
 # The list of moth species included in the mod.

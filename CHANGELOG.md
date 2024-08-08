@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.16.0 (2024)
+- Added the Common Grass Yellow Butterfly.
+
 ### 4.15.3 (2024-08-05)
 - Peacock butterflies can pollinate sweet berry bushes.
 
