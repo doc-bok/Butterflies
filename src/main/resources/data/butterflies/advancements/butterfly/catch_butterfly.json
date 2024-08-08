@@ -252,6 +252,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commongrassyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_commongrassyellow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "emperor": {
       "conditions": {
         "items": [
@@ -434,7 +446,8 @@
       "morpho",
       "rainbow",
       "swallowtail",
-      "peacock"
+      "peacock",
+      "commongrassyellow"
     ]
   ]
 }

@@ -252,6 +252,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commongrassyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_commongrassyellow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "emperor": {
       "conditions": {
         "items": [
@@ -497,6 +509,9 @@
     ],
     [
       "peacock"
+    ],
+    [
+      "commongrassyellow"
     ]
   ],
   "rewards": {

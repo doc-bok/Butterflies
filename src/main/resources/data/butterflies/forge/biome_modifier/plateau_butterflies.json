@@ -146,6 +146,30 @@
       "weight": 4,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:commongrassyellow",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commongrassyellow_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commongrassyellow_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commongrassyellow_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

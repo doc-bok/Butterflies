@@ -5,7 +5,7 @@
   "entityId": "lava",
   "extraLandingBlocks": "none",
   "habitat": "lava",
-  "index": 44,
+  "index": 45,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
