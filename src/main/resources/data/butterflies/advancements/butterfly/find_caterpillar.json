@@ -240,6 +240,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_commander"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
@@ -447,7 +459,8 @@
       "rainbow",
       "swallowtail",
       "peacock",
-      "commongrassyellow"
+      "commongrassyellow",
+      "commander"
     ]
   ]
 }

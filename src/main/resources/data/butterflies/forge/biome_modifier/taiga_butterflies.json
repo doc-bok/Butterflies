@@ -265,6 +265,30 @@
       "weight": 4,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:commander",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commander_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commander_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:commander_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

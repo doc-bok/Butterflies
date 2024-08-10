@@ -288,6 +288,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commander"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
@@ -568,6 +580,7 @@
       "swallowtail",
       "peacock",
       "commongrassyellow",
+      "commander",
       "clothes",
       "luna",
       "domestic_silk",
