@@ -38,6 +38,7 @@ public class ButterflySpeciesList {
             "swallowtail",
             "peacock",
             "commongrassyellow",
+            "commander",
             "clothes",
             "luna",
             "domestic_silk",

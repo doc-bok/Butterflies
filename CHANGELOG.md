@@ -1,5 +1,8 @@
 ## Changelog
 
+### 4.17.0 (2024)
+- Added the Commander Butterfly.
+
 ### 4.16.0 (2024)
 - Added the Common Grass Yellow Butterfly.
 

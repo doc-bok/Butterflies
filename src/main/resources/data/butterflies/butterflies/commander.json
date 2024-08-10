@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "commander",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 33,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "long",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "blue_orchid",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
+}
