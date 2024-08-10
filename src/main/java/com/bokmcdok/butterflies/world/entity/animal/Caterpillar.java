@@ -127,18 +127,7 @@ public class Caterpillar extends DirectionalCreature {
         float scale = (float) getAge() / -24000.0f;
         scale = scale * 0.04f;
         scale = scale + 0.08f;
-
-        switch (this.getData().size()) {
-            case SMALL -> {
-                return 0.7f * scale;
-            }
-            case LARGE -> {
-                return 1.28f * scale;
-            }
-            default -> {
-                return scale;
-            }
-        }
+        return scale * getData().getSizeMultiplier();
     }
 
     /**

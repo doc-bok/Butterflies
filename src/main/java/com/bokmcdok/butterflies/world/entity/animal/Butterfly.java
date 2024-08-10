@@ -354,6 +354,7 @@ public class Butterfly extends Animal {
         switch (getData().size()) {
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }
+            case HUGE ->{ return 0.55f; }
             default -> { return 0.35f; }
         }
     }

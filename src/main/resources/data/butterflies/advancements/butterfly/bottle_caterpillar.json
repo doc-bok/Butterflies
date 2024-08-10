@@ -264,6 +264,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commonbirdwing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_commonbirdwing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "commongrassyellow": {
       "conditions": {
         "items": [
@@ -460,7 +472,8 @@
       "swallowtail",
       "peacock",
       "commongrassyellow",
-      "commander"
+      "commander",
+      "commonbirdwing"
     ]
   ]
 }

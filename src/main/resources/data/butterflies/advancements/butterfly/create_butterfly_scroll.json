@@ -312,6 +312,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commonbirdwing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commonbirdwing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "commongrassyellow": {
       "conditions": {
         "items": [
@@ -581,6 +593,7 @@
       "peacock",
       "commongrassyellow",
       "commander",
+      "commonbirdwing",
       "clothes",
       "luna",
       "domestic_silk",

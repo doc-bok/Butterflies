@@ -74,12 +74,7 @@ public class ButterflyEgg extends DirectionalCreature {
      */
     @Override
     public float getScale() {
-        float scale = 0.05f;
-        switch (this.getData().size()) {
-            case SMALL -> { return 0.7f * scale; }
-            case LARGE ->{ return 1.28f * scale; }
-            default -> { return scale; }
-        }
+        return 0.05f * getData().getSizeMultiplier();
     }
 
     /**

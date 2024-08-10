@@ -39,7 +39,8 @@ BUTTERFLIES = [
     'swallowtail',
     'peacock',
     'commongrassyellow',
-    'commander'
+    'commander',
+    'commonbirdwing'
 ]
 
 # The list of moth species included in the mod.

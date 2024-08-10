@@ -1,5 +1,9 @@
 ## Changelog
 
+### 4.18.0 (2024)
+- Added the Common Birdwing Butterfly.
+- Added support for `HUGE` butterflies.
+
 ### 4.17.0 (2024)
 - Added the Commander Butterfly.
 
