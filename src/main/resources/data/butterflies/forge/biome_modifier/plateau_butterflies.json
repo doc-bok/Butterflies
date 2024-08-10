@@ -170,6 +170,30 @@
       "weight": 4,
       "minCount": 3,
       "maxCount": 5
+    },
+    {
+      "type": "butterflies:commonbirdwing",
+      "weight": 1,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:commonbirdwing_caterpillar",
+      "weight": 1,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:commonbirdwing_chrysalis",
+      "weight": 1,
+      "minCount": 1,
+      "maxCount": 3
+    },
+    {
+      "type": "butterflies:commonbirdwing_egg",
+      "weight": 1,
+      "minCount": 1,
+      "maxCount": 3
     }
   ]
 }

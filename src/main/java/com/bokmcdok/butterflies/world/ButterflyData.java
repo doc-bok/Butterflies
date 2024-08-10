@@ -132,7 +132,8 @@ public record ButterflyData(int butterflyIndex,
     public enum Size {
         SMALL,
         MEDIUM,
-        LARGE
+        LARGE,
+        HUGE
     }
 
     // Represents the speed of a butterfly.
@@ -555,6 +556,27 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getScrollTexture() {
         return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
+    }
+
+    /**
+     * Returns a multiplier for the sizes of eggs, caterpillars, and chrysalises.
+     * @return A multiplier based on the butterfly size.
+     */
+    public float getSizeMultiplier() {
+        switch (this.size) {
+            case SMALL -> {
+                return 0.7f;
+            }
+            case LARGE -> {
+                return 1.28f;
+            }
+            case HUGE -> {
+                return 1.5f;
+            }
+            default -> {
+                return 1.0f;
+            }
+        }
     }
 
     /**

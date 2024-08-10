@@ -39,6 +39,7 @@ public class ButterflySpeciesList {
             "peacock",
             "commongrassyellow",
             "commander",
+            "commonbirdwing",
             "clothes",
             "luna",
             "domestic_silk",
