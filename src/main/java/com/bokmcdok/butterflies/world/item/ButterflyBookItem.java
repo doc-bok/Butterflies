@@ -45,11 +45,16 @@ public class ButterflyBookItem extends Item {
 
         // Calculate the actual number of butterflies in the book.
         int numButterflies = 0;
+        int numMoths = 0;
         for (Tag i : newPages) {
             if (i instanceof IntTag intTag) {
                 ButterflyData data = ButterflyData.getEntry(intTag.getAsInt());
-                if (data != null && data.type() == ButterflyData.ButterflyType.BUTTERFLY) {
-                    numButterflies += 1;
+                if (data != null) {
+                    if (data.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                        numButterflies += 1;
+                    } else if (data.type() == ButterflyData.ButterflyType.MOTH) {
+                        numMoths += 1;
+                    }
                 }
             }
         }
@@ -57,9 +62,16 @@ public class ButterflyBookItem extends Item {
         CompoundTag newTag = newBook.getOrCreateTag();
         newTag.put(CompoundTagId.PAGES, newPages);
 
+        int customModelData = 0;
         if (numButterflies  >= ButterflyData.getNumButterflySpecies()) {
-            newTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
+            customModelData += 1;
         }
+
+        if (numMoths  >= ButterflyData.getNumMothSpecies()) {
+            customModelData += 2;
+        }
+
+        newTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, customModelData);
     }
 
     /**

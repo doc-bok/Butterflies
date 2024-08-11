@@ -1,21 +1,20 @@
 # Bok's Banging Butterflies
 This mod adds butterflies with a full life cycle to the world of Minecraft. It
-features 16 butterfly species, mostly based on real-life butterflies but a
-couple of them are purely fantasy butterflies.
+features several butterfly species as well as several moth species. Most are
+based on real-life butterflies but a few are pure fantasy creatures.
 
 ## Features 
 
-### Butterflies
+### Butterflies and Moths
 
-There are 16 species of butterfly in total. Each butterfly species has its own
-size, speed, rarity and lifespan. Some will be larger, some will move faster,
-some will live longer than others.
+There are several species of butterfly and moths in the mod, each with their
+own design and behaviour. Some will be larger, some will move faster, some will
+live longer than others. Some are dimorphic, some love apples, some will live
+in wood or fruit.
 
 Butterflies can be caught or released using a butterfly net. Once caught, they
-can be bottled and placed in the world as decorative objects.
-
-If you want to breed the butterflies in this mod, then be sure to keep your
-cats away from them!
+can be bottled and placed in the world as decorative objects. They can also be
+stored in a butterfly book where you can learn more about them.
 
 ### Eggs
 
@@ -38,6 +37,11 @@ Built by caterpillars, these will eventually hatch into new butterflies within
 the world. These cannot be moved by players and will be destroyed if they
 attempt to do so.
 
+### Silk
+
+Some moth cocoons will drop silk, which can be crafted into string or paper.
+Unfortunately, this kills the moth.
+
 ### Scrolls and Books
 
 Butterflies can also be pinned to a piece of paper to create a scroll where you
@@ -59,7 +63,13 @@ using the bottle while not highlighting a block.
 ### Flower Pollination
 
 Butterflies will occasionally fly toward and pollinate flowers. This will spawn
-flower buds that will eventually bloom into full flowers. 
+flower buds that will eventually bloom into full flowers.
+
+### Breeding
+
+Butterflies can be bred by players feeding them their favourite flower (or
+other plant). You will need to learn what their favourite food is by studying
+the butterfly book.
 
 ### Server Config
 
@@ -83,15 +93,16 @@ before breeding is disabled. If set to zero, this is ignored (default: `16`).
 cause them to spread (default: `true`)
 
 ## Latest Release
-- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.4.jar)
-- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.2.jar)
-- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.20.1.jar)
-- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/4.0.0/butterflies-4.0.0-for-1.19.2.jar)
+- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.4.jar)
+- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.2.jar)
+- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.1.jar)
+- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
+- [Bok’s Butterflies v4.0.0](https://github.com/doc-bok/Butterflies/releases/tag/4.0.0)
 - [Bok’s Butterflies v3.4.0](https://github.com/doc-bok/Butterflies/releases/tag/3.4.0)
 - [Bok’s Butterflies v3.1.0](https://github.com/doc-bok/Butterflies/releases/tag/3.1.0)
 - [Bok’s Butterflies v3.0.2](https://github.com/doc-bok/Butterflies/releases/tag/3.0.2)

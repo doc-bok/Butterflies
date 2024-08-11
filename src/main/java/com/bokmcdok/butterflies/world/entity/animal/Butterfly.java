@@ -4,11 +4,9 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyLayEggGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyMatingGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyPollinateFlowerGoal;
-import com.bokmcdok.butterflies.world.entity.ai.ButterflyWanderGoal;
+import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,6 +19,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -31,6 +31,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -40,6 +43,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -66,14 +70,8 @@ public class Butterfly extends Animal {
     // Helper constant to modify butterfly speed
     private static final double BUTTERFLY_SPEED = 1.8d;
 
-    // The butterfly index
-    private final int butterflyIndex;
-
-    // The size of the butterfly.
-    private final ButterflyData.Size size;
-
-    // The speed of the butterfly.
-    private final ButterflyData.Speed speed;
+    // The butterfly's data - created on access.
+    private ButterflyData data = null;
 
     //  The location of the texture that the renderer should use.
     private final ResourceLocation texture;
@@ -87,13 +85,14 @@ public class Butterfly extends Animal {
      * @param rng (Unused) The global random number generator.
      * @return TRUE if the butterfly can spawn.
      */
+    @SuppressWarnings("unused")
     public static boolean checkButterflySpawnRules(
-            @SuppressWarnings("unused") EntityType<? extends Butterfly> entityType,
+            EntityType<? extends Butterfly> entityType,
             ServerLevelAccessor level,
-            @SuppressWarnings("unused") MobSpawnType spawnType,
+            MobSpawnType spawnType,
             BlockPos position,
-            @SuppressWarnings("unused") RandomSource rng) {
-        return level.getRawBrightness(position, 0) > 8;
+            RandomSource rng) {
+        return true;
     }
 
     /**
@@ -147,7 +146,7 @@ public class Butterfly extends Animal {
                             null,
                             null);
 
-                    if (placed) {
+                    if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
                         butterfly.setInvulnerable(true);
                         butterfly.setPersistenceRequired();
                     }
@@ -162,6 +161,32 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Check if the butterfly is scared of this entity.
+     * @param entity The entity that is too close.
+     * @return TRUE if butterflies are scared of the entity.
+     */
+    private static boolean isScaredOfEverything(LivingEntity entity) {
+        return !(entity instanceof Butterfly ||
+                entity instanceof Caterpillar ||
+                entity instanceof ButterflyEgg ||
+                entity instanceof Chrysalis);
+    }
+
+    /**
+     * Check if the butterfly is scared of this entity. Used by foresters, so
+     * they aren't scared of cats.
+     * @param entity The entity that is too close.
+     * @return TRUE if butterflies are scared of the entity.
+     */
+    private static boolean isNotScaredOfCats(LivingEntity entity) {
+        return !(entity instanceof Butterfly ||
+                entity instanceof Caterpillar ||
+                entity instanceof ButterflyEgg ||
+                entity instanceof Chrysalis ||
+                entity instanceof Cat);
+    }
+
+    /**
      * The default constructor.
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
@@ -173,31 +198,9 @@ public class Butterfly extends Animal {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-            }
-        }
+        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
 
-        this.texture = new ResourceLocation("butterflies:textures/entity/butterfly/butterfly_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        this.speed = data.speed();
-
-        this.butterflyIndex = data.butterflyIndex();
-
-        setAge(-data.butterflyLifespan());
-        setLanded(false);
-
-        // Register the goals again since they rely on the butterfly index.
-        this.goalSelector.removeAllGoals((x) -> true);
-        this.targetSelector.removeAllGoals((x) -> true);
-        registerGoals();
+        setAge(-getData().butterflyLifespan());
     }
 
     /**
@@ -247,11 +250,19 @@ public class Butterfly extends Animal {
         }
 
         //  Small chance the butterfly has more eggs.
+        int numEggs = ButterfliesConfig.eggLimit.get();
         if (this.random.nextDouble() < ButterfliesConfig.doubleEggChance.get()) {
-            this.setNumEggs(ButterfliesConfig.eggLimit.get() * 2);
-        } else {
-            this.setNumEggs(ButterfliesConfig.eggLimit.get());
+            numEggs *= 2;
         }
+
+        switch (getData().eggMultiplier()) {
+            case NONE -> numEggs = 0;
+            case NORMAL -> {
+            }
+            case DOUBLE -> numEggs *= 2;
+        }
+
+        setNumEggs(numEggs);
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
     }
@@ -274,7 +285,33 @@ public class Butterfly extends Animal {
      * @return The butterfly index.
      */
     public int getButterflyIndex() {
-        return butterflyIndex;
+        return getData().butterflyIndex();
+    }
+
+    /**
+     * Checks the time of day to see if the butterfly is active based on its
+     * diurnality.
+     * @return TRUE if the butterfly is active at this time of day.
+     */
+    public boolean getIsActive() {
+        switch (getData().diurnality()) {
+            case DIURNAL -> {
+                return this.level().isDay();
+            }
+
+            case NOCTURNAL -> {
+                return this.level().isNight();
+            }
+
+            case CREPUSCULAR -> {
+                return !this.level().dimensionType().hasFixedTime() &&
+                        this.level().getSkyDarken() == 4;
+            }
+
+            default -> {
+                return true;
+            }
+        }
     }
 
     /**
@@ -289,8 +326,16 @@ public class Butterfly extends Animal {
      * Check if the butterfly has landed.
      * @return TRUE if the butterfly has landed.
      */
-    public boolean getLanded() {
+    public boolean getIsLanded() {
         return entityData.get(DATA_LANDED);
+    }
+
+    /**
+     * Check if this is actually a moth.
+     * @return TRUE if this is actually a moth.
+     */
+    public boolean getIsMoth() {
+        return getData().type() == ButterflyData.ButterflyType.MOTH;
     }
 
     /**
@@ -306,21 +351,35 @@ public class Butterfly extends Animal {
      * @return A scale value based on the butterfly's size.
      */
     public float getScale() {
-        switch (this.size) {
+        switch (getData().size()) {
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }
+            case HUGE ->{ return 0.55f; }
             default -> { return 0.35f; }
         }
     }
 
     /**
-     * Butterflies can't be fed by players.
+     * Butterflies can be fed to increase the number of eggs available,
+     * allowing players to breed them as they can other animals.
      * @param stack The item stack the player tried to feed the butterfly.
      * @return FALSE, indicating it isn't food.
      */
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
-        return false;
+        ResourceLocation location = this.getData().preferredFlower();
+        @SuppressWarnings("deprecation")
+        Item item = BuiltInRegistries.ITEM.get(location);
+        return stack.is(item);
+    }
+
+    /**
+     * Determine if a block can be landed on.
+     * @param blockState The block state we want to check.
+     * @return TRUE if the block can be landed on by this butterfly.
+     */
+    public boolean isValidLandingBlock(BlockState blockState) {
+        return this.getData().isValidLandingBlock(blockState);
     }
 
     /**
@@ -333,6 +392,34 @@ public class Butterfly extends Animal {
         //  Reduce the vertical movement to keep the butterfly close to the
         //  same height.
         this.setDeltaMovement(this.getDeltaMovement().multiply(1.0d, 0.6d, 1.0d));
+    }
+
+    /**
+     * Butterflies can be fed their preferred flower, allowing players to breed
+     * them manually.
+     * @param player The player interacting with the entity.
+     * @param interactionHand The hand that is interacting with the entity.
+     * @return The result of the interaction.
+     */
+    @Override
+    public @NotNull InteractionResult mobInteract(@NotNull Player player,
+                                                  @NotNull InteractionHand interactionHand) {
+        ItemStack itemstack = player.getItemInHand(interactionHand);
+        if (getData().eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
+            if (this.isFood(itemstack)) {
+                if (!this.level().isClientSide && this.getNumEggs() == 0) {
+                    this.usePlayerItem(player, interactionHand, itemstack);
+                    setNumEggs(1);
+                    return InteractionResult.SUCCESS;
+                }
+
+                if (this.level().isClientSide) {
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+
+        return InteractionResult.PASS;
     }
 
     /**
@@ -350,7 +437,7 @@ public class Butterfly extends Animal {
             }
         };
 
-        if (speed == ButterflyData.Speed.FAST) {
+        if (getData().speed() == ButterflyData.Speed.FAST) {
 
             navigation.setSpeedModifier(1.2);
         }
@@ -421,21 +508,54 @@ public class Butterfly extends Animal {
     protected void registerGoals() {
         super.registerGoals();
 
-        this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this, LivingEntity.class, 3, 0.8, 1.33, (x) -> !(x instanceof Butterfly)));
+        // Forester butterflies are not scared of cats.
+        if (Objects.equals(getData().entityId(), "forester")) {
+            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+                    LivingEntity.class,
+                    3,
+                    0.8,
+                    1.33, Butterfly::isNotScaredOfCats));
+        } else {
+            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+                    LivingEntity.class,
+                    3,
+                    0.8,
+                    1.33, Butterfly::isScaredOfEverything));
+        }
+
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(2, new ButterflyMatingGoal(this, 1.1, 8));
 
         // Pollination can be configured to be off.
         if (ButterfliesConfig.enablePollination.get()) {
-            this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+            switch (this.getData().plantEffect()) {
+                case NONE:
+                    break;
+
+                case POLLINATE:
+                    this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+                    break;
+
+                case CONSUME:
+                    this.goalSelector.addGoal(4, new ButterflyEatCropGoal(this, 0.8d, 8, 8));
+                    break;
+            }
         }
 
-        this.goalSelector.addGoal(8, new ButterflyWanderGoal(this));
+        this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
+
+        // Heath butterflies and moths are drawn to light.
+        if (getData().type() == ButterflyData.ButterflyType.MOTH ||
+                Objects.equals(getData().entityId(), "heath")) {
+            this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
+        } else {
+            this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
+        }
 
         // Butterflies use targets to select mates.
         this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
             if (target instanceof Butterfly butterfly) {
-                return butterfly.getButterflyIndex() == this.getButterflyIndex() &&
+                return butterfly.getButterflyIndex() == this.getData().getMateButterflyIndex() &&
                         butterfly.getNumEggs() > 0 &&
                         !butterfly.getIsFertile();
             }
@@ -598,6 +718,18 @@ public class Butterfly extends Animal {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    public ButterflyData getData() {
+        if (this.data == null) {
+            this.data = ButterflyData.getButterflyDataForEntity(this);
+        }
+
+        return this.data;
     }
 
     /**

@@ -12,6 +12,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "bluemoon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bluemoon_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "buckeye": {
       "conditions": {
         "items": [
@@ -60,12 +72,228 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "clipperblack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperblack_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperblue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperblue_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperbrown": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperbrown_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippercyan": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clippercyan_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippergray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clippergray_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippergreen": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clippergreen_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperlightgray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperlightgray_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperlime": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperlime_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clippermagenta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clippermagenta_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperorange": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperorange_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperpink": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperpink_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperpurple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperpurple_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperred": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperred_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperwhite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperwhite_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clipperyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clipperyellow_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:commander_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common": {
       "conditions": {
         "items": [
           {
             "items": [
               "butterflies:common_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "commonbirdwing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:commonbirdwing_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "commongrassyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:commongrassyellow_egg"
             ]
           }
         ]
@@ -228,6 +456,21 @@
       "cabbage",
       "chalkhill",
       "clipper",
+      "clipperwhite",
+      "clipperlightgray",
+      "clippergray",
+      "clipperblack",
+      "clipperbrown",
+      "clipperred",
+      "clipperorange",
+      "clipperyellow",
+      "clipperlime",
+      "clippergreen",
+      "clippercyan",
+      "clipperblue",
+      "clipperpurple",
+      "clippermagenta",
+      "clipperpink",
       "common",
       "emperor",
       "forester",
@@ -239,7 +482,11 @@
       "morpho",
       "rainbow",
       "swallowtail",
-      "peacock"
+      "peacock",
+      "commongrassyellow",
+      "commander",
+      "commonbirdwing",
+      "bluemoon"
     ]
   ]
 }

@@ -1,16 +1,21 @@
 {
-  "index": 1,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "buckeye",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "fruit",
   "habitat": "plains",
+  "index": 1,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "blue_orchid",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
   "type": "butterfly"
 }

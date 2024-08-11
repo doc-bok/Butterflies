@@ -1,0 +1,54 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#minecraft:has_structure/village_plains",
+  "spawners": [
+    {
+      "type": "butterflies:clothes",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:clothes_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:clothes_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:clothes_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:domestic_silk_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    }
+  ]
+}

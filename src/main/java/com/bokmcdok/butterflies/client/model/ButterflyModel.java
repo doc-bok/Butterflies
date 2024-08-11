@@ -58,28 +58,24 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offsetAndRotation(1.0F, 23.0F, 0.0F, 0.0F, -1.5708F, 0.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
         body.addOrReplaceChild("body", CubeListBuilder.create()
-                .texOffs(0, 20).addBox(-5.0F, -1.0F, -1.0F, 10.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(0.0F, 1.0F, 1.0F, 0.0F, 3.1416F, 0.0F));
-
+                .texOffs(0, 20).addBox(-5.0F, -2.0F, -1.0F, 10.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
+                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
         body.addOrReplaceChild("left_wing", CubeListBuilder.create()
-                        .texOffs(0, 0).addBox(-8.0F, 1.0F, 2.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
+                .texOffs(0, 0).addBox(-9.0F, -1.0F, 1.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, -1.0F, 0.0F));
 
         body.addOrReplaceChild("right_wing", CubeListBuilder.create()
-                        .texOffs(0, 10).addBox(-8.0F, 1.0F, -10.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
+                .texOffs(0, 10).addBox(-9.0F, -1.0F, -11.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, -1.0F, 0.0F));
 
-        PartDefinition antennae = body.addOrReplaceChild("left_antenna", CubeListBuilder.create()
-                .texOffs(0, 2).addBox(5.0F, -2.0F, 0.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
-
-        antennae.addOrReplaceChild("right_antenna", CubeListBuilder.create()
-                .texOffs(0, 0).addBox(-1.0F, 0.0F, 0.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
-                PartPose.offsetAndRotation(6.0F, 0.0F, 2.0F, 3.1416F, 0.0F, 0.0F));
+        body.addOrReplaceChild("antannae", CubeListBuilder.create()
+                .texOffs(0, 0).addBox(-8.0F, -4.0F, -1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-8.0F, -4.0F, 1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
+                PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -102,9 +98,14 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                           float headPitch) {
 
         //  When landed butterflies hold their wings together.
-        if (entity.getLanded()) {
+        if (entity.getIsLanded()) {
             this.body.yRot = 0.7853982F;
-            this.right_wing.xRot = -Mth.PI * 0.5F;
+            if (entity.getIsMoth()) {
+                this.right_wing.xRot = 0.15F;
+            } else {
+                this.right_wing.xRot = (0.15F - Mth.PI) * 0.5F;
+            }
+
         } else {
             this.body.yRot = 0.7853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
             this.right_wing.xRot = Mth.sin(ageInTicks * 1.3F) * Mth.PI * 0.25F;

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "butterflies:butterfly_loot"
+    "butterflies:butterfly_loot",
+    "butterflies:oak_leaves_loot"
   ]
 }

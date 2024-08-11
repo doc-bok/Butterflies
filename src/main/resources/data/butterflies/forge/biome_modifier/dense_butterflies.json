@@ -4,27 +4,75 @@
   "spawners": [
     {
       "type": "butterflies:glasswing",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:glasswing_caterpillar",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:glasswing_chrysalis",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:glasswing_egg",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
+    },
+    {
+      "type": "butterflies:indianmeal",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:indianmeal_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:codling",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:codling_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:codling_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:codling_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

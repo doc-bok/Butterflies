@@ -1,0 +1,21 @@
+{
+  "breedTarget": "spongy",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "none",
+  "entityId": "spongymale",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 47,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "long"
+  },
+  "plantEffect": "consume",
+  "preferredFlower": "bud_orange_tulip",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}
