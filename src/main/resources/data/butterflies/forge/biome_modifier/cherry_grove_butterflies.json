@@ -195,6 +195,36 @@
       "weight": 1,
       "minCount": 1,
       "maxCount": 3
+    },
+    {
+      "type": "butterflies:bluemoon",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:bluemoonmale",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:bluemoon_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:bluemoon_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:bluemoon_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

@@ -12,6 +12,30 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "bluemoon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_bluemoon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "bluemoonmale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_bluemoonmale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "buckeye": {
       "conditions": {
         "items": [
@@ -542,6 +566,12 @@
     ],
     [
       "commonbirdwing"
+    ],
+    [
+      "bluemoon"
+    ],
+    [
+      "bluemoonmale"
     ]
   ],
   "rewards": {

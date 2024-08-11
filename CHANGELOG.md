@@ -1,13 +1,16 @@
 ## Changelog
 
-### 4.18.0 (2024)
+### 4.19.0 (2024-08-11)
+- Added the Blue Moon Butterfly.
+
+### 4.18.0 (2024-08-10)
 - Added the Common Birdwing Butterfly.
 - Added support for `HUGE` butterflies.
 
-### 4.17.0 (2024)
+### 4.17.0 (2024-08-10)
 - Added the Commander Butterfly.
 
-### 4.16.0 (2024)
+### 4.16.0 (2024-08-09)
 - Added the Common Grass Yellow Butterfly.
 
 ### 4.15.3 (2024-08-05)

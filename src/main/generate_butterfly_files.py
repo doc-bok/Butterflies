@@ -40,7 +40,12 @@ BUTTERFLIES = [
     'peacock',
     'commongrassyellow',
     'commander',
-    'commonbirdwing'
+    'commonbirdwing',
+    'bluemoon'
+]
+
+MALE_BUTTERFLIES = [
+    'bluemoonmale'
 ]
 
 # The list of moth species included in the mod.
@@ -91,6 +96,7 @@ FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
 BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/butterfly/"
+MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/butterfly_male/"
 MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/moth/"
 MALE_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/moth_male/"
 BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/advancement_templates/both/"
@@ -184,6 +190,9 @@ def generate_frog_food():
     for i in BUTTERFLIES:
         values.append("butterflies:" + i)
 
+    for i in MALE_BUTTERFLIES:
+        values.append("butterflies:" + i)
+
     for i in MOTHS:
         values.append("butterflies:" + i)
 
@@ -213,7 +222,7 @@ def generate_localisation_strings():
     with open(LOCALISATION, 'r', encoding="utf8") as input_file:
         json_data = json.load(input_file)
 
-    for i in BUTTERFLIES + SPECIAL:
+    for i in BUTTERFLIES + MALE_BUTTERFLIES + SPECIAL:
         name = i.replace('_', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
@@ -231,7 +240,7 @@ def generate_localisation_strings():
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
 
-    for i in BUTTERFLIES + MOTHS + MALE_MOTHS + SPECIAL:
+    for i in BUTTERFLIES + MALE_BUTTERFLIES + MOTHS + MALE_MOTHS + SPECIAL:
         try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")
 
     with open(LOCALISATION, 'w', encoding="utf8") as file:
@@ -308,6 +317,10 @@ public class ButterflySpeciesList {
             output_file.write("""            \"""" + butterfly + """\",
 """)
 
+        for butterfly in MALE_BUTTERFLIES:
+            output_file.write("""            \"""" + butterfly + """\",
+""")
+
         for moth in MOTHS:
             output_file.write("""            \"""" + moth + """\",
 """)
@@ -356,6 +369,7 @@ def generate_textures(entries, base):
 # Python's main entry point
 if __name__ == "__main__":
     generate_data_files(BUTTERFLIES)
+    generate_data_files(MALE_BUTTERFLIES)
     generate_data_files(MOTHS)
     generate_data_files(MALE_MOTHS)
     generate_data_files(SPECIAL)
@@ -364,6 +378,7 @@ if __name__ == "__main__":
     generate_frog_food()
     generate_localisation_strings()
     generate_advancements(BUTTERFLIES, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(BUTTERFLIES + MALE_BUTTERFLIES, MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
     generate_advancements(MOTHS, MOTH_ACHIEVEMENT_TEMPLATES)
     generate_advancements(MOTHS + MALE_MOTHS, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
     generate_advancements(BUTTERFLIES + MOTHS, BOTH_ACHIEVEMENT_TEMPLATES)

@@ -5,7 +5,7 @@
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
   "habitat": "forests",
-  "index": 42,
+  "index": 44,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
