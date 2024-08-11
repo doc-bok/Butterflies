@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.0 (2024-08-11)
+- Release v5.0.0
+
 ### 4.19.0 (2024-08-11)
 - Added the Blue Moon Butterfly.
 
@@ -50,7 +53,7 @@
 - Fixed mating goal fertilising butterflies with zero eggs.
 
 ### 4.11.2 (2024-08-03)
-- Fixed missing `spongmale` textures and models.
+- Fixed missing `spongymale` textures and models.
 
 ### 4.11.1 (2024-08-03)
 - Added Infested Apples.
