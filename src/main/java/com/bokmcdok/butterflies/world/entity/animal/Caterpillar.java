@@ -12,19 +12,17 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,12 +54,6 @@ public class Caterpillar extends DirectionalCreature {
 
     // Whether gravity is being applied.
     private boolean isNoGravity = true;
-
-    // The size of the caterpillar.
-    private final ButterflyData.Size size;
-
-    // The caterpillar item location.
-    private final ResourceLocation caterpillarItem;
 
     /**
      * Spawns a caterpillar at the specified position.
@@ -133,18 +125,7 @@ public class Caterpillar extends DirectionalCreature {
         float scale = (float) getAge() / -24000.0f;
         scale = scale * 0.04f;
         scale = scale + 0.08f;
-
-        switch (this.size) {
-            case SMALL -> {
-                return 0.7f * scale;
-            }
-            case LARGE -> {
-                return 1.28f * scale;
-            }
-            default -> {
-                return scale;
-            }
-        }
+        return scale * getData().getSizeMultiplier();
     }
 
     /**
@@ -162,7 +143,7 @@ public class Caterpillar extends DirectionalCreature {
             } else {
                 this.remove(RemovalReason.DISCARDED);
 
-                Item caterpillarItem = BuiltInRegistries.ITEM.get(this.caterpillarItem);
+                Item caterpillarItem = BuiltInRegistries.ITEM.get(this.getData().getCaterpillarItem());
                 ItemStack itemStack = new ItemStack(caterpillarItem);
                 player.addItem(itemStack);
             }
@@ -262,26 +243,8 @@ public class Caterpillar extends DirectionalCreature {
                           Level level) {
         super(entityType, level);
 
-        String species = "undiscovered";
-        String encodeId = this.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
-            if (split.length >= 2) {
-                species = split[1];
-                split = species.split("_");
-                if (split.length >=2) {
-                    species = split[0];
-                }
-            }
-        }
-
-        setTexture("textures/entity/caterpillar/caterpillar_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        this.caterpillarItem = ButterflyData.indexToCaterpillarItem(data.butterflyIndex());
-        setAge(-data.caterpillarLifespan());
+        setTexture("textures/entity/caterpillar/caterpillar_" + ButterflyData.getSpeciesString(this) + ".png");
+        setAge(-getData().caterpillarLifespan());
     }
 
     /**
@@ -377,20 +340,16 @@ public class Caterpillar extends DirectionalCreature {
                     && this.random.nextInt(0, 15) == 0) {
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
-                // If the caterpillar is not on a leaf block it will starve instead.
-                if (level().getBlockState(surfaceBlockPos).getBlock() instanceof LeavesBlock) {
-                    ResourceLocation location = EntityType.getKey(this.getType());
-                    int index = ButterflyData.getButterflyIndex(location);
-                    ResourceLocation newLocation = ButterflyData.indexToChrysalisEntity(index);
-                    if (newLocation != null) {
-                        Chrysalis.spawn((ServerLevel) this.level(),
-                                newLocation,
-                                this.getSurfaceBlockPos(),
-                                this.getSurfaceDirection(),
-                                this.position(),
-                                this.getYRot());
-                        this.remove(RemovalReason.DISCARDED);
-                    }
+                // If the caterpillar is not on a valid block it will starve instead.
+                if (getData().isValidLandingBlock(level().getBlockState(surfaceBlockPos))) {
+                    ResourceLocation newLocation = this.getData().getChrysalisEntity();
+                    Chrysalis.spawn((ServerLevel) this.level(),
+                            newLocation,
+                            this.getSurfaceBlockPos(),
+                            this.getSurfaceDirection(),
+                            this.position(),
+                            this.getYRot());
+                    this.remove(RemovalReason.DISCARDED);
                 } else {
                     this.hurt(this.damageSources().starve(), 1.0f);
                 }
@@ -418,6 +377,17 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Return an ambient sound for the caterpillar. If the sound doesn't exist
+     * it just won't play.
+     * @return A reference to the ambient sound.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+    }
+
+    /**
      * Check if the caterpillar is in a bottle or not.
      * @return TRUE if the caterpillar is free.
      */
@@ -435,15 +405,6 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
-    }
-
-    /**
-     * Override to control an entity's relative volume. Caterpillars are silent.
-     * @return Always zero, so caterpillars are silent.
-     */
-    @Override
-    protected float getSoundVolume() {
-        return 0.0f;
     }
 
     /**
@@ -472,26 +433,26 @@ public class Caterpillar extends DirectionalCreature {
         } else if (direction == Direction.UP) {
             updatedRotation =
                     (Mth.atan2(
-                            updatedDeltaMovement.x,
-                            updatedDeltaMovement.z)
+                            updatedDeltaMovement.x(),
+                            updatedDeltaMovement.z())
                             * (180.0d / Math.PI)) - 180.0d;
         } else if (direction == Direction.NORTH) {
             updatedRotation =
                     (Mth.atan2(
-                            updatedDeltaMovement.x,
-                            updatedDeltaMovement.y)
+                            updatedDeltaMovement.x(),
+                            updatedDeltaMovement.y())
                             * (180.0d / Math.PI)) - 180.0d;
         } else if (direction == Direction.SOUTH) {
             updatedRotation =
                     (Mth.atan2(
-                            updatedDeltaMovement.y,
-                            updatedDeltaMovement.x)
+                            updatedDeltaMovement.y(),
+                            updatedDeltaMovement.x())
                             * (180.0d / Math.PI)) - 90.0d;
         } else if (direction == Direction.EAST) {
             updatedRotation =
                     (Mth.atan2(
-                            updatedDeltaMovement.z,
-                            updatedDeltaMovement.y)
+                            updatedDeltaMovement.z(),
+                            updatedDeltaMovement.y())
                             * (180.0d / Math.PI)) - 90.0d;
         } else {
             updatedRotation =

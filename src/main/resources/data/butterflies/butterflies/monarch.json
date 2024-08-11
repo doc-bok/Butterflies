@@ -1,16 +1,21 @@
 {
-  "index": 12,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "monarch",
-  "size": "large",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
+  "index": 27,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "poppy",
+  "rarity": "common",
+  "size": "large",
+  "speed": "moderate",
   "type": "butterfly"
 }

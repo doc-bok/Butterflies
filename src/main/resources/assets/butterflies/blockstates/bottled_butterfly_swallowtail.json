@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "butterflies:block/bottle" }
+    "": {
+      "model": "butterflies:block/bottle"
+    }
   }
 }

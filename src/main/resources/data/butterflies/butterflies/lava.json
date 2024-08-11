@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "cathemeral",
+  "eggMultiplier": "none",
+  "entityId": "lava",
+  "extraLandingBlocks": "none",
+  "habitat": "lava",
+  "index": 49,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "none",
+  "preferredFlower": "none",
+  "rarity": "rare",
+  "size": "large",
+  "speed": "fast",
+  "type": "special"
+}

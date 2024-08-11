@@ -141,7 +141,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 
-                entity.discard();
+                if (item != ItemRegistry.BUTTERFLY_NET_BURNT) {
+                    entity.discard();
+                }
 
                 player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);

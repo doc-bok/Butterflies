@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -70,8 +69,9 @@ public class BottledCaterpillarItem extends BlockItem {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        ResourceLocation caterpillarEntity = ButterflyData.indexToCaterpillarEntity(this.butterflyIndex);
-        if (caterpillarEntity != null) {
+        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        if (data != null) {
+            ResourceLocation caterpillarEntity = data.getCaterpillarEntity();
             String translatable = "entity." + caterpillarEntity.toString().replace(':', '.');
 
             MutableComponent speciesComponent = Component.translatable(translatable);
@@ -113,17 +113,20 @@ public class BottledCaterpillarItem extends BlockItem {
 
         InteractionResult result = super.place(context);
         if (result == InteractionResult.CONSUME) {
-            Caterpillar.spawn((ServerLevel)context.getLevel(),
-                    ButterflyData.indexToCaterpillarEntity(this.butterflyIndex),
-                    context.getClickedPos(),
-                    Direction.DOWN, true);
+            ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+            if (data != null) {
+                Caterpillar.spawn((ServerLevel) context.getLevel(),
+                        data.getCaterpillarEntity(),
+                        context.getClickedPos(),
+                        Direction.DOWN, true);
+            }
         }
 
         return result;
     }
 
     /**
-     * Right-clicking with a full bottle will release the butterfly.
+     * Right-clicking with a full bottle will release the caterpillar.
      * @param level The current level.
      * @param player The player holding the net.
      * @param hand The player's hand.
@@ -136,13 +139,14 @@ public class BottledCaterpillarItem extends BlockItem {
                                                   @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation location = ButterflyData.indexToCaterpillarItem(this.butterflyIndex);
-        Item caterpillarItem = BuiltInRegistries.ITEM.get(location);
-        ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
-        player.addItem(caterpillarStack);
+        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        if (data != null) {
+            ResourceLocation location = data.getCaterpillarItem();
+            Item caterpillarItem = BuiltInRegistries.ITEM.get(location);
+            ItemStack caterpillarStack = new ItemStack(caterpillarItem, 1);
+            player.addItem(caterpillarStack);
+        }
 
-        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-        return InteractionResultHolder.success(stack);
+        return InteractionResultHolder.fail(stack);
     }
 }

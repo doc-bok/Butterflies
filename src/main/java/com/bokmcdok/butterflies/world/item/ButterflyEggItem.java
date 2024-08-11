@@ -102,8 +102,11 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
                 if (!context.getLevel().isClientSide()) {
                     Direction clickedFace = context.getClickedFace();
 
-                    ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterflyIndex);
-                    ButterflyEgg.spawn((ServerLevel) context.getLevel(), eggEntity, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+                    ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+                    if (data != null) {
+                        ResourceLocation eggEntity = data.getButterflyEggEntity();
+                        ButterflyEgg.spawn((ServerLevel) context.getLevel(), eggEntity, clickedPos.relative(clickedFace), clickedFace.getOpposite());
+                    }
                 } else {
                     player.playSound(SoundEvents.SLIME_SQUISH_SMALL, 1F, 1F);
                 }

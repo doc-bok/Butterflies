@@ -54,7 +54,10 @@ public class ButterflyScrollScreen extends Screen {
      */
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
         super.render(guiGraphics, x, y, unknown);
-        int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyData.indexToButterflyScrollTexture(butterflyIndex), i, 2, 0, 0, 192, 192);
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null) {
+            int i = (this.width - 192) / 2;
+            guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
+        }
     }
 }

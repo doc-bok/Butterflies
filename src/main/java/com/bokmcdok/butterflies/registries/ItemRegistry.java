@@ -24,6 +24,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * This class registers items with Forge's Item Registry
@@ -50,6 +51,10 @@ public class ItemRegistry {
 
     public static final DeferredHolder<Item, Item> BUTTERFLY_NET = INSTANCE.register(ButterflyNetItem.EMPTY_NAME,
             () -> new ButterflyNetItem(-1));
+
+    // Apples infested with a Codling Larva.
+    public static final DeferredHolder<Item, Item> BUTTERFLY_NET_BURNT =
+            INSTANCE.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
     // Bottled butterfly - A butterfly trapped in a bottle.
     private static DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
@@ -159,6 +164,14 @@ public class ItemRegistry {
         }
     };
 
+    // Silk dropped by some moths.
+    public static final DeferredHolder<Item, Item> SILK = INSTANCE.register("silk", () -> new Item(new Item.Properties()));
+
+    // Apples infested with a Codling Larva.
+    public static final DeferredHolder<Item, Item> INFESTED_APPLE =
+            INSTANCE.register("infested_apple", () -> new Item(new Item.Properties()));
+
+
     /**
      * Helper method to get the correct butterfly net item.
      * @param butterflyIndex The butterfly index.
@@ -167,6 +180,8 @@ public class ItemRegistry {
     public static DeferredHolder<Item, Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return BUTTERFLY_NET;
+        } else if (Objects.equals(ButterflySpeciesList.SPECIES[butterflyIndex], "lava")) {
+                return BUTTERFLY_NET_BURNT;
         } else {
             return BUTTERFLY_NET_ITEMS.get(butterflyIndex);
         }
@@ -189,12 +204,26 @@ public class ItemRegistry {
             }
         }
 
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(SILK.get());
+        }
+
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             for (DeferredHolder<Item, Item> i : BUTTERFLY_EGG_ITEMS) {
                 event.accept(i.get());
             }
 
             for (DeferredHolder<Item, Item> i : CATERPILLAR_ITEMS) {
+                event.accept(i.get());
+            }
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+            for (DeferredHolder<Item, Item> i : BUTTERFLY_SPAWN_EGGS) {
+                event.accept(i.get());
+            }
+
+            for (DeferredHolder<Item, Item> i : CATERPILLAR_SPAWN_EGGS) {
                 event.accept(i.get());
             }
         }
@@ -208,6 +237,7 @@ public class ItemRegistry {
             for (DeferredHolder<Item, Item> i : BOTTLED_BUTTERFLY_ITEMS) {
                 event.accept(i.get());
             }
+            event.accept(BUTTERFLY_NET_BURNT.get());
 
             for (DeferredHolder<Item, Item> i : BOTTLED_CATERPILLAR_ITEMS) {
                 event.accept(i.get());

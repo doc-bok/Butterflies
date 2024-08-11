@@ -1,7 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,24 +7,22 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a chrysalis that will eventually morph into a butterfly.
+ */
 public class Chrysalis extends DirectionalCreature {
 
-    //  The name this block is registered under.
+    //  The name this entity is registered under.
     public static String getRegistryId(int butterflyIndex) {
         return ButterflySpeciesList.SPECIES[butterflyIndex] + "_chrysalis";
     }
-
-    // The size of the caterpillar.
-    private final ButterflyData.Size size;
 
     /**
      * Spawns a chrysalis into the world.
@@ -70,12 +66,7 @@ public class Chrysalis extends DirectionalCreature {
         float scale = (float)getAge() / -24000.0f;
         scale = scale * 0.06f;
         scale = scale + 0.1f;
-
-        switch (this.size) {
-            case SMALL -> { return 0.7f * scale; }
-            case LARGE ->{ return 1.28f * scale; }
-            default -> { return scale; }
-        }
+        return scale * getData().getSizeMultiplier();
     }
 
     /**
@@ -166,11 +157,7 @@ public class Chrysalis extends DirectionalCreature {
         }
 
         setTexture("textures/entity/chrysalis/chrysalis_" + species + ".png");
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
-        ButterflyData data = ButterflyData.getEntry(location);
-        this.size = data.size();
-        setAge(-data.chrysalisLifespan());
+        setAge(-getData().chrysalisLifespan());
     }
 
     /**
@@ -187,13 +174,9 @@ public class Chrysalis extends DirectionalCreature {
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-            ResourceLocation location = EntityType.getKey(this.getType());
-            int index = ButterflyData.getButterflyIndex(location);
-            ResourceLocation newLocation = ButterflyData.indexToButterflyEntity(index);
-            if (newLocation != null) {
-                Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
-                this.remove(RemovalReason.DISCARDED);
-            }
+            ResourceLocation newLocation = getData().getMateButterflyEntity(this.random);
+            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+            this.remove(RemovalReason.DISCARDED);
         }
     }
 

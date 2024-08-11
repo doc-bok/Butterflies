@@ -4,75 +4,99 @@
   "spawners": [
     {
       "type": "butterflies:buckeye",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:buckeye_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:buckeye_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:buckeye_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_caterpillar",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_chrysalis",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:cabbage_egg",
-      "weight": 10,
+      "weight": 4,
       "minCount": 3,
       "maxCount": 5
     },
     {
       "type": "butterflies:rainbow",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_caterpillar",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_chrysalis",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
     },
     {
       "type": "butterflies:rainbow_egg",
-      "weight": 5,
+      "weight": 2,
       "minCount": 2,
       "maxCount": 4
+    },
+    {
+      "type": "butterflies:diamondback",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_caterpillar",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_chrysalis",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
+    },
+    {
+      "type": "butterflies:diamondback_egg",
+      "weight": 4,
+      "minCount": 3,
+      "maxCount": 5
     }
   ]
 }

@@ -8,12 +8,7 @@ import com.bokmcdok.butterflies.client.model.CaterpillarModel;
 import com.bokmcdok.butterflies.client.model.ChrysalisModel;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
-import com.bokmcdok.butterflies.world.entity.animal.IceButterfly;
-import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
-import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
-import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
-import com.bokmcdok.butterflies.world.entity.animal.DirectionalCreature;
+import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -58,15 +53,25 @@ public class EntityTypeRegistry {
      */
     private static DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
 
+        String registryId = Butterfly.getRegistryId(butterflyIndex);
+
         // Ice Butterfly
-        if (butterflyIndex == 17) {
-            return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
+        if (registryId.equals("ice")) {
+            return INSTANCE.register(registryId,
                     () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
-        return INSTANCE.register(Butterfly.getRegistryId(butterflyIndex),
+        // Lava Moth
+        if (registryId.equals("lava")) {
+            return INSTANCE.register(registryId,
+                    () -> EntityType.Builder.of(LavaMoth::new, MobCategory.CREATURE)
+                            .sized(0.3f, 0.2f)
+                            .build(Butterfly.getRegistryId(butterflyIndex)));
+        }
+
+        return INSTANCE.register(registryId,
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
                 .sized(0.3f, 0.2f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));
@@ -139,8 +144,9 @@ public class EntityTypeRegistry {
         event.registerEntityRenderer(BUTTERFLY_SCROLL.get(), ButterflyScrollRenderer::new);
 
         for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : BUTTERFLY_ENTITIES) {
-            if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "ice")) == 0) {
-                event.registerEntityRenderer(i.get(), IceButterflyRenderer::new);
+            if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "ice")) == 0 ||
+                i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "lava")) == 0) {
+                event.registerEntityRenderer(i.get(), GlowButterflyRenderer::new);
             } else {
                 event.registerEntityRenderer(i.get(), ButterflyRenderer::new);
             }

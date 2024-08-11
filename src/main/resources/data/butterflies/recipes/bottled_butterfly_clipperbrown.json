@@ -1,0 +1,15 @@
+{
+  "group": "bottled_butterfly",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_net_clipperbrown"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "butterflies:bottled_butterfly_clipperbrown"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

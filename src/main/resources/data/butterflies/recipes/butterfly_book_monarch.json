@@ -1,5 +1,4 @@
 {
-  "type": "minecraft:crafting_shapeless",
   "group": "butterfly_book",
   "ingredients": [
     {
@@ -11,5 +10,6 @@
   ],
   "result": {
     "item": "butterflies:butterfly_book"
-  }
+  },
+  "type": "minecraft:crafting_shapeless"
 }
