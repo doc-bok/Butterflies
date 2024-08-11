@@ -1,0 +1,172 @@
+{
+  "criteria": {
+    "atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:atlas_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:carpet_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:clothes_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:codling_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "diamondback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:diamondback_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "domestic_silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:domestic_silk_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "indianmeal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:indianmeal_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:luna_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peppered": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:peppered_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:spongy_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.find_all_moth_eggs.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:clothes_egg"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.find_all_moth_eggs.title"
+    }
+  },
+  "parent": "butterflies:butterfly/find_moth_egg",
+  "requirements": [
+    [
+      "clothes"
+    ],
+    [
+      "luna"
+    ],
+    [
+      "domestic_silk"
+    ],
+    [
+      "peppered"
+    ],
+    [
+      "indianmeal"
+    ],
+    [
+      "spongy"
+    ],
+    [
+      "atlas"
+    ],
+    [
+      "carpet"
+    ],
+    [
+      "codling"
+    ],
+    [
+      "diamondback"
+    ]
+  ]
+}

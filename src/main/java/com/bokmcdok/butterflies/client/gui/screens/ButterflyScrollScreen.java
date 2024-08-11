@@ -59,12 +59,16 @@ public class ButterflyScrollScreen extends Screen {
     public void render(@NotNull PoseStack guiGraphics, int x, int y, float unknown) {
         this.renderBackground(guiGraphics);
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ButterflyData.indexToButterflyScrollTexture(this.butterflyIndex));
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null) {
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, data.getScrollTexture());
 
-        int i = (this.width - 192) / 2;
-        this.blit(guiGraphics, i, 2, 0, 0, 192, 192);
+            int i = (this.width - 192) / 2;
+            this.blit(guiGraphics, i, 2, 0, 0, 192, 192);
+        }
+
         super.render(guiGraphics, x, y, unknown);
     }
 }

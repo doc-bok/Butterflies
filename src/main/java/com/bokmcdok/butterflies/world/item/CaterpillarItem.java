@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
@@ -23,6 +24,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -97,8 +99,8 @@ public class CaterpillarItem extends Item {
 
             BlockPos clickedPos = context.getClickedPos();
 
-            Block block = context.getLevel().getBlockState(clickedPos).getBlock();
-            if (!(block instanceof LeavesBlock)) {
+            BlockState blockState = context.getLevel().getBlockState(clickedPos);
+            if (!(ButterflyData.getEntry(this.species).isValidLandingBlock(blockState))) {
                 return InteractionResult.FAIL;
             } else {
                 if (!context.getLevel().isClientSide()) {

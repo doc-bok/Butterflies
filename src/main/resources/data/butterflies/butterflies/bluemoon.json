@@ -1,0 +1,21 @@
+{
+  "breedTarget": "bluemoonmale",
+  "diurnality": "diurnal",
+  "eggMultiplier": "double",
+  "entityId": "bluemoon",
+  "extraLandingBlocks": "none",
+  "habitat": "forestsandplains",
+  "index": 35,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "allium",
+  "rarity": "common",
+  "size": "large",
+  "speed": "moderate",
+  "type": "butterfly"
+}

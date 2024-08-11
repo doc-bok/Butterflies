@@ -27,3 +27,6 @@ forge*changelog.txt
 
 # gimp
 *.xcf
+
+# Blockbench
+*.bbmodel

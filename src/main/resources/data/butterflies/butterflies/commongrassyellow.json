@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "double",
+  "entityId": "commongrassyellow",
+  "extraLandingBlocks": "none",
+  "habitat": "plains",
+  "index": 32,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "azure_bluet",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "butterfly"
+}

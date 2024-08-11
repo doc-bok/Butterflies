@@ -66,11 +66,28 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Stop using if time of day changes to inactive.
+     * @return Whether the goal can continue being active.
+     */
+    @Override
+    public boolean canContinueToUse() {
+        return this.butterfly.getIsActive() && super.canContinueToUse();
+    }
+
+    /**
+     * Butterflies can only pollinate when active.
+     * @return TRUE if the butterfly can pollinate right now.
+     */
+    @Override
+    public boolean canUse() {
+        return this.butterfly.getIsActive() && super.canUse();
+    }
+
+    /**
      * Start using the goal - ensure the butterfly is not landed.
      */
     @Override
     public void start() {
-        this.butterfly.setLanded(false);
         attemptedToPollinate = false;
         super.start();
     }
@@ -120,12 +137,13 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
         }
 
         BlockState blockState = levelReader.getBlockState(blockPos);
-        if (blockState.is(BlockTags.SMALL_FLOWERS)) {
 
-            // If this is the butterfly's preferred flower it is always valid.
-            if (blockState.is(preferredFlower)) {
-                return true;
-            }
+        // If this is the butterfly's preferred flower it is always valid.
+        if (blockState.is(this.preferredFlower)) {
+            return true;
+        }
+
+        if (blockState.is(BlockTags.SMALL_FLOWERS)) {
 
             // Butterflies will only fly to other flowers 50% of the time.
             return (this.random.nextInt() % 2 == 0);

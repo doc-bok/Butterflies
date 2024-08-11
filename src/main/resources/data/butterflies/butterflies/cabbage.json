@@ -1,16 +1,21 @@
 {
-  "index": 2,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "cabbage",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "plains",
+  "index": 2,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "short",
     "caterpillar": "short",
     "chrysalis": "short",
-    "butterfly": "short"
+    "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "dandelion",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "fast",
   "type": "butterfly"
 }

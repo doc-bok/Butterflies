@@ -1,16 +1,21 @@
 {
-  "index": 9,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "hairstreak",
-  "size": "small",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "wood",
   "habitat": "forests",
+  "index": 24,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "short",
     "caterpillar": "short",
     "chrysalis": "medium",
-    "butterfly": "short"
+    "egg": "short"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "poppy",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
   "type": "butterfly"
 }

@@ -1,14 +1,12 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.LevelReader;
@@ -41,12 +39,21 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Stop using if time of day changes to inactive.
+     * @return Whether the goal can continue being active.
+     */
+    @Override
+    public boolean canContinueToUse() {
+        return this.butterfly.getIsActive() && super.canContinueToUse();
+    }
+
+    /**
      * We can only use this goal if the butterfly has an egg to lay.
      * @return TRUE if we can use this goal.
      */
     @Override
     public boolean canUse() {
-        return butterfly.getIsFertile() && super.canUse();
+        return this.butterfly.getIsActive() && butterfly.getIsFertile() && super.canUse();
     }
 
     /**
@@ -54,8 +61,16 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
      */
     @Override
     public void start() {
-        this.butterfly.setLanded(false);
         super.start();
+    }
+
+    /**
+     * Ensure the butterfly isn't in the landed state when the goal ends.
+     */
+    @Override
+    public void stop() {
+        this.butterfly.setLanded(false);
+        super.stop();
     }
 
     /**
@@ -96,7 +111,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
                     };
 
                     if (this.butterfly.level.getBlockState(this.blockPos.relative(direction)).isAir()) {
-                        ResourceLocation eggEntity = ButterflyData.indexToButterflyEggEntity(this.butterfly.getButterflyIndex());
+                        ResourceLocation eggEntity = this.butterfly.getData().getButterflyEggEntity();
                         ButterflyEgg.spawn((ServerLevel) this.butterfly.level, eggEntity, this.blockPos, direction);
                         this.butterfly.setIsFertile(false);
                         this.butterfly.useEgg();
@@ -123,7 +138,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
             return false;
         }
 
-        if (levelReader.getBlockState(blockPos).is(BlockTags.LEAVES)) {
+        if (this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos))) {
             return blockPos.getY() < this.butterfly.getBlockY();
         }
 

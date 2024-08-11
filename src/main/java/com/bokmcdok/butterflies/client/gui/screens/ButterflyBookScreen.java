@@ -213,7 +213,10 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            RenderSystem.setShaderTexture(0, ButterflyData.indexToButterflyScrollTexture(butterflyIndex));
+            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            if (data != null) {
+                RenderSystem.setShaderTexture(0, data.getScrollTexture());
+            }
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
 
@@ -439,6 +442,7 @@ public class ButterflyBookScreen extends Screen {
                         case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
                         case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));
+                        case HUGE -> component.append(Component.translatable("gui.butterflies.size.huge"));
                         default -> {}
                     }
 
@@ -458,6 +462,7 @@ public class ButterflyBookScreen extends Screen {
                         case SHORT -> component.append(Component.translatable("gui.butterflies.lifespan.short"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.lifespan.average"));
                         case LONG -> component.append(Component.translatable("gui.butterflies.lifespan.long"));
+                        case IMMORTAL -> component.append(Component.translatable("gui.butterflies.lifespan.immortal"));
                         default -> {}
                     }
 

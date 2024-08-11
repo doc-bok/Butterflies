@@ -1,5 +1,4 @@
 {
-  "type": "minecraft:crafting_shapeless",
   "group": "bottled_caterpillar",
   "ingredients": [
     {
@@ -11,5 +10,6 @@
   ],
   "result": {
     "item": "butterflies:bottled_caterpillar_rainbow"
-  }
+  },
+  "type": "minecraft:crafting_shapeless"
 }
