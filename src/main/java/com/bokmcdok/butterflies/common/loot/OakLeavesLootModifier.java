@@ -9,8 +9,8 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
@@ -41,7 +41,8 @@ public class OakLeavesLootModifier extends LootModifier {
      */
     @NotNull
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    public ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot,
+                                              LootContext context) {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(400) == 1) {
@@ -56,6 +57,7 @@ public class OakLeavesLootModifier extends LootModifier {
      * Get the codec.
      * @return The codec.
      */
+    @NotNull
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
         return CODEC.get();
