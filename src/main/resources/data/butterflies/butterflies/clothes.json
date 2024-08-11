@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "clothes",
+  "extraLandingBlocks": "wool",
+  "habitat": "villages",
+  "index": 37,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "cornflower",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}

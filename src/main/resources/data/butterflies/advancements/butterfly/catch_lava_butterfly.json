@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "lava": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_burnt"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.catch_lava_moth.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:butterfly_net_burnt"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_lava_moth.title"
+    }
+  },
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "requirements": [
+    [
+      "lava"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

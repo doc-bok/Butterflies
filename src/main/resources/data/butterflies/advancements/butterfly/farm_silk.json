@@ -1,0 +1,37 @@
+{
+  "criteria": {
+    "silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.farm_silk.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:silk"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.farm_silk.title"
+    }
+  },
+  "parent": "butterflies:butterfly/root",
+  "requirements": [
+    [
+      "silk"
+    ]
+  ]
+}

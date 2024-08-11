@@ -1,16 +1,21 @@
 {
-  "index": 13,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "morpho",
-  "size": "large",
-  "speed": "moderate",
-  "rarity": "rare",
+  "extraLandingBlocks": "none",
   "habitat": "jungles",
+  "index": 28,
   "lifespan": {
-    "egg": "medium",
+    "butterfly": "medium",
     "caterpillar": "medium",
     "chrysalis": "short",
-    "butterfly": "medium"
+    "egg": "medium"
   },
+  "plantEffect": "pollinate",
   "preferredFlower": "pink_tulip",
+  "rarity": "rare",
+  "size": "large",
+  "speed": "moderate",
   "type": "butterfly"
 }

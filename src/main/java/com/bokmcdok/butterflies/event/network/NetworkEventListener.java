@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Listens for network-based events.
  */
+@SuppressWarnings("unused")
 @Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class NetworkEventListener {
 
@@ -67,17 +68,22 @@ public class NetworkEventListener {
             if (payload != null) {
                 List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
                         (buffer) -> new ButterflyData(buffer.readInt(),
-                            buffer.readUtf(),
-                            buffer.readEnum(ButterflyData.Size.class),
-                            buffer.readEnum(ButterflyData.Speed.class),
-                            buffer.readEnum(ButterflyData.Rarity.class),
-                            buffer.readEnum(ButterflyData.Habitat.class),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readResourceLocation(),
-                            buffer.readEnum(ButterflyData.ButterflyType.class)));
+                                                      buffer.readUtf(),
+                                                      buffer.readEnum(ButterflyData.Size.class),
+                                                      buffer.readEnum(ButterflyData.Speed.class),
+                                                      buffer.readEnum(ButterflyData.Rarity.class),
+                                                      buffer.readEnum(ButterflyData.Habitat.class),
+                                                      buffer.readInt(),
+                                                      buffer.readInt(),
+                                                      buffer.readInt(),
+                                                      buffer.readInt(),
+                                                      buffer.readResourceLocation(),
+                                                      buffer.readEnum(ButterflyData.ButterflyType.class),
+                                                      buffer.readEnum(ButterflyData.Diurnality.class),
+                                                      buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
+                                                      buffer.readEnum(ButterflyData.PlantEffect.class),
+                                                      buffer.readResourceLocation(),
+                                                      buffer.readEnum(ButterflyData.EggMultiplier.class)));
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {

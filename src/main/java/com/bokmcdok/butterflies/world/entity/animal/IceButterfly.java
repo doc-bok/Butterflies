@@ -4,6 +4,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
+/**
+ * The ice butterfly, found in icy biomes.
+ */
 public class IceButterfly extends Butterfly {
 
     /**

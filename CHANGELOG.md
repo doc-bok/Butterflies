@@ -1,5 +1,113 @@
 ## Changelog
 
+### 5.0.0 (2024-08-11)
+- Release v5.0.0
+
+### 4.19.0 (2024-08-11)
+- Added the Blue Moon Butterfly.
+
+### 4.18.0 (2024-08-10)
+- Added the Common Birdwing Butterfly.
+- Added support for `HUGE` butterflies.
+
+### 4.17.0 (2024-08-10)
+- Added the Commander Butterfly.
+
+### 4.16.0 (2024-08-09)
+- Added the Common Grass Yellow Butterfly.
+
+### 4.15.3 (2024-08-05)
+- Peacock butterflies can pollinate sweet berry bushes.
+
+### 4.15.2 (2024-08-05)
+- Monarch Caterpillars can be brewed into poison.
+
+### 4.15.1 (2024-08-05)
+- Heath butterflies now use `MothWanderGoal`.
+
+### 4.15.0 (2024-08-05)
+- Cats and forester butterflies are no longer enemies.
+
+### 4.14.1 (2024-08-05)
+- Emperor and Hairstreak butterflies can now use wood blocks.
+
+### 4.14.0 (2024-08-05)
+- Added Clipper Butterfly variants.
+
+### 4.13.3 (2024-08-05)
+- Cabbage butterflies are now fast.
+
+### 4.13.2 (2024-08-05)
+- Buckeye butterflies can now use melon and pumpkin blocks.
+
+### 4.13.1 (2024-08-05)
+- Admiral butterflies are now crepuscular.
+
+### 4.13.0 (2024-08-05)
+- Added butterfly breeding.
+
+### 4.12.0 (2024-08-03)
+- Added the Diamondback Moth.
+
+### 4.11.3 (2024-08-03)
+- Fixed mating goal fertilising butterflies with zero eggs.
+
+### 4.11.2 (2024-08-03)
+- Fixed missing `spongymale` textures and models.
+
+### 4.11.1 (2024-08-03)
+- Added Infested Apples.
+
+### 4.11.0 (2024-08-03)
+- Added the Codling Moth.
+
+### 4.10.0 (2024-08-02)
+- Added the Atlas and Carpet Moths.
+
+### 4.9.0 (2024-07-29)
+- Added support for dimorphic species.
+- Added the Spongy Moth.
+
+### 4.8.0 (2024-07-28)
+- Added the Indian Meal Moth.
+- New goal for butterflies/moths that eat plants.
+- Hay bales are now an option for butterflies to use as landing blocks. 
+- Fixed the spawn code so it takes advantage of `extraLandingBlocks`.
+
+### 4.7.0 (2024-07-25)
+- Added the Peppered Moth.
+
+### 4.6.0 (2024-07-25)
+- Added the Domestic Silk Moth.
+
+### 4.5.4 (2024-07-23)
+- Some minor adjustments to butterfly animations when landed.
+
+### 4.5.3 (2024-07-21)
+- Fixed butterfly landing state not being saved correctly.
+
+### 4.5.2 (2024-07-20)
+- Fixed directional creatures not getting their spawn block properly.
+
+### 4.5.1 (2024-07-17)
+- Fixed some advancement related bugs.
+
+### 4.5.0 (2024-07-15)
+- Added the Clothes Moth.
+
+### 4.4.0 (2024-07-14)
+- Added silk.
+
+### 4.3.0 (2024-07-11)
+- Moths will spread their wings when they land rather than hold them straight
+up.
+
+### 4.2.0 (2024-07-11)
+- Moths will now be drawn to brighter areas.
+
+### 4.1.0 (2024-07-02)
+- Added diurnality to butterflies.
+
 ### 4.0.1 (2024-07-05)
 - Fixed bounding box for butterflies, so they won't escape bottles.
 

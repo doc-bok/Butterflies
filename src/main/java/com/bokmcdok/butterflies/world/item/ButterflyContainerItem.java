@@ -65,7 +65,10 @@ public interface ButterflyContainerItem {
         }
 
         if (entity == null) {
-            entity = ButterflyData.indexToButterflyEntity(getButterflyIndex());
+            ButterflyData data = ButterflyData.getEntry(getButterflyIndex());
+            if (data != null) {
+                entity = data.getButterflyEntity();
+            }
         }
 
         return entity;

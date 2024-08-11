@@ -1,16 +1,21 @@
 {
-  "index": 16,
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
   "entityId": "peacock",
-  "size": "medium",
-  "speed": "moderate",
-  "rarity": "common",
+  "extraLandingBlocks": "none",
   "habitat": "forests_and_plains",
+  "index": 31,
   "lifespan": {
-    "egg": "short",
+    "butterfly": "medium",
     "caterpillar": "medium",
     "chrysalis": "medium",
-    "butterfly": "medium"
+    "egg": "short"
   },
-  "preferredFlower": "blue_orchid",
+  "plantEffect": "pollinate",
+  "preferredFlower": "sweet_berry_bush",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
   "type": "butterfly"
 }
