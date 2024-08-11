@@ -26,8 +26,8 @@ public class MothWanderGoal extends ButterflyWanderGoal {
         Vec3 pos = super.getPosition();
 
         if (pos != null) {
-            int targetBrightness = this.mob.level().getRawBrightness(new BlockPos((int)pos.x(), (int)pos.y(), (int)pos.z()), 0);
-            int localBrightness = this.mob.level().getRawBrightness(this.mob.blockPosition(), 0);
+            int targetBrightness = this.mob.getLevel().getRawBrightness(new BlockPos((int)pos.x(), (int)pos.y(), (int)pos.z()), 0);
+            int localBrightness = this.mob.getLevel().getRawBrightness(this.mob.blockPosition(), 0);
 
             if (targetBrightness < localBrightness) {
                 pos = super.getPosition();

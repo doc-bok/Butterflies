@@ -22,7 +22,7 @@ public class LavaMoth extends Butterfly {
     public void aiStep() {
         super.aiStep();
 
-        this.level().addParticle(ParticleTypes.DRIPPING_DRIPSTONE_LAVA,
+        this.getLevel().addParticle(ParticleTypes.DRIPPING_DRIPSTONE_LAVA,
                 this.getRandomX(0.6),
                 this.getRandomY(),
                 this.getRandomZ(0.6),

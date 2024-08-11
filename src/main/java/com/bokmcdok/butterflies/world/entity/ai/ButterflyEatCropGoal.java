@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.world.entity.ai;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
@@ -11,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,7 +47,7 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
-            Block potentialFoodSource = BuiltInRegistries.BLOCK.get(data.preferredFlower());
+            Block potentialFoodSource = ForgeRegistries.BLOCKS.getValue(data.preferredFlower());
             if (potentialFoodSource instanceof CropBlock cropBlock) {
                 this.foodSource = cropBlock;
             }
@@ -109,12 +109,12 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
             if (!hasEaten) {
                 hasEaten = true;
 
-                BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                BlockState blockState = this.mob.getLevel().getBlockState(this.blockPos);
                 if (blockState.is(this.foodSource)) {
                     int age = blockState.getValue(CropBlock.AGE);
                     if (age > 0) {
                         blockState.setValue(CropBlock.AGE, age -1);
-                        this.mob.level().setBlockAndUpdate(this.blockPos, blockState);
+                        this.mob.getLevel().setBlockAndUpdate(this.blockPos, blockState);
                     }
                 }
             }
