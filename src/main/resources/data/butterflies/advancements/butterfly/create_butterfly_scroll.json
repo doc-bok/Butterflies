@@ -24,6 +24,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "bluemoon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_bluemoon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "buckeye": {
       "conditions": {
         "items": [
@@ -594,6 +606,7 @@
       "commongrassyellow",
       "commander",
       "commonbirdwing",
+      "bluemoon",
       "clothes",
       "luna",
       "domestic_silk",

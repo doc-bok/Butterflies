@@ -5,7 +5,7 @@
   "entityId": "spongy",
   "extraLandingBlocks": "none",
   "habitat": "forests",
-  "index": 40,
+  "index": 42,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "long",

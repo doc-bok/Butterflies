@@ -12,6 +12,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "bluemoon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bluemoon_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "buckeye": {
       "conditions": {
         "items": [
@@ -473,7 +485,8 @@
       "peacock",
       "commongrassyellow",
       "commander",
-      "commonbirdwing"
+      "commonbirdwing",
+      "bluemoon"
     ]
   ]
 }

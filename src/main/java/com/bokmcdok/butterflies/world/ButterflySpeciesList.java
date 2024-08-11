@@ -40,6 +40,8 @@ public class ButterflySpeciesList {
             "commongrassyellow",
             "commander",
             "commonbirdwing",
+            "bluemoon",
+            "bluemoonmale",
             "clothes",
             "luna",
             "domestic_silk",
