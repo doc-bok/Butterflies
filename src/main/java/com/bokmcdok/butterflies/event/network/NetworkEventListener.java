@@ -46,7 +46,7 @@ public class NetworkEventListener {
         }
 
         // Handle multiple players.
-        if (event.getPlayerList() != null) {
+        else if (event.getPlayerList() != null) {
             for (ServerPlayer i : event.getPlayerList().getPlayers()) {
                 i.connection.send(payload);
             }
