@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.1 (2024-08-14)
+- Fixed incorrect syncing from client to server.
+
 ### 5.0.0 (2024-08-11)
 - Release v5.0.0
 

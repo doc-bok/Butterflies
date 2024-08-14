@@ -43,12 +43,12 @@ public class NetworkEventListener {
             // Handle a single player.
             if (event.getPlayer() != null) {
                 event.getPlayer().connection.send(payload);
-            }
-
-            // Handle multiple players.
-            event.getPlayerList();
-            for (ServerPlayer i : event.getPlayerList().getPlayers()) {
-                i.connection.send(payload);
+            } else {
+                // Handle multiple players.
+                event.getPlayerList();
+                for (ServerPlayer i : event.getPlayerList().getPlayers()) {
+                    i.connection.send(payload);
+                }
             }
         }
     }
