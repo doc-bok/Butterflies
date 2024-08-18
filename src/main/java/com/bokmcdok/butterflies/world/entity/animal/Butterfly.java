@@ -198,7 +198,7 @@ public class Butterfly extends Animal {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
 
         setAge(-getData().butterflyLifespan());
     }

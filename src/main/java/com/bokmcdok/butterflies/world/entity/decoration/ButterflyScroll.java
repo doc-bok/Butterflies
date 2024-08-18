@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -52,7 +51,7 @@ public class ButterflyScroll extends HangingEntity {
      * @param direction The direction the scroll is facing.
      */
     public ButterflyScroll(Level level, BlockPos blockPos, Direction direction) {
-        this(EntityTypeRegistry.BUTTERFLY_SCROLL.get(), level);
+        this(ButterfliesMod.getEntityTypeRegistry().getButterflyScroll().get(), level);
         this.pos = blockPos;
         this.setDirection(direction);
     }
@@ -74,7 +73,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_SCROLL_ITEMS.get(this.butterflyIndex).get());
+        ItemStack stack = new ItemStack(ButterfliesMod.getItemRegistry().getButterflyScrolls().get(this.butterflyIndex).get());
         this.spawnAtLocation(stack);
     }
 

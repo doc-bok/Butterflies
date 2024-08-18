@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
-import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
@@ -114,7 +114,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                     BlockPos spawnPos = findNearestFlowerSpot();
                     if (spawnPos != null) {
                         BlockState blockState = this.mob.level().getBlockState(this.blockPos);
-                        Block budBlock = BlockRegistry.getFlowerBud(blockState.getBlock());
+                        Block budBlock = ButterfliesMod.getBlockRegistry().getFlowerBud(blockState.getBlock());
                         if (budBlock != null) {
                             this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
                         }

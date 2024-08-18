@@ -26,7 +26,7 @@ public class ChrysalisModel extends EntityModel<Chrysalis> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MODID, "chrysalis"), "main");
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "chrysalis"), "main");
 
     //  The core of the model
     private final ModelPart main;

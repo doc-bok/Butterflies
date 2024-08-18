@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
@@ -36,15 +36,13 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         return "butterfly_net_" + ButterflySpeciesList.SPECIES[butterflyIndex];
     }
 
-    //  The name this item is registered under.
+    // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    //  TODO: Remove this item
-    public static final String FULL_NAME = "butterfly_net_full";
-
+    // The localisation string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
-    //  The index of the butterfly species.
+    // The index of the butterfly species.
     private final int butterflyIndex;
 
     /**
@@ -101,7 +99,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return new ItemStack(ItemRegistry.BUTTERFLY_NET.get());
+        return new ItemStack(ButterfliesMod.getItemRegistry().getEmptyButterflyNet().get());
     }
 
     /**
@@ -137,11 +135,11 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (entity instanceof Butterfly butterfly) {
 
-            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            RegistryObject<Item> item = ButterfliesMod.getItemRegistry().getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 
-                if (item != ItemRegistry.BUTTERFLY_NET_BURNT) {
+                if (item != ButterfliesMod.getItemRegistry().getBurntButterflyNet()) {
                     entity.discard();
                 }
 
@@ -181,7 +179,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
             Butterfly.spawn(player.level(), entity, positionToSpawn, false);
 
-            ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET.get(), 1);
+            ItemStack newStack = new ItemStack(ButterfliesMod.getItemRegistry().getEmptyButterflyNet().get(), 1);
             player.setItemInHand(hand, newStack);
 
             return InteractionResultHolder.success(stack);

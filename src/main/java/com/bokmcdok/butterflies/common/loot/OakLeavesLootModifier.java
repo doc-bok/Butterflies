@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.common.loot;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
@@ -45,7 +46,7 @@ public class OakLeavesLootModifier extends LootModifier {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(400) == 1) {
-            ItemStack stack = new ItemStack(ItemRegistry.INFESTED_APPLE.get());
+            ItemStack stack = new ItemStack(ButterfliesMod.getItemRegistry().getInfestedApple().get());
             generatedLoot.add(stack);
         }
 

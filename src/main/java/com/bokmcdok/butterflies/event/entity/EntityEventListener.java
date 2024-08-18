@@ -1,9 +1,12 @@
 package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.entity.animal.*;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.Cat;
@@ -14,24 +17,74 @@ import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Objects;
 
 /**
  * Holds event listeners for entities.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EntityEventListener {
+
+    /**
+     * Construction
+     * @param forgeEventBus The event bus to register with.
+     */
+    public EntityEventListener(IEventBus forgeEventBus,
+                               IEventBus modEventBus) {
+        forgeEventBus.register(this);
+        forgeEventBus.addListener(this::onJoinWorld);
+
+        modEventBus.register(this);
+        modEventBus.addListener(this::onEntityAttributeCreation);
+        modEventBus.addListener(this::onSpawnPlacementRegister);
+    }
+
+    /**
+     * Used to stop cats from attacking forester butterflies.
+     * @param entity The entity the cat wants to target.
+     * @return TRUE if the entity is any butterfly except for a Forester.
+     */
+    private static boolean isButterflyAttackableByCat(LivingEntity entity) {
+        if (entity instanceof Butterfly butterfly) {
+            return !Objects.equals(butterfly.getData().entityId(), "forester");
+        }
+
+        return false;
+    }
+
+    /**
+     * Register the attributes for living entities
+     */
+    private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
+        EntityTypeRegistry entityTypeRegistry = ButterfliesMod.getEntityTypeRegistry();
+        for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+            event.put(i.get(), Butterfly.createAttributes().build());
+        }
+
+        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+            event.put(i.get(), Caterpillar.createAttributes().build());
+        }
+
+        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+            event.put(i.get(), Chrysalis.createAttributes().build());
+        }
+
+        for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
+            event.put(i.get(), ButterflyEgg.createAttributes().build());
+        }
+    }
 
     /**
      * On joining the world modify entities' goals so butterflies have predators.
      * @param event Information for the event.
      */
-    @SubscribeEvent
-    public static void onJoinWorld(EntityJoinLevelEvent event) {
+    private void onJoinWorld(EntityJoinLevelEvent event) {
 
         //  Cat
         if (event.getEntity() instanceof Cat cat) {
@@ -72,15 +125,42 @@ public class EntityEventListener {
     }
 
     /**
-     * Used to stop cats from attacking forester butterflies.
-     * @param entity The entity the cat wants to target.
-     * @return TRUE if the entity is any butterfly except for a Forester.
+     * Register entity spawn placements here
+     * @param event The event information
      */
-    private static boolean isButterflyAttackableByCat(LivingEntity entity) {
-        if (entity instanceof Butterfly butterfly) {
-            return !Objects.equals(butterfly.getData().entityId(), "forester");
+    public void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
+        EntityTypeRegistry entityTypeRegistry = ButterfliesMod.getEntityTypeRegistry();
+
+        for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+            event.register(i.get(),
+                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    Heightmap.Types.MOTION_BLOCKING,
+                    Butterfly::checkButterflySpawnRules,
+                    SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        return false;
+        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+            event.register(i.get(),
+                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    Heightmap.Types.MOTION_BLOCKING,
+                    DirectionalCreature::checkDirectionalSpawnRules,
+                    SpawnPlacementRegisterEvent.Operation.AND);
+        }
+
+        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+            event.register(i.get(),
+                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    Heightmap.Types.MOTION_BLOCKING,
+                    DirectionalCreature::checkDirectionalSpawnRules,
+                    SpawnPlacementRegisterEvent.Operation.AND);
+        }
+
+        for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
+            event.register(i.get(),
+                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    Heightmap.Types.MOTION_BLOCKING,
+                    DirectionalCreature::checkDirectionalSpawnRules,
+                    SpawnPlacementRegisterEvent.Operation.AND);
+        }
     }
 }

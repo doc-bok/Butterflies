@@ -21,8 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -48,7 +46,7 @@ public class CaterpillarItem extends Item {
     public CaterpillarItem(String species) {
         super(new Item.Properties());
 
-        this.species = new ResourceLocation(ButterfliesMod.MODID, species);
+        this.species = new ResourceLocation(ButterfliesMod.MOD_ID, species);
     }
 
     /**
