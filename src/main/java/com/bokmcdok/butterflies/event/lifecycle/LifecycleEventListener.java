@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.event.lifecycle;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -18,13 +19,19 @@ import java.util.Arrays;
  */
 public class LifecycleEventListener {
 
+    // Reference to the item registry.
+    private final ItemRegistry itemRegistry;
+
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public LifecycleEventListener(IEventBus modEventBus) {
+    public LifecycleEventListener(IEventBus modEventBus,
+                                  ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::commonSetup);
+
+        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -35,7 +42,7 @@ public class LifecycleEventListener {
         int monarchIndex = Arrays.asList(ButterflySpeciesList.SPECIES).indexOf("monarch");
         BrewingRecipeRegistry.addRecipe(
                 Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-                Ingredient.of(ButterfliesMod.getItemRegistry().getBottledButterflies().get(monarchIndex).get()),
+                Ingredient.of(itemRegistry.getBottledButterflies().get(monarchIndex).get()),
                 PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
     }
 }

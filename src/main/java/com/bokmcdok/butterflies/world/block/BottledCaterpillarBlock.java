@@ -26,11 +26,6 @@ import java.util.List;
 
 public class BottledCaterpillarBlock extends Block {
 
-    //  The name this block is registered under.
-    public static String getRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
-
     private static final String NAME = "block.butterflies.bottled_caterpillar";
 
     //  The bottle's "model".

@@ -31,18 +31,24 @@ import java.util.Objects;
  */
 public class EntityEventListener {
 
+    // The entity type registry.
+    private final EntityTypeRegistry entityTypeRegistry;
+
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
     public EntityEventListener(IEventBus forgeEventBus,
-                               IEventBus modEventBus) {
+                               IEventBus modEventBus,
+                               EntityTypeRegistry entityTypeRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onJoinWorld);
 
         modEventBus.register(this);
         modEventBus.addListener(this::onEntityAttributeCreation);
         modEventBus.addListener(this::onSpawnPlacementRegister);
+
+        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -62,7 +68,6 @@ public class EntityEventListener {
      * Register the attributes for living entities
      */
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        EntityTypeRegistry entityTypeRegistry = ButterfliesMod.getEntityTypeRegistry();
         for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
@@ -129,8 +134,6 @@ public class EntityEventListener {
      * @param event The event information
      */
     public void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        EntityTypeRegistry entityTypeRegistry = ButterfliesMod.getEntityTypeRegistry();
-
         for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,

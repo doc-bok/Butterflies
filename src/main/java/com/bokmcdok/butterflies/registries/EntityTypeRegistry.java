@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -22,6 +23,8 @@ public class EntityTypeRegistry {
 
     // An instance of a deferred registry we use to register our entity types.
     private final DeferredRegister<EntityType<?>> deferredRegister;
+
+    private final BlockRegistry blockRegistry;
 
     // The Butterfly Scroll entity.
     private final RegistryObject<EntityType<ButterflyScroll>> butterflyScroll;
@@ -42,9 +45,12 @@ public class EntityTypeRegistry {
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public EntityTypeRegistry(IEventBus modEventBus) {
+    public EntityTypeRegistry(IEventBus modEventBus,
+                              BlockRegistry blockRegistry) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
+
+        this.blockRegistry = blockRegistry;
         
         this.butterflyScroll =
                 this.deferredRegister.register(ButterflyScroll.NAME, () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
@@ -125,6 +131,39 @@ public class EntityTypeRegistry {
     }
 
     /**
+     * Helper method to create a butterfly entity.
+     * @param entityType The entity's type.
+     * @param level The current level.
+     * @return A new butterfly.
+     */
+    private Butterfly createButterfly(EntityType<? extends Butterfly> entityType,
+                                      Level level) {
+        return new Butterfly(blockRegistry, entityType, level);
+    }
+
+    /**
+     * Helper method to create an ice butterfly entity.
+     * @param entityType The entity's type.
+     * @param level The current level.
+     * @return A new butterfly.
+     */
+    private Butterfly createIceButterfly(EntityType<? extends Butterfly> entityType,
+                                         Level level) {
+        return new IceButterfly(blockRegistry, entityType, level);
+    }
+
+    /**
+     * Helper method to create a lava moth entity.
+     * @param entityType The entity's type.
+     * @param level The current level.
+     * @return A new butterfly.
+     */
+    private Butterfly createLavaMoth(EntityType<? extends Butterfly> entityType,
+                                         Level level) {
+        return new LavaMoth(blockRegistry, entityType, level);
+    }
+
+    /**
      * Register the butterflies.
      * @param butterflyIndex The index of the butterfly to register.
      * @return The new registry object.
@@ -136,7 +175,7 @@ public class EntityTypeRegistry {
         // Ice Butterfly
         if (registryId.equals("ice")) {
             return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
+                    () -> EntityType.Builder.of(this::createIceButterfly, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
@@ -144,13 +183,13 @@ public class EntityTypeRegistry {
         // Lava Moth
         if (registryId.equals("lava")) {
             return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(LavaMoth::new, MobCategory.CREATURE)
+                    () -> EntityType.Builder.of(this::createLavaMoth, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
         return this.deferredRegister.register(registryId,
-                () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
+                () -> EntityType.Builder.of(this::createButterfly, MobCategory.CREATURE)
                 .sized(0.3f, 0.2f)
                 .build(Butterfly.getRegistryId(butterflyIndex)));
     }

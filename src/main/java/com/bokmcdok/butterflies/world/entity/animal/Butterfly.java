@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.ai.*;
@@ -73,8 +74,11 @@ public class Butterfly extends Animal {
     // The butterfly's data - created on access.
     private ButterflyData data = null;
 
-    //  The location of the texture that the renderer should use.
+    // The location of the texture that the renderer should use.
     private final ResourceLocation texture;
+
+    // A reference to the block registry.
+    private final BlockRegistry blockRegistry;
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -191,9 +195,12 @@ public class Butterfly extends Animal {
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
      */
-    public Butterfly(EntityType<? extends Butterfly> entityType,
+    public Butterfly(BlockRegistry blockRegistry,
+                     EntityType<? extends Butterfly> entityType,
                      Level level) {
         super(entityType, level);
+
+        this.blockRegistry = blockRegistry;
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
@@ -265,6 +272,14 @@ public class Butterfly extends Animal {
         setNumEggs(numEggs);
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+    }
+
+    /**
+     * Accessor for the block registry.
+     * @return The block registry.
+     */
+    public BlockRegistry getBlockRegistry() {
+        return blockRegistry;
     }
 
     /**

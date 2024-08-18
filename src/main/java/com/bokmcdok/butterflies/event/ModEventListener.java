@@ -13,13 +13,19 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class ModEventListener {
 
+    // Reference to the item registry.
+    private final ItemRegistry itemRegistry;
+
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ModEventListener(IEventBus modEventBus) {
+    public ModEventListener(IEventBus modEventBus,
+                            ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onBuildCreativeModeTabContents);
+
+        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -27,7 +33,6 @@ public class ModEventListener {
      * @param event The event information
      */
     public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
-        ItemRegistry itemRegistry = ButterfliesMod.getItemRegistry();
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(itemRegistry.getInfestedApple());

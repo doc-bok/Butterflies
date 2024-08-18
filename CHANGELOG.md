@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.5 (2024-08-18)
+- More refactoring to remove static registry references.
+
 ### 5.0.4 (2024-08-18)
 - Refactored code to rely less on static variables.
 

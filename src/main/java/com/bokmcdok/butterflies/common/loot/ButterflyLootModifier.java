@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.common.loot;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
@@ -21,17 +20,22 @@ import java.util.function.Supplier;
  */
 public class ButterflyLootModifier extends LootModifier {
 
+    // The item registry.
+    private final ItemRegistry itemRegistry;
+
     // The codec that is registered with Forge.
-    public static final Supplier<Codec<ButterflyLootModifier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, ButterflyLootModifier::new)));
+    private final Supplier<Codec<ButterflyLootModifier>> codec = Suppliers.memoize(() ->
+            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, this::createButterflyLootModifier)));
 
     /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public ButterflyLootModifier(LootItemCondition[] conditionsIn)
+    public ButterflyLootModifier(ItemRegistry itemRegistry,
+                                 LootItemCondition[] conditionsIn)
     {
         super(conditionsIn);
+        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -42,11 +46,12 @@ public class ButterflyLootModifier extends LootModifier {
      */
     @NotNull
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
+                                              LootContext context) {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(32) == 1) {
-            ItemStack stack = new ItemStack(ButterfliesMod.getItemRegistry().getZhuangziBook().get());
+            ItemStack stack = new ItemStack(itemRegistry.getZhuangziBook().get());
             generatedLoot.add(stack);
         }
 
@@ -59,6 +64,14 @@ public class ButterflyLootModifier extends LootModifier {
      */
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+        return codec.get();
+    }
+
+    public Supplier<Codec<ButterflyLootModifier>> getCodec() {
+        return codec;
+    }
+
+    private ButterflyLootModifier createButterflyLootModifier(LootItemCondition[] conditionsIn) {
+        return new ButterflyLootModifier(itemRegistry, conditionsIn);
     }
 }

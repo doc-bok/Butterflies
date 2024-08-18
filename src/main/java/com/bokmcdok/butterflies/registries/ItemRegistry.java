@@ -31,8 +31,9 @@ public class ItemRegistry {
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Item> deferredRegister;
 
-    // A reference to the block registry.
+    // Other registry references
     private final BlockRegistry blockRegistry;
+    private final EntityTypeRegistry entityTypeRegistry;
 
     // Registry Items
     private final List<RegistryObject<Item>> bottledButterflies;
@@ -55,11 +56,13 @@ public class ItemRegistry {
      * @param modEventBus The event bus to register with.
      */
     public ItemRegistry(IEventBus modEventBus,
-                        BlockRegistry blockRegistry) {
+                        BlockRegistry blockRegistry,
+                        EntityTypeRegistry entityTypeRegistry) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
 
         this.blockRegistry = blockRegistry;
+        this.entityTypeRegistry = entityTypeRegistry;
 
         this.bottledButterflies = new ArrayList<>() {
             {
@@ -128,7 +131,7 @@ public class ItemRegistry {
             }
         };
 
-        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(-1));
+        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(this, -1));
         this.infestedApple = deferredRegister.register("infested_apple", () -> new Item(new Item.Properties()));
         this.silk = deferredRegister.register("silk", () -> new Item(new Item.Properties()));
         this.zhuangziBook = deferredRegister.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
@@ -268,7 +271,7 @@ public class ItemRegistry {
      */
     private RegistryObject<Item> registerButterflyNet(int butterflyIndex) {
         return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyNetItem(butterflyIndex));
+                () -> new ButterflyNetItem(this, butterflyIndex));
     }
 
     /**
@@ -308,7 +311,7 @@ public class ItemRegistry {
      */
     private RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(butterflyIndex));
+                () -> new ButterflyScrollItem(entityTypeRegistry, this, butterflyIndex));
     }
 
     /**
@@ -318,7 +321,7 @@ public class ItemRegistry {
      */
     private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(ButterfliesMod.getEntityTypeRegistry().getButterflies().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
                         0x880000, 0x0088ff, new Item.Properties()));
     }
 
@@ -339,7 +342,7 @@ public class ItemRegistry {
      */
     private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(ButterfliesMod.getEntityTypeRegistry().getCaterpillars().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
                         0x0088ff, 0x880000, new Item.Properties()));
     }
 }

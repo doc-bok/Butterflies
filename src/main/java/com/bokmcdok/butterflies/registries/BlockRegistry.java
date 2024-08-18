@@ -27,8 +27,12 @@ public class BlockRegistry {
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Block> deferredRegister;
 
+    // Bottled creatures.
     private final List<RegistryObject<Block>> bottledButterflyBlocks;
     private final List<RegistryObject<Block>> bottledCaterpillarBlocks;
+
+    // Butterfly Feeder
+    //private final RegistryObject<Block> butterflyFeeder;
 
     // Flower Buds
     private final RegistryObject<Block> alliumBud;
@@ -46,7 +50,8 @@ public class BlockRegistry {
     private final RegistryObject<Block> witherRoseBud;
 
     /**
-     * Helper method for the "never" attribute.
+     * Helper method for the "never" attribute. Used in block properties during
+     * block construction.
      * @param ignoredBlockState The current block state.
      * @param ignoredBlockGetter Access to the block.
      * @param ignoredBlockPos The block's position.
@@ -61,7 +66,8 @@ public class BlockRegistry {
     }
 
     /**
-     * Helper method for the "never" attribute.
+     * Helper method for the "never" attribute. Used in block properties during
+     * block construction.
      * @param ignoredBlockState The current block state.
      * @param ignoredBlockGetter Access to the block.
      * @param ignoredBlockPos The block's position.
@@ -85,7 +91,7 @@ public class BlockRegistry {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
                     RegistryObject<Block> newBlock =
-                            deferredRegister.register(BottledButterflyBlock.getRegistryId(i), BottledButterflyBlock::new);
+                            deferredRegister.register(getBottledButterflyRegistryId(i), BottledButterflyBlock::new);
                     add(newBlock);
                 }
             }
@@ -95,7 +101,7 @@ public class BlockRegistry {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
                     RegistryObject<Block> newBlock =
-                            deferredRegister.register(BottledCaterpillarBlock.getRegistryId(i), BottledButterflyBlock::new);
+                            deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
                     add(newBlock);
                 }
             }
@@ -155,6 +161,30 @@ public class BlockRegistry {
     }
 
     /**
+     * Allium bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getAlliumBud() {
+        return alliumBud;
+    }
+
+    /**
+     * Azure bluet bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getAzureBluetBud() {
+        return azureBluetBud;
+    }
+
+    /**
+     * Blue orchid bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getBlueOrchidBud() {
+        return blueOrchidBud;
+    }
+
+    /**
      * Get the bottled butterfly blocks.
      * @return The list of bottled butterfly blocks.
      */
@@ -171,71 +201,100 @@ public class BlockRegistry {
     }
 
     /**
-     * Gets the flower bud for the specified flower block.
-     * @param flowerBlock The flower we are trying to seed.
-     * @return The bud block for the specified flower, if any.
+     * Helper method to generate the Registry ID for bottled butterflies.
+     * @param butterflyIndex The butterfly index of the species.
+     * @return The registry ID.
      */
-    public Block getFlowerBud(Block flowerBlock) {
-        if (flowerBlock == Blocks.ALLIUM) {
-            return this.alliumBud.get();
-        }
+    private String getBottledButterflyRegistryId(int butterflyIndex) {
+        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
-        if (flowerBlock == Blocks.AZURE_BLUET) {
-            return this.azureBluetBud.get();
-        }
+    /**
+     * Helper method to generate the Registry ID for bottled caterpillars.
+     * @param butterflyIndex The butterfly index of the species.
+     * @return The registry ID.
+     */
+    private String getBottledCaterpillarRegistryId(int butterflyIndex) {
+        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
 
-        if (flowerBlock == Blocks.BLUE_ORCHID) {
-            return this.blueOrchidBud.get();
-        }
+    /**
+     * Cornflower bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getCornflowerBud() {
+        return cornflowerBud;
+    }
 
-        if (flowerBlock == Blocks.CORNFLOWER) {
-            return this.cornflowerBud.get();
-        }
+    /**
+     * Dandelion bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getDandelionBud() {
+        return dandelionBud;
+    }
 
-        if (flowerBlock == Blocks.DANDELION) {
-            return this.dandelionBud.get();
-        }
+    /**
+     * Lily of the valley bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getLilyOfTheValleyBud() {
+        return lilyOfTheValleyBud;
+    }
 
-        if (flowerBlock == Blocks.LILY_OF_THE_VALLEY) {
-            return this.lilyOfTheValleyBud.get();
-        }
+    /**
+     * Orange tulip bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getOrangeTulipBud() {
+        return orangeTulipBud;
+    }
 
-        if (flowerBlock == Blocks.ORANGE_TULIP) {
-            return this.orangeTulipBud.get();
-        }
+    /**
+     * Oxeye daisy bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getOxeyeDaisyBud() {
+        return oxeyeDaisyBud;
+    }
 
-        if (flowerBlock == Blocks.OXEYE_DAISY) {
-            return this.oxeyeDaisyBud.get();
-        }
+    /**
+     * Pink tulip bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getPinkTulipBud() {
+        return pinkTulipBud;
+    }
 
-        if (flowerBlock == Blocks.PINK_TULIP) {
-            return this.pinkTulipBud.get();
-        }
+    /**
+     * Poppy bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getPoppyBud() {
+        return poppyBud;
+    }
 
-        if (flowerBlock == Blocks.POPPY) {
-            return this.poppyBud.get();
-        }
+    /**
+     * Red tulip bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getRedTulipBud() {
+        return redTulipBud;
+    }
 
-        if (flowerBlock == Blocks.RED_TULIP) {
-            return this.redTulipBud.get();
-        }
+    /**
+     * White tulip bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getWhiteTulipBud() {
+        return whiteTulipBud;
+    }
 
-        if (flowerBlock == Blocks.TORCHFLOWER) {
-            return Blocks.TORCHFLOWER_CROP;
-        }
-
-        if (flowerBlock == Blocks.WHITE_TULIP) {
-            return this.whiteTulipBud.get();
-        }
-
-        if (flowerBlock == Blocks.WITHER_ROSE) {
-            return this.witherRoseBud.get();
-        }
-
-        if (flowerBlock == Blocks.SWEET_BERRY_BUSH) {
-            return Blocks.SWEET_BERRY_BUSH;
-        }
-
-        return null;
+    /**
+     * Wither rose bud accessor.
+     * @return The registry object.
+     */
+    public RegistryObject<Block> getWitherRoseBud() {
+        return witherRoseBud;
     }
 }

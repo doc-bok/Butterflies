@@ -14,7 +14,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 /**
@@ -23,14 +22,20 @@ import net.minecraftforge.registries.RegistryObject;
 @OnlyIn(Dist.CLIENT)
 public class ClientEventListener {
 
+    // The entity type registry.
+    private final EntityTypeRegistry entityTypeRegistry;
+
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ClientEventListener(IEventBus modEventBus) {
+    public ClientEventListener(IEventBus modEventBus,
+                               EntityTypeRegistry entityTypeRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onRegisterLayerDefinitions);
         modEventBus.addListener(this::onRegisterRenderers);
+
+        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -51,7 +56,6 @@ public class ClientEventListener {
      */
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
-        EntityTypeRegistry entityTypeRegistry = ButterfliesMod.getEntityTypeRegistry();
         event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
 
         for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {

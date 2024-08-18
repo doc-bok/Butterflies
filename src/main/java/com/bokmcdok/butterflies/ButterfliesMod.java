@@ -8,10 +8,7 @@ import com.bokmcdok.butterflies.event.entity.player.PlayerEventListener;
 import com.bokmcdok.butterflies.event.level.LevelEventListener;
 import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
-import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.LootModifierRegistry;
+import com.bokmcdok.butterflies.registries.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -26,10 +23,6 @@ public class ButterfliesMod
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "butterflies";
 
-    private static BlockRegistry BLOCK_REGISTRY;
-    private static EntityTypeRegistry ENTITY_TYPE_REGISTRY;
-    private static ItemRegistry ITEM_REGISTRY;
-
     /**
      * Constructor - The main entry point for the mod.
      */
@@ -37,48 +30,25 @@ public class ButterfliesMod
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
+        // Create the registries.
+        BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus, blockRegistry);
+        ItemRegistry itemRegistry = new ItemRegistry(modEventBus, blockRegistry, entityTypeRegistry);
+        new LootModifierRegistry(modEventBus, itemRegistry);
+        new MenuTypeRegistry(modEventBus);
+
         // Create the Mod event listeners
-        new ClientEventListener(modEventBus);
-        new LifecycleEventListener(modEventBus);
-        new ModEventListener(modEventBus);
+        new ClientEventListener(modEventBus, entityTypeRegistry);
+        new LifecycleEventListener(modEventBus, itemRegistry);
+        new ModEventListener(modEventBus, itemRegistry);
 
         // Create the Forge event listeners.
-        new EntityEventListener(forgeEventBus, modEventBus);
+        new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
         new LevelEventListener(forgeEventBus);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
 
-        // Create the registries.
-        BLOCK_REGISTRY = new BlockRegistry(modEventBus);
-        ENTITY_TYPE_REGISTRY = new EntityTypeRegistry(modEventBus);
-        ITEM_REGISTRY = new ItemRegistry(modEventBus, BLOCK_REGISTRY);
-        new LootModifierRegistry(modEventBus);
-
         // Mod Config Settings
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
-    }
-
-    /**
-     * Accessor for the block registry.
-     * @return The block registry.
-     */
-    public static BlockRegistry getBlockRegistry() {
-        return BLOCK_REGISTRY;
-    }
-
-    /**
-     * Accessor for the entity type registry.
-     * @return The entity type registry.
-     */
-    public static EntityTypeRegistry getEntityTypeRegistry() {
-        return ENTITY_TYPE_REGISTRY;
-    }
-
-    /**
-     * Accessor for the item registry.
-     * @return The item registry.
-     */
-    public static ItemRegistry getItemRegistry() {
-        return ITEM_REGISTRY;
     }
 }

@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,14 +25,13 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyScroll extends HangingEntity {
 
-    /**
-     * The name used for registration.
-     */
+    // Reference to the item registry.
+    private ItemRegistry itemRegistry;
+
+    // The name used for registration.
     public static final String NAME = "butterfly_scroll";
 
-    /**
-     * The index of the butterfly on the scroll.
-     */
+    //The index of the butterfly on the scroll.
     private int butterflyIndex;
 
     /**
@@ -50,8 +51,14 @@ public class ButterflyScroll extends HangingEntity {
      * @param blockPos The position of the block it is being placed upon.
      * @param direction The direction the scroll is facing.
      */
-    public ButterflyScroll(Level level, BlockPos blockPos, Direction direction) {
-        this(ButterfliesMod.getEntityTypeRegistry().getButterflyScroll().get(), level);
+    public ButterflyScroll(EntityTypeRegistry entityTypeRegistry,
+                           ItemRegistry itemRegistry,
+                           Level level,
+                           BlockPos blockPos,
+                           Direction direction) {
+        this(entityTypeRegistry.getButterflyScroll().get(), level);
+
+        this.itemRegistry = itemRegistry;
         this.pos = blockPos;
         this.setDirection(direction);
     }
@@ -73,7 +80,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        ItemStack stack = new ItemStack(ButterfliesMod.getItemRegistry().getButterflyScrolls().get(this.butterflyIndex).get());
+        ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(this.butterflyIndex).get());
         this.spawnAtLocation(stack);
     }
 
