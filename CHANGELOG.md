@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.2 (2024-08-18)
+- Biome modifiers can now be generated.
+
 ### 5.0.1 (2024-08-14)
 - Fixed incorrect syncing from client to server.
 

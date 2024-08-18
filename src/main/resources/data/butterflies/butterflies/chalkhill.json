@@ -4,7 +4,7 @@
   "eggMultiplier": "normal",
   "entityId": "chalkhill",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
+  "habitat": "hills_and_plateaus",
   "index": 3,
   "lifespan": {
     "butterfly": "medium",

@@ -92,7 +92,14 @@ public record ButterflyData(int butterflyIndex,
         FORESTS_AND_PLAINS,
         ICE,
         JUNGLES,
-        PLAINS
+        PLAINS,
+        NETHER,
+        FORESTS_AND_WETLANDS,
+        PLAINS_AND_SAVANNAS,
+        PLAINS_AND_WETLANDS,
+        HILLS_AND_PLATEAUS,
+        FORESTS_PLAINS_WETLANDS,
+        WETLANDS
     }
 
     // Helper enum to determine a butterflies overall lifespan.

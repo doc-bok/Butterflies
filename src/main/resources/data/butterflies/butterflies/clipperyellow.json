@@ -4,7 +4,7 @@
   "eggMultiplier": "normal",
   "entityId": "clipperyellow",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitat": "jungles",
   "index": 12,
   "lifespan": {
     "butterfly": "medium",

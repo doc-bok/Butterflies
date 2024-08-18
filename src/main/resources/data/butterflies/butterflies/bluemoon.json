@@ -4,7 +4,7 @@
   "eggMultiplier": "double",
   "entityId": "bluemoon",
   "extraLandingBlocks": "none",
-  "habitat": "forestsandplains",
+  "habitat": "forests",
   "index": 35,
   "lifespan": {
     "butterfly": "short",
