@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.3 (2024-08-18)
+- Fix plateau and plain biome modifiers being confused.
+
 ### 5.0.2 (2024-08-18)
 - Biome modifiers can now be generated.
 

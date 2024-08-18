@@ -438,11 +438,11 @@ def addSpawns(species, is_male):
         addSingleSpawn("nether", species, weight, maximum, True)
 
     if "plains" in habitat:
-        addSingleSpawn("lush", species, weight, maximum, is_male)
-        addSingleSpawn("plateau", species, weight, maximum, is_male)
+        addSingleSpawn("plains", species, weight, maximum, is_male)
 
     if "plateaus" in habitat:
-        addSingleSpawn("plains", species, weight, maximum, is_male)
+        addSingleSpawn("lush", species, weight, maximum, is_male)
+        addSingleSpawn("plateau", species, weight, maximum, is_male)
 
     if "savannas" in habitat:
         addSingleSpawn("savanna", species, weight, maximum, is_male)
