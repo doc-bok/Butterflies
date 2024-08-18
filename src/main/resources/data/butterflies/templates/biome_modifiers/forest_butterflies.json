@@ -1,0 +1,5 @@
+{
+  "biomes": "#minecraft:is_forest",
+  "spawners": [],
+  "type": "forge:add_spawns"
+}

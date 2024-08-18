@@ -4,7 +4,7 @@
   "eggMultiplier": "normal",
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
-  "habitat": "forests",
+  "habitat": "plains_and_wetlands",
   "index": 44,
   "lifespan": {
     "butterfly": "short",
