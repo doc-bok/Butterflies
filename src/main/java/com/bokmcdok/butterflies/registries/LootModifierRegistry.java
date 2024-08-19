@@ -15,18 +15,24 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 public class LootModifierRegistry {
 
+    // The deferred register.
+    private final DeferredRegister<Codec<? extends IGlobalLootModifier>> deferredRegister;
+
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public LootModifierRegistry(IEventBus modEventBus,
-                                ItemRegistry itemRegistry) {
+    public LootModifierRegistry(IEventBus modEventBus) {
         // An instance of a deferred registry we use to register items.
-        DeferredRegister<Codec<? extends IGlobalLootModifier>> deferredRegister =
-                DeferredRegister.create(ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
+        deferredRegister = DeferredRegister.create(ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
         deferredRegister.register(modEventBus);
+    }
 
-        // The loot modifiers.
+    /**
+     * Register the loot modifiers.
+     * @param itemRegistry The item registry.
+     */
+    public void initialise(ItemRegistry itemRegistry) {
         deferredRegister.register("butterfly_loot", new ButterflyLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
         deferredRegister.register("oak_leaves_loot", new OakLeavesLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
     }

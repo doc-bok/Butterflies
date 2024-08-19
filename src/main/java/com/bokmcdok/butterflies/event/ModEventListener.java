@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.event;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -34,12 +33,15 @@ public class ModEventListener {
      */
     public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
 
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(itemRegistry.getButterflyFeeder());
+        }
+        else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(itemRegistry.getInfestedApple());
             event.accept(itemRegistry.getSilk());
         }
 
-        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+        else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
 
             for (RegistryObject<Item> i : itemRegistry.getButterflyEggs()) {
                 event.accept(i);
@@ -50,7 +52,7 @@ public class ModEventListener {
             }
         }
 
-        if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
+        else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
             for (RegistryObject<Item> i : itemRegistry.getButterflySpawnEggs()) {
                 event.accept(i);
             }
@@ -60,7 +62,7 @@ public class ModEventListener {
             }
         }
 
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+        else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
 
             event.accept(itemRegistry.getEmptyButterflyNet());
             for (RegistryObject<Item> i : itemRegistry.getButterflyNets()) {

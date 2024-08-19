@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.block.BottledButterflyBlock;
 import com.bokmcdok.butterflies.world.block.BottledCaterpillarBlock;
+import com.bokmcdok.butterflies.world.block.ButterflyFeederBlock;
 import com.bokmcdok.butterflies.world.block.FlowerCropBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
@@ -28,26 +29,26 @@ public class BlockRegistry {
     private final DeferredRegister<Block> deferredRegister;
 
     // Bottled creatures.
-    private final List<RegistryObject<Block>> bottledButterflyBlocks;
-    private final List<RegistryObject<Block>> bottledCaterpillarBlocks;
+    private List<RegistryObject<Block>> bottledButterflyBlocks;
+    private List<RegistryObject<Block>> bottledCaterpillarBlocks;
 
     // Butterfly Feeder
-    //private final RegistryObject<Block> butterflyFeeder;
+    private RegistryObject<Block> butterflyFeeder;
 
     // Flower Buds
-    private final RegistryObject<Block> alliumBud;
-    private final RegistryObject<Block> azureBluetBud;
-    private final RegistryObject<Block> blueOrchidBud;
-    private final RegistryObject<Block> cornflowerBud;
-    private final RegistryObject<Block> dandelionBud;
-    private final RegistryObject<Block> lilyOfTheValleyBud;
-    private final RegistryObject<Block> orangeTulipBud;
-    private final RegistryObject<Block> oxeyeDaisyBud;
-    private final RegistryObject<Block> pinkTulipBud;
-    private final RegistryObject<Block> poppyBud;
-    private final RegistryObject<Block> redTulipBud;
-    private final RegistryObject<Block> whiteTulipBud;
-    private final RegistryObject<Block> witherRoseBud;
+    private RegistryObject<Block> alliumBud;
+    private RegistryObject<Block> azureBluetBud;
+    private RegistryObject<Block> blueOrchidBud;
+    private RegistryObject<Block> cornflowerBud;
+    private RegistryObject<Block> dandelionBud;
+    private RegistryObject<Block> lilyOfTheValleyBud;
+    private RegistryObject<Block> orangeTulipBud;
+    private RegistryObject<Block> oxeyeDaisyBud;
+    private RegistryObject<Block> pinkTulipBud;
+    private RegistryObject<Block> poppyBud;
+    private RegistryObject<Block> redTulipBud;
+    private RegistryObject<Block> whiteTulipBud;
+    private RegistryObject<Block> witherRoseBud;
 
     /**
      * Helper method for the "never" attribute. Used in block properties during
@@ -86,6 +87,15 @@ public class BlockRegistry {
     public BlockRegistry(IEventBus modEventBus) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
+    }
+
+    /**
+     * Register the blocks.
+     * @param blockEntityTypeRegistry The block entity registry.
+     * @param menuTypeRegistry The menu type registry.
+     */
+    public void initialise(BlockEntityTypeRegistry blockEntityTypeRegistry,
+                           MenuTypeRegistry menuTypeRegistry) {
         
         this.bottledButterflyBlocks = new ArrayList<>() {
             {
@@ -158,6 +168,9 @@ public class BlockRegistry {
         this.witherRoseBud = deferredRegister.register(
                 "bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE)
         );
+
+        this.butterflyFeeder = deferredRegister.register( "butterfly_feeder",
+                () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry));
     }
 
     /**
@@ -201,21 +214,11 @@ public class BlockRegistry {
     }
 
     /**
-     * Helper method to generate the Registry ID for bottled butterflies.
-     * @param butterflyIndex The butterfly index of the species.
-     * @return The registry ID.
+     * Get the butterfly feeder block.
+     * @return The butterfly feeder block.
      */
-    private String getBottledButterflyRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
-
-    /**
-     * Helper method to generate the Registry ID for bottled caterpillars.
-     * @param butterflyIndex The butterfly index of the species.
-     * @return The registry ID.
-     */
-    private String getBottledCaterpillarRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    public RegistryObject<Block> getButterflyFeeder() {
+        return butterflyFeeder;
     }
 
     /**
@@ -296,5 +299,23 @@ public class BlockRegistry {
      */
     public RegistryObject<Block> getWitherRoseBud() {
         return witherRoseBud;
+    }
+
+    /**
+     * Helper method to generate the Registry ID for bottled butterflies.
+     * @param butterflyIndex The butterfly index of the species.
+     * @return The registry ID.
+     */
+    private String getBottledButterflyRegistryId(int butterflyIndex) {
+        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
+
+    /**
+     * Helper method to generate the Registry ID for bottled caterpillars.
+     * @param butterflyIndex The butterfly index of the species.
+     * @return The registry ID.
+     */
+    private String getBottledCaterpillarRegistryId(int butterflyIndex) {
+        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
     }
 }

@@ -24,31 +24,38 @@ public class EntityTypeRegistry {
     // An instance of a deferred registry we use to register our entity types.
     private final DeferredRegister<EntityType<?>> deferredRegister;
 
-    private final BlockRegistry blockRegistry;
+    // The block registry.
+    private BlockRegistry blockRegistry;
 
     // The Butterfly Scroll entity.
-    private final RegistryObject<EntityType<ButterflyScroll>> butterflyScroll;
+    private RegistryObject<EntityType<ButterflyScroll>> butterflyScroll;
 
     // The butterfly and moth entities.
-    private final List<RegistryObject<EntityType<? extends Butterfly>>> butterflies;
+    private List<RegistryObject<EntityType<? extends Butterfly>>> butterflies;
 
     // The caterpillar and larva entities.
-    private final List<RegistryObject<EntityType<Caterpillar>>> caterpillars;
+    private List<RegistryObject<EntityType<Caterpillar>>> caterpillars;
 
     // The chrysalis and cocoon entities.
-    private final List<RegistryObject<EntityType<Chrysalis>>> chrysalises;
+    private List<RegistryObject<EntityType<Chrysalis>>> chrysalises;
 
     // The egg entities (not spawn eggs!).
-    private final List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs;
+    private List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public EntityTypeRegistry(IEventBus modEventBus,
-                              BlockRegistry blockRegistry) {
+    public EntityTypeRegistry(IEventBus modEventBus) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
+    }
+
+    /**
+     * Register the entity types.
+     * @param blockRegistry The block registry.
+     */
+    public void initialise(BlockRegistry blockRegistry) {
 
         this.blockRegistry = blockRegistry;
         

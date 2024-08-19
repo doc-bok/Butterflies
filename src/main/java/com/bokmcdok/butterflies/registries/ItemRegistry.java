@@ -12,6 +12,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,34 +33,42 @@ public class ItemRegistry {
     private final DeferredRegister<Item> deferredRegister;
 
     // Other registry references
-    private final BlockRegistry blockRegistry;
-    private final EntityTypeRegistry entityTypeRegistry;
+    private BlockRegistry blockRegistry;
+    private EntityTypeRegistry entityTypeRegistry;
 
     // Registry Items
-    private final List<RegistryObject<Item>> bottledButterflies;
-    private final List<RegistryObject<Item>> bottledCaterpillars;
-    private final RegistryObject<Item> burntButterflyNet;
-    private final RegistryObject<Item> butterflyBook;
-    private final List<RegistryObject<Item>> butterflyEggs;
-    private final List<RegistryObject<Item>> butterflyNets;
-    private final List<RegistryObject<Item>> butterflyScrolls;
-    private final List<RegistryObject<Item>> butterflySpawnEggs;
-    private final List<RegistryObject<Item>> caterpillars;
-    private final List<RegistryObject<Item>> caterpillarSpawnEggs;
-    private final RegistryObject<Item> emptyButterflyNet;
-    private final RegistryObject<Item> infestedApple;
-    private final RegistryObject<Item> silk;
-    private final RegistryObject<Item> zhuangziBook;
+    private List<RegistryObject<Item>> bottledButterflies;
+    private List<RegistryObject<Item>> bottledCaterpillars;
+    private RegistryObject<Item> burntButterflyNet;
+    private RegistryObject<Item> butterflyBook;
+    private List<RegistryObject<Item>> butterflyEggs;
+    private RegistryObject<Item> butterflyFeeder;
+    private List<RegistryObject<Item>> butterflyNets;
+    private List<RegistryObject<Item>> butterflyScrolls;
+    private List<RegistryObject<Item>> butterflySpawnEggs;
+    private List<RegistryObject<Item>> caterpillars;
+    private List<RegistryObject<Item>> caterpillarSpawnEggs;
+    private RegistryObject<Item> emptyButterflyNet;
+    private RegistryObject<Item> infestedApple;
+    private RegistryObject<Item> silk;
+    private RegistryObject<Item> zhuangziBook;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ItemRegistry(IEventBus modEventBus,
-                        BlockRegistry blockRegistry,
-                        EntityTypeRegistry entityTypeRegistry) {
+    public ItemRegistry(IEventBus modEventBus) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
+    }
+
+    /**
+     * Register the items.
+     * @param blockRegistry The block registry.
+     * @param entityTypeRegistry The entity type registry.
+     */
+    public void initialise(BlockRegistry blockRegistry,
+                           EntityTypeRegistry entityTypeRegistry) {
 
         this.blockRegistry = blockRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
@@ -90,6 +99,9 @@ public class ItemRegistry {
                 }
             }
         };
+
+        this.butterflyFeeder =deferredRegister.register("butterfly_feeder",
+                        () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
 
         this.butterflyNets = new ArrayList<>() {
             {
@@ -190,6 +202,14 @@ public class ItemRegistry {
         } else {
             return butterflyNets.get(butterflyIndex);
         }
+    }
+
+    /**
+     * Accessor for the butterfly feeder.
+     * @return The registry object.
+     */
+    public RegistryObject<Item> getButterflyFeeder() {
+        return butterflyFeeder;
     }
 
     /**
