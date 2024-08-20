@@ -20,17 +20,22 @@ import java.util.function.Supplier;
  */
 public class OakLeavesLootModifier extends LootModifier {
 
+    // The item registry.
+    private final ItemRegistry itemRegistry;
+
     // The codec that is registered with Forge.
-    public static final Supplier<Codec<OakLeavesLootModifier>> CODEC = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, OakLeavesLootModifier::new)));
+    private final Supplier<Codec<OakLeavesLootModifier>> codec = Suppliers.memoize(() ->
+            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, this::createOakLeavesLootModifier)));
 
     /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public OakLeavesLootModifier(LootItemCondition[] conditionsIn)
+    public OakLeavesLootModifier(ItemRegistry itemRegistry,
+                                 LootItemCondition[] conditionsIn)
     {
         super(conditionsIn);
+        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -45,7 +50,7 @@ public class OakLeavesLootModifier extends LootModifier {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(400) == 1) {
-            ItemStack stack = new ItemStack(ItemRegistry.INFESTED_APPLE.get());
+            ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());
             generatedLoot.add(stack);
         }
 
@@ -58,6 +63,14 @@ public class OakLeavesLootModifier extends LootModifier {
      */
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+        return codec.get();
+    }
+
+    private OakLeavesLootModifier createOakLeavesLootModifier(LootItemCondition[] conditionsIn) {
+        return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+    }
+
+    public Supplier<Codec<OakLeavesLootModifier>> getCodec() {
+        return codec;
     }
 }

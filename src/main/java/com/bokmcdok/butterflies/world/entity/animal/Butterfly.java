@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.ai.*;
@@ -73,8 +74,11 @@ public class Butterfly extends Animal {
     // The butterfly's data - created on access.
     private ButterflyData data = null;
 
-    //  The location of the texture that the renderer should use.
+    // The location of the texture that the renderer should use.
     private final ResourceLocation texture;
+
+    // A reference to the block registry.
+    private final BlockRegistry blockRegistry;
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -191,14 +195,17 @@ public class Butterfly extends Animal {
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
      */
-    public Butterfly(EntityType<? extends Butterfly> entityType,
+    public Butterfly(BlockRegistry blockRegistry,
+                     EntityType<? extends Butterfly> entityType,
                      Level level) {
         super(entityType, level);
+
+        this.blockRegistry = blockRegistry;
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
 
         setAge(-getData().butterflyLifespan());
     }
@@ -265,6 +272,14 @@ public class Butterfly extends Animal {
         setNumEggs(numEggs);
 
         return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+    }
+
+    /**
+     * Accessor for the block registry.
+     * @return The block registry.
+     */
+    public BlockRegistry getBlockRegistry() {
+        return blockRegistry;
     }
 
     /**
@@ -430,12 +445,7 @@ public class Butterfly extends Animal {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
-            public boolean isStableDestination(@NotNull BlockPos blockPos) {
-                return this.level.getBlockState(blockPos).isAir() ||
-                       this.level.getBlockState(blockPos).is(BlockTags.FLOWERS);
-            }
-        };
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
 
         if (getData().speed() == ButterflyData.Speed.FAST) {
 
@@ -591,6 +601,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Set the number of eggs this butterfly can lay.
+     * @param numEggs The number of eggs remaining.
+     */
+    public void setNumEggs(int numEggs) {
+        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
+    }
+
+    /**
      * Hacky fix to stop butterflies teleporting.
      * TODO: We need a better fix than this.
      * @param x The x-position.
@@ -730,13 +748,5 @@ public class Butterfly extends Animal {
         }
 
         return this.data;
-    }
-
-    /**
-     * Set the number of eggs this butterfly can lay.
-     * @param numEggs The number of eggs remaining.
-     */
-    private void setNumEggs(int numEggs) {
-        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
     }
 }

@@ -11,8 +11,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.IEventBus;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
@@ -22,23 +21,32 @@ import java.util.Map;
 /**
  * Listens for events on loading a level.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class LevelEventListener {
 
-
-    // GSON build that can parse Butterfly entries.
-    private static final Gson GSON = (new GsonBuilder()).registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
+    // GSON builder that can parse Butterfly entries.
+    private final Gson gsonBuilder;
 
     // Logger for reporting errors.
-    private static final Logger LOGGER = LogUtils.getLogger();
+    private final Logger logger;
+
+    /**
+     * Construction
+     * @param forgeEventBus The event bus to register with.
+     */
+    public LevelEventListener(IEventBus forgeEventBus) {
+        this.gsonBuilder = (new GsonBuilder()).registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
+        this.logger = LogUtils.getLogger();
+
+        forgeEventBus.register(this);
+        forgeEventBus.addListener(this::onLevelLoad);
+    }
 
     /**
      * Load butterfly mod-specific data when a level loads.
      * @param event The level load event.
      */
-    @SubscribeEvent
-    public static void onLevelLoad(LevelEvent.Load event) {
-        LOGGER.debug("LevelEvent.Load");
+    public void onLevelLoad(LevelEvent.Load event) {
+        logger.debug("LevelEvent.Load");
 
         // Get the resource manager.
         ResourceManager resourceManager = null;
@@ -47,28 +55,28 @@ public class LevelEventListener {
         } else {
             MinecraftServer server = event.getLevel().getServer();
             if (server == null) {
-                LOGGER.error("Failed to get Minecraft Server");
+                logger.error("Failed to get Minecraft Server");
             } else {
                 resourceManager = server.getResourceManager();
             }
         }
 
         if (resourceManager == null) {
-            LOGGER.error("Failed to get Resource Manager");
+            logger.error("Failed to get Resource Manager");
         } else {
             // Get the butterfly JSON files
             Map<ResourceLocation, Resource> resourceMap =
-                    resourceManager.listResources(ButterfliesMod.MODID, (x) -> x.getPath().endsWith(".json"));
+                    resourceManager.listResources(ButterfliesMod.MOD_ID, (x) -> x.getPath().endsWith(".json"));
 
             // Parse each one and generate the data.
             for (ResourceLocation location : resourceMap.keySet()) {
                 try {
                     Resource resource = resourceMap.get(location);
                     BufferedReader reader = resource.openAsReader();
-                    ButterflyData butterflyData = GSON.fromJson(reader, ButterflyData.class);
+                    ButterflyData butterflyData = gsonBuilder.fromJson(reader, ButterflyData.class);
                     ButterflyData.addButterfly(butterflyData);
                 } catch (IOException e) {
-                    LOGGER.error("Failed to load butterfly data: [" + location.toString() + "]", e);
+                    logger.error("Failed to load butterfly data: [" + location.toString() + "]", e);
                 }
             }
         }

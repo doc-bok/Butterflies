@@ -294,7 +294,7 @@ public record ButterflyData(int butterflyIndex,
                         diurnality,
                         extraLandingBlocks,
                         plantEffect,
-                        new ResourceLocation(ButterfliesMod.MODID, breedTarget),
+                        new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier
                 );
             }
@@ -380,7 +380,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public static ButterflyData getButterflyDataForEntity(LivingEntity entity) {
         String species = getSpeciesString(entity);
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MODID, species);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
         return getEntry(location);
     }
 
@@ -476,7 +476,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getCaterpillarItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, "caterpillar_" + this.entityId);
+            return new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
         }
 
         return null;
@@ -488,7 +488,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getButterflyEggItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MODID, entityId + "_egg");
+            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
         }
 
         return null;
@@ -499,7 +499,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly.
      */
     public ResourceLocation getButterflyEntity() {
-        return new ResourceLocation(ButterfliesMod.MODID, this.entityId);
+        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId);
     }
 
     /**
@@ -507,7 +507,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly egg.
      */
     public ResourceLocation getButterflyEggEntity() {
-        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_egg");
+        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_egg");
     }
 
     /**
@@ -515,7 +515,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the caterpillar.
      */
     public ResourceLocation getCaterpillarEntity() {
-        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_caterpillar");
+        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
     }
 
     /**
@@ -523,7 +523,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the chrysalis.
      */
     public  ResourceLocation getChrysalisEntity() {
-        return new ResourceLocation(ButterfliesMod.MODID, this.entityId + "_chrysalis");
+        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
     }
 
     /**
