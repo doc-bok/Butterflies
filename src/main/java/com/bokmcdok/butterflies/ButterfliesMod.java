@@ -51,7 +51,7 @@ public class ButterfliesMod
         menuTypeRegistry.initialise();
 
         // Create the Mod event listeners
-        new ClientEventListener(modEventBus, entityTypeRegistry);
+        new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
         new LifecycleEventListener(modEventBus, itemRegistry,menuTypeRegistry);
         new ModEventListener(modEventBus, itemRegistry);
 

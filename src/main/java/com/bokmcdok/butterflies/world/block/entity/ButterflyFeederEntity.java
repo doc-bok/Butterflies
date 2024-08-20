@@ -1,10 +1,15 @@
-package com.bokmcdok.butterflies.world.level.block.entity;
+package com.bokmcdok.butterflies.world.block.entity;
 
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
@@ -12,6 +17,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * The block entity for a butterfly feeder.
@@ -63,6 +69,19 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
+     * Load the inventory from a saved world.
+     * @param compoundTag The compound tag.
+     */
+    @Override
+    public void load(@NotNull CompoundTag compoundTag) {
+        super.load(compoundTag);
+        this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        if (!this.tryLoadLootTable(compoundTag)) {
+            ContainerHelper.loadAllItems(compoundTag, this.items);
+        }
+    }
+
+    /**
      * Get the default name for the feeder.
      * @return The relevant localisation string.
      */
@@ -83,11 +102,53 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
+     * Create an update packet for this entity.
+     * @return The update packet.
+     */
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    /**
+     * Create an update tag that's synced with the client.
+     * @return The update tag.
+     */
+    @NotNull
+    @Override
+    public CompoundTag getUpdateTag() {
+        return this.saveWithoutMetadata();
+    }
+
+    /**
      * Set the items in the container.
      * @param items The items to set.
      */
     @Override
     protected void setItems(@NotNull NonNullList<ItemStack> items) {
-        this.items = items;
+        if (items.size() <= this.getContainerSize()) {
+            this.items = items;
+        }
+    }
+
+    /**
+     * Save the inventory.
+     * @param compoundTag The compound tag.
+     */
+    protected void saveAdditional(@NotNull CompoundTag compoundTag) {
+        super.saveAdditional(compoundTag);
+        if (!this.trySaveLootTable(compoundTag)) {
+            ContainerHelper.saveAllItems(compoundTag, this.items);
+        }
+    }
+
+    @Override
+    public void setChanged() {
+        super.setChanged();
+
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 2);
+        }
     }
 }

@@ -2,7 +2,9 @@ package com.bokmcdok.butterflies.client.event;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.*;
+import com.bokmcdok.butterflies.client.renderer.blockentity.ButterflyFeederEntityRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
+import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
@@ -22,7 +24,8 @@ import net.minecraftforge.registries.RegistryObject;
 @OnlyIn(Dist.CLIENT)
 public class ClientEventListener {
 
-    // The entity type registry.
+    // Registries.
+    private final BlockEntityTypeRegistry blockEntityTypeRegistry;
     private final EntityTypeRegistry entityTypeRegistry;
 
     /**
@@ -30,11 +33,13 @@ public class ClientEventListener {
      * @param modEventBus The event bus to register with.
      */
     public ClientEventListener(IEventBus modEventBus,
+                               BlockEntityTypeRegistry blockEntityTypeRegistry,
                                EntityTypeRegistry entityTypeRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onRegisterLayerDefinitions);
         modEventBus.addListener(this::onRegisterRenderers);
 
+        this.blockEntityTypeRegistry = blockEntityTypeRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
     }
 
@@ -78,5 +83,7 @@ public class ClientEventListener {
         for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
             event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
         }
+
+        event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
     }
 }

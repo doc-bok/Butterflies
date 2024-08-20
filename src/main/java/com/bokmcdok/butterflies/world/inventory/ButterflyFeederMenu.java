@@ -45,7 +45,7 @@ public class ButterflyFeederMenu extends AbstractContainerMenu {
         checkContainerSize(container, 1);
         container.startOpen(playerInventory.player);
 
-        this.addSlot(new Slot(container, 0, 80, 17));
+        this.addSlot(new ButterflyFeederSlot(container, 0, 80, 17));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -73,6 +73,7 @@ public class ButterflyFeederMenu extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack item = slot.getItem();
             result = item.copy();
+
             if (slotIndex < this.feeder.getContainerSize()) {
                 if (!this.moveItemStackTo(item, this.feeder.getContainerSize(), this.slots.size(), true)) {
                     return ItemStack.EMPTY;

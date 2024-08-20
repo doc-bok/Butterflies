@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.level.block.entity.ButterflyFeederEntity;
+import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
