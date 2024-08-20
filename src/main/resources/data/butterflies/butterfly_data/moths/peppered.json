@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "peppered",
+  "extraLandingBlocks": "logs",
+  "habitat": "forests",
+  "index": 45,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "lily_of_the_valley",
+  "rarity": "common",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}

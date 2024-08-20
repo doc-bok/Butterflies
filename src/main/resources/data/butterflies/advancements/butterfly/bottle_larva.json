@@ -139,16 +139,16 @@
   "parent": "butterflies:butterfly/find_larva",
   "requirements": [
     [
-      "clothes",
-      "luna",
-      "domestic_silk",
-      "peppered",
-      "indianmeal",
-      "spongy",
       "atlas",
       "carpet",
+      "clothes",
       "codling",
-      "diamondback"
+      "diamondback",
+      "domestic_silk",
+      "indianmeal",
+      "luna",
+      "peppered",
+      "spongy"
     ]
   ]
 }

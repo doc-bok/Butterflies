@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "swallowtail",
+  "extraLandingBlocks": "none",
+  "habitat": "plains",
+  "index": 35,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "short",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "azure_bluet",
+  "rarity": "common",
+  "size": "huge",
+  "speed": "moderate",
+  "type": "butterfly"
+}

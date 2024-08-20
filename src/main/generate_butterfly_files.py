@@ -3,77 +3,6 @@ import os
 import pathlib
 import shutil
 
-# The list of butterfly species included in the mod.
-# NOTE: Avoid using underscores in these names.
-BUTTERFLIES = [
-    'admiral',
-    'buckeye',
-    'cabbage',
-    'chalkhill',
-    'clipper',
-    'clipperwhite',
-    'clipperlightgray',
-    'clippergray',
-    'clipperblack',
-    'clipperbrown',
-    'clipperred',
-    'clipperorange',
-    'clipperyellow',
-    'clipperlime',
-    'clippergreen',
-    'clippercyan',
-    'clipperblue',
-    'clipperpurple',
-    'clippermagenta',
-    'clipperpink',
-    'common',
-    'emperor',
-    'forester',
-    'glasswing',
-    'hairstreak',
-    'heath',
-    'longwing',
-    'monarch',
-    'morpho',
-    'rainbow',
-    'swallowtail',
-    'peacock',
-    'commongrassyellow',
-    'commander',
-    'commonbirdwing',
-    'bluemoon'
-]
-
-MALE_BUTTERFLIES = [
-    'bluemoonmale'
-]
-
-# The list of moth species included in the mod.
-# NOTE: Avoid using underscores in these names.
-MOTHS = [
-    'clothes',
-    'luna',
-    'domestic_silk',
-    'peppered',
-    'indianmeal',
-    'spongy',
-    'atlas',
-    'carpet',
-    'codling',
-    'diamondback'
-]
-
-MALE_MOTHS = [
-    'spongymale'
-]
-
-# The list of special butterflies included in the mod.
-# NOTE: Avoid using underscores in these names.
-SPECIAL = [
-    'ice',
-    'lava'
-]
-
 # List of files to generate json files for.
 FLOWERS = [
     'allium',
@@ -94,7 +23,7 @@ FLOWERS = [
 # File locations
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
 BIOME_MODIFIERS = "resources/data/butterflies/forge/biome_modifier/"
-BUTTERFLY_DATA = "resources/data/butterflies/butterflies/"
+BUTTERFLY_DATA = "resources/data/butterflies/butterfly_data/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
@@ -105,9 +34,25 @@ MALE_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancem
 BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/both/"
 BIOME_MODIFIER_TEMPLATES = "resources/data/butterflies/templates/biome_modifiers/"
 
+BUTTERFLIES_FOLDER = "butterflies/"
+MALE_BUTTERFLIES_FOLDER = "butterflies/male/"
+MOTHS_FOLDER = "moths/"
+MALE_MOTHS_FOLDER = "moths/male/"
+SPECIAL_FOLDER = "special/"
+
 
 # Initial index
 BUTTERFLY_INDEX = 0
+
+def generate_butterfly_list(folder):
+    print(f"Generating species list for folder [{BUTTERFLY_DATA + folder}]")
+    result = []
+    for (path, _, filenames) in os.walk(BUTTERFLY_DATA + folder):
+        result = [f.replace(".json", "") for f in filenames if f.endswith(".json")]
+        break
+
+    print(f"Result: {repr(result)}")
+    return result
 
 
 # Generates data files from the input array based on the first entry in the#
@@ -122,8 +67,9 @@ def generate_data_files(entries):
         # We only want json
         filenames = [f for f in filenames if f.endswith(".json") and entries[0] in f]
 
-        for name in filenames:
-            files.append(pathlib.Path(path, name))
+        if "loot_tables" not in path:
+            for name in filenames:
+                files.append(pathlib.Path(path, name))
 
     # Loop Start
     for entry in entries:
@@ -187,25 +133,10 @@ class FrogFood(object):
 
 
 # Generate list of entities to add to frog food.
-def generate_frog_food():
+def generate_frog_food(species):
     print("Generating frog food...")
 
-    values = []
-    for i in BUTTERFLIES:
-        values.append("butterflies:" + i)
-
-    for i in MALE_BUTTERFLIES:
-        values.append("butterflies:" + i)
-
-    for i in MOTHS:
-        values.append("butterflies:" + i)
-
-    for i in MALE_MOTHS:
-        values.append("butterflies:" + i)
-
-    for i in SPECIAL:
-        values.append("butterflies:" + i)
-
+    values = ["butterflies:" + i for i in species]
     frog_food = FrogFood(values)
 
     with open(FROG_FOOD, 'w') as file:
@@ -220,13 +151,13 @@ def try_add_localisation_string(json_data, key, value):
 
 
 # Generates localisation strings if they don't already exist.
-def generate_localisation_strings():
+def generate_localisation_strings(all_butterflies, all_moths):
     print("Generating localisation strings...")
 
     with open(LOCALISATION, 'r', encoding="utf8") as input_file:
         json_data = json.load(input_file)
 
-    for i in BUTTERFLIES + MALE_BUTTERFLIES + SPECIAL:
+    for i in all_butterflies:
         name = i.replace('_', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
@@ -236,7 +167,7 @@ def generate_localisation_strings():
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Butterfly Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Caterpillar")
 
-    for i in MOTHS + MALE_MOTHS:
+    for i in all_moths:
         name = i.replace('_', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
@@ -244,7 +175,7 @@ def generate_localisation_strings():
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
 
-    for i in BUTTERFLIES + MALE_BUTTERFLIES + MOTHS + MALE_MOTHS + SPECIAL:
+    for i in all_butterflies + all_moths:
         try_add_localisation_string(json_data, "gui.butterflies.fact." + i, "")
 
     with open(LOCALISATION, 'w', encoding="utf8") as file:
@@ -304,7 +235,7 @@ def generate_advancements(entities, templates):
 # then used to create all the entities and items related to each butterfly,
 # saving a ton of new code needing to be written every time we add a new
 # butterfly or moth.
-def generate_code():
+def generate_code(all):
     print("Generating code...")
 
     with open(CODE_GENERATION, 'w', encoding="utf8") as output_file:
@@ -317,24 +248,8 @@ public class ButterflySpeciesList {
     public static final String[] SPECIES = {
 """)
 
-        for butterfly in BUTTERFLIES:
+        for butterfly in all:
             output_file.write("""            \"""" + butterfly + """\",
-""")
-
-        for butterfly in MALE_BUTTERFLIES:
-            output_file.write("""            \"""" + butterfly + """\",
-""")
-
-        for moth in MOTHS:
-            output_file.write("""            \"""" + moth + """\",
-""")
-
-        for moth in MALE_MOTHS:
-            output_file.write("""            \"""" + moth + """\",
-""")
-
-        for special in SPECIAL:
-            output_file.write("""            \"""" + special + """\",
 """)
 
         output_file.write("""    };
@@ -370,11 +285,8 @@ def generate_textures(entries, base):
                     shutil.copy(file, new_file)
 
 
-# Generate biome modifiers based on rarity and habitat
-def generate_biome_modifiers():
-    print("Generating biome modifiers...")
-
-    # Overwrite the biome modifiers with empty templates
+# Reset the biome modifiers ready for generation.
+def reset_biome_modifiers():
     for (_, _, files) in os.walk(BIOME_MODIFIER_TEMPLATES):
         for file_ in files:
             src_file = os.path.join(BIOME_MODIFIER_TEMPLATES, file_)
@@ -386,18 +298,21 @@ def generate_biome_modifiers():
                 os.remove(dst_file)
             shutil.copy(src_file, BIOME_MODIFIERS)
 
-    # Iterate over butterflies
-    for i in BUTTERFLIES + MOTHS + SPECIAL:
-        addSpawns(i, False)
 
-    for i in MALE_BUTTERFLIES + MALE_MOTHS:
-        addSpawns(i, True)
+# Generate biome modifiers based on rarity and habitat
+def generate_biome_modifiers(list, folder, is_male):
+    print("Generating biome modifiers...")
+
+    # Iterate over butterflies
+    for i in list:
+        addSpawns(folder, i, is_male)
 
 
 # Add a group of spawns for a single butterfly.
-def addSpawns(species, is_male):
+def addSpawns(folder, species, is_male):
+
     # Open Butterfly data
-    with open(BUTTERFLY_DATA + species + ".json", 'r', encoding="utf8") as input_file:
+    with open(BUTTERFLY_DATA + folder + species + ".json", 'r', encoding="utf8") as input_file:
         json_data = json.load(input_file)
 
     rarity = json_data["rarity"]
@@ -505,19 +420,44 @@ def addSingleSpawn(tag, species, weight, maximum, is_male):
 
 # Python's main entry point
 if __name__ == "__main__":
-    generate_data_files(BUTTERFLIES)
-    generate_data_files(MALE_BUTTERFLIES)
-    generate_data_files(MOTHS)
-    generate_data_files(MALE_MOTHS)
-    generate_data_files(SPECIAL)
+    # Get the species lists
+    butterflies = generate_butterfly_list(BUTTERFLIES_FOLDER)
+    male_butterflies = generate_butterfly_list(MALE_BUTTERFLIES_FOLDER)
+    moths = generate_butterfly_list(MOTHS_FOLDER)
+    male_moths = generate_butterfly_list(MALE_MOTHS_FOLDER)
+    special = generate_butterfly_list(SPECIAL_FOLDER)
+
+    all = butterflies + male_butterflies + moths + male_moths + special
+    all_butterflies = butterflies + male_butterflies
+    all_moths = moths + male_moths
+
+    # Generate the data files
+    generate_data_files(butterflies)
+    generate_data_files(male_butterflies)
+    generate_data_files(moths)
+    generate_data_files(male_moths)
+    generate_data_files(special)
+
     #generate_textures(BUTTERFLIES, "clipper") # Change this to use a different base for textures
     # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
-    generate_frog_food()
-    generate_localisation_strings()
-    generate_advancements(BUTTERFLIES, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(BUTTERFLIES + MALE_BUTTERFLIES, MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(MOTHS, MOTH_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(MOTHS + MALE_MOTHS, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(BUTTERFLIES + MOTHS, BOTH_ACHIEVEMENT_TEMPLATES)
-    generate_code()
-    generate_biome_modifiers()
+
+    generate_frog_food(all)
+    generate_localisation_strings(all_butterflies + special, all_moths)
+
+    # Generate the advancements
+    generate_advancements(butterflies, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_butterflies, MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(moths, MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_moths, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(butterflies + moths, BOTH_ACHIEVEMENT_TEMPLATES)
+
+    generate_code(all)
+
+    # Generate biome modifiers.
+    reset_biome_modifiers()
+    generate_biome_modifiers(butterflies, BUTTERFLIES_FOLDER, False)
+    generate_biome_modifiers(male_butterflies, MALE_BUTTERFLIES_FOLDER, True)
+    generate_biome_modifiers(moths, MOTHS_FOLDER, False)
+    generate_biome_modifiers(male_moths, MALE_MOTHS_FOLDER, True)
+    generate_biome_modifiers(special, SPECIAL_FOLDER, False)
+#

@@ -28,6 +28,30 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:bluemoon",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:bluemoon_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:bluemoon_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:bluemoon_egg",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:chalkhill",
       "weight": 4
     },
@@ -47,6 +71,30 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:chalkhill_egg",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commander",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commander_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commander_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commander_egg",
       "weight": 4
     },
     {
@@ -72,6 +120,30 @@
       "minCount": 1,
       "type": "butterflies:common_egg",
       "weight": 4
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:commonbirdwing",
+      "weight": 1
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:commonbirdwing_caterpillar",
+      "weight": 1
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:commonbirdwing_chrysalis",
+      "weight": 1
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:commonbirdwing_egg",
+      "weight": 1
     },
     {
       "maxCount": 4,
@@ -146,6 +218,30 @@
       "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_egg",
+      "weight": 4
+    },
+    {
       "maxCount": 3,
       "minCount": 1,
       "type": "butterflies:rainbow",
@@ -172,97 +268,55 @@
     {
       "maxCount": 4,
       "minCount": 1,
-      "type": "butterflies:peacock",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_caterpillar",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_chrysalis",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_egg",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commander",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commander_caterpillar",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commander_chrysalis",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commander_egg",
+      "type": "butterflies:bluemoonmale",
       "weight": 4
     },
     {
       "maxCount": 2,
       "minCount": 1,
-      "type": "butterflies:commonbirdwing",
+      "type": "butterflies:atlas",
       "weight": 1
     },
     {
       "maxCount": 2,
       "minCount": 1,
-      "type": "butterflies:commonbirdwing_caterpillar",
+      "type": "butterflies:atlas_caterpillar",
       "weight": 1
     },
     {
       "maxCount": 2,
       "minCount": 1,
-      "type": "butterflies:commonbirdwing_chrysalis",
+      "type": "butterflies:atlas_chrysalis",
       "weight": 1
     },
     {
       "maxCount": 2,
       "minCount": 1,
-      "type": "butterflies:commonbirdwing_egg",
+      "type": "butterflies:atlas_egg",
       "weight": 1
     },
     {
       "maxCount": 4,
       "minCount": 1,
-      "type": "butterflies:bluemoon",
+      "type": "butterflies:codling",
       "weight": 4
     },
     {
       "maxCount": 4,
       "minCount": 1,
-      "type": "butterflies:bluemoon_caterpillar",
+      "type": "butterflies:codling_caterpillar",
       "weight": 4
     },
     {
       "maxCount": 4,
       "minCount": 1,
-      "type": "butterflies:bluemoon_chrysalis",
+      "type": "butterflies:codling_chrysalis",
       "weight": 4
     },
     {
       "maxCount": 4,
       "minCount": 1,
-      "type": "butterflies:bluemoon_egg",
+      "type": "butterflies:codling_egg",
       "weight": 4
     },
     {
@@ -335,60 +389,6 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:spongy_egg",
-      "weight": 4
-    },
-    {
-      "maxCount": 2,
-      "minCount": 1,
-      "type": "butterflies:atlas",
-      "weight": 1
-    },
-    {
-      "maxCount": 2,
-      "minCount": 1,
-      "type": "butterflies:atlas_caterpillar",
-      "weight": 1
-    },
-    {
-      "maxCount": 2,
-      "minCount": 1,
-      "type": "butterflies:atlas_chrysalis",
-      "weight": 1
-    },
-    {
-      "maxCount": 2,
-      "minCount": 1,
-      "type": "butterflies:atlas_egg",
-      "weight": 1
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:codling",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:codling_caterpillar",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:codling_chrysalis",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:codling_egg",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:bluemoonmale",
       "weight": 4
     },
     {
