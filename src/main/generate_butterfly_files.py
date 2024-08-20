@@ -379,8 +379,6 @@ def addSpawns(folder, species, is_male):
 def addSingleSpawn(tag, species, weight, maximum, is_male):
     target_file = BIOME_MODIFIERS + tag + "_butterflies.json"
 
-    print(target_file)
-
     with open(target_file, 'r', encoding="utf8") as input_file:
         json_data = json.load(input_file)
 
