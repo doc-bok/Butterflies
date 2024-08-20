@@ -1,12 +1,14 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -23,7 +25,8 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private final Block preferredFlower;
+    private final Block preferredFlowerBlock;
+    private final Item preferredFlowerItem;
 
     // The RNG.
     public final RandomSource random;
@@ -48,9 +51,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
-            this.preferredFlower = BuiltInRegistries.BLOCK.get(data.preferredFlower());
+            this.preferredFlowerBlock = BuiltInRegistries.BLOCK.get(data.preferredFlower());
+            this.preferredFlowerItem = BuiltInRegistries.ITEM.get(data.preferredFlower());
         } else {
-            this.preferredFlower = null;
+            this.preferredFlowerBlock = null;
+            this.preferredFlowerItem = null;
         }
 
         this.random = this.butterfly.getRandom();
@@ -109,13 +114,20 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             if (!attemptedToPollinate) {
                 attemptedToPollinate = true;
 
-                if (this.random.nextInt() % 5 == 0) {
-                    BlockPos spawnPos = findNearestFlowerSpot();
-                    if (spawnPos != null) {
-                        BlockState blockState = this.mob.level().getBlockState(this.blockPos);
-                        Block budBlock = getFlowerBud(blockState.getBlock());
-                        if (budBlock != null) {
-                            this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                if (butterfly.level().getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+                    if (feeder.getItem(0).is(preferredFlowerItem)) {
+                        butterfly.setNumEggs(1);
+                        feeder.removeItem(0, 1);
+                    }
+                } else {
+                    if (this.random.nextInt() % 5 == 0) {
+                        BlockPos spawnPos = findNearestFlowerSpot();
+                        if (spawnPos != null) {
+                            BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                            Block budBlock = getFlowerBud(blockState.getBlock());
+                            if (budBlock != null) {
+                                this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                            }
                         }
                     }
                 }
@@ -136,10 +148,18 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             return false;
         }
 
+        // Butterflies will look for feeders.
+        if (butterfly.getNumEggs() == 0 &&
+                levelReader.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+            if (feeder.getItem(0).is(preferredFlowerItem)) {
+                return true;
+            }
+        }
+
         BlockState blockState = levelReader.getBlockState(blockPos);
 
         // If this is the butterfly's preferred flower it is always valid.
-        if (blockState.is(this.preferredFlower)) {
+        if (blockState.is(this.preferredFlowerBlock)) {
             return true;
         }
 

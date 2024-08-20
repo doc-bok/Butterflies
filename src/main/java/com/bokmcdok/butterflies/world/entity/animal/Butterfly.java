@@ -445,12 +445,7 @@ public class Butterfly extends Animal {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
-            public boolean isStableDestination(@NotNull BlockPos blockPos) {
-                return this.level.getBlockState(blockPos).isAir() ||
-                       this.level.getBlockState(blockPos).is(BlockTags.FLOWERS);
-            }
-        };
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
 
         if (getData().speed() == ButterflyData.Speed.FAST) {
 
@@ -606,6 +601,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Set the number of eggs this butterfly can lay.
+     * @param numEggs The number of eggs remaining.
+     */
+    public void setNumEggs(int numEggs) {
+        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
+    }
+
+    /**
      * Hacky fix to stop butterflies teleporting.
      * TODO: We need a better fix than this.
      * @param x The x-position.
@@ -745,13 +748,5 @@ public class Butterfly extends Animal {
         }
 
         return this.data;
-    }
-
-    /**
-     * Set the number of eggs this butterfly can lay.
-     * @param numEggs The number of eggs remaining.
-     */
-    private void setNumEggs(int numEggs) {
-        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
     }
 }
