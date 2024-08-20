@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.event.level;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -66,7 +65,7 @@ public class LevelEventListener {
         } else {
             // Get the butterfly JSON files
             Map<ResourceLocation, Resource> resourceMap =
-                    resourceManager.listResources(ButterfliesMod.MOD_ID, (x) -> x.getPath().endsWith(".json"));
+                    resourceManager.listResources("butterfly_data", (x) -> x.getPath().endsWith(".json"));
 
             // Parse each one and generate the data.
             for (ResourceLocation location : resourceMap.keySet()) {

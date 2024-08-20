@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "buckeye",
+  "extraLandingBlocks": "fruit",
+  "habitat": "plains_and_savannahs",
+  "index": 2,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "blue_orchid",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
+}

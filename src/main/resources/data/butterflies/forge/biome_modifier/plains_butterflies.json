@@ -74,6 +74,30 @@
       "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commongrassyellow",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commongrassyellow_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commongrassyellow_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:commongrassyellow_egg",
+      "weight": 4
+    },
+    {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:forester",
@@ -170,6 +194,30 @@
       "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock_egg",
+      "weight": 4
+    },
+    {
       "maxCount": 3,
       "minCount": 1,
       "type": "butterflies:rainbow",
@@ -215,54 +263,6 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:swallowtail_egg",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_caterpillar",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_chrysalis",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:peacock_egg",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commongrassyellow",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commongrassyellow_caterpillar",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commongrassyellow_chrysalis",
-      "weight": 4
-    },
-    {
-      "maxCount": 4,
-      "minCount": 1,
-      "type": "butterflies:commongrassyellow_egg",
       "weight": 4
     },
     {

@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "carpet",
+  "extraLandingBlocks": "wool",
+  "habitat": "plains_and_wetlands",
+  "index": 38,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "cornflower",
+  "rarity": "common",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "moth"
+}

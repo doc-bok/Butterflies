@@ -466,6 +466,9 @@
       "admiral"
     ],
     [
+      "bluemoon"
+    ],
+    [
       "buckeye"
     ],
     [
@@ -478,52 +481,61 @@
       "clipper"
     ],
     [
-      "clipperwhite"
-    ],
-    [
-      "clipperlightgray"
-    ],
-    [
-      "clippergray"
-    ],
-    [
       "clipperblack"
-    ],
-    [
-      "clipperbrown"
-    ],
-    [
-      "clipperred"
-    ],
-    [
-      "clipperorange"
-    ],
-    [
-      "clipperyellow"
-    ],
-    [
-      "clipperlime"
-    ],
-    [
-      "clippergreen"
-    ],
-    [
-      "clippercyan"
     ],
     [
       "clipperblue"
     ],
     [
-      "clipperpurple"
+      "clipperbrown"
+    ],
+    [
+      "clippercyan"
+    ],
+    [
+      "clippergray"
+    ],
+    [
+      "clippergreen"
+    ],
+    [
+      "clipperlightgray"
+    ],
+    [
+      "clipperlime"
     ],
     [
       "clippermagenta"
     ],
     [
+      "clipperorange"
+    ],
+    [
       "clipperpink"
     ],
     [
+      "clipperpurple"
+    ],
+    [
+      "clipperred"
+    ],
+    [
+      "clipperwhite"
+    ],
+    [
+      "clipperyellow"
+    ],
+    [
+      "commander"
+    ],
+    [
       "common"
+    ],
+    [
+      "commonbirdwing"
+    ],
+    [
+      "commongrassyellow"
     ],
     [
       "emperor"
@@ -550,25 +562,13 @@
       "morpho"
     ],
     [
+      "peacock"
+    ],
+    [
       "rainbow"
     ],
     [
       "swallowtail"
-    ],
-    [
-      "peacock"
-    ],
-    [
-      "commongrassyellow"
-    ],
-    [
-      "commander"
-    ],
-    [
-      "commonbirdwing"
-    ],
-    [
-      "bluemoon"
     ],
     [
       "bluemoonmale"

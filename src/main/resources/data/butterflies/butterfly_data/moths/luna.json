@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "luna",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 44,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "oxeye_daisy",
+  "rarity": "uncommon",
+  "size": "small",
+  "speed": "moderate",
+  "type": "moth"
+}

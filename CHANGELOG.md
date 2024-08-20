@@ -1,6 +1,9 @@
 ## Changelog
 
-### 5.10.0 (2024-08-20)
+### 5.1.1 (2024-08-20)
+- Butterfly data is now the source of truth for data generation.
+
+### 5.1.0 (2024-08-20)
 - Added the butterfly feeder.
 
 ### 5.0.5 (2024-08-18)
