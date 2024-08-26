@@ -5,9 +5,10 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.event.ModEventListener;
 import com.bokmcdok.butterflies.event.entity.EntityEventListener;
 import com.bokmcdok.butterflies.event.entity.player.PlayerEventListener;
-import com.bokmcdok.butterflies.event.level.LevelEventListener;
+import com.bokmcdok.butterflies.event.server.ServerEventListener;
 import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
+import com.bokmcdok.butterflies.event.village.VillageEventListener;
 import com.bokmcdok.butterflies.registries.*;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -39,6 +40,8 @@ public class ButterfliesMod
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         MenuTypeRegistry menuTypeRegistry = new MenuTypeRegistry(modEventBus);
+        PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
+        VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
         // Initialise the registries. Do this here because (e.g.)
         // blockEntityTypeRegistry requires blockRegistry to be created and
@@ -49,6 +52,8 @@ public class ButterfliesMod
         itemRegistry.initialise(blockRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
+        poiTypesRegistry.initialise(blockRegistry);
+        villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Create the Mod event listeners
         new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
@@ -57,9 +62,10 @@ public class ButterfliesMod
 
         // Create the Forge event listeners.
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
-        new LevelEventListener(forgeEventBus);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
+        new ServerEventListener(forgeEventBus);
+        new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
 
         // Mod Config Settings
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);

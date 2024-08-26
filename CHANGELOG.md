@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.2.0 (2024-08-26)
+- Added the lepidopterist.
+
 ### 5.1.1 (2024-08-20)
 - Butterfly data is now the source of truth for data generation.
 

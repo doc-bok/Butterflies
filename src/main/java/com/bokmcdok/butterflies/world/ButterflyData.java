@@ -2,12 +2,11 @@ package com.bokmcdok.butterflies.world;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.lang.EnumExtensions;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
+import com.mojang.logging.LogUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,6 +14,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
@@ -322,31 +323,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Create new butterfly data.
-     * @param entry The butterfly data.
-     */
-    public static void addButterfly(ButterflyData entry) {
-        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
-        BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
-
-        //  Recount the butterflies
-        if (entry.type != ButterflyType.SPECIAL) {
-            int total = 0;
-            for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
-                if (i.type == entry.type) {
-                    ++total;
-                }
-            }
-
-            if (entry.type == ButterflyType.BUTTERFLY) {
-                NUM_BUTTERFLIES = total;
-            } else if (entry.type == ButterflyType.MOTH) {
-                NUM_MOTHS = total;
-            }
-        }
-    }
-
-    /**
      * Converts an Entity ID to an index.
      * @param entityId The entity ID to convert.
      * @return The index of said entity ID.
@@ -372,6 +348,31 @@ public record ButterflyData(int butterflyIndex,
         }
 
         return -1;
+    }
+
+    /**
+     * Create new butterfly data.
+     * @param entry The butterfly data.
+     */
+    public static void addButterfly(ButterflyData entry) {
+        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
+        BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
+
+        //  Recount the butterflies
+        if (entry.type != ButterflyType.SPECIAL) {
+            int total = 0;
+            for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
+                if (i.type == entry.type) {
+                    ++total;
+                }
+            }
+
+            if (entry.type == ButterflyType.BUTTERFLY) {
+                NUM_BUTTERFLIES = total;
+            } else if (entry.type == ButterflyType.MOTH) {
+                NUM_MOTHS = total;
+            }
+        }
     }
 
     /**
@@ -468,6 +469,30 @@ public record ButterflyData(int butterflyIndex,
      */
     public static int getNumMothSpecies() {
         return NUM_MOTHS;
+    }
+
+    /**
+     * Load the butterfly data.
+     * @param resourceManager The resource manager to use for loading.
+     */
+    public static void load(ResourceManager resourceManager) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
+
+        // Get the butterfly JSON files
+        Map<ResourceLocation, Resource> resourceMap =
+                resourceManager.listResources("butterfly_data", (x) -> x.getPath().endsWith(".json"));
+
+        // Parse each one and generate the data.
+        for (ResourceLocation location : resourceMap.keySet()) {
+            try {
+                Resource resource = resourceMap.get(location);
+                BufferedReader reader = resource.openAsReader();
+                ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
+                ButterflyData.addButterfly(butterflyData);
+            } catch (IOException e) {
+                LogUtils.getLogger().error("Failed to load butterfly data", e);
+            }
+        }
     }
 
     /**
