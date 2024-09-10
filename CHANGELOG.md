@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.3.1 (2024-09-10)
+- Fixed missing entities from NBT files.
+
 ### 5.3.0 (2024-09-10)
 - Added the Lepidopterist House.
 
