@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.2.2 (2024-09-10)
+- Added Hero of the Village rewards to the lepidopterist.
+
 ### 5.2.1 (2024-09-10)
 - Changed Lepidopterist job sound to planting flowers.
 
