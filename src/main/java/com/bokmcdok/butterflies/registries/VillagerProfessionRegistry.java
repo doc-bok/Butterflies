@@ -41,7 +41,7 @@ public class VillagerProfessionRegistry {
                         x -> x.get() == poiTypeRegistry.getLepidopterist().get(),
                         ImmutableSet.of(),
                         ImmutableSet.of(),
-                        SoundEvents.VILLAGER_WORK_CLERIC));
+                        SoundEvents.FLOWERING_AZALEA_PLACE));
     }
 
     /**
