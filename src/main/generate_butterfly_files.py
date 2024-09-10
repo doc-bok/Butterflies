@@ -359,7 +359,7 @@ def addSpawns(folder, species, is_male):
         addSingleSpawn("lush", species, weight, maximum, is_male)
         addSingleSpawn("plateau", species, weight, maximum, is_male)
 
-    if "savannas" in habitat:
+    if "savanna" in habitat:
         addSingleSpawn("savanna", species, weight, maximum, is_male)
 
     if "villages" in habitat:
