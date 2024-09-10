@@ -26,7 +26,7 @@ public class ServerEventListener {
      * Load butterfly mod-specific data when a level loads.
      * @param event The level load event.
      */
-    public void onServerAboutToStart(ServerAboutToStartEvent event) {
+    private void onServerAboutToStart(ServerAboutToStartEvent event) {
 
         // Get the resource manager.
         MinecraftServer server = event.getServer();

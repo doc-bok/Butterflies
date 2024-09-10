@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies;
 
 import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.event.ForgeEventListener;
 import com.bokmcdok.butterflies.event.ModEventListener;
 import com.bokmcdok.butterflies.event.entity.EntityEventListener;
 import com.bokmcdok.butterflies.event.entity.player.PlayerEventListener;
@@ -62,6 +63,7 @@ public class ButterfliesMod
 
         // Create the Forge event listeners.
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
+        new ForgeEventListener(forgeEventBus);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);

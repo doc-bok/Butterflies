@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.3.0 (2024-09-10)
+- Added the Lepidopterist House.
+
 ### 5.2.2 (2024-09-10)
 - Added Hero of the Village rewards to the lepidopterist.
 
