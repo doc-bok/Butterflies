@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.2.1 (2024-09-10)
+- Changed Lepidopterist job sound to planting flowers.
+
 ### 5.2.0 (2024-08-26)
 - Added the lepidopterist.
 
