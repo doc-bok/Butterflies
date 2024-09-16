@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.4.0 (2024-09-16)
+- Added wandering villager trades.
+
 ### 5.3.1 (2024-09-10)
 - Fixed missing entities from NBT files.
 
@@ -21,17 +24,20 @@
 ### 5.1.0 (2024-08-20)
 - Added the butterfly feeder.
 
-### 5.0.5 (2024-08-18)
+### 5.0.7 (2024-08-18)
 - More refactoring to remove static registry references.
 
-### 5.0.4 (2024-08-18)
+### 5.0.6 (2024-08-18)
 - Refactored code to rely less on static variables.
 
-### 5.0.3 (2024-08-18)
+### 5.0.5 (2024-08-18)
 - Fix plateau and plain biome modifiers being confused.
 
-### 5.0.2 (2024-08-18)
+### 5.0.4 (2024-08-18)
 - Biome modifiers can now be generated.
+- 
+### 5.0.3 (2024-09-16)
+- Increased Client Tracking Range for butterflies.
 
 ### 5.0.1 (2024-08-14)
 - Fixed incorrect syncing from client to server.
