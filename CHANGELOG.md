@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.2 (2024-09-16)
+- Fixed infested apples dropping for any broken block.
+
 ### 5.0.1 (2024-08-14)
 - Fixed incorrect syncing from client to server.
 
