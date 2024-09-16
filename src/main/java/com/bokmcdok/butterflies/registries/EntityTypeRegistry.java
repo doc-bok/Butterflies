@@ -184,6 +184,7 @@ public class EntityTypeRegistry {
             return this.deferredRegister.register(registryId,
                     () -> EntityType.Builder.of(this::createIceButterfly, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
+                            .clientTrackingRange(10)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
@@ -192,13 +193,15 @@ public class EntityTypeRegistry {
             return this.deferredRegister.register(registryId,
                     () -> EntityType.Builder.of(this::createLavaMoth, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
+                            .clientTrackingRange(10)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
         return this.deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createButterfly, MobCategory.CREATURE)
-                .sized(0.3f, 0.2f)
-                .build(Butterfly.getRegistryId(butterflyIndex)));
+                        .sized(0.3f, 0.2f)
+                        .clientTrackingRange(10)
+                        .build(Butterfly.getRegistryId(butterflyIndex)));
     }
 
     /**
