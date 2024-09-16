@@ -60,6 +60,7 @@ public class EntityTypeRegistry {
             return INSTANCE.register(registryId,
                     () -> EntityType.Builder.of(IceButterfly::new, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
+                            .clientTrackingRange(10)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
@@ -68,13 +69,15 @@ public class EntityTypeRegistry {
             return INSTANCE.register(registryId,
                     () -> EntityType.Builder.of(LavaMoth::new, MobCategory.CREATURE)
                             .sized(0.3f, 0.2f)
+                            .clientTrackingRange(10)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
         }
 
         return INSTANCE.register(registryId,
                 () -> EntityType.Builder.of(Butterfly::new, MobCategory.CREATURE)
-                .sized(0.3f, 0.2f)
-                .build(Butterfly.getRegistryId(butterflyIndex)));
+                        .sized(0.3f, 0.2f)
+                        .clientTrackingRange(10)
+                        .build(Butterfly.getRegistryId(butterflyIndex)));
     }
 
     public static final List<RegistryObject<EntityType<? extends Butterfly>>> BUTTERFLY_ENTITIES = new ArrayList<>() {

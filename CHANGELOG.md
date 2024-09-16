@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.0.3 (2024-09-16)
+- Increased Client Tracking Range for butterflies.
+
 ### 5.0.1 (2024-08-14)
 - Fixed incorrect syncing from client to server.
 
