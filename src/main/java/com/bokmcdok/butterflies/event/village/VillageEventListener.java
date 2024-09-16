@@ -9,11 +9,13 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Listens for events based around villagers.
@@ -33,6 +35,7 @@ public class VillageEventListener {
                                 VillagerProfessionRegistry villagerProfessionRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onVillagerTrades);
+        forgeEventBus.addListener(this::onWandererTrades);
 
         this.itemRegistry = itemRegistry;
         this.villagerProfessionRegistry = villagerProfessionRegistry;
@@ -104,6 +107,29 @@ public class VillageEventListener {
                             tradesLevel5.add(new SellingItemTrade(bottledButterflies.get(i).get(), 32, 1, 30));
                             break;
                     }
+                }
+            }
+        }
+    }
+
+    /**
+     * Used to add/modify trades to wandering traders.
+     * @param event The event information.
+     */
+    private void onWandererTrades(WandererTradesEvent event) {
+        List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
+
+        Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
+
+        rareTrades.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
+
+        List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();
+
+        for (ButterflyData butterfly : butterflies) {
+            if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
+                int i = butterfly.butterflyIndex();
+                if (Objects.requireNonNull(butterfly.rarity()) == ButterflyData.Rarity.RARE) {
+                    rareTrades.add(new SellingItemTrade(bottledButterflies.get(i).get(), 32, 1, 30));
                 }
             }
         }

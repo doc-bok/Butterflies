@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.4.0 (2024-09-16)
+- Added wandering villager trades.
+
 ### 5.3.1 (2024-09-10)
 - Fixed missing entities from NBT files.
 
