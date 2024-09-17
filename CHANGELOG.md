@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.4.1 (2024-09-17)
+- Reduced drop rate of infested apples.
+
 ### 5.4.0 (2024-09-16)
 - Added wandering villager trades.
 
