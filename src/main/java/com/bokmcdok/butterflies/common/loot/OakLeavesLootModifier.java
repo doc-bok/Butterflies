@@ -49,7 +49,7 @@ public class OakLeavesLootModifier extends LootModifier {
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         RandomSource random = context.getRandom();
 
-        if (random.nextInt(400) == 1) {
+        if (random.nextInt(4000) == 1) {
             ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());
             generatedLoot.add(stack);
         }
