@@ -121,6 +121,7 @@ public class VillageEventListener {
 
         Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
 
+        rareTrades.add(new SellingItemTrade(itemRegistry.getButterflyPotterySherd().get(), 28, 1, 30));
         rareTrades.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
 
         List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();

@@ -44,6 +44,7 @@ public class ItemRegistry {
     private List<RegistryObject<Item>> butterflyEggs;
     private RegistryObject<Item> butterflyFeeder;
     private List<RegistryObject<Item>> butterflyNets;
+    private RegistryObject<Item> butterflyPotterySherd;
     private List<RegistryObject<Item>> butterflyScrolls;
     private List<RegistryObject<Item>> butterflySpawnEggs;
     private List<RegistryObject<Item>> caterpillars;
@@ -100,7 +101,7 @@ public class ItemRegistry {
             }
         };
 
-        this.butterflyFeeder =deferredRegister.register("butterfly_feeder",
+        this.butterflyFeeder = deferredRegister.register("butterfly_feeder",
                         () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
 
         this.butterflyNets = new ArrayList<>() {
@@ -110,6 +111,9 @@ public class ItemRegistry {
                 }
             }
         };
+
+        this.butterflyPotterySherd = deferredRegister.register("butterfly_pottery_sherd",
+                () -> new Item(new Item.Properties()));
 
         this.butterflyScrolls = new ArrayList<>() {
             {
@@ -218,6 +222,14 @@ public class ItemRegistry {
      */
     public List<RegistryObject<Item>> getButterflyNets() {
         return butterflyNets;
+    }
+
+    /**
+     * Accessor for butterfly pottery sherd.
+     * @return The butterfly pottery sherd.
+     */
+    public RegistryObject<Item> getButterflyPotterySherd() {
+        return butterflyPotterySherd;
     }
 
     /**

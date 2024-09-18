@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A loot modifier to add treasure to some chests.
  */
-public class OakLeavesLootModifier extends BaseLootModifier {
+public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
     /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public OakLeavesLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public TrailRuinsRareLootModifier(ItemRegistry itemRegistry,
+                                      LootItemCondition[] conditionsIn)
     {
         super(itemRegistry, conditionsIn);
     }
@@ -34,8 +34,11 @@ public class OakLeavesLootModifier extends BaseLootModifier {
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
         RandomSource random = context.getRandom();
 
-        if (random.nextInt(4000) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());
+        // 1/13 chance to replace with new sherd.
+        if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {
+            generatedLoot.remove(0);
+
+            ItemStack stack = new ItemStack(itemRegistry.getButterflyPotterySherd().get());
             generatedLoot.add(stack);
         }
 
@@ -49,6 +52,6 @@ public class OakLeavesLootModifier extends BaseLootModifier {
      */
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+        return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
     }
 }
