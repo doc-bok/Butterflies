@@ -37,6 +37,7 @@ public class ButterfliesMod
         // Create the registries.
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
@@ -49,6 +50,7 @@ public class ButterfliesMod
         // vice-versa.
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
+        decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(blockRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
@@ -58,7 +60,7 @@ public class ButterfliesMod
 
         // Create the Mod event listeners
         new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
-        new LifecycleEventListener(modEventBus, itemRegistry,menuTypeRegistry);
+        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
         new ModEventListener(modEventBus, itemRegistry);
 
         // Create the Forge event listeners.

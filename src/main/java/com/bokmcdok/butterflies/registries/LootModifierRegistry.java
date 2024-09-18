@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.common.loot.ButterflyLootModifier;
 import com.bokmcdok.butterflies.common.loot.OakLeavesLootModifier;
+import com.bokmcdok.butterflies.common.loot.TrailRuinsRareLootModifier;
 import com.mojang.serialization.Codec;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -35,5 +36,6 @@ public class LootModifierRegistry {
     public void initialise(ItemRegistry itemRegistry) {
         deferredRegister.register("butterfly_loot", new ButterflyLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
         deferredRegister.register("oak_leaves_loot", new OakLeavesLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
+        deferredRegister.register("trail_ruins_rare_loot", new TrailRuinsRareLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
     }
 }

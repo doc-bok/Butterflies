@@ -37,6 +37,7 @@ public class ModEventListener {
             event.accept(itemRegistry.getButterflyFeeder());
         }
         else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(itemRegistry.getButterflyPotterySherd());
             event.accept(itemRegistry.getInfestedApple());
             event.accept(itemRegistry.getSilk());
         }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.5.0 (2024-09-18)
+- Added the Butterfly Pottery Sherd.
+
 ### 5.4.1 (2024-09-17)
 - Reduced drop rate of infested apples.
 
