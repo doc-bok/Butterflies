@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.5.1 (2024-09-25)
+- Wandering Traders now offer uncommon butterflies as generic trades, replacing 
+  the rare trades.
+
 ### 5.5.0 (2024-09-18)
 - Added the Butterfly Pottery Sherd.
 

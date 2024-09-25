@@ -51,7 +51,8 @@ public class LifecycleEventListener {
     }
 
     /**
-     * Common setup event where we register brewing recipes.
+     * Common setup event where we register brewing recipes and pottery sherd
+     * patterns.
      * @param event The event class.
      */
     private void commonSetup(FMLCommonSetupEvent event) {
