@@ -117,20 +117,17 @@ public class VillageEventListener {
      * @param event The event information.
      */
     private void onWandererTrades(WandererTradesEvent event) {
-        List<VillagerTrades.ItemListing> rareTrades = event.getRareTrades();
+        List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
 
         Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
-
-        rareTrades.add(new SellingItemTrade(itemRegistry.getButterflyPotterySherd().get(), 28, 1, 30));
-        rareTrades.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
 
         List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();
 
         for (ButterflyData butterfly : butterflies) {
             if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
                 int i = butterfly.butterflyIndex();
-                if (Objects.requireNonNull(butterfly.rarity()) == ButterflyData.Rarity.RARE) {
-                    rareTrades.add(new SellingItemTrade(bottledButterflies.get(i).get(), 32, 1, 30));
+                if (Objects.requireNonNull(butterfly.rarity()) == ButterflyData.Rarity.UNCOMMON) {
+                    genericTrades.add(new SellingItemTrade(bottledButterflies.get(i).get(), 20, 1, 30));
                 }
             }
         }

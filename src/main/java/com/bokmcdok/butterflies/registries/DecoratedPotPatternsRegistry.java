@@ -6,6 +6,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
+/**
+ * Registers pottery patterns.
+ */
 public class DecoratedPotPatternsRegistry {
 
     // An instance of a deferred registry we use to register items.
