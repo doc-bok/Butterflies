@@ -35,6 +35,7 @@ public class ButterfliesMod
         final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         // Create the registries.
+        BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
         DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
@@ -48,11 +49,12 @@ public class ButterfliesMod
         // Initialise the registries. Do this here because (e.g.)
         // blockEntityTypeRegistry requires blockRegistry to be created and
         // vice-versa.
+        bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
-        itemRegistry.initialise(blockRegistry, entityTypeRegistry);
+        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);

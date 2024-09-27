@@ -40,6 +40,7 @@ public class ModEventListener {
             event.accept(itemRegistry.getButterflyPotterySherd());
             event.accept(itemRegistry.getInfestedApple());
             event.accept(itemRegistry.getSilk());
+            event.accept(itemRegistry.getButterflyBannerPattern());
         }
 
         else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
