@@ -59,6 +59,7 @@ public class VillageEventListener {
 
             tradesLevel1.add(new SellingItemTrade(itemRegistry.getEmptyButterflyNet().get(), 5, 1, 1));
             tradesLevel3.add(new SellingItemTrade(itemRegistry.getSilk().get(), 32, 8, 10));
+            tradesLevel5.add(new SellingItemTrade(itemRegistry.getButterflyBannerPattern().get(), 8, 1, 30));
             tradesLevel5.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
 
             List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();

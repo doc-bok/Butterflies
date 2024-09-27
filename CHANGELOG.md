@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.6.0 (2024-09-27)
+- Added the Butterfly Banner Pattern.
+
 ### 5.5.1 (2024-09-25)
 - Wandering Traders now offer uncommon butterflies as generic trades, replacing 
   the rare trades.

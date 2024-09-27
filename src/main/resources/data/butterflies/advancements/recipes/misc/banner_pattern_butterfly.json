@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "butterflies:banner_pattern_butterfly"
+    ]
+  },
+  "criteria": {
+    "has_silk": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:silk"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "butterflies:banner_pattern_butterfly"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_silk",
+      "has_the_recipe"
+    ]
+  ]
+}

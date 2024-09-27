@@ -12,8 +12,10 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,6 +42,7 @@ public class ItemRegistry {
     private List<RegistryObject<Item>> bottledButterflies;
     private List<RegistryObject<Item>> bottledCaterpillars;
     private RegistryObject<Item> burntButterflyNet;
+    private RegistryObject<Item> butterflyBannerPattern;
     private RegistryObject<Item> butterflyBook;
     private List<RegistryObject<Item>> butterflyEggs;
     private RegistryObject<Item> butterflyFeeder;
@@ -68,7 +71,8 @@ public class ItemRegistry {
      * @param blockRegistry The block registry.
      * @param entityTypeRegistry The entity type registry.
      */
-    public void initialise(BlockRegistry blockRegistry,
+    public void initialise(BannerPatternRegistry bannerPatternRegistry,
+                           BlockRegistry blockRegistry,
                            EntityTypeRegistry entityTypeRegistry) {
 
         this.blockRegistry = blockRegistry;
@@ -91,6 +95,11 @@ public class ItemRegistry {
         };
 
         this.burntButterflyNet = deferredRegister.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
+
+        this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
+                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
+                (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+
         this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
 
         this.butterflyEggs = new ArrayList<>() {
@@ -170,11 +179,11 @@ public class ItemRegistry {
     }
 
     /**
-     * Accessor for burnt butterfly net.
+     * Accessor for butterfly banner pattern.
      * @return The registry object.
      */
-    public RegistryObject<Item> getBurntButterflyNet() {
-        return burntButterflyNet;
+    public RegistryObject<Item> getButterflyBannerPattern() {
+        return butterflyBannerPattern;
     }
 
     /**
@@ -183,6 +192,14 @@ public class ItemRegistry {
      */
     public RegistryObject<Item> getButterflyBook() {
         return butterflyBook;
+    }
+
+    /**
+     * Accessor for burnt butterfly net.
+     * @return The registry object.
+     */
+    public RegistryObject<Item> getBurntButterflyNet() {
+        return burntButterflyNet;
     }
 
     /**
