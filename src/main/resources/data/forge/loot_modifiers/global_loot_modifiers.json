@@ -2,6 +2,7 @@
   "replace": false,
   "entries": [
     "butterflies:butterfly_loot",
-    "butterflies:oak_leaves_loot"
+    "butterflies:oak_leaves_loot",
+    "butterflies:trail_ruins_rare_loot"
   ]
 }

@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,11 +24,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class BottledButterflyBlock extends Block {
-
-    //  The name this block is registered under.
-    public static String getRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
 
     private static final String NAME = "block.butterflies.bottled_butterfly";
 

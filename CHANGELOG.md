@@ -1,5 +1,54 @@
 ## Changelog
 
+### 5.6.0 (2024-09-27)
+- Added the Butterfly Banner Pattern.
+
+### 5.5.1 (2024-09-25)
+- Wandering Traders now offer uncommon butterflies as generic trades, replacing 
+  the rare trades.
+
+### 5.5.0 (2024-09-18)
+- Added the Butterfly Pottery Sherd.
+
+### 5.4.1 (2024-09-17)
+- Reduced drop rate of infested apples.
+
+### 5.4.0 (2024-09-16)
+- Added wandering villager trades.
+
+### 5.3.1 (2024-09-10)
+- Fixed missing entities from NBT files.
+
+### 5.3.0 (2024-09-10)
+- Added the Lepidopterist House.
+
+### 5.2.2 (2024-09-10)
+- Added Hero of the Village rewards to the lepidopterist.
+
+### 5.2.1 (2024-09-10)
+- Changed Lepidopterist job sound to planting flowers.
+
+### 5.2.0 (2024-08-26)
+- Added the lepidopterist.
+
+### 5.1.1 (2024-08-20)
+- Butterfly data is now the source of truth for data generation.
+
+### 5.1.0 (2024-08-20)
+- Added the butterfly feeder.
+
+### 5.0.7 (2024-08-18)
+- More refactoring to remove static registry references.
+
+### 5.0.6 (2024-08-18)
+- Refactored code to rely less on static variables.
+
+### 5.0.5 (2024-08-18)
+- Fix plateau and plain biome modifiers being confused.
+
+### 5.0.4 (2024-08-18)
+- Biome modifiers can now be generated.
+- 
 ### 5.0.3 (2024-09-16)
 - Increased Client Tracking Range for butterflies.
 

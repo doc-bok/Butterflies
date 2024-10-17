@@ -75,7 +75,7 @@ public abstract class DirectionalCreature extends Animal {
 
             // Check if the entity can spawn on this surface.
             if (level.hasChunkAt(surfacePosition)) {
-                ButterflyData data = ButterflyData.getEntry(new ResourceLocation(ButterfliesMod.MODID, components[2]));
+                ButterflyData data = ButterflyData.getEntry(new ResourceLocation(ButterfliesMod.MOD_ID, components[2]));
 
                 // Fall back to leaves if we don't have the data yet.
                 if (data == null) {
@@ -238,7 +238,7 @@ public abstract class DirectionalCreature extends Animal {
      * @param texture The entity's texture.
      */
     protected void setTexture(String texture) {
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, texture);
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, texture);
     }
 
     /**

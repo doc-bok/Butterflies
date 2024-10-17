@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "clipper",
+  "extraLandingBlocks": "none",
+  "habitat": "jungles",
+  "index": 5,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "long",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "poppy",
+  "rarity": "rare",
+  "size": "large",
+  "speed": "fast",
+  "type": "butterfly"
+}
