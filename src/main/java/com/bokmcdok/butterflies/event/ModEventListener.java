@@ -36,6 +36,26 @@ public class ModEventListener {
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(itemRegistry.getButterflyFeeder());
         }
+
+        else if (event.getTabKey() == CreativeModeTabs.COLORED_BLOCKS) {
+            event.accept(itemRegistry.getButterflyOrigamiBlack());
+            event.accept(itemRegistry.getButterflyOrigamiBlue());
+            event.accept(itemRegistry.getButterflyOrigamiBrown());
+            event.accept(itemRegistry.getButterflyOrigamiCyan());
+            event.accept(itemRegistry.getButterflyOrigamiGray());
+            event.accept(itemRegistry.getButterflyOrigamiGreen());
+            event.accept(itemRegistry.getButterflyOrigamiLightBlue());
+            event.accept(itemRegistry.getButterflyOrigamiLightGray());
+            event.accept(itemRegistry.getButterflyOrigamiLime());
+            event.accept(itemRegistry.getButterflyOrigamiMagenta());
+            event.accept(itemRegistry.getButterflyOrigamiOrange());
+            event.accept(itemRegistry.getButterflyOrigamiPink());
+            event.accept(itemRegistry.getButterflyOrigamiPurple());
+            event.accept(itemRegistry.getButterflyOrigamiRed());
+            event.accept(itemRegistry.getButterflyOrigamiWhite());
+            event.accept(itemRegistry.getButterflyOrigamiYellow());
+        }
+
         else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(itemRegistry.getButterflyPotterySherd());
             event.accept(itemRegistry.getInfestedApple());

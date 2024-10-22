@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.7.0 (2024-10-22)
+- Added Butterfly Origami.
+
 ### 5.6.0 (2024-09-27)
 - Added the Butterfly Banner Pattern.
 
