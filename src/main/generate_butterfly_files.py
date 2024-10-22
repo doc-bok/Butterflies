@@ -4,6 +4,25 @@ import pathlib
 import shutil
 
 # List of files to generate json files for.
+COLORS = [
+    'black',
+    'blue',
+    'brown',
+    'cyan',
+    'gray',
+    'green',
+    'light_blue',
+    'light_gray',
+    'lime',
+    'magenta',
+    'orange',
+    'pink',
+    'purple',
+    'red',
+    'white',
+    'yellow'
+]
+
 FLOWERS = [
     'allium',
     'azure_bluet',
@@ -439,7 +458,8 @@ if __name__ == "__main__":
     generate_data_files(special)
 
     #generate_textures(BUTTERFLIES, "clipper") # Change this to use a different base for textures
-    # generate_data_files(FLOWERS) # Disabled for now due to tulip problem
+    #generate_data_files(FLOWERS) # Disabled for now due to tulip problem
+    #generate_data_files(COLORS)
 
     generate_frog_food(all)
     generate_localisation_strings(all_butterflies + special, all_moths)
@@ -460,4 +480,3 @@ if __name__ == "__main__":
     generate_biome_modifiers(moths, MOTHS_FOLDER, False)
     generate_biome_modifiers(male_moths, MALE_MOTHS_FOLDER, True)
     generate_biome_modifiers(special, SPECIAL_FOLDER, False)
-#
