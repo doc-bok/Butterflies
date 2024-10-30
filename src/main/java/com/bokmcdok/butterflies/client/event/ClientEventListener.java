@@ -53,6 +53,7 @@ public class ClientEventListener {
         event.registerLayerDefinition(ChrysalisModel.LAYER_LOCATION, ChrysalisModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyEggModel.LAYER_LOCATION, ButterflyEggModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyScrollModel.LAYER_LOCATION, ButterflyScrollModel::createBodyLayer);
+        event.registerLayerDefinition(ButterflyGolemModel.LAYER_LOCATION, ButterflyGolemModel::createBodyLayer);
     }
 
     /**
@@ -83,6 +84,8 @@ public class ClientEventListener {
         for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
             event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
         }
+
+        event.registerEntityRenderer(entityTypeRegistry.getButterflyGolem().get(), ButterflyGolemRenderer::new);
 
         event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
     }

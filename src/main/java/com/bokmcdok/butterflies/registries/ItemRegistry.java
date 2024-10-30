@@ -50,6 +50,7 @@ public class ItemRegistry {
     private List<RegistryObject<Item>> butterflyNets;
     private RegistryObject<Item> butterflyPotterySherd;
     private List<RegistryObject<Item>> butterflyScrolls;
+    private RegistryObject<Item> butterflyGolemSpawnEgg;
     private List<RegistryObject<Item>> butterflySpawnEggs;
     private List<RegistryObject<Item>> caterpillars;
     private List<RegistryObject<Item>> caterpillarSpawnEggs;
@@ -167,6 +168,10 @@ public class ItemRegistry {
                 }
             }
         };
+
+        this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
+                        0x888800, 0x333333, new Item.Properties()));
 
         this.butterflySpawnEggs = new ArrayList<>() {
             {
@@ -427,6 +432,14 @@ public class ItemRegistry {
      */
     public List<RegistryObject<Item>> getButterflySpawnEggs() {
         return butterflySpawnEggs;
+    }
+
+    /**
+     * Accessor for butterfly golem spawn eggs.
+     * @return The registry object.
+     */
+    public RegistryObject<Item> getButterflyGolemSpawnEgg() {
+        return butterflyGolemSpawnEgg;
     }
 
     /**
