@@ -87,13 +87,13 @@ public class ButterflyOrigamiBlock extends Block {
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos pos,
                                @NotNull CollisionContext collisionContext) {
-        FrontAndTop direction = blockState.getValue(ORIENTATION);
+        Direction direction = blockState.getValue(ORIENTATION).front();
         return switch (direction) {
-            case NORTH_UP -> this.northAabb;
-            case SOUTH_UP -> this.southAabb;
-            case EAST_UP -> this.eastAabb;
-            case WEST_UP -> this.westAabb;
-            case DOWN_EAST, DOWN_NORTH, DOWN_SOUTH, DOWN_WEST -> this.downAabb;
+            case NORTH -> this.northAabb;
+            case SOUTH -> this.southAabb;
+            case EAST -> this.eastAabb;
+            case WEST -> this.westAabb;
+            case DOWN -> this.downAabb;
             default -> this.upAabb;
         };
     }
