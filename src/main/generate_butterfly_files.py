@@ -182,6 +182,7 @@ def generate_localisation_strings(all_butterflies, all_moths):
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Caterpillar")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Chrysalis")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_egg", name + " Butterfly Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i, name + " Butterfly")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Butterfly Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Caterpillar")
@@ -191,6 +192,7 @@ def generate_localisation_strings(all_butterflies, all_moths):
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")
+        try_add_localisation_string(json_data, "entity.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_egg", name + " Moth Egg")
         try_add_localisation_string(json_data, "item.butterflies." + i + "_caterpillar", name + " Larva")
 

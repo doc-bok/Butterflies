@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.7.1 (2024-10-22)
+- Added missing translation strings for egg entities.
+
 ### 5.7.0 (2024-10-22)
 - Added Butterfly Origami.
 
