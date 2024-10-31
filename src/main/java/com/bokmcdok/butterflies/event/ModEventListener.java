@@ -82,6 +82,8 @@ public class ModEventListener {
             for (RegistryObject<Item> i : itemRegistry.getCaterpillarSpawnEggs()) {
                 event.accept(i);
             }
+
+            event.accept(itemRegistry.getButterflyGolemSpawnEgg());
         }
 
         else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {

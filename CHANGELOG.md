@@ -1,5 +1,11 @@
 ## Changelog
 
+### 5.8.1 (2024-10-31)
+- Added loot table and spawn rules to Butterfly Golem.
+
+### 5.8.0 (2024-10-31)
+- Added the butterfly golem.
+
 ### 5.7.1 (2024-10-22)
 - Added missing translation strings for egg entities.
 

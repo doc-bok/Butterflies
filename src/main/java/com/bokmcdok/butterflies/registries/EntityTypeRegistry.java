@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -41,6 +42,9 @@ public class EntityTypeRegistry {
 
     // The egg entities (not spawn eggs!).
     private List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs;
+
+    // The butterfly golem
+    private RegistryObject<EntityType<IronGolem>> butterflyGolem;
 
     /**
      * Construction
@@ -95,6 +99,8 @@ public class EntityTypeRegistry {
                 }
             }
         };
+
+        this.butterflyGolem = registerButterflyGolem();
     }
 
     /**
@@ -135,6 +141,14 @@ public class EntityTypeRegistry {
      */
     public List<RegistryObject<EntityType<Chrysalis>>> getChrysalises() {
         return chrysalises;
+    }
+
+    /**
+     * Accessor for the butterfly golem.
+     * @return The registry entry.
+     */
+    public RegistryObject<EntityType<IronGolem>> getButterflyGolem() {
+        return butterflyGolem;
     }
 
     /**
@@ -236,7 +250,19 @@ public class EntityTypeRegistry {
     private RegistryObject<EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
         return this.deferredRegister.register(ButterflyEgg.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(ButterflyEgg::new, MobCategory.CREATURE)
-                .sized(0.1f, 0.1f)
-                .build(ButterflyEgg.getRegistryId(butterflyIndex)));
+                        .sized(0.1f, 0.1f)
+                        .build(ButterflyEgg.getRegistryId(butterflyIndex)));
+    }
+
+    /**
+     * Register a butterfly golem.
+     * @return The new registry object.
+     */
+    private RegistryObject<EntityType<IronGolem>> registerButterflyGolem() {
+        return this.deferredRegister.register("butterfly_golem",
+                () -> EntityType.Builder.of(IronGolem::new, MobCategory.MISC)
+                        .sized(1.4F, 2.7F)
+                        .clientTrackingRange(10)
+                        .build("butterfly_golem"));
     }
 }
