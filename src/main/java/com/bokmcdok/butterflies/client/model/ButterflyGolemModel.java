@@ -101,7 +101,7 @@ public class ButterflyGolemModel extends IronGolemModel<IronGolem> {
                           float headPitch) {
         super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-        this.rightWing.yRot = 0.5F - 1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount;
-        this.leftWing.yRot = -0.5f + 1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount;
+        this.rightWing.yRot = (Mth.sin(ageInTicks * 0.1F) * 0.1F) + 0.5F - (1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount);
+        this.leftWing.yRot = (Mth.sin(ageInTicks * 0.1F) * -0.1F) - 0.5f + (1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount);
     }
 }
