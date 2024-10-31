@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.8.2 (2024-10-31)
+- Added idle animations to the Butterfly Golem.
+
 ### 5.8.1 (2024-10-31)
 - Added loot table and spawn rules to Butterfly Golem.
 
