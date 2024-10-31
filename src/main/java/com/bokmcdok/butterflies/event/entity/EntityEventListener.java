@@ -2,10 +2,7 @@ package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.*;
@@ -37,7 +34,7 @@ public class EntityEventListener {
                                IEventBus modEventBus,
                                EntityTypeRegistry entityTypeRegistry) {
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onJoinWorld);
+        forgeEventBus.addListener(this::onEntityJoinLevel);
 
         modEventBus.register(this);
         modEventBus.addListener(this::onEntityAttributeCreation);
@@ -86,7 +83,7 @@ public class EntityEventListener {
      * On joining the world modify entities' goals so butterflies have predators.
      * @param event Information for the event.
      */
-    private void onJoinWorld(EntityJoinLevelEvent event) {
+    private void onEntityJoinLevel(EntityJoinLevelEvent event) {
 
         //  Cat
         if (event.getEntity() instanceof Cat cat) {
