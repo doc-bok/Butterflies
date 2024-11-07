@@ -497,6 +497,7 @@ public class BlockRegistry {
                 .sound(SoundType.GLASS)
                 .strength(0.3F);
 
+        // Light Butterflies glow when they are in a bottle.
         if (registryId.equals("bottled_butterfly_light")) {
             properties.lightLevel((blockState) -> 15);
         }

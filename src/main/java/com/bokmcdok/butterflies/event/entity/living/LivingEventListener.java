@@ -8,6 +8,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
+/**
+ * Listens for events involving living entities.
+ */
 public class LivingEventListener {
 
     /**
