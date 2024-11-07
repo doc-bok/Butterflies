@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.9.0 (2024-11-07)
+- Added the Féileacáin.
+
 ### 5.8.2 (2024-10-31)
 - Added idle animations to the Butterfly Golem.
 

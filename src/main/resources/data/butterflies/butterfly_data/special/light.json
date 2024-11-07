@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "none",
+  "entityId": "light",
+  "extraLandingBlocks": "none",
+  "habitat": "none",
+  "index": 50,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "none",
+  "preferredFlower": "none",
+  "rarity": "rare",
+  "size": "small",
+  "speed": "fast",
+  "type": "special"
+}

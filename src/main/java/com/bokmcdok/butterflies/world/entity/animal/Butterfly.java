@@ -671,10 +671,12 @@ public class Butterfly extends Animal {
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.enableLifespan.get()) {
-            if (!this.isPersistenceRequired() &&
-                    this.getAge() >= 0 &&
-                    this.random.nextInt(0, 15) == 0) {
-                this.kill();
+            if (getData().getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
+                if (!this.isPersistenceRequired() &&
+                        this.getAge() >= 0 &&
+                        this.random.nextInt(0, 15) == 0) {
+                    this.kill();
+                }
             }
         }
     }

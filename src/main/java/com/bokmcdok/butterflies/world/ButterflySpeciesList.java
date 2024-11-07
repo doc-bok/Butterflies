@@ -55,5 +55,6 @@ public class ButterflySpeciesList {
             "spongymale",
             "ice",
             "lava",
+            "light",
     };
 }

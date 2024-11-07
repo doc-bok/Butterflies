@@ -99,19 +99,19 @@ public class EntityEventListener {
 
         //  Ocelots and Parrots
         if (event.getEntity() instanceof Ocelot ||
-            event.getEntity() instanceof Parrot) {
+                event.getEntity() instanceof Parrot) {
 
-            Mob mob = (Mob)event.getEntity();
+            Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(
                     mob, Butterfly.class, false));
         }
 
         //  Spiders, Cave Spiders, Witches, and Zombies of all kinds
         if (event.getEntity() instanceof Spider ||
-            event.getEntity() instanceof Witch ||
-            event.getEntity() instanceof Zombie) {
+                event.getEntity() instanceof Witch ||
+                event.getEntity() instanceof Zombie) {
 
-            Mob mob = (Mob)event.getEntity();
+            Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(
                     mob, Butterfly.class, false));
         }
@@ -127,7 +127,7 @@ public class EntityEventListener {
      * Register entity spawn placements here
      * @param event The event information
      */
-    public void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
+    private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
         for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,

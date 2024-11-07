@@ -41,15 +41,8 @@ public class BottledButterflyBlock extends Block {
     /**
      * Create a butterfly block
      */
-    public BottledButterflyBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.GLASS)
-                .strength(0.3F));
+    public BottledButterflyBlock(Properties properties) {
+        super(properties);
     }
 
     /**

@@ -466,12 +466,14 @@ public class ButterflyBookScreen extends Screen {
                         case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
                         case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
                         case NETHER -> component.append(Component.translatable("gui.butterflies.habitat.nether"));
+                        case NONE -> component.append(Component.translatable("gui.butterflies.habitat.none"));
                         case FORESTS_AND_WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.forestsandwetlands"));
                         case PLAINS_AND_SAVANNAS -> component.append(Component.translatable("gui.butterflies.habitat.plainsandsavannas"));
                         case PLAINS_AND_WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.plainsandwetlands"));
                         case HILLS_AND_PLATEAUS -> component.append(Component.translatable("gui.butterflies.habitat.hillsandplateaus"));
                         case FORESTS_PLAINS_WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.forestsplainswetlands"));
                         case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
+                        case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
                         default -> {}
                     }
 
