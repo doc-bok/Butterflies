@@ -8,6 +8,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -115,8 +117,7 @@ public class BlockRegistry {
         this.bottledButterflyBlocks = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
-                    RegistryObject<Block> newBlock =
-                            deferredRegister.register(getBottledButterflyRegistryId(i), BottledButterflyBlock::new);
+                    RegistryObject<Block> newBlock = registerBottledButterfly(i);
                     add(newBlock);
                 }
             }
@@ -478,6 +479,30 @@ public class BlockRegistry {
      */
     private String getBottledCaterpillarRegistryId(int butterflyIndex) {
         return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+    }
+
+    /**
+     * Register a bottled butterfly.
+     * @param butterflyIndex The butterfly index to register for.
+     * @return The registry object.
+     */
+    private RegistryObject<Block> registerBottledButterfly(int butterflyIndex) {
+        String registryId = getBottledButterflyRegistryId(butterflyIndex);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F);
+
+        // Light Butterflies glow when they are in a bottle.
+        if (registryId.equals("bottled_butterfly_light")) {
+            properties.lightLevel((blockState) -> 15);
+        }
+
+        return deferredRegister.register(registryId, () -> new BottledButterflyBlock(properties));
     }
 
     /**

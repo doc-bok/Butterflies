@@ -89,6 +89,7 @@ public record ButterflyData(int butterflyIndex,
     // only affects the description. The biome modifiers will determine where
     // they will actually spawn.
     public enum Habitat {
+        NONE,
         FORESTS,
         FORESTS_AND_PLAINS,
         ICE,
@@ -100,6 +101,7 @@ public record ButterflyData(int butterflyIndex,
         PLAINS_AND_WETLANDS,
         HILLS_AND_PLATEAUS,
         FORESTS_PLAINS_WETLANDS,
+        VILLAGES,
         WETLANDS
     }
 
@@ -222,7 +224,7 @@ public record ButterflyData(int butterflyIndex,
         this.eggLifespan = eggLifespan;
         this.caterpillarLifespan = caterpillarLifespan * 2;
         this.chrysalisLifespan = chrysalisLifespan;
-        this.butterflyLifespan = butterflyLifespan * 2;
+        this.butterflyLifespan = butterflyLifespan == Integer.MAX_VALUE ? Integer.MAX_VALUE : butterflyLifespan * 2;
 
         this.preferredFlower = preferredFlower;
         

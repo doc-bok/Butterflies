@@ -5,6 +5,9 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Renders a butterfly that glows.
+ */
 public class GlowButterflyRenderer extends ButterflyRenderer {
 
     /**
