@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.9.1 (2024-11-07)
+- Improved Féileacáin texture.
+- 
 ### 5.9.0 (2024-11-07)
 - Added the Féileacáin.
 
