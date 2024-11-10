@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.10.1 (2024-11-10)
+- The grave now shows both lover's names and will spawn Féileacáin.
+
 ### 5.10.0 (2024-11-10)
 - Added Liang Shanbo's grave.
 
