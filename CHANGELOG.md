@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.10.0 (2024-11-10)
+- Added Liang Shanbo's grave.
+
 ### 5.9.1 (2024-11-07)
 - Improved Féileacáin texture.
 - 
