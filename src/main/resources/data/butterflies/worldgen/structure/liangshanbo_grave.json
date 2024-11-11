@@ -12,18 +12,6 @@
   "project_start_to_heightmap": "OCEAN_FLOOR_WG",
   "use_expansion_hack": false,
   "liquid_settings": "apply_waterlogging",
-  "spawn_overrides": {
-    "creature": {
-      "bounding_box": "full",
-      "spawns": [
-        {
-          "type": "butterflies:light",
-          "weight": 1,
-          "minCount": 2,
-          "maxCount": 2
-        }
-      ]
-    }
-  },
+  "spawn_overrides": {},
   "pool_aliases": []
 }
