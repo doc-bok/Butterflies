@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.10.2 (2024-11-10)
+- The grave now has two bottled Féileacáin.
+
 ### 5.10.1 (2024-11-10)
 - The grave now shows both lover's names and will spawn Féileacáin.
 
