@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
+import com.sun.jdi.InvalidTypeException;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -319,8 +320,27 @@ public record ButterflyData(int butterflyIndex,
                                                           Class<T> enumeration,
                                                           String key,
                                                           T fallback) {
-            String value = object.get(key).getAsString();
-            return EnumExtensions.searchEnum(enumeration, value, fallback);
+            JsonElement element = object.get(key);
+            if (element == null) {
+                LogUtils.getLogger().error("Element [{}] missing from [{}]",
+                        key,
+                        object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+
+                return fallback;
+            }
+
+            String value = element.getAsString();
+            try {
+                return EnumExtensions.searchEnum(enumeration, value);
+            } catch (InvalidTypeException e) {
+                LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
+                        object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown",
+                        key,
+                        enumeration,
+                        value);
+
+                return fallback;
+            }
         }
     }
 
