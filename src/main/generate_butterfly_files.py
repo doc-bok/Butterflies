@@ -178,6 +178,7 @@ def generate_localisation_strings(all_butterflies, all_moths):
 
     for i in all_butterflies:
         name = i.replace('_', ' ')
+        name = i.replace('-', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i, name + " Butterfly")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Caterpillar")
@@ -189,6 +190,7 @@ def generate_localisation_strings(all_butterflies, all_moths):
 
     for i in all_moths:
         name = i.replace('_', ' ')
+        name = i.replace('-', ' ')
         name = name.title()
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_caterpillar", name + " Larva")
         try_add_localisation_string(json_data, "entity.butterflies." + i + "_chrysalis", name + " Cocoon")

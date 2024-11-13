@@ -408,6 +408,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_green-skirt-baron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hairstreak": {
       "conditions": {
         "items": [
@@ -599,6 +611,7 @@
       "emperor",
       "forester",
       "glasswing",
+      "green-skirt-baron",
       "hairstreak",
       "heath",
       "longwing",

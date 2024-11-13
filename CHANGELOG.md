@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.11.0 (2024-11-13)
+- Added the Green Skirt Baron.
+- Improved error handling for invalid data
+
 ### 5.10.2 (2024-11-10)
 - The grave now has two bottled Féileacáin.
 

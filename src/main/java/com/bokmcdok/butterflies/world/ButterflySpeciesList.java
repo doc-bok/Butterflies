@@ -33,6 +33,7 @@ public class ButterflySpeciesList {
             "emperor",
             "forester",
             "glasswing",
+            "green-skirt-baron",
             "hairstreak",
             "heath",
             "longwing",

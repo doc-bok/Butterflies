@@ -3,9 +3,9 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hairstreak",
-  "extraLandingBlocks": "wood",
+  "extraLandingBlocks": "logs",
   "habitat": "forests_plains_wetlands",
-  "index": 28,
+  "index": 29,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "short",

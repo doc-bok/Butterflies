@@ -336,6 +336,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:green-skirt-baron_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hairstreak": {
       "conditions": {
         "items": [
@@ -533,6 +545,9 @@
     ],
     [
       "glasswing"
+    ],
+    [
+      "green-skirt-baron"
     ],
     [
       "hairstreak"
