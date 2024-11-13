@@ -3,7 +3,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "emperor",
-  "extraLandingBlocks": "wood",
+  "extraLandingBlocks": "logs",
   "habitat": "forests",
   "index": 25,
   "lifespan": {

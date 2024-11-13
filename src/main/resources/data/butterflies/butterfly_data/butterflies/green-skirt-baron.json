@@ -1,0 +1,21 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "green-skirt-baron",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 28,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "azure_bluet",
+  "rarity": "uncommon",
+  "size": "medium",
+  "speed": "moderate",
+  "type": "butterfly"
+}
