@@ -141,6 +141,7 @@ public record ButterflyData(int butterflyIndex,
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
+        TINY,
         SMALL,
         MEDIUM,
         LARGE,
@@ -320,6 +321,7 @@ public record ButterflyData(int butterflyIndex,
                                                           Class<T> enumeration,
                                                           String key,
                                                           T fallback) {
+            // Check the key exists in the JSON object.
             JsonElement element = object.get(key);
             if (element == null) {
                 LogUtils.getLogger().error("Element [{}] missing from [{}]",
@@ -333,6 +335,8 @@ public record ButterflyData(int butterflyIndex,
             try {
                 return EnumExtensions.searchEnum(enumeration, value);
             } catch (InvalidTypeException e) {
+
+                // The value specified is invalid, so make sure it's written to the log.
                 LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
                         object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown",
                         key,
@@ -618,6 +622,9 @@ public record ButterflyData(int butterflyIndex,
      */
     public float getSizeMultiplier() {
         switch (this.size) {
+            case TINY -> {
+                return 0.5f;
+            }
             case SMALL -> {
                 return 0.7f;
             }

@@ -4,6 +4,30 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:case-bearing-clothes",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:case-bearing-clothes_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:case-bearing-clothes_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:case-bearing-clothes_egg",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:clothes",
       "weight": 4
     },

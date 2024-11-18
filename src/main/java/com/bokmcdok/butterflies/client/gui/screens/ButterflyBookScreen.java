@@ -429,6 +429,7 @@ public class ButterflyBookScreen extends Screen {
                     component.append("\n");
                     component.append(Component.translatable("gui.butterflies.size"));
                     switch (entry.size()) {
+                        case TINY -> component.append(Component.translatable("gui.butterflies.size.tiny"));
                         case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
                         case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
                         case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));

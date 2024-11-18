@@ -346,6 +346,30 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:oak-silk",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:oak-silk_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:oak-silk_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:oak-silk_egg",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:peppered",
       "weight": 4
     },
