@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.12.0 (2024-11-18)
+- Added the Case Bearing Moth and the Oak Silk Moth.
+
 ### 5.11.0 (2024-11-13)
 - Added the Green Skirt Baron.
 - Improved error handling for invalid data

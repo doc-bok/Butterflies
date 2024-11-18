@@ -72,6 +72,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_case-bearing-clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "chalkhill": {
       "conditions": {
         "items": [
@@ -504,6 +516,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_oak-silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peacock": {
       "conditions": {
         "items": [
@@ -622,12 +646,14 @@
       "swallowtail",
       "atlas",
       "carpet",
+      "case-bearing-clothes",
       "clothes",
       "codling",
       "diamondback",
       "domestic_silk",
       "indianmeal",
       "luna",
+      "oak-silk",
       "peppered",
       "spongy"
     ]

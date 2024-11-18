@@ -24,6 +24,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_case-bearing-clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clothes": {
       "conditions": {
         "items": [
@@ -96,6 +108,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_oak-silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peppered": {
       "conditions": {
         "items": [
@@ -157,6 +181,9 @@
       "carpet"
     ],
     [
+      "case-bearing-clothes"
+    ],
+    [
       "clothes"
     ],
     [
@@ -173,6 +200,9 @@
     ],
     [
       "luna"
+    ],
+    [
+      "oak-silk"
     ],
     [
       "peppered"
