@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.12.2 (2024-11-26)
+ - Generator will now ensure `entityId` is correct.
+
 ### 5.12.1 (2024-11-26)
 - Added a check for duplicate entity IDs or indexes.
 

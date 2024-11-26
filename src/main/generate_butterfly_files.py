@@ -125,6 +125,9 @@ def generate_data_files(entries):
                 json_data["index"] = BUTTERFLY_INDEX
                 BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
 
+            if "entityId" in json_data:
+                json_data["entityId"] = entry
+
             with open(new_file, 'w', encoding="utf8") as new_file:
                 new_file.write(json.dumps(json_data,
                                           default=lambda o: o.__dict__,
