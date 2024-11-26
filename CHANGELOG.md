@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.12.1 (2024-11-26)
+- Added a check for duplicate entity IDs or indexes.
+
 ### 5.12.0 (2024-11-18)
 - Added the Case Bearing Moth and the Oak Silk Moth.
 

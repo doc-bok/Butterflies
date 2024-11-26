@@ -21,6 +21,7 @@ import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.DataFormatException;
 
 /**
  * Helper for converting entity ID to index and vice versa.
@@ -380,7 +381,18 @@ public record ButterflyData(int butterflyIndex,
      * Create new butterfly data.
      * @param entry The butterfly data.
      */
-    public static void addButterfly(ButterflyData entry) {
+    public static void addButterfly(ButterflyData entry)
+            throws DataFormatException {
+        if (ENTITY_ID_TO_INDEX_MAP.containsKey(entry.entityId)) {
+            String message = String.format("Butterfly Data Entry for entity [%s] already exists.", entry.entityId);
+            throw new DataFormatException(message);
+        }
+
+        if (BUTTERFLY_ENTRIES.containsKey(entry.butterflyIndex)) {
+            String message = String.format("Butterfly Data Entry for index [%d] already exists.", entry.butterflyIndex);
+            throw new DataFormatException(message);
+        }
+
         ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
         BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
 
@@ -515,8 +527,8 @@ public record ButterflyData(int butterflyIndex,
                 BufferedReader reader = resource.openAsReader();
                 ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
                 ButterflyData.addButterfly(butterflyData);
-            } catch (IOException e) {
-                LogUtils.getLogger().error("Failed to load butterfly data", e);
+            } catch (DataFormatException | IOException e) {
+                LogUtils.getLogger().error("Failed to load butterfly data.", e);
             }
         }
     }
