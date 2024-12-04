@@ -16,6 +16,10 @@
   "preferredFlower": "wheat",
   "rarity": "common",
   "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "moth"
 }

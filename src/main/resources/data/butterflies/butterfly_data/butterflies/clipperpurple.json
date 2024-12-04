@@ -16,6 +16,10 @@
   "preferredFlower": "poppy",
   "rarity": "rare",
   "size": "large",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "fast",
   "type": "butterfly"
 }

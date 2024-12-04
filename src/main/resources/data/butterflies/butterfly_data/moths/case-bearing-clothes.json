@@ -16,6 +16,10 @@
   "preferredFlower": "cornflower",
   "rarity": "common",
   "size": "tiny",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "moth"
 }

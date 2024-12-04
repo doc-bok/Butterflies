@@ -53,7 +53,9 @@ public record ButterflyData(int butterflyIndex,
                             ExtraLandingBlocks extraLandingBlocks,
                             PlantEffect plantEffect,
                             ResourceLocation breedTarget,
-                            EggMultiplier eggMultiplier) {
+                            EggMultiplier eggMultiplier,
+                            boolean caterpillarSounds,
+                            boolean butterflySounds) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -216,7 +218,9 @@ public record ButterflyData(int butterflyIndex,
                          ExtraLandingBlocks extraLandingBlocks,
                          PlantEffect plantEffect,
                          ResourceLocation breedTarget,
-                         EggMultiplier eggMultiplier) {
+                         EggMultiplier eggMultiplier,
+                         boolean caterpillarSounds,
+                         boolean butterflySounds) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -238,6 +242,9 @@ public record ButterflyData(int butterflyIndex,
 
         this.breedTarget = breedTarget;
         this.eggMultiplier = eggMultiplier;
+
+        this.caterpillarSounds = caterpillarSounds;
+        this.butterflySounds = butterflySounds;
     }
 
     /**
@@ -284,6 +291,10 @@ public record ButterflyData(int butterflyIndex,
                 String breedTarget = object.get("breedTarget").getAsString();
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
 
+                JsonObject sounds = object.get("sounds").getAsJsonObject();
+                boolean caterpillarSounds = sounds.get("caterpillar").getAsBoolean();
+                boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
+
                 entry = new ButterflyData(
                         index,
                         entityId,
@@ -301,7 +312,9 @@ public record ButterflyData(int butterflyIndex,
                         extraLandingBlocks,
                         plantEffect,
                         new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
-                        eggMultiplier
+                        eggMultiplier,
+                        caterpillarSounds,
+                        butterflySounds
                 );
             }
 

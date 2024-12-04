@@ -388,7 +388,11 @@ public class Caterpillar extends DirectionalCreature {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+        if (getData().caterpillarSounds()) {
+            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+        }
+
+        return super.getAmbientSound();
     }
 
     /**

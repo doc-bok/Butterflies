@@ -16,6 +16,10 @@
   "preferredFlower": "oxeye_daisy",
   "rarity": "uncommon",
   "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": true
+  },
   "speed": "moderate",
   "type": "moth"
 }

@@ -16,6 +16,10 @@
   "preferredFlower": "blue_orchid",
   "rarity": "common",
   "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "butterfly"
 }

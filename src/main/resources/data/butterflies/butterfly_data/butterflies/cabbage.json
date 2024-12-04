@@ -16,6 +16,10 @@
   "preferredFlower": "dandelion",
   "rarity": "common",
   "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "fast",
   "type": "butterfly"
 }

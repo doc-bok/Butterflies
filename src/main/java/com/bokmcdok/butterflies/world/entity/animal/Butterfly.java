@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -715,20 +716,35 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * Override to control an entity's relative volume. Butterflies are silent.
-     * @return Always zero, so butterflies are silent.
-     */
-    @Override
-    protected float getSoundVolume() {
-        return 0.0f;
-    }
-
-    /**
      * Get the texture to use for rendering.
      * @return The resource location of the texture.
      */
     public ResourceLocation getTexture() {
         return texture;
+    }
+
+    /**
+     * Return an ambient sound for the caterpillar. If the sound doesn't exist
+     * it just won't play.
+     * @return A reference to the ambient sound.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (getIsActive() && getData().butterflySounds()) {
+            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+        }
+
+        return super.getAmbientSound();
+    }
+
+    /**
+     * Override to control an entity's relative volume. Butterflies are silent.
+     * @return Always zero, so butterflies are silent.
+     */
+    @Override
+    protected float getSoundVolume() {
+        return 0.2f;
     }
 
     /**
