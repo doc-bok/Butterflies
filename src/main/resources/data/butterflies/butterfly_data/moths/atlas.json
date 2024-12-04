@@ -16,6 +16,10 @@
   "preferredFlower": "white_tulip",
   "rarity": "rare",
   "size": "large",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "moth"
 }

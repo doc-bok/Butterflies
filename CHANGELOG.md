@@ -1,5 +1,11 @@
 ## Changelog
 
+### 5.13.3 (2024-12-04)
+ - Removed logspam caused by flower bud blockstates.
+
+### 5.13.2 (2024-12-04)
+ - Hummingbird Moths will now have ambient sound.
+
 ### 5.13.1 (2024-12-04)
  - Fixed hummingbird wing animations.
 

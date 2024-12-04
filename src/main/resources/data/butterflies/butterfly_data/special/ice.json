@@ -16,6 +16,10 @@
   "preferredFlower": "wither_rose",
   "rarity": "rare",
   "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "fast",
   "type": "special"
 }

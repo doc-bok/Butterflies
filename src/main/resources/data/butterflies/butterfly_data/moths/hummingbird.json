@@ -16,6 +16,10 @@
   "preferredFlower": "lily_of_the_valley",
   "rarity": "uncommon",
   "size": "tiny",
+  "sounds": {
+    "butterfly": true,
+    "caterpillar": false
+  },
   "speed": "fast",
   "type": "moth"
 }

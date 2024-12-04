@@ -20,6 +20,9 @@
     },
     "age=6": {
       "model": "butterflies:block/flower_buds/lily_of_the_valley_stage6"
+    },
+    "age=7": {
+      "model": "butterflies:block/flower_buds/lily_of_the_valley_stage6"
     }
   }
 }

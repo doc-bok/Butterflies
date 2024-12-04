@@ -16,6 +16,10 @@
   "preferredFlower": "allium",
   "rarity": "rare",
   "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "fast",
   "type": "butterfly"
 }

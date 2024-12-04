@@ -16,6 +16,10 @@
   "preferredFlower": "azure_bluet",
   "rarity": "common",
   "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "butterfly"
 }

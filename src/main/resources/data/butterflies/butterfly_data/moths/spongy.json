@@ -16,6 +16,10 @@
   "preferredFlower": "bud_orange_tulip",
   "rarity": "common",
   "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
   "speed": "moderate",
   "type": "moth"
 }
