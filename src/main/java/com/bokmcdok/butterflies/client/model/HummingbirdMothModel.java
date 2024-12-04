@@ -54,7 +54,7 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
 
         // The upper part of the body.
         PartDefinition thorax = partdefinition.addOrReplaceChild("thorax", CubeListBuilder.create().texOffs(0, 0)
-                .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)),                 PartPose.offset(0.0F, 13.0F, 0.0F));
+                .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, 0.0F));
 
         // The lower part of the body.
         PartDefinition abdomen = thorax.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(14, 0)
@@ -75,9 +75,9 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
         // The wings.
         PartDefinition wings = thorax.addOrReplaceChild("wings", CubeListBuilder.create(), PartPose.offset(0.0F, 13.0F, 0.0F));
         wings.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 4)
-                .addBox(0.0F, -3.0F, 3.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, -13.0F, -2.0F));
+                .addBox(0.0F, -3.0F, 0.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, -13.0F, 1.0F));
         wings.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 4)
-                .addBox(0.0F, -3.0F, 3.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -13.0F, -2.0F));
+                .addBox(0.0F, -3.0F, 0.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -13.0F, 1.0F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
@@ -99,7 +99,10 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
                           float netHeadYaw,
                           float headPitch) {
         this.thorax.xRot = 0.2853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
-        this.right_wing.yRot = Mth.sin(ageInTicks * 1.3F) * Mth.PI * 0.25F;
+
+        final float WING_ARC = 0.2f;
+        final float WING_SPEED = 13.0f;
+        this.right_wing.yRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         this.left_wing.yRot = -right_wing.yRot;
     }
 

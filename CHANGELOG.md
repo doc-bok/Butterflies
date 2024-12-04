@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.13.1 (2024-12-04)
+ - Fixed hummingbird wing animations.
+
 ### 5.13.0 (2024-12-04)
  - Added the hummingbird moth.
 
