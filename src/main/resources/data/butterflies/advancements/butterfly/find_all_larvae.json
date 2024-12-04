@@ -84,6 +84,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "indianmeal": {
       "conditions": {
         "items": [
@@ -182,6 +194,9 @@
     ],
     [
       "domestic_silk"
+    ],
+    [
+      "hummingbird"
     ],
     [
       "indianmeal"

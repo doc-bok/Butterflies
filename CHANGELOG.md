@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.13.0 (2024-12-04)
+ - Added the hummingbird moth.
+
 ### 5.12.2 (2024-11-26)
  - Generator will now ensure `entityId` is correct.
 

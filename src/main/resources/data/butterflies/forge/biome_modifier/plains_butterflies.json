@@ -312,6 +312,30 @@
       "minCount": 1,
       "type": "butterflies:diamondback_egg",
       "weight": 4
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:hummingbird",
+      "weight": 2
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:hummingbird_caterpillar",
+      "weight": 2
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:hummingbird_chrysalis",
+      "weight": 2
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:hummingbird_egg",
+      "weight": 2
     }
   ],
   "type": "forge:add_spawns"

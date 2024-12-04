@@ -54,6 +54,7 @@ public class ClientEventListener {
         event.registerLayerDefinition(ButterflyEggModel.LAYER_LOCATION, ButterflyEggModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyScrollModel.LAYER_LOCATION, ButterflyScrollModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyGolemModel.LAYER_LOCATION, ButterflyGolemModel::createBodyLayer);
+        event.registerLayerDefinition(HummingbirdMothModel.LAYER_LOCATION, HummingbirdMothModel::createBodyLayer);
     }
 
     /**
@@ -69,6 +70,8 @@ public class ClientEventListener {
                     i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "lava")) == 0 ||
                     i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "light")) == 0) {
                 event.registerEntityRenderer(i.get(), GlowButterflyRenderer::new);
+            } else if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "hummingbird")) == 0){
+                event.registerEntityRenderer(i.get(), HummingbirdMothRenderer::new);
             } else {
                 event.registerEntityRenderer(i.get(), ButterflyRenderer::new);
             }
