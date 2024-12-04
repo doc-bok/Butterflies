@@ -2,20 +2,20 @@
   "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
-  "entityId": "oak-silk",
+  "entityId": "hummingbird",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
-  "index": 48,
+  "habitat": "plains",
+  "index": 45,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
     "chrysalis": "short",
-    "egg": "medium"
+    "egg": "short"
   },
-  "plantEffect": "pollinate",
-  "preferredFlower": "blue_orchid",
-  "rarity": "common",
-  "size": "small",
-  "speed": "moderate",
+  "plantEffect": "consume",
+  "preferredFlower": "lily_of_the_valley",
+  "rarity": "uncommon",
+  "size": "tiny",
+  "speed": "fast",
   "type": "moth"
 }

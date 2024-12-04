@@ -84,6 +84,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "indianmeal": {
       "conditions": {
         "items": [
@@ -182,6 +194,7 @@
       "codling",
       "diamondback",
       "domestic_silk",
+      "hummingbird",
       "indianmeal",
       "luna",
       "oak-silk",

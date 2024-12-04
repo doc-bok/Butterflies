@@ -50,6 +50,7 @@ public class ButterflySpeciesList {
             "codling",
             "diamondback",
             "domestic_silk",
+            "hummingbird",
             "indianmeal",
             "luna",
             "oak-silk",

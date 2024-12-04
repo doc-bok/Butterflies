@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.network;
 
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
@@ -13,6 +14,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 /**
  * Listens for network-based events.
@@ -92,7 +94,11 @@ public class NetworkEventListener {
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {
-                    ButterflyData.addButterfly(butterfly);
+                    try {
+                        ButterflyData.addButterfly(butterfly);
+                    } catch (DataFormatException e) {
+                        LogUtils.getLogger().error("Received invalid butterfly data.", e);
+                    }
                 }
             }
         }
