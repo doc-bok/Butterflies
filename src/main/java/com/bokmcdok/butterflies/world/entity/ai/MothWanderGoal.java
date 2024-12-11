@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity.ai;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MothWanderGoal extends ButterflyWanderGoal {
@@ -14,6 +15,16 @@ public class MothWanderGoal extends ButterflyWanderGoal {
      */
     public MothWanderGoal(Butterfly butterfly, double speedModifier) {
         super(butterfly, speedModifier);
+    }
+
+    /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Wander (Moth)";
     }
 
     /**

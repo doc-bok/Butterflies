@@ -36,7 +36,7 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean canContinueToUse() {
-        return !this.butterfly.getIsActive() && super.canContinueToUse();
+        return !this.butterfly.getIsActive() && this.isValidTarget(this.mob.level(), this.blockPos);
     }
 
     /**
@@ -78,10 +78,21 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
         super.tick();
 
         if (this.isReachedTarget()) {
-            Vec3 deltaMovement = this.butterfly.getDeltaMovement();
             this.butterfly.setLanded(true);
-            this.butterfly.setDeltaMovement(0.0, deltaMovement.y, 0.0);
         }
+    }
+
+    /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Rest / Target: " + this.getMoveToTarget() +
+        " / Position: " + butterfly.getOnPos() +
+        " / Reached: " + this.isReachedTarget() +
+        " / Landed: " + butterfly.getIsLanded();
     }
 
     /**
