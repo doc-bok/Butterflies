@@ -126,6 +126,16 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
     }
 
     /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Lay Egg";
+    }
+
+    /**
      * Tells the base goal which blocks are valid targets.
      * @param levelReader Gives access to the level.
      * @param blockPos The block position to check.

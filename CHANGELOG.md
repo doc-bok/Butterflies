@@ -1,5 +1,9 @@
 ## Changelog
 
+### 5.13.4
+ - Added debug information for butterfly states.
+ - Tweaked landing mechanics so they're more reliable.
+
 ### 5.13.3 (2024-12-04)
  - Removed logspam caused by flower bud blockstates.
 

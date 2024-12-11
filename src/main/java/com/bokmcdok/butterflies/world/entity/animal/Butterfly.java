@@ -28,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -59,6 +60,8 @@ public class Butterfly extends Animal {
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> DATA_NUM_EGGS =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<String> DATA_GOAL_STATE =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
 
     // Names of the attributes stored in the save data.
     protected static final String IS_FERTILE = "is_fertile";
@@ -362,6 +365,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Get the current goal state, used for debugging.
+     * @return The current goal state.
+     */
+    public String getGoalState() {
+        return entityData.get(DATA_GOAL_STATE);
+    }
+
+    /**
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
@@ -610,6 +621,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Set the goal state displayed when debugging.
+     * @param goalState The current goal state.
+     */
+    public void setGoalState(String goalState) {
+        entityData.set(DATA_GOAL_STATE, goalState);
+    }
+
+    /**
      * Hacky fix to stop butterflies teleporting.
      * TODO: We need a better fix than this.
      * @param x The x-position.
@@ -681,6 +700,19 @@ public class Butterfly extends Animal {
                 }
             }
         }
+
+        //  Don't do this unless the debug information flag is set.
+        if (ButterfliesConfig.debugInformation.get()) {
+            StringBuilder debugOutput = new StringBuilder();
+            WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
+
+            for (WrappedGoal goal : runningGoals) {
+                debugOutput.append(goal.getGoal());
+                debugOutput.append(" / ");
+            }
+
+            setGoalState(debugOutput.toString());
+        }
     }
 
     /**
@@ -692,6 +724,7 @@ public class Butterfly extends Animal {
         this.entityData.define(DATA_IS_FERTILE, false);
         this.entityData.define(DATA_LANDED, false);
         this.entityData.define(DATA_NUM_EGGS, 1);
+        this.entityData.define(DATA_GOAL_STATE, "");
     }
 
     /**
