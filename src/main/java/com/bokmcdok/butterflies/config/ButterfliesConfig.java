@@ -2,6 +2,9 @@ package com.bokmcdok.butterflies.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
+/**
+ * Holds config options for the butterflies.
+ */
 public class ButterfliesConfig {
     public static final ForgeConfigSpec SERVER_CONFIG;
 
@@ -12,12 +15,20 @@ public class ButterfliesConfig {
     public static ForgeConfigSpec.BooleanValue enablePollination;
     public static ForgeConfigSpec.BooleanValue debugInformation;
 
+    /**
+     * Static initialisation for the configurations - they need to be loaded
+     * before anything else.
+     */
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
         setupServerConfig(configBuilder);
         SERVER_CONFIG = configBuilder.build();
     }
 
+    /**
+     * Set up the server configuration.
+     * @param builder The spec builder.
+     */
     private static void setupServerConfig(ForgeConfigSpec.Builder builder) {
         builder.comment("This category holds configs for the butterflies mod.");
         builder.push("Butterfly Options");

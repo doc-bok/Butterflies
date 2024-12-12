@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -89,10 +88,11 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
     @NotNull
     @Override
     public String toString() {
-        return "Rest / Target: " + this.getMoveToTarget() +
-        " / Position: " + butterfly.getOnPos() +
-        " / Reached: " + this.isReachedTarget() +
-        " / Landed: " + butterfly.getIsLanded();
+        return "Rest / Target = [" + this.getMoveToTarget() +
+                "] / Position = [" + butterfly.getOnPos() +
+                "] / Reached = [" + this.isReachedTarget() +
+                "] / Landed = [" + butterfly.getIsLanded() +
+                "]";
     }
 
     /**

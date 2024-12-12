@@ -70,6 +70,8 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
     @NotNull
     @Override
     public String toString() {
-        return "Mating";
+        return "Mating / Fertile = [" + this.butterfly.getIsFertile() +
+                "] / Num Eggs = [" + this.butterfly.getNumEggs() +
+                "]";
     }
 }

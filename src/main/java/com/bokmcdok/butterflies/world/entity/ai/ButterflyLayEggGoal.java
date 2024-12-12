@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.BlockPos;
@@ -132,7 +131,12 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
     @NotNull
     @Override
     public String toString() {
-        return "Lay Egg";
+        return "Lay Egg / Target = [" + this.getMoveToTarget() +
+                "] / Reached Target = [" + this.isReachedTarget() +
+                "] / Landed = [" + this.butterfly.getIsLanded() +
+                "] / Fertile = [" + this.butterfly.getIsFertile() +
+                "] / Num Eggs = [" + this.butterfly.getNumEggs() +
+                "]";
     }
 
     /**

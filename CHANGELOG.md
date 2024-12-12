@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.13.5
+ - Improved log output for butterfly goals.
+
 ### 5.13.4
  - Added debug information for butterfly states.
  - Tweaked landing mechanics so they're more reliable.
