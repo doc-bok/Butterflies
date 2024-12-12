@@ -142,7 +142,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     @NotNull
     @Override
     public String toString() {
-        return "Pollinate Flower";
+        return "Pollinate Flower / Target = [" + this.getMoveToTarget() +
+                "] / Reached Target = [" + this.isReachedTarget() +
+                "] / Attempted to Pollinate = [" + this.attemptedToPollinate +
+                "] / Num Eggs = [" + this.butterfly.getNumEggs() +
+                "]";
     }
 
     /**
