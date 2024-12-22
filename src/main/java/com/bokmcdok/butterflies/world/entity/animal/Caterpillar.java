@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -31,7 +32,7 @@ import javax.annotation.Nullable;
 /**
  * Creates the Caterpillar behaviour.
  */
-public class Caterpillar extends DirectionalCreature {
+public class Caterpillar extends DirectionalCreature implements DebugInfoSupplier {
 
     //  The name this block is registered under.
     public static String getRegistryId(int butterflyIndex) {
@@ -252,6 +253,28 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Prevent a caterpillar's block position from changing.
+     * @param x The x-position.
+     * @param y The y-position.
+     * @param z The z-position.
+     */
+    @Override
+    public void setPos(double x, double y, double z) {
+
+        // Set the initial position.
+        if (this.getX() == 0 && this.getY() == 0 && this.getZ() == 0) {
+            super.setPos(x, y, z);
+        }
+
+        // Only set the position if the block position doesn't change.
+        if (    Mth.floor(x) == this.blockPosition().getX() &&
+                Mth.floor(y) == this.blockPosition().getY() &&
+                Mth.floor(z) == this.blockPosition().getZ()) {
+            super.setPos(x, y, z);
+        }
+    }
+
+    /**
      * A custom step for the AI update loop.
      */
     @Override
@@ -307,24 +330,18 @@ public class Caterpillar extends DirectionalCreature {
                 if (axis == Direction.Axis.X) {
                     this.targetPosition = new Vec3(
                             this.targetPosition.x(),
-                            Math.floor(this.targetPosition.y())
-                                    + (this.random.nextDouble() % 1.0),
-                            Math.floor(this.targetPosition.z())
-                                    + (this.random.nextDouble() % 1.0));
+                            Math.floor(this.targetPosition.y()) + clampedRandomDouble(),
+                            Math.floor(this.targetPosition.z()) + clampedRandomDouble());
                 } else if (axis == Direction.Axis.Y) {
                     this.targetPosition = new Vec3(
-                            Math.floor(this.targetPosition.x())
-                                    + (this.random.nextDouble() % 1.0),
+                            Math.floor(this.targetPosition.x()) + clampedRandomDouble(),
                             this.targetPosition.y(),
-                            Math.floor(this.targetPosition.z())
-                                    + (this.random.nextDouble() % 1.0));
+                            Math.floor(this.targetPosition.z()) + clampedRandomDouble());
 
                 } else {
                     this.targetPosition = new Vec3(
-                            Math.floor(this.targetPosition.x())
-                                    + (this.random.nextDouble() % 1.0),
-                            Math.floor(this.targetPosition.y())
-                                    + (this.random.nextDouble() % 1.0),
+                            Math.floor(this.targetPosition.x()) + clampedRandomDouble(),
+                            Math.floor(this.targetPosition.y()) + clampedRandomDouble(),
                             this.targetPosition.z());
                 }
             }
@@ -396,6 +413,23 @@ public class Caterpillar extends DirectionalCreature {
     }
 
     /**
+     * Get the current state, used for debugging.
+     * @return The current goal state.
+     */
+    @Override
+    public String getDebugInfo() {
+        return "Position = [" +
+                String.format("%.3f", this.getX() % 1.f) + ", " +
+                String.format("%.3f", this.getY() % 1.f) + ", " +
+                String.format("%.3f", this.getZ() % 1.f) +
+                "] / BlockPos = [" + this.blockPosition() +
+                "] / SurfaceBlock = [" + this.getSurfaceBlockPos() +
+                "] / SurfaceDirection = [" + this.getSurfaceDirection().getName() +
+                "] / IsNoGravity = [" + this.isNoGravity +
+                "]";
+    }
+
+    /**
      * Check if the caterpillar is in a bottle or not.
      * @return TRUE if the caterpillar is free.
      */
@@ -422,6 +456,22 @@ public class Caterpillar extends DirectionalCreature {
     @Override
     protected void pushEntities() {
         // No-op
+    }
+
+    /**
+     * Helper method to return a clamped double.
+     * @return A double value between 0.05 and 0.95.
+     */
+    private double clampedDouble(double x) {
+        return Math.max(0.05, Math.min(0.95, x));
+    }
+
+    /**
+     * Helper method to generate a clamped random double.
+     * @return A random clamped double.
+     */
+    private double clampedRandomDouble() {
+        return clampedDouble(this.random.nextDouble() % 1.0);
     }
 
     /**
@@ -487,22 +537,35 @@ public class Caterpillar extends DirectionalCreature {
             double signumY = Math.signum(updatedMovementDelta.y);
             double signumZ = Math.signum(updatedMovementDelta.z);
             Vec3 deltaMovement = this.getDeltaMovement();
-            if (axis == Direction.Axis.X) {
-                updatedDeltaMovement = deltaMovement.add(
-                        0.0,
-                        (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
-                        (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
-            } else if (axis == Direction.Axis.Y) {
-                updatedDeltaMovement = deltaMovement.add(
-                        (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
-                        0.0,
-                        (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED);
-            } else {
 
-                updatedDeltaMovement = deltaMovement.add(
-                        (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED,
-                        (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED,
-                        0.0);
+            double xMod = 0.0;
+            double yMod = 0.0;
+            double zMod = 0.0;
+
+            if (axis == Direction.Axis.X) {
+                yMod = (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED;
+                zMod = (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED;
+            } else if (axis == Direction.Axis.Y) {
+                xMod = (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED;
+                zMod = (signumZ * 0.5d - deltaMovement.z) * CATERPILLAR_SPEED;
+            } else {
+                xMod = (signumX * 0.5d - deltaMovement.x) * CATERPILLAR_SPEED;
+                yMod = (signumY * 0.5d - deltaMovement.y) * CATERPILLAR_SPEED;
+            }
+
+            updatedDeltaMovement = deltaMovement.add(xMod, yMod, zMod);
+
+            // Clamp the speed if the caterpillar is too close to the edge.
+            if (this.getX() % 1.0 > 0.95 || this.getX() < 0.05) {
+                updatedDeltaMovement.multiply(0.0, 1.0, 1.0);
+            }
+
+            if (this.getY() % 1.0 > 0.95 || this.getY() < 0.05) {
+                updatedDeltaMovement.multiply(1.0, 0.0, 1.0);
+            }
+
+            if (this.getZ() % 1.0 > 0.95 || this.getZ() < 0.05) {
+                updatedDeltaMovement.multiply(1.0, 1.0, 0.0);
             }
         }
 

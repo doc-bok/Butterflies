@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.13.6
+ - Fixed caterpillars getting stuck on the edge of blocks.
+
 ### 5.13.5
  - Improved log output for butterfly goals.
 

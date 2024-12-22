@@ -1,22 +1,16 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyModel;
-import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
 
 /**
  * This is the renderer for all the butterflies and moths in the game.
@@ -61,7 +55,14 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
                        @NotNull MultiBufferSource multiBufferSource,
                        int packedLightCoordinates) {
 
-        renderDebugInfo(entity, poseStack, multiBufferSource, packedLightCoordinates);
+        // Render any debug information for this entity.
+        EntityDebugInfoRenderer.renderDebugInfo(
+                entity,
+                poseStack,
+                multiBufferSource,
+                this.entityRenderDispatcher.cameraOrientation(),
+                this.getFont(),
+                packedLightCoordinates);
 
         // When the models were initially created no thought was given as to
         // what orientation they needed to be in. Rotating them here allows
@@ -84,40 +85,5 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
     protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
         float s = entity.getScale();
         poses.scale(s, s, s);
-    }
-
-    /**
-     * Renders debug information for the butterfly.
-     * @param butterfly The butterfly entity.
-     * @param poseStack The current pose stack.
-     * @param multiBufferSource The render buffer.
-     * @param packedLightCoordinates The light coordinates.
-     */
-    private void renderDebugInfo(Butterfly butterfly,
-                                 PoseStack poseStack,
-                                 MultiBufferSource multiBufferSource,
-                                 int packedLightCoordinates) {
-        if (ButterfliesConfig.debugInformation.get()) {
-            String debugOutput = butterfly.getGoalState();
-            if (!debugOutput.isBlank()) {
-
-                MutableComponent component = Component.literal(debugOutput);
-
-                float nameTagOffsetY = butterfly.getNameTagOffsetY();
-                poseStack.pushPose();
-                poseStack.translate(0.0F, nameTagOffsetY, 0.0F);
-                poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
-                poseStack.scale(-0.025F, -0.025F, 0.025F);
-                Matrix4f pose = poseStack.last().pose();
-                float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-                int alpha = (int) (backgroundOpacity * 255.0F) << 24;
-                Font font = this.getFont();
-                float fontWidth = (float) (-font.width(component) / 2);
-                font.drawInBatch(component, fontWidth, 0, 553648127, false, pose, multiBufferSource, Font.DisplayMode.SEE_THROUGH, alpha, packedLightCoordinates);
-                font.drawInBatch(component, fontWidth, 0, -1, false, pose, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLightCoordinates);
-
-                poseStack.popPose();
-            }
-        }
     }
 }

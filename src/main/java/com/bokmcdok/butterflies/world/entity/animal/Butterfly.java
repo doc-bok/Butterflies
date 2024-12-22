@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -51,7 +52,7 @@ import java.util.Objects;
  * The butterfly entity that flies around the world, adding some ambience and
  * fertilising plants.
  */
-public class Butterfly extends Animal {
+public class Butterfly extends Animal implements DebugInfoSupplier {
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
@@ -307,6 +308,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Get the current goal state, used for debugging.
+     * @return The current goal state.
+     */
+    public String getDebugInfo() {
+        return entityData.get(DATA_GOAL_STATE);
+    }
+
+    /**
      * Checks the time of day to see if the butterfly is active based on its
      * diurnality.
      * @return TRUE if the butterfly is active at this time of day.
@@ -362,14 +371,6 @@ public class Butterfly extends Animal {
      */
     public int getNumEggs() {
         return entityData.get(DATA_NUM_EGGS);
-    }
-
-    /**
-     * Get the current goal state, used for debugging.
-     * @return The current goal state.
-     */
-    public String getGoalState() {
-        return entityData.get(DATA_GOAL_STATE);
     }
 
     /**
