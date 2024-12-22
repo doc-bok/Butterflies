@@ -15,9 +15,9 @@ public class ButterfliesConfig {
     public static ForgeConfigSpec.BooleanValue enablePollination;
     public static ForgeConfigSpec.BooleanValue debugInformation;
 
-    /**
-     * Static initialisation for the configurations - they need to be loaded
-     * before anything else.
+    /*
+      Static initialisation for the configurations - they need to be loaded
+      before anything else.
      */
     static {
         ForgeConfigSpec.Builder configBuilder = new ForgeConfigSpec.Builder();
