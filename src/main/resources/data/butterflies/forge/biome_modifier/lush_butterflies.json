@@ -76,6 +76,30 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:christmas",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:christmas_caterpillar",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:christmas_chrysalis",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:christmas_egg",
+      "weight": 4
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:commander",
       "weight": 4
     },

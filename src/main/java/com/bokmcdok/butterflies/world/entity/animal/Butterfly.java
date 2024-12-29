@@ -46,6 +46,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Calendar;
 import java.util.Objects;
 
 /**
@@ -209,7 +210,18 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
+        // Support for Christmas Butterfly texture change.
+        String species = ButterflyData.getSpeciesString(this);
+        if (species.contains("christmas")) {
+            Calendar calendar = Calendar.getInstance();
+            if (calendar.get(Calendar.MONTH) + 1 == 12 &&
+                    calendar.get(Calendar.DAY_OF_MONTH) >= 24 &&
+                    calendar.get(Calendar.DAY_OF_MONTH) <= 26) {
+                species = "christmas_alt";
+            }
+        }
+
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + species + ".png");
 
         setAge(-getData().butterflyLifespan());
     }

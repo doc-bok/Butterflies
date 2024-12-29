@@ -96,6 +96,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "christmas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_christmas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clipper": {
       "conditions": {
         "items": [
@@ -624,6 +636,7 @@
       "buckeye",
       "cabbage",
       "chalkhill",
+      "christmas",
       "clipper",
       "clipperblack",
       "clipperblue",

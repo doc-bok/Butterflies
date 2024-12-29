@@ -1,12 +1,15 @@
 ## Changelog
 
-### 5.13.6
+### 5.14.0 (2024-12-29)
+ - Added the Christmas Butterfly.
+
+### 5.13.6 (2024-12-11)
  - Fixed caterpillars getting stuck on the edge of blocks.
 
-### 5.13.5
+### 5.13.5 (2024-12-11)
  - Improved log output for butterfly goals.
 
-### 5.13.4
+### 5.13.4 (2024-12-11)
  - Added debug information for butterfly states.
  - Tweaked landing mechanics so they're more reliable.
 
