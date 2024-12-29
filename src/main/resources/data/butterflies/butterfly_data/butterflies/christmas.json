@@ -14,7 +14,7 @@
   },
   "plantEffect": "pollinate",
   "preferredFlower": "oxeye_daisy",
-  "rarity": "rare",
+  "rarity": "common",
   "size": "huge",
   "sounds": {
     "butterfly": false,
