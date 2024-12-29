@@ -10,6 +10,7 @@ public class ButterflySpeciesList {
             "buckeye",
             "cabbage",
             "chalkhill",
+            "christmas",
             "clipper",
             "clipperblack",
             "clipperblue",

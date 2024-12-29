@@ -5,7 +5,7 @@
   "entityId": "forester",
   "extraLandingBlocks": "none",
   "habitat": "forests_plains_wetlands",
-  "index": 26,
+  "index": 27,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "long",
