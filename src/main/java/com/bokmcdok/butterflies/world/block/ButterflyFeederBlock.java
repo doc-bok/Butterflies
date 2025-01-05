@@ -16,7 +16,8 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -52,8 +53,8 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      */
     public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry,
                                 MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.SAND)
+        super(BlockBehaviour.Properties.of(Material.WOOD)
+                .color(MaterialColor.SAND)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)

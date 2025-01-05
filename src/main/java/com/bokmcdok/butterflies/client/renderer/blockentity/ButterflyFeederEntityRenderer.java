@@ -2,14 +2,14 @@ package com.bokmcdok.butterflies.client.renderer.blockentity;
 
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,7 +64,7 @@ public class ButterflyFeederEntityRenderer implements BlockEntityRenderer<Butter
                 // Use a "random" starting rotation based on the block
                 // position.
                 BlockPos blockPos = butterflyFeederEntity.getBlockPos();
-                float yRot = (float)blockPos.getCenter().lengthSqr();
+                float yRot = (float)blockPos.asLong();
                 yRot += i * 3.0f;
 
                 renderItem(
@@ -103,16 +103,15 @@ public class ButterflyFeederEntityRenderer implements BlockEntityRenderer<Butter
 
         poseStack.pushPose();
         poseStack.translate(x, 0.9, z);
-        poseStack.mulPose(Axis.YP.rotationDegrees(yRot));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
 
         itemRenderer.renderStatic(
                 butterflyFeederEntity.getItem(0),
-                ItemDisplayContext.GROUND,
+                ItemTransforms.TransformType.GROUND,
                 i,
                 i1,
                 poseStack,
                 multiBufferSource,
-                butterflyFeederEntity.getLevel(),
                 0);
 
         poseStack.popPose();

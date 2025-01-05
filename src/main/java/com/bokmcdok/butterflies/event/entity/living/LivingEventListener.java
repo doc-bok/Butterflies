@@ -28,7 +28,7 @@ public class LivingEventListener {
      * @param event The event data.
      */
     private void onLivingDeath(LivingDeathEvent event) {
-        Level level = event.getEntity().level();
+        Level level = event.getEntity().getLevel();
 
         // Only do this on the server.
         if (!level.isClientSide()) {

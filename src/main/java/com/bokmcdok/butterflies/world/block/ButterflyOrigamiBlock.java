@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
@@ -40,10 +41,10 @@ public class ButterflyOrigamiBlock extends Block {
      * Construction
      */
     public ButterflyOrigamiBlock() {
-        super(Properties.of()
+        super(Properties.of(Material.PLANT)
                 .noCollission()
                 .strength(0.5F, 2.5F)
-                .sound(SoundType.PINK_PETALS));
+                .sound(SoundType.FLOWERING_AZALEA));
 
         this.registerDefaultState(this.defaultBlockState().setValue(ORIENTATION, FrontAndTop.NORTH_UP));
 

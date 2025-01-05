@@ -113,7 +113,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             if (!attemptedToPollinate) {
                 attemptedToPollinate = true;
 
-                if (butterfly.level().getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+                if (butterfly.getLevel().getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
                     if (feeder.getItem(0).is(preferredFlowerItem)) {
                         butterfly.setNumEggs(1);
                         feeder.removeItem(0, 1);
@@ -122,10 +122,10 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                     if (this.random.nextInt() % 5 == 0) {
                         BlockPos spawnPos = findNearestFlowerSpot();
                         if (spawnPos != null) {
-                            BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                            BlockState blockState = this.mob.getLevel().getBlockState(this.blockPos);
                             Block budBlock = getFlowerBud(blockState.getBlock());
                             if (budBlock != null) {
-                                this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                                this.mob.getLevel().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
                             }
                         }
                     }
@@ -262,10 +262,6 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
         if (flowerBlock == Blocks.RED_TULIP) {
             return butterfly.getBlockRegistry().getRedTulipBud().get();
-        }
-
-        if (flowerBlock == Blocks.TORCHFLOWER) {
-            return Blocks.TORCHFLOWER_CROP;
         }
 
         if (flowerBlock == Blocks.WHITE_TULIP) {

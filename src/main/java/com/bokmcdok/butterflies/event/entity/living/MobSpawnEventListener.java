@@ -3,9 +3,10 @@ package com.bokmcdok.butterflies.event.entity.living;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 /**
@@ -32,8 +33,7 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
-    private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    private void onMobSpawn(LivingSpawnEvent event) {
 
         // Only affect Iron Golems.
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
@@ -41,22 +41,25 @@ public class MobSpawnEventListener {
 
             // 1 in 256 chance.
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
-                ServerLevelAccessor level = event.getLevel();
-                EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
+                LevelAccessor levelAccessor = event.getLevel();
+                if (levelAccessor instanceof ServerLevelAccessor level) {
+                    EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
 
-                if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {})) {
-                    IronGolem newMob = ironGolem.convertTo(entityType, false);
-                    if (newMob != null) {
-                        newMob.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                MobSpawnType.CONVERSION,
-                                null,
-                                null);
+                    if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
+                    })) {
+                        IronGolem newMob = ironGolem.convertTo(entityType, false);
+                        if (newMob != null) {
+                            newMob.finalizeSpawn(level,
+                                    level.getCurrentDifficultyAt(newMob.blockPosition()),
+                                    MobSpawnType.CONVERSION,
+                                    null,
+                                    null);
 
-                        ForgeEventFactory.onLivingConvert(ironGolem, newMob);
+                            ForgeEventFactory.onLivingConvert(ironGolem, newMob);
 
-                        if (!newMob.isSilent()) {
-                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+                            if (!newMob.isSilent()) {
+                                level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+                            }
                         }
                     }
                 }

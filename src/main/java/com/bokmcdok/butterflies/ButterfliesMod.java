@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies;
 import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.event.ForgeEventListener;
-import com.bokmcdok.butterflies.event.ModEventListener;
 import com.bokmcdok.butterflies.event.entity.EntityEventListener;
 import com.bokmcdok.butterflies.event.entity.living.LivingEventListener;
 import com.bokmcdok.butterflies.event.entity.living.MobSpawnEventListener;
@@ -40,7 +39,6 @@ public class ButterfliesMod
         BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
-        DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
@@ -54,7 +52,6 @@ public class ButterfliesMod
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
-        decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
@@ -64,8 +61,7 @@ public class ButterfliesMod
 
         // Create the Mod event listeners
         new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
-        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
-        new ModEventListener(modEventBus, itemRegistry);
+        new LifecycleEventListener(modEventBus, itemRegistry,menuTypeRegistry);
 
         // Create the Forge event listeners.
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);

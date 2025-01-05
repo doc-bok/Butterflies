@@ -35,7 +35,7 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean canContinueToUse() {
-        return !this.butterfly.getIsActive() && this.isValidTarget(this.mob.level(), this.blockPos);
+        return !this.butterfly.getIsActive() && this.isValidTarget(this.mob.getLevel(), this.blockPos);
     }
 
     /**

@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.event;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
@@ -68,7 +67,7 @@ public class ForgeEventListener {
                                   ResourceLocation structureToAdd,
                                   int weight)
     {
-        Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
+        Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
         StructureTemplatePool pool = Objects.requireNonNull(registry.get(structurePool), structurePool.getPath());
 
         if(!(pool.rawTemplates instanceof ArrayList)) {

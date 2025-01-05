@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -35,7 +34,7 @@ public class MenuTypeRegistry {
      */
     public void initialise() {
         this.butterflyFeederMenu = deferredRegister.register("butterfly_feeder",
-                        () -> new MenuType<>(this::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
+                        () -> new MenuType<>(this::createButterflyFeederMenu));
     }
 
     /**

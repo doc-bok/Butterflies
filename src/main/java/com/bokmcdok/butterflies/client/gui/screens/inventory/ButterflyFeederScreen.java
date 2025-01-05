@@ -2,8 +2,10 @@ package com.bokmcdok.butterflies.client.gui.screens.inventory;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
-import net.minecraft.client.gui.GuiGraphics;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -37,34 +39,38 @@ public class ButterflyFeederScreen extends AbstractContainerScreen<ButterflyFeed
 
     /**
      * Render the tool tip.
-     * @param guiGraphics The graphics object.
+     * @param stack The graphics object.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      * @param unknown Unknown.
      */
-    public void render(@NotNull GuiGraphics guiGraphics,
+    public void render(@NotNull PoseStack stack,
                        int mouseX,
                        int mouseY,
                        float unknown) {
-        super.render(guiGraphics, mouseX, mouseY, unknown);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.render(stack, mouseX, mouseY, unknown);
+        this.renderTooltip(stack, mouseX, mouseY);
     }
 
     /**
      * Render the background.
-     * @param guiGraphics The graphics object.
+     * @param stack The graphics object.
      * @param unknown Unknown.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      */
     @Override
-    protected void renderBg(@NotNull GuiGraphics guiGraphics,
+    protected void renderBg(@NotNull PoseStack stack,
                             float unknown,
                             int mouseX,
                             int mouseY) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, TEXTURE);
+
+        int i = (this.width - 192) / 2;
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        guiGraphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
-
+        this.blit(stack, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

@@ -3,6 +3,8 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -11,8 +13,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
 
 /**
  * Helper class that provides debug rendering to entities.
@@ -33,7 +33,7 @@ public class EntityDebugInfoRenderer {
     void renderDebugInfo(T entity,
                          PoseStack poseStack,
                          MultiBufferSource multiBufferSource,
-                         Quaternionf cameraOrientation,
+                         Quaternion cameraOrientation,
                          Font font,
                          int packedLightCoordinates) {
         if (ButterfliesConfig.debugInformation.get()) {
@@ -42,7 +42,7 @@ public class EntityDebugInfoRenderer {
 
                 MutableComponent component = Component.literal(debugInfo);
 
-                float nameTagOffsetY = entity.getNameTagOffsetY();
+                float nameTagOffsetY = entity.getBbHeight() + 0.5f;
                 poseStack.pushPose();
                 poseStack.translate(0.0F, nameTagOffsetY, 0.0F);
                 poseStack.mulPose(cameraOrientation);
@@ -51,9 +51,8 @@ public class EntityDebugInfoRenderer {
                 float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
                 int alpha = (int) (backgroundOpacity * 255.0F) << 24;
                 float fontWidth = (float) (-font.width(component) / 2);
-                font.drawInBatch(component, fontWidth, 0, 553648127, false, pose, multiBufferSource, Font.DisplayMode.SEE_THROUGH, alpha, packedLightCoordinates);
-                font.drawInBatch(component, fontWidth, 0, -1, false, pose, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLightCoordinates);
-
+                font.drawInBatch(component, fontWidth, 0, 553648127, false, pose, multiBufferSource, false, alpha, packedLightCoordinates);
+                font.drawInBatch(component, fontWidth, 0, -1, false, pose, multiBufferSource, false, 0, packedLightCoordinates);
                 poseStack.popPose();
             }
         }

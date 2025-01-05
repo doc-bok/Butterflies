@@ -12,14 +12,12 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.BannerPatternItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -251,6 +249,21 @@ public class ItemRegistry {
      */
     public List<RegistryObject<Item>> getButterflyEggs() {
         return butterflyEggs;
+    }
+
+    /**
+     * Helper method to get the correct butterfly net item.
+     * @param butterflyIndex The butterfly index.
+     * @return The registry entry for the related item.
+     */
+    public RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
+        if (butterflyIndex < 0) {
+            return emptyButterflyNet;
+        } else if (Objects.equals(ButterflySpeciesList.SPECIES[butterflyIndex], "lava")) {
+            return burntButterflyNet;
+        } else {
+            return butterflyNets.get(butterflyIndex);
+        }
     }
 
     /**

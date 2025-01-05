@@ -409,7 +409,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     @Override
     protected SoundEvent getAmbientSound() {
         if (getData().caterpillarSounds()) {
-            return new SoundEvent(new ResourceLocation(ButterfliesMod.MODID, ButterflyData.getSpeciesString(this)));
+            return new SoundEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();

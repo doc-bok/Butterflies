@@ -776,7 +776,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     protected SoundEvent getAmbientSound() {
         if (getIsActive() && getData().butterflySounds()) {
-            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+            return new SoundEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();

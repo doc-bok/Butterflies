@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.entity.BannerPattern;
@@ -21,7 +21,7 @@ public class BannerPatternRegistry {
      * @param modEventBus The event bus to register with.
      */
     public BannerPatternRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.BANNER_PATTERN, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(Registry.BANNER_PATTERN_REGISTRY, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -34,7 +34,7 @@ public class BannerPatternRegistry {
 
         // Register the tag used to link everything together.
         this.butterflyBannerPatternTagKey = TagKey.create(
-                Registries.BANNER_PATTERN,
+                Registry.BANNER_PATTERN_REGISTRY,
                 new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
     }
 

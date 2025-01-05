@@ -83,7 +83,7 @@ public class ButterflyFeederMenu extends AbstractContainerMenu {
             }
 
             if (item.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
