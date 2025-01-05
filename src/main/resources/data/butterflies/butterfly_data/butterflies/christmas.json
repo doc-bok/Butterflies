@@ -3,7 +3,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "christmas",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": "fruit",
   "habitat": "forests",
   "index": 5,
   "lifespan": {
