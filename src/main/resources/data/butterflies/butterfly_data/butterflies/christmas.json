@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "christmas",
+  "extraLandingBlocks": "fruit",
+  "habitat": "forests",
+  "index": 5,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "short",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "oxeye_daisy",
+  "rarity": "common",
+  "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}

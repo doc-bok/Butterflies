@@ -72,12 +72,36 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_case-bearing-clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "chalkhill": {
       "conditions": {
         "items": [
           {
             "items": [
               "butterflies:butterfly_scroll_chalkhill"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "christmas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_christmas"
             ]
           }
         ]
@@ -408,6 +432,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_green-skirt-baron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hairstreak": {
       "conditions": {
         "items": [
@@ -426,6 +462,18 @@
           {
             "items": [
               "butterflies:butterfly_scroll_heath"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_hummingbird"
             ]
           }
         ]
@@ -486,6 +534,18 @@
           {
             "items": [
               "butterflies:butterfly_scroll_morpho"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_oak-silk"
             ]
           }
         ]
@@ -572,51 +632,56 @@
   "requirements": [
     [
       "admiral",
+      "bluemoon",
       "buckeye",
       "cabbage",
       "chalkhill",
+      "christmas",
       "clipper",
-      "clipperwhite",
-      "clipperlightgray",
-      "clippergray",
       "clipperblack",
-      "clipperbrown",
-      "clipperred",
-      "clipperorange",
-      "clipperyellow",
-      "clipperlime",
-      "clippergreen",
-      "clippercyan",
       "clipperblue",
-      "clipperpurple",
+      "clipperbrown",
+      "clippercyan",
+      "clippergray",
+      "clippergreen",
+      "clipperlightgray",
+      "clipperlime",
       "clippermagenta",
+      "clipperorange",
       "clipperpink",
+      "clipperpurple",
+      "clipperred",
+      "clipperwhite",
+      "clipperyellow",
+      "commander",
       "common",
+      "commonbirdwing",
+      "commongrassyellow",
       "emperor",
       "forester",
       "glasswing",
+      "green-skirt-baron",
       "hairstreak",
       "heath",
       "longwing",
       "monarch",
       "morpho",
+      "peacock",
       "rainbow",
       "swallowtail",
-      "peacock",
-      "commongrassyellow",
-      "commander",
-      "commonbirdwing",
-      "bluemoon",
-      "clothes",
-      "luna",
-      "domestic_silk",
-      "peppered",
-      "indianmeal",
-      "spongy",
       "atlas",
       "carpet",
+      "case-bearing-clothes",
+      "clothes",
       "codling",
-      "diamondback"
+      "diamondback",
+      "domestic_silk",
+      "hummingbird",
+      "indianmeal",
+      "luna",
+      "oak-silk",
+      "peppered",
+      "spongy"
     ]
   ]
 }

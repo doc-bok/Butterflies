@@ -1,126 +1,30 @@
 {
-  "type": "forge:add_spawns",
   "biomes": "#minecraft:is_savanna",
   "spawners": [
     {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:buckeye",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
+      "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:buckeye_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
+      "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:buckeye_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
+      "weight": 4
     },
     {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:buckeye_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:chalkhill",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:chalkhill_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:chalkhill_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:chalkhill_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:heath",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
-    },
-    {
-      "type": "butterflies:heath_caterpillar",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
-    },
-    {
-      "type": "butterflies:heath_chrysalis",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
-    },
-    {
-      "type": "butterflies:heath_egg",
-      "weight": 1,
-      "minCount": 1,
-      "maxCount": 3
-    },
-    {
-      "type": "butterflies:luna",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:luna_caterpillar",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:luna_chrysalis",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:luna_egg",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:diamondback",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:diamondback_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:diamondback_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:diamondback_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
+      "weight": 4
     }
-  ]
+  ],
+  "type": "forge:add_spawns"
 }

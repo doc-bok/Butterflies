@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "diamondback",
+  "extraLandingBlocks": "fruit",
+  "habitat": "plains",
+  "index": 44,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "cornflower",
+  "rarity": "common",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "moth"
+}

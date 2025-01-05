@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "atlas",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 39,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "white_tulip",
+  "rarity": "rare",
+  "size": "large",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "moth"
+}

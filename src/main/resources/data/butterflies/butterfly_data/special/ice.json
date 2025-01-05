@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "cathemeral",
+  "eggMultiplier": "normal",
+  "entityId": "ice",
+  "extraLandingBlocks": "none",
+  "habitat": "ice",
+  "index": 53,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "long",
+    "chrysalis": "long",
+    "egg": "long"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "wither_rose",
+  "rarity": "rare",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "type": "special"
+}

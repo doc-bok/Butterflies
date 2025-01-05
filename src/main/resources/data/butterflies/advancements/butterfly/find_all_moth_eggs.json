@@ -24,6 +24,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:case-bearing-clothes_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clothes": {
       "conditions": {
         "items": [
@@ -72,6 +84,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:hummingbird_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "indianmeal": {
       "conditions": {
         "items": [
@@ -90,6 +114,18 @@
           {
             "items": [
               "butterflies:luna_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:oak-silk_egg"
             ]
           }
         ]
@@ -139,34 +175,43 @@
   "parent": "butterflies:butterfly/find_moth_egg",
   "requirements": [
     [
-      "clothes"
-    ],
-    [
-      "luna"
-    ],
-    [
-      "domestic_silk"
-    ],
-    [
-      "peppered"
-    ],
-    [
-      "indianmeal"
-    ],
-    [
-      "spongy"
-    ],
-    [
       "atlas"
     ],
     [
       "carpet"
     ],
     [
+      "case-bearing-clothes"
+    ],
+    [
+      "clothes"
+    ],
+    [
       "codling"
     ],
     [
       "diamondback"
+    ],
+    [
+      "domestic_silk"
+    ],
+    [
+      "hummingbird"
+    ],
+    [
+      "indianmeal"
+    ],
+    [
+      "luna"
+    ],
+    [
+      "oak-silk"
+    ],
+    [
+      "peppered"
+    ],
+    [
+      "spongy"
     ]
   ]
 }

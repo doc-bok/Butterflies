@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -23,9 +22,6 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
 
     // The flower this butterfly prefers.
     private CropBlock foodSource = null;
-
-    // The RNG.
-    private final RandomSource random;
 
     // Has pollination been attempted yet?
     private boolean hasEaten;
@@ -52,8 +48,6 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
                 this.foodSource = cropBlock;
             }
         }
-
-        this.random = this.butterfly.getRandom();
     }
 
     /**
@@ -119,6 +113,20 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
                 }
             }
         }
+    }
+
+    /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Eat Crop / Food Source = [" + this.foodSource.toString() +
+                "] / Target = [" + this.getMoveToTarget() +
+                "] / Reached Target = [" + this.isReachedTarget() +
+                "] / Has Eaten = [" + this.hasEaten +
+                "]";
     }
 
     /**

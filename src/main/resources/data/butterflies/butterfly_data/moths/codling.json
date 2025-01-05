@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "codling",
+  "extraLandingBlocks": "none",
+  "habitat": "forests",
+  "index": 43,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "none",
+  "preferredFlower": "apple",
+  "rarity": "common",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "moth"
+}

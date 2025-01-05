@@ -30,7 +30,7 @@ public class ButterflyScrollModel extends Model {
      * The layer location to register with Forge.
      */
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MODID, "butterfly_scroll"), "main");
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_scroll"), "main");
 
 
     /**

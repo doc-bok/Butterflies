@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "cathemeral",
+  "eggMultiplier": "none",
+  "entityId": "lava",
+  "extraLandingBlocks": "none",
+  "habitat": "nether",
+  "index": 54,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "none",
+  "preferredFlower": "none",
+  "rarity": "rare",
+  "size": "large",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "type": "special"
+}

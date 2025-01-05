@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "forester",
+  "extraLandingBlocks": "none",
+  "habitat": "forests_plains_wetlands",
+  "index": 27,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "lily_of_the_valley",
+  "rarity": "rare",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}
