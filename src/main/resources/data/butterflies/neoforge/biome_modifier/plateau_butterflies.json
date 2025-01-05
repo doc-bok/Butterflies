@@ -2,228 +2,29 @@
   "type": "neoforge:add_spawns",
   "biomes": "#forge:is_plateau",
   "spawners": [
-
     {
-      "type": "butterflies:cabbage",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:cabbage_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:cabbage_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:cabbage_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:common",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:common_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:common_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:common_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:monarch",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:monarch_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:monarch_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:monarch_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:rainbow",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:rainbow_caterpillar",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:rainbow_chrysalis",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:rainbow_egg",
-      "weight": 2,
-      "minCount": 2,
-      "maxCount": 4
-    },
-    {
-      "type": "butterflies:swallowtail",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:swallowtail_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:swallowtail_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:swallowtail_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:peacock",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:peacock_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:peacock_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:peacock_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:commongrassyellow",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:commongrassyellow_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:commongrassyellow_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:commongrassyellow_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:commonbirdwing",
-      "weight": 1,
+      "maxCount": 4,
       "minCount": 1,
-      "maxCount": 3
+      "type": "butterflies:chalkhill",
+      "weight": 4
     },
     {
-      "type": "butterflies:commonbirdwing_caterpillar",
-      "weight": 1,
+      "maxCount": 4,
       "minCount": 1,
-      "maxCount": 3
+      "type": "butterflies:chalkhill_caterpillar",
+      "weight": 4
     },
     {
-      "type": "butterflies:commonbirdwing_chrysalis",
-      "weight": 1,
+      "maxCount": 4,
       "minCount": 1,
-      "maxCount": 3
+      "type": "butterflies:chalkhill_chrysalis",
+      "weight": 4
     },
     {
-      "type": "butterflies:commonbirdwing_egg",
-      "weight": 1,
+      "maxCount": 4,
       "minCount": 1,
-      "maxCount": 3
-    },
-    {
-      "type": "butterflies:bluemoon",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:bluemoonmale",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:bluemoon_caterpillar",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:bluemoon_chrysalis",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
-    },
-    {
-      "type": "butterflies:bluemoon_egg",
-      "weight": 4,
-      "minCount": 3,
-      "maxCount": 5
+      "type": "butterflies:chalkhill_egg",
+      "weight": 4
     }
   ]
 }

@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "crepuscular",
+  "eggMultiplier": "normal",
+  "entityId": "domestic_silk",
+  "extraLandingBlocks": "none",
+  "habitat": "villages",
+  "index": 45,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "red_tulip",
+  "rarity": "common",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "moth"
+}

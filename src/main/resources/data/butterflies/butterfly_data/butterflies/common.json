@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "common",
+  "extraLandingBlocks": "none",
+  "habitat": "forests_and_plains",
+  "index": 23,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "dandelion",
+  "rarity": "common",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}

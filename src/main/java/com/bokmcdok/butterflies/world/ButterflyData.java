@@ -2,12 +2,12 @@ package com.bokmcdok.butterflies.world;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.lang.EnumExtensions;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.google.gson.*;
+import com.mojang.logging.LogUtils;
+import com.sun.jdi.InvalidTypeException;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,10 +15,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.DataFormatException;
 
 /**
  * Helper for converting entity ID to index and vice versa.
@@ -50,7 +53,9 @@ public record ButterflyData(int butterflyIndex,
                             ExtraLandingBlocks extraLandingBlocks,
                             PlantEffect plantEffect,
                             ResourceLocation breedTarget,
-                            EggMultiplier eggMultiplier) {
+                            EggMultiplier eggMultiplier,
+                            boolean caterpillarSounds,
+                            boolean butterflySounds) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -88,11 +93,20 @@ public record ButterflyData(int butterflyIndex,
     // only affects the description. The biome modifiers will determine where
     // they will actually spawn.
     public enum Habitat {
+        NONE,
         FORESTS,
         FORESTS_AND_PLAINS,
         ICE,
         JUNGLES,
-        PLAINS
+        PLAINS,
+        NETHER,
+        FORESTS_AND_WETLANDS,
+        PLAINS_AND_SAVANNAS,
+        PLAINS_AND_WETLANDS,
+        HILLS_AND_PLATEAUS,
+        FORESTS_PLAINS_WETLANDS,
+        VILLAGES,
+        WETLANDS
     }
 
     // Helper enum to determine a butterflies overall lifespan.
@@ -130,6 +144,7 @@ public record ButterflyData(int butterflyIndex,
 
     //  Represents the possible sizes of the butterflies.
     public enum Size {
+        TINY,
         SMALL,
         MEDIUM,
         LARGE,
@@ -203,7 +218,9 @@ public record ButterflyData(int butterflyIndex,
                          ExtraLandingBlocks extraLandingBlocks,
                          PlantEffect plantEffect,
                          ResourceLocation breedTarget,
-                         EggMultiplier eggMultiplier) {
+                         EggMultiplier eggMultiplier,
+                         boolean caterpillarSounds,
+                         boolean butterflySounds) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -214,7 +231,7 @@ public record ButterflyData(int butterflyIndex,
         this.eggLifespan = eggLifespan;
         this.caterpillarLifespan = caterpillarLifespan * 2;
         this.chrysalisLifespan = chrysalisLifespan;
-        this.butterflyLifespan = butterflyLifespan * 2;
+        this.butterflyLifespan = butterflyLifespan == Integer.MAX_VALUE ? Integer.MAX_VALUE : butterflyLifespan * 2;
 
         this.preferredFlower = preferredFlower;
         
@@ -225,6 +242,9 @@ public record ButterflyData(int butterflyIndex,
 
         this.breedTarget = breedTarget;
         this.eggMultiplier = eggMultiplier;
+
+        this.caterpillarSounds = caterpillarSounds;
+        this.butterflySounds = butterflySounds;
     }
 
     /**
@@ -271,6 +291,10 @@ public record ButterflyData(int butterflyIndex,
                 String breedTarget = object.get("breedTarget").getAsString();
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
 
+                JsonObject sounds = object.get("sounds").getAsJsonObject();
+                boolean caterpillarSounds = sounds.get("caterpillar").getAsBoolean();
+                boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
+
                 entry = new ButterflyData(
                         index,
                         entityId,
@@ -288,7 +312,9 @@ public record ButterflyData(int butterflyIndex,
                         extraLandingBlocks,
                         plantEffect,
                         new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
-                        eggMultiplier
+                        eggMultiplier,
+                        caterpillarSounds,
+                        butterflySounds
                 );
             }
 
@@ -309,32 +335,29 @@ public record ButterflyData(int butterflyIndex,
                                                           Class<T> enumeration,
                                                           String key,
                                                           T fallback) {
-            String value = object.get(key).getAsString();
-            return EnumExtensions.searchEnum(enumeration, value, fallback);
-        }
-    }
+            // Check the key exists in the JSON object.
+            JsonElement element = object.get(key);
+            if (element == null) {
+                LogUtils.getLogger().error("Element [{}] missing from [{}]",
+                        key,
+                        object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
 
-    /**
-     * Create new butterfly data.
-     * @param entry The butterfly data.
-     */
-    public static void addButterfly(ButterflyData entry) {
-        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
-        BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
-
-        //  Recount the butterflies
-        if (entry.type != ButterflyType.SPECIAL) {
-            int total = 0;
-            for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
-                if (i.type == entry.type) {
-                    ++total;
-                }
+                return fallback;
             }
 
-            if (entry.type == ButterflyType.BUTTERFLY) {
-                NUM_BUTTERFLIES = total;
-            } else if (entry.type == ButterflyType.MOTH) {
-                NUM_MOTHS = total;
+            String value = element.getAsString();
+            try {
+                return EnumExtensions.searchEnum(enumeration, value);
+            } catch (InvalidTypeException e) {
+
+                // The value specified is invalid, so make sure it's written to the log.
+                LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
+                        object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown",
+                        key,
+                        enumeration,
+                        value);
+
+                return fallback;
             }
         }
     }
@@ -365,6 +388,42 @@ public record ButterflyData(int butterflyIndex,
         }
 
         return -1;
+    }
+
+    /**
+     * Create new butterfly data.
+     * @param entry The butterfly data.
+     */
+    public static void addButterfly(ButterflyData entry)
+            throws DataFormatException {
+        if (ENTITY_ID_TO_INDEX_MAP.containsKey(entry.entityId)) {
+            String message = String.format("Butterfly Data Entry for entity [%s] already exists.", entry.entityId);
+            throw new DataFormatException(message);
+        }
+
+        if (BUTTERFLY_ENTRIES.containsKey(entry.butterflyIndex)) {
+            String message = String.format("Butterfly Data Entry for index [%d] already exists.", entry.butterflyIndex);
+            throw new DataFormatException(message);
+        }
+
+        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId, entry.butterflyIndex);
+        BUTTERFLY_ENTRIES.put(entry.butterflyIndex, entry);
+
+        //  Recount the butterflies
+        if (entry.type != ButterflyType.SPECIAL) {
+            int total = 0;
+            for (ButterflyData i : BUTTERFLY_ENTRIES.values()) {
+                if (i.type == entry.type) {
+                    ++total;
+                }
+            }
+
+            if (entry.type == ButterflyType.BUTTERFLY) {
+                NUM_BUTTERFLIES = total;
+            } else if (entry.type == ButterflyType.MOTH) {
+                NUM_MOTHS = total;
+            }
+        }
     }
 
     /**
@@ -461,6 +520,30 @@ public record ButterflyData(int butterflyIndex,
      */
     public static int getNumMothSpecies() {
         return NUM_MOTHS;
+    }
+
+    /**
+     * Load the butterfly data.
+     * @param resourceManager The resource manager to use for loading.
+     */
+    public static void load(ResourceManager resourceManager) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
+
+        // Get the butterfly JSON files
+        Map<ResourceLocation, Resource> resourceMap =
+                resourceManager.listResources("butterfly_data", (x) -> x.getPath().endsWith(".json"));
+
+        // Parse each one and generate the data.
+        for (ResourceLocation location : resourceMap.keySet()) {
+            try {
+                Resource resource = resourceMap.get(location);
+                BufferedReader reader = resource.openAsReader();
+                ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
+                ButterflyData.addButterfly(butterflyData);
+            } catch (DataFormatException | IOException e) {
+                LogUtils.getLogger().error("Failed to load butterfly data.", e);
+            }
+        }
     }
 
     /**
@@ -564,6 +647,9 @@ public record ButterflyData(int butterflyIndex,
      */
     public float getSizeMultiplier() {
         switch (this.size) {
+            case TINY -> {
+                return 0.5f;
+            }
             case SMALL -> {
                 return 0.7f;
             }

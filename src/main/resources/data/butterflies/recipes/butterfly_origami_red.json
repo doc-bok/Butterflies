@@ -1,0 +1,15 @@
+{
+  "group": "butterfly_origami",
+  "ingredients": [
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:red_dye"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_origami_red"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

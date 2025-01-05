@@ -64,7 +64,7 @@ public class CaterpillarRenderer
      * @param p_115457_ Unknown.
      * @param poseStack The posed model to render.
      * @param multiBufferSource The render buffer.
-     * @param p_115460_ Unknown.
+     * @param packedLightCoordinates The light coordinates.
      */
     @Override
     public void render(@NotNull Caterpillar entity,
@@ -72,7 +72,17 @@ public class CaterpillarRenderer
                        float p_115457_,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
-                       int p_115460_) {
+                       int packedLightCoordinates) {
+
+        // Render any debug information for this entity.
+        EntityDebugInfoRenderer.renderDebugInfo(
+                entity,
+                poseStack,
+                multiBufferSource,
+                this.entityRenderDispatcher.cameraOrientation(),
+                this.getFont(),
+                packedLightCoordinates);
+
         Direction direction = entity.getSurfaceDirection();
         if (direction == Direction.UP) {
             poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
@@ -86,6 +96,6 @@ public class CaterpillarRenderer
             poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
         }
 
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
+        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
     }
 }

@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.ButterflyScrollModel;
-import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.mojang.blaze3d.vertex.PoseStack;

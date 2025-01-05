@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "glasswing",
+  "extraLandingBlocks": "none",
+  "habitat": "jungles",
+  "index": 28,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "orange_tulip",
+  "rarity": "uncommon",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}

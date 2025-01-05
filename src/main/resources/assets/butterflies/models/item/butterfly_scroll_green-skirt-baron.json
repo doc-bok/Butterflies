@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "butterflies:item/butterfly_scroll/butterfly_scroll_green-skirt-baron"
+  }
+}

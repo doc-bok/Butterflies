@@ -1,0 +1,15 @@
+{
+  "group": "butterfly_book_add_page",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_scroll_light"
+    },
+    {
+      "item": "butterflies:butterfly_book"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_book"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

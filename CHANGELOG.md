@@ -1,5 +1,131 @@
 ## Changelog
 
+### 6.0.0
+ - Villager Release
+
+### 5.14.1 (2025-01-05)
+ - Christmas butterflies enjoy fruit.
+
+### 5.14.0 (2024-12-29)
+ - Added the Christmas Butterfly.
+
+### 5.13.6 (2024-12-11)
+ - Fixed caterpillars getting stuck on the edge of blocks.
+
+### 5.13.5 (2024-12-11)
+ - Improved log output for butterfly goals.
+
+### 5.13.4 (2024-12-11)
+ - Added debug information for butterfly states.
+ - Tweaked landing mechanics so they're more reliable.
+
+### 5.13.3 (2024-12-04)
+ - Removed logspam caused by flower bud blockstates.
+
+### 5.13.2 (2024-12-04)
+ - Hummingbird Moths will now have ambient sound.
+
+### 5.13.1 (2024-12-04)
+ - Fixed hummingbird wing animations.
+
+### 5.13.0 (2024-12-04)
+ - Added the hummingbird moth.
+
+### 5.12.2 (2024-11-26)
+ - Generator will now ensure `entityId` is correct.
+
+### 5.12.1 (2024-11-26)
+- Added a check for duplicate entity IDs or indexes.
+
+### 5.12.0 (2024-11-18)
+- Added the Case Bearing Moth and the Oak Silk Moth.
+
+### 5.11.0 (2024-11-13)
+- Added the Green Skirt Baron.
+- Improved error handling for invalid data
+
+### 5.10.2 (2024-11-10)
+- The grave now has two bottled Féileacáin.
+
+### 5.10.1 (2024-11-10)
+- The grave now shows both lover's names and will spawn Féileacáin.
+
+### 5.10.0 (2024-11-10)
+- Added Liang Shanbo's grave.
+
+### 5.9.1 (2024-11-07)
+- Improved Féileacáin texture.
+- 
+### 5.9.0 (2024-11-07)
+- Added the Féileacáin.
+
+### 5.8.2 (2024-10-31)
+- Added idle animations to the Butterfly Golem.
+
+### 5.8.1 (2024-10-31)
+- Added loot table and spawn rules to Butterfly Golem.
+
+### 5.8.0 (2024-10-31)
+- Added the butterfly golem.
+
+### 5.7.1 (2024-10-22)
+- Added missing translation strings for egg entities.
+
+### 5.7.0 (2024-10-22)
+- Added Butterfly Origami.
+
+### 5.6.0 (2024-09-27)
+- Added the Butterfly Banner Pattern.
+
+### 5.5.1 (2024-09-25)
+- Wandering Traders now offer uncommon butterflies as generic trades, replacing 
+  the rare trades.
+
+### 5.5.0 (2024-09-18)
+- Added the Butterfly Pottery Sherd.
+
+### 5.4.1 (2024-09-17)
+- Reduced drop rate of infested apples.
+
+### 5.4.0 (2024-09-16)
+- Added wandering villager trades.
+
+### 5.3.1 (2024-09-10)
+- Fixed missing entities from NBT files.
+
+### 5.3.0 (2024-09-10)
+- Added the Lepidopterist House.
+
+### 5.2.2 (2024-09-10)
+- Added Hero of the Village rewards to the lepidopterist.
+
+### 5.2.1 (2024-09-10)
+- Changed Lepidopterist job sound to planting flowers.
+
+### 5.2.0 (2024-08-26)
+- Added the lepidopterist.
+
+### 5.1.1 (2024-08-20)
+- Butterfly data is now the source of truth for data generation.
+
+### 5.1.0 (2024-08-20)
+- Added the butterfly feeder.
+
+### 5.0.7 (2024-08-18)
+- More refactoring to remove static registry references.
+
+### 5.0.6 (2024-08-18)
+- Refactored code to rely less on static variables.
+
+### 5.0.5 (2024-08-18)
+- Fix plateau and plain biome modifiers being confused.
+
+### 5.0.4 (2024-08-18)
+- Biome modifiers can now be generated.
+- 
+### 5.0.3 (2024-09-16)
+- Increased Client Tracking Range for butterflies.
+- 
 ### 5.0.2 (2024-09-16)
 - Fixed infested apples dropping for any broken block.
 

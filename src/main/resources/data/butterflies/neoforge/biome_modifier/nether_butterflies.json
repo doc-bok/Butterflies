@@ -3,10 +3,10 @@
   "biomes": "#minecraft:is_nether",
   "spawners": [
     {
-      "type": "butterflies:lava",
-      "weight": 1,
+      "maxCount": 2,
       "minCount": 1,
-      "maxCount": 3
+      "type": "butterflies:lava",
+      "weight": 1
     }
   ]
 }

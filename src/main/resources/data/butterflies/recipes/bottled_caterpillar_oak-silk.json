@@ -1,0 +1,15 @@
+{
+  "group": "bottled_caterpillar",
+  "ingredients": [
+    {
+      "item": "butterflies:caterpillar_oak-silk"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "butterflies:bottled_caterpillar_oak-silk"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

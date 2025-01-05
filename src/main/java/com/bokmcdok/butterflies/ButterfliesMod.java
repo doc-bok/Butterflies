@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies;
 
+import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
@@ -21,7 +22,9 @@ import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
 
 import java.util.Arrays;
 
-// The value here should match an entry in the META-INF/mods.toml file
+/**
+ * The main entry point for the mod.
+ */
 @Mod(ButterfliesMod.MOD_ID)
 public class ButterfliesMod
 {
@@ -29,36 +32,54 @@ public class ButterfliesMod
     public static final String MOD_ID = "butterflies";
 
     /**
-     * Constructor - The main entry point for the mod.
+     * Constructor.
      */
     public ButterfliesMod() {
-        final IEventBus modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
-        if (modEventBus != null) {
-            // Register ourselves for server and other game events we are interested in
-            // modEventBus.register(this);
-            modEventBus.addListener(this::commonSetup);
+        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-            // Deferred registries.
-            BlockRegistry.INSTANCE.register(modEventBus);
-            BlockEntityTypeRegistry.INSTANCE.register(modEventBus);
-            EntityTypeRegistry.INSTANCE.register(modEventBus);
-            ItemRegistry.INSTANCE.register(modEventBus);
-            LootModifierRegistry.INSTANCE.register(modEventBus);
-        }
+        // Create the registries.
+        BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
+        BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
+        BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
+        EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
+        ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
+        LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
+        MenuTypeRegistry menuTypeRegistry = new MenuTypeRegistry(modEventBus);
+        PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
+        VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
+
+        // Initialise the registries. Do this here because (e.g.)
+        // blockEntityTypeRegistry requires blockRegistry to be created and
+        // vice-versa.
+        bannerPatternRegistry.initialise();
+        blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
+        blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
+        decoratedPotPatternsRegistry.initialise();
+        entityTypeRegistry.initialise(blockRegistry);
+        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
+        lootModifierRegistry.initialise(itemRegistry);
+        menuTypeRegistry.initialise();
+        poiTypesRegistry.initialise(blockRegistry);
+        villagerProfessionRegistry.initialise(poiTypesRegistry);
+
+        // Create the Mod event listeners
+        new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
+        new ModEventListener(modEventBus, itemRegistry);
+
+        // Create the Forge event listeners.
+        new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
+        new ForgeEventListener(forgeEventBus);
+        new LivingEventListener(forgeEventBus);
+        new MobSpawnEventListener(forgeEventBus, entityTypeRegistry);
+        new NetworkEventListener(forgeEventBus);
+        new PlayerEventListener(forgeEventBus);
+        new ServerEventListener(forgeEventBus);
+        new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
 
         // Mod Config Settings
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
-    }
-
-    /**
-     * Common setup event where we register brewing recipes.
-     * @param event The event class.
-     */
-    private void commonSetup(FMLCommonSetupEvent event) {
-        int monarchIndex = Arrays.asList(ButterflySpeciesList.SPECIES).indexOf("monarch");
-        BrewingRecipeRegistry.addRecipe(
-                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-                Ingredient.of(ItemRegistry.CATERPILLAR_ITEMS.get(monarchIndex).get()),
-                PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
     }
 }

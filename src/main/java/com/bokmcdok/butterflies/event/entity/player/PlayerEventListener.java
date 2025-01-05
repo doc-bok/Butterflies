@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.event.entity.player;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
@@ -25,15 +24,47 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 /**
  * Holds event listeners for player actions.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerEventListener {
+
+    /**
+     * Construction
+     * @param forgeEventBus The event bus to register with.
+     */
+    public PlayerEventListener(IEventBus forgeEventBus) {
+        forgeEventBus.register(this);
+        forgeEventBus.addListener(this::onEntityInteractEvent);
+        forgeEventBus.addListener(this::onItemCraftedEvent);
+    }
+
+    /**
+     * Called when a player interacts with an entity.
+     * @param event The interaction event
+     */
+    private void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
+        if (event.getTarget() instanceof Cat cat) {
+            Player player = event.getEntity();
+            InteractionHand hand = event.getHand();
+            ItemStack stack = player.getItemInHand(hand);
+            Item item = stack.getItem();
+            if (item instanceof NameTagItem) {
+                String name = stack.getHoverName().getString();
+
+                //  If the cat is named Snow, then change it to a white cat.
+                if ("Snow".equals(name)) {
+                    CatVariant variant = BuiltInRegistries.CAT_VARIANT.get(CatVariant.WHITE);
+                    if (variant != null) {
+                        cat.setVariant(variant);
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * Handles adding new pages to a butterfly book.
      * @param event The event data
      */
-    @SubscribeEvent
-    public static void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
+    private void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
 
         ItemStack craftingItem = event.getCrafting();
         if (craftingItem.getItem() instanceof ButterflyBookItem) {
@@ -77,31 +108,6 @@ public class PlayerEventListener {
                     ItemStack inventoryItem = inventory.getItem(j);
                     if (inventoryItem.getItem() instanceof ButterflyBookItem) {
                         ButterflyBookItem.addPage(oldBook, craftingItem, index);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Called when a player interacts with an entity.
-     * @param event The interaction event
-     */
-    @SubscribeEvent
-    public static void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
-        if (event.getTarget() instanceof Cat cat) {
-            Player player = event.getEntity();
-            InteractionHand hand = event.getHand();
-            ItemStack stack = player.getItemInHand(hand);
-            Item item = stack.getItem();
-            if (item instanceof NameTagItem) {
-                String name = stack.getHoverName().getString();
-
-                //  If the cat is named Snow, then change it to a white cat.
-                if ("Snow".equals(name)) {
-                    CatVariant variant = BuiltInRegistries.CAT_VARIANT.get(CatVariant.WHITE);
-                    if (variant != null) {
-                        cat.setVariant(variant);
                     }
                 }
             }

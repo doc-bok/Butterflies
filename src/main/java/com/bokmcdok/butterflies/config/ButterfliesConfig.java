@@ -3,21 +3,33 @@ package com.bokmcdok.butterflies.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
+/**
+ * Holds config options for the butterflies.
+ */
 public class ButterfliesConfig {
     public static final ModConfigSpec SERVER_CONFIG;
+
 
     public static ModConfigSpec.DoubleValue doubleEggChance;
     public static ModConfigSpec.IntValue eggLimit;
     public static ModConfigSpec.IntValue maxDensity;
     public static ModConfigSpec.BooleanValue enableLifespan;
     public static ModConfigSpec.BooleanValue enablePollination;
+    public static ModConfigSpec.BooleanValue debugInformation;
 
+    /*
+      Static initialisation for the configurations - they need to be loaded
+      before anything else.
+     */
     static {
         ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
         setupServerConfig(configBuilder);
         SERVER_CONFIG = configBuilder.build();
     }
-
+    /**
+     * Set up the server configuration.
+     * @param builder The spec builder.
+     */
     private static void setupServerConfig(ModConfigSpec.Builder builder) {
         builder.comment("This category holds configs for the butterflies mod.");
         builder.push("Butterfly Options");
@@ -42,6 +54,10 @@ public class ButterfliesConfig {
         enablePollination = builder
                 .comment("If set to TRUE butterflies will pollinate flowers and cause new ones to grow.")
                         .define("enable_pollination", true);
+
+        debugInformation = builder
+                .comment("If set to TRUE debug information will be rendered.")
+                .define("debug_info", false);
 
         builder.pop();
     }
