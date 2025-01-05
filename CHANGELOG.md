@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.0.0
+ - Villager Release
+
 ### 5.14.1 (2025-01-05)
  - Christmas butterflies enjoy fruit.
 

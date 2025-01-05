@@ -3,6 +3,9 @@ This mod adds butterflies with a full life cycle to the world of Minecraft. It
 features several butterfly species as well as several moth species. Most are
 based on real-life butterflies but a few are pure fantasy creatures.
 
+This latest version contains various fixes, as well as some villager related
+features to enhance your experience with butterflies.
+
 ## Features 
 
 ### Butterflies and Moths
@@ -71,6 +74,25 @@ Butterflies can be bred by players feeding them their favourite flower (or
 other plant). You will need to learn what their favourite food is by studying
 the butterfly book.
 
+### Butterfly Feeder
+
+These can be filled with food to allow automated breeding of butterflies. They
+can only take one stack at a time though.
+
+### Lepidopterist
+
+This new village will provide players with butterfly-related trades.
+
+### New Cosmetic Items
+
+Butterfly banners and butterfly origami add some butterfly related flavour for
+builders and collectors.
+
+### Secrets
+
+There are a few secret features in the mod. Books with ancient poetry, strange
+moths, and butterfly-related structures. Can you discover them all?
+
 ### Server Config
 
 There are now server config options to help manage butterfly growth. You can
@@ -92,16 +114,19 @@ before breeding is disabled. If set to zero, this is ignored (default: `16`).
 **enable_pollination:** If set to TRUE butterflies will pollinate flowers and
 cause them to spread (default: `true`)
 
+**debug_info** If set to TRUE debug information will be rendered (default: `false`)
+
 ## Latest Release
-- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.4.jar)
-- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.2.jar)
-- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.20.1.jar)
-- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/5.0.0/butterflies-5.0.0-for-1.19.2.jar)
+- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.4.jar)
+- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.2.jar)
+- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.1.jar)
+- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
+- [Bok’s Butterflies v5.0.0](https://github.com/doc-bok/Butterflies/releases/tag/5.0.0)
 - [Bok’s Butterflies v4.0.0](https://github.com/doc-bok/Butterflies/releases/tag/4.0.0)
 - [Bok’s Butterflies v3.4.0](https://github.com/doc-bok/Butterflies/releases/tag/3.4.0)
 - [Bok’s Butterflies v3.1.0](https://github.com/doc-bok/Butterflies/releases/tag/3.1.0)
@@ -125,7 +150,6 @@ cause them to spread (default: `true`)
 
 ## Other Locations
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-butterflies)
-- [Minecraft Forums](https://www.minecraftforum.net/forums/mapping-and-modding-java-edition/minecraft-mods/3195810-boks-butterflies-v3-0-0-caterpillar-release)
 - [Modrinth](https://modrinth.com/mod/boks-butterflies/)
 - [Planet Minecraft](https://www.planetminecraft.com/mod/bok-s-butterflies/)
 
