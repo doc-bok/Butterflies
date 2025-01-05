@@ -13,12 +13,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * This is the renderer for all the butterflies in the game.
+ * This is the renderer for all the butterflies and moths in the game.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
+public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
     /**
      * Bakes a new model for the renderer
+     *
      * @param context The current rendering context
      */
     public ButterflyRenderer(EntityRendererProvider.Context context) {
@@ -27,6 +28,7 @@ public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
 
     /**
      * Gets the texture to use
+     *
      * @param entity The butterfly entity
      * @return The texture to use for this entity
      */
@@ -37,12 +39,13 @@ public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
 
     /**
      * Override to fix a bug with the model's orientation.
-     * @param entity The butterfly entity.
-     * @param p_115456_ Unknown.
-     * @param p_115457_ Unknown.
-     * @param poseStack The pose stack.
+     *
+     * @param entity            The butterfly entity.
+     * @param p_115456_         Unknown.
+     * @param p_115457_         Unknown.
+     * @param poseStack         The pose stack.
      * @param multiBufferSource The render buffer (I think...)
-     * @param p_115460_ Unknown.
+     * @param packedLightCoordinates The light coordinates.
      */
     @Override
     public void render(@NotNull Butterfly entity,
@@ -50,22 +53,33 @@ public class ButterflyRenderer  extends MobRenderer<Butterfly, ButterflyModel> {
                        float p_115457_,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
-                       int p_115460_) {
+                       int packedLightCoordinates) {
+
+        // Render any debug information for this entity.
+        EntityDebugInfoRenderer.renderDebugInfo(
+                entity,
+                poseStack,
+                multiBufferSource,
+                this.entityRenderDispatcher.cameraOrientation(),
+                this.getFont(),
+                packedLightCoordinates);
 
         // When the models were initially created no thought was given as to
         // what orientation they needed to be in. Rotating them here allows
         // them to use Minecraft's pathfinding systems without having to redo
         // the model from scratch.
+        poseStack.pushPose();
         poseStack.mulPose(Vector3f.YP.rotationDegrees(-90.f));
-
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
+        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
+        poseStack.popPose();
     }
 
     /**
      * Scale the entity down
+     *
      * @param entity The butterfly entity
-     * @param poses The current entity pose
-     * @param scale The scale that should be applied
+     * @param poses  The current entity pose
+     * @param scale  The scale that should be applied
      */
     @Override
     protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {

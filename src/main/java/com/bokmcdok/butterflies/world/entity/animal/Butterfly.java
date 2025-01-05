@@ -2,8 +2,10 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -12,9 +14,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -42,13 +45,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Calendar;
 import java.util.Objects;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
  * fertilising plants.
  */
-public class Butterfly extends Animal {
+public class Butterfly extends Animal implements DebugInfoSupplier {
 
     // Serializers for data stored in the save data.
     protected static final EntityDataAccessor<Boolean> DATA_IS_FERTILE =
@@ -57,6 +61,8 @@ public class Butterfly extends Animal {
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.BOOLEAN);
     protected static final EntityDataAccessor<Integer> DATA_NUM_EGGS =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
+    protected static final EntityDataAccessor<String> DATA_GOAL_STATE =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
 
     // Names of the attributes stored in the save data.
     protected static final String IS_FERTILE = "is_fertile";
@@ -72,8 +78,11 @@ public class Butterfly extends Animal {
     // The butterfly's data - created on access.
     private ButterflyData data = null;
 
-    //  The location of the texture that the renderer should use.
+    // The location of the texture that the renderer should use.
     private final ResourceLocation texture;
+
+    // A reference to the block registry.
+    private final BlockRegistry blockRegistry;
 
     /**
      * Checks custom rules to determine if the entity can spawn.
@@ -190,14 +199,28 @@ public class Butterfly extends Animal {
      * @param entityType The type of the entity.
      * @param level The level where the entity exists.
      */
-    public Butterfly(EntityType<? extends Butterfly> entityType,
+    public Butterfly(BlockRegistry blockRegistry,
+                     EntityType<? extends Butterfly> entityType,
                      Level level) {
         super(entityType, level);
+
+        this.blockRegistry = blockRegistry;
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        this.texture = new ResourceLocation(ButterfliesMod.MODID, "textures/entity/butterfly/butterfly_" + ButterflyData.getSpeciesString(this) + ".png");
+        // Support for Christmas Butterfly texture change.
+        String species = ButterflyData.getSpeciesString(this);
+        if (species.contains("christmas")) {
+            Calendar calendar = Calendar.getInstance();
+            if (calendar.get(Calendar.MONTH) + 1 == 12 &&
+                    calendar.get(Calendar.DAY_OF_MONTH) >= 24 &&
+                    calendar.get(Calendar.DAY_OF_MONTH) <= 26) {
+                species = "christmas_alt";
+            }
+        }
+
+        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + species + ".png");
 
         setAge(-getData().butterflyLifespan());
     }
@@ -267,6 +290,14 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Accessor for the block registry.
+     * @return The block registry.
+     */
+    public BlockRegistry getBlockRegistry() {
+        return blockRegistry;
+    }
+
+    /**
      * Butterflies won't produce offspring: they lay eggs instead.
      * @param level The current level
      * @param mob The parent mod
@@ -285,6 +316,14 @@ public class Butterfly extends Animal {
      */
     public int getButterflyIndex() {
         return getData().butterflyIndex();
+    }
+
+    /**
+     * Get the current goal state, used for debugging.
+     * @return The current goal state.
+     */
+    public String getDebugInfo() {
+        return entityData.get(DATA_GOAL_STATE);
     }
 
     /**
@@ -351,6 +390,7 @@ public class Butterfly extends Animal {
      */
     public float getScale() {
         switch (getData().size()) {
+            case TINY -> { return 0.15f; }
             case SMALL -> { return 0.25f; }
             case LARGE ->{ return 0.45f; }
             case HUGE ->{ return 0.55f; }
@@ -428,12 +468,7 @@ public class Butterfly extends Animal {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
-            public boolean isStableDestination(@NotNull BlockPos blockPos) {
-                return this.level.getBlockState(blockPos).isAir() ||
-                       this.level.getBlockState(blockPos).is(BlockTags.FLOWERS);
-            }
-        };
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
 
         if (getData().speed() == ButterflyData.Speed.FAST) {
 
@@ -589,6 +624,22 @@ public class Butterfly extends Animal {
     }
 
     /**
+     * Set the number of eggs this butterfly can lay.
+     * @param numEggs The number of eggs remaining.
+     */
+    public void setNumEggs(int numEggs) {
+        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
+    }
+
+    /**
+     * Set the goal state displayed when debugging.
+     * @param goalState The current goal state.
+     */
+    public void setGoalState(String goalState) {
+        entityData.set(DATA_GOAL_STATE, goalState);
+    }
+
+    /**
      * Hacky fix to stop butterflies teleporting.
      * TODO: We need a better fix than this.
      * @param x The x-position.
@@ -652,11 +703,26 @@ public class Butterfly extends Animal {
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.enableLifespan.get()) {
-            if (!this.isPersistenceRequired() &&
-                    this.getAge() >= 0 &&
-                    this.random.nextInt(0, 15) == 0) {
-                this.kill();
+            if (getData().getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
+                if (!this.isPersistenceRequired() &&
+                        this.getAge() >= 0 &&
+                        this.random.nextInt(0, 15) == 0) {
+                    this.kill();
+                }
             }
+        }
+
+        //  Don't do this unless the debug information flag is set.
+        if (ButterfliesConfig.debugInformation.get()) {
+            StringBuilder debugOutput = new StringBuilder();
+            WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
+
+            for (WrappedGoal goal : runningGoals) {
+                debugOutput.append(goal.getGoal());
+                debugOutput.append(" / ");
+            }
+
+            setGoalState(debugOutput.toString());
         }
     }
 
@@ -669,6 +735,7 @@ public class Butterfly extends Animal {
         this.entityData.define(DATA_IS_FERTILE, false);
         this.entityData.define(DATA_LANDED, false);
         this.entityData.define(DATA_NUM_EGGS, 1);
+        this.entityData.define(DATA_GOAL_STATE, "");
     }
 
     /**
@@ -693,20 +760,35 @@ public class Butterfly extends Animal {
     }
 
     /**
-     * Override to control an entity's relative volume. Butterflies are silent.
-     * @return Always zero, so butterflies are silent.
-     */
-    @Override
-    protected float getSoundVolume() {
-        return 0.0f;
-    }
-
-    /**
      * Get the texture to use for rendering.
      * @return The resource location of the texture.
      */
     public ResourceLocation getTexture() {
         return texture;
+    }
+
+    /**
+     * Return an ambient sound for the caterpillar. If the sound doesn't exist
+     * it just won't play.
+     * @return A reference to the ambient sound.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (getIsActive() && getData().butterflySounds()) {
+            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+        }
+
+        return super.getAmbientSound();
+    }
+
+    /**
+     * Override to control an entity's relative volume. Butterflies are silent.
+     * @return Always zero, so butterflies are silent.
+     */
+    @Override
+    protected float getSoundVolume() {
+        return 0.2f;
     }
 
     /**
@@ -728,13 +810,5 @@ public class Butterfly extends Animal {
         }
 
         return this.data;
-    }
-
-    /**
-     * Set the number of eggs this butterfly can lay.
-     * @param numEggs The number of eggs remaining.
-     */
-    private void setNumEggs(int numEggs) {
-        entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
     }
 }

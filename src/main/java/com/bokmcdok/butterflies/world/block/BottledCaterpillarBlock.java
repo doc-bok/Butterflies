@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.core.BlockPos;
@@ -10,7 +11,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -21,11 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class BottledCaterpillarBlock extends Block {
-
-    //  The name this block is registered under.
-    public static String getRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
 
     private static final String NAME = "block.butterflies.bottled_caterpillar";
 
@@ -42,10 +41,16 @@ public class BottledCaterpillarBlock extends Block {
 
     /**
      * Create a butterfly block
-     * @param properties The properties of this block
      */
-    public BottledCaterpillarBlock(Properties properties) {
-        super(properties);
+    public BottledCaterpillarBlock() {
+        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F));
     }
 
     /**

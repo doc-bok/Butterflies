@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "heath",
+  "extraLandingBlocks": "none",
+  "habitat": "plains",
+  "index": 31,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "egg": "long"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "white_tulip",
+  "rarity": "rare",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}

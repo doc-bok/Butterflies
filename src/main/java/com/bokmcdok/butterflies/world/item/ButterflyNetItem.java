@@ -37,24 +37,27 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         return "butterfly_net_" + ButterflySpeciesList.SPECIES[butterflyIndex];
     }
 
-    //  The name this item is registered under.
+    // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    //  TODO: Remove this item
-    public static final String FULL_NAME = "butterfly_net_full";
-
+    // The localisation string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
-    //  The index of the butterfly species.
+    // Reference to the item registry.
+    private final ItemRegistry itemRegistry;
+
+    // The index of the butterfly species.
     private final int butterflyIndex;
 
     /**
      * Construction
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(int butterflyIndex) {
+    public ButterflyNetItem(ItemRegistry itemRegistry,
+                            int butterflyIndex) {
         super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
 
+        this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -102,7 +105,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return new ItemStack(ItemRegistry.BUTTERFLY_NET.get());
+        return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
     }
 
     /**
@@ -138,11 +141,11 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (entity instanceof Butterfly butterfly) {
 
-            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            RegistryObject<Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 
-                if (item != ItemRegistry.BUTTERFLY_NET_BURNT) {
+                if (item != itemRegistry.getBurntButterflyNet()) {
                     entity.discard();
                 }
 
@@ -182,7 +185,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
             Butterfly.spawn(player.getLevel(), entity, positionToSpawn, false);
 
-            ItemStack newStack = new ItemStack(ItemRegistry.BUTTERFLY_NET.get(), 1);
+            ItemStack newStack = new ItemStack(itemRegistry.getEmptyButterflyNet().get(), 1);
             player.setItemInHand(hand, newStack);
 
             return InteractionResultHolder.success(stack);

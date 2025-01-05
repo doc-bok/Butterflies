@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -28,11 +27,6 @@ import java.util.List;
 
 public class BottledButterflyBlock extends Block {
 
-    //  The name this block is registered under.
-    public static String getRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
-    }
-
     private static final String NAME = "block.butterflies.bottled_butterfly";
 
     //  The bottle's "model".
@@ -49,15 +43,8 @@ public class BottledButterflyBlock extends Block {
     /**
      * Create a butterfly block
      */
-    public BottledButterflyBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.GLASS)
-                .strength(0.3F));
+    public BottledButterflyBlock(Properties properties) {
+        super(properties);
     }
 
     /**

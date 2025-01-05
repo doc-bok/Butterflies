@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "emperor",
+  "extraLandingBlocks": "logs",
+  "habitat": "forests",
+  "index": 26,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "red_tulip",
+  "rarity": "common",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "type": "butterfly"
+}

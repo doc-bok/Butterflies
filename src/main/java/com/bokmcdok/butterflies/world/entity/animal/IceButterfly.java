@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -14,8 +15,10 @@ public class IceButterfly extends Butterfly {
      * @param entityType The type of the entity.
      * @param level      The level where the entity exists.
      */
-    public IceButterfly(EntityType<? extends Butterfly> entityType, Level level) {
-        super(entityType, level);
+    public IceButterfly(BlockRegistry blockRegistry,
+                        EntityType<? extends Butterfly> entityType,
+                        Level level) {
+        super(blockRegistry, entityType, level);
     }
 
     @Override

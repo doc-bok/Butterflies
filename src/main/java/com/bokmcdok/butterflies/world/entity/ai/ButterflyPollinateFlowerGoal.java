@@ -1,12 +1,13 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
-import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,7 +25,8 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private final Block preferredFlower;
+    private final Block preferredFlowerBlock;
+    private final Item preferredFlowerItem;
 
     // The RNG.
     public final RandomSource random;
@@ -48,9 +50,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
-            this.preferredFlower = ForgeRegistries.BLOCKS.getValue(data.preferredFlower());
+            this.preferredFlowerBlock = ForgeRegistries.BLOCKS.getValue(data.preferredFlower());
+            this.preferredFlowerItem = ForgeRegistries.ITEMS.getValue(data.preferredFlower());
         } else {
-            this.preferredFlower = null;
+            this.preferredFlowerBlock = null;
+            this.preferredFlowerItem = null;
         }
 
         this.random = this.butterfly.getRandom();
@@ -109,18 +113,39 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             if (!attemptedToPollinate) {
                 attemptedToPollinate = true;
 
-                if (this.random.nextInt() % 5 == 0) {
-                    BlockPos spawnPos = findNearestFlowerSpot();
-                    if (spawnPos != null) {
-                        BlockState blockState = this.mob.level.getBlockState(this.blockPos);
-                        Block budBlock = BlockRegistry.getFlowerBud(blockState.getBlock());
-                        if (budBlock != null) {
-                            this.mob.level.setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                if (butterfly.level().getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+                    if (feeder.getItem(0).is(preferredFlowerItem)) {
+                        butterfly.setNumEggs(1);
+                        feeder.removeItem(0, 1);
+                    }
+                } else {
+                    if (this.random.nextInt() % 5 == 0) {
+                        BlockPos spawnPos = findNearestFlowerSpot();
+                        if (spawnPos != null) {
+                            BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                            Block budBlock = getFlowerBud(blockState.getBlock());
+                            if (budBlock != null) {
+                                this.mob.level().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Pollinate Flower / Target = [" + this.getMoveToTarget() +
+                "] / Reached Target = [" + this.isReachedTarget() +
+                "] / Attempted to Pollinate = [" + this.attemptedToPollinate +
+                "] / Num Eggs = [" + this.butterfly.getNumEggs() +
+                "]";
     }
 
     /**
@@ -136,10 +161,18 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             return false;
         }
 
+        // Butterflies will look for feeders.
+        if (butterfly.getNumEggs() == 0 &&
+                levelReader.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+            if (feeder.getItem(0).is(preferredFlowerItem)) {
+                return true;
+            }
+        }
+
         BlockState blockState = levelReader.getBlockState(blockPos);
 
         // If this is the butterfly's preferred flower it is always valid.
-        if (blockState.is(this.preferredFlower)) {
+        if (blockState.is(this.preferredFlowerBlock)) {
             return true;
         }
 
@@ -176,6 +209,75 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                     }
                 }
             }
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets the flower bud for the specified flower block.
+     * @param flowerBlock The flower we are trying to seed.
+     * @return The bud block for the specified flower, if any.
+     */
+    private Block getFlowerBud(Block flowerBlock) {
+        if (flowerBlock == Blocks.ALLIUM) {
+            return butterfly.getBlockRegistry().getAlliumBud().get();
+        }
+
+        if (flowerBlock == Blocks.AZURE_BLUET) {
+            return butterfly.getBlockRegistry().getAzureBluetBud().get();
+        }
+
+        if (flowerBlock == Blocks.BLUE_ORCHID) {
+            return butterfly.getBlockRegistry().getBlueOrchidBud().get();
+        }
+
+        if (flowerBlock == Blocks.CORNFLOWER) {
+            return butterfly.getBlockRegistry().getCornflowerBud().get();
+        }
+
+        if (flowerBlock == Blocks.DANDELION) {
+            return butterfly.getBlockRegistry().getDandelionBud().get();
+        }
+
+        if (flowerBlock == Blocks.LILY_OF_THE_VALLEY) {
+            return butterfly.getBlockRegistry().getLilyOfTheValleyBud().get();
+        }
+
+        if (flowerBlock == Blocks.ORANGE_TULIP) {
+            return butterfly.getBlockRegistry().getOrangeTulipBud().get();
+        }
+
+        if (flowerBlock == Blocks.OXEYE_DAISY) {
+            return butterfly.getBlockRegistry().getOxeyeDaisyBud().get();
+        }
+
+        if (flowerBlock == Blocks.PINK_TULIP) {
+            return butterfly.getBlockRegistry().getPinkTulipBud().get();
+        }
+
+        if (flowerBlock == Blocks.POPPY) {
+            return butterfly.getBlockRegistry().getPoppyBud().get();
+        }
+
+        if (flowerBlock == Blocks.RED_TULIP) {
+            return butterfly.getBlockRegistry().getRedTulipBud().get();
+        }
+
+        if (flowerBlock == Blocks.TORCHFLOWER) {
+            return Blocks.TORCHFLOWER_CROP;
+        }
+
+        if (flowerBlock == Blocks.WHITE_TULIP) {
+            return butterfly.getBlockRegistry().getWhiteTulipBud().get();
+        }
+
+        if (flowerBlock == Blocks.WITHER_ROSE) {
+            return butterfly.getBlockRegistry().getWitherRoseBud().get();
+        }
+
+        if (flowerBlock == Blocks.SWEET_BERRY_BUSH) {
+            return Blocks.SWEET_BERRY_BUSH;
         }
 
         return null;

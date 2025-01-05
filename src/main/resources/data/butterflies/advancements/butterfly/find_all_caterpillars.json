@@ -60,6 +60,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "christmas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_christmas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clipper": {
       "conditions": {
         "items": [
@@ -336,6 +348,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_green-skirt-baron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hairstreak": {
       "conditions": {
         "items": [
@@ -454,6 +478,9 @@
       "admiral"
     ],
     [
+      "bluemoon"
+    ],
+    [
       "buckeye"
     ],
     [
@@ -463,55 +490,67 @@
       "chalkhill"
     ],
     [
+      "christmas"
+    ],
+    [
       "clipper"
-    ],
-    [
-      "clipperwhite"
-    ],
-    [
-      "clipperlightgray"
-    ],
-    [
-      "clippergray"
     ],
     [
       "clipperblack"
     ],
     [
+      "clipperblue"
+    ],
+    [
       "clipperbrown"
-    ],
-    [
-      "clipperred"
-    ],
-    [
-      "clipperorange"
-    ],
-    [
-      "clipperyellow"
-    ],
-    [
-      "clipperlime"
-    ],
-    [
-      "clippergreen"
     ],
     [
       "clippercyan"
     ],
     [
-      "clipperblue"
+      "clippergray"
     ],
     [
-      "clipperpurple"
+      "clippergreen"
+    ],
+    [
+      "clipperlightgray"
+    ],
+    [
+      "clipperlime"
     ],
     [
       "clippermagenta"
     ],
     [
+      "clipperorange"
+    ],
+    [
       "clipperpink"
     ],
     [
+      "clipperpurple"
+    ],
+    [
+      "clipperred"
+    ],
+    [
+      "clipperwhite"
+    ],
+    [
+      "clipperyellow"
+    ],
+    [
+      "commander"
+    ],
+    [
       "common"
+    ],
+    [
+      "commonbirdwing"
+    ],
+    [
+      "commongrassyellow"
     ],
     [
       "emperor"
@@ -521,6 +560,9 @@
     ],
     [
       "glasswing"
+    ],
+    [
+      "green-skirt-baron"
     ],
     [
       "hairstreak"
@@ -538,25 +580,13 @@
       "morpho"
     ],
     [
+      "peacock"
+    ],
+    [
       "rainbow"
     ],
     [
       "swallowtail"
-    ],
-    [
-      "peacock"
-    ],
-    [
-      "commongrassyellow"
-    ],
-    [
-      "commander"
-    ],
-    [
-      "commonbirdwing"
-    ],
-    [
-      "bluemoon"
     ]
   ]
 }

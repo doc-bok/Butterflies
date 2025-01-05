@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity.ai;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MoveTowardsTargetGoal;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A goal for butterflies that want to mate.
@@ -60,5 +61,17 @@ public class ButterflyMatingGoal extends MoveTowardsTargetGoal {
                 }
             }
         }
+    }
+
+    /**
+     * Used for debug information.
+     * @return The name of the goal.
+     */
+    @NotNull
+    @Override
+    public String toString() {
+        return "Mating / Fertile = [" + this.butterfly.getIsFertile() +
+                "] / Num Eggs = [" + this.butterfly.getNumEggs() +
+                "]";
     }
 }

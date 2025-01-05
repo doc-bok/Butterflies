@@ -24,7 +24,7 @@ public class CaterpillarModel extends HierarchicalModel<Caterpillar> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MODID, "caterpillar"), "main");
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar"), "main");
 
     // The root of the model.
     private final ModelPart root;
