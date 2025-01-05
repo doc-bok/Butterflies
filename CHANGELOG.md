@@ -1,5 +1,8 @@
 ## Changelog
 
+### 5.14.1 (2025-01-05)
+ - Christmas butterflies enjoy fruit.
+
 ### 5.14.0 (2024-12-29)
  - Added the Christmas Butterfly.
 
