@@ -8,10 +8,11 @@ import com.bokmcdok.butterflies.world.entity.npc.SellingItemTrade;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.event.village.WandererTradesEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
+import net.neoforged.neoforge.event.village.WandererTradesEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,8 +35,6 @@ public class VillageEventListener {
                                 ItemRegistry itemRegistry,
                                 VillagerProfessionRegistry villagerProfessionRegistry) {
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onVillagerTrades);
-        forgeEventBus.addListener(this::onWandererTrades);
 
         this.itemRegistry = itemRegistry;
         this.villagerProfessionRegistry = villagerProfessionRegistry;
@@ -45,6 +44,7 @@ public class VillageEventListener {
      * Used to add/modify trades to professions.
      * @param event The event information.
      */
+    @SubscribeEvent
     private void onVillagerTrades(VillagerTradesEvent event) {
         if (event.getType() == villagerProfessionRegistry.getLepidopterist().get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
@@ -62,11 +62,11 @@ public class VillageEventListener {
             tradesLevel5.add(new SellingItemTrade(itemRegistry.getButterflyBannerPattern().get(), 8, 1, 30));
             tradesLevel5.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
 
-            List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();
-            List<RegistryObject<Item>> bottledCaterpillars = itemRegistry.getBottledCaterpillars();
-            List<RegistryObject<Item>> butterflyEggs = itemRegistry.getButterflyEggs();
-            List<RegistryObject<Item>> butterflyScrolls = itemRegistry.getButterflyScrolls();
-            List<RegistryObject<Item>> caterpillars = itemRegistry.getCaterpillars();
+            List<DeferredHolder<Item, Item>> bottledButterflies = itemRegistry.getBottledButterflies();
+            List<DeferredHolder<Item, Item>> bottledCaterpillars = itemRegistry.getBottledCaterpillars();
+            List<DeferredHolder<Item, Item>> butterflyEggs = itemRegistry.getButterflyEggs();
+            List<DeferredHolder<Item, Item>> butterflyScrolls = itemRegistry.getButterflyScrolls();
+            List<DeferredHolder<Item, Item>> caterpillars = itemRegistry.getCaterpillars();
 
             for (ButterflyData butterfly : butterflies) {
                 if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
@@ -117,12 +117,13 @@ public class VillageEventListener {
      * Used to add/modify trades to wandering traders.
      * @param event The event information.
      */
+    @SubscribeEvent
     private void onWandererTrades(WandererTradesEvent event) {
         List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
 
         Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
 
-        List<RegistryObject<Item>> bottledButterflies = itemRegistry.getBottledButterflies();
+        List<DeferredHolder<Item, Item>> bottledButterflies = itemRegistry.getBottledButterflies();
 
         for (ButterflyData butterfly : butterflies) {
             if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {

@@ -7,8 +7,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraftforge.event.TagsUpdatedEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.TagsUpdatedEvent;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,13 +26,13 @@ public class ForgeEventListener {
     public ForgeEventListener(IEventBus forgeEventBus) {
 
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onTagsUpdated);
     }
 
     /**
      * Add the lepidopterist's buildings to villages.
      * @param event The event we respond to in order to add the villages.
      */
+    @SubscribeEvent
     private void onTagsUpdated(TagsUpdatedEvent event)
     {
         if(event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) {

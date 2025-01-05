@@ -2,25 +2,23 @@ package com.bokmcdok.butterflies;
 
 import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.LootModifierRegistry;
+import com.bokmcdok.butterflies.event.ForgeEventListener;
+import com.bokmcdok.butterflies.event.ModEventListener;
+import com.bokmcdok.butterflies.event.entity.ForgeEntityEventListener;
+import com.bokmcdok.butterflies.event.entity.ModEntityEventListener;
+import com.bokmcdok.butterflies.event.entity.living.LivingEventListener;
+import com.bokmcdok.butterflies.event.entity.living.MobSpawnEventListener;
+import com.bokmcdok.butterflies.event.entity.player.PlayerEventListener;
+import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
+import com.bokmcdok.butterflies.event.network.NetworkEventListener;
+import com.bokmcdok.butterflies.event.server.ServerEventListener;
+import com.bokmcdok.butterflies.event.village.VillageEventListener;
+import com.bokmcdok.butterflies.registries.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
-
-import java.util.Arrays;
+import net.neoforged.neoforge.common.NeoForge;
 
 /**
  * The main entry point for the mod.
@@ -35,8 +33,8 @@ public class ButterfliesMod
      * Constructor.
      */
     public ButterfliesMod() {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        final IEventBus modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        final IEventBus forgeEventBus = NeoForge.EVENT_BUS;
 
         // Create the registries.
         BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
@@ -67,11 +65,12 @@ public class ButterfliesMod
         // Create the Mod event listeners
         new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
         new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
+        new ModEntityEventListener(modEventBus, entityTypeRegistry);
         new ModEventListener(modEventBus, itemRegistry);
 
         // Create the Forge event listeners.
-        new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
         new ForgeEventListener(forgeEventBus);
+        new ForgeEntityEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
         new MobSpawnEventListener(forgeEventBus, entityTypeRegistry);
         new NetworkEventListener(forgeEventBus);

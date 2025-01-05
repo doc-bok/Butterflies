@@ -4,8 +4,9 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 
 /**
  * Listens for events on starting a server.
@@ -19,13 +20,13 @@ public class ServerEventListener {
     public ServerEventListener(IEventBus forgeEventBus) {
 
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onServerAboutToStart);
     }
 
     /**
      * Load butterfly mod-specific data when a level loads.
      * @param event The level load event.
      */
+    @SubscribeEvent
     private void onServerAboutToStart(ServerAboutToStartEvent event) {
 
         // Get the resource manager.

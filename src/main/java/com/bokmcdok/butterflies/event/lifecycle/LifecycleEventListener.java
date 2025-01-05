@@ -15,10 +15,11 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.brewing.BrewingRecipeRegistry;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -42,8 +43,6 @@ public class LifecycleEventListener {
                                   ItemRegistry itemRegistry,
                                   MenuTypeRegistry menuTypeRegistry) {
         modEventBus.register(this);
-        modEventBus.addListener(this::clientSetup);
-        modEventBus.addListener(this::commonSetup);
 
         this.decoratedPotPatternsRegistry = decoratedPotPatternsRegistry;
         this.itemRegistry = itemRegistry;
@@ -55,6 +54,7 @@ public class LifecycleEventListener {
      * patterns.
      * @param event The event class.
      */
+    @SubscribeEvent
     private void commonSetup(FMLCommonSetupEvent event) {
 
         // Brewing Monarch Butterflies into poison.
@@ -75,6 +75,7 @@ public class LifecycleEventListener {
      * Register the screens with their respective menus.
      * @param event The client setup event.
      */
+    @SubscribeEvent
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
                 () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)

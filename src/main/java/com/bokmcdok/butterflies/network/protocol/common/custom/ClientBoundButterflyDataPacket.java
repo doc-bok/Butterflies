@@ -41,7 +41,9 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readEnum(ButterflyData.ExtraLandingBlocks.class),
                     entry.readEnum(ButterflyData.PlantEffect.class),
                     entry.readResourceLocation(),
-                    entry.readEnum(ButterflyData.EggMultiplier.class))));
+                    entry.readEnum(ButterflyData.EggMultiplier.class),
+                    entry.readBoolean(),
+                    entry.readBoolean())));
     }
 
     /**

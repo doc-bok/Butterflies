@@ -5,8 +5,9 @@ import com.bokmcdok.butterflies.common.loot.ButterflyLootModifier;
 import com.bokmcdok.butterflies.common.loot.OakLeavesLootModifier;
 import com.bokmcdok.butterflies.common.loot.TrailRuinsRareLootModifier;
 import com.mojang.serialization.Codec;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -23,7 +24,7 @@ public class LootModifierRegistry {
      */
     public LootModifierRegistry(IEventBus modEventBus) {
         // An instance of a deferred registry we use to register items.
-        deferredRegister = DeferredRegister.create(ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
+        deferredRegister = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
         deferredRegister.register(modEventBus);
     }
 

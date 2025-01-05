@@ -2,13 +2,13 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Register for the menu types.
@@ -19,14 +19,14 @@ public class MenuTypeRegistry {
     private final DeferredRegister<MenuType<?>> deferredRegister;
 
     // The butterfly feeder menu
-    private RegistryObject<MenuType<ButterflyFeederMenu>> butterflyFeederMenu;
+    private DeferredHolder<MenuType<?>, MenuType<ButterflyFeederMenu>> butterflyFeederMenu;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
     public MenuTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(BuiltInRegistries.MENU, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -42,7 +42,7 @@ public class MenuTypeRegistry {
      * Get the butterfly feeder menu.
      * @return The menu type.
      */
-    public RegistryObject<MenuType<ButterflyFeederMenu>> getButterflyFeederMenu() {
+    public DeferredHolder<MenuType<?>, MenuType<ButterflyFeederMenu>> getButterflyFeederMenu() {
         return butterflyFeederMenu;
     }
 

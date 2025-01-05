@@ -1,12 +1,14 @@
 package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 
 /**
  * Holds event listeners for entities.
@@ -23,7 +25,6 @@ public class MobSpawnEventListener {
     public MobSpawnEventListener(IEventBus forgeEventBus,
                                  EntityTypeRegistry entityTypeRegistry) {
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onMobSpawn);
 
         this.entityTypeRegistry = entityTypeRegistry;
     }
@@ -32,6 +33,7 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
+    @SubscribeEvent
     @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
     private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
 
@@ -44,7 +46,7 @@ public class MobSpawnEventListener {
                 ServerLevelAccessor level = event.getLevel();
                 EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
 
-                if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {})) {
+                if (EventHooks.canLivingConvert(ironGolem, entityType, (x) -> {})) {
                     IronGolem newMob = ironGolem.convertTo(entityType, false);
                     if (newMob != null) {
                         newMob.finalizeSpawn(level,
@@ -53,7 +55,7 @@ public class MobSpawnEventListener {
                                 null,
                                 null);
 
-                        ForgeEventFactory.onLivingConvert(ironGolem, newMob);
+                        EventHooks.onLivingConvert(ironGolem, newMob);
 
                         if (!newMob.isSilent()) {
                             level.levelEvent(null, 1026, newMob.blockPosition(), 0);

@@ -16,8 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
@@ -32,14 +32,13 @@ public class PlayerEventListener {
      */
     public PlayerEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onEntityInteractEvent);
-        forgeEventBus.addListener(this::onItemCraftedEvent);
     }
 
     /**
      * Called when a player interacts with an entity.
      * @param event The interaction event
      */
+    @SubscribeEvent
     private void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
         if (event.getTarget() instanceof Cat cat) {
             Player player = event.getEntity();
@@ -64,6 +63,7 @@ public class PlayerEventListener {
      * Handles adding new pages to a butterfly book.
      * @param event The event data
      */
+    @SubscribeEvent
     private void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
 
         ItemStack craftingItem = event.getCrafting();

@@ -4,21 +4,11 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
-import com.bokmcdok.butterflies.world.item.BottledCaterpillarItem;
-import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
-import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
-import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
-import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
-import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
-import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -39,49 +29,49 @@ public class ItemRegistry {
     private EntityTypeRegistry entityTypeRegistry;
 
     // Registry Items
-    private List<RegistryObject<Item>> bottledButterflies;
-    private List<RegistryObject<Item>> bottledCaterpillars;
-    private RegistryObject<Item> burntButterflyNet;
-    private RegistryObject<Item> butterflyBannerPattern;
-    private RegistryObject<Item> butterflyBook;
-    private List<RegistryObject<Item>> butterflyEggs;
-    private RegistryObject<Item> butterflyFeeder;
-    private List<RegistryObject<Item>> butterflyNets;
-    private RegistryObject<Item> butterflyPotterySherd;
-    private List<RegistryObject<Item>> butterflyScrolls;
-    private RegistryObject<Item> butterflyGolemSpawnEgg;
-    private List<RegistryObject<Item>> butterflySpawnEggs;
-    private List<RegistryObject<Item>> caterpillars;
-    private List<RegistryObject<Item>> caterpillarSpawnEggs;
-    private RegistryObject<Item> emptyButterflyNet;
-    private RegistryObject<Item> infestedApple;
-    private RegistryObject<Item> silk;
-    private RegistryObject<Item> zhuangziBook;
+    private List<DeferredHolder<Item, Item>> bottledButterflies;
+    private List<DeferredHolder<Item, Item>> bottledCaterpillars;
+    private DeferredHolder<Item, Item> burntButterflyNet;
+    private DeferredHolder<Item, Item> butterflyBannerPattern;
+    private DeferredHolder<Item, Item> butterflyBook;
+    private List<DeferredHolder<Item, Item>> butterflyEggs;
+    private DeferredHolder<Item, Item> butterflyFeeder;
+    private List<DeferredHolder<Item, Item>> butterflyNets;
+    private DeferredHolder<Item, Item> butterflyPotterySherd;
+    private List<DeferredHolder<Item, Item>> butterflyScrolls;
+    private DeferredHolder<Item, Item> butterflyGolemSpawnEgg;
+    private List<DeferredHolder<Item, Item>> butterflySpawnEggs;
+    private List<DeferredHolder<Item, Item>> caterpillars;
+    private List<DeferredHolder<Item, Item>> caterpillarSpawnEggs;
+    private DeferredHolder<Item, Item> emptyButterflyNet;
+    private DeferredHolder<Item, Item> infestedApple;
+    private DeferredHolder<Item, Item> silk;
+    private DeferredHolder<Item, Item> zhuangziBook;
 
     // Origami
-    private RegistryObject<Item> butterflyOrigamiBlack;
-    private RegistryObject<Item> butterflyOrigamiBlue;
-    private RegistryObject<Item> butterflyOrigamiBrown;
-    private RegistryObject<Item> butterflyOrigamiCyan;
-    private RegistryObject<Item> butterflyOrigamiGray;
-    private RegistryObject<Item> butterflyOrigamiGreen;
-    private RegistryObject<Item> butterflyOrigamiLightBlue;
-    private RegistryObject<Item> butterflyOrigamiLightGray;
-    private RegistryObject<Item> butterflyOrigamiLime;
-    private RegistryObject<Item> butterflyOrigamiMagenta;
-    private RegistryObject<Item> butterflyOrigamiOrange;
-    private RegistryObject<Item> butterflyOrigamiPink;
-    private RegistryObject<Item> butterflyOrigamiPurple;
-    private RegistryObject<Item> butterflyOrigamiRed;
-    private RegistryObject<Item> butterflyOrigamiWhite;
-    private RegistryObject<Item> butterflyOrigamiYellow;
+    private DeferredHolder<Item, Item> butterflyOrigamiBlack;
+    private DeferredHolder<Item, Item> butterflyOrigamiBlue;
+    private DeferredHolder<Item, Item> butterflyOrigamiBrown;
+    private DeferredHolder<Item, Item> butterflyOrigamiCyan;
+    private DeferredHolder<Item, Item> butterflyOrigamiGray;
+    private DeferredHolder<Item, Item> butterflyOrigamiGreen;
+    private DeferredHolder<Item, Item> butterflyOrigamiLightBlue;
+    private DeferredHolder<Item, Item> butterflyOrigamiLightGray;
+    private DeferredHolder<Item, Item> butterflyOrigamiLime;
+    private DeferredHolder<Item, Item> butterflyOrigamiMagenta;
+    private DeferredHolder<Item, Item> butterflyOrigamiOrange;
+    private DeferredHolder<Item, Item> butterflyOrigamiPink;
+    private DeferredHolder<Item, Item> butterflyOrigamiPurple;
+    private DeferredHolder<Item, Item> butterflyOrigamiRed;
+    private DeferredHolder<Item, Item> butterflyOrigamiWhite;
+    private DeferredHolder<Item, Item> butterflyOrigamiYellow;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
     public ItemRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(BuiltInRegistries.ITEM, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -169,7 +159,7 @@ public class ItemRegistry {
         };
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
+                () -> new SpawnEggItem(entityTypeRegistry.getButterflyGolem().get(),
                         0x888800, 0x333333, new Item.Properties()));
 
         this.butterflySpawnEggs = new ArrayList<>() {
@@ -206,7 +196,7 @@ public class ItemRegistry {
      * Accessor for bottled butterflies.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getBottledButterflies() {
+    public List<DeferredHolder<Item, Item>> getBottledButterflies() {
         return bottledButterflies;
     }
 
@@ -214,7 +204,7 @@ public class ItemRegistry {
      * Accessor for bottled caterpillars.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getBottledCaterpillars() {
+    public List<DeferredHolder<Item, Item>> getBottledCaterpillars() {
         return bottledCaterpillars;
     }
 
@@ -222,7 +212,7 @@ public class ItemRegistry {
      * Accessor for butterfly banner pattern.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyBannerPattern() {
+    public DeferredHolder<Item, Item> getButterflyBannerPattern() {
         return butterflyBannerPattern;
     }
 
@@ -230,7 +220,7 @@ public class ItemRegistry {
      * Accessor for butterfly book.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyBook() {
+    public DeferredHolder<Item, Item> getButterflyBook() {
         return butterflyBook;
     }
 
@@ -238,7 +228,7 @@ public class ItemRegistry {
      * Accessor for burnt butterfly net.
      * @return The registry object.
      */
-    public RegistryObject<Item> getBurntButterflyNet() {
+    public DeferredHolder<Item, Item> getBurntButterflyNet() {
         return burntButterflyNet;
     }
 
@@ -246,7 +236,7 @@ public class ItemRegistry {
      * Accessor for butterfly eggs.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getButterflyEggs() {
+    public List<DeferredHolder<Item, Item>> getButterflyEggs() {
         return butterflyEggs;
     }
 
@@ -255,7 +245,7 @@ public class ItemRegistry {
      * @param butterflyIndex The butterfly index.
      * @return The registry entry for the related item.
      */
-    public RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
+    public DeferredHolder<Item, Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return emptyButterflyNet;
         } else if (Objects.equals(ButterflySpeciesList.SPECIES[butterflyIndex], "lava")) {
@@ -269,7 +259,7 @@ public class ItemRegistry {
      * Accessor for the butterfly feeder.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyFeeder() {
+    public DeferredHolder<Item, Item> getButterflyFeeder() {
         return butterflyFeeder;
     }
 
@@ -277,7 +267,7 @@ public class ItemRegistry {
      * Accessor for butterfly nets.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getButterflyNets() {
+    public List<DeferredHolder<Item, Item>> getButterflyNets() {
         return butterflyNets;
     }
 
@@ -285,7 +275,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiBlack() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiBlack() {
         return butterflyOrigamiBlack;
     }
 
@@ -293,7 +283,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiBlue() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiBlue() {
         return butterflyOrigamiBlue;
     }
 
@@ -301,7 +291,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiBrown() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiBrown() {
         return butterflyOrigamiBrown;
     }
 
@@ -309,7 +299,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiCyan() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiCyan() {
         return butterflyOrigamiCyan;
     }
 
@@ -317,7 +307,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiGray() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiGray() {
         return butterflyOrigamiGray;
     }
 
@@ -325,7 +315,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiGreen() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiGreen() {
         return butterflyOrigamiGreen;
     }
 
@@ -333,7 +323,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiLightBlue() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiLightBlue() {
         return butterflyOrigamiLightBlue;
     }
 
@@ -341,7 +331,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiLightGray() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiLightGray() {
         return butterflyOrigamiLightGray;
     }
 
@@ -349,7 +339,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiLime() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiLime() {
         return butterflyOrigamiLime;
     }
 
@@ -357,7 +347,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiMagenta() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiMagenta() {
         return butterflyOrigamiMagenta;
     }
 
@@ -365,7 +355,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiOrange() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiOrange() {
         return butterflyOrigamiOrange;
     }
 
@@ -373,7 +363,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiPink() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiPink() {
         return butterflyOrigamiPink;
     }
 
@@ -381,7 +371,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiPurple() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiPurple() {
         return butterflyOrigamiPurple;
     }
 
@@ -389,7 +379,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiRed() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiRed() {
         return butterflyOrigamiRed;
     }
 
@@ -397,7 +387,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiWhite() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiWhite() {
         return butterflyOrigamiWhite;
     }
 
@@ -405,7 +395,7 @@ public class ItemRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyOrigamiYellow() {
+    public DeferredHolder<Item, Item> getButterflyOrigamiYellow() {
         return butterflyOrigamiYellow;
     }
 
@@ -413,7 +403,7 @@ public class ItemRegistry {
      * Accessor for butterfly pottery sherd.
      * @return The butterfly pottery sherd.
      */
-    public RegistryObject<Item> getButterflyPotterySherd() {
+    public DeferredHolder<Item, Item> getButterflyPotterySherd() {
         return butterflyPotterySherd;
     }
 
@@ -421,7 +411,7 @@ public class ItemRegistry {
      * Accessor for butterfly scrolls.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getButterflyScrolls() {
+    public List<DeferredHolder<Item, Item>> getButterflyScrolls() {
         return butterflyScrolls;
     }
 
@@ -429,7 +419,7 @@ public class ItemRegistry {
      * Accessor for butterfly spawn eggs.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getButterflySpawnEggs() {
+    public List<DeferredHolder<Item, Item>> getButterflySpawnEggs() {
         return butterflySpawnEggs;
     }
 
@@ -437,7 +427,7 @@ public class ItemRegistry {
      * Accessor for butterfly golem spawn eggs.
      * @return The registry object.
      */
-    public RegistryObject<Item> getButterflyGolemSpawnEgg() {
+    public DeferredHolder<Item, Item> getButterflyGolemSpawnEgg() {
         return butterflyGolemSpawnEgg;
     }
 
@@ -445,7 +435,7 @@ public class ItemRegistry {
      * Accessor for caterpillars.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getCaterpillars() {
+    public List<DeferredHolder<Item, Item>> getCaterpillars() {
         return caterpillars;
     }
 
@@ -453,7 +443,7 @@ public class ItemRegistry {
      * Accessor for caterpillar spawn eggs.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getCaterpillarSpawnEggs() {
+    public List<DeferredHolder<Item, Item>> getCaterpillarSpawnEggs() {
         return caterpillarSpawnEggs;
     }
 
@@ -461,7 +451,7 @@ public class ItemRegistry {
      * Accessor for empty butterfly net.
      * @return The registry object.
      */
-    public RegistryObject<Item> getEmptyButterflyNet() {
+    public DeferredHolder<Item, Item> getEmptyButterflyNet() {
         return emptyButterflyNet;
     }
 
@@ -469,7 +459,7 @@ public class ItemRegistry {
      * Accessor for infested apple.
      * @return The registry object.
      */
-    public RegistryObject<Item> getInfestedApple() {
+    public DeferredHolder<Item, Item> getInfestedApple() {
         return infestedApple;
     }
 
@@ -477,7 +467,7 @@ public class ItemRegistry {
      * Accessor for silk.
      * @return The registry object.
      */
-    public RegistryObject<Item> getSilk() {
+    public DeferredHolder<Item, Item> getSilk() {
         return this.silk;
     }
 
@@ -485,7 +475,7 @@ public class ItemRegistry {
      * Accessor for secret book.
      * @return The registry object.
      */
-    public RegistryObject<Item> getZhuangziBook() {
+    public DeferredHolder<Item, Item> getZhuangziBook() {
         return zhuangziBook;
     }
 
@@ -494,7 +484,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflyNet(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex) {
         return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyNetItem(this, butterflyIndex));
     }
@@ -504,7 +494,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
         return deferredRegister.register(BottledButterflyItem.getRegistryId(butterflyIndex),
                 () -> new BottledButterflyItem(blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
     }
@@ -514,7 +504,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerBottledCaterpillar(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerBottledCaterpillar(int butterflyIndex) {
         return deferredRegister.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new BottledCaterpillarItem(blockRegistry.getBottledCaterpillarBlocks().get(butterflyIndex), butterflyIndex));
     }
@@ -524,7 +514,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflyEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflyEgg(int butterflyIndex) {
         return deferredRegister.register(ButterflyEggItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
     }
@@ -534,7 +524,7 @@ public class ItemRegistry {
      * @param id The ID of the item to register.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflyOrigami(String id, RegistryObject<Block> block) {
+    private DeferredHolder<Item, Item> registerButterflyOrigami(String id, DeferredHolder<Block, Block> block) {
         return deferredRegister.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
@@ -543,7 +533,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyScrollItem(entityTypeRegistry, this, butterflyIndex));
     }
@@ -553,9 +543,9 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
+                () -> new SpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
                         0x880000, 0x0088ff, new Item.Properties()));
     }
 
@@ -564,7 +554,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerCaterpillar(int butterflyIndex) {
         return deferredRegister.register(CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
     }
@@ -574,9 +564,9 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
+                () -> new SpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
                         0x0088ff, 0x880000, new Item.Properties()));
     }
 }

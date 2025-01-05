@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
@@ -28,6 +29,9 @@ import org.jetbrains.annotations.Nullable;
  * A butterfly feeder block.
  */
 public class ButterflyFeederBlock extends BaseEntityBlock {
+
+    private static final MapCodec<ButterflyFeederBlock> CODEC =
+            simpleCodec((x) -> new ButterflyFeederBlock(null, null));
 
     //  The bottle's "model".
     private static final VoxelShape SHAPE = Shapes.or(
@@ -82,6 +86,16 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
                                @NotNull BlockPos position,
                                @NotNull CollisionContext collisionContext) {
         return SHAPE;
+    }
+
+    /**
+     * Get the codec whatever that is.
+     * @return The codec.
+     */
+    @NotNull
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
     }
 
     /**

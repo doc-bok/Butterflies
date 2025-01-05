@@ -2,9 +2,9 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.registries.Registries;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
  * Registers pottery patterns.
@@ -15,7 +15,7 @@ public class DecoratedPotPatternsRegistry {
     private final DeferredRegister<String> deferredRegister;
 
     // The butterfly pot pattern.
-    private RegistryObject<String> butterflyPotPattern;
+    private DeferredHolder<String, String> butterflyPotPattern;
 
     /**
      * Construction
@@ -37,7 +37,7 @@ public class DecoratedPotPatternsRegistry {
      * Accessor for butterfly pot pattern.
      * @return The butterfly pot pattern.
      */
-    public RegistryObject<String> getButterflyPotPattern() {
+    public DeferredHolder<String, String> getButterflyPotPattern() {
         return butterflyPotPattern;
     }
 }

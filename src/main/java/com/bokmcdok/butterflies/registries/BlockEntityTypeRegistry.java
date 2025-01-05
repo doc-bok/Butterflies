@@ -1,8 +1,13 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
@@ -17,14 +22,14 @@ public class BlockEntityTypeRegistry {
     private final DeferredRegister<BlockEntityType<?>> deferredRegister;
 
     // The butterfly feeder entity.
-    private RegistryObject<BlockEntityType<ButterflyFeederEntity>> butterflyFeeder;
+    private DeferredHolder<BlockEntityType<?>, BlockEntityType<ButterflyFeederEntity>> butterflyFeeder;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
     public BlockEntityTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -41,7 +46,7 @@ public class BlockEntityTypeRegistry {
         //noinspection DataFlowIssue
         this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
                 () -> BlockEntityType.Builder.of(this::createButterflyFeeder,
-                        blockRegistry.getButterflyFeeder().get()).build(null));
+                        blockRegistry.getButterflyFeeder().value()).build(null));
 
     }
 
@@ -49,7 +54,7 @@ public class BlockEntityTypeRegistry {
      * Get the butterfly feeder.
      * @return The block entity type.
      */
-    public RegistryObject<BlockEntityType<ButterflyFeederEntity>> getButterflyFeeder() {
+    public DeferredHolder<BlockEntityType<?>, BlockEntityType<ButterflyFeederEntity>> getButterflyFeeder() {
         return butterflyFeeder;
     }
 

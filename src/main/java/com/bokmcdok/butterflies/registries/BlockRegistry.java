@@ -12,8 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -29,44 +28,44 @@ public class BlockRegistry {
     private final DeferredRegister<Block> deferredRegister;
 
     // Bottled creatures.
-    private List<RegistryObject<Block>> bottledButterflyBlocks;
-    private List<RegistryObject<Block>> bottledCaterpillarBlocks;
+    private List<DeferredHolder<Block, Block>> bottledButterflyBlocks;
+    private List<DeferredHolder<Block, Block>> bottledCaterpillarBlocks;
 
     // Butterfly Feeder
-    private RegistryObject<Block> butterflyFeeder;
+    private DeferredHolder<Block, Block> butterflyFeeder;
 
     // Flower Buds
-    private RegistryObject<Block> alliumBud;
-    private RegistryObject<Block> azureBluetBud;
-    private RegistryObject<Block> blueOrchidBud;
-    private RegistryObject<Block> cornflowerBud;
-    private RegistryObject<Block> dandelionBud;
-    private RegistryObject<Block> lilyOfTheValleyBud;
-    private RegistryObject<Block> orangeTulipBud;
-    private RegistryObject<Block> oxeyeDaisyBud;
-    private RegistryObject<Block> pinkTulipBud;
-    private RegistryObject<Block> poppyBud;
-    private RegistryObject<Block> redTulipBud;
-    private RegistryObject<Block> whiteTulipBud;
-    private RegistryObject<Block> witherRoseBud;
+    private DeferredHolder<Block, Block> alliumBud;
+    private DeferredHolder<Block, Block> azureBluetBud;
+    private DeferredHolder<Block, Block> blueOrchidBud;
+    private DeferredHolder<Block, Block> cornflowerBud;
+    private DeferredHolder<Block, Block> dandelionBud;
+    private DeferredHolder<Block, Block> lilyOfTheValleyBud;
+    private DeferredHolder<Block, Block> orangeTulipBud;
+    private DeferredHolder<Block, Block> oxeyeDaisyBud;
+    private DeferredHolder<Block, Block> pinkTulipBud;
+    private DeferredHolder<Block, Block> poppyBud;
+    private DeferredHolder<Block, Block> redTulipBud;
+    private DeferredHolder<Block, Block> whiteTulipBud;
+    private DeferredHolder<Block, Block> witherRoseBud;
 
     // Origami
-    private RegistryObject<Block> butterflyOrigamiBlack;
-    private RegistryObject<Block> butterflyOrigamiBlue;
-    private RegistryObject<Block> butterflyOrigamiBrown;
-    private RegistryObject<Block> butterflyOrigamiCyan;
-    private RegistryObject<Block> butterflyOrigamiGray;
-    private RegistryObject<Block> butterflyOrigamiGreen;
-    private RegistryObject<Block> butterflyOrigamiLightBlue;
-    private RegistryObject<Block> butterflyOrigamiLightGray;
-    private RegistryObject<Block> butterflyOrigamiLime;
-    private RegistryObject<Block> butterflyOrigamiMagenta;
-    private RegistryObject<Block> butterflyOrigamiOrange;
-    private RegistryObject<Block> butterflyOrigamiPink;
-    private RegistryObject<Block> butterflyOrigamiPurple;
-    private RegistryObject<Block> butterflyOrigamiRed;
-    private RegistryObject<Block> butterflyOrigamiWhite;
-    private RegistryObject<Block> butterflyOrigamiYellow;
+    private DeferredHolder<Block, Block> butterflyOrigamiBlack;
+    private DeferredHolder<Block, Block> butterflyOrigamiBlue;
+    private DeferredHolder<Block, Block> butterflyOrigamiBrown;
+    private DeferredHolder<Block, Block> butterflyOrigamiCyan;
+    private DeferredHolder<Block, Block> butterflyOrigamiGray;
+    private DeferredHolder<Block, Block> butterflyOrigamiGreen;
+    private DeferredHolder<Block, Block> butterflyOrigamiLightBlue;
+    private DeferredHolder<Block, Block> butterflyOrigamiLightGray;
+    private DeferredHolder<Block, Block> butterflyOrigamiLime;
+    private DeferredHolder<Block, Block> butterflyOrigamiMagenta;
+    private DeferredHolder<Block, Block> butterflyOrigamiOrange;
+    private DeferredHolder<Block, Block> butterflyOrigamiPink;
+    private DeferredHolder<Block, Block> butterflyOrigamiPurple;
+    private DeferredHolder<Block, Block> butterflyOrigamiRed;
+    private DeferredHolder<Block, Block> butterflyOrigamiWhite;
+    private DeferredHolder<Block, Block> butterflyOrigamiYellow;
 
     /**
      * Helper method for the "never" attribute. Used in block properties during
@@ -104,7 +103,7 @@ public class BlockRegistry {
      */
 
     public BlockRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(BuiltInRegistries.BLOCK, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -119,7 +118,7 @@ public class BlockRegistry {
         this.bottledButterflyBlocks = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
-                    RegistryObject<Block> newBlock = registerBottledButterfly(i);
+                    DeferredHolder<Block, Block> newBlock = registerBottledButterfly(i);
                     add(newBlock);
                 }
             }
@@ -128,7 +127,7 @@ public class BlockRegistry {
         this.bottledCaterpillarBlocks = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
-                    RegistryObject<Block> newBlock =
+                    DeferredHolder<Block, Block> newBlock =
                             deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
                     add(newBlock);
                 }
@@ -213,7 +212,7 @@ public class BlockRegistry {
      * Allium bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getAlliumBud() {
+    public DeferredHolder<Block, Block> getAlliumBud() {
         return alliumBud;
     }
 
@@ -221,7 +220,7 @@ public class BlockRegistry {
      * Azure bluet bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getAzureBluetBud() {
+    public DeferredHolder<Block, Block> getAzureBluetBud() {
         return azureBluetBud;
     }
 
@@ -229,7 +228,7 @@ public class BlockRegistry {
      * Blue orchid bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getBlueOrchidBud() {
+    public DeferredHolder<Block, Block> getBlueOrchidBud() {
         return blueOrchidBud;
     }
 
@@ -237,7 +236,7 @@ public class BlockRegistry {
      * Get the bottled butterfly blocks.
      * @return The list of bottled butterfly blocks.
      */
-    public List<RegistryObject<Block>> getBottledButterflyBlocks() {
+    public List<DeferredHolder<Block, Block>> getBottledButterflyBlocks() {
         return this.bottledButterflyBlocks;
     }
 
@@ -245,7 +244,7 @@ public class BlockRegistry {
      * Get the bottled caterpillar blocks.
      * @return The list of bottled caterpillar blocks.
      */
-    public List<RegistryObject<Block>> getBottledCaterpillarBlocks() {
+    public List<DeferredHolder<Block, Block>> getBottledCaterpillarBlocks() {
         return this.bottledCaterpillarBlocks;
     }
 
@@ -253,7 +252,7 @@ public class BlockRegistry {
      * Get the butterfly feeder block.
      * @return The butterfly feeder block.
      */
-    public RegistryObject<Block> getButterflyFeeder() {
+    public DeferredHolder<Block, Block> getButterflyFeeder() {
         return butterflyFeeder;
     }
 
@@ -261,7 +260,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiBlack() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiBlack() {
         return butterflyOrigamiBlack;
     }
 
@@ -269,7 +268,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiBlue() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiBlue() {
         return butterflyOrigamiBlue;
     }
 
@@ -277,7 +276,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiBrown() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiBrown() {
         return butterflyOrigamiBrown;
     }
 
@@ -285,7 +284,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiCyan() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiCyan() {
         return butterflyOrigamiCyan;
     }
 
@@ -293,7 +292,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiGray() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiGray() {
         return butterflyOrigamiGray;
     }
 
@@ -301,7 +300,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiGreen() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiGreen() {
         return butterflyOrigamiGreen;
     }
 
@@ -309,7 +308,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiLightBlue() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiLightBlue() {
         return butterflyOrigamiLightBlue;
     }
 
@@ -317,7 +316,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiLightGray() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiLightGray() {
         return butterflyOrigamiLightGray;
     }
 
@@ -325,7 +324,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiLime() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiLime() {
         return butterflyOrigamiLime;
     }
 
@@ -333,7 +332,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiMagenta() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiMagenta() {
         return butterflyOrigamiMagenta;
     }
 
@@ -341,7 +340,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiOrange() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiOrange() {
         return butterflyOrigamiOrange;
     }
 
@@ -349,7 +348,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiPink() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiPink() {
         return butterflyOrigamiPink;
     }
 
@@ -357,7 +356,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiPurple() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiPurple() {
         return butterflyOrigamiPurple;
     }
 
@@ -365,7 +364,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiRed() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiRed() {
         return butterflyOrigamiRed;
     }
 
@@ -373,7 +372,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiWhite() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiWhite() {
         return butterflyOrigamiWhite;
     }
 
@@ -381,7 +380,7 @@ public class BlockRegistry {
      * Get a butterfly origami.
      * @return The registry object.
      */
-    public RegistryObject<Block> getButterflyOrigamiYellow() {
+    public DeferredHolder<Block, Block> getButterflyOrigamiYellow() {
         return butterflyOrigamiYellow;
     }
 
@@ -389,7 +388,7 @@ public class BlockRegistry {
      * Cornflower bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getCornflowerBud() {
+    public DeferredHolder<Block, Block> getCornflowerBud() {
         return cornflowerBud;
     }
 
@@ -397,7 +396,7 @@ public class BlockRegistry {
      * Dandelion bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getDandelionBud() {
+    public DeferredHolder<Block, Block> getDandelionBud() {
         return dandelionBud;
     }
 
@@ -405,7 +404,7 @@ public class BlockRegistry {
      * Lily of the valley bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getLilyOfTheValleyBud() {
+    public DeferredHolder<Block, Block> getLilyOfTheValleyBud() {
         return lilyOfTheValleyBud;
     }
 
@@ -413,7 +412,7 @@ public class BlockRegistry {
      * Orange tulip bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getOrangeTulipBud() {
+    public DeferredHolder<Block, Block> getOrangeTulipBud() {
         return orangeTulipBud;
     }
 
@@ -421,7 +420,7 @@ public class BlockRegistry {
      * Oxeye daisy bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getOxeyeDaisyBud() {
+    public DeferredHolder<Block, Block> getOxeyeDaisyBud() {
         return oxeyeDaisyBud;
     }
 
@@ -429,7 +428,7 @@ public class BlockRegistry {
      * Pink tulip bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getPinkTulipBud() {
+    public DeferredHolder<Block, Block> getPinkTulipBud() {
         return pinkTulipBud;
     }
 
@@ -437,7 +436,7 @@ public class BlockRegistry {
      * Poppy bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getPoppyBud() {
+    public DeferredHolder<Block, Block> getPoppyBud() {
         return poppyBud;
     }
 
@@ -445,7 +444,7 @@ public class BlockRegistry {
      * Red tulip bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getRedTulipBud() {
+    public DeferredHolder<Block, Block> getRedTulipBud() {
         return redTulipBud;
     }
 
@@ -453,7 +452,7 @@ public class BlockRegistry {
      * White tulip bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getWhiteTulipBud() {
+    public DeferredHolder<Block, Block> getWhiteTulipBud() {
         return whiteTulipBud;
     }
 
@@ -461,7 +460,7 @@ public class BlockRegistry {
      * Wither rose bud accessor.
      * @return The registry object.
      */
-    public RegistryObject<Block> getWitherRoseBud() {
+    public DeferredHolder<Block, Block> getWitherRoseBud() {
         return witherRoseBud;
     }
 
@@ -488,9 +487,9 @@ public class BlockRegistry {
      * @param butterflyIndex The butterfly index to register for.
      * @return The registry object.
      */
-    private RegistryObject<Block> registerBottledButterfly(int butterflyIndex) {
+    private DeferredHolder<Block, Block> registerBottledButterfly(int butterflyIndex) {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(Blocks.GLASS)
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)
@@ -512,7 +511,7 @@ public class BlockRegistry {
      * @param id The ID of the block to register.
      * @return A new registry object.
      */
-    private RegistryObject<Block> registerButterflyOrigami(String id) {
+    private DeferredHolder<Block, Block> registerButterflyOrigami(String id) {
         return deferredRegister.register(id, ButterflyOrigamiBlock::new);
     }
 }

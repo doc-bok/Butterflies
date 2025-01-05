@@ -1,11 +1,13 @@
 package com.bokmcdok.butterflies.network.protocol.common.custom;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.zip.DataFormatException;
 
 /**
  * Handles payloads sent to the client.
@@ -38,7 +40,11 @@ public class ClientPayloadHandler {
 
                     // Register the new data.
                     for (ButterflyData butterfly : butterflyData) {
-                        ButterflyData.addButterfly(butterfly);
+                        try {
+                            ButterflyData.addButterfly(butterfly);
+                        } catch (DataFormatException e) {
+                            LogUtils.getLogger().error("Received invalid butterfly data.", e);
+                        }
                     }
                 })
                 .exceptionally(e -> {

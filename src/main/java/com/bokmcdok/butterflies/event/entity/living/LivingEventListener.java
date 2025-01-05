@@ -5,8 +5,9 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 
 /**
  * Listens for events involving living entities.
@@ -20,13 +21,13 @@ public class LivingEventListener {
      */
     public LivingEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
-        forgeEventBus.addListener(this::onLivingDeath);
     }
 
     /**
      * Fired when a living entity dies.
      * @param event The event data.
      */
+    @SubscribeEvent
     private void onLivingDeath(LivingDeathEvent event) {
         Level level = event.getEntity().level();
 

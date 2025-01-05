@@ -139,7 +139,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
         if (entity instanceof Butterfly butterfly) {
-            RegistryObject<Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
 
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
