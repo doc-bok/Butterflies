@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "rainbow",
+  "extraLandingBlocks": "none",
+  "habitat": "forests_and_plains",
+  "index": 36,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "allium",
+  "rarity": "uncommon",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "type": "butterfly"
+}

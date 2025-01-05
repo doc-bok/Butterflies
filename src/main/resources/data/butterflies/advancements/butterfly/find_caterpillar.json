@@ -60,6 +60,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "christmas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_christmas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clipper": {
       "conditions": {
         "items": [
@@ -336,6 +348,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_green-skirt-baron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "hairstreak": {
       "conditions": {
         "items": [
@@ -452,41 +476,43 @@
   "requirements": [
     [
       "admiral",
+      "bluemoon",
       "buckeye",
       "cabbage",
       "chalkhill",
+      "christmas",
       "clipper",
-      "clipperwhite",
-      "clipperlightgray",
-      "clippergray",
       "clipperblack",
-      "clipperbrown",
-      "clipperred",
-      "clipperorange",
-      "clipperyellow",
-      "clipperlime",
-      "clippergreen",
-      "clippercyan",
       "clipperblue",
-      "clipperpurple",
+      "clipperbrown",
+      "clippercyan",
+      "clippergray",
+      "clippergreen",
+      "clipperlightgray",
+      "clipperlime",
       "clippermagenta",
+      "clipperorange",
       "clipperpink",
+      "clipperpurple",
+      "clipperred",
+      "clipperwhite",
+      "clipperyellow",
+      "commander",
       "common",
+      "commonbirdwing",
+      "commongrassyellow",
       "emperor",
       "forester",
       "glasswing",
+      "green-skirt-baron",
       "hairstreak",
       "heath",
       "longwing",
       "monarch",
       "morpho",
-      "rainbow",
-      "swallowtail",
       "peacock",
-      "commongrassyellow",
-      "commander",
-      "commonbirdwing",
-      "bluemoon"
+      "rainbow",
+      "swallowtail"
     ]
   ]
 }

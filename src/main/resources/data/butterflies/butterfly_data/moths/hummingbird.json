@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "hummingbird",
+  "extraLandingBlocks": "none",
+  "habitat": "plains",
+  "index": 46,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "consume",
+  "preferredFlower": "lily_of_the_valley",
+  "rarity": "uncommon",
+  "size": "tiny",
+  "sounds": {
+    "butterfly": true,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "type": "moth"
+}

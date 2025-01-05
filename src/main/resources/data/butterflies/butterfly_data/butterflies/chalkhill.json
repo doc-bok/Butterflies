@@ -1,0 +1,25 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "chalkhill",
+  "extraLandingBlocks": "none",
+  "habitat": "hills_and_plateaus",
+  "index": 4,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "oxeye_daisy",
+  "rarity": "common",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "type": "butterfly"
+}

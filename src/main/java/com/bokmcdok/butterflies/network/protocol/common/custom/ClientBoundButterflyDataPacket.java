@@ -16,7 +16,7 @@ import java.util.Collection;
 public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
 
     //  The ID of this packet.
-    public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MODID, "butterfly_data");
+    public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_data");
 
     /**
      * Write the data to a network buffer.
@@ -41,6 +41,8 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
             collectionBuffer.writeEnum(i.plantEffect());
             collectionBuffer.writeResourceLocation(i.breedTarget());
             collectionBuffer.writeEnum(i.eggMultiplier());
+            collectionBuffer.writeBoolean(i.caterpillarSounds());
+            collectionBuffer.writeBoolean(i.butterflySounds());
         });
     }
 

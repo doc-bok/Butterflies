@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.event.network;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
@@ -14,16 +14,17 @@ import net.minecraftforge.network.NetworkConstants;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.event.EventNetworkChannel;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.zip.DataFormatException;
 
 /**
  * Listens for network-based events.
  */
-@SuppressWarnings("unused")
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class NetworkEventListener {
 
     public static final EventNetworkChannel BUTTERFLY_NETWORK_CHANNEL = NetworkRegistry.ChannelBuilder.
@@ -34,12 +35,22 @@ public class NetworkEventListener {
             eventNetworkChannel();
 
     /**
+     * Construction
+     * @param forgeEventBus The event bus to register with.
+     */
+    public NetworkEventListener(IEventBus forgeEventBus) {
+        forgeEventBus.register(this);
+        forgeEventBus.addListener(this::onDatapackSync);
+        forgeEventBus.addListener(this::onCustomPayload);
+
+    }
+
+    /**
      * Called when there is a datapack sync requested. Used to send butterfly
      * data to the clients.
      * @param event The sync event.
      */
-    @SubscribeEvent
-    public static void onDatapackSync(OnDatapackSyncEvent event) {
+    private void onDatapackSync(OnDatapackSyncEvent event) {
 
         // Get the butterfly data collection.
         Collection<ButterflyData> butterflyDataCollection = ButterflyData.getButterflyDataCollection();
@@ -89,11 +100,18 @@ public class NetworkEventListener {
                                                   buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
                                                   buffer.readEnum(ButterflyData.PlantEffect.class),
                                                   buffer.readResourceLocation(),
-                                                  buffer.readEnum(ButterflyData.EggMultiplier.class)));
+                                                  buffer.readEnum(ButterflyData.EggMultiplier.class),
+                                                  buffer.readBoolean(),
+                                                  buffer.readBoolean()));
 
-            // Register the new data.
-            for (ButterflyData butterfly : butterflyData) {
-                ButterflyData.addButterfly(butterfly);
+                // Register the new data.
+                for (ButterflyData butterfly : butterflyData) {
+                    try {
+                        ButterflyData.addButterfly(butterfly);
+                    } catch (DataFormatException e) {
+                        LogUtils.getLogger().error("Received invalid butterfly data.", e);
+                    }
+                }
             }
         }
     }

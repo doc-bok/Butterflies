@@ -1,0 +1,5 @@
+{
+  "biomes": "#forge:is_lush",
+  "spawners": [],
+  "type": "forge:add_spawns"
+}
