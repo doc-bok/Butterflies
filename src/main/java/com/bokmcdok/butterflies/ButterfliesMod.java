@@ -63,7 +63,10 @@ public class ButterfliesMod
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Create the Mod event listeners
-        new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+        }
+
         new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
         new ModEntityEventListener(modEventBus, entityTypeRegistry);
         new ModEventListener(modEventBus, itemRegistry);
