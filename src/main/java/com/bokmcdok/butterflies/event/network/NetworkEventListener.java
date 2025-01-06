@@ -8,13 +8,10 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.OnDatapackSyncEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.NetworkConstants;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.event.EventNetworkChannel;
-import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.ArrayList;
@@ -41,7 +38,7 @@ public class NetworkEventListener {
     public NetworkEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onDatapackSync);
-        forgeEventBus.addListener(this::onCustomPayload);
+        forgeEventBus.addListener(this::onButterflyCollectionPayload);
 
     }
 
@@ -78,7 +75,7 @@ public class NetworkEventListener {
      * Called when a custom payload is received.
      * @param event The payload event.
      */
-    public static void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
+    private void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
 
         // Extract the data from the payload.
         FriendlyByteBuf payload = event.getPayload();
@@ -104,13 +101,12 @@ public class NetworkEventListener {
                                                   buffer.readBoolean(),
                                                   buffer.readBoolean()));
 
-                // Register the new data.
-                for (ButterflyData butterfly : butterflyData) {
-                    try {
-                        ButterflyData.addButterfly(butterfly);
-                    } catch (DataFormatException e) {
-                        LogUtils.getLogger().error("Received invalid butterfly data.", e);
-                    }
+            // Register the new data.
+            for (ButterflyData butterfly : butterflyData) {
+                try {
+                    ButterflyData.addButterfly(butterfly);
+                } catch (DataFormatException e) {
+                    LogUtils.getLogger().error("Received invalid butterfly data.", e);
                 }
             }
         }
