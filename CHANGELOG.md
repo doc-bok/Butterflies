@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.0.1
+ - Fixed ClientEventListener being loaded on server distributions.
+
 ### 6.0.0
  - Villager Release
 
