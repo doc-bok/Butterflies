@@ -14,10 +14,12 @@ import com.bokmcdok.butterflies.event.network.NetworkEventListener;
 import com.bokmcdok.butterflies.event.server.ServerEventListener;
 import com.bokmcdok.butterflies.event.village.VillageEventListener;
 import com.bokmcdok.butterflies.registries.*;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 
 /**

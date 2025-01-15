@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": [
     "minecraft:cherry_grove"
   ],
@@ -448,5 +447,6 @@
       "type": "butterflies:spongymale",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

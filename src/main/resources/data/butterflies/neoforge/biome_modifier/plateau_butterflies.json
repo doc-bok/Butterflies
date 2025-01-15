@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_plateau",
   "spawners": [
     {
@@ -26,5 +25,6 @@
       "type": "butterflies:chalkhill_egg",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

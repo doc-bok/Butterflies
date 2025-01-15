@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_plains",
   "spawners": [
     {
@@ -338,5 +337,6 @@
       "type": "butterflies:hummingbird_egg",
       "weight": 2
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_lush",
   "spawners": [
     {
@@ -470,5 +469,6 @@
       "type": "butterflies:spongymale",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

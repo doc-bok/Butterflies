@@ -1,4 +1,5 @@
 {
+  "type": "neoforge:add_spawns",
   "biomes": "#minecraft:is_taiga",
   "spawners": []
 }

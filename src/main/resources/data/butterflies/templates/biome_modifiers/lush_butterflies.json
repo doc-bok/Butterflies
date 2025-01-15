@@ -1,4 +1,5 @@
 {
   "biomes": "#forge:is_lush",
-  "spawners": []
+  "spawners": [],
+  "type": "neoforge:add_spawns"
 }

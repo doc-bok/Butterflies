@@ -1,4 +1,5 @@
 {
+  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_dense",
   "spawners": []
 }

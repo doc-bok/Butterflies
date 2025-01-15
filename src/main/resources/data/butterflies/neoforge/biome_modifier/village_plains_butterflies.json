@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#minecraft:has_structure/village_plains",
   "spawners": [
     {
@@ -74,5 +73,6 @@
       "type": "butterflies:domestic_silk_egg",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

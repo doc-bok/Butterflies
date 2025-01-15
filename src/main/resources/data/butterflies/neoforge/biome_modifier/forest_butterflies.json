@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#minecraft:is_forest",
   "spawners": [
     {
@@ -446,5 +445,6 @@
       "type": "butterflies:spongymale",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

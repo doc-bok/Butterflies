@@ -41,7 +41,7 @@ FLOWERS = [
 
 # File locations
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
-BIOME_MODIFIERS = "resources/data/butterflies/forge/biome_modifier/"
+BIOME_MODIFIERS = "resources/data/butterflies/neoforge/biome_modifier/"
 BUTTERFLY_DATA = "resources/data/butterflies/butterfly_data/"
 CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"

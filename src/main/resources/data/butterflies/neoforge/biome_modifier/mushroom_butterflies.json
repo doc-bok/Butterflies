@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_mushroom",
   "spawners": [
     {
@@ -146,5 +145,6 @@
       "type": "butterflies:carpet_egg",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

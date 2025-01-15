@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": [
     "minecraft:river"
   ],
@@ -148,5 +147,6 @@
       "type": "butterflies:carpet_egg",
       "weight": 4
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }

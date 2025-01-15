@@ -1,5 +1,4 @@
 {
-  "type": "neoforge:add_spawns",
   "biomes": "#forge:is_snowy",
   "spawners": [
     {
@@ -26,5 +25,6 @@
       "type": "butterflies:ice_egg",
       "weight": 1
     }
-  ]
+  ],
+  "type": "neoforge:add_spawns"
 }
