@@ -38,8 +38,9 @@ public class NetworkEventListener {
     public NetworkEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onDatapackSync);
-        forgeEventBus.addListener(this::onButterflyCollectionPayload);
 
+        // This is needed for 1.20.1
+        BUTTERFLY_NETWORK_CHANNEL.addListener(this::onButterflyCollectionPayload);
     }
 
     /**
