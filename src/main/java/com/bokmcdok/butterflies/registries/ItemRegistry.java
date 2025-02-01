@@ -47,6 +47,7 @@ public class ItemRegistry {
     private RegistryObject<Item> butterflyBook;
     private List<RegistryObject<Item>> butterflyEggs;
     private RegistryObject<Item> butterflyFeeder;
+    private RegistryObject<Item> butterflyMicroscope;
     private List<RegistryObject<Item>> butterflyNets;
     private RegistryObject<Item> butterflyPotterySherd;
     private List<RegistryObject<Item>> butterflyScrolls;
@@ -132,6 +133,9 @@ public class ItemRegistry {
 
         this.butterflyFeeder = deferredRegister.register("butterfly_feeder",
                         () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
+
+        this.butterflyMicroscope = deferredRegister.register("butterfly_microscope",
+                () -> new BlockItem(blockRegistry.getButterflyMicroscope().get(), new Item.Properties()));
 
         this.butterflyNets = new ArrayList<>() {
             {
@@ -233,6 +237,14 @@ public class ItemRegistry {
      */
     public RegistryObject<Item> getButterflyBook() {
         return butterflyBook;
+    }
+
+    /**
+     * Accessor for butterfly microscope.
+     * @return The registry object.
+     */
+    public RegistryObject<Item> getButterflyMicroscope() {
+        return butterflyMicroscope;
     }
 
     /**
