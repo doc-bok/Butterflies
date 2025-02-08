@@ -132,7 +132,8 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
                                       @NotNull BlockState blockState) {
         return new ButterflyFeederEntity(
-                this.menuTypeRegistry, blockEntityTypeRegistry.getButterflyFeeder().get(),
+                this.menuTypeRegistry,
+                blockEntityTypeRegistry.getButterflyFeeder().get(),
                 blockPos,
                 blockState);
     }
