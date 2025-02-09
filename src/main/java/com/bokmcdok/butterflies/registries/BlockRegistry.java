@@ -36,7 +36,7 @@ public class BlockRegistry {
     private DeferredHolder<Block, Block> butterflyFeeder;
 
     // Butterfly Microscope
-    private RegistryObject<Block> butterflyMicroscope;
+    private DeferredHolder<Block, Block> butterflyMicroscope;
 
     // Flower Buds
     private DeferredHolder<Block, Block> alliumBud;
@@ -268,7 +268,7 @@ public class BlockRegistry {
      * Get the butterfly microscope block.
      * @return The butterfly microscope block.
      */
-    public RegistryObject<Block> getButterflyMicroscope() {
+    public DeferredHolder<Block, Block> getButterflyMicroscope() {
         return butterflyMicroscope;
     }
 
