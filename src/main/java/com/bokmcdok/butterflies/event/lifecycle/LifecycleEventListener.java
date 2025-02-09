@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.event.lifecycle;
 
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
+import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
 import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
@@ -79,6 +80,10 @@ public class LifecycleEventListener {
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
                 () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
+        );
+
+        event.enqueueWork(
+                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
         );
     }
 }

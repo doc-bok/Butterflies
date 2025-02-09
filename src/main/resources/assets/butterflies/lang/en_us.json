@@ -58,6 +58,7 @@
   "block.butterflies.bottled_butterfly": "Bottled Butterfly",
   "block.butterflies.bottled_caterpillar": "Bottled Caterpillar",
   "block.butterflies.butterfly_feeder": "Butterfly Feeder",
+  "block.butterflies.butterfly_microscope": "Butterfly Microscope",
   "block.butterflies.butterfly_origami_black": "Black Butterfly Origami",
   "block.butterflies.butterfly_origami_blue": "Blue Butterfly Origami",
   "block.butterflies.butterfly_origami_brown": "Brown Butterfly Origami",
@@ -93,6 +94,7 @@
   "butterflies.subtitle.hummingbird": "Hummingbird moth wings",
   "butterflies.subtitle.luna_caterpillar": "Luna Caterpillar Clicking",
   "container.butterfly_feeder": "Butterfly Feeder",
+  "container.butterfly_microscope": "Butterfly Microscope",
   "entity.butterflies.admiral": "Admiral Butterfly",
   "entity.butterflies.admiral_caterpillar": "Admiral Caterpillar",
   "entity.butterflies.admiral_chrysalis": "Admiral Chrysalis",
@@ -597,5 +599,6 @@
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
+  "tooltip.butterflies.pages": "%s pages"
 }

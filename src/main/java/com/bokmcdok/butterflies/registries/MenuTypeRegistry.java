@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.core.registries.BuiltInRegistries;
+import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -20,6 +21,7 @@ public class MenuTypeRegistry {
 
     // The butterfly feeder menu
     private DeferredHolder<MenuType<?>, MenuType<ButterflyFeederMenu>> butterflyFeederMenu;
+    private DeferredHolder<MenuType<?>, MenuType<ButterflyMicroscopeMenu>> butterflyMicroscopeMenu;
 
     /**
      * Construction
@@ -35,7 +37,10 @@ public class MenuTypeRegistry {
      */
     public void initialise() {
         this.butterflyFeederMenu = deferredRegister.register("butterfly_feeder",
-                        () -> new MenuType<>(this::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
+                () -> new MenuType<>(this::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
+
+        this.butterflyMicroscopeMenu = deferredRegister.register("butterfly_microscope",
+                        () -> new MenuType<>(this::createButterflyMicroscopeMenu, FeatureFlags.DEFAULT_FLAGS));
     }
 
     /**
@@ -47,6 +52,14 @@ public class MenuTypeRegistry {
     }
 
     /**
+     * Get the butterfly microscope menu.
+     * @return The menu type.
+     */
+    public DeferredHolder<MenuType<?>, MenuType<ButterflyMicroscopeMenu>> getButterflyMicroscopeMenu() {
+        return butterflyMicroscopeMenu;
+    }
+
+    /**
      * Helper method for creating butterfly feeder menu.
      * @param containerId The ID of the container.
      * @param playerInventory The player's inventory.
@@ -55,5 +68,16 @@ public class MenuTypeRegistry {
     private ButterflyFeederMenu createButterflyFeederMenu(int containerId,
                                                           Inventory playerInventory) {
         return new ButterflyFeederMenu(this.butterflyFeederMenu.get(), containerId, playerInventory);
+    }
+
+    /**
+     * Helper method for creating butterfly feeder menu.
+     * @param containerId The ID of the container.
+     * @param playerInventory The player's inventory.
+     * @return A new menu instance.
+     */
+    private ButterflyMicroscopeMenu createButterflyMicroscopeMenu(int containerId,
+                                                                  Inventory playerInventory) {
+        return new ButterflyMicroscopeMenu(this.butterflyMicroscopeMenu.get(), containerId, playerInventory);
     }
 }

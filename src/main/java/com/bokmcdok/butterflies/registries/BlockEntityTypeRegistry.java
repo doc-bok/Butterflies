@@ -47,7 +47,6 @@ public class BlockEntityTypeRegistry {
         this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
                 () -> BlockEntityType.Builder.of(this::createButterflyFeeder,
                         blockRegistry.getButterflyFeeder().value()).build(null));
-
     }
 
     /**

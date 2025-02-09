@@ -45,14 +45,15 @@ attempt to do so.
 Some moth cocoons will drop silk, which can be crafted into string or paper.
 Unfortunately, this kills the moth.
 
-### Scrolls and Books
+### Scrolls, Microscopes, and Books
 
 Butterflies can also be pinned to a piece of paper to create a scroll where you
 can look at the butterfly in detail. Unfortunately this kills the butterfly.
 These scrolls can also be placed around your world as decoration. 
 
-Scrolls can also be placed in a book, allowing the player to collect
-more detailed information on each butterfly species.
+Scrolls can be examined using the butterfly microscope, so you can learn more
+about the various species. You can also use the microscope to place the scrolls
+in a book, allowing the player to collect all the information in one place.
 
 ### Jars
 
