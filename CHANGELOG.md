@@ -1,9 +1,15 @@
 ## Changelog
 
-### 6.0.1
- - Fixed ClientEventListener being loaded on server distributions.
+### 6.0.3 (2025-02-09)
+- Added the butterfly microscope.
 
-### 6.0.0
+### 6.0.2 (2025-02-02)
+- Fixed butterfly data not syncing correctly.
+
+### 6.0.1 (2025-02-26)
+- Fixed ClientEventListener being loaded on server distributions.
+
+### 6.0.0 (2025-01-19)
  - Villager Release
 
 ### 5.14.1 (2025-01-05)
