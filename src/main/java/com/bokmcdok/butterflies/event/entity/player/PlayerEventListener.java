@@ -31,7 +31,6 @@ public class PlayerEventListener {
     public PlayerEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onEntityInteractEvent);
-        forgeEventBus.addListener(this::onItemCraftedEvent);
     }
 
     /**
@@ -50,62 +49,6 @@ public class PlayerEventListener {
                 //  If the cat is named Snow, then change it to a white cat.
                 if ("Snow".equals(name)) {
                     cat.setCatVariant(CatVariant.WHITE);
-                }
-            }
-        }
-    }
-
-    /**
-     * Handles adding new pages to a butterfly book.
-     * @param event The event data
-     */
-    private void onItemCraftedEvent(PlayerEvent.ItemCraftedEvent event) {
-
-        ItemStack craftingItem = event.getCrafting();
-        if (craftingItem.getItem() instanceof ButterflyBookItem) {
-            Container craftingMatrix = event.getInventory();
-            int index = -1;
-            ItemStack oldBook = null;
-            for (int i = 0; i < craftingMatrix.getContainerSize(); ++i) {
-
-                // If there is a book then we are adding a page.
-                ItemStack recipeItem = craftingMatrix.getItem(i);
-                if (recipeItem.getItem() instanceof ButterflyBookItem) {
-                    oldBook = recipeItem;
-                }
-
-                //  Get the index from the scroll.
-                if (recipeItem.getItem() instanceof ButterflyScrollItem scroll) {
-                    if (index == -1) {
-                        index = scroll.getButterflyIndex();
-                    }
-                }
-
-                // Always use Entity ID for compatibility with butterfly net.
-                // TODO: Remove in a future version.
-                CompoundTag tag = recipeItem.getTag();
-                if (tag != null && tag.contains(CompoundTagId.ENTITY_ID)) {
-                    ResourceLocation location = new ResourceLocation(tag.getString(CompoundTagId.ENTITY_ID));
-                    index = ButterflyData.getButterflyIndex(location);
-                    break;
-                }
-            }
-
-            if (index >= 0) {
-                ButterflyBookItem.addPage(oldBook, craftingItem, index);
-
-                // Check for shift-clicked item.
-                // TODO: This is still hacky - is there a better way to add pages?
-                Player player = event.getEntity();
-                if (player != null) {
-                    Inventory inventory = player.getInventory();
-                    for (int j = 0; j < inventory.getContainerSize(); ++j) {
-
-                        ItemStack inventoryItem = inventory.getItem(j);
-                        if (inventoryItem.getItem() instanceof ButterflyBookItem) {
-                            ButterflyBookItem.addPage(oldBook, craftingItem, index);
-                        }
-                    }
                 }
             }
         }

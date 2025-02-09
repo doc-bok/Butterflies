@@ -1,99 +1,84 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
-import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
+import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Container;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
- * A butterfly feeder block.
+ * Butterfly Microscope
+ *  By placing a Butterfly Scroll in this block, players can learn more about
+ *  the butterfly. It can also be used to create Butterfly Books and append
+ *  pages to it.
  */
-public class ButterflyFeederBlock extends BaseEntityBlock {
+public class ButterflyMicroscopeBlock extends Block {
 
-    //  The bottle's "model".
-    private static final VoxelShape SHAPE = Shapes.or(
-            Block.box(14.0,  0.0,  0.0, 16.0, 12.0,  2.0),
-            Block.box(14.0,  0.0, 14.0, 16.0, 12.0, 16.0),
-            Block.box( 0.0,  0.0, 14.0,  2.0, 12.0, 16.0),
-            Block.box( 0.0, 12.0,  0.0, 16.0, 14.0, 16.0),
-            Block.box(15.0, 14.0,  0.0, 16.0, 16.0, 16.0),
-            Block.box( 0.0, 14.0,  0.0,  1.0, 16.0, 16.0),
-            Block.box( 1.0, 14.0, 15.0, 15.0, 16.0, 16.0),
-            Block.box( 1.0, 14.0,  0.0, 15.0, 16.0,  1.0),
-            Block.box( 0.0,  0.0,  0.0,  2.0, 12.0,  2.0));
+    // The translation string for the title.
+    private static final Component CONTAINER_TITLE =
+            Component.translatable("container.butterfly_microscope");
 
-    // The registries.
-    private final BlockEntityTypeRegistry blockEntityTypeRegistry;
+    // The shape of the block.
+    private static final VoxelShape SHAPE;
+
+    // Access to items.
+    private final ItemRegistry itemRegistry;
+
+    // Access to menu types.
     private final MenuTypeRegistry menuTypeRegistry;
 
     /**
-     * Construction.
-     * @param blockEntityTypeRegistry The block entity registry.
-     * @param menuTypeRegistry The menu type registry.
+     * Construction
      */
-    public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry,
-                                MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of(Material.WOOD)
-                .color(MaterialColor.SAND)
+    public ButterflyMicroscopeBlock(ItemRegistry itemRegistry,
+                                    MenuTypeRegistry menuTypeRegistry) {
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)
                 .isViewBlocking(BlockRegistry::never)
                 .noOcclusion()
-                .sound(SoundType.BAMBOO)
-                .strength(0.3F));
+                .sound(SoundType.STONE)
+                .strength(1.0F));
 
-        this.blockEntityTypeRegistry = blockEntityTypeRegistry;
+        this.itemRegistry = itemRegistry;
         this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
      * Get the shape of the block.
-     * @param blockState The current block state.
-     * @param blockGetter Access to the block.
-     * @param position The block's position.
-     * @param collisionContext The collision context we are fetching for.
-     * @return The block's bounding box.
+     * @param blockState The block state.
+     * @param blockGetter The block getter.
+     * @param blockPos The block position.
+     * @param collisionContext The collision context.
+     * @return The shape of the crop based on its age.
      */
     @NotNull
     @Override
     @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
-                               @NotNull BlockPos position,
+                               @NotNull BlockPos blockPos,
                                @NotNull CollisionContext collisionContext) {
         return SHAPE;
-    }
-
-    /**
-     * Tell this block to render as a normal block.
-     * @param blockState The current block state.
-     * @return Always MODEL.
-     */
-    @Override
-    @NotNull
-    public RenderShape getRenderShape(@NotNull BlockState blockState) {
-        return RenderShape.MODEL;
     }
 
     /**
@@ -123,23 +108,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     }
 
     /**
-     * Create a block entity for this block.
-     * @param blockPos The position of the block.
-     * @param blockState The block's state.
-     * @return A new block entity.
-     */
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
-                                      @NotNull BlockState blockState) {
-        return new ButterflyFeederEntity(
-                this.menuTypeRegistry,
-                blockEntityTypeRegistry.getButterflyFeeder().get(),
-                blockPos,
-                blockState);
-    }
-
-    /**
      * Open the menu when the block is interacted with.
      * @param blockState The block's state.
      * @param level The current level.
@@ -161,12 +129,46 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof ButterflyFeederEntity feederEntity) {
-                player.openMenu(feederEntity);
-            }
-
+            player.openMenu(blockState.getMenuProvider(level, blockPos));
             return InteractionResult.CONSUME;
         }
+    }
+
+    /**
+     * Provides the menu for this block.
+     * @param blockState The current block state.
+     * @param level The current level.
+     * @param blockPos The position of the block.
+     * @return A new menu provider.
+     */
+    @Override
+    @SuppressWarnings("deprecation")
+    public MenuProvider getMenuProvider(@NotNull BlockState blockState,
+                                        @NotNull Level level,
+                                        @NotNull BlockPos blockPos) {
+        return new SimpleMenuProvider((containerId,
+                                       inventory,
+                                       title) ->
+                new ButterflyMicroscopeMenu(
+                        itemRegistry,
+                        menuTypeRegistry.getButterflyMicroscopeMenu().get(),
+                        containerId,
+                        inventory,
+                        ContainerLevelAccess.create(level, blockPos)),
+                CONTAINER_TITLE);
+    }
+
+    // Defines the shape of the block.
+    static {
+        SHAPE = Shapes.or(
+                Block.box( 0.0,  0.0,  0.0, 16.0,  3.0, 16.0),
+                Block.box( 2.0,  3.0,  2.0,  5.0,  9.0,  5.0),
+                Block.box( 8.0,  5.0,  8.0, 10.0, 16.0, 10.0),
+                Block.box( 3.0,  9.0,  3.0,  4.0, 10.0,  4.0),
+                Block.box( 4.0, 10.0,  4.0,  5.0, 11.0,  5.0),
+                Block.box( 5.0, 11.0,  5.0,  6.0, 12.0,  6.0),
+                Block.box( 6.0, 12.0,  6.0,  7.0, 13.0,  7.0),
+                Block.box( 7.0, 13.0,  7.0,  8.0, 14.0,  8.0)
+        );
     }
 }

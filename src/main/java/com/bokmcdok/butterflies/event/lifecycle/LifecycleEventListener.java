@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.lifecycle;
 
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
+import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
@@ -17,7 +18,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * Events fired during the overall life cycle of the mod.
@@ -66,6 +66,10 @@ public class LifecycleEventListener {
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
                 () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
+        );
+
+        event.enqueueWork(
+                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
         );
     }
 }
