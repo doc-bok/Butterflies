@@ -21,7 +21,7 @@ public class BlockEntityTypeRegistry {
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<BlockEntityType<?>> deferredRegister;
 
-    // The butterfly feeder entity.
+    // The block entities.
     private RegistryObject<BlockEntityType<ButterflyFeederEntity>> butterflyFeeder;
 
     /**
@@ -47,7 +47,6 @@ public class BlockEntityTypeRegistry {
         this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
                 () -> BlockEntityType.Builder.of(this::createButterflyFeeder,
                         blockRegistry.getButterflyFeeder().get()).build(null));
-
     }
 
     /**

@@ -35,6 +35,7 @@ public class ModEventListener {
 
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(itemRegistry.getButterflyFeeder());
+            event.accept(itemRegistry.getButterflyMicroscope());
         }
 
         else if (event.getTabKey() == CreativeModeTabs.COLORED_BLOCKS) {
