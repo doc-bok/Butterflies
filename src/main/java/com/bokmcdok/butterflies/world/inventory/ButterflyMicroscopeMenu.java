@@ -75,19 +75,35 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
         this.containerLevelAccess = container;
 
         // TODO: Update positions.
-        this.addSlot(new ResultSlot(player, this.craftSlots, this.resultSlots, 0, 116, 17));
-        this.addSlot(new ButterflyBookSlot(craftSlots, 0, 44, 17));
-        this.addSlot(new ButterflyScrollSlot(craftSlots, 1, 62, 17));
+        this.addSlot(new ButterflyBookResultSlot(this.craftSlots, this.resultSlots, 0, 204, 17));
+        this.addSlot(new ButterflyBookSlot(craftSlots, 0, 132, 17));
+        this.addSlot(new ButterflyScrollSlot(craftSlots, 1, 150, 17));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, i * 18 + 47));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 96 + j * 18, i * 18 + 47));
             }
         }
 
         for(int i = 0; i < 9; ++i) {
-            this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 105));
+            this.addSlot(new Slot(playerInventory, i, 96 + i * 18, 105));
         }
+    }
+
+    /**
+     * Get the butterfly index of the current scroll. Used to render the
+     * correct scroll.
+     * @return The butterfly index.
+     */
+    public int getButterflyScrollIndex() {
+        ItemStack scroll = this.craftSlots.getItem(1);
+        if (scroll != ItemStack.EMPTY) {
+            if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
+                return scrollItem.getButterflyIndex();
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -154,7 +170,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     @Override
     public void removed(@NotNull Player player) {
         super.removed(player);
-        this.containerLevelAccess.execute((p_39371_, p_39372_) ->
+        this.containerLevelAccess.execute((level, blockPos) ->
                 this.clearContainer(player, this.craftSlots));
     }
 
@@ -203,7 +219,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
             ItemStack book = craftingContainer.getItem(0);
 
             // Get a new book, if any.
-            if (book != ItemStack.EMPTY) {
+            if (!book.isEmpty()) {
                 ItemStack scroll = craftingContainer.getItem(1);
                 if (scroll != ItemStack.EMPTY) {
                     if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
