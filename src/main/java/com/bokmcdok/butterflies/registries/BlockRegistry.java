@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -33,6 +34,9 @@ public class BlockRegistry {
 
     // Butterfly Feeder
     private RegistryObject<Block> butterflyFeeder;
+
+    // Butterfly Microscope
+    private RegistryObject<Block> butterflyMicroscope;
 
     // Flower Buds
     private RegistryObject<Block> alliumBud;
@@ -109,9 +113,11 @@ public class BlockRegistry {
     /**
      * Register the blocks.
      * @param blockEntityTypeRegistry The block entity registry.
+     * @param itemRegistry The item registry.
      * @param menuTypeRegistry The menu type registry.
      */
     public void initialise(BlockEntityTypeRegistry blockEntityTypeRegistry,
+                           ItemRegistry itemRegistry,
                            MenuTypeRegistry menuTypeRegistry) {
         
         this.bottledButterflyBlocks = new ArrayList<>() {
@@ -188,6 +194,9 @@ public class BlockRegistry {
         this.butterflyFeeder = deferredRegister.register( "butterfly_feeder",
                 () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry));
 
+        this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
+                () -> new ButterflyMicroscopeBlock(itemRegistry, menuTypeRegistry));
+
         this.butterflyOrigamiBlack = registerButterflyOrigami("butterfly_origami_black");
         this.butterflyOrigamiBlue = registerButterflyOrigami("butterfly_origami_blue");
         this.butterflyOrigamiBrown = registerButterflyOrigami("butterfly_origami_brown");
@@ -204,7 +213,6 @@ public class BlockRegistry {
         this.butterflyOrigamiRed = registerButterflyOrigami("butterfly_origami_red");
         this.butterflyOrigamiWhite = registerButterflyOrigami("butterfly_origami_white");
         this.butterflyOrigamiYellow = registerButterflyOrigami("butterfly_origami_yellow");
-
     }
 
     /**
@@ -253,6 +261,14 @@ public class BlockRegistry {
      */
     public RegistryObject<Block> getButterflyFeeder() {
         return butterflyFeeder;
+    }
+
+    /**
+     * Get the butterfly microscope block.
+     * @return The butterfly microscope block.
+     */
+    public RegistryObject<Block> getButterflyMicroscope() {
+        return butterflyMicroscope;
     }
 
     /**

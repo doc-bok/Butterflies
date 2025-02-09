@@ -13,12 +13,14 @@ import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
 import com.bokmcdok.butterflies.event.village.VillageEventListener;
 import com.bokmcdok.butterflies.registries.*;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
  * The main entry point for the mod.
@@ -53,7 +55,7 @@ public class ButterfliesMod
         // vice-versa.
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
-        blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
+        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
@@ -63,7 +65,10 @@ public class ButterfliesMod
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Create the Mod event listeners
-        new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+        }
+
         new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
         new ModEventListener(modEventBus, itemRegistry);
 

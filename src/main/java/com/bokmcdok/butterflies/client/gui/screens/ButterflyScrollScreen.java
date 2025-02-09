@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
-import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
