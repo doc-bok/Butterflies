@@ -1,6 +1,6 @@
 ## Changelog
 
-### 6.0.3 (2025-02-09)
+### 6.1.0 (2025-02-09)
 - Added the butterfly microscope.
 
 ### 6.0.2 (2025-02-02)
