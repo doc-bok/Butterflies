@@ -55,8 +55,11 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     @Override
     protected AbstractContainerMenu createMenu(int containerId,
                                                @NotNull Inventory inventory) {
-        return new ButterflyFeederMenu(this.menuTypeRegistry.getButterflyFeederMenu().get(),
-                containerId, inventory, this);
+        return new ButterflyFeederMenu(
+                this.menuTypeRegistry.getButterflyFeederMenu().get(),
+                containerId,
+                inventory,
+                this);
     }
 
     /**

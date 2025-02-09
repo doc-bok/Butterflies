@@ -5,6 +5,11 @@ import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import com.sun.jdi.InvalidTypeException;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -504,6 +509,114 @@ public record ButterflyData(int butterflyIndex,
     public static ButterflyData getEntry(ResourceLocation location) {
         int index = getButterflyIndex(location);
         return getEntry(index);
+    }
+
+    /**
+     * Returns a collection of formatted components ready to render as text.
+     * @param butterflyIndex The butterfly index.
+     * @return Formatted, localised text.
+     */
+    public static FormattedText getFormattedButterflyData(int butterflyIndex) {
+        ButterflyData entry = ButterflyData.getEntry(butterflyIndex);
+        if (entry != null) {
+            //  Butterfly name
+            MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId());
+
+            if (entry.type() == ButterflyData.ButterflyType.SPECIAL) {
+                component.withStyle(ChatFormatting.DARK_BLUE);
+            }
+
+            // Rarity
+            component.append("\n\n");
+            component.append(Component.translatable("gui.butterflies.rarity"));
+            switch (entry.rarity()) {
+                case RARE -> component.append(Component.translatable("gui.butterflies.rarity.rare"));
+                case UNCOMMON -> component.append(Component.translatable("gui.butterflies.rarity.uncommon"));
+                case COMMON -> component.append(Component.translatable("gui.butterflies.rarity.common"));
+                default -> {
+                }
+            }
+
+            // Size
+            component.append("\n");
+            component.append(Component.translatable("gui.butterflies.size"));
+            switch (entry.size()) {
+                case TINY -> component.append(Component.translatable("gui.butterflies.size.tiny"));
+                case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
+                case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
+                case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));
+                case HUGE -> component.append(Component.translatable("gui.butterflies.size.huge"));
+                default -> {
+                }
+            }
+
+            // Speed
+            component.append("\n");
+            component.append(Component.translatable("gui.butterflies.speed"));
+            switch (entry.speed()) {
+                case MODERATE -> component.append(Component.translatable("gui.butterflies.speed.moderate"));
+                case FAST -> component.append(Component.translatable("gui.butterflies.speed.fast"));
+                default -> {
+                }
+            }
+
+            // Lifespan
+            component.append("\n");
+            component.append(Component.translatable("gui.butterflies.lifespan"));
+            switch (entry.getOverallLifeSpan()) {
+                case SHORT -> component.append(Component.translatable("gui.butterflies.lifespan.short"));
+                case MEDIUM -> component.append(Component.translatable("gui.butterflies.lifespan.average"));
+                case LONG -> component.append(Component.translatable("gui.butterflies.lifespan.long"));
+                case IMMORTAL -> component.append(Component.translatable("gui.butterflies.lifespan.immortal"));
+                default -> {
+                }
+            }
+
+            // Habitat
+            component.append("\n");
+            component.append(Component.translatable("gui.butterflies.habitat"));
+            switch (entry.habitat()) {
+                case FORESTS -> component.append(Component.translatable("gui.butterflies.habitat.forests"));
+                case FORESTS_AND_PLAINS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
+                case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
+                case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
+                case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
+                case NETHER -> component.append(Component.translatable("gui.butterflies.habitat.nether"));
+                case NONE -> component.append(Component.translatable("gui.butterflies.habitat.none"));
+                case FORESTS_AND_WETLANDS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.forestsandwetlands"));
+                case PLAINS_AND_SAVANNAS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.plainsandsavannas"));
+                case PLAINS_AND_WETLANDS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.plainsandwetlands"));
+                case HILLS_AND_PLATEAUS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.hillsandplateaus"));
+                case FORESTS_PLAINS_WETLANDS ->
+                        component.append(Component.translatable("gui.butterflies.habitat.forestsplainswetlands"));
+                case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
+                case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
+                default -> {
+                }
+            }
+
+            // Preferred Flower
+            component.append("\n");
+            component.append(Component.translatable("gui.butterflies.preferred_flower"));
+
+            @SuppressWarnings("deprecation")
+            Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
+            component.append(description);
+
+
+            // Fact
+            component.append("\n\n");
+            component.append(Component.translatable("gui.butterflies.fact." + entry.entityId()));
+
+            return component;
+        }
+
+        return null;
     }
 
     /**

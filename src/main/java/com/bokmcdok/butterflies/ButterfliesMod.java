@@ -55,7 +55,7 @@ public class ButterfliesMod
         // vice-versa.
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
-        blockRegistry.initialise(blockEntityTypeRegistry, menuTypeRegistry);
+        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
