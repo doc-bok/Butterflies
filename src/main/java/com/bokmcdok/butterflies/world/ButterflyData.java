@@ -6,7 +6,6 @@ import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import com.sun.jdi.InvalidTypeException;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
@@ -16,8 +15,10 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
@@ -604,10 +605,11 @@ public record ButterflyData(int butterflyIndex,
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            @SuppressWarnings("deprecation")
-            Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
-            component.append(description);
-
+            Item value = ForgeRegistries.ITEMS.getValue(entry.preferredFlower());
+            if (value != null) {
+                Component description = value.getDescription();
+                component.append(description);
+            }
 
             // Fact
             component.append("\n\n");

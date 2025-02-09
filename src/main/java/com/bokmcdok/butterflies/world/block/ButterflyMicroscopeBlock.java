@@ -16,7 +16,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -49,8 +50,8 @@ public class ButterflyMicroscopeBlock extends Block {
      */
     public ButterflyMicroscopeBlock(ItemRegistry itemRegistry,
                                     MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
+        super(BlockBehaviour.Properties.of(Material.STONE)
+                .color(MaterialColor.STONE)
                 .isRedstoneConductor(BlockRegistry::never)
                 .isSuffocating(BlockRegistry::never)
                 .isValidSpawn(BlockRegistry::never)

@@ -212,6 +212,7 @@ public class ButterflyBookScreen extends Screen {
             ButterflyData data = ButterflyData.getEntry(butterflyIndex);
             if (data != null) {
                 RenderSystem.setShaderTexture(0, data.getScrollTexture());
+                this.blit(poseStack, i, 2, 0, 0, 192, 192);
             }
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());

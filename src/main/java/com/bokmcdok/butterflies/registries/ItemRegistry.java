@@ -12,10 +12,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
-import net.minecraft.world.item.BannerPatternItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -132,10 +129,10 @@ public class ItemRegistry {
         };
 
         this.butterflyFeeder = deferredRegister.register("butterfly_feeder",
-                        () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
+                        () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
         this.butterflyMicroscope = deferredRegister.register("butterfly_microscope",
-                () -> new BlockItem(blockRegistry.getButterflyMicroscope().get(), new Item.Properties()));
+                () -> new BlockItem(blockRegistry.getButterflyMicroscope().get(), new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
         this.butterflyNets = new ArrayList<>() {
             {

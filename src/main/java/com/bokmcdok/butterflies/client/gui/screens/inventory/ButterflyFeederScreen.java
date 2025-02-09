@@ -39,28 +39,28 @@ public class ButterflyFeederScreen extends AbstractContainerScreen<ButterflyFeed
 
     /**
      * Render the tool tip.
-     * @param stack The graphics object.
+     * @param poseStack The graphics object.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      * @param unknown Unknown.
      */
-    public void render(@NotNull PoseStack stack,
+    public void render(@NotNull PoseStack poseStack,
                        int mouseX,
                        int mouseY,
                        float unknown) {
-        super.render(stack, mouseX, mouseY, unknown);
-        this.renderTooltip(stack, mouseX, mouseY);
+        super.render(poseStack, mouseX, mouseY, unknown);
+        this.renderTooltip(poseStack, mouseX, mouseY);
     }
 
     /**
      * Render the background.
-     * @param stack The graphics object.
+     * @param poseStack The graphics object.
      * @param unknown Unknown.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      */
     @Override
-    protected void renderBg(@NotNull PoseStack stack,
+    protected void renderBg(@NotNull PoseStack poseStack,
                             float unknown,
                             int mouseX,
                             int mouseY) {
@@ -68,9 +68,8 @@ public class ButterflyFeederScreen extends AbstractContainerScreen<ButterflyFeed
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
 
-        int i = (this.width - 192) / 2;
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        this.blit(stack, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack, x, y, 0, 0, this.imageWidth, this.imageHeight);
     }
 }

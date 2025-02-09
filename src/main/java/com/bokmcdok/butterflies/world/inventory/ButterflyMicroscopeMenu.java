@@ -70,7 +70,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
         this.player = playerInventory.player;
 
-        this.craftSlots = new TransientCraftingContainer(this, 2, 1);
+        this.craftSlots = new CraftingContainer(this, 2, 1);
         this.resultSlots = new ResultContainer();
         this.containerLevelAccess = container;
 
@@ -145,7 +145,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
             }
 
             if (slotItem.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }

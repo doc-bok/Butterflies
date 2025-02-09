@@ -3,8 +3,10 @@ package com.bokmcdok.butterflies.client.gui.screens.inventory;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
-import net.minecraft.client.gui.GuiGraphics;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
@@ -48,34 +50,38 @@ public class ButterflyMicroscopeScreen extends AbstractContainerScreen<Butterfly
 
     /**
      * Render the tool tip.
-     * @param guiGraphics The graphics object.
+     * @param poseStack The graphics object.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      * @param unknown Unknown.
      */
-    public void render(@NotNull GuiGraphics guiGraphics,
+    public void render(@NotNull PoseStack poseStack,
                        int mouseX,
                        int mouseY,
                        float unknown) {
-        super.render(guiGraphics, mouseX, mouseY, unknown);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+        super.render(poseStack, mouseX, mouseY, unknown);
+        this.renderTooltip(poseStack, mouseX, mouseY);
     }
 
     /**
      * Render the background.
-     * @param guiGraphics The graphics object.
+     * @param poseStack The graphics object.
      * @param unknown Unknown.
      * @param mouseX Mouse x-position.
      * @param mouseY Mouse y-position.
      */
     @Override
-    protected void renderBg(@NotNull GuiGraphics guiGraphics,
+    protected void renderBg(@NotNull PoseStack poseStack,
                             float unknown,
                             int mouseX,
                             int mouseY) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, ButterflyTextures.MICROSCOPE);
+
         int x = (this.width) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        guiGraphics.blit(ButterflyTextures.MICROSCOPE, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        this.blit(poseStack, x,y, 0, 0, this.imageWidth, this.imageHeight);
 
         x = ((this.width) / 2) - 176;
         y = (this.height - 192) / 2;
@@ -98,12 +104,13 @@ public class ButterflyMicroscopeScreen extends AbstractContainerScreen<Butterfly
 
         this.cachedButterflyIndex = butterflyIndex;
 
-        guiGraphics.blit(scrollTexture, x, y, 0, 0, 192, 192);
+        RenderSystem.setShaderTexture(0, scrollTexture);
+        this.blit(poseStack, x, y, 0, 0, 192, 192);
 
         int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
         for (int line = 0; line < cachedPageSize; ++line) {
             FormattedCharSequence formattedCharSequence = this.cachedPageComponents.get(line);
-            guiGraphics.drawString(this.font, formattedCharSequence, x + 36, 50 + line * 9, 0, false);
+            this.font.draw(poseStack, formattedCharSequence, x + 36, 50 + line * 9, 0);
         }
     }
 }
