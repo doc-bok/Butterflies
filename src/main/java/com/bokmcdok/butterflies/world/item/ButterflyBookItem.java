@@ -118,7 +118,7 @@ public class ButterflyBookItem extends Item {
             numPages = 2 * newPages.size();
         }
 
-        MutableComponent newComponent = Component.translatable(localisation, numPages);
+        MutableComponent newComponent = new TranslatableComponent(localisation, numPages);
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
                 .withItalic(true);
         newComponent.setStyle(style);

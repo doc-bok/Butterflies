@@ -9,11 +9,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
+
+import java.io.InputStreamReader;
+import java.util.Random;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -521,7 +524,7 @@ public record ButterflyData(int butterflyIndex,
         ButterflyData entry = ButterflyData.getEntry(butterflyIndex);
         if (entry != null) {
             //  Butterfly name
-            MutableComponent component = Component.translatable("entity.butterflies." + entry.entityId());
+            MutableComponent component = new TranslatableComponent("entity.butterflies." + entry.entityId());
 
             if (entry.type() == ButterflyData.ButterflyType.SPECIAL) {
                 component.withStyle(ChatFormatting.DARK_BLUE);
@@ -529,81 +532,81 @@ public record ButterflyData(int butterflyIndex,
 
             // Rarity
             component.append("\n\n");
-            component.append(Component.translatable("gui.butterflies.rarity"));
+            component.append(new TranslatableComponent("gui.butterflies.rarity"));
             switch (entry.rarity()) {
-                case RARE -> component.append(Component.translatable("gui.butterflies.rarity.rare"));
-                case UNCOMMON -> component.append(Component.translatable("gui.butterflies.rarity.uncommon"));
-                case COMMON -> component.append(Component.translatable("gui.butterflies.rarity.common"));
+                case RARE -> component.append(new TranslatableComponent("gui.butterflies.rarity.rare"));
+                case UNCOMMON -> component.append(new TranslatableComponent("gui.butterflies.rarity.uncommon"));
+                case COMMON -> component.append(new TranslatableComponent("gui.butterflies.rarity.common"));
                 default -> {
                 }
             }
 
             // Size
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.size"));
+            component.append(new TranslatableComponent("gui.butterflies.size"));
             switch (entry.size()) {
-                case TINY -> component.append(Component.translatable("gui.butterflies.size.tiny"));
-                case SMALL -> component.append(Component.translatable("gui.butterflies.size.small"));
-                case MEDIUM -> component.append(Component.translatable("gui.butterflies.size.medium"));
-                case LARGE -> component.append(Component.translatable("gui.butterflies.size.large"));
-                case HUGE -> component.append(Component.translatable("gui.butterflies.size.huge"));
+                case TINY -> component.append(new TranslatableComponent("gui.butterflies.size.tiny"));
+                case SMALL -> component.append(new TranslatableComponent("gui.butterflies.size.small"));
+                case MEDIUM -> component.append(new TranslatableComponent("gui.butterflies.size.medium"));
+                case LARGE -> component.append(new TranslatableComponent("gui.butterflies.size.large"));
+                case HUGE -> component.append(new TranslatableComponent("gui.butterflies.size.huge"));
                 default -> {
                 }
             }
 
             // Speed
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.speed"));
+            component.append(new TranslatableComponent("gui.butterflies.speed"));
             switch (entry.speed()) {
-                case MODERATE -> component.append(Component.translatable("gui.butterflies.speed.moderate"));
-                case FAST -> component.append(Component.translatable("gui.butterflies.speed.fast"));
+                case MODERATE -> component.append(new TranslatableComponent("gui.butterflies.speed.moderate"));
+                case FAST -> component.append(new TranslatableComponent("gui.butterflies.speed.fast"));
                 default -> {
                 }
             }
 
             // Lifespan
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.lifespan"));
+            component.append(new TranslatableComponent("gui.butterflies.lifespan"));
             switch (entry.getOverallLifeSpan()) {
-                case SHORT -> component.append(Component.translatable("gui.butterflies.lifespan.short"));
-                case MEDIUM -> component.append(Component.translatable("gui.butterflies.lifespan.average"));
-                case LONG -> component.append(Component.translatable("gui.butterflies.lifespan.long"));
-                case IMMORTAL -> component.append(Component.translatable("gui.butterflies.lifespan.immortal"));
+                case SHORT -> component.append(new TranslatableComponent("gui.butterflies.lifespan.short"));
+                case MEDIUM -> component.append(new TranslatableComponent("gui.butterflies.lifespan.average"));
+                case LONG -> component.append(new TranslatableComponent("gui.butterflies.lifespan.long"));
+                case IMMORTAL -> component.append(new TranslatableComponent("gui.butterflies.lifespan.immortal"));
                 default -> {
                 }
             }
 
             // Habitat
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.habitat"));
+            component.append(new TranslatableComponent("gui.butterflies.habitat"));
             switch (entry.habitat()) {
-                case FORESTS -> component.append(Component.translatable("gui.butterflies.habitat.forests"));
+                case FORESTS -> component.append(new TranslatableComponent("gui.butterflies.habitat.forests"));
                 case FORESTS_AND_PLAINS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
-                case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
-                case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
-                case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
-                case NETHER -> component.append(Component.translatable("gui.butterflies.habitat.nether"));
-                case NONE -> component.append(Component.translatable("gui.butterflies.habitat.none"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.forestsandplains"));
+                case JUNGLES -> component.append(new TranslatableComponent("gui.butterflies.habitat.jungles"));
+                case PLAINS -> component.append(new TranslatableComponent("gui.butterflies.habitat.plains"));
+                case ICE -> component.append(new TranslatableComponent("gui.butterflies.habitat.ice"));
+                case NETHER -> component.append(new TranslatableComponent("gui.butterflies.habitat.nether"));
+                case NONE -> component.append(new TranslatableComponent("gui.butterflies.habitat.none"));
                 case FORESTS_AND_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsandwetlands"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.forestsandwetlands"));
                 case PLAINS_AND_SAVANNAS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.plainsandsavannas"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.plainsandsavannas"));
                 case PLAINS_AND_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.plainsandwetlands"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.plainsandwetlands"));
                 case HILLS_AND_PLATEAUS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.hillsandplateaus"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.hillsandplateaus"));
                 case FORESTS_PLAINS_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsplainswetlands"));
-                case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
-                case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
+                        component.append(new TranslatableComponent("gui.butterflies.habitat.forestsplainswetlands"));
+                case WETLANDS -> component.append(new TranslatableComponent("gui.butterflies.habitat.wetlands"));
+                case VILLAGES -> component.append(new TranslatableComponent("gui.butterflies.habitat.villages"));
                 default -> {
                 }
             }
 
             // Preferred Flower
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.preferred_flower"));
+            component.append(new TranslatableComponent("gui.butterflies.preferred_flower"));
 
             Item value = ForgeRegistries.ITEMS.getValue(entry.preferredFlower());
             if (value != null) {
@@ -613,7 +616,7 @@ public record ButterflyData(int butterflyIndex,
 
             // Fact
             component.append("\n\n");
-            component.append(Component.translatable("gui.butterflies.fact." + entry.entityId()));
+            component.append(new TranslatableComponent("gui.butterflies.fact." + entry.entityId()));
 
             return component;
         }
@@ -645,14 +648,14 @@ public record ButterflyData(int butterflyIndex,
         Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
 
         // Get the butterfly JSON files
-        Map<ResourceLocation, Resource> resourceMap =
-                resourceManager.listResources("butterfly_data", (x) -> x.getPath().endsWith(".json"));
+        Collection<ResourceLocation> resourceLocations =
+                resourceManager.listResources("butterfly_data", (x) -> x.endsWith(".json"));
 
         // Parse each one and generate the data.
-        for (ResourceLocation location : resourceMap.keySet()) {
+        for (ResourceLocation location : resourceLocations) {
             try {
-                Resource resource = resourceMap.get(location);
-                BufferedReader reader = resource.openAsReader();
+                Resource resource = resourceManager.getResource(location);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
                 ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
                 ButterflyData.addButterfly(butterflyData);
             } catch (DataFormatException | IOException e) {
@@ -736,7 +739,7 @@ public record ButterflyData(int butterflyIndex,
      * @param random A random source used to determine the sex of dimorphic species.
      * @return The entity ID of the butterfly that should spawn.
      */
-    public ResourceLocation getMateButterflyEntity(RandomSource random) {
+    public ResourceLocation getMateButterflyEntity(Random random) {
         int mateIndex = getMateButterflyIndex();
         if (random.nextInt() % 2 == 0) {
             ButterflyData entry = getEntry(mateIndex);

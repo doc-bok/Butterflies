@@ -39,7 +39,7 @@ public interface ButterflyContainerItem {
             translatable = "entity." + entity.toString().replace(':', '.');
         }
 
-        MutableComponent newComponent = Component.translatable(translatable);
+        MutableComponent newComponent = new TranslatableComponent(translatable);
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
                 .withItalic(true);
         newComponent.setStyle(style);

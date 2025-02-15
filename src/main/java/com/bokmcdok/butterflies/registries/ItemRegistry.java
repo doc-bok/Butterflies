@@ -14,6 +14,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -115,7 +116,7 @@ public class ItemRegistry {
         this.burntButterflyNet = deferredRegister.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
         this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
+                new BannerPattern("banner_pattern_butterfly", "but", true),
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
         this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
@@ -172,7 +173,7 @@ public class ItemRegistry {
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
-                        0x888800, 0x333333, new Item.Properties()));
+                        0x888800, 0x333333, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
 
         this.butterflySpawnEggs = new ArrayList<>() {
             {
@@ -566,7 +567,7 @@ public class ItemRegistry {
     private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
-                        0x880000, 0x0088ff, new Item.Properties()));
+                        0x880000, 0x0088ff, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
     }
 
     /**
@@ -587,6 +588,6 @@ public class ItemRegistry {
     private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
-                        0x0088ff, 0x880000, new Item.Properties()));
+                        0x0088ff, 0x880000, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
     }
 }

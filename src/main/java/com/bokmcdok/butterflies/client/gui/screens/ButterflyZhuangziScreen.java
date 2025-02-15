@@ -3,13 +3,14 @@ package com.bokmcdok.butterflies.client.gui.screens;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -31,7 +32,7 @@ public class ButterflyZhuangziScreen extends Screen {
      * Constructs a basic butterfly page screen.
      */
     public ButterflyZhuangziScreen() {
-        super(GameNarrator.NO_TITLE);
+        super(NarratorChatListener.NO_TITLE);
     }
 
     /**
@@ -73,7 +74,7 @@ public class ButterflyZhuangziScreen extends Screen {
 
 
         if (this.cache.isEmpty()) {
-            FormattedText formattedText = Component.translatable("gui.butterflies.zhuangzi");
+            FormattedText formattedText = new TranslatableComponent("gui.butterflies.zhuangzi");
             this.cache = this.font.split(formattedText, 114);
         }
 

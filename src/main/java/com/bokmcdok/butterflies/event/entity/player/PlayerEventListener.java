@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -38,8 +37,8 @@ public class PlayerEventListener {
      * @param event The interaction event
      */
     private void onEntityInteractEvent(PlayerInteractEvent.EntityInteract event) {
-        if (event.getTarget() instanceof Cat cat) {
-            Player player = event.getEntity();
+        if (event.getTarget() instanceof Cat cat &&
+            event.getEntity() instanceof Player player) {
             InteractionHand hand = event.getHand();
             ItemStack stack = player.getItemInHand(hand);
             Item item = stack.getItem();
@@ -48,7 +47,7 @@ public class PlayerEventListener {
 
                 //  If the cat is named Snow, then change it to a white cat.
                 if ("Snow".equals(name)) {
-                    cat.setCatVariant(CatVariant.WHITE);
+                    cat.setCatType(Cat.TYPE_WHITE);
                 }
             }
         }

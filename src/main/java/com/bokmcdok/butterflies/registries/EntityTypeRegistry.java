@@ -51,7 +51,7 @@ public class EntityTypeRegistry {
      * @param modEventBus The event bus to register with.
      */
     public EntityTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(ForgeRegistries.ENTITIES, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 

@@ -63,7 +63,7 @@ public class CaterpillarItem extends Item {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
 
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.place_caterpillar");
+        MutableComponent newComponent = new TranslatableComponent("tooltip.butterflies.place_caterpillar");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                 .withItalic(true);
         newComponent.setStyle(style);
@@ -81,7 +81,7 @@ public class CaterpillarItem extends Item {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable("entity." + species.toString().replace(":", "."));
+        return new TranslatableComponent("entity." + species.toString().replace(":", "."));
     }
 
     /**

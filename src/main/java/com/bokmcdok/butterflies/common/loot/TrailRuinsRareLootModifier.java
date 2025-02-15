@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -32,7 +32,7 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
     @NotNull
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        RandomSource random = context.getRandom();
+        Random random = context.getRandom();
 
         // 1/13 chance to replace with new sherd.
         if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {

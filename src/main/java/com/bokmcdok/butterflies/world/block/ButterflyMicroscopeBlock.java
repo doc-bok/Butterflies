@@ -34,7 +34,7 @@ public class ButterflyMicroscopeBlock extends Block {
 
     // The translation string for the title.
     private static final Component CONTAINER_TITLE =
-            Component.translatable("container.butterfly_microscope");
+            new TranslatableComponent("container.butterfly_microscope");
 
     // The shape of the block.
     private static final VoxelShape SHAPE;

@@ -80,7 +80,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             localisation = "tooltip.butterflies.butterfly_net";
         }
 
-        MutableComponent newComponent = Component.translatable(localisation);
+        MutableComponent newComponent = new TranslatableComponent(localisation);
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                 .withItalic(true);
         newComponent.setStyle(style);
@@ -117,7 +117,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        return new TranslatableComponent(NAME);
     }
 
     /**

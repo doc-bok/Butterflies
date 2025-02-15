@@ -11,7 +11,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -58,7 +58,7 @@ public abstract class DirectionalCreature extends Animal {
                                                      LevelAccessor level,
                                                      MobSpawnType spawnType,
                                                      BlockPos blockPos,
-                                                     RandomSource random) {
+                                                     Random random) {
 
         // Get the relevant butterfly data.
         String descriptionId = entityType.getDescriptionId();

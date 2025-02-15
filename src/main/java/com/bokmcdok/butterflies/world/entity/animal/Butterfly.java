@@ -18,7 +18,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -47,6 +46,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -99,7 +99,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             ServerLevelAccessor level,
             MobSpawnType spawnType,
             BlockPos position,
-            RandomSource rng) {
+            Random rng) {
         return true;
     }
 
@@ -136,7 +136,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                              Boolean placed) {
         if (level instanceof ServerLevel) {
             EntityType<?> entityType =
-                    ForgeRegistries.ENTITY_TYPES.getValue(location);
+                    ForgeRegistries.ENTITIES.getValue(location);
             if (entityType != null) {
                 Entity entity = entityType.create(level);
                 if (entity instanceof Butterfly butterfly) {

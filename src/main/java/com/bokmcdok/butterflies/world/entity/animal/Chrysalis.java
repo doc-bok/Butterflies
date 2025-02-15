@@ -39,7 +39,7 @@ public class Chrysalis extends DirectionalCreature {
                              Direction surfaceDirection,
                              Vec3 position,
                              float yRotation) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
+        EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(location);
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Chrysalis chrysalis) {

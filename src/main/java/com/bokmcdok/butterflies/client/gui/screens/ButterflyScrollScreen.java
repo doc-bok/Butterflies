@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.client.gui.screens;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -24,7 +24,7 @@ public class ButterflyScrollScreen extends Screen {
      * Constructs a basic butterfly page screen.
      */
     public ButterflyScrollScreen(int butterflyIndex) {
-        super(GameNarrator.NO_TITLE);
+        super(NarratorChatListener.NO_TITLE);
 
         this.butterflyIndex = butterflyIndex;
     }

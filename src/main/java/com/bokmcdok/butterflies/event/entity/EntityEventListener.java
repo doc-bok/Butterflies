@@ -9,10 +9,8 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -38,7 +36,6 @@ public class EntityEventListener {
 
         modEventBus.register(this);
         modEventBus.addListener(this::onEntityAttributeCreation);
-        modEventBus.addListener(this::onSpawnPlacementRegister);
 
         this.entityTypeRegistry = entityTypeRegistry;
     }
@@ -83,7 +80,7 @@ public class EntityEventListener {
      * On joining the world modify entities' goals so butterflies have predators.
      * @param event Information for the event.
      */
-    private void onEntityJoinLevel(EntityJoinLevelEvent event) {
+    private void onEntityJoinLevel(EntityJoinWorldEvent event) {
 
         //  Cat
         if (event.getEntity() instanceof Cat cat) {
@@ -120,44 +117,6 @@ public class EntityEventListener {
         if (event.getEntity() instanceof Wolf wolf) {
             wolf.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(
                     wolf, Butterfly.class, false, null));
-        }
-    }
-
-    /**
-     * Register entity spawn placements here
-     * @param event The event information
-     */
-    private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    Butterfly::checkButterflySpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
         }
     }
 }

@@ -76,13 +76,13 @@ public class BottledCaterpillarItem extends BlockItem {
             ResourceLocation caterpillarEntity = data.getCaterpillarEntity();
             String translatable = "entity." + caterpillarEntity.toString().replace(':', '.');
 
-            MutableComponent speciesComponent = Component.translatable(translatable);
+            MutableComponent speciesComponent = new TranslatableComponent(translatable);
             Style speciesStyle = speciesComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
                     .withItalic(true);
             speciesComponent.setStyle(speciesStyle);
             components.add(speciesComponent);
 
-            MutableComponent tooltipComponent = Component.translatable("tooltip.butterflies.release_caterpillar");
+            MutableComponent tooltipComponent = new TranslatableComponent("tooltip.butterflies.release_caterpillar");
             Style tooltipStyle = tooltipComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                     .withItalic(true);
             tooltipComponent.setStyle(tooltipStyle);
@@ -101,7 +101,7 @@ public class BottledCaterpillarItem extends BlockItem {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        return new TranslatableComponent(NAME);
     }
 
     /**

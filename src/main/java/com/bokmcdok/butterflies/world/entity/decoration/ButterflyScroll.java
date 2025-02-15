@@ -93,7 +93,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public Packet<ClientGamePacketListener> getAddEntityPacket() {
         int data = ((this.direction.get3DDataValue() & 0xFFFF) << 16) | (butterflyIndex & 0xFFFF);
-        return new ClientboundAddEntityPacket(this, data, this.getPos());
+        return new ClientboundAddEntityPacket(this, this.getType(), data, this.getPos());
     }
 
     /**

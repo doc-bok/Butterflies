@@ -64,7 +64,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
 
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.place_egg");
+        MutableComponent newComponent = new TranslatableComponent("tooltip.butterflies.place_egg");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                 .withItalic(true);
         newComponent.setStyle(style);

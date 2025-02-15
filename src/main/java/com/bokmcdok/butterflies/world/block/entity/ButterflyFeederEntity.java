@@ -91,7 +91,7 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     @NotNull
     @Override
     protected Component getDefaultName() {
-        return Component.translatable("container.butterfly_feeder");
+        return new TranslatableComponent("container.butterfly_feeder");
     }
 
     /**

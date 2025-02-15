@@ -5,7 +5,7 @@ import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.LevelReader;
@@ -29,7 +29,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
     private final Item preferredFlowerItem;
 
     // The RNG.
-    public final RandomSource random;
+    public final Random random;
 
     // Has pollination been attempted yet?
     public boolean attemptedToPollinate;

@@ -36,7 +36,7 @@ public class ButterflyEgg extends DirectionalCreature {
                              ResourceLocation location,
                              BlockPos spawnBlock,
                              Direction surfaceDirection) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
+        EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(location);
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof ButterflyEgg egg) {

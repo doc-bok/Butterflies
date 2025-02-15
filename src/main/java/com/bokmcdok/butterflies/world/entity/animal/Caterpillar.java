@@ -69,7 +69,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
                              BlockPos position,
                              Direction direction,
                              boolean isBottled) {
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
+        EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(location);
         if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Caterpillar caterpillar) {

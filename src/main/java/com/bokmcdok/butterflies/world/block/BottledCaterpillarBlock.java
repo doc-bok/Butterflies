@@ -76,7 +76,7 @@ public class BottledCaterpillarBlock extends Block {
     @NotNull
     @Override
     public MutableComponent getName() {
-        return Component.translatable(NAME);
+        return new TranslatableComponent(NAME);
     }
 
     /**

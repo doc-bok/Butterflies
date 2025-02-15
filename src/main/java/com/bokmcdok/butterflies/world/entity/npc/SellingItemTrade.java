@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.npc;
 
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
@@ -82,7 +82,7 @@ public class SellingItemTrade implements VillagerTrades.ItemListing {
      */
     @Override
     public MerchantOffer getOffer(@NotNull Entity trader,
-                                  @NotNull RandomSource rand) {
+                                  @NotNull Random rand) {
         return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCount),
                 new ItemStack(this.givenItem.getItem(), this.sellingItemCount),
                 this.maxUses,

@@ -5,18 +5,14 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.GameNarrator;
+import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
@@ -39,7 +35,7 @@ public class ButterflyBookScreen extends Screen {
     private List<FormattedCharSequence> cachedPageComponents = Collections.emptyList();
 
     // The component that displays the current page.
-    private Component pageMsg = CommonComponents.EMPTY;
+    private Component pageMsg = TextComponent.EMPTY;
 
     // Widget for button to go back a page.
     private PageButton backButton;
@@ -203,7 +199,7 @@ public class ButterflyBookScreen extends Screen {
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
             this.cachedPageComponents = this.font.split(formattedText, 114);
-            this.pageMsg = Component.translatable("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
+            this.pageMsg = new TranslatableComponent("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
         }
 
         this.cachedPage = this.currentPage;
@@ -332,7 +328,7 @@ public class ButterflyBookScreen extends Screen {
      * @param playTurnSound Whether to play the turn sound.
      */
     private ButterflyBookScreen(BookAccess access, boolean playTurnSound) {
-        super(GameNarrator.NO_TITLE);
+        super(NarratorChatListener.NO_TITLE);
         this.bookAccess = access;
         this.playTurnSound = playTurnSound;
     }

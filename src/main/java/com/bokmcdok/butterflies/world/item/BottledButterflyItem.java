@@ -65,7 +65,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
 
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.release_butterfly");
+        MutableComponent newComponent = new TranslatableComponent("tooltip.butterflies.release_butterfly");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                 .withItalic(true);
         newComponent.setStyle(style);
@@ -92,7 +92,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        return new TranslatableComponent(NAME);
     }
 
     /**

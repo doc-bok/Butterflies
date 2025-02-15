@@ -29,7 +29,7 @@ public class BlockEntityTypeRegistry {
      * @param modEventBus The event bus to register with.
      */
     public BlockEntityTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 

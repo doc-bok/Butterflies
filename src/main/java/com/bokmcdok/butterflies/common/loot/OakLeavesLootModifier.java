@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.util.RandomSource;
+import java.util.Random;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -32,7 +32,7 @@ public class OakLeavesLootModifier extends BaseLootModifier {
     @NotNull
     @Override
     public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-        RandomSource random = context.getRandom();
+        Random random = context.getRandom();
 
         if (random.nextInt(4000) == 1) {
             ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());

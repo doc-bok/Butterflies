@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies;
 import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.event.ForgeEventListener;
+import com.bokmcdok.butterflies.event.ModEventListener;
 import com.bokmcdok.butterflies.event.entity.EntityEventListener;
 import com.bokmcdok.butterflies.event.entity.living.LivingEventListener;
 import com.bokmcdok.butterflies.event.entity.living.MobSpawnEventListener;
@@ -12,6 +13,7 @@ import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
 import com.bokmcdok.butterflies.event.village.VillageEventListener;
 import com.bokmcdok.butterflies.registries.*;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -37,8 +39,11 @@ public class ButterfliesMod
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
+
+        BannerPattern.create("BUTTERFLY", "banner_pattern_butterfly", "banner_pattern_butterfly", true);
+
         // Create the registries.
-        BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
+        //BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
@@ -67,6 +72,7 @@ public class ButterfliesMod
         }
 
         new LifecycleEventListener(modEventBus, itemRegistry,menuTypeRegistry);
+        new ModEventListener(modEventBus, entityTypeRegistry);
 
         // Create the Forge event listeners.
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
