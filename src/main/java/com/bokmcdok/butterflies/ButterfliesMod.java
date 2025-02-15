@@ -39,7 +39,7 @@ public class ButterfliesMod
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-
+        // Create a banner pattern
         BannerPattern.create("BUTTERFLY", "banner_pattern_butterfly", "banner_pattern_butterfly", true);
 
         // Create the registries.
@@ -56,11 +56,11 @@ public class ButterfliesMod
         // Initialise the registries. Do this here because (e.g.)
         // blockEntityTypeRegistry requires blockRegistry to be created and
         // vice-versa.
-        bannerPatternRegistry.initialise();
+        //bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         entityTypeRegistry.initialise(blockRegistry);
-        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
+        itemRegistry.initialise(blockRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);

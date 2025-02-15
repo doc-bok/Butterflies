@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;

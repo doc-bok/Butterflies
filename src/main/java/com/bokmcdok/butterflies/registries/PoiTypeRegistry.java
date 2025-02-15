@@ -38,7 +38,7 @@ public class PoiTypeRegistry {
      */
     public void initialise(BlockRegistry blockRegistry) {
         lepidopterist =deferredRegister.register("lepidopterist",
-                () -> new PoiType(getBlockStates(blockRegistry.getButterflyFeeder()), 1, 1));
+                () -> new PoiType("lepidopterist", getBlockStates(blockRegistry.getButterflyFeeder()), 1, 1));
     }
 
     /**

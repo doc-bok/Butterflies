@@ -27,7 +27,7 @@ public class MenuTypeRegistry {
      * @param modEventBus The event bus to register with.
      */
     public MenuTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(ForgeRegistries.CONTAINERS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 

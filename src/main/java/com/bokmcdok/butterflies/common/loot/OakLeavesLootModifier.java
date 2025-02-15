@@ -1,11 +1,16 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+
+import java.util.List;
 import java.util.Random;
+
+import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,7 +36,7 @@ public class OakLeavesLootModifier extends BaseLootModifier {
      */
     @NotNull
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    public List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
         Random random = context.getRandom();
 
         if (random.nextInt(4000) == 1) {
@@ -43,12 +48,43 @@ public class OakLeavesLootModifier extends BaseLootModifier {
     }
 
     /**
-     * Helper method to create the loot modifier.
-     * @param conditionsIn The conditions for this loot modifier.
-     * @return A new loot modifier.
+     * The Loot Modifier Serializer.
      */
-    @Override
-    protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+    public static class Serializer extends GlobalLootModifierSerializer<OakLeavesLootModifier> {
+
+        // The item registry.
+        protected final ItemRegistry itemRegistry;
+
+        /**
+         * Construction
+         */
+        public Serializer(ItemRegistry itemRegistry)
+        {
+            this.itemRegistry = itemRegistry;
+        }
+
+        /**
+         * Read Loot Modifier data.
+         * @param name The resource name.
+         * @param object The Json Object with any extra data.
+         * @param conditionsIn The conditions for the loot.
+         * @return A new loot modifier.
+         */
+        @Override
+        public OakLeavesLootModifier read(ResourceLocation name,
+                                          JsonObject object,
+                                          LootItemCondition[] conditionsIn) {
+            return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+        }
+
+        /**
+         * Write loot modifier data.
+         * @param instance The loot modifier.
+         * @return Modifier data in JSON format.
+         */
+        @Override
+        public JsonObject write(OakLeavesLootModifier instance) {
+            return makeConditions(instance.conditions);
+        }
     }
 }

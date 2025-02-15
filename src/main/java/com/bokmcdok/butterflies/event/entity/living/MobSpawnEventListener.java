@@ -41,7 +41,7 @@ public class MobSpawnEventListener {
 
             // 1 in 256 chance.
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
-                LevelAccessor levelAccessor = event.getLevel();
+                LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
                     EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
 

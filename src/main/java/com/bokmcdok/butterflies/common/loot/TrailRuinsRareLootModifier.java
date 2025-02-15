@@ -1,11 +1,16 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import com.google.gson.JsonObject;
+
+import java.util.List;
 import java.util.Random;
+
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -31,7 +36,8 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
      */
     @NotNull
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+    public List<ItemStack> doApply(List<ItemStack> generatedLoot,
+                                   LootContext context) {
         Random random = context.getRandom();
 
         // 1/13 chance to replace with new sherd.
@@ -46,12 +52,43 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
     }
 
     /**
-     * Helper method to create the loot modifier.
-     * @param conditionsIn The conditions for this loot modifier.
-     * @return A new loot modifier.
+     * The Loot Modifier Serializer.
      */
-    @Override
-    protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
+    public static class Serializer extends GlobalLootModifierSerializer<TrailRuinsRareLootModifier> {
+
+        // The item registry.
+        protected final ItemRegistry itemRegistry;
+
+        /**
+         * Construction
+         */
+        public Serializer(ItemRegistry itemRegistry)
+        {
+            this.itemRegistry = itemRegistry;
+        }
+
+        /**
+         * Read Loot Modifier data.
+         * @param name The resource name.
+         * @param object The Json Object with any extra data.
+         * @param conditionsIn The conditions for the loot.
+         * @return A new loot modifier.
+         */
+        @Override
+        public TrailRuinsRareLootModifier read(ResourceLocation name,
+                                          JsonObject object,
+                                          LootItemCondition[] conditionsIn) {
+            return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
+        }
+
+        /**
+         * Write loot modifier data.
+         * @param instance The loot modifier.
+         * @return Modifier data in JSON format.
+         */
+        @Override
+        public JsonObject write(TrailRuinsRareLootModifier instance) {
+            return makeConditions(instance.conditions);
+        }
     }
 }

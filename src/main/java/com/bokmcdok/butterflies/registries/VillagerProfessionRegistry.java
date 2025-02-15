@@ -25,7 +25,7 @@ public class VillagerProfessionRegistry {
      * @param modEventBus The event bus to register with.
      */
     public VillagerProfessionRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, ButterfliesMod.MOD_ID);
+        this.deferredRegister = DeferredRegister.create(ForgeRegistries.PROFESSIONS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
 
@@ -37,8 +37,7 @@ public class VillagerProfessionRegistry {
         lepidopterist = deferredRegister.register("lepidopterist",
                 () -> new VillagerProfession(
                         "lepidopterist",
-                        x -> x.get() == poiTypeRegistry.getLepidopterist().get(),
-                        x -> x.get() == poiTypeRegistry.getLepidopterist().get(),
+                        poiTypeRegistry.getLepidopterist().get(),
                         ImmutableSet.of(),
                         ImmutableSet.of(),
                         SoundEvents.FLOWERING_AZALEA_PLACE));

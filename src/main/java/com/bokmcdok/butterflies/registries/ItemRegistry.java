@@ -90,8 +90,7 @@ public class ItemRegistry {
      * @param blockRegistry The block registry.
      * @param entityTypeRegistry The entity type registry.
      */
-    public void initialise(BannerPatternRegistry bannerPatternRegistry,
-                           BlockRegistry blockRegistry,
+    public void initialise(BlockRegistry blockRegistry,
                            EntityTypeRegistry entityTypeRegistry) {
 
         this.blockRegistry = blockRegistry;
@@ -115,9 +114,11 @@ public class ItemRegistry {
 
         this.burntButterflyNet = deferredRegister.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
-        this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                new BannerPattern("banner_pattern_butterfly", "but", true),
-                (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+        this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () ->
+                new BannerPatternItem(BannerPattern.valueOf("BUTTERFLY"), new Item.Properties()
+                        .rarity(Rarity.UNCOMMON)
+                        .stacksTo(1)
+                        .tab(CreativeModeTab.TAB_MISC)));
 
         this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
 

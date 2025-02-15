@@ -36,19 +36,19 @@ public class ForgeEventListener {
         if(event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) {
 
             // Plains
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getTagManager(),
                     new ResourceLocation("village/plains/houses"),
                     new ResourceLocation("butterflies", "village/plains/houses/plains_butterfly_house_1"),
                     3);
 
             // Savanna
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getTagManager(),
                     new ResourceLocation("village/savanna/houses"),
                     new ResourceLocation("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
                     2);
 
             // Taiga
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getTagManager(),
                     new ResourceLocation("village/taiga/houses"),
                     new ResourceLocation("butterflies", "village/taiga/houses/taiga_butterfly_house_1"),
                     2);

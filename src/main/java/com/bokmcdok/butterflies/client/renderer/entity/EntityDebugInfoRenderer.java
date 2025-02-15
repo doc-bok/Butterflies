@@ -8,8 +8,8 @@ import com.mojang.math.Quaternion;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -40,7 +40,7 @@ public class EntityDebugInfoRenderer {
             String debugInfo = entity.getDebugInfo();
             if (!debugInfo.isBlank()) {
 
-                MutableComponent component = Component.literal(debugInfo);
+                MutableComponent component = new TextComponent(debugInfo);
 
                 float nameTagOffsetY = entity.getBbHeight() + 0.5f;
                 poseStack.pushPose();
