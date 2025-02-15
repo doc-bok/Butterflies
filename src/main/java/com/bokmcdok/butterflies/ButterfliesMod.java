@@ -70,7 +70,7 @@ public class ButterfliesMod
             new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
         }
 
-        new LifecycleEventListener(modEventBus, itemRegistry,menuTypeRegistry);
+        new LifecycleEventListener(modEventBus, blockRegistry, itemRegistry,menuTypeRegistry);
         new ModEventListener(modEventBus, entityTypeRegistry);
 
         // Create the Forge event listeners.
