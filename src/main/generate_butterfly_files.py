@@ -281,6 +281,38 @@ public class ButterflySpeciesList {
 """)
 
         output_file.write("""    };
+
+""")
+
+        output_file.write("""
+    public static final ButterflyData.Habitat[] HABITATS = {
+""")
+
+        for butterfly in all:
+            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            habitat = None
+            i = 0
+
+            while habitat is None and i < len(folders):
+                folder = folders[i]
+                try:
+                    with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
+                            json_data = json.load(input_file)
+
+                    habitat = json_data["habitat"]
+                except FileNotFoundError:
+                    # doesn't exist
+                    pass
+                else:
+                    # exists
+                    pass
+
+                i = i + 1
+
+            output_file.write("""            ButterflyData.Habitat.""" + habitat.upper() + """,
+""")
+
+        output_file.write("""    };
 }
 """)
 
@@ -361,7 +393,6 @@ def addSpawns(folder, species, is_male):
 
     # Open relevant files and add butterfly spawns
     if "forests" in habitat:
-        addSingleSpawn("cherry_grove", species, weight, maximum, is_male)
         addSingleSpawn("dense", species, weight, maximum, is_male)
         addSingleSpawn("forest", species, weight, maximum, is_male)
         addSingleSpawn("lush", species, weight, maximum, is_male)

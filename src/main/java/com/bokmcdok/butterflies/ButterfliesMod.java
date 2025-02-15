@@ -12,6 +12,7 @@ import com.bokmcdok.butterflies.event.server.ServerEventListener;
 import com.bokmcdok.butterflies.event.lifecycle.LifecycleEventListener;
 import com.bokmcdok.butterflies.event.network.NetworkEventListener;
 import com.bokmcdok.butterflies.event.village.VillageEventListener;
+import com.bokmcdok.butterflies.event.world.level.LevelEventListener;
 import com.bokmcdok.butterflies.registries.*;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.api.distmarker.Dist;
@@ -43,7 +44,6 @@ public class ButterfliesMod
         BannerPattern.create("BUTTERFLY", "banner_pattern_butterfly", "banner_pattern_butterfly", true);
 
         // Create the registries.
-        //BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
@@ -56,7 +56,6 @@ public class ButterfliesMod
         // Initialise the registries. Do this here because (e.g.)
         // blockEntityTypeRegistry requires blockRegistry to be created and
         // vice-versa.
-        //bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         entityTypeRegistry.initialise(blockRegistry);
@@ -77,6 +76,7 @@ public class ButterfliesMod
         // Create the Forge event listeners.
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
         new ForgeEventListener(forgeEventBus);
+        new LevelEventListener(forgeEventBus, entityTypeRegistry);
         new LivingEventListener(forgeEventBus);
         new MobSpawnEventListener(forgeEventBus, entityTypeRegistry);
         new NetworkEventListener(forgeEventBus);
