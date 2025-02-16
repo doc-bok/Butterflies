@@ -3,6 +3,8 @@ package com.bokmcdok.butterflies.network.protocol.common.custom;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
@@ -16,8 +18,12 @@ import java.util.Collection;
  */
 public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) implements CustomPacketPayload {
 
-    //  The ID of this packet.
-    public static final ResourceLocation ID = new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_data");
+    public static final CustomPacketPayload.Type<ClientBoundButterflyDataPacket> TYPE_PAYLOAD = new CustomPacketPayload.Type<>(
+            ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_data"));
+
+    StreamCodec<FriendlyByteBuf, ClientBoundButterflyDataPacket> STREAM_CODEC = ButterflyData.STREAM_CODEC
+            .apply(ByteBufCodecs.list())
+            .map(ClientBoundButterflyDataPacket::new, ClientBoundButterflyDataPacket::data);
 
     /**
      * Construct from a byte buffer. Reads the data ready for use.
@@ -76,12 +82,11 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
     }
 
     /**
-     * Get the ID of this buffer.
+     * Get the Type of this buffer.
      * @return ResourceLocation containing the buffer ID.
      */
     @Override
-    @NotNull
-    public ResourceLocation id() {
-        return ID;
+    public Type<? extends CustomPacketPayload> type() {
+        return ClientBoundButterflyDataPacket.TYPE_PAYLOAD;
     }
 }

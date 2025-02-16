@@ -126,7 +126,7 @@ public class ModEventListener {
     @SubscribeEvent
     private void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(ButterfliesMod.MOD_ID);
-        registrar.playToClient(ClientBoundButterflyDataPacket.ID,
+        registrar.playToClient(ClientBoundButterflyDataPacket.TYPE_PAYLOAD,
                 ClientBoundButterflyDataPacket::new,
                 ClientPayloadHandler::handleButterflyData);
     }
