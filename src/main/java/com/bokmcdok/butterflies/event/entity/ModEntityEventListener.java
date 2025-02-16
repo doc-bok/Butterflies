@@ -2,15 +2,13 @@ package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.SpawnPlacementRegisterEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Objects;
@@ -76,37 +74,37 @@ public class ModEntityEventListener {
      * @param event The event information
      */
     @SubscribeEvent
-    private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
+    private void onSpawnPlacementRegister(RegisterSpawnPlacementsEvent event) {
         for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
             event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     Butterfly::checkButterflySpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
+                    RegisterSpawnPlacementsEvent.Operation.AND);
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
             event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
+                    RegisterSpawnPlacementsEvent.Operation.AND);
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
             event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
+                    RegisterSpawnPlacementsEvent.Operation.AND);
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
             event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
+                    SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
+                    RegisterSpawnPlacementsEvent.Operation.AND);
         }
     }
 }

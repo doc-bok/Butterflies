@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
@@ -124,9 +124,10 @@ public class ModEventListener {
      * @param event The event fired when payload handlers are being registered.
      */
     @SubscribeEvent
-    private void onRegisterPayloadHandler(final RegisterPayloadHandlerEvent event) {
-        final IPayloadRegistrar registrar = event.registrar(ButterfliesMod.MOD_ID);
-        registrar.play(ClientBoundButterflyDataPacket.ID, ClientBoundButterflyDataPacket::new, handler -> handler
-                .client(ClientPayloadHandler.getInstance()::handleButterflyData));
+    private void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar registrar = event.registrar(ButterfliesMod.MOD_ID);
+        registrar.playToClient(ClientBoundButterflyDataPacket.ID,
+                ClientBoundButterflyDataPacket::new,
+                ClientPayloadHandler::handleButterflyData);
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 
 /**
  * Holds event listeners for entities.
@@ -34,8 +34,8 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     @SubscribeEvent
-    @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
-    private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    @SuppressWarnings({"deprecation", "OverrideOnly"})
+    private void onMobSpawn(FinalizeSpawnEvent event) {
 
         // Only affect Iron Golems.
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
@@ -52,7 +52,6 @@ public class MobSpawnEventListener {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
                                 MobSpawnType.CONVERSION,
-                                null,
                                 null);
 
                         EventHooks.onLivingConvert(ironGolem, newMob);
