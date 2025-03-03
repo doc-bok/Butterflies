@@ -38,7 +38,6 @@ public class NetworkEventListener {
     public NetworkEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onDatapackSync);
-
     }
 
     /**
