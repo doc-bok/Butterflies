@@ -38,9 +38,6 @@ public class NetworkEventListener {
     public NetworkEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onDatapackSync);
-
-        // This is needed for 1.20.1
-        BUTTERFLY_NETWORK_CHANNEL.addListener(this::onButterflyCollectionPayload);
     }
 
     /**
@@ -76,8 +73,7 @@ public class NetworkEventListener {
      * Called when a custom payload is received.
      * @param event The payload event.
      */
-    //public static void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
-    private void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
+    public static void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
 
         // Extract the data from the payload.
         FriendlyByteBuf payload = event.getPayload();
