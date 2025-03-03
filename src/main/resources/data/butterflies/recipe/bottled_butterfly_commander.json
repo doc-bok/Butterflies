@@ -1,0 +1,15 @@
+{
+  "group": "bottled_butterfly",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_net_commander"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "id": "butterflies:bottled_butterfly_commander"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

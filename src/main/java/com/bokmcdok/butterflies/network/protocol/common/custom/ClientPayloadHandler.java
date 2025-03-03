@@ -29,6 +29,7 @@ public class ClientPayloadHandler {
             Collection<ButterflyData> butterflyData = data.data();
 
             // Register the new data.
+            ButterflyData.reset(); // Forces client to use server data.
             for (ButterflyData butterfly : butterflyData) {
                 try {
                     ButterflyData.addButterfly(butterfly);

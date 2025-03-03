@@ -1,5 +1,5 @@
 {
-  "biomes": "#forge:is_lush",
+  "biomes": "#c:is_lush",
   "spawners": [
     {
       "maxCount": 4,

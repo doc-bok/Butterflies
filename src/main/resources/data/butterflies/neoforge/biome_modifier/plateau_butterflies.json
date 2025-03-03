@@ -1,5 +1,5 @@
 {
-  "biomes": "#forge:is_plateau",
+  "biomes": "#c:is_plateau",
   "spawners": [
     {
       "maxCount": 4,

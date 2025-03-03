@@ -1,0 +1,15 @@
+{
+  "group": "bottled_butterfly",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_net_swallowtail"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "id": "butterflies:bottled_butterfly_swallowtail"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

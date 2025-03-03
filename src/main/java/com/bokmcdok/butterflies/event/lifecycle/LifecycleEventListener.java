@@ -47,13 +47,9 @@ public class LifecycleEventListener {
      */
     @SubscribeEvent
     private void commonSetup(FMLCommonSetupEvent event) {
-        ResourceKey<DecoratedPotPattern> key = decoratedPotPatternsRegistry.getButterflyPotPattern().getKey();
-        if (key != null) {
-            ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
-            itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-            itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), key);
-            DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
-        }
+        event.enqueueWork(() -> {
+            decoratedPotPatternsRegistry.expandVanillaPatterns(itemRegistry);
+        });
     }
 
     /**

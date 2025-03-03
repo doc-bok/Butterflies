@@ -1,0 +1,15 @@
+{
+  "group": "bottled_caterpillar",
+  "ingredients": [
+    {
+      "item": "butterflies:caterpillar_green-skirt-baron"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "id": "butterflies:bottled_caterpillar_green-skirt-baron"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

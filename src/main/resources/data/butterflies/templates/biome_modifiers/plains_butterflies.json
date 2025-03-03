@@ -1,5 +1,5 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#forge:is_plains",
+  "biomes": "#c:is_plains",
   "spawners": []
 }

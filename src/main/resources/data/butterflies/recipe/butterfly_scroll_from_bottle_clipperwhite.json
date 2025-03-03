@@ -1,0 +1,18 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:bottled_butterfly_clipperwhite"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_clipperwhite"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

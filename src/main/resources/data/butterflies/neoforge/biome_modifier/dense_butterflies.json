@@ -1,5 +1,5 @@
 {
-  "biomes": "#forge:is_dense",
+  "biomes": "#c:is_dense",
   "spawners": [
     {
       "maxCount": 4,

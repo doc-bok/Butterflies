@@ -725,6 +725,17 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Resets the data. Used before applying data from a server.
+     */
+    public static void reset() {
+        ENTITY_ID_TO_INDEX_MAP.clear();
+        BUTTERFLY_ENTRIES.clear();
+
+        NUM_BUTTERFLIES = 0;
+        NUM_MOTHS = 0;
+    }
+
+    /**
      * Gets the resource location for the caterpillar item.
      * @return The resource location of the caterpillar item.
      */

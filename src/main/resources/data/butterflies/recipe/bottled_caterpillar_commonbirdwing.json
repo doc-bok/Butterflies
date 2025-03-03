@@ -1,0 +1,15 @@
+{
+  "group": "bottled_caterpillar",
+  "ingredients": [
+    {
+      "item": "butterflies:caterpillar_commonbirdwing"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "id": "butterflies:bottled_caterpillar_commonbirdwing"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

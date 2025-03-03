@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " i ",
+    " / ",
+    " - "
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:spyglass"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    },
+    "-": {
+      "item": "minecraft:stone_slab"
+    }
+  },
+  "result": {
+    "id": "butterflies:butterfly_microscope"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:bottled_butterfly_green-skirt-baron"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_green-skirt-baron"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

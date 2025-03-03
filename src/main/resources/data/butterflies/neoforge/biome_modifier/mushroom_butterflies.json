@@ -1,5 +1,5 @@
 {
-  "biomes": "#forge:is_mushroom",
+  "biomes": "#c:is_mushroom",
   "spawners": [
     {
       "maxCount": 4,
