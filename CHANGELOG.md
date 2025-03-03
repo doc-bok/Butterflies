@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.1 (2025-03-04)
+- Fixed a crash caused by using the wrong exception.
+
 ### 6.1.0 (2025-02-09)
 - Added the butterfly microscope.
 

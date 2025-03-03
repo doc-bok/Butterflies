@@ -118,15 +118,17 @@ cause them to spread (default: `true`)
 **debug_info** If set to TRUE debug information will be rendered (default: `false`)
 
 ## Latest Release
-- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.4.jar)
-- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.2.jar)
-- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.20.1.jar)
-- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/6.0.0/butterflies-6.0.0-for-1.19.2.jar)
+- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.0/butterflies-6.1.0-for-1.20.4.jar)
+- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.0/butterflies-6.1.0-for-1.20.2.jar)
+- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.0/butterflies-61.0-for-1.20.1.jar)
+- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.0/butterflies-6.1.0-for-1.19.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
 
 ## Older Versions
+- [Bok’s Butterflies v6.0.1](https://github.com/doc-bok/Butterflies/releases/tag/6.0.1)
+- [Bok’s Butterflies v6.0.0](https://github.com/doc-bok/Butterflies/releases/tag/6.0.0)
 - [Bok’s Butterflies v5.0.0](https://github.com/doc-bok/Butterflies/releases/tag/5.0.0)
 - [Bok’s Butterflies v4.0.0](https://github.com/doc-bok/Butterflies/releases/tag/4.0.0)
 - [Bok’s Butterflies v3.4.0](https://github.com/doc-bok/Butterflies/releases/tag/3.4.0)
