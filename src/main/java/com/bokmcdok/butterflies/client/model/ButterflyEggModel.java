@@ -22,7 +22,7 @@ public class ButterflyEggModel extends EntityModel<ButterflyEgg> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_egg"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_egg"), "main");
 
     //  The core of the model
     private final ModelPart main;
@@ -77,20 +77,14 @@ public class ButterflyEggModel extends EntityModel<ButterflyEgg> {
      * @param vertexConsumer The vertex consumer.
      * @param packedLight The packed light.
      * @param packedOverlay The packed overlay.
-     * @param red The red channel.
-     * @param green The green channel.
-     * @param blue The blue channel.
-     * @param alpha The alpha channel.
+     * @param color The packed color.
      */
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack,
                                @NotNull VertexConsumer vertexConsumer,
                                int packedLight,
                                int packedOverlay,
-                               float red,
-                               float green,
-                               float blue,
-                               float alpha) {
-        this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+                               int color) {
+        this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 }

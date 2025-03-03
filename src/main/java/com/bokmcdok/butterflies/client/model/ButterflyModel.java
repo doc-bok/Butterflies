@@ -21,7 +21,7 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
 
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly"), "main");
 
     //  The root of the model.
     private final ModelPart root;

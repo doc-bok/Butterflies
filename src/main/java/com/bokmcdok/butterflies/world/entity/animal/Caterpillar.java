@@ -100,7 +100,6 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
             caterpillar.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(position),
                     MobSpawnType.NATURAL,
-                    null,
                     null);
 
             level.addFreshEntity(caterpillar);
@@ -378,9 +377,9 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
      * Override to define extra data to be synced between server and client.
      */
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_IS_BOTTLED, false);
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_IS_BOTTLED, false);
     }
 
     /**
@@ -402,7 +401,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     @Override
     protected SoundEvent getAmbientSound() {
         if (getData().caterpillarSounds()) {
-            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();

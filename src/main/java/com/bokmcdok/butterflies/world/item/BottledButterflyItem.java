@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -36,42 +36,48 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
 
     private static final String NAME = "block.butterflies.bottled_butterfly";
 
+    // The data component registry
+    private final DataComponentRegistry dataComponentRegistry;
+
     //  The index of the butterfly species.
     private final int butterflyIndex;
 
     /**
      * Construction
+     * @param dataComponentRegistry The data component registry.
      * @param block The block related to this item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public BottledButterflyItem(DeferredHolder<Block, Block> block,
+    public BottledButterflyItem(DataComponentRegistry dataComponentRegistry,
+                                DeferredHolder<Block, Block> block,
                                 int butterflyIndex) {
         super(block.get(), new Item.Properties().stacksTo(1));
 
         this.butterflyIndex = butterflyIndex;
+        this.dataComponentRegistry = dataComponentRegistry;
     }
 
     /**
      * Adds some helper text.
      * @param stack The item stack.
-     * @param level The current level.
-     * @param components The current text components.
+     * @param context The context of the tooltip.
+     * @param tooltipComponents The current text components.
      * @param tooltipFlag Is this a tooltip?
      */
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
-                                @NotNull List<Component> components,
+                                @NotNull Item.TooltipContext context,
+                                @NotNull List<Component> tooltipComponents,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(stack, components);
+        appendButterflyNameToHoverText(dataComponentRegistry, stack, tooltipComponents);
 
         MutableComponent newComponent = Component.translatable("tooltip.butterflies.release_butterfly");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                 .withItalic(true);
         newComponent.setStyle(style);
-        components.add(newComponent);
+        tooltipComponents.add(newComponent);
 
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     /**
@@ -109,7 +115,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                                   @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(stack);
+        ResourceLocation entity = getButterflyEntity(dataComponentRegistry,stack);
         if (entity != null) {
 
             //  Move the target position slightly in front of the player
@@ -142,7 +148,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Player player = context.getPlayer();
             if (player != null) {
                 ItemStack stack = player.getItemInHand(context.getHand());
-                ResourceLocation entity = getButterflyEntity(stack);
+                ResourceLocation entity = getButterflyEntity(dataComponentRegistry,stack);
 
                 if (entity != null) {
                     BlockPos position = context.getClickedPos();

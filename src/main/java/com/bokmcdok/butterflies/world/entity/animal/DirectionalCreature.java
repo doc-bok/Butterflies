@@ -71,7 +71,7 @@ public abstract class DirectionalCreature extends Animal {
 
             // Check if the entity can spawn on this surface.
             if (level.hasChunkAt(surfacePosition)) {
-                ButterflyData data = ButterflyData.getEntry(new ResourceLocation(ButterfliesMod.MOD_ID, components[2]));
+                ButterflyData data = ButterflyData.getEntry(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, components[2]));
 
                 // Fall back to leaves if we don't have the data yet.
                 if (data == null) {
@@ -111,7 +111,6 @@ public abstract class DirectionalCreature extends Animal {
      * @param difficulty The local difficulty.
      * @param spawnType The type of spawn.
      * @param groupData The group data.
-     * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
     @Override
@@ -119,8 +118,7 @@ public abstract class DirectionalCreature extends Animal {
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
                                         @NotNull MobSpawnType spawnType,
-                                        @Nullable SpawnGroupData groupData,
-                                        @Nullable CompoundTag compoundTag) {
+                                        @Nullable SpawnGroupData groupData) {
         if (spawnType == MobSpawnType.SPAWN_EGG) {
             setPersistenceRequired();
         }
@@ -162,7 +160,7 @@ public abstract class DirectionalCreature extends Animal {
             }
         }
 
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData);
     }
 
     /**
@@ -234,16 +232,16 @@ public abstract class DirectionalCreature extends Animal {
      * @param texture The entity's texture.
      */
     protected void setTexture(String texture) {
-        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, texture);
+        this.texture = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, texture);
     }
 
     /**
      * Override to define extra data to be synced between server and client.
      */
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_DIRECTION, Direction.DOWN);
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_DIRECTION, Direction.DOWN);
     }
 
     /**

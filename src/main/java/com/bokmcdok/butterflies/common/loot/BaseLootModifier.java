@@ -2,11 +2,12 @@ package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -16,8 +17,8 @@ public abstract class BaseLootModifier extends LootModifier {
     protected final ItemRegistry itemRegistry;
 
     // The codec that is registered with Forge.
-    private final Supplier<Codec<BaseLootModifier>> codec = Suppliers.memoize(() ->
-            RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, this::create)));
+    private final Supplier<MapCodec<BaseLootModifier>> codec = Suppliers.memoize(() ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, this::create)));
 
     /**
      * Construction
@@ -34,8 +35,9 @@ public abstract class BaseLootModifier extends LootModifier {
      * Get the codec.
      * @return The codec.
      */
+    @NotNull
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return codec.get();
     }
 
@@ -43,7 +45,7 @@ public abstract class BaseLootModifier extends LootModifier {
      * Accessor for the codec.
      * @return The loot modifier's codec.
      */
-    public Supplier<Codec<BaseLootModifier>> getCodec() {
+    public Supplier<MapCodec<BaseLootModifier>> getCodec() {
         return codec;
     }
 

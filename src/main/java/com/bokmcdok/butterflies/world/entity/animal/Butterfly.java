@@ -150,7 +150,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                 butterfly.finalizeSpawn((ServerLevel) level,
                         level.getCurrentDifficultyAt(position),
                         MobSpawnType.NATURAL,
-                        null,
                         null);
 
                 if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
@@ -217,7 +216,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             }
         }
 
-        this.texture = new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + species + ".png");
+        this.texture = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/entity/butterfly/butterfly_" + species + ".png");
 
         setAge(-getData().butterflyLifespan());
     }
@@ -255,15 +254,13 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @param difficulty The local difficulty.
      * @param spawnType The type of spawn.
      * @param groupData The group data.
-     * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
                                         @NotNull MobSpawnType spawnType,
-                                        @Nullable SpawnGroupData groupData,
-                                        @Nullable CompoundTag compoundTag) {
+                                        @Nullable SpawnGroupData groupData) {
         if (spawnType == MobSpawnType.SPAWN_EGG) {
             setPersistenceRequired();
         }
@@ -283,7 +280,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         setNumEggs(numEggs);
 
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData);
     }
 
     /**
@@ -712,7 +709,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         //  Don't do this unless the debug information flag is set.
         if (ButterfliesConfig.debugInformation.get()) {
             StringBuilder debugOutput = new StringBuilder();
-            WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
+            WrappedGoal[] runningGoals = goalSelector.getAvailableGoals().toArray(WrappedGoal[]::new);
 
             for (WrappedGoal goal : runningGoals) {
                 debugOutput.append(goal.getGoal());
@@ -727,12 +724,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * Override to define extra data to be synced between server and client.
      */
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_IS_FERTILE, false);
-        this.entityData.define(DATA_LANDED, false);
-        this.entityData.define(DATA_NUM_EGGS, 1);
-        this.entityData.define(DATA_GOAL_STATE, "");
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_IS_FERTILE, false);
+        builder.define(DATA_LANDED, false);
+        builder.define(DATA_NUM_EGGS, 1);
+        builder.define(DATA_GOAL_STATE, "");
     }
 
     /**
@@ -773,7 +770,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     protected SoundEvent getAmbientSound() {
         if (getIsActive() && getData().butterflySounds()) {
-            return SoundEvent.createVariableRangeEvent(new ResourceLocation(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();

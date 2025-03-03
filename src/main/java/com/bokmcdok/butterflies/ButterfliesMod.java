@@ -42,6 +42,7 @@ public class ButterfliesMod
         BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        DataComponentRegistry dataComponentRegistry = new DataComponentRegistry(modEventBus);
         DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
@@ -55,23 +56,26 @@ public class ButterfliesMod
         // vice-versa.
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
-        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
+        blockRegistry.initialise(blockEntityTypeRegistry, dataComponentRegistry, itemRegistry, menuTypeRegistry);
+        dataComponentRegistry.initialise();
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
-        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
+        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, dataComponentRegistry, entityTypeRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Create the Mod event listeners
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
-        }
+        if (modEventBus != null) {
+            if (FMLEnvironment.dist == Dist.CLIENT) {
+                new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+            }
 
-        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
-        new ModEntityEventListener(modEventBus, entityTypeRegistry);
-        new ModEventListener(modEventBus, itemRegistry);
+            new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry, menuTypeRegistry);
+            new ModEntityEventListener(modEventBus, entityTypeRegistry);
+            new ModEventListener(modEventBus, itemRegistry);
+        }
 
         // Create the Forge event listeners.
         new ForgeEventListener(forgeEventBus);
@@ -84,6 +88,6 @@ public class ButterfliesMod
         new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
 
         // Mod Config Settings
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
     }
 }

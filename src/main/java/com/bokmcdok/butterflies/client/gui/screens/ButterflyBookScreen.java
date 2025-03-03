@@ -1,17 +1,14 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -25,6 +22,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,10 +59,12 @@ public class ButterflyBookScreen extends Screen {
 
     /**
      * Construction
+     * @param dataComponentRegistry The data component registry.
      * @param stack The item stack we are using.
      */
-    public ButterflyBookScreen(ItemStack stack) {
-        this(new BookAccess(stack), true);
+    public ButterflyBookScreen(DataComponentRegistry dataComponentRegistry,
+                               ItemStack stack) {
+        this(new BookAccess(dataComponentRegistry, stack), true);
     }
 
     /**
@@ -347,17 +347,17 @@ public class ButterflyBookScreen extends Screen {
      */
     @OnlyIn(Dist.CLIENT)
     public static class BookAccess {
-        private ListTag pages;
+
+        private final List<Integer> pages;
 
         /**
          * Construct access based on an item stack.
+         * @param dataComponentRegistry The data component registry.
          * @param stack The item stack we are using.
          */
-        public BookAccess(ItemStack stack) {
-            CompoundTag tag = stack.getTag();
-            if (tag != null) {
-                pages = tag.getList(CompoundTagId.PAGES, 3);
-            }
+        public BookAccess(DataComponentRegistry dataComponentRegistry,
+                          ItemStack stack) {
+            pages = stack.getOrDefault(dataComponentRegistry.getButterflyBookPages(), new ArrayList<>());
         }
 
         /**
@@ -367,7 +367,7 @@ public class ButterflyBookScreen extends Screen {
          */
         public int getButterflyIndex(int page) {
             if (pages != null) {
-                return pages.getInt(page / 2);
+                return pages.get(page / 2);
             }
 
             return 0;
@@ -401,7 +401,7 @@ public class ButterflyBookScreen extends Screen {
          */
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
-                int butterflyIndex = pages.getInt((page - 1) / 2);
+                int butterflyIndex = pages.get((page - 1) / 2);
                 return ButterflyData.getFormattedButterflyData(butterflyIndex);
             }
 

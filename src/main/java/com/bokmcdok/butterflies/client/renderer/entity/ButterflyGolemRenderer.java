@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 public class ButterflyGolemRenderer extends IronGolemRenderer {
 
     // The golem's texture location.
-    private static final ResourceLocation TEXTURE = new ResourceLocation(
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(
             ButterfliesMod.MOD_ID,
             "textures/entity/butterfly_golem/butterfly_golem.png");
 

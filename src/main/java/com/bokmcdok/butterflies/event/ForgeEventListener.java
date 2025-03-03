@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.event;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
@@ -39,20 +40,20 @@ public class ForgeEventListener {
 
             // Plains
             addToPool(event.getRegistryAccess(),
-                    new ResourceLocation("village/plains/houses"),
-                    new ResourceLocation("butterflies", "village/plains/houses/plains_butterfly_house_1"),
+                    ResourceLocation.withDefaultNamespace("village/plains/houses"),
+                    ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/plains/houses/plains_butterfly_house_1"),
                     3);
 
             // Savanna
             addToPool(event.getRegistryAccess(),
-                    new ResourceLocation("village/savanna/houses"),
-                    new ResourceLocation("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
+                    ResourceLocation.withDefaultNamespace("village/savanna/houses"),
+                    ResourceLocation.fromNamespaceAndPath("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
                     2);
 
             // Taiga
             addToPool(event.getRegistryAccess(),
-                    new ResourceLocation("village/taiga/houses"),
-                    new ResourceLocation("butterflies", "village/taiga/houses/taiga_butterfly_house_1"),
+                    ResourceLocation.withDefaultNamespace("village/taiga/houses"),
+                    ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/taiga/houses/taiga_butterfly_house_1"),
                     2);
         }
     }

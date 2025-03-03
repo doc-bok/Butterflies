@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -114,10 +113,12 @@ public class BlockRegistry {
     /**
      * Register the blocks.
      * @param blockEntityTypeRegistry The block entity registry.
+     * @param dataComponentRegistry The data component registry.
      * @param itemRegistry The item registry.
      * @param menuTypeRegistry The menu type registry.
      */
     public void initialise(BlockEntityTypeRegistry blockEntityTypeRegistry,
+                           DataComponentRegistry dataComponentRegistry,
                            ItemRegistry itemRegistry,
                            MenuTypeRegistry menuTypeRegistry) {
         
@@ -196,7 +197,7 @@ public class BlockRegistry {
                 () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry));
 
         this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
-                () -> new ButterflyMicroscopeBlock(itemRegistry, menuTypeRegistry));
+                () -> new ButterflyMicroscopeBlock(dataComponentRegistry, itemRegistry, menuTypeRegistry));
 
         this.butterflyOrigamiBlack = registerButterflyOrigami("butterfly_origami_black");
         this.butterflyOrigamiBlue = registerButterflyOrigami("butterfly_origami_blue");

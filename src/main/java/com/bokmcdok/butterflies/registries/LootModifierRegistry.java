@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.common.loot.ButterflyLootModifier;
 import com.bokmcdok.butterflies.common.loot.OakLeavesLootModifier;
 import com.bokmcdok.butterflies.common.loot.TrailRuinsRareLootModifier;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -16,7 +16,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
  */
 public class LootModifierRegistry {
     // The deferred register.
-    private final DeferredRegister<Codec<? extends IGlobalLootModifier>> deferredRegister;
+    private final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> deferredRegister;
 
     /**
      * Construction

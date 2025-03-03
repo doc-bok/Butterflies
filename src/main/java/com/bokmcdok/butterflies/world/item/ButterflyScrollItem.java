@@ -1,16 +1,15 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -30,13 +29,13 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class ButterflyScrollItem extends Item implements ButterflyContainerItem {
 
     // Reference to the entity type registry.
+    private final DataComponentRegistry dataComponentRegistry;
     private final EntityTypeRegistry entityTypeRegistry;
     private final ItemRegistry itemRegistry;
 
@@ -54,11 +53,13 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     /**
      * Construction
      */
-    public ButterflyScrollItem(EntityTypeRegistry entityTypeRegistry,
+    public ButterflyScrollItem(DataComponentRegistry dataComponentRegistry,
+                               EntityTypeRegistry entityTypeRegistry,
                                ItemRegistry itemRegistry,
                                int butterflyIndex) {
         super(new Item.Properties());
 
+        this.dataComponentRegistry = dataComponentRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
         this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
@@ -67,16 +68,16 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     /**
      * Adds some helper text that tells us what butterfly is on the page (if any).
      * @param stack The item stack.
-     * @param level The current level.
+     * @param context The context for the tooltip.
      * @param components The current text components.
      * @param tooltipFlag Is this a tooltip?
      */
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
+                                @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(stack, components);
+        appendButterflyNameToHoverText(dataComponentRegistry, stack, components);
 
         MutableComponent newComponent = Component.translatable("tooltip.butterflies.scroll");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
@@ -84,7 +85,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         newComponent.setStyle(style);
         components.add(newComponent);
 
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**
@@ -123,11 +124,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (level.isClientSide()) {
-            CompoundTag tag = itemstack.getTag();
-            if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-                openScreen(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
-            } else if (getButterflyIndex() >= 0) {
-                openScreen(getButterflyIndex());
+            int butterflyIndex = getButterflyIndex();
+            if (butterflyIndex >= 0) {
+                openScreen(butterflyIndex);
             } else {
                 replaceWithPaper(player, hand, itemstack);
             }
@@ -158,13 +157,6 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             } else {
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
-                CompoundTag tag = itemInHand.getTag();
-
-                if (butterflyIndex < 0) {
-                    if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-                        butterflyIndex = tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA);
-                    }
-                }
 
                 if (butterflyIndex >= 0) {
                     ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, itemRegistry, level, blockPos, clickedFace);

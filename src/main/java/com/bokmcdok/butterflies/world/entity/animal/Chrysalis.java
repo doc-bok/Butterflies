@@ -50,7 +50,6 @@ public class Chrysalis extends DirectionalCreature {
             chrysalis.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(spawnBlock),
                     MobSpawnType.NATURAL,
-                    null,
                     null);
 
             level.addFreshEntity(chrysalis);

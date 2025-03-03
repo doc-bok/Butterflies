@@ -26,7 +26,7 @@ public class ButterflyScrollModel extends Model {
      * The layer location to register with Forge.
      */
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_scroll"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_scroll"), "main");
 
 
     /**
@@ -62,20 +62,14 @@ public class ButterflyScrollModel extends Model {
      * @param vertexConsumer The vertices to render.
      * @param packedLight The current light.
      * @param packedOverlay The overlay.
-     * @param red Red tint.
-     * @param green Green tint.
-     * @param blue Blue tint.
-     * @param alpha Alpha tint.
+     * @param color The packed color.
      */
     @Override
     public void renderToBuffer(@NotNull PoseStack poseStack,
                                @NotNull VertexConsumer vertexConsumer,
                                int packedLight,
                                int packedOverlay,
-                               float red,
-                               float green,
-                               float blue,
-                               float alpha) {
-        this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+                               int color) {
+        this.root.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 }

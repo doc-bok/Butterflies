@@ -5,18 +5,15 @@ import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscope
 import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
-import com.google.common.collect.Maps;
-import net.minecraft.client.gui.screens.MenuScreens;
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-
-import java.util.Arrays;
-import java.util.Map;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 /**
  * Events fired during the overall life cycle of the mod.
@@ -50,12 +47,13 @@ public class LifecycleEventListener {
      */
     @SubscribeEvent
     private void commonSetup(FMLCommonSetupEvent event) {
-
-        // Butterfly Sherd Pattern.
-        Map<Item, ResourceKey<String>> itemToPotTextureMap = Maps.newHashMap(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-        itemToPotTextureMap.put(itemRegistry.getButterflyPotterySherd().get(),
-                                decoratedPotPatternsRegistry.getButterflyPotPattern().getKey());
-        DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemToPotTextureMap;
+        ResourceKey<DecoratedPotPattern> key = decoratedPotPatternsRegistry.getButterflyPotPattern().getKey();
+        if (key != null) {
+            ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
+            itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
+            itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), key);
+            DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
+        }
     }
 
     /**
@@ -63,13 +61,8 @@ public class LifecycleEventListener {
      * @param event The client setup event.
      */
     @SubscribeEvent
-    private void clientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
-        );
-
-        event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
-        );
+    private void clientSetup(RegisterMenuScreensEvent event) {
+        event.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new);
+        event.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new);
     }
 }

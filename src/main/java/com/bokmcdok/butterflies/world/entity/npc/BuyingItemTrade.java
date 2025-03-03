@@ -6,6 +6,7 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
@@ -41,8 +42,8 @@ public class BuyingItemTrade implements VillagerTrades.ItemListing {
     @Override
     public MerchantOffer getOffer(@NotNull Entity trader,
                                   @NotNull RandomSource rand) {
-        ItemStack stack = new ItemStack(this.wantedItem, this.count);
-        return new MerchantOffer(stack,
+        ItemCost cost = new ItemCost(this.wantedItem, this.count);
+        return new MerchantOffer(cost,
                 new ItemStack(Items.EMERALD),
                 this.maxUses,
                 this.xpValue,

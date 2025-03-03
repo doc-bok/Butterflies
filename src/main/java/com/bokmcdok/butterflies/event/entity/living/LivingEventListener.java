@@ -41,7 +41,7 @@ public class LivingEventListener {
                 if (villager.getRandom().nextInt() % 256 == 1) {
 
                     // Create a light butterfly.
-                    ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "light");
+                    ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "light");
                     Butterfly.spawn(level, location, villager.getOnPos(), false);
                 }
             }

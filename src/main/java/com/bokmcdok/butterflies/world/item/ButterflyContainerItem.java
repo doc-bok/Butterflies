@@ -1,9 +1,8 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -30,10 +29,11 @@ public interface ButterflyContainerItem {
      * @param stack The item stack.
      * @param components The current text components.
      */
-    default void appendButterflyNameToHoverText(@NotNull ItemStack stack,
+    default void appendButterflyNameToHoverText(DataComponentRegistry dataComponentRegistry,
+                                                @NotNull ItemStack stack,
                                                 @NotNull List<Component> components) {
         String translatable = "item.butterflies.empty";
-        ResourceLocation entity = getButterflyEntity(stack);
+        ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
 
         if (entity != null) {
             translatable = "entity." + entity.toString().replace(':', '.');
@@ -48,19 +48,20 @@ public interface ButterflyContainerItem {
 
     /**
      * Helper method to get the entity from an item stack
+     * @param dataComponentRegistry The data component registry.
      * @param stack The item stack.
      * @return The entity held in this item, if any.
      */
-    default ResourceLocation getButterflyEntity(ItemStack stack) {
+    default ResourceLocation getButterflyEntity(DataComponentRegistry dataComponentRegistry,
+                                                ItemStack stack) {
         ResourceLocation entity = null;
 
         //  TODO: Compound tags are checked for backwards compatibility. This
         //        code should be removed in a future version.
         if (stack != null) {
-            CompoundTag tag = stack.getOrCreateTag();
-            if (tag.contains(CompoundTagId.ENTITY_ID)) {
-                String entityId = tag.getString(CompoundTagId.ENTITY_ID);
-                entity = new ResourceLocation(entityId);
+            String entityId = stack.get(dataComponentRegistry.getButterflyEntityId());
+            if (entityId != null) {
+                entity = ResourceLocation.withDefaultNamespace(entityId);
             }
         }
 

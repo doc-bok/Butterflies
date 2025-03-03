@@ -19,11 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -54,13 +52,13 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
     /**
      * Adds some tooltips.
      * @param stack The item stack.
-     * @param level The current level.
+     * @param context The context for the tooltip.
      * @param components The current text components.
      * @param tooltipFlag Is this a tooltip?
      */
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
+                                @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
 
@@ -70,7 +68,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
         newComponent.setStyle(style);
         components.add(newComponent);
 
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**

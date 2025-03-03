@@ -7,9 +7,11 @@ import com.mojang.logging.LogUtils;
 import com.sun.jdi.InvalidTypeException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -23,8 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
 
@@ -178,6 +180,70 @@ public record ButterflyData(int butterflyIndex,
     private static int NUM_MOTHS;
 
     /**
+     * Stream codec for syncing butterfly data.
+     */
+    public static final StreamCodec<RegistryFriendlyByteBuf, ButterflyData> STREAM_CODEC = new StreamCodec<>() {
+
+        /**
+         * Decode a data stream to an object.
+         * @param buffer The message buffer.
+         * @return A new butterfly object.
+         */
+        @NotNull
+        @Override
+        public ButterflyData decode(RegistryFriendlyByteBuf buffer) {
+            return new ButterflyData(buffer.readInt(),
+                    buffer.readUtf(),
+                    buffer.readEnum(ButterflyData.Size.class),
+                    buffer.readEnum(ButterflyData.Speed.class),
+                    buffer.readEnum(ButterflyData.Rarity.class),
+                    buffer.readEnum(ButterflyData.Habitat.class),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readResourceLocation(),
+                    buffer.readEnum(ButterflyData.ButterflyType.class),
+                    buffer.readEnum(ButterflyData.Diurnality.class),
+                    buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
+                    buffer.readEnum(ButterflyData.PlantEffect.class),
+                    buffer.readResourceLocation(),
+                    buffer.readEnum(ButterflyData.EggMultiplier.class),
+                    buffer.readBoolean(),
+                    buffer.readBoolean());
+        }
+
+        /**
+         * Encode some data to a buffer.
+         * @param buffer The message buffer.
+         * @param data The data to encode.
+         */
+        @Override
+        public void encode(RegistryFriendlyByteBuf buffer,
+                           ButterflyData data) {
+            buffer.writeInt(data.butterflyIndex());
+            buffer.writeUtf(data.entityId());
+            buffer.writeEnum(data.size());
+            buffer.writeEnum(data.speed());
+            buffer.writeEnum(data.rarity());
+            buffer.writeEnum(data.habitat());
+            buffer.writeInt(data.eggLifespan());
+            buffer.writeInt(data.caterpillarLifespan());
+            buffer.writeInt(data.chrysalisLifespan());
+            buffer.writeInt(data.butterflyLifespan());
+            buffer.writeResourceLocation(data.preferredFlower());
+            buffer.writeEnum(data.type());
+            buffer.writeEnum(data.diurnality());
+            buffer.writeEnum(data.extraLandingBlocks());
+            buffer.writeEnum(data.plantEffect());
+            buffer.writeResourceLocation(data.breedTarget());
+            buffer.writeEnum(data.eggMultiplier());
+            buffer.writeBoolean(data.caterpillarSounds());
+            buffer.writeBoolean(data.butterflySounds());
+        }
+    };
+
+    /**
      * Get the overall lifespan as a simple enumeration
      * @return A representation of the lifespan.
      */
@@ -311,12 +377,12 @@ public record ButterflyData(int butterflyIndex,
                         LIFESPAN[caterpillarLifespan.getIndex()],
                         LIFESPAN[chrysalisLifespan.getIndex()],
                         LIFESPAN[butterflyLifespan.getIndex()],
-                        new ResourceLocation(preferredFlower),
+                        ResourceLocation.withDefaultNamespace(preferredFlower),
                         type,
                         diurnality,
                         extraLandingBlocks,
                         plantEffect,
-                        new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
+                        ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier,
                         caterpillarSounds,
                         butterflySounds
@@ -437,7 +503,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public static ButterflyData getButterflyDataForEntity(LivingEntity entity) {
         String species = getSpeciesString(entity);
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, species);
         return getEntry(location);
     }
 
@@ -474,8 +540,8 @@ public record ButterflyData(int butterflyIndex,
      * Get all butterfly data. Used for network synchronisation.
      * @return The butterfly entries as a collection.
      */
-    public static Collection<ButterflyData> getButterflyDataCollection() {
-        return BUTTERFLY_ENTRIES.values();
+    public static List<ButterflyData> getButterflyDataList() {
+        return BUTTERFLY_ENTRIES.values().stream().toList();
     }
 
     /**
@@ -604,7 +670,6 @@ public record ButterflyData(int butterflyIndex,
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            @SuppressWarnings("deprecation")
             Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
             component.append(description);
 
@@ -665,7 +730,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getCaterpillarItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
+            return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
         }
 
         return null;
@@ -677,7 +742,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getButterflyEggItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
+            return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId + "_egg");
         }
 
         return null;
@@ -688,7 +753,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly.
      */
     public ResourceLocation getButterflyEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId);
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId);
     }
 
     /**
@@ -696,7 +761,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly egg.
      */
     public ResourceLocation getButterflyEggEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_egg");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_egg");
     }
 
     /**
@@ -704,7 +769,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the caterpillar.
      */
     public ResourceLocation getCaterpillarEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
     }
 
     /**
@@ -712,7 +777,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the chrysalis.
      */
     public  ResourceLocation getChrysalisEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
     }
 
     /**
@@ -751,7 +816,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the texture to use.
      */
     public ResourceLocation getScrollTexture() {
-        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
+        return ResourceLocation.fromNamespaceAndPath("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
     }
 
     /**

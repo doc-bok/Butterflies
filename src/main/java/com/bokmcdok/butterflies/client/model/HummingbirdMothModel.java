@@ -21,7 +21,7 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
 
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "hummingbird_moth"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "hummingbird_moth"), "main");
 
     // The main body and also the root of the model.
     private final ModelPart thorax;

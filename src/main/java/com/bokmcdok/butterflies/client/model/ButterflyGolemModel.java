@@ -21,7 +21,7 @@ public class ButterflyGolemModel extends IronGolemModel<IronGolem> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_golem"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_golem"), "main");
 
     // The golem's wings.
     private final ModelPart leftWing;

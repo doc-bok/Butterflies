@@ -1,24 +1,16 @@
 package com.bokmcdok.butterflies.event.entity.player;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
-import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.NameTagItem;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
@@ -50,10 +42,8 @@ public class PlayerEventListener {
 
                 //  If the cat is named Snow, then change it to a white cat.
                 if ("Snow".equals(name)) {
-                    CatVariant variant = BuiltInRegistries.CAT_VARIANT.get(CatVariant.WHITE);
-                    if (variant != null) {
-                        cat.setVariant(variant);
-                    }
+                    Holder<CatVariant> variant = BuiltInRegistries.CAT_VARIANT.getHolderOrThrow(CatVariant.WHITE);
+                    cat.setVariant(variant);
                 }
             }
         }

@@ -30,12 +30,15 @@ public class BannerPatternRegistry {
      */
     public void initialise() {
         // Register the banner pattern itself.
-        deferredRegister.register("banner_pattern_butterfly", () -> new BannerPattern("banner_pattern_butterfly"));
+        deferredRegister.register("banner_pattern_butterfly", () ->
+                new BannerPattern(
+                        ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID,"banner_pattern_butterfly"),
+                        "block.minecraft.banner.butterflies.banner_pattern_butterfly"));
 
         // Register the tag used to link everything together.
         this.butterflyBannerPatternTagKey = TagKey.create(
                 Registries.BANNER_PATTERN,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
     }
 
     /**

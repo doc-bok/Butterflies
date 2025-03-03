@@ -19,7 +19,7 @@ public class ButterflyFeederScreen extends AbstractContainerScreen<ButterflyFeed
 
     // The screen texture.
     private static final ResourceLocation TEXTURE =
-            new ResourceLocation(ButterfliesMod.MOD_ID, "textures/gui/butterfly_feeder/butterfly_feeder.png");
+            ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_feeder/butterfly_feeder.png");
 
     /**
      * Construction

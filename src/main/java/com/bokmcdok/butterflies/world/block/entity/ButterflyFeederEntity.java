@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.block.entity;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -73,14 +74,15 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
     /**
      * Load the inventory from a saved world.
-     * @param compoundTag The compound tag.
+     * @param tag The compound tag.
      */
     @Override
-    public void load(@NotNull CompoundTag compoundTag) {
-        super.load(compoundTag);
+    public void loadAdditional(@NotNull CompoundTag tag,
+                               @NotNull HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-        if (!this.tryLoadLootTable(compoundTag)) {
-            ContainerHelper.loadAllItems(compoundTag, this.items);
+        if (!this.tryLoadLootTable(tag)) {
+            ContainerHelper.loadAllItems(tag, this.items, registries);
         }
     }
 
@@ -120,8 +122,8 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
      */
     @NotNull
     @Override
-    public CompoundTag getUpdateTag() {
-        return this.saveWithoutMetadata();
+    public CompoundTag getUpdateTag(@NotNull HolderLookup.Provider registries) {
+        return this.saveWithoutMetadata(registries);
     }
 
     /**
@@ -137,12 +139,13 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
     /**
      * Save the inventory.
-     * @param compoundTag The compound tag.
+     * @param tag The compound tag.
      */
-    protected void saveAdditional(@NotNull CompoundTag compoundTag) {
-        super.saveAdditional(compoundTag);
-        if (!this.trySaveLootTable(compoundTag)) {
-            ContainerHelper.saveAllItems(compoundTag, this.items);
+    protected void saveAdditional(@NotNull CompoundTag tag,
+                                  @NotNull HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        if (!this.trySaveLootTable(tag)) {
+            ContainerHelper.saveAllItems(tag, this.items, registries);
         }
     }
 

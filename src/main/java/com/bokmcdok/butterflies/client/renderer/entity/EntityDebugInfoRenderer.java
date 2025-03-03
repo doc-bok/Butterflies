@@ -42,9 +42,8 @@ public class EntityDebugInfoRenderer {
 
                 MutableComponent component = Component.literal(debugInfo);
 
-                float nameTagOffsetY = entity.getNameTagOffsetY();
                 poseStack.pushPose();
-                poseStack.translate(0.0F, nameTagOffsetY, 0.0F);
+                poseStack.translate(0.0F, 0.5F, 0.0F);
                 poseStack.mulPose(cameraOrientation);
                 poseStack.scale(-0.025F, -0.025F, 0.025F);
                 Matrix4f pose = poseStack.last().pose();

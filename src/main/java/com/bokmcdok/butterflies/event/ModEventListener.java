@@ -10,6 +10,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -127,7 +128,7 @@ public class ModEventListener {
     private void onRegisterPayloadHandler(final RegisterPayloadHandlersEvent event) {
         final PayloadRegistrar registrar = event.registrar(ButterfliesMod.MOD_ID);
         registrar.playToClient(ClientBoundButterflyDataPacket.TYPE_PAYLOAD,
-                ClientBoundButterflyDataPacket::new,
+                ClientBoundButterflyDataPacket.STREAM_CODEC,
                 ClientPayloadHandler::handleButterflyData);
     }
 }

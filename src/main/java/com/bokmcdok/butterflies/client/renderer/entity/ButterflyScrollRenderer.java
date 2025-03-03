@@ -53,7 +53,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
     @NotNull
     public ResourceLocation getTextureLocation(@NotNull ButterflyScroll scroll) {
         ButterflyData data = ButterflyData.getEntry(scroll.getButterflyIndex());
-        return data == null ? new ResourceLocation(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png") : data.getScrollTexture();
+        return data == null ? ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png") : data.getScrollTexture();
     }
 
     /**
@@ -82,7 +82,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll> {
 
         RenderType renderType = RenderType.entitySmoothCutout(getTextureLocation(scroll));
         VertexConsumer vertexConsumer = buffers.getBuffer(renderType);
-        model.renderToBuffer(poseStack, vertexConsumer, overlay, 0, 1.0f, 1.0f, 1.0f, 1.0f);
+        model.renderToBuffer(poseStack, vertexConsumer, overlay, 0);
         poseStack.popPose();
     }
 }

@@ -49,7 +49,7 @@ public class VillageEventListener {
         if (event.getType() == villagerProfessionRegistry.getLepidopterist().get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
-            Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
+            Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataList();
 
             List<VillagerTrades.ItemListing> tradesLevel1 = trades.get(1);
             List<VillagerTrades.ItemListing> tradesLevel2 = trades.get(2);
@@ -121,7 +121,7 @@ public class VillageEventListener {
     private void onWandererTrades(WandererTradesEvent event) {
         List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
 
-        Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
+        Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataList();
 
         List<DeferredHolder<Item, Item>> bottledButterflies = itemRegistry.getBottledButterflies();
 

@@ -69,11 +69,11 @@ public class ClientEventListener {
         event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
 
         for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
-            if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "ice")) == 0 ||
-                    i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "lava")) == 0 ||
-                    i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "light")) == 0) {
+            if (i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "ice")) == 0 ||
+                    i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "lava")) == 0 ||
+                    i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "light")) == 0) {
                 event.registerEntityRenderer(i.get(), GlowButterflyRenderer::new);
-            } else if (i.getId().compareTo(new ResourceLocation(ButterfliesMod.MOD_ID, "hummingbird")) == 0){
+            } else if (i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "hummingbird")) == 0){
                 event.registerEntityRenderer(i.get(), HummingbirdMothRenderer::new);
             } else {
                 event.registerEntityRenderer(i.get(), ButterflyRenderer::new);

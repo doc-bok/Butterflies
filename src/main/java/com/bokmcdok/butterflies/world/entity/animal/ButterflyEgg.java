@@ -59,7 +59,6 @@ public class ButterflyEgg extends DirectionalCreature {
             egg.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(spawnBlock),
                     MobSpawnType.NATURAL,
-                    null,
                     null);
 
             level.addFreshEntity(egg);

@@ -154,27 +154,24 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
 
     /**
      * Open the menu when the block is interacted with.
-     * @param blockState The block's state.
+     * @param state The block's state.
      * @param level The current level.
-     * @param blockPos The block's position.
+     * @param pos The block's position.
      * @param player The player using the block.
-     * @param interactionHand The hand interacting with the block.
-     * @param blockHitResult The result of the collision detection.
+     * @param hitResult The result of the collision detection.
      * @return The result of the interaction (usually consumed).
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(@NotNull BlockState blockState,
-                                 Level level,
-                                 @NotNull BlockPos blockPos,
-                                 @NotNull Player player,
-                                 @NotNull InteractionHand interactionHand,
-                                 @NotNull BlockHitResult blockHitResult) {
+    public InteractionResult useWithoutItem(@NotNull BlockState state,
+                                            Level level,
+                                            @NotNull BlockPos pos,
+                                            @NotNull Player player,
+                                            @NotNull BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
+            BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof ButterflyFeederEntity feederEntity) {
                 player.openMenu(feederEntity);
             }

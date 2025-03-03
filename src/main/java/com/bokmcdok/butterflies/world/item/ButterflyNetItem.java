@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
@@ -22,7 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -42,6 +42,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The localisation string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
+    // Reference to the data component registry.
+    private final DataComponentRegistry dataComponentRegistry;
+
     // Reference to the item registry.
     private final ItemRegistry itemRegistry;
 
@@ -52,10 +55,12 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * Construction
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(ItemRegistry itemRegistry,
+    public ButterflyNetItem(DataComponentRegistry dataComponentRegistry,
+                            ItemRegistry itemRegistry,
                             int butterflyIndex) {
         super(new Item.Properties().stacksTo(1));
 
+        this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
@@ -63,16 +68,16 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     /**
      * Adds some helper text that tells us what butterfly is in the net (if any).
      * @param stack The item stack.
-     * @param level The current level.
+     * @param context The context for the tooltip.
      * @param components The current text components.
      * @param tooltipFlag Is this a tooltip?
      */
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
+                                @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(stack, components);
+        appendButterflyNameToHoverText(dataComponentRegistry, stack, components);
 
         String localisation = "tooltip.butterflies.release_butterfly";
         if (butterflyIndex < 0) {
@@ -85,7 +90,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         newComponent.setStyle(style);
         components.add(newComponent);
 
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**
@@ -102,8 +107,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * @param itemStack The current ItemStack.
      * @return An empty butterfly net.
      */
+    @NotNull
     @Override
-    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+    public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
         return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
     }
 
@@ -137,7 +143,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * @return TRUE if the left-click action is consumed.
      */
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+    public boolean onLeftClickEntity(@NotNull ItemStack stack,
+                                     @NotNull Player player,
+                                     @NotNull Entity entity) {
         if (entity instanceof Butterfly butterfly) {
             DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
 
@@ -172,7 +180,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                                    @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(stack);
+        ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
 
         if (entity != null) {
             //  Move the target position slightly in front of the player

@@ -60,14 +60,14 @@ public class BottledCaterpillarItem extends BlockItem {
     /**
      * Adds some helper text.
      * @param stack The item stack.
-     * @param level The current level.
-     * @param components The current text components.
+     * @param context The context of the tooltip.
+     * @param tooltipComponents The current text components.
      * @param tooltipFlag Is this a tooltip?
      */
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @Nullable Level level,
-                                @NotNull List<Component> components,
+                                @NotNull Item.TooltipContext context,
+                                @NotNull List<Component> tooltipComponents,
                                 @NotNull TooltipFlag tooltipFlag) {
         ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
         if (data != null) {
@@ -78,15 +78,15 @@ public class BottledCaterpillarItem extends BlockItem {
             Style speciesStyle = speciesComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.DARK_RED))
                     .withItalic(true);
             speciesComponent.setStyle(speciesStyle);
-            components.add(speciesComponent);
+            tooltipComponents.add(speciesComponent);
 
             MutableComponent tooltipComponent = Component.translatable("tooltip.butterflies.release_caterpillar");
             Style tooltipStyle = tooltipComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                     .withItalic(true);
             tooltipComponent.setStyle(tooltipStyle);
-            components.add(tooltipComponent);
+            tooltipComponents.add(tooltipComponent);
 
-            super.appendHoverText(stack, level, components, tooltipFlag);
+            super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
         }
     }
 

@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -26,6 +27,7 @@ public class ItemRegistry {
 
     // Other registry references
     private BlockRegistry blockRegistry;
+    private DataComponentRegistry dataComponentRegistry;
     private EntityTypeRegistry entityTypeRegistry;
 
     // Registry Items
@@ -83,9 +85,11 @@ public class ItemRegistry {
      */
     public void initialise(BannerPatternRegistry bannerPatternRegistry,
                            BlockRegistry blockRegistry,
+                           DataComponentRegistry dataComponentRegistry,
                            EntityTypeRegistry entityTypeRegistry) {
 
         this.blockRegistry = blockRegistry;
+        this.dataComponentRegistry = dataComponentRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
 
         this.bottledButterflies = new ArrayList<>() {
@@ -110,7 +114,7 @@ public class ItemRegistry {
                 bannerPatternRegistry.getButterflyBannerPatternTagKey(),
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
-        this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
+        this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, () -> new ButterflyBookItem(dataComponentRegistry));
 
         this.butterflyEggs = new ArrayList<>() {
             {
@@ -163,7 +167,7 @@ public class ItemRegistry {
         };
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflyGolem().get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
                         0x888800, 0x333333, new Item.Properties()));
 
         this.butterflySpawnEggs = new ArrayList<>() {
@@ -190,7 +194,7 @@ public class ItemRegistry {
             }
         };
 
-        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(this, -1));
+        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(dataComponentRegistry, this, -1));
         this.infestedApple = deferredRegister.register("infested_apple", () -> new Item(new Item.Properties()));
         this.silk = deferredRegister.register("silk", () -> new Item(new Item.Properties()));
         this.zhuangziBook = deferredRegister.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
@@ -498,7 +502,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex) {
         return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyNetItem(this, butterflyIndex));
+                () -> new ButterflyNetItem(dataComponentRegistry, this, butterflyIndex));
     }
 
     /**
@@ -508,7 +512,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
         return deferredRegister.register(BottledButterflyItem.getRegistryId(butterflyIndex),
-                () -> new BottledButterflyItem(blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
+                () -> new BottledButterflyItem(dataComponentRegistry, blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
     }
 
     /**
@@ -547,7 +551,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(entityTypeRegistry, this, butterflyIndex));
+                () -> new ButterflyScrollItem(dataComponentRegistry, entityTypeRegistry, this, butterflyIndex));
     }
 
     /**
@@ -557,7 +561,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
                         0x880000, 0x0088ff, new Item.Properties()));
     }
 
@@ -578,7 +582,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
                         0x0088ff, 0x880000, new Item.Properties()));
     }
 }

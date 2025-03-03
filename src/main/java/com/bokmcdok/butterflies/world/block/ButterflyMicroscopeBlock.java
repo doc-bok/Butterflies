@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
@@ -38,6 +39,9 @@ public class ButterflyMicroscopeBlock extends Block {
     // The shape of the block.
     private static final VoxelShape SHAPE;
 
+    // Access to data components.
+    private final DataComponentRegistry dataComponentRegistry;
+
     // Access to items.
     private final ItemRegistry itemRegistry;
 
@@ -47,7 +51,8 @@ public class ButterflyMicroscopeBlock extends Block {
     /**
      * Construction
      */
-    public ButterflyMicroscopeBlock(ItemRegistry itemRegistry,
+    public ButterflyMicroscopeBlock(DataComponentRegistry dataComponentRegistry,
+                                    ItemRegistry itemRegistry,
                                     MenuTypeRegistry menuTypeRegistry) {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
@@ -59,6 +64,7 @@ public class ButterflyMicroscopeBlock extends Block {
                 .sound(SoundType.STONE)
                 .strength(1.0F));
 
+        this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;
         this.menuTypeRegistry = menuTypeRegistry;
     }
@@ -73,7 +79,6 @@ public class ButterflyMicroscopeBlock extends Block {
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos blockPos,
@@ -90,7 +95,6 @@ public class ButterflyMicroscopeBlock extends Block {
      * @param unknown Unknown flag.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void onRemove(BlockState blockState,
                          @NotNull Level level,
                          @NotNull BlockPos blockPos,
@@ -109,27 +113,24 @@ public class ButterflyMicroscopeBlock extends Block {
 
     /**
      * Open the menu when the block is interacted with.
-     * @param blockState The block's state.
+     * @param state The block's state.
      * @param level The current level.
-     * @param blockPos The block's position.
+     * @param pos The block's position.
      * @param player The player using the block.
-     * @param interactionHand The hand interacting with the block.
-     * @param blockHitResult The result of the collision detection.
+     * @param hitResult The result of the collision detection.
      * @return The result of the interaction (usually consumed).
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
-    public InteractionResult use(@NotNull BlockState blockState,
-                                 Level level,
-                                 @NotNull BlockPos blockPos,
-                                 @NotNull Player player,
-                                 @NotNull InteractionHand interactionHand,
-                                 @NotNull BlockHitResult blockHitResult) {
+    public InteractionResult useWithoutItem(@NotNull BlockState state,
+                                            Level level,
+                                            @NotNull BlockPos pos,
+                                            @NotNull Player player,
+                                            @NotNull BlockHitResult hitResult) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            player.openMenu(blockState.getMenuProvider(level, blockPos));
+            player.openMenu(state.getMenuProvider(level, pos));
             return InteractionResult.CONSUME;
         }
     }
@@ -142,7 +143,6 @@ public class ButterflyMicroscopeBlock extends Block {
      * @return A new menu provider.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public MenuProvider getMenuProvider(@NotNull BlockState blockState,
                                         @NotNull Level level,
                                         @NotNull BlockPos blockPos) {
@@ -150,6 +150,7 @@ public class ButterflyMicroscopeBlock extends Block {
                                        inventory,
                                        title) ->
                 new ButterflyMicroscopeMenu(
+                        dataComponentRegistry,
                         itemRegistry,
                         menuTypeRegistry.getButterflyMicroscopeMenu().get(),
                         containerId,

@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.inventory;
 
+import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyMicroscopeBlock;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
@@ -25,6 +26,9 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     private static final int USE_ROW_SLOT_START = 30;
     private static final int USE_ROW_SLOT_END = 39;
 
+    // The data component registry.
+    private final DataComponentRegistry dataComponentRegistry;
+
     // The item registry.
     private final ItemRegistry itemRegistry;
 
@@ -49,7 +53,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     public ButterflyMicroscopeMenu(MenuType<?> menuType,
                                    int containerId,
                                    Inventory playerInventory) {
-        this(null, menuType, containerId, playerInventory, ContainerLevelAccess.NULL);
+        this(null, null, menuType, containerId, playerInventory, ContainerLevelAccess.NULL);
     }
 
     /**
@@ -59,13 +63,15 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
      * @param playerInventory The player's inventory.
      * @param container The container for the feeder.
      */
-    public ButterflyMicroscopeMenu(ItemRegistry itemRegistry,
+    public ButterflyMicroscopeMenu(DataComponentRegistry dataComponentRegistry,
+                                   ItemRegistry itemRegistry,
                                    MenuType<?> menuType,
                                    int containerId,
                                    Inventory playerInventory,
                                    ContainerLevelAccess container) {
         super(menuType, containerId);
 
+        this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;
 
         this.player = playerInventory.player;
@@ -229,7 +235,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
                             result = new ItemStack(itemRegistry.getButterflyBook().get());
                         }
 
-                        if (!ButterflyBookItem.addPage(result, scrollItem.getButterflyIndex())) {
+                        if (!ButterflyBookItem.addPage(dataComponentRegistry, result, scrollItem.getButterflyIndex())) {
                             result = ItemStack.EMPTY;
                         }
                     }
