@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.lang;
 
-import com.sun.jdi.InvalidTypeException;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -18,13 +17,13 @@ public class EnumExtensions {
     @NotNull
     public static <T extends Enum<?>> T searchEnum(Class<T> enumeration,
                                                    String search)
-            throws InvalidTypeException {
+            throws IllegalArgumentException {
         for (T each : enumeration.getEnumConstants()) {
             if (each.name().compareToIgnoreCase(search) == 0) {
                 return each;
             }
         }
 
-        throw new InvalidTypeException(search);
+        throw new IllegalArgumentException(search);
     }
 }
