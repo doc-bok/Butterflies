@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
-import com.sun.jdi.InvalidTypeException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -264,12 +263,12 @@ public record ButterflyData(int butterflyIndex,
          * @param typeOfT The type of the Object to deserialize to
          * @param context Language context (ignored)
          * @return A new butterfly entry
-         * @throws JsonParseException Unused
+         * @throws IllegalArgumentException Unused
          */
         @Override
         public ButterflyData deserialize(JsonElement json,
                                          Type typeOfT,
-                                         JsonDeserializationContext context) throws JsonParseException {
+                                         JsonDeserializationContext context) throws IllegalArgumentException {
             ButterflyData entry = null;
 
             if (json instanceof final JsonObject object) {
@@ -354,7 +353,7 @@ public record ButterflyData(int butterflyIndex,
             String value = element.getAsString();
             try {
                 return EnumExtensions.searchEnum(enumeration, value);
-            } catch (InvalidTypeException e) {
+            } catch (IllegalArgumentException e) {
 
                 // The value specified is invalid, so make sure it's written to the log.
                 LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",

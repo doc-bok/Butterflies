@@ -26,7 +26,6 @@ public class LootModifierRegistry {
     public LootModifierRegistry(IEventBus modEventBus) {
         // An instance of a deferred registry we use to register items.
         deferredRegister = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
-        //DeferredRegister.create(ForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
         deferredRegister.register(modEventBus);
     }
 
