@@ -21,8 +21,8 @@ public class DecoratedPotPatternsRegistry {
     private final DeferredRegister<DecoratedPotPattern> deferredRegister;
 
     // The butterfly pot pattern.
-    //private DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> butterflyPotPattern;
-    private final ResourceKey<DecoratedPotPattern> butterflyPotPattern;
+    private DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> butterflyPotPattern;
+    private final ResourceKey<DecoratedPotPattern> butterflyPotPatternKey;
 
     /**
      * Construction
@@ -32,7 +32,7 @@ public class DecoratedPotPatternsRegistry {
         this.deferredRegister = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
 
-        this.butterflyPotPattern = ResourceKey.create(
+        this.butterflyPotPatternKey = ResourceKey.create(
                 Registries.DECORATED_POT_PATTERN,
                 ResourceLocation.fromNamespaceAndPath(
                         ButterfliesMod.MOD_ID,
@@ -43,25 +43,29 @@ public class DecoratedPotPatternsRegistry {
      */
     public void initialise() {
 
-        //butterflyPotPattern = deferredRegister.register(
-        //        "butterfly_pottery_pattern",
-        //        () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
-        //                ButterfliesMod.MOD_ID,
-        //                "butterfly_pottery_pattern")));
+        butterflyPotPattern = deferredRegister.register(
+               "butterfly_pottery_pattern",
+               () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
+                        ButterfliesMod.MOD_ID,
+                        "butterfly_pottery_pattern")));
     }
 
     /**
      * Accessor for butterfly pot pattern.
      * @return The butterfly pot pattern.
      */
-    //public DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> getButterflyPotPattern() {
-    //    return butterflyPotPattern;
-    //}
+    public DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> getButterflyPotPattern() {
+        return butterflyPotPattern;
+    }
 
+    /**
+     * Add the new butterfly pottery pattern to the list of valid patterns.
+     * @param itemRegistry The item registry.
+     */
     public void expandVanillaPatterns(ItemRegistry itemRegistry) {
         ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
         itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-        itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), butterflyPotPattern);
+        itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), butterflyPotPatternKey);
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
     }
 }
