@@ -5,25 +5,25 @@
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:ice",
-      "weight": 1
+      "weight": 4
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:ice_caterpillar",
-      "weight": 1
+      "weight": 4
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:ice_chrysalis",
-      "weight": 1
+      "weight": 4
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:ice_egg",
-      "weight": 1
+      "weight": 4
     }
   ],
   "type": "forge:add_spawns"
