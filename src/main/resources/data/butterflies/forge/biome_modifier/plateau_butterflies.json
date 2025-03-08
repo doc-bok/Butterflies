@@ -5,25 +5,25 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:chalkhill",
-      "weight": 4
+      "weight": 12
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:chalkhill_caterpillar",
-      "weight": 4
+      "weight": 12
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:chalkhill_chrysalis",
-      "weight": 4
+      "weight": 12
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:chalkhill_egg",
-      "weight": 4
+      "weight": 12
     }
   ],
   "type": "forge:add_spawns"

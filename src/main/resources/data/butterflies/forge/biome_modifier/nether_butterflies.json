@@ -5,7 +5,7 @@
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:lava",
-      "weight": 1
+      "weight": 4
     }
   ],
   "type": "forge:add_spawns"
