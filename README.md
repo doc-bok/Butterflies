@@ -152,6 +152,7 @@ cause them to spread (default: `true`)
 - [Bok’s Butterflies v1.0.0](https://github.com/doc-bok/Butterflies/releases/tag/1.0.0)
 
 ## Source Code
+- [Homepage](https://www.bokmcdok.com/minecraft-modding-diaries/boks-butterflies/)
 - [GitHub Repository](https://github.com/doc-bok/Butterflies)
 - [Changelog](https://github.com/doc-bok/Butterflies/blob/main/CHANGELOG.md)
 - [Report a Bug](https://github.com/doc-bok/Butterflies/issues)
