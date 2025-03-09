@@ -1,5 +1,0 @@
-{
-  "type": "forge:add_spawns",
-  "biomes": "#minecraft:has_structure/village_taiga",
-  "spawners": []
-}

@@ -1,5 +1,0 @@
-{
-  "type": "forge:add_spawns",
-  "biomes": "#forge:is_snowy",
-  "spawners": []
-}

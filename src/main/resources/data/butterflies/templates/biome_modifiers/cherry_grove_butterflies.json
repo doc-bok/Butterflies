@@ -1,7 +1,0 @@
-{
-  "biomes": [
-    "minecraft:cherry_grove"
-  ],
-  "spawners": [],
-  "type": "forge:add_spawns"
-}
