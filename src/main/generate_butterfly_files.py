@@ -86,7 +86,7 @@ def generate_data_files(entries):
         # We only want json
         filenames = [f for f in filenames if f.endswith(".json") and entries[0] in f]
 
-        if "loot_tables" not in path:
+        if "loot_table" not in path:
             for name in filenames:
                 files.append(pathlib.Path(path, name))
 
