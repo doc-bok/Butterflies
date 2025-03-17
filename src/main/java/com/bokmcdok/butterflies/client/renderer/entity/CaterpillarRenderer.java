@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.CaterpillarModel;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -53,7 +54,7 @@ public class CaterpillarRenderer
     protected void scale(@NotNull Caterpillar entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getScale() * ButterflyData.DIRECTIONAL_SIZE_MOD;
         poses.scale(s, s, s);
     }
 

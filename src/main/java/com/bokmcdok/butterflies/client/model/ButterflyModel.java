@@ -93,18 +93,36 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                           float netHeadYaw,
                           float headPitch) {
 
-        //  When landed butterflies hold their wings together.
+        // The angle that the body rests at.
+        final float BODY_REST_ANGLE = 0.7853982f;
+
+        // The speed at which the body "hovers".
+        final float BODY_MOVE_SPEED = 0.1f;
+
+        // The arc through which the body moves.
+        final float BODY_MOVE_ARC = 0.15f;
+
+        // The arc through which the wings travel.
+        final float WING_ARC = 0.25f;
+
+        // The speed at which wings flap.
+        final float WING_SPEED = 1.3f;
+
+        //  When landed wings don't flap.
         if (entity.getIsLanded()) {
-            this.body.yRot = 0.7853982F;
+            this.body.yRot = BODY_REST_ANGLE;
+
+            // Moths hold their wings flat.
             if (entity.getIsMoth()) {
                 this.right_wing.xRot = 0.15F;
+
+            // Butterflies raise their wings up.
             } else {
                 this.right_wing.xRot = (0.15F - Mth.PI) * 0.5F;
             }
-
         } else {
-            this.body.yRot = 0.7853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
-            this.right_wing.xRot = Mth.sin(ageInTicks * 1.3F) * Mth.PI * 0.25F;
+            this.body.yRot = BODY_REST_ANGLE + Mth.cos(ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
+            this.right_wing.xRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         }
 
         this.left_wing.xRot = -right_wing.xRot;

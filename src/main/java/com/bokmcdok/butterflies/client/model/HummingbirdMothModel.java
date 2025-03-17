@@ -98,10 +98,23 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
                           float ageInTicks,
                           float netHeadYaw,
                           float headPitch) {
-        this.thorax.xRot = 0.2853982F + Mth.cos(ageInTicks * 0.1F) * 0.15F;
 
+        // The angle that the body rests at.
+        final float BODY_REST_ANGLE = 0.2853982f;
+
+        // The speed at which the body "hovers".
+        final float BODY_MOVE_SPEED = 0.1f;
+
+        // The arc through which the body moves.
+        final float BODY_MOVE_ARC = 0.15f;
+
+        // The arc through which the wings travel.
         final float WING_ARC = 0.2f;
+
+        // The speed at which wings flap.
         final float WING_SPEED = 13.0f;
+
+        this.thorax.xRot = BODY_REST_ANGLE + Mth.cos(ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
         this.right_wing.yRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         this.left_wing.yRot = -right_wing.yRot;
     }

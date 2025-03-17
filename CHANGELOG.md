@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.3 (2025-03-17)
+- Increased size of butterfly entities.
+
 ### 6.1.2 (2025-03-09)
 - Increased butterfly spawn rates.
 

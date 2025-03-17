@@ -211,6 +211,25 @@ public abstract class DirectionalCreature extends Animal {
             this.entityData.set(DATA_DIRECTION, direction);
     }
 
+    /**
+     * Overridden so that butterfly entities will render at a decent distance.
+     * @param distance The distance to check.
+     * @return TRUE if we should render the entity.
+     */
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize();
+        if (d0 < 1.0D) {
+            d0 = 1.0D;
+        }
+
+        d0 *= 64.0D * getViewScale();
+        return distance < d0 * d0;
+    }
+
+    /**
+     * Increase age at a quicker rate.
+     */
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();

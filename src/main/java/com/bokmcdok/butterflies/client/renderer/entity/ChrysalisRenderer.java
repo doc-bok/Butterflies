@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ChrysalisModel;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -45,7 +46,7 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
     protected void scale(@NotNull Chrysalis entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getScale() * ButterflyData.DIRECTIONAL_SIZE_MOD;
         poses.scale(s, s, s);
     }
 

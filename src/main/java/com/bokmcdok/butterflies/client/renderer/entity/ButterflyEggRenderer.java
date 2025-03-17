@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyEggModel;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -48,7 +49,7 @@ public class ButterflyEggRenderer extends MobRenderer<ButterflyEgg, ButterflyEgg
     protected void scale(@NotNull ButterflyEgg entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getScale() * ButterflyData.DIRECTIONAL_SIZE_MOD;
         poses.scale(s, s, s);
     }
 

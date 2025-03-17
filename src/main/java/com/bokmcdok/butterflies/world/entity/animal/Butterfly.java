@@ -655,8 +655,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     @Override
     public boolean shouldRenderAtSqrDistance(double distance) {
-        double d0 = this.getBoundingBox().getSize() * 10.0D;
-        if (Double.isNaN(d0)) {
+        double d0 = this.getBoundingBox().getSize();
+        if (d0 < 1.0D) {
             d0 = 1.0D;
         }
 

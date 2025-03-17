@@ -171,6 +171,9 @@ public record ButterflyData(int butterflyIndex,
             Integer.MAX_VALUE
     };
 
+    public static final float BUTTERFLY_SIZE_MOD = 1.25f;
+    public static final float DIRECTIONAL_SIZE_MOD = 16.0f;
+
     //  Helper maps.
     private static final Map<String, Integer> ENTITY_ID_TO_INDEX_MAP = new HashMap<>();
     private static final Map<Integer, ButterflyData> BUTTERFLY_ENTRIES = new HashMap<>();
