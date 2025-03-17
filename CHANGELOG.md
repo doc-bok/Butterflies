@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.4 (2025-03-17)
+- Fixed scale methods accidentally overriding base entity behaviour.
+
 ### 6.1.2 (2025-03-09)
 - Increased butterfly spawn rates.
 
