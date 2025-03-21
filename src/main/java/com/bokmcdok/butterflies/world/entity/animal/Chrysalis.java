@@ -63,8 +63,7 @@ public class Chrysalis extends DirectionalCreature {
      * Reduce the size of the caterpillar - they are small!
      * @return The new size of the caterpillar.
      */
-    @Override
-    public float getScale() {
+    public float getRenderScale() {
         float scale = (float)getAge() / -24000.0f;
         scale = scale * 0.06f;
         scale = scale + 0.1f;

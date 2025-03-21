@@ -45,7 +45,7 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
     protected void scale(@NotNull Chrysalis entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getRenderScale();
         poses.scale(s, s, s);
     }
 
