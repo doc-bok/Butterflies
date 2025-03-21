@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
@@ -195,8 +194,8 @@ public class EntityTypeRegistry {
 
         String registryId = Butterfly.getRegistryId(butterflyIndex);
 
-        float width = 0.3f * ButterflyData.BUTTERFLY_SIZE_MOD;
-        float height = 0.2f * ButterflyData.BUTTERFLY_SIZE_MOD;
+        float width = 0.3f;
+        float height = 0.2f;
 
         // Ice Butterfly
         if (registryId.equals("ice")) {
@@ -229,7 +228,7 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
-        float sized = 0.1f * ButterflyData.DIRECTIONAL_SIZE_MOD;
+        float sized = 0.1f;
         return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(Caterpillar::new, MobCategory.CREATURE)
                 .sized(sized, sized)
@@ -242,7 +241,7 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        float sized = 0.1f * ButterflyData.DIRECTIONAL_SIZE_MOD;
+        float sized = 0.1f;
         return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(Chrysalis::new, MobCategory.CREATURE)
                         .sized(sized, sized)
@@ -255,7 +254,7 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
-        float sized = 0.1f * ButterflyData.DIRECTIONAL_SIZE_MOD;
+        float sized = 0.1f;
         return this.deferredRegister.register(ButterflyEgg.getRegistryId(butterflyIndex),
                 () -> EntityType.Builder.of(ButterflyEgg::new, MobCategory.CREATURE)
                         .sized(sized, sized)

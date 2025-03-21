@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.HummingbirdMothModel;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -43,7 +42,7 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      */
     @Override
     protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
-        float s = entity.getScale() * ButterflyData.BUTTERFLY_SIZE_MOD;
+        float s = entity.getScale();
         poses.scale(s, s, s);
     }
 }
