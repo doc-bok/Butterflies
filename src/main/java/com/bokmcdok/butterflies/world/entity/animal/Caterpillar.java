@@ -124,8 +124,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
      * Reduce the size of the caterpillar - they are small!
      * @return The new size of the caterpillar.
      */
-    @Override
-    public float getScale() {
+    public float getRenderScale() {
         float scale = (float) getAge() / -24000.0f;
         scale = scale * 0.04f;
         scale = scale + 0.08f;
