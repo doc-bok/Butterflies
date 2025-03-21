@@ -42,7 +42,7 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      */
     @Override
     protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
-        float s = entity.getScale();
+        float s = entity.getRenderScale();
         poses.scale(s, s, s);
     }
 }

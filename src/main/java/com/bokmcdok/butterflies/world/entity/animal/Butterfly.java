@@ -382,7 +382,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * Get the scale to use for the butterfly.
      * @return A scale value based on the butterfly's size.
      */
-    public float getScale() {
+    public float getRenderScale() {
         switch (getData().size()) {
             case TINY -> { return 0.15f; }
             case SMALL -> { return 0.25f; }

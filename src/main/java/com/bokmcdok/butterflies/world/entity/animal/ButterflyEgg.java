@@ -69,8 +69,7 @@ public class ButterflyEgg extends DirectionalCreature {
      * Reduce the size of the butterfly egg - they are small!
      * @return The new size of the caterpillar.
      */
-    @Override
-    public float getScale() {
+    public float getRenderScale() {
         return 0.05f * getData().getSizeMultiplier();
     }
 
