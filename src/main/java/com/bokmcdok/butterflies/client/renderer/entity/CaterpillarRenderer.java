@@ -53,7 +53,7 @@ public class CaterpillarRenderer
     protected void scale(@NotNull Caterpillar entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getRenderScale();
         poses.scale(s, s, s);
     }
 
