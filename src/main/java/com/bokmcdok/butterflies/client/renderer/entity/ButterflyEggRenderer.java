@@ -48,7 +48,7 @@ public class ButterflyEggRenderer extends MobRenderer<ButterflyEgg, ButterflyEgg
     protected void scale(@NotNull ButterflyEgg entity,
                          PoseStack poses,
                          float scale) {
-        float s = entity.getScale();
+        float s = entity.getRenderScale();
         poses.scale(s, s, s);
     }
 
