@@ -10,7 +10,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -40,11 +39,8 @@ public class ButterflyOrigamiBlock extends Block {
     /**
      * Construction
      */
-    public ButterflyOrigamiBlock() {
-        super(Properties.of()
-                .noCollission()
-                .strength(0.5F, 2.5F)
-                .sound(SoundType.PINK_PETALS));
+    public ButterflyOrigamiBlock(Properties properties) {
+        super(properties);
 
         this.registerDefaultState(this.defaultBlockState().setValue(ORIENTATION, FrontAndTop.NORTH_UP));
 

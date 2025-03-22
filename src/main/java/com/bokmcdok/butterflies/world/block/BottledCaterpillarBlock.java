@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -10,10 +9,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -41,15 +37,8 @@ public class BottledCaterpillarBlock extends Block {
     /**
      * Create a butterfly block
      */
-    public BottledCaterpillarBlock() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.GLASS)
-                .strength(0.3F));
+    public BottledCaterpillarBlock(Properties properties) {
+        super(properties);
     }
 
     /**
@@ -88,7 +77,6 @@ public class BottledCaterpillarBlock extends Block {
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos position,
@@ -103,7 +91,6 @@ public class BottledCaterpillarBlock extends Block {
      */
     @Override
     @NotNull
-    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(@NotNull BlockState blockState) {
         return RenderShape.MODEL;
     }
@@ -117,7 +104,6 @@ public class BottledCaterpillarBlock extends Block {
      * @param flag Unknown.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void onRemove(@NotNull BlockState oldBlockState,
                          @NotNull Level level,
                          @NotNull BlockPos position,

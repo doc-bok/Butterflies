@@ -5,6 +5,9 @@ import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -12,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -23,6 +27,8 @@ import java.util.List;
  * Registers the blocks used by the mod.
  */
 public class BlockRegistry {
+
+    private static final String BUTTERFLY_MICROSCOPE_ID = "butterfly_microscope";
 
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Block> deferredRegister;
@@ -134,70 +140,29 @@ public class BlockRegistry {
         this.bottledCaterpillarBlocks = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
-                    DeferredHolder<Block, Block> newBlock =
-                            deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
+                    DeferredHolder<Block, Block> newBlock = registerBottledCaterpillar(i);
                     add(newBlock);
                 }
             }
         };
         
-        this.alliumBud = deferredRegister.register(
-                "bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM)
-        );
+        this.alliumBud = registerFlowerCropBlock("bud_allium", Blocks.ALLIUM);
+        this.azureBluetBud = registerFlowerCropBlock("bud_azure_bluet", Blocks.AZURE_BLUET);
+        this.blueOrchidBud = registerFlowerCropBlock("bud_blue_orchid", Blocks.BLUE_ORCHID);
+        this.cornflowerBud = registerFlowerCropBlock("bud_cornflower", Blocks.CORNFLOWER);
+        this.dandelionBud = registerFlowerCropBlock("bud_dandelion", Blocks.DANDELION);
+        this.lilyOfTheValleyBud = registerFlowerCropBlock("bud_lily_of_the_valley", Blocks.LILY_OF_THE_VALLEY);
+        this.orangeTulipBud = registerFlowerCropBlock("bud_orange_tulip", Blocks.ORANGE_TULIP);
+        this.oxeyeDaisyBud = registerFlowerCropBlock("bud_oxeye_daisy", Blocks.OXEYE_DAISY);
+        this.pinkTulipBud = registerFlowerCropBlock("bud_pink_tulip", Blocks.PINK_TULIP);
+        this.poppyBud = registerFlowerCropBlock("bud_poppy", Blocks.POPPY);
+        this.redTulipBud = registerFlowerCropBlock("bud_red_tulip", Blocks.RED_TULIP);
+        this.whiteTulipBud = registerFlowerCropBlock("bud_white_tulip", Blocks.WHITE_TULIP);
+        this.witherRoseBud = registerFlowerCropBlock("bud_wither_rose", Blocks.WITHER_ROSE);
 
-        this.azureBluetBud = deferredRegister.register(
-                "bud_azure_bluet", () -> new FlowerCropBlock(Blocks.AZURE_BLUET)
-        );
+        this.butterflyFeeder = registerButterflyFeeder(blockEntityTypeRegistry, menuTypeRegistry);
 
-        this.blueOrchidBud = deferredRegister.register(
-                "bud_blue_orchid", () -> new FlowerCropBlock(Blocks.BLUE_ORCHID)
-        );
-
-        this.cornflowerBud = deferredRegister.register(
-                "bud_cornflower", () -> new FlowerCropBlock(Blocks.CORNFLOWER)
-        );
-
-        this.dandelionBud = deferredRegister.register(
-                "bud_dandelion", () -> new FlowerCropBlock(Blocks.DANDELION)
-        );
-
-        this.lilyOfTheValleyBud = deferredRegister.register(
-                "bud_lily_of_the_valley", () -> new FlowerCropBlock(Blocks.LILY_OF_THE_VALLEY)
-        );
-
-        this.orangeTulipBud = deferredRegister.register(
-                "bud_orange_tulip", () -> new FlowerCropBlock(Blocks.ORANGE_TULIP)
-        );
-
-        this.oxeyeDaisyBud = deferredRegister.register(
-                "bud_oxeye_daisy", () -> new FlowerCropBlock(Blocks.OXEYE_DAISY)
-        );
-
-        this.pinkTulipBud = deferredRegister.register(
-                "bud_pink_tulip", () -> new FlowerCropBlock(Blocks.PINK_TULIP)
-        );
-
-        this.poppyBud = deferredRegister.register(
-                "bud_poppy", () -> new FlowerCropBlock(Blocks.POPPY)
-        );
-
-        this.redTulipBud = deferredRegister.register(
-                "bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP)
-        );
-
-        this.whiteTulipBud = deferredRegister.register(
-                "bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP)
-        );
-
-        this.witherRoseBud = deferredRegister.register(
-                "bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE)
-        );
-
-        this.butterflyFeeder = deferredRegister.register( "butterfly_feeder",
-                () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry));
-
-        this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
-                () -> new ButterflyMicroscopeBlock(dataComponentRegistry, itemRegistry, menuTypeRegistry));
+        this.butterflyMicroscope = registerButterflyMicroscope(dataComponentRegistry, itemRegistry, menuTypeRegistry);
 
         this.butterflyOrigamiBlack = registerButterflyOrigami("butterfly_origami_black");
         this.butterflyOrigamiBlue = registerButterflyOrigami("butterfly_origami_blue");
@@ -513,7 +478,8 @@ public class BlockRegistry {
                 .isViewBlocking(BlockRegistry::never)
                 .noOcclusion()
                 .sound(SoundType.GLASS)
-                .strength(0.3F);
+                .strength(0.3F)
+                .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId)));
 
         // Light Butterflies glow when they are in a bottle.
         if (registryId.equals("bottled_butterfly_light")) {
@@ -524,11 +490,87 @@ public class BlockRegistry {
     }
 
     /**
+     * Register a bottled caterpillar.
+     * @param butterflyIndex The butterfly index to register for.
+     * @return The registry object.
+     */
+    private DeferredHolder<Block, Block> registerBottledCaterpillar(int butterflyIndex) {
+        String registryId = getBottledCaterpillarRegistryId(butterflyIndex);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F)
+                .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId)));
+
+        return deferredRegister.register(registryId, () -> new BottledCaterpillarBlock(properties));
+    }
+
+    /**
+     * Register the butterfly feeder.
+     * @param blockEntityTypeRegistry The block entity registry.
+     * @param menuTypeRegistry The menu registry.
+     * @return The registry object.
+     */
+    private DeferredHolder<Block, Block> registerButterflyFeeder(BlockEntityTypeRegistry blockEntityTypeRegistry,
+                                                                 MenuTypeRegistry menuTypeRegistry) {
+        BlockBehaviour.Properties properties = ButterflyFeederBlock.PROPERTIES;
+        return deferredRegister.register(ButterflyFeederBlock.ID, () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry, properties));
+    }
+
+    /**
+     * Register the butterfly feeder.
+     * @param dataComponentRegistry The data component registry.
+     * @param itemRegistry The item registry.
+     * @param menuTypeRegistry The menu registry.
+     * @return The registry object.
+     */
+    private DeferredHolder<Block, Block> registerButterflyMicroscope(DataComponentRegistry dataComponentRegistry,
+                                                                     ItemRegistry itemRegistry,
+                                                                     MenuTypeRegistry menuTypeRegistry) {
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.STONE)
+                .strength(1.0F)
+                .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, BUTTERFLY_MICROSCOPE_ID)));
+
+        return deferredRegister.register(BUTTERFLY_MICROSCOPE_ID, () -> new ButterflyMicroscopeBlock(dataComponentRegistry, itemRegistry, menuTypeRegistry, properties));
+    }
+
+    /**
      * Registers an origami block.
      * @param id The ID of the block to register.
      * @return A new registry object.
      */
     private DeferredHolder<Block, Block> registerButterflyOrigami(String id) {
-        return deferredRegister.register(id, ButterflyOrigamiBlock::new);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.of()
+                .noCollission()
+                .strength(0.5F, 2.5F)
+                .sound(SoundType.PINK_PETALS)
+                .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, id)));
+
+        return deferredRegister.register(id, () -> new ButterflyOrigamiBlock(properties));
+    }
+
+    /**
+     * Register a flower crop.
+     * @param block The base flower block.
+     * @param registryId The value to use as a registry ID.
+     * @return The registry object.
+     */
+    private DeferredHolder<Block, Block> registerFlowerCropBlock(String registryId, 
+                                                                 Block block) {
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(block)
+                .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId)));
+
+        return deferredRegister.register(registryId, () -> new FlowerCropBlock(block, properties));
     }
 }

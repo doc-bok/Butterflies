@@ -7,7 +7,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -29,8 +28,8 @@ public class FlowerCropBlock extends CropBlock {
      * Construction - copy the properties from the flower it will grow into.
      * @param block The flower block.
      */
-    public FlowerCropBlock(Block block) {
-        super(BlockBehaviour.Properties.ofFullCopy(block));
+    public FlowerCropBlock(Block block, Properties properties) {
+        super(properties);
         this.flowerBlock = block;
     }
 

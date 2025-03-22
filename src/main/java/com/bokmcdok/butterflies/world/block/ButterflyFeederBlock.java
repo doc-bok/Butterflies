@@ -1,14 +1,17 @@
 package com.bokmcdok.butterflies.world.block;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
@@ -30,8 +33,24 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyFeederBlock extends BaseEntityBlock {
 
+    // The ID of the block.
+    public static final String ID = "butterfly_feeder";
+
+    // The base properties of the block.
+    public static final Properties PROPERTIES = BlockBehaviour.Properties.of()
+            .mapColor(MapColor.SAND)
+            .isRedstoneConductor(BlockRegistry::never)
+            .isSuffocating(BlockRegistry::never)
+            .isValidSpawn(BlockRegistry::never)
+            .isViewBlocking(BlockRegistry::never)
+            .noOcclusion()
+            .sound(SoundType.BAMBOO)
+            .strength(0.3F)
+            .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ID)));
+
+    // The codec for the block.
     private static final MapCodec<ButterflyFeederBlock> CODEC =
-            simpleCodec((x) -> new ButterflyFeederBlock(null, null));
+            simpleCodec((x) -> new ButterflyFeederBlock(null, null, PROPERTIES));
 
     //  The bottle's "model".
     private static final VoxelShape SHAPE = Shapes.or(
@@ -55,16 +74,9 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      * @param menuTypeRegistry The menu type registry.
      */
     public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry,
-                                MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.SAND)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.BAMBOO)
-                .strength(0.3F));
+                                MenuTypeRegistry menuTypeRegistry,
+                                Properties properties) {
+        super(properties);
 
         this.blockEntityTypeRegistry = blockEntityTypeRegistry;
         this.menuTypeRegistry = menuTypeRegistry;
@@ -80,7 +92,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos position,
@@ -118,7 +129,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      * @param unknown Unknown flag.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void onRemove(BlockState blockState,
                          @NotNull Level level,
                          @NotNull BlockPos blockPos,

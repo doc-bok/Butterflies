@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
@@ -13,11 +12,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -53,16 +49,9 @@ public class ButterflyMicroscopeBlock extends Block {
      */
     public ButterflyMicroscopeBlock(DataComponentRegistry dataComponentRegistry,
                                     ItemRegistry itemRegistry,
-                                    MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.STONE)
-                .strength(1.0F));
+                                    MenuTypeRegistry menuTypeRegistry,
+                                    Properties properties) {
+        super(properties);
 
         this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;
