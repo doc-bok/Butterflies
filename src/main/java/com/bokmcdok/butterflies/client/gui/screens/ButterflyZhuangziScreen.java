@@ -5,6 +5,7 @@ import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -59,7 +60,7 @@ public class ButterflyZhuangziScreen extends Screen {
     public void render(@NotNull GuiGraphics guiGraphics, int x, int y, float unknown) {
         super.render(guiGraphics, x, y, unknown);
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(RenderType::guiTextured, ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192, 256, 256);
 
 
         if (this.cache.isEmpty()) {

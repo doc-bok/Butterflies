@@ -12,7 +12,6 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -110,7 +109,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
      */
     @Override
     @NotNull
-    public InteractionResultHolder<ItemStack> use(@NotNull Level level,
+    public InteractionResult use(@NotNull Level level,
                                                   @NotNull Player player,
                                                   @NotNull InteractionHand hand) {
 
@@ -128,9 +127,9 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Butterfly.spawn(player.level(), entity, positionToSpawn, false);
         }
 
-        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-        return InteractionResultHolder.success(stack);
+        ItemStack newItemStack = new ItemStack(Items.GLASS_BOTTLE);
+        player.setItemInHand(hand, newItemStack);
+        return InteractionResult.SUCCESS.heldItemTransformedTo(newItemStack);
     }
 
     /**

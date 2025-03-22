@@ -6,9 +6,9 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.IronGolemRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * The model for a butterfly golem.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyGolemModel extends IronGolemModel<IronGolem> {
+public class ButterflyGolemModel extends IronGolemModel {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
@@ -85,21 +85,15 @@ public class ButterflyGolemModel extends IronGolemModel<IronGolem> {
 
     /**
      * Animate the wings.
-     * @param entity The butterfly entity
-     * @param limbSwing Unused
-     * @param limbSwingAmount Unused
-     * @param ageInTicks The current age of the entity in ticks
-     * @param netHeadYaw unused
-     * @param headPitch unused
+     * @param renderState The current rendering state.
      */
     @Override
-    public void setupAnim(@NotNull IronGolem entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    public void setupAnim(@NotNull IronGolemRenderState renderState) {
+        super.setupAnim(renderState);
+
+        float ageInTicks = renderState.ageInTicks;
+        float limbSwing = renderState.walkAnimationPos;
+        float limbSwingAmount = renderState.walkAnimationSpeed;
 
         this.rightWing.yRot = (Mth.sin(ageInTicks * 0.1F) * 0.1F) + 0.5F - (1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount);
         this.leftWing.yRot = (Mth.sin(ageInTicks * 0.1F) * -0.1F) - 0.5f + (1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount);

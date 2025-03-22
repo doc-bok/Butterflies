@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -11,12 +12,14 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 public class ButterflyEgg extends DirectionalCreature {
 
@@ -36,32 +39,34 @@ public class ButterflyEgg extends DirectionalCreature {
                              ResourceLocation location,
                              BlockPos spawnBlock,
                              Direction surfaceDirection) {
-        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-        Entity entity = entityType.create(level);
-        if (entity instanceof ButterflyEgg egg) {
+        Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityType.isPresent()) {
+            Entity entity = entityType.get().value().create(level, EntitySpawnReason.NATURAL);
+            if (entity instanceof ButterflyEgg egg) {
 
-            double x = spawnBlock.getX() + level.random.nextDouble();
-            double y = spawnBlock.getY() + level.random.nextDouble();
-            double z = spawnBlock.getZ() + level.random.nextDouble();
+                double x = spawnBlock.getX() + level.random.nextDouble();
+                double y = spawnBlock.getY() + level.random.nextDouble();
+                double z = spawnBlock.getZ() + level.random.nextDouble();
 
-            switch (surfaceDirection) {
-                case WEST -> x = spawnBlock.getX();
-                case EAST -> x = spawnBlock.getX() + 1.0d;
-                case DOWN -> y = spawnBlock.getY();
-                case UP -> y = spawnBlock.getY() + 1.0d;
-                case NORTH -> z = spawnBlock.getZ();
-                case SOUTH -> z = spawnBlock.getZ() + 1.0d;
+                switch (surfaceDirection) {
+                    case WEST -> x = spawnBlock.getX();
+                    case EAST -> x = spawnBlock.getX() + 1.0d;
+                    case DOWN -> y = spawnBlock.getY();
+                    case UP -> y = spawnBlock.getY() + 1.0d;
+                    case NORTH -> z = spawnBlock.getZ();
+                    case SOUTH -> z = spawnBlock.getZ() + 1.0d;
+                }
+
+                egg.moveTo(x, y, z, 0.0F, 0.0F);
+                egg.setSurfaceDirection(surfaceDirection);
+
+                egg.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(spawnBlock),
+                        EntitySpawnReason.NATURAL,
+                        null);
+
+                level.addFreshEntity(egg);
             }
-
-            egg.moveTo(x, y, z, 0.0F, 0.0F);
-            egg.setSurfaceDirection(surfaceDirection);
-
-            egg.finalizeSpawn(level,
-                    level.getCurrentDifficultyAt(spawnBlock),
-                    MobSpawnType.NATURAL,
-                    null);
-
-            level.addFreshEntity(egg);
         }
     }
 
@@ -74,29 +79,46 @@ public class ButterflyEgg extends DirectionalCreature {
     }
 
     /**
-     * If a player hits a butterfly egg it will be converted to an item in their inventory.
+     * Play a sound when a player hits the entity.
      * @param damageSource The source of the damage.
-     * @param damage The amount of damage.
-     * @return The result from hurting the caterpillar.
+     * @return The result from hurting the entity.
      */
     @Override
-    public boolean hurt(@NotNull DamageSource damageSource,
-                        float damage) {
+    public boolean hurtClient(@NotNull DamageSource damageSource) {
         if (damageSource.getEntity() instanceof Player player) {
-            if (this.level().isClientSide) {
-                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-            } else {
-                this.remove(RemovalReason.DISCARDED);
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+            return true;
+        }
 
-                Item itemToAdd = BuiltInRegistries.ITEM.get(this.getData().getButterflyEggItem());
-                ItemStack itemStack = new ItemStack(itemToAdd);
-                player.addItem(itemStack);
+        return super.hurtClient(damageSource);
+    }
+
+    /**
+     * If a player hits the entity it will be converted to an item in their inventory.
+     * @param damageSource The source of the damage.
+     * @param damage The amount of damage.
+     * @return The result from hurting the entity.
+     */
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel level,
+                              @NotNull DamageSource damageSource,
+                              float damage) {
+        if (damageSource.getEntity() instanceof Player player) {
+            this.remove(RemovalReason.DISCARDED);
+
+            ResourceLocation location = this.getData().getButterflyEggItem();
+            if (location != null) {
+                Optional<Holder.Reference<Item>> butterflyEggItem = BuiltInRegistries.ITEM.get(location);
+                if (butterflyEggItem.isPresent()) {
+                    ItemStack itemStack = new ItemStack(butterflyEggItem.get());
+                    player.addItem(itemStack);
+                }
             }
 
             return true;
         }
 
-        return super.hurt(damageSource, damage);
+        return super.hurtServer(level, damageSource, damage);
     }
 
     /**
@@ -165,12 +187,12 @@ public class ButterflyEgg extends DirectionalCreature {
      * A custom step for the AI update loop.
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         // If the surface block is destroyed then the butterfly egg dies.
         if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
-            kill();
+            kill(level);
         }
 
         // Spawn Butterfly.

@@ -3,8 +3,8 @@ package com.bokmcdok.butterflies.world.inventory;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.BookItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 /**
  * A slot that limits what can be placed in it to Books and Butterfly Books.
@@ -34,6 +34,6 @@ public class ButterflyBookSlot extends Slot {
     @Override
     public boolean mayPlace(ItemStack itemStack) {
         return itemStack.getItem() instanceof ButterflyBookItem ||
-                itemStack.getItem() instanceof BookItem;
+                itemStack.is(Items.BOOK);
     }
 }

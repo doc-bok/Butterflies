@@ -91,7 +91,7 @@ public class ButterflyLayEggGoal extends MoveToBlockGoal {
             if (this.butterfly.getIsFertile()) {
 
                 // Don't lay an egg if there are too many butterflies in the area already.
-                List<Butterfly> numButterflies = this.butterfly.level().getNearbyEntities(
+                    List<Butterfly> numButterflies = getServerLevel(this.butterfly.level()).getNearbyEntities(
                         Butterfly.class,
                         TargetingConditions.forNonCombat(),
                         butterfly,

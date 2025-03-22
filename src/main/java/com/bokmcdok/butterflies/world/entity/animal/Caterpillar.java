@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,7 +20,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -28,6 +29,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * Creates the Caterpillar behaviour.
@@ -68,41 +70,44 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
                              BlockPos position,
                              Direction direction,
                              boolean isBottled) {
-        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-        Entity entity = entityType.create(level);
-        if (entity instanceof Caterpillar caterpillar) {
-            caterpillar.setIsBottled(isBottled);
+        Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
 
-            double x = position.getX() + 0.45D;
-            double y = position.getY() + 0.4D;
-            double z = position.getZ() + 0.5D;
+        if (entityType.isPresent()) {
+            Entity entity = entityType.get().value().create(level, EntitySpawnReason.NATURAL);
+            if (entity instanceof Caterpillar caterpillar) {
+                caterpillar.setIsBottled(isBottled);
 
-            if (isBottled) {
-                direction = Direction.DOWN;
-                y = position.getY() + 0.07d;
+                double x = position.getX() + 0.45D;
+                double y = position.getY() + 0.4D;
+                double z = position.getZ() + 0.5D;
 
-                caterpillar.setInvulnerable(true);
-                caterpillar.setPersistenceRequired();
-            } else {
-                switch (direction) {
-                    case DOWN -> y = position.getY();
-                    case UP -> y = position.getY() + 1.0d;
-                    case NORTH -> z = position.getZ();
-                    case SOUTH -> z = position.getZ() + 1.0d;
-                    case WEST -> x = position.getX();
-                    case EAST -> x = position.getX() + 1.0d;
+                if (isBottled) {
+                    direction = Direction.DOWN;
+                    y = position.getY() + 0.07d;
+
+                    caterpillar.setInvulnerable(true);
+                    caterpillar.setPersistenceRequired();
+                } else {
+                    switch (direction) {
+                        case DOWN -> y = position.getY();
+                        case UP -> y = position.getY() + 1.0d;
+                        case NORTH -> z = position.getZ();
+                        case SOUTH -> z = position.getZ() + 1.0d;
+                        case WEST -> x = position.getX();
+                        case EAST -> x = position.getX() + 1.0d;
+                    }
                 }
+
+                caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
+                caterpillar.setSurfaceDirection(direction);
+
+                caterpillar.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(position),
+                        EntitySpawnReason.NATURAL,
+                        null);
+
+                level.addFreshEntity(caterpillar);
             }
-
-            caterpillar.moveTo(x, y, z, 0.0F, 0.0F);
-            caterpillar.setSurfaceDirection(direction);
-
-            caterpillar.finalizeSpawn(level,
-                    level.getCurrentDifficultyAt(position),
-                    MobSpawnType.NATURAL,
-                    null);
-
-            level.addFreshEntity(caterpillar);
         }
     }
 
@@ -128,29 +133,46 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     }
 
     /**
-     * If a player hits a caterpillar it will be converted to an item in their inventory.
+     * Play a sound when a player hits the entity.
      * @param damageSource The source of the damage.
-     * @param damage The amount of damage.
-     * @return The result from hurting the caterpillar.
+     * @return The result from hurting the entity.
      */
     @Override
-    public boolean hurt(@NotNull DamageSource damageSource,
-                        float damage) {
+    public boolean hurtClient(@NotNull DamageSource damageSource) {
         if (damageSource.getEntity() instanceof Player player) {
-            if (this.level().isClientSide) {
-                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-            } else {
-                this.remove(RemovalReason.DISCARDED);
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+            return true;
+        }
 
-                Item caterpillarItem = BuiltInRegistries.ITEM.get(this.getData().getCaterpillarItem());
-                ItemStack itemStack = new ItemStack(caterpillarItem);
-                player.addItem(itemStack);
+        return super.hurtClient(damageSource);
+    }
+
+    /**
+     * If a player hits the entity it will be converted to an item in their inventory.
+     * @param damageSource The source of the damage.
+     * @param damage The amount of damage.
+     * @return The result from hurting the entity.
+     */
+    @Override
+    public boolean hurtServer(@NotNull ServerLevel level,
+                              @NotNull DamageSource damageSource,
+                              float damage) {
+        if (damageSource.getEntity() instanceof Player player) {
+            this.remove(RemovalReason.DISCARDED);
+
+            ResourceLocation location = this.getData().getCaterpillarItem();
+            if (location != null) {
+                Optional<Holder.Reference<Item>> caterpillarItem = BuiltInRegistries.ITEM.get(location);
+                if (caterpillarItem.isPresent()) {
+                    ItemStack itemStack = new ItemStack(caterpillarItem.get());
+                    player.addItem(itemStack);
+                }
             }
 
             return true;
         }
 
-        return super.hurt(damageSource, damage);
+        return super.hurtServer(level, damageSource, damage);
     }
 
     /**
@@ -257,8 +279,8 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
      */
     @Override
     @SuppressWarnings("deprecation")
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         // Update gravity
         isNoGravity = true;

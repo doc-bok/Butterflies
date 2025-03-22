@@ -1,8 +1,7 @@
 {
-  "parent": "butterflies:butterfly/create_butterfly_scroll",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_book"
+      "id": "butterflies:butterfly_book"
     },
     "title": {
       "translate": "advancements.butterfly.moth_book.title"
@@ -15,32 +14,40 @@
     "announce_to_chat": true,
     "hidden": false
   },
-  "rewards": {
-    "experience": 100
-  },
+  "parent": "butterflies:butterfly/create_butterfly_scroll",
   "criteria": {
     "filled_book_moth": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "butterflies:butterfly_book"
-            ],
-            "nbt": "{CustomModelData:2}"
+            "items": "butterflies:butterfly_book",
+            "components": {
+              "minecraft:custom_model_data": {
+                "flags": [
+                  false,
+                  true
+                ]
+              }
+            }
           }
         ]
       }
     },
-    "filled_book_both": {
+    "filled_book_all": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "butterflies:butterfly_book"
-            ],
-            "nbt": "{CustomModelData:3}"
+            "items": "butterflies:butterfly_book",
+            "components": {
+              "minecraft:custom_model_data": {
+                "flags": [
+                  true,
+                  true
+                ]
+              }
+            }
           }
         ]
       }
@@ -49,7 +56,10 @@
   "requirements": [
     [
       "filled_book_moth",
-      "filled_book_both"
+      "filled_book_all"
     ]
-  ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
 }

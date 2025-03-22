@@ -3,10 +3,11 @@ package com.bokmcdok.butterflies.world.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.FrontAndTop;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -63,7 +64,6 @@ public class ButterflyOrigamiBlock extends Block {
      * @return TRUE if the block can survive, FALSE otherwise.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public boolean canSurvive(BlockState blockState,
                               LevelReader levelReader,
                               BlockPos pos) {
@@ -82,7 +82,6 @@ public class ButterflyOrigamiBlock extends Block {
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos pos,
@@ -132,27 +131,31 @@ public class ButterflyOrigamiBlock extends Block {
     }
 
     /**
-     * Called on a block update.
-     * @param thisBlockState The current block state.
-     * @param direction The direction of the block update.
-     * @param otherBlockState The state of the block that caused the update.
-     * @param levelAccessor The current level.
-     * @param thisBlockPos The current block position.
-     * @param otherBlockPos The position of the block that caused the update.
+     * Called whenever a block updates.
+     * @param state The current block state.
+     * @param level The level accessor.
+     * @param scheduledTickAccess Access to scheduled ticks.
+     * @param pos The block's position.
+     * @param direction The direction of the block.
+     * @param neighborPos The neighbour's position.
+     * @param neighborState The neighbour's state.
+     * @param random The random number generator.
      * @return The updated block state.
      */
     @NotNull
-    @SuppressWarnings("deprecation")
-    public BlockState updateShape(BlockState thisBlockState,
-                                  Direction direction,
-                                  @NotNull BlockState otherBlockState,
-                                  @NotNull LevelAccessor levelAccessor,
-                                  @NotNull BlockPos thisBlockPos,
-                                  @NotNull BlockPos otherBlockPos) {
+    @Override
+    public BlockState updateShape(@NotNull BlockState state,
+                                  @NotNull LevelReader level,
+                                  @NotNull ScheduledTickAccess scheduledTickAccess,
+                                  @NotNull BlockPos pos,
+                                  @NotNull Direction direction,
+                                  @NotNull BlockPos neighborPos,
+                                  @NotNull BlockState neighborState,
+                                  @NotNull RandomSource random) {
         return direction.getOpposite() ==
-                thisBlockState.getValue(ORIENTATION).front() && !thisBlockState.canSurvive(levelAccessor, thisBlockPos) ?
+                state.getValue(ORIENTATION).front() && !state.canSurvive(level, pos) ?
                 Blocks.AIR.defaultBlockState() :
-                super.updateShape(thisBlockState, direction, otherBlockState, levelAccessor, thisBlockPos, otherBlockPos);
+                super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
     }
 
     /**

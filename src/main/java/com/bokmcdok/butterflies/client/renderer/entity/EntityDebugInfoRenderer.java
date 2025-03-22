@@ -22,7 +22,7 @@ public class EntityDebugInfoRenderer {
 
     /**
      * Renders debug information for the butterfly.
-     * @param entity The butterfly entity.
+     * @param debugInfo The information to render.
      * @param poseStack The current pose stack.
      * @param multiBufferSource The render buffer.
      * @param cameraOrientation The current camera orientation.
@@ -30,14 +30,13 @@ public class EntityDebugInfoRenderer {
      * @param packedLightCoordinates The light coordinates.
      */
     public static <T extends Entity & DebugInfoSupplier>
-    void renderDebugInfo(T entity,
+    void renderDebugInfo(String debugInfo,
                          PoseStack poseStack,
                          MultiBufferSource multiBufferSource,
                          Quaternionf cameraOrientation,
                          Font font,
                          int packedLightCoordinates) {
         if (ButterfliesConfig.debugInformation.get()) {
-            String debugInfo = entity.getDebugInfo();
             if (!debugInfo.isBlank()) {
 
                 MutableComponent component = Component.literal(debugInfo);

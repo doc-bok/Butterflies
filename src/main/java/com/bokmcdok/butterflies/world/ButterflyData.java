@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -17,6 +18,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +29,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.zip.DataFormatException;
 
 /**
@@ -669,9 +672,11 @@ public record ButterflyData(int butterflyIndex,
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
-            component.append(description);
-
+            Optional<Holder.Reference<Item>> preferredFlower = BuiltInRegistries.ITEM.get(entry.preferredFlower());
+            if (preferredFlower.isPresent()) {
+                Component description = preferredFlower.get().value().getName();
+                component.append(description);
+            }
 
             // Fact
             component.append("\n\n");

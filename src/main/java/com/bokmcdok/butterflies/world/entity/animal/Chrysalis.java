@@ -3,16 +3,19 @@ package com.bokmcdok.butterflies.world.entity.animal;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Represents a chrysalis that will eventually morph into a butterfly.
@@ -39,20 +42,22 @@ public class Chrysalis extends DirectionalCreature {
                              Direction surfaceDirection,
                              Vec3 position,
                              float yRotation) {
-        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-        Entity entity = entityType.create(level);
-        if (entity instanceof Chrysalis chrysalis) {
+        Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityType.isPresent()) {
+            Entity entity = entityType.get().value().create(level, EntitySpawnReason.NATURAL);
+            if (entity instanceof Chrysalis chrysalis) {
 
-            chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
-            chrysalis.setYRot(yRotation);
-            chrysalis.setSurfaceDirection(surfaceDirection);
+                chrysalis.moveTo(position.x, position.y, position.z, 0.0F, 0.0F);
+                chrysalis.setYRot(yRotation);
+                chrysalis.setSurfaceDirection(surfaceDirection);
 
-            chrysalis.finalizeSpawn(level,
-                    level.getCurrentDifficultyAt(spawnBlock),
-                    MobSpawnType.NATURAL,
-                    null);
+                chrysalis.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(spawnBlock),
+                        EntitySpawnReason.NATURAL,
+                        null);
 
-            level.addFreshEntity(chrysalis);
+                level.addFreshEntity(chrysalis);
+            }
         }
     }
 
@@ -146,12 +151,12 @@ public class Chrysalis extends DirectionalCreature {
      * A custom step for the AI update loop.
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         // If the surface block is destroyed then the chrysalis dies.
         if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
-            kill();
+            kill(level);
         }
 
         // Spawn Butterfly.

@@ -9,7 +9,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -167,8 +166,9 @@ public class ItemRegistry {
         };
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
-                        0x888800, 0x333333, new Item.Properties()));
+                () -> new SpawnEggItem(
+                        entityTypeRegistry.getButterflyGolem().get(),
+                        new Item.Properties()));
 
         this.butterflySpawnEggs = new ArrayList<>() {
             {
@@ -561,8 +561,9 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
-                        0x880000, 0x0088ff, new Item.Properties()));
+                () -> new SpawnEggItem(
+                        entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
+                        new Item.Properties()));
     }
 
     /**
@@ -582,7 +583,8 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
-                        0x0088ff, 0x880000, new Item.Properties()));
+                () -> new SpawnEggItem(
+                        entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
+                        new Item.Properties()));
     }
 }

@@ -13,7 +13,7 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -109,7 +109,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @NotNull
     @Override
-    public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
+    public ItemStack getCraftingRemainder(@NotNull ItemStack itemStack) {
         return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
     }
 
@@ -123,16 +123,6 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
         return Component.translatable(NAME);
-    }
-
-    /**
-     * Let Minecraft know we don't lose the item if we use it to craft.
-     * @return Always TRUE.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public boolean hasCraftingRemainingItem() {
-        return true;
     }
 
     /**
@@ -175,9 +165,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     @NotNull
-    public  InteractionResultHolder<ItemStack> use(@NotNull Level level,
-                                                   @NotNull Player player,
-                                                   @NotNull InteractionHand hand) {
+    public InteractionResult use(@NotNull Level level,
+                                 @NotNull Player player,
+                                 @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
         ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
@@ -194,8 +184,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
             ItemStack newStack = new ItemStack(itemRegistry.getEmptyButterflyNet().get(), 1);
             player.setItemInHand(hand, newStack);
-
-            return InteractionResultHolder.success(stack);
+            return InteractionResult.SUCCESS.heldItemTransformedTo(newStack);
         }
 
         return super.use(level, player, hand);

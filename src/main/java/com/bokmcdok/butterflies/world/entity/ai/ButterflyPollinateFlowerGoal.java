@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -15,6 +16,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Goal that enables butterflies to pollinate flowers.
@@ -41,7 +44,6 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyPollinateFlowerGoal(Butterfly mob,
                                         double speedModifier,
                                         int searchRange,
@@ -51,8 +53,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
-            this.preferredFlowerBlock = BuiltInRegistries.BLOCK.get(data.preferredFlower());
-            this.preferredFlowerItem = BuiltInRegistries.ITEM.get(data.preferredFlower());
+            Optional<Holder.Reference<Block>> blockHolder = BuiltInRegistries.BLOCK.get(data.preferredFlower());
+            this.preferredFlowerBlock = blockHolder.map(Holder.Reference::value).orElse(null);
+
+            Optional<Holder.Reference<Item>> itemHolder = BuiltInRegistries.ITEM.get(data.preferredFlower());
+            this.preferredFlowerItem = itemHolder.map(Holder.Reference::value).orElse(null);
         } else {
             this.preferredFlowerBlock = null;
             this.preferredFlowerItem = null;

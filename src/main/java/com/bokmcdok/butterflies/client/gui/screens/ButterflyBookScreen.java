@@ -9,6 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -189,7 +190,7 @@ public class ButterflyBookScreen extends Screen {
         renderBackground(guiGraphics, x, y, unknown);
 
         int i = (this.width - 192) / 2;
-        guiGraphics.blit(ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192);
+        guiGraphics.blit(RenderType::guiTextured, ButterflyTextures.BOOK, i, 2, 0, 0, 192, 192, 256, 256);
 
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
@@ -202,7 +203,7 @@ public class ButterflyBookScreen extends Screen {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
             ButterflyData data = ButterflyData.getEntry(butterflyIndex);
             if (data != null) {
-                guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
+                guiGraphics.blit(RenderType::guiTextured, data.getScrollTexture(), i, 2, 0, 0, 192, 192, 256, 256);
             }
         } else {
             int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());

@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -16,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * This is the renderer for all the butterflies and moths in the game.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
+public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyRenderState, ButterflyModel> {
     /**
      * Bakes a new model for the renderer
      *
@@ -27,37 +29,65 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
     }
 
     /**
-     * Gets the texture to use
-     *
-     * @param entity The butterfly entity
-     * @return The texture to use for this entity
+     * Creates a reusable render state.
+     * @return The new render state.
+     */
+    @NotNull
+    @Override
+    public ButterflyRenderState createRenderState() {
+        return new ButterflyRenderState();
+    }
+
+    /**
+     * Extracts the render state for use in rendering.
+     * @param entity The butterfly entity.
+     * @param renderState The current render state.
+     * @param partialTick The number of partial ticks.
      */
     @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Butterfly entity) {
-        return entity.getTexture();
+    public void extractRenderState(@NotNull Butterfly entity,
+                                   @NotNull ButterflyRenderState renderState,
+                                   float partialTick) {
+        super.extractRenderState(entity, renderState, partialTick);
+
+        // Only extract debug info if we need it.
+        if (ButterfliesConfig.debugInformation.get()) {
+            renderState.debugInfo = entity.getDebugInfo();
+        }
+
+        renderState.isLanded = entity.getIsLanded();
+        renderState.isMoth = entity.getIsMoth();
+        renderState.renderScale = entity.getRenderScale();
+        renderState.texture = entity.getTexture();
+    }
+
+    /**
+     * Gets the texture to use.
+     * @param renderState The current render state.
+     * @return The texture to use for this entity
+     */
+    @NotNull
+    @Override
+    public ResourceLocation getTextureLocation(@NotNull ButterflyRenderState renderState) {
+        return renderState.texture;
     }
 
     /**
      * Override to fix a bug with the model's orientation.
-     *
-     * @param entity            The butterfly entity.
-     * @param p_115456_         Unknown.
-     * @param p_115457_         Unknown.
+     * @param renderState The current render state.
      * @param poseStack         The pose stack.
      * @param multiBufferSource The render buffer (I think...)
      * @param packedLightCoordinates The light coordinates.
      */
     @Override
-    public void render(@NotNull Butterfly entity,
-                       float p_115456_,
-                       float p_115457_,
+    public void render(@NotNull ButterflyRenderState renderState,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
                        int packedLightCoordinates) {
 
         // Render any debug information for this entity.
         EntityDebugInfoRenderer.renderDebugInfo(
-                entity,
+                renderState.debugInfo,
                 poseStack,
                 multiBufferSource,
                 this.entityRenderDispatcher.cameraOrientation(),
@@ -70,20 +100,19 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
         // the model from scratch.
         poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.f));
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
+        super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
         poseStack.popPose();
     }
 
     /**
      * Scale the entity down
-     *
-     * @param entity The butterfly entity
+     * @param renderState The current render state.
      * @param poses  The current entity pose
-     * @param scale  The scale that should be applied
      */
     @Override
-    protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
-        float s = entity.getRenderScale();
+    protected void scale(@NotNull ButterflyRenderState renderState,
+                         PoseStack poses) {
+        float s = renderState.renderScale;
         poses.scale(s, s, s);
     }
 }

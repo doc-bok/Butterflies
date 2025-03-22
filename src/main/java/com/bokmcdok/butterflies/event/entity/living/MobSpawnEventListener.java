@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import net.minecraft.world.entity.ConversionParams;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.bus.api.IEventBus;
@@ -47,11 +48,16 @@ public class MobSpawnEventListener {
                 EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
 
                 if (EventHooks.canLivingConvert(ironGolem, entityType, (x) -> {})) {
-                    IronGolem newMob = ironGolem.convertTo(entityType, false);
+                    IronGolem newMob = ironGolem.convertTo(
+                            entityType,
+                            ConversionParams.single(ironGolem, true, true),
+                            EntitySpawnReason.CONVERSION,
+                            entity -> {});
+
                     if (newMob != null) {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                MobSpawnType.CONVERSION,
+                                EntitySpawnReason.CONVERSION,
                                 null);
 
                         EventHooks.onLivingConvert(ironGolem, newMob);

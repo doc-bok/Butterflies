@@ -5,8 +5,8 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.ButterflyGolemModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IronGolemRenderer;
+import net.minecraft.client.renderer.entity.state.IronGolemRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -33,12 +33,12 @@ public class ButterflyGolemRenderer extends IronGolemRenderer {
 
     /**
      * Override the Iron Golem texture.
-     * @param ironGolem The golem entity.
+     * @param renderState The current render state.
      * @return The texture location.
      */
     @NotNull
     @Override
-    public ResourceLocation getTextureLocation(@NotNull IronGolem ironGolem) {
+    public ResourceLocation getTextureLocation(@NotNull IronGolemRenderState renderState) {
         return TEXTURE;
     }
 }

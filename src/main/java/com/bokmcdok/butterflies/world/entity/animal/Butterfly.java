@@ -8,6 +8,7 @@ import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -47,6 +48,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -97,7 +99,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public static boolean checkButterflySpawnRules(
             EntityType<? extends Butterfly> entityType,
             ServerLevelAccessor level,
-            MobSpawnType spawnType,
+            EntitySpawnReason spawnType,
             BlockPos position,
             RandomSource rng) {
         return true;
@@ -135,29 +137,30 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                              BlockPos position,
                              Boolean placed) {
         if (level instanceof ServerLevel) {
-            EntityType<?> entityType =
-                    BuiltInRegistries.ENTITY_TYPE.get(location);
-            Entity entity = entityType.create(level);
-            if (entity instanceof Butterfly butterfly) {
+            Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (entityType.isPresent()) {
+                Entity entity = entityType.get().value().create(level, EntitySpawnReason.NATURAL);
+                if (entity instanceof Butterfly butterfly) {
 
-                butterfly.moveTo(position.getX() + 0.45D,
-                        position.getY() + 0.2D,
-                        position.getZ() + 0.5D,
-                        0.0F, 0.0F);
+                    butterfly.moveTo(position.getX() + 0.45D,
+                            position.getY() + 0.2D,
+                            position.getZ() + 0.5D,
+                            0.0F, 0.0F);
 
-                butterfly.setYBodyRot(butterfly.random.nextFloat());
+                    butterfly.setYBodyRot(butterfly.random.nextFloat());
 
-                butterfly.finalizeSpawn((ServerLevel) level,
-                        level.getCurrentDifficultyAt(position),
-                        MobSpawnType.NATURAL,
-                        null);
+                    butterfly.finalizeSpawn((ServerLevel) level,
+                            level.getCurrentDifficultyAt(position),
+                            EntitySpawnReason.NATURAL,
+                            null);
 
-                if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
-                    butterfly.setInvulnerable(true);
-                    butterfly.setPersistenceRequired();
+                    if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
+                        butterfly.setInvulnerable(true);
+                        butterfly.setPersistenceRequired();
+                    }
+
+                    level.addFreshEntity(butterfly);
                 }
-
-                level.addFreshEntity(butterfly);
             }
         } else {
             level.playSound(null, position.getX(), position.getY(), position.getZ(), SoundEvents.PLAYER_ATTACK_WEAK,
@@ -259,9 +262,9 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
-                                        @NotNull MobSpawnType spawnType,
+                                        @NotNull EntitySpawnReason spawnType,
                                         @Nullable SpawnGroupData groupData) {
-        if (spawnType == MobSpawnType.SPAWN_EGG) {
+        if (spawnType == EntitySpawnReason.SPAWN_ITEM_USE) {
             setPersistenceRequired();
         }
 
@@ -401,8 +404,9 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
         ResourceLocation location = this.getData().preferredFlower();
-        Item item = BuiltInRegistries.ITEM.get(location);
-        return stack.is(item);
+        Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(location);
+        return item.filter(stack::is).isPresent();
+
     }
 
     /**
@@ -471,7 +475,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         navigation.setCanOpenDoors(false);
         navigation.setCanFloat(false);
-        navigation.setCanPassDoors(true);
         return navigation;
     }
 
@@ -580,7 +583,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         // Butterflies use targets to select mates.
-        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target, level) -> {
             if (target instanceof Butterfly butterfly) {
                 return butterfly.getButterflyIndex() == this.getData().getMateButterflyIndex() &&
                         butterfly.getNumEggs() > 0 &&
@@ -691,8 +694,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * A custom step for the AI update loop.
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
@@ -701,7 +704,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                 if (!this.isPersistenceRequired() &&
                         this.getAge() >= 0 &&
                         this.random.nextInt(0, 15) == 0) {
-                    this.kill();
+                    this.kill(level);
                 }
             }
         }

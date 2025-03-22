@@ -10,6 +10,7 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -80,9 +81,10 @@ public class ButterflyScroll extends HangingEntity {
      * @param entity The entity being destroyed.
      */
     @Override
-    public void dropItem(@Nullable Entity entity) {
+    public void dropItem(@NotNull ServerLevel level,
+                         @Nullable Entity entity) {
         ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(getButterflyIndex()).get());
-        this.spawnAtLocation(stack);
+        this.spawnAtLocation(level, stack);
     }
 
     /**

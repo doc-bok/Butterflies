@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
@@ -75,7 +76,7 @@ public class ButterflyMicroscopeScreen extends AbstractContainerScreen<Butterfly
                             int mouseY) {
         int x = (this.width) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        guiGraphics.blit(ButterflyTextures.MICROSCOPE, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderType::guiTextured, ButterflyTextures.MICROSCOPE, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         x = ((this.width) / 2) - 176;
         y = (this.height - 192) / 2;
@@ -98,7 +99,7 @@ public class ButterflyMicroscopeScreen extends AbstractContainerScreen<Butterfly
 
         this.cachedButterflyIndex = butterflyIndex;
 
-        guiGraphics.blit(scrollTexture, x, y, 0, 0, 192, 192);
+        guiGraphics.blit(RenderType::guiTextured, scrollTexture, x, y, 0, 0, 192, 192, 256, 256);
 
         int cachedPageSize = Math.min(128 / 9, this.cachedPageComponents.size());
         for (int line = 0; line < cachedPageSize; ++line) {

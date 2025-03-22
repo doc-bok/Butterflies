@@ -1,9 +1,7 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ChrysalisRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,21 +16,18 @@ import org.jetbrains.annotations.NotNull;
  * Model for a chrysalis entity.
  */
 @OnlyIn(Dist.CLIENT)
-public class ChrysalisModel extends EntityModel<Chrysalis> {
+public class ChrysalisModel extends EntityModel<ChrysalisRenderState> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "chrysalis"), "main");
-
-    //  The core of the model
-    private final ModelPart main;
 
     /**
      * Constructor
      * @param root The root of the model.
      */
     public ChrysalisModel(ModelPart root) {
-        main = root.getChild("main");
+        super(root);
     }
 
     /**
@@ -54,37 +49,10 @@ public class ChrysalisModel extends EntityModel<Chrysalis> {
 
     /**
      * Animate the model (or rather, don't)
-     * @param entity The entity.
-     * @param limbSwing The limb swing.
-     * @param limbSwingAmount The limb swing amount.
-     * @param ageInTicks Age of the entity in ticks.
-     * @param netHeadYaw The head's yaw.
-     * @param headPitch The head's pitch.
+     * @param renderState The current render state.
      */
     @Override
-    public void setupAnim(@NotNull Chrysalis entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
+    public void setupAnim(@NotNull ChrysalisRenderState renderState) {
         // No-op
-    }
-
-    /**
-     * Render the model.
-     * @param poseStack The pose stack.
-     * @param vertexConsumer The vertex consumer.
-     * @param packedLight The packed light.
-     * @param packedOverlay The packed overlay.
-     * @param color The packed color.
-     */
-    @Override
-    public void renderToBuffer(@NotNull PoseStack poseStack,
-                               @NotNull VertexConsumer vertexConsumer,
-                               int packedLight,
-                               int packedOverlay,
-                               int color) {
-        this.main.render(poseStack, vertexConsumer, packedLight, packedOverlay, color);
     }
 }

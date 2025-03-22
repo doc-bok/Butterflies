@@ -45,7 +45,8 @@ public class FlowerCropBlock extends CropBlock {
     @Override
     public ItemStack getCloneItemStack(@NotNull LevelReader levelReader,
                                        @NotNull BlockPos blockPos,
-                                       @NotNull BlockState blockState) {
+                                       @NotNull BlockState blockState,
+                                       boolean flag) {
         return ItemStack.EMPTY;
     }
 
@@ -63,7 +64,7 @@ public class FlowerCropBlock extends CropBlock {
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos blockPos,
                                @NotNull CollisionContext collisionContext) {
-        Vec3 offset = blockState.getOffset(blockGetter, blockPos);
+        Vec3 offset = blockState.getOffset(blockPos);
         return SHAPE_BY_AGE[this.getAge(blockState)].move(offset.x, offset.y, offset.z);
     }
 

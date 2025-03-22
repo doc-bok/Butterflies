@@ -17,7 +17,6 @@ import net.minecraft.network.chat.TextColor;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -118,9 +117,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
      */
     @Override
     @NotNull
-    public InteractionResultHolder<ItemStack> use(Level level,
-                                                  Player player,
-                                                  @NotNull InteractionHand hand) {
+    public InteractionResult use(Level level,
+                                 Player player,
+                                 @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (level.isClientSide()) {
@@ -133,7 +132,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     /**
@@ -171,13 +170,13 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                         }
 
                         itemInHand.shrink(1);
-                        return InteractionResult.sidedSuccess(level.isClientSide);
+                        return InteractionResult.SUCCESS.heldItemTransformedTo(itemInHand);
                     } else {
                         return InteractionResult.CONSUME;
                     }
                 } else {
                     replaceWithPaper(player, context.getHand(), itemInHand);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
+                    return InteractionResult.SUCCESS;
                 }
             }
         }

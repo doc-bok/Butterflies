@@ -5,6 +5,7 @@ import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.CommonComponents;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -56,7 +57,7 @@ public class ButterflyScrollScreen extends Screen {
         ButterflyData data = ButterflyData.getEntry(butterflyIndex);
         if (data != null) {
             int i = (this.width - 192) / 2;
-            guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
+            guiGraphics.blit(RenderType::guiTextured, data.getScrollTexture(), i, 2, 0, 0, 192, 192, 256, 256);
         }
     }
 }

@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
-import net.minecraft.client.model.HierarchicalModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.HummingbirdMothRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * The model for the hummingbird moth.
  */
 @OnlyIn(Dist.CLIENT)
-public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
+public class HummingbirdMothModel extends EntityModel<HummingbirdMothRenderState> {
 
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
@@ -37,7 +37,10 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
      * @param root The root part to attach the model to.
      */
     public HummingbirdMothModel(ModelPart root) {
+        super(root);
+
         this.thorax = root.getChild("thorax");
+
         // The wings.
         ModelPart wings = this.thorax.getChild("wings");
         this.left_wing = wings.getChild("left_wing");
@@ -83,21 +86,11 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
     }
 
     /**
-     * Create a flying animation
-     * @param entity The butterfly entity
-     * @param limbSwing Unused
-     * @param limbSwingAmount Unused
-     * @param ageInTicks The current age of the entity in ticks
-     * @param netHeadYaw unused
-     * @param headPitch unused
+     * Create a flying animation.
+     * @param renderState The current render state.
      */
     @Override
-    public void setupAnim(@NotNull Butterfly entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
+    public void setupAnim(@NotNull HummingbirdMothRenderState renderState) {
 
         // The angle that the body rests at.
         final float BODY_REST_ANGLE = 0.2853982f;
@@ -114,17 +107,8 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
         // The speed at which wings flap.
         final float WING_SPEED = 13.0f;
 
-        this.thorax.xRot = BODY_REST_ANGLE + Mth.cos(ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
-        this.right_wing.yRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
+        this.thorax.xRot = BODY_REST_ANGLE + Mth.cos(renderState.ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
+        this.right_wing.yRot = Mth.sin(renderState.ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         this.left_wing.yRot = -right_wing.yRot;
-    }
-
-    /**
-     * Get the root of the model.
-     * @return The root ModelPart
-     */
-    @Override
-    public @NotNull ModelPart root() {
-        return this.thorax;
     }
 }

@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
-import net.minecraft.client.model.HierarchicalModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -17,14 +17,11 @@ import org.jetbrains.annotations.NotNull;
  * A model of a butterfly.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyModel  extends HierarchicalModel<Butterfly> {
+public class ButterflyModel  extends EntityModel<ButterflyRenderState> {
 
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly"), "main");
-
-    //  The root of the model.
-    private final ModelPart root;
 
     //  The body of the butterfly.
     private final ModelPart body;
@@ -40,7 +37,9 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
      * @param root The root part to attach the model to.
      */
     public ButterflyModel(ModelPart root) {
-        this.root = root;
+        super(root);
+
+        //  The root of the model.
         this.body = root.getChild("body");
         this.left_wing = this.body.getChild("left_wing");
         this.right_wing = this.body.getChild("right_wing");
@@ -78,20 +77,10 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
 
     /**
      * Create a flying animation
-     * @param entity The butterfly entity
-     * @param limbSwing Unused
-     * @param limbSwingAmount Unused
-     * @param ageInTicks The current age of the entity in ticks
-     * @param netHeadYaw unused
-     * @param headPitch unused
+     * @param renderState The current rendering state.
      */
     @Override
-    public void setupAnim(@NotNull Butterfly entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
+    public void setupAnim(@NotNull ButterflyRenderState renderState) {
 
         // The angle that the body rests at.
         final float BODY_REST_ANGLE = 0.7853982f;
@@ -109,11 +98,11 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
         final float WING_SPEED = 1.3f;
 
         //  When landed wings don't flap.
-        if (entity.getIsLanded()) {
+        if (renderState.isLanded) {
             this.body.yRot = BODY_REST_ANGLE;
 
             // Moths hold their wings flat.
-            if (entity.getIsMoth()) {
+            if (renderState.isMoth) {
                 this.right_wing.xRot = 0.15F;
 
             // Butterflies raise their wings up.
@@ -121,19 +110,10 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
                 this.right_wing.xRot = (0.15F - Mth.PI) * 0.5F;
             }
         } else {
-            this.body.yRot = BODY_REST_ANGLE + Mth.cos(ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
-            this.right_wing.xRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
+            this.body.yRot = BODY_REST_ANGLE + Mth.cos(renderState.ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
+            this.right_wing.xRot = Mth.sin(renderState.ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         }
 
         this.left_wing.xRot = -right_wing.xRot;
-    }
-
-    /**
-     * Get the root of the model.
-     * @return The root ModelPart
-     */
-    @Override
-    public @NotNull ModelPart root() {
-        return this.root;
     }
 }

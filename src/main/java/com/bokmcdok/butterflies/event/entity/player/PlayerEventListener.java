@@ -42,7 +42,7 @@ public class PlayerEventListener {
 
                 //  If the cat is named Snow, then change it to a white cat.
                 if ("Snow".equals(name)) {
-                    Holder<CatVariant> variant = BuiltInRegistries.CAT_VARIANT.getHolderOrThrow(CatVariant.WHITE);
+                    Holder<CatVariant> variant = BuiltInRegistries.CAT_VARIANT.getOrThrow(CatVariant.WHITE);
                     cat.setVariant(variant);
                 }
             }

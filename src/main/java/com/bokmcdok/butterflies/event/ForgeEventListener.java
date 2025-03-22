@@ -2,9 +2,9 @@ package com.bokmcdok.butterflies.event;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.SinglePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
@@ -13,7 +13,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.TagsUpdatedEvent;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Listens for generic events on the Forge Bus.
@@ -39,19 +38,19 @@ public class ForgeEventListener {
         if(event.getUpdateCause() == TagsUpdatedEvent.UpdateCause.SERVER_DATA_LOAD) {
 
             // Plains
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getLookupProvider(),
                     ResourceLocation.withDefaultNamespace("village/plains/houses"),
                     ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/plains/houses/plains_butterfly_house_1"),
                     3);
 
             // Savanna
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getLookupProvider(),
                     ResourceLocation.withDefaultNamespace("village/savanna/houses"),
                     ResourceLocation.fromNamespaceAndPath("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
                     2);
 
             // Taiga
-            addToPool(event.getRegistryAccess(),
+            addToPool(event.getLookupProvider(),
                     ResourceLocation.withDefaultNamespace("village/taiga/houses"),
                     ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/taiga/houses/taiga_butterfly_house_1"),
                     2);
@@ -65,13 +64,15 @@ public class ForgeEventListener {
      * @param structureToAdd The RL of the structure to add.
      * @param weight The likelihood this building will appear.
      */
-    private static void addToPool(RegistryAccess registryAccess,
+    private static void addToPool(HolderLookup.Provider registryAccess,
                                   ResourceLocation structurePool,
                                   ResourceLocation structureToAdd,
                                   int weight)
     {
-        Registry<StructureTemplatePool> registry = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL);
-        StructureTemplatePool pool = Objects.requireNonNull(registry.get(structurePool), structurePool.getPath());
+
+        HolderLookup.RegistryLookup<StructureTemplatePool> registry = registryAccess.lookupOrThrow(Registries.TEMPLATE_POOL);
+        ResourceKey<StructureTemplatePool> key = ResourceKey.create(Registries.TEMPLATE_POOL, structurePool);
+        StructureTemplatePool pool = registry.getOrThrow(key).value();
 
         if(!(pool.rawTemplates instanceof ArrayList)) {
             pool.rawTemplates = new ArrayList<>(pool.rawTemplates);

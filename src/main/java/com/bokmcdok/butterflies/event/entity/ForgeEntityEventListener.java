@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.event.entity;
 
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -35,7 +35,8 @@ public class ForgeEntityEventListener {
      * @param entity The entity the cat wants to target.
      * @return TRUE if the entity is any butterfly except for a Forester.
      */
-    private static boolean isButterflyAttackableByCat(LivingEntity entity) {
+    private static boolean isButterflyAttackableByCat(LivingEntity entity,
+                                                      ServerLevel level) {
         if (entity instanceof Butterfly butterfly) {
             return !Objects.equals(butterfly.getData().entityId(), "forester");
         }

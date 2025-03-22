@@ -1,6 +1,10 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ChrysalisModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.CaterpillarRenderState;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ChrysalisRenderState;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -14,7 +18,7 @@ import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
+public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisRenderState, ChrysalisModel> {
 
     /**
      * Construction
@@ -25,47 +29,68 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
     }
 
     /**
+     * Creates a reusable render state.
+     * @return The new render state.
+     */
+    @NotNull
+    @Override
+    public ChrysalisRenderState createRenderState() {
+        return new ChrysalisRenderState();
+    }
+
+    /**
+     * Extracts the render state for use in rendering.
+     * @param entity The butterfly entity.
+     * @param renderState The current render state.
+     * @param partialTick The number of partial ticks.
+     */
+    @Override
+    public void extractRenderState(@NotNull Chrysalis entity,
+                                   @NotNull ChrysalisRenderState renderState,
+                                   float partialTick) {
+        super.extractRenderState(entity, renderState, partialTick);
+
+        renderState.surfaceDirection = entity.getSurfaceDirection();
+        renderState.renderScale = entity.getRenderScale();
+        renderState.texture = entity.getTexture();
+    }
+
+    /**
      * Gets the texture to use.
-     * @param entity The  entity.
+     * @param renderState The current render state.
      * @return The texture to use for this entity.
      */
     @Override
     @NotNull
-    public ResourceLocation getTextureLocation(@NotNull Chrysalis entity) {
-        return entity.getTexture();
+    public ResourceLocation getTextureLocation(@NotNull ChrysalisRenderState renderState) {
+        return renderState.texture;
     }
 
     /**
      * Scale the entity down.
-     * @param entity The  entity.
+     * @param renderState The current render state.
      * @param poses The current entity pose.
-     * @param scale The scale that should be applied.
      */
     @Override
-    protected void scale(@NotNull Chrysalis entity,
-                         PoseStack poses,
-                         float scale) {
-        float s = entity.getRenderScale();
+    protected void scale(@NotNull ChrysalisRenderState renderState,
+                         PoseStack poses) {
+        float s = renderState.renderScale;
         poses.scale(s, s, s);
     }
 
     /**
      * Rotates the chrysalis, so it's attached to its block.
-     * @param entity The entity.
-     * @param p_115456_ Unknown.
-     * @param p_115457_ Unknown.
+     * @param renderState The current render state.
      * @param poseStack The posed model to render.
      * @param multiBufferSource The render buffer.
      * @param p_115460_ Unknown.
      */
     @Override
-    public void render(@NotNull Chrysalis entity,
-                       float p_115456_,
-                       float p_115457_,
+    public void render(@NotNull ChrysalisRenderState renderState,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
                        int p_115460_) {
-        Direction direction = entity.getSurfaceDirection();
+        Direction direction = renderState.surfaceDirection;
         if (direction == Direction.UP) {
             poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
         } else if (direction == Direction.NORTH) {
@@ -78,6 +103,6 @@ public class ChrysalisRenderer extends MobRenderer<Chrysalis, ChrysalisModel> {
             poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
         }
 
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, p_115460_);
+        super.render(renderState, poseStack, multiBufferSource, p_115460_);
     }
 }

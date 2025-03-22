@@ -4,10 +4,9 @@ import com.bokmcdok.butterflies.client.gui.screens.ButterflyZhuangziScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -33,21 +32,20 @@ public class ButterflyZhuangziItem extends Item {
      */
     @Override
     @NotNull
-    public InteractionResultHolder<ItemStack> use(Level level,
-                                                  Player player,
-                                                  @NotNull InteractionHand hand) {
-        ItemStack itemstack = player.getItemInHand(hand);
+    public InteractionResult use(Level level,
+                                 @NotNull Player player,
+                                 @NotNull InteractionHand hand) {
 
         if (level.isClientSide()) {
             openScreen();
         }
 
         player.awardStat(Stats.ITEM_USED.get(this));
-        return InteractionResultHolder.sidedSuccess(itemstack, level.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
     /**
-     * Open the screen. Kept separate so it can be excluded from server builds.
+     * Open the screen. Kept separate, so it can be excluded from server builds.
      */
     @OnlyIn(Dist.CLIENT)
     private void openScreen() {

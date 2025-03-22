@@ -52,7 +52,7 @@ public abstract class DirectionalCreature extends Animal {
     @SuppressWarnings("deprecation, unused")
     public static boolean checkDirectionalSpawnRules(EntityType<? extends Mob> entityType,
                                                      LevelAccessor level,
-                                                     MobSpawnType spawnType,
+                                                     EntitySpawnReason spawnType,
                                                      BlockPos blockPos,
                                                      RandomSource random) {
 
@@ -117,9 +117,9 @@ public abstract class DirectionalCreature extends Animal {
     @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
-                                        @NotNull MobSpawnType spawnType,
+                                        @NotNull EntitySpawnReason spawnType,
                                         @Nullable SpawnGroupData groupData) {
-        if (spawnType == MobSpawnType.SPAWN_EGG) {
+        if (spawnType == EntitySpawnReason.SPAWN_ITEM_USE) {
             setPersistenceRequired();
         }
 
@@ -231,8 +231,8 @@ public abstract class DirectionalCreature extends Animal {
      * Increase age at a quicker rate.
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
         this.setAge(this.getAge() + 1);
     }
 

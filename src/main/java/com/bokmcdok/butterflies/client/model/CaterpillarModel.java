@@ -1,12 +1,12 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -16,14 +16,12 @@ import org.jetbrains.annotations.NotNull;
  * A model of a caterpillar.
  */
 @OnlyIn(Dist.CLIENT)
-public class CaterpillarModel extends HierarchicalModel<Caterpillar> {
+public class CaterpillarModel extends EntityModel<LivingEntityRenderState> {
 
     // Holds the layers for the model.
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "caterpillar"), "main");
 
-    // The root of the model.
-    private final ModelPart root;
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart thorax;
@@ -33,7 +31,9 @@ public class CaterpillarModel extends HierarchicalModel<Caterpillar> {
      * @param root The root of the model.
      */
     public CaterpillarModel(ModelPart root) {
-        this.root = root;
+        super(root);
+
+        // The root of the model.
         this.body = root.getChild("body");
         this.head = this.body.getChild("head");
         this.thorax = this.body.getChild("thorax");
@@ -67,38 +67,19 @@ public class CaterpillarModel extends HierarchicalModel<Caterpillar> {
     }
 
     /**
-     * Animate the model
-     * @param entity The entity
-     * @param limbSwing Unused
-     * @param limbSwingAmount Unused
-     * @param ageInTicks The current age of the entity in ticks
-     * @param netHeadYaw unused
-     * @param headPitch unused
+     * Animate the model.
+     * @param renderState The current render state.
      */
     @Override
-    public void setupAnim(@NotNull Caterpillar entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
-        float sin = (float)Math.sin(ageInTicks * 0.2f);
+    public void setupAnim(@NotNull LivingEntityRenderState renderState) {
+        float sin = (float)Math.sin(renderState.ageInTicks * 0.2f);
 
-        float ymod = 0.5f * (sin + 1.f);
+        float yModifier = 0.5f * (sin + 1.f);
 
-        this.head.y = ymod;
-        this.body.y = 24.0f - ymod;
-        this.thorax.y = ymod;
+        this.head.y = yModifier;
+        this.body.y = 24.0f - yModifier;
+        this.thorax.y = yModifier;
 
         this.thorax.z = -1.0f - sin;
-    }
-
-    /**
-     * Get the root of the model.
-     * @return The root ModelPart
-     */
-    @Override
-    public @NotNull ModelPart root() {
-        return this.root;
     }
 }
