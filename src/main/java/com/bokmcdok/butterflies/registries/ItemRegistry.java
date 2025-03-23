@@ -6,6 +6,11 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
@@ -107,13 +112,9 @@ public class ItemRegistry {
             }
         };
 
-        this.burntButterflyNet = deferredRegister.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
-
-        this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
-                (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
-
-        this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, () -> new ButterflyBookItem(dataComponentRegistry));
+        this.burntButterflyNet = registerItem("butterfly_net_burnt");
+        this.butterflyBannerPattern = registerBannerPattern(bannerPatternRegistry);
+        this.butterflyBook = registerButterflyBook();
 
         this.butterflyEggs = new ArrayList<>() {
             {
@@ -123,11 +124,8 @@ public class ItemRegistry {
             }
         };
 
-        this.butterflyFeeder = deferredRegister.register("butterfly_feeder",
-                () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
-
-        this.butterflyMicroscope = deferredRegister.register("butterfly_microscope",
-                () -> new BlockItem(blockRegistry.getButterflyMicroscope().get(), new Item.Properties()));
+        this.butterflyFeeder = registerButterflyFeeder();
+        this.butterflyMicroscope = registerButterflyMicroscope();
 
         this.butterflyNets = new ArrayList<>() {
             {
@@ -154,8 +152,7 @@ public class ItemRegistry {
         this.butterflyOrigamiWhite = registerButterflyOrigami("butterfly_origami_white", blockRegistry.getButterflyOrigamiWhite());
         this.butterflyOrigamiYellow = registerButterflyOrigami("butterfly_origami_yellow", blockRegistry.getButterflyOrigamiYellow());
 
-        this.butterflyPotterySherd = deferredRegister.register("butterfly_pottery_sherd",
-                () -> new Item(new Item.Properties()));
+        this.butterflyPotterySherd = registerItem("butterfly_pottery_sherd");
 
         this.butterflyScrolls = new ArrayList<>() {
             {
@@ -165,10 +162,7 @@ public class ItemRegistry {
             }
         };
 
-        this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
-                () -> new SpawnEggItem(
-                        entityTypeRegistry.getButterflyGolem().get(),
-                        new Item.Properties()));
+        this.butterflyGolemSpawnEgg = registerSpawnEgg("butterfly_golem", entityTypeRegistry.getButterflyGolem());
 
         this.butterflySpawnEggs = new ArrayList<>() {
             {
@@ -194,10 +188,10 @@ public class ItemRegistry {
             }
         };
 
-        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(dataComponentRegistry, this, -1));
-        this.infestedApple = deferredRegister.register("infested_apple", () -> new Item(new Item.Properties()));
-        this.silk = deferredRegister.register("silk", () -> new Item(new Item.Properties()));
-        this.zhuangziBook = deferredRegister.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
+        this.emptyButterflyNet = registerButterflyNet(-1, ButterflyNetItem.EMPTY_NAME);
+        this.infestedApple = registerItem("infested_apple");
+        this.silk = registerItem("silk");
+        this.zhuangziBook = registerZhuangZiBook();
     }
 
     /**
@@ -495,14 +489,92 @@ public class ItemRegistry {
         return zhuangziBook;
     }
 
+    private ResourceKey<Item> createResourceKey(String registryId) {
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId);
+        return ResourceKey.create(Registries.ITEM, location);
+    }
+
+    /**
+     * Register a banner pattern.
+     *
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerBannerPattern(BannerPatternRegistry bannerPatternRegistry) {
+
+        final String registryId = "banner_pattern_butterfly";
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId, () -> new BannerPatternItem(
+                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
+                new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).setId(key)));
+    }
+
+    /**
+     * Register the butterfly book.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerButterflyBook() {
+        ResourceKey<Item> key = createResourceKey(ButterflyBookItem.NAME);
+        return deferredRegister.register(ButterflyBookItem.NAME,
+                () -> new ButterflyBookItem(
+                        new Item.Properties().stacksTo(1).setId(key),
+                        dataComponentRegistry));
+    }
+
+    /**
+     * Register the butterfly feeder.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerButterflyFeeder() {
+
+        final String registryId = "butterfly_feeder";
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId, () -> new BlockItem(
+                blockRegistry.getButterflyFeeder().get(),
+                new Item.Properties().setId(key)));
+
+    }
+
+    /**
+     * Register the butterfly microscope.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerButterflyMicroscope() {
+
+        final String registryId = "butterfly_microscope";
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId, () -> new BlockItem(
+                blockRegistry.getButterflyMicroscope().get(),
+                new Item.Properties().setId(key)));
+
+    }
+
     /**
      * Register a butterfly net.
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex) {
-        return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyNetItem(dataComponentRegistry, this, butterflyIndex));
+        return registerButterflyNet(butterflyIndex, ButterflyNetItem.getRegistryId(butterflyIndex));
+    }
+
+    /**
+     * Register a butterfly net.
+     * @param butterflyIndex The index of the butterfly.
+     * @param registryId The Registry ID of the item.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex,
+                                                            String registryId) {
+        ResourceKey<Item> key = createResourceKey(registryId);
+        return deferredRegister.register(registryId,
+                () -> new ButterflyNetItem(
+                        new Item.Properties().stacksTo(1).setId(key),
+                        dataComponentRegistry,
+                        this,
+                        butterflyIndex));
     }
 
     /**
@@ -511,8 +583,16 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
-        return deferredRegister.register(BottledButterflyItem.getRegistryId(butterflyIndex),
-                () -> new BottledButterflyItem(dataComponentRegistry, blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
+
+        String registryId = BottledButterflyItem.getRegistryId(butterflyIndex);
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId,
+                () -> new BottledButterflyItem(
+                        new Item.Properties().stacksTo(1).setId(key),
+                        dataComponentRegistry,
+                        blockRegistry.getBottledButterflyBlocks().get(butterflyIndex),
+                        butterflyIndex));
     }
 
     /**
@@ -521,8 +601,15 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerBottledCaterpillar(int butterflyIndex) {
-        return deferredRegister.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new BottledCaterpillarItem(blockRegistry.getBottledCaterpillarBlocks().get(butterflyIndex), butterflyIndex));
+
+        String registryId = BottledCaterpillarItem.getRegistryId(butterflyIndex);
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId,
+                () -> new BottledCaterpillarItem(
+                        new Item.Properties().stacksTo(1).setId(key),
+                        blockRegistry.getBottledCaterpillarBlocks().get(butterflyIndex),
+                        butterflyIndex));
     }
 
     /**
@@ -531,17 +618,25 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerButterflyEgg(int butterflyIndex) {
-        return deferredRegister.register(ButterflyEggItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
+
+        String registryId = ButterflyEggItem.getRegistryId(butterflyIndex);
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId,
+                () -> new ButterflyEggItem(butterflyIndex, new Item.Properties().setId(key)));
     }
 
     /**
      * Registers an origami block item.
-     * @param id The ID of the item to register.
+     * @param registryId The Registry ID of the item.
+     * @param block The block this item is linked to.
      * @return A new registry object.
      */
-    private DeferredHolder<Item, Item> registerButterflyOrigami(String id, DeferredHolder<Block, Block> block) {
-        return deferredRegister.register(id, () -> new BlockItem(block.get(), new Item.Properties()));
+    private DeferredHolder<Item, Item> registerButterflyOrigami(String registryId,
+                                                                DeferredHolder<Block, Block> block) {
+        ResourceKey<Item> key = createResourceKey(registryId);
+        return deferredRegister.register(registryId,
+                () -> new BlockItem(block.get(), new Item.Properties().setId(key)));
     }
 
     /**
@@ -550,8 +645,17 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
-        return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(dataComponentRegistry, entityTypeRegistry, this, butterflyIndex));
+
+        String registryId = ButterflyScrollItem.getRegistryId(butterflyIndex);
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId,
+                () -> new ButterflyScrollItem(
+                        new Item.Properties().setId(key),
+                        dataComponentRegistry,
+                        entityTypeRegistry,
+                        this,
+                        butterflyIndex));
     }
 
     /**
@@ -560,10 +664,9 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
-        return deferredRegister.register(Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(
-                        entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
-                        new Item.Properties()));
+
+        String registryId = Butterfly.getRegistryId(butterflyIndex);
+        return registerSpawnEgg(registryId, entityTypeRegistry.getButterflies().get(butterflyIndex));
     }
 
     /**
@@ -572,8 +675,12 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerCaterpillar(int butterflyIndex) {
-        return deferredRegister.register(CaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
+
+        String registryId = CaterpillarItem.getRegistryId(butterflyIndex);
+        ResourceKey<Item> key = createResourceKey(registryId);
+
+        return deferredRegister.register(registryId,
+                () -> new CaterpillarItem(new Item.Properties().setId(key), Caterpillar.getRegistryId(butterflyIndex)));
     }
 
     /**
@@ -582,9 +689,54 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
-        return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(
-                        entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
-                        new Item.Properties()));
+
+        String registryId = Caterpillar.getRegistryId(butterflyIndex);
+        return registerSpawnEgg(registryId, entityTypeRegistry.getCaterpillars().get(butterflyIndex));
+    }
+
+    /**
+     * Register a basic item.
+     * @param registryId The Registry ID of the item.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerItem(String registryId) {
+        return registerItem(registryId, new Item.Properties());
+    }
+
+    /**
+     * Register a basic item.
+     * @param registryId The Registry ID of the item.
+     * @param properties The base properties of the item.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerItem(String registryId,
+                                                    Item.Properties properties) {
+
+        ResourceKey<Item> key = createResourceKey(registryId);
+        return deferredRegister.register(registryId, () -> new Item(properties.setId(key)));
+    }
+
+    /**
+     * Register a butterfly spawn egg.
+     * @param registryId The Registry ID of the item.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerSpawnEgg(String registryId,
+                                                        DeferredHolder<EntityType<?>, EntityType<? extends Mob>> entityType) {
+
+        ResourceKey<Item> key = createResourceKey(registryId);
+        return deferredRegister.register(registryId,
+                () -> new SpawnEggItem(entityType.get(), new Item.Properties().setId(key)));
+    }
+
+    /**
+     * Register the secret book.
+     * @return A new registry object.
+     */
+    private DeferredHolder<Item, Item> registerZhuangZiBook() {
+        String registryId = ButterflyZhuangZiItem.NAME;
+        ResourceKey<Item> key = createResourceKey(registryId);
+        return deferredRegister.register(registryId,
+                () -> new ButterflyZhuangZiItem(new Item.Properties().stacksTo(1).setId(key)));
     }
 }

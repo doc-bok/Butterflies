@@ -35,7 +35,7 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     @SubscribeEvent
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
+    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
     private void onMobSpawn(FinalizeSpawnEvent event) {
 
         // Only affect Iron Golems.
@@ -45,7 +45,7 @@ public class MobSpawnEventListener {
             // 1 in 256 chance.
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
                 ServerLevelAccessor level = event.getLevel();
-                EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
+                EntityType<IronGolem> entityType = (EntityType<IronGolem>) entityTypeRegistry.getButterflyGolem().get();
 
                 if (EventHooks.canLivingConvert(ironGolem, entityType, (x) -> {})) {
                     IronGolem newMob = ironGolem.convertTo(

@@ -43,14 +43,16 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
 
     /**
      * Construction
+     * @param properties The item's properties.
      * @param dataComponentRegistry The data component registry.
      * @param block The block related to this item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public BottledButterflyItem(DataComponentRegistry dataComponentRegistry,
+    public BottledButterflyItem(Properties properties,
+                                DataComponentRegistry dataComponentRegistry,
                                 DeferredHolder<Block, Block> block,
                                 int butterflyIndex) {
-        super(block.get(), new Item.Properties().stacksTo(1));
+        super(block.get(), properties);
 
         this.butterflyIndex = butterflyIndex;
         this.dataComponentRegistry = dataComponentRegistry;

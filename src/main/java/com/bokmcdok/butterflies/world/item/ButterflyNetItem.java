@@ -53,12 +53,16 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     /**
      * Construction
+     * @param properties The item's properties.
+     * @param dataComponentRegistry The data component registry.
+     * @param itemRegistry The item registry.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(DataComponentRegistry dataComponentRegistry,
+    public ButterflyNetItem(Properties properties,
+                            DataComponentRegistry dataComponentRegistry,
                             ItemRegistry itemRegistry,
                             int butterflyIndex) {
-        super(new Item.Properties().stacksTo(1));
+        super(properties);
 
         this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;

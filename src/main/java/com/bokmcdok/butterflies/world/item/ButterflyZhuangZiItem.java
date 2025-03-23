@@ -12,15 +12,16 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
-public class ButterflyZhuangziItem extends Item {
+public class ButterflyZhuangZiItem extends Item {
 
     public static final String NAME = "butterfly_zhuangzi";
 
     /**
      * Construction
+     * @param properties The item's properties.
      */
-    public ButterflyZhuangziItem() {
-        super(new Properties().stacksTo(1));
+    public ButterflyZhuangZiItem(Properties properties) {
+        super(properties);
     }
 
     /**

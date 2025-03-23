@@ -91,9 +91,12 @@ public class ButterflyBookItem extends Item {
 
     /**
      * Construction
+     * @param properties The item's properties.
+     * @param dataComponentRegistry The data component registry.
      */
-    public ButterflyBookItem(DataComponentRegistry dataComponentRegistry) {
-        super(new Item.Properties().stacksTo(1));
+    public ButterflyBookItem(Properties properties,
+                             DataComponentRegistry dataComponentRegistry) {
+        super(properties);
         this.dataComponentRegistry = dataComponentRegistry;
     }
 

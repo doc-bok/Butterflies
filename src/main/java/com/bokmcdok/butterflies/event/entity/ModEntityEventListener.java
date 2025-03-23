@@ -50,11 +50,11 @@ public class ModEntityEventListener {
      */
     @SubscribeEvent
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getButterflies()) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getCaterpillars()) {
             event.put(i.get(), Caterpillar.createAttributes().build());
         }
 
@@ -75,7 +75,7 @@ public class ModEntityEventListener {
      */
     @SubscribeEvent
     private void onSpawnPlacementRegister(RegisterSpawnPlacementsEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getButterflies()) {
             event.register(i.get(),
                     SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -83,7 +83,7 @@ public class ModEntityEventListener {
                     RegisterSpawnPlacementsEvent.Operation.AND);
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getCaterpillars()) {
             event.register(i.get(),
                     SpawnPlacementTypes.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,

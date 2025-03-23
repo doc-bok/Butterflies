@@ -39,10 +39,12 @@ public class CaterpillarItem extends Item {
 
     /**
      * Construction
+     * @param properties The item's properties.
      * @param species The species of the caterpillar
      */
-    public CaterpillarItem(String species) {
-        super(new Item.Properties());
+    public CaterpillarItem(Properties properties,
+                           String species) {
+        super(properties);
 
         this.species = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, species);
     }

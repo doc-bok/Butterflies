@@ -97,7 +97,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     @SuppressWarnings("unused")
     public static boolean checkButterflySpawnRules(
-            EntityType<? extends Butterfly> entityType,
+            EntityType<? extends Mob> entityType,
             ServerLevelAccessor level,
             EntitySpawnReason spawnType,
             BlockPos position,

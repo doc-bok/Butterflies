@@ -12,6 +12,8 @@ import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
@@ -64,24 +66,25 @@ public class ClientEventListener {
      * @param event The event information
      */
     @SubscribeEvent
+    @SuppressWarnings("unchecked")
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
         event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
 
-        for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getButterflies()) {
             if (i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "ice")) == 0 ||
                     i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "lava")) == 0 ||
                     i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "light")) == 0) {
-                event.registerEntityRenderer(i.get(), GlowButterflyRenderer::new);
+                event.registerEntityRenderer((EntityType<Butterfly>)i.get(), GlowButterflyRenderer::new);
             } else if (i.getId().compareTo(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "hummingbird")) == 0){
-                event.registerEntityRenderer(i.get(), HummingbirdMothRenderer::new);
+                event.registerEntityRenderer((EntityType<Butterfly>)i.get(), HummingbirdMothRenderer::new);
             } else {
-                event.registerEntityRenderer(i.get(), ButterflyRenderer::new);
+                event.registerEntityRenderer((EntityType<Butterfly>)i.get(), ButterflyRenderer::new);
             }
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
-            event.registerEntityRenderer(i.get(), CaterpillarRenderer::new);
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getCaterpillars()) {
+            event.registerEntityRenderer((EntityType<Caterpillar>)i.get(), CaterpillarRenderer::new);
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
@@ -92,7 +95,7 @@ public class ClientEventListener {
             event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
         }
 
-        event.registerEntityRenderer(entityTypeRegistry.getButterflyGolem().get(), ButterflyGolemRenderer::new);
+        event.registerEntityRenderer((EntityType<IronGolem>)entityTypeRegistry.getButterflyGolem().get(), ButterflyGolemRenderer::new);
 
         event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
     }

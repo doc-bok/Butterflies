@@ -44,12 +44,14 @@ public class BottledCaterpillarItem extends BlockItem {
 
     /**
      * Construction
+     * @param properties The item's properties.
      * @param block The block to place in the world.
      * @param butterflyIndex The butterfly index of the species.
      */
-    public BottledCaterpillarItem(DeferredHolder<Block, Block> block,
+    public BottledCaterpillarItem(Properties properties,
+                                  DeferredHolder<Block, Block> block,
                                   int butterflyIndex) {
-        super(block.get(), new Item.Properties().stacksTo(1));
+        super(block.get(), properties);
 
         this.butterflyIndex = butterflyIndex;
     }
