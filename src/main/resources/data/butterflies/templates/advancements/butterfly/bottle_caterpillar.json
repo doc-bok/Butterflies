@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/find_caterpillar",
   "display": {
     "icon": {
-      "item": "butterflies:bottled_caterpillar_swallowtail"
+      "id": "butterflies:bottled_caterpillar_swallowtail"
     },
     "title": {
       "translate": "advancements.butterfly.bottle_caterpillar.title"

@@ -477,7 +477,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "butterflies:bottled_butterfly_admiral"
+      "id": "butterflies:bottled_butterfly_admiral"
     },
     "show_toast": true,
     "title": {

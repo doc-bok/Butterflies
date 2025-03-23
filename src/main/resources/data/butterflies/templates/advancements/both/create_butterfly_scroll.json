@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/catch_butterfly",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_scroll_admiral"
+      "id": "butterflies:butterfly_scroll_admiral"
     },
     "title": {
       "translate": "advancements.butterfly.butterfly_scroll.title"

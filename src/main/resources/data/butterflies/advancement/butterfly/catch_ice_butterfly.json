@@ -21,7 +21,7 @@
     "frame": "goal",
     "hidden": true,
     "icon": {
-      "item": "butterflies:butterfly_scroll_ice"
+      "id": "butterflies:butterfly_scroll_ice"
     },
     "show_toast": true,
     "title": {

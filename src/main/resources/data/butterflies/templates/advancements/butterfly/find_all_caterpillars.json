@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/find_caterpillar",
   "display": {
     "icon": {
-      "item": "butterflies:caterpillar_forester"
+      "id": "butterflies:caterpillar_forester"
     },
     "title": {
       "translate": "advancements.butterfly.find_all_caterpillars.title"

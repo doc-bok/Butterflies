@@ -465,7 +465,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "butterflies:caterpillar_forester"
+      "id": "butterflies:caterpillar_forester"
     },
     "show_toast": true,
     "title": {

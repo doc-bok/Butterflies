@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/find_butterfly_egg",
   "display": {
     "icon": {
-      "item": "butterflies:swallowtail_egg"
+      "id": "butterflies:swallowtail_egg"
     },
     "title": {
       "translate": "advancements.butterfly.find_all_butterfly_eggs.title"

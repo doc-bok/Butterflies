@@ -177,7 +177,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:butterfly_net"
+      "id": "butterflies:butterfly_net"
     },
     "show_toast": true,
     "title": {

@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/catch_moth",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_net_clothes"
+      "id": "butterflies:butterfly_net_clothes"
     },
     "title": {
       "translate": "advancements.butterfly.catch_all_moths.title"

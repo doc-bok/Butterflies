@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/bottle_moth",
   "display": {
     "icon": {
-      "item": "butterflies:bottled_butterfly_clothes"
+      "id": "butterflies:bottled_butterfly_clothes"
     },
     "title": {
       "translate": "advancements.butterfly.bottle_all_moths.title"

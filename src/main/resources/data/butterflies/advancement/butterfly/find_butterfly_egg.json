@@ -465,7 +465,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:admiral_egg"
+      "id": "butterflies:admiral_egg"
     },
     "show_toast": true,
     "title": {

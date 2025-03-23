@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/root",
   "display": {
     "icon": {
-      "item": "butterflies:caterpillar_swallowtail"
+      "id": "butterflies:caterpillar_swallowtail"
     },
     "title": {
       "translate": "advancements.butterfly.find_caterpillar.title"

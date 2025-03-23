@@ -465,7 +465,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "butterflies:swallowtail_egg"
+      "id": "butterflies:swallowtail_egg"
     },
     "show_toast": true,
     "title": {

@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/bottle_caterpillar",
   "display": {
     "icon": {
-      "item": "butterflies:bottled_caterpillar_forester"
+      "id": "butterflies:bottled_caterpillar_forester"
     },
     "title": {
       "translate": "advancements.butterfly.bottle_all_caterpillars.title"

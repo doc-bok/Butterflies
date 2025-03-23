@@ -621,7 +621,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:butterfly_scroll_admiral"
+      "id": "butterflies:butterfly_scroll_admiral"
     },
     "show_toast": true,
     "title": {

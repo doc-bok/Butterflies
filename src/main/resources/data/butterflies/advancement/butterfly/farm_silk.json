@@ -21,7 +21,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:silk"
+      "id": "butterflies:silk"
     },
     "show_toast": true,
     "title": {

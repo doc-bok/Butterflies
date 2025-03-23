@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/find_larva",
   "display": {
     "icon": {
-      "item": "butterflies:bottled_caterpillar_clothes"
+      "id": "butterflies:bottled_caterpillar_clothes"
     },
     "title": {
       "translate": "advancements.butterfly.bottle_larva.title"
