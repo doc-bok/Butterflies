@@ -49,8 +49,8 @@ public class ButterflyScroll extends HangingEntity {
      * @param blockPos The position of the block it is being placed upon.
      * @param direction The direction the scroll is facing.
      */
-    public ButterflyScroll(EntityTypeRegistry entityTypeRegistry,
-                           ItemRegistry itemRegistry,
+    public ButterflyScroll(@NotNull EntityTypeRegistry entityTypeRegistry,
+                           @NotNull ItemRegistry itemRegistry,
                            Level level,
                            BlockPos blockPos,
                            Direction direction) {
@@ -68,8 +68,10 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void dropItem(@NotNull ServerLevel level,
                          @Nullable Entity entity) {
-        ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(getButterflyIndex()).get());
-        this.spawnAtLocation(level, stack);
+        if (itemRegistry != null) {
+            ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(getButterflyIndex()).get());
+            this.spawnAtLocation(level, stack);
+        }
     }
 
     /**

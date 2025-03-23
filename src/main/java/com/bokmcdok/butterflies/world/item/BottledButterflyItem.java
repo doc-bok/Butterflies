@@ -112,11 +112,11 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @Override
     @NotNull
     public InteractionResult use(@NotNull Level level,
-                                                  @NotNull Player player,
-                                                  @NotNull InteractionHand hand) {
+                                 @NotNull Player player,
+                                 @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(dataComponentRegistry,stack);
+        ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
         if (entity != null) {
 
             //  Move the target position slightly in front of the player
@@ -144,7 +144,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     public InteractionResult place(@NotNull BlockPlaceContext context) {
 
         InteractionResult result = super.place(context);
-        if (result == InteractionResult.CONSUME) {
+        if (result == InteractionResult.SUCCESS) {
 
             Player player = context.getPlayer();
             if (player != null) {

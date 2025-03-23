@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -111,13 +112,23 @@ public class BottledCaterpillarItem extends BlockItem {
     public InteractionResult place(@NotNull BlockPlaceContext context) {
 
         InteractionResult result = super.place(context);
-        if (result == InteractionResult.CONSUME) {
-            ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
-            if (data != null) {
-                Caterpillar.spawn((ServerLevel) context.getLevel(),
-                        data.getCaterpillarEntity(),
-                        context.getClickedPos(),
-                        Direction.DOWN, true);
+        if (result == InteractionResult.SUCCESS) {
+
+            Level level = context.getLevel();
+            if (level instanceof ServerLevel serverLevel) {
+
+                ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+                if (data != null) {
+                    ResourceLocation entity = data.getCaterpillarEntity();
+
+                    BlockPos position = context.getClickedPos();
+                    Caterpillar.spawn(
+                            serverLevel,
+                            entity,
+                            position,
+                            Direction.DOWN,
+                            true);
+                }
             }
         }
 

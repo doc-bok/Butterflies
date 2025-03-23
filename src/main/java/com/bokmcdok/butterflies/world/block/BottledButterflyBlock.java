@@ -77,7 +77,6 @@ public class BottledButterflyBlock extends Block {
      */
     @NotNull
     @Override
-    @SuppressWarnings("deprecation")
     public VoxelShape getShape(@NotNull BlockState blockState,
                                @NotNull BlockGetter blockGetter,
                                @NotNull BlockPos position,
@@ -92,7 +91,6 @@ public class BottledButterflyBlock extends Block {
      */
     @Override
     @NotNull
-    @SuppressWarnings("deprecation")
     public RenderShape getRenderShape(@NotNull BlockState blockState) {
         return RenderShape.MODEL;
     }
@@ -106,7 +104,6 @@ public class BottledButterflyBlock extends Block {
      * @param flag Unknown.
      */
     @Override
-    @SuppressWarnings("deprecation")
     public void onRemove(@NotNull BlockState oldBlockState,
                          @NotNull Level level,
                          @NotNull BlockPos position,
