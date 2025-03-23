@@ -1,5 +1,5 @@
 {
-  "biomes": "#c:is_dense",
+  "biomes": "#c:is_dense_vegetation",
   "spawners": [
     {
       "maxCount": 4,

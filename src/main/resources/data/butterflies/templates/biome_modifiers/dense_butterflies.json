@@ -1,5 +1,5 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#c:is_dense",
+  "biomes": "#c:is_dense_vegetation",
   "spawners": []
 }
