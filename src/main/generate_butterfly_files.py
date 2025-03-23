@@ -63,10 +63,17 @@ SPECIAL_FOLDER = "special/"
 # Initial index
 BUTTERFLY_INDEX = 0
 
+
+# Generates a list of butterflies in a folder.
 def generate_butterfly_list(folder):
-    print(f"Generating species list for folder [{BUTTERFLY_DATA + folder}]")
+    return generate_file_list(BUTTERFLY_DATA + folder)
+
+
+# Generates a list of files in a folder.
+def generate_file_list(folder):
+    print(f"Generating file list for folder [{folder}]")
     result = []
-    for (path, _, filenames) in os.walk(BUTTERFLY_DATA + folder):
+    for (path, _, filenames) in os.walk(folder):
         result = [f.replace(".json", "") for f in filenames if f.endswith(".json")]
         break
 
@@ -446,6 +453,20 @@ def addSingleSpawn(tag, species, weight, maximum, is_male):
                                      indent=2))
 
 
+# Use to generate missing item models.
+def generate_item_models():
+    files = generate_file_list("resources/assets/butterflies/models/items/")
+    for file in files:
+        with open("resources/assets/butterflies/items/" + file + ".json", 'w+', encoding="utf8") as output_file:
+            output_file.write("""{
+  "model": {
+    "model": "butterflies:item/""" + file + """",
+    "type": "minecraft:model"
+  }
+}
+""")
+
+
 # Python's main entry point
 if __name__ == "__main__":
     # Get the species lists
@@ -489,3 +510,4 @@ if __name__ == "__main__":
     generate_biome_modifiers(moths, MOTHS_FOLDER, False)
     generate_biome_modifiers(male_moths, MALE_MOTHS_FOLDER, True)
     generate_biome_modifiers(special, SPECIAL_FOLDER, False)
+

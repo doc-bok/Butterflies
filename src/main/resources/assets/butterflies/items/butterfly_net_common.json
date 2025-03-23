@@ -1,0 +1,6 @@
+{
+  "model": {
+    "model": "butterflies:item/butterfly_net_common",
+    "type": "minecraft:model"
+  }
+}
