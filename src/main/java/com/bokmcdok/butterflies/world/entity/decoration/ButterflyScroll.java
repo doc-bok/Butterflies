@@ -2,11 +2,8 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,9 +23,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyScroll extends HangingEntity {
 
-    private static final EntityDataAccessor<Integer> BUTTERFLY_INDEX = SynchedEntityData.defineId(
-            ButterflyScroll.class, EntityDataSerializers.INT
-    );
+    private static final EntityDataAccessor<Integer> BUTTERFLY_INDEX;
+    private static final EntityDataAccessor<Direction> DATA_DIRECTION;
 
     // Reference to the item registry.
     private ItemRegistry itemRegistry;
@@ -63,17 +59,6 @@ public class ButterflyScroll extends HangingEntity {
         this.itemRegistry = itemRegistry;
         this.pos = blockPos;
         this.setDirection(direction);
-    }
-
-    /**
-     * Add extra data for this entity to a save.
-     * @param tag The tag with the entity's save data.
-     */
-    @Override
-    public void addAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putByte("Facing", (byte)this.direction.get3DDataValue());
-        tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, getButterflyIndex());
     }
 
     /**
@@ -122,20 +107,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
         builder.define(BUTTERFLY_INDEX, 0);
-    }
-
-    /**
-     * Read the entity's data from a save.
-     * @param tag The tag loaded from the save data.
-     */
-    @Override
-    public void readAdditionalSaveData(@NotNull CompoundTag tag) {
-        super.readAdditionalSaveData(tag);
-        this.setDirection(Direction.from3DDataValue(tag.getByte("Facing")));
-
-        if (tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-            this.setButterflyIndex(tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA));
-        }
+        builder.define(DATA_DIRECTION, Direction.NORTH);
     }
 
     /**
@@ -147,49 +119,31 @@ public class ButterflyScroll extends HangingEntity {
     protected AABB calculateBoundingBox(@NotNull BlockPos pos,
                                         @NotNull Direction direction) {
 
-        //  Direction can actually be null here.
-        if (this.direction != null) {
+        direction = getDirection();
 
-            double x = (double) this.pos.getX() + 0.5D - (double) this.direction.getStepX() * 0.46875D;
-            double y = (double) this.pos.getY() + 0.5D - (double) this.direction.getStepY() * 0.46875D;
-            double z = (double) this.pos.getZ() + 0.5D - (double) this.direction.getStepZ() * 0.46875D;
-            this.setPosRaw(x, y, z);
+        double x = (double) this.pos.getX() + 0.5D - (double) direction.getStepX() * 0.46875D;
+        double y = (double) this.pos.getY() + 0.5D - (double) direction.getStepY() * 0.46875D;
+        double z = (double) this.pos.getZ() + 0.5D - (double) direction.getStepZ() * 0.46875D;
+        this.setPosRaw(x, y, z);
 
-            double width = this.getWidth();
-            double height = this.getHeight();
-            double breadth = this.getWidth();
+        double width = this.getWidth();
+        double height = this.getHeight();
+        double breadth = this.getWidth();
 
-            Direction.Axis axis = this.direction.getAxis();
-            switch (axis) {
-                case X -> width = 1.0D;
-                case Y -> height = 1.0D;
-                case Z -> breadth = 1.0D;
-                default -> {
-                }
+        Direction.Axis axis = direction.getAxis();
+        switch (axis) {
+            case X -> width = 1.0D;
+            case Y -> height = 1.0D;
+            case Z -> breadth = 1.0D;
+            default -> {
             }
-
-            width /= 32.0D;
-            height /= 32.0D;
-            breadth /= 32.0D;
-
-            return new AABB(x - width, y - height, z - breadth, x + width, y + height, z + breadth);
         }
 
-        return null;
-    }
+        width /= 32.0D;
+        height /= 32.0D;
+        breadth /= 32.0D;
 
-    /**
-     * Recreate the entity from a received packet.
-     * @param packet The packet sent from the server.
-     */
-    @Override
-    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
-        super.recreateFromPacket(packet);
-
-        int data = packet.getData();
-        int direction = ((data >> 16) & 0xFFFF);
-        this.setButterflyIndex(data & 0xFFFF);
-        this.setDirection(Direction.from3DDataValue(direction));
+        return new AABB(x - width, y - height, z - breadth, x + width, y + height, z + breadth);
     }
 
     /**
@@ -200,12 +154,19 @@ public class ButterflyScroll extends HangingEntity {
         this.entityData.set(BUTTERFLY_INDEX, index);
     }
 
+    @Override
+    @NotNull
+    public Direction getDirection() {
+        return this.getEntityData().get(DATA_DIRECTION);
+    }
+
     /**
      * Set the direction and rotate the entity, so it faces the correct way.
      * @param direction The direction the entity is facing.
      */
     @Override
     protected void setDirection(@NotNull Direction direction) {
+        this.getEntityData().set(DATA_DIRECTION, direction);
         this.direction = direction;
 
         this.setXRot(0.0F);
@@ -224,5 +185,10 @@ public class ButterflyScroll extends HangingEntity {
      */
     private ButterflyScroll(EntityType<? extends ButterflyScroll> entityType, Level level) {
         super(entityType, level);
+    }
+
+    static {
+        BUTTERFLY_INDEX = SynchedEntityData.defineId(ButterflyScroll.class, EntityDataSerializers.INT);
+        DATA_DIRECTION = SynchedEntityData.defineId(ButterflyScroll.class, EntityDataSerializers.DIRECTION);
     }
 }
