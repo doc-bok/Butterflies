@@ -49,7 +49,6 @@ public class ButterflyBookItem extends Item {
 
         List<Integer> newPages = newBook.getOrDefault(dataComponentRegistry.getButterflyBookPages(), new ArrayList<>());
 
-
         if (!newPages.contains(index)) {
             newPages.add(index);
             result = true;

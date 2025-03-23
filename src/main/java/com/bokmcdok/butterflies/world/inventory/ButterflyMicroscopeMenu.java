@@ -5,8 +5,6 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyMicroscopeBlock;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +12,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
@@ -33,16 +34,13 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     private final ItemRegistry itemRegistry;
 
     // The crafting slot container.
-    private final CraftingContainer craftSlots;
+    private final CraftingContainer craftingContainer;
 
     // The result slot container.
-    private final ResultContainer resultSlots;
+    private final ResultContainer resultContainer;
 
     // The container the menu is interfacing with.
     private final ContainerLevelAccess containerLevelAccess;
-
-    // The player.
-    private final Player player;
 
     /**
      * Client constructor.
@@ -74,16 +72,13 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
         this.dataComponentRegistry = dataComponentRegistry;
         this.itemRegistry = itemRegistry;
 
-        this.player = playerInventory.player;
-
-        this.craftSlots = new TransientCraftingContainer(this, 2, 1);
-        this.resultSlots = new ResultContainer();
+        this.craftingContainer = new TransientCraftingContainer(this, 2, 1);
+        this.resultContainer = new ResultContainer();
         this.containerLevelAccess = container;
 
-        // TODO: Update positions.
-        this.addSlot(new ButterflyBookResultSlot(this.craftSlots, this.resultSlots, 0, 204, 17));
-        this.addSlot(new ButterflyBookSlot(craftSlots, 0, 132, 17));
-        this.addSlot(new ButterflyScrollSlot(craftSlots, 1, 150, 17));
+        this.addSlot(new ButterflyBookResultSlot(this.craftingContainer, this.resultContainer, 0, 204, 17));
+        this.addSlot(new ButterflyBookSlot(craftingContainer, 0, 132, 17));
+        this.addSlot(new ButterflyScrollSlot(craftingContainer, 1, 150, 17));
 
         for(int i = 0; i < 3; ++i) {
             for(int j = 0; j < 9; ++j) {
@@ -102,7 +97,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
      * @return The butterfly index.
      */
     public int getButterflyScrollIndex() {
-        ItemStack scroll = this.craftSlots.getItem(1);
+        ItemStack scroll = this.craftingContainer.getItem(1);
         if (scroll != ItemStack.EMPTY) {
             if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
                 return scrollItem.getButterflyIndex();
@@ -177,7 +172,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     public void removed(@NotNull Player player) {
         super.removed(player);
         this.containerLevelAccess.execute((level, blockPos) ->
-                this.clearContainer(player, this.craftSlots));
+                this.clearContainer(player, this.craftingContainer));
     }
 
     /**
@@ -187,7 +182,7 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     @Override
     public void slotsChanged(@NotNull Container container) {
         this.containerLevelAccess.execute((level, blockPos) ->
-                onCraftingGridSlotChanged(this, level, this.player, this.craftSlots, this.resultSlots));
+                onCraftingGridSlotChanged(level, this.craftingContainer, this.resultContainer));
     }
 
     /**
@@ -207,21 +202,15 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
     /**
      * Update the resulting book if there is a valid recipe.
-     * @param menu The menu.
      * @param level The current level.
-     * @param player The player interacting with the menu.
      * @param craftingContainer The crafting slots.
      * @param resultContainer The result slots.
      */
-    private void onCraftingGridSlotChanged(AbstractContainerMenu menu,
-                                           Level level,
-                                           Player player,
+    private void onCraftingGridSlotChanged(Level level,
                                            CraftingContainer craftingContainer,
                                            ResultContainer resultContainer) {
         if (!level.isClientSide) {
-            ServerPlayer serverPlayer = (ServerPlayer)player;
             ItemStack result = ItemStack.EMPTY;
-
             ItemStack book = craftingContainer.getItem(0);
 
             // Get a new book, if any.
@@ -229,10 +218,14 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
                 ItemStack scroll = craftingContainer.getItem(1);
                 if (scroll != ItemStack.EMPTY) {
                     if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
+                        result = new ItemStack(itemRegistry.getButterflyBook().get());
+
                         if (book.is(itemRegistry.getButterflyBook().get())) {
-                            result = book.copy();
-                        } else {
-                            result = new ItemStack(itemRegistry.getButterflyBook().get());
+                            List<Integer> pages = book.get(dataComponentRegistry.getButterflyBookPages());
+                            if (pages != null) {
+                                result.set(dataComponentRegistry.getButterflyBookPages(),
+                                        new ArrayList<>(pages));
+                            }
                         }
 
                         if (!ButterflyBookItem.addPage(dataComponentRegistry, result, scrollItem.getButterflyIndex())) {
@@ -243,8 +236,6 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
             }
 
             resultContainer.setItem(0, result);
-            menu.setRemoteSlot(0, result);
-            serverPlayer.connection.send(new ClientboundContainerSetSlotPacket(menu.containerId, menu.incrementStateId(), 0, result));
         }
     }
 }
