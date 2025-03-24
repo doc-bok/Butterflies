@@ -1,0 +1,12 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    "butterflies:bottled_butterfly_luna",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_luna"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

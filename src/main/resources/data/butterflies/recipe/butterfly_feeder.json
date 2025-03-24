@@ -6,15 +6,9 @@
     "b b"
   ],
   "key": {
-    "i": {
-      "item": "minecraft:iron_ingot"
-    },
-    "b": {
-      "item": "minecraft:bamboo"
-    },
-    "s": {
-      "item": "minecraft:string"
-    }
+    "i": "minecraft:iron_ingot",
+    "b": "minecraft:bamboo",
+    "s": "minecraft:string"
   },
   "result": {
     "id": "butterflies:butterfly_feeder"

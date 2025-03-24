@@ -6,9 +6,7 @@
     "sss"
   ],
   "key": {
-    "s": {
-      "item": "butterflies:silk"
-    }
+    "s": "butterflies:silk"
   },
   "result": {
     "id": "minecraft:paper"

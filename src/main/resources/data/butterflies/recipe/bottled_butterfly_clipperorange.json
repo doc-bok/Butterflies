@@ -1,12 +1,8 @@
 {
   "group": "bottled_butterfly",
   "ingredients": [
-    {
-      "item": "butterflies:butterfly_net_clipperorange"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "butterflies:butterfly_net_clipperorange",
+    "minecraft:glass_bottle"
   ],
   "result": {
     "id": "butterflies:bottled_butterfly_clipperorange"

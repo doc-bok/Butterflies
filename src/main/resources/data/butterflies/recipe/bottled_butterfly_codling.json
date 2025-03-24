@@ -1,12 +1,8 @@
 {
   "group": "bottled_butterfly",
   "ingredients": [
-    {
-      "item": "butterflies:butterfly_net_codling"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "butterflies:butterfly_net_codling",
+    "minecraft:glass_bottle"
   ],
   "result": {
     "id": "butterflies:bottled_butterfly_codling"

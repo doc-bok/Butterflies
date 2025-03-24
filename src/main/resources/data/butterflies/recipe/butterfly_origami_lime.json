@@ -1,12 +1,8 @@
 {
   "group": "butterfly_origami",
   "ingredients": [
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:lime_dye"
-    }
+    "minecraft:paper",
+    "minecraft:lime_dye"
   ],
   "result": {
     "id": "butterflies:butterfly_origami_lime"

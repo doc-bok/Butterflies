@@ -6,15 +6,9 @@
     " - "
   ],
   "key": {
-    "i": {
-      "item": "minecraft:spyglass"
-    },
-    "/": {
-      "item": "minecraft:stick"
-    },
-    "-": {
-      "item": "minecraft:stone_slab"
-    }
+    "i": "minecraft:spyglass",
+    "/": "minecraft:stick",
+    "-": "minecraft:stone_slab"
   },
   "result": {
     "id": "butterflies:butterfly_microscope"

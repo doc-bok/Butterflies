@@ -1,12 +1,8 @@
 {
   "group": "bottled_caterpillar",
   "ingredients": [
-    {
-      "item": "butterflies:caterpillar_bluemoonmale"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "butterflies:caterpillar_bluemoonmale",
+    "minecraft:glass_bottle"
   ],
   "result": {
     "id": "butterflies:bottled_caterpillar_bluemoonmale"

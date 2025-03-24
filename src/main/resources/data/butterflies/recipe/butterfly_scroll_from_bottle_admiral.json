@@ -1,15 +1,9 @@
 {
   "group": "butterfly_scroll",
   "ingredients": [
-    {
-      "item": "butterflies:bottled_butterfly_admiral"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    }
+    "butterflies:bottled_butterfly_admiral",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
   ],
   "result": {
     "id": "butterflies:butterfly_scroll_admiral"

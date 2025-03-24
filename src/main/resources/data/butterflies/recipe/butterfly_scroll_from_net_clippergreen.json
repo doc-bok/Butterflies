@@ -1,15 +1,9 @@
 {
   "group": "butterfly_scroll",
   "ingredients": [
-    {
-      "item": "butterflies:butterfly_net_clippergreen"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    }
+    "butterflies:butterfly_net_clippergreen",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
   ],
   "result": {
     "id": "butterflies:butterfly_scroll_clippergreen"

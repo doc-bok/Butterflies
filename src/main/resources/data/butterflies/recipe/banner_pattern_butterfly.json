@@ -6,12 +6,8 @@
     " s "
   ],
   "key": {
-    "s": {
-      "item": "butterflies:silk"
-    },
-    "p": {
-      "item": "minecraft:paper"
-    }
+    "s": "butterflies:silk",
+    "p": "minecraft:paper"
   },
   "result": {
     "id": "butterflies:banner_pattern_butterfly"

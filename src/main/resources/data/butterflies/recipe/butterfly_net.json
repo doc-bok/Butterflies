@@ -6,12 +6,8 @@
     "/ss"
   ],
   "key": {
-    "/": {
-      "item": "minecraft:stick"
-    },
-    "s": {
-      "item": "minecraft:string"
-    }
+    "/": "minecraft:stick",
+    "s": "minecraft:string"
   },
   "result": {
     "id": "butterflies:butterfly_net"

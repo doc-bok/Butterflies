@@ -1,8 +1,6 @@
 {
   "ingredients": [
-    {
-      "item": "butterflies:infested_apple"
-    }
+    "butterflies:infested_apple"
   ],
   "result": {
     "id": "butterflies:caterpillar_codling"

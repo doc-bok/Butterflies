@@ -1,12 +1,8 @@
 {
   "group": "bottled_caterpillar",
   "ingredients": [
-    {
-      "item": "butterflies:caterpillar_clipperlime"
-    },
-    {
-      "item": "minecraft:glass_bottle"
-    }
+    "butterflies:caterpillar_clipperlime",
+    "minecraft:glass_bottle"
   ],
   "result": {
     "id": "butterflies:bottled_caterpillar_clipperlime"

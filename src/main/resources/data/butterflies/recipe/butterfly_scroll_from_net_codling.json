@@ -1,0 +1,12 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    "butterflies:butterfly_net_codling",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_codling"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

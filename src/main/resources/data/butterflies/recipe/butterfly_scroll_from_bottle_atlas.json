@@ -1,0 +1,12 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    "butterflies:bottled_butterfly_atlas",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_atlas"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

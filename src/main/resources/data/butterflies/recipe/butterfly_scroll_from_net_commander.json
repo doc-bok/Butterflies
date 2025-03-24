@@ -1,15 +1,9 @@
 {
   "group": "butterfly_scroll",
   "ingredients": [
-    {
-      "item": "butterflies:butterfly_net_commander"
-    },
-    {
-      "item": "minecraft:paper"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    }
+    "butterflies:butterfly_net_commander",
+    "minecraft:paper",
+    "minecraft:iron_nugget"
   ],
   "result": {
     "id": "butterflies:butterfly_scroll_commander"
