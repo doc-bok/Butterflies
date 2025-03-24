@@ -23,29 +23,8 @@
           {
             "items": "butterflies:butterfly_book",
             "components": {
-              "minecraft:custom_model_data": {
-                "flags": [
-                  false,
-                  true
-                ]
-              }
-            }
-          }
-        ]
-      }
-    },
-    "filled_book_all": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": "butterflies:butterfly_book",
-            "components": {
-              "minecraft:custom_model_data": {
-                "flags": [
-                  true,
-                  true
-                ]
+              "minecraft:custom_data": {
+                "filled_moth": true
               }
             }
           }
@@ -55,8 +34,7 @@
   },
   "requirements": [
     [
-      "filled_book_moth",
-      "filled_book_all"
+      "filled_book_moth"
     ]
   ],
   "rewards": {

@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
@@ -70,20 +72,17 @@ public class ButterflyBookItem extends Item {
 
         newBook.set(dataComponentRegistry.getButterflyBookPages(), newPages);
 
-        List<Boolean> customModelFlags = Arrays.asList(false, false);
         if (numButterflies >= ButterflyData.getNumButterflySpecies()) {
-            customModelFlags.set(0, true);
+            CompoundTag filledButterfly = new CompoundTag();
+            filledButterfly.putBoolean("filled_butterfly", true);
+            newBook.set(DataComponents.CUSTOM_DATA, CustomData.of(filledButterfly));
         }
 
         if (numMoths >= ButterflyData.getNumMothSpecies()) {
-            customModelFlags.set(1, true);
+            CompoundTag filledMoth = new CompoundTag();
+            filledMoth.putBoolean("filled_moth", true);
+            newBook.set(DataComponents.CUSTOM_DATA, CustomData.of(filledMoth));
         }
-
-        newBook.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(
-                Collections.emptyList(),
-                customModelFlags,
-                Collections.emptyList(),
-                Collections.emptyList()));
 
         return result;
     }

@@ -23,10 +23,8 @@
           {
             "items": "butterflies:butterfly_book",
             "components": {
-              "minecraft:custom_model_data": {
-                "flags": [
-                  true
-                ]
+              "minecraft:custom_data": {
+                "filled_butterfly": true
               }
             }
           }

@@ -41,7 +41,7 @@ public class ForgeEventListener {
             addToPool(event.getLookupProvider(),
                     ResourceLocation.withDefaultNamespace("village/plains/houses"),
                     ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/plains/houses/plains_butterfly_house_1"),
-                    4);
+                    6);
 
             // Savanna
             addToPool(event.getLookupProvider(),
