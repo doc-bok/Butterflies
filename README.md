@@ -118,6 +118,7 @@ cause them to spread (default: `true`)
 **debug_info** If set to TRUE debug information will be rendered (default: `false`)
 
 ## Latest Release
+- [NeoForge 1.21.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.21.4.jar)
 - [NeoForge 1.21.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.21.1.jar)
 - [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.20.4.jar)
 - [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.20.2.jar)
