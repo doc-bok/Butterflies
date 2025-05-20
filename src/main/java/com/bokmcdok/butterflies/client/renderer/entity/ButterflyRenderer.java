@@ -83,7 +83,7 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
      */
     @Override
     protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
-        float s = entity.getScale();
+        float s = entity.getRenderScale();
         poses.scale(s, s, s);
     }
 }
