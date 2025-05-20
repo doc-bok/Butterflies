@@ -210,7 +210,7 @@ public class EntityTypeRegistry {
         // Lava Moth
         if (registryId.equals("lava")) {
             return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(this::createLavaMoth, MobCategory.BUTTERFLY)
+                    () -> EntityType.Builder.of(this::createLavaMoth, ButterflyMobCategory.BUTTERFLY)
                             .sized(width, height)
                             .clientTrackingRange(10)
                             .build(Butterfly.getRegistryId(butterflyIndex)));
