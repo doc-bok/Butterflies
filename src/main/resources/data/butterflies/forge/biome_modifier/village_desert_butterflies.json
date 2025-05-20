@@ -5,73 +5,73 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:case-bearing-clothes",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:case-bearing-clothes_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:case-bearing-clothes_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:case-bearing-clothes_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:clothes",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:clothes_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:clothes_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:clothes_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:domestic_silk",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:domestic_silk_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:domestic_silk_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:domestic_silk_egg",
-      "weight": 12
+      "weight": 100
     }
   ],
   "type": "forge:add_spawns"
