@@ -5,25 +5,25 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:buckeye",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:buckeye_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:buckeye_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:buckeye_egg",
-      "weight": 12
+      "weight": 100
     }
   ],
   "type": "forge:add_spawns"
