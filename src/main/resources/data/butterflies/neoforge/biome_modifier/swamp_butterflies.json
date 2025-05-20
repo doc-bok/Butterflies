@@ -5,145 +5,145 @@
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:admiral",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:admiral_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:admiral_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:admiral_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:cabbage",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:cabbage_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:cabbage_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:cabbage_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:forester",
-      "weight": 4
+      "weight": 20
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:forester_caterpillar",
-      "weight": 4
+      "weight": 20
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:forester_chrysalis",
-      "weight": 4
+      "weight": 20
     },
     {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:forester_egg",
-      "weight": 4
+      "weight": 20
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:hairstreak",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:hairstreak_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:hairstreak_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:hairstreak_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:longwing",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:longwing_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:longwing_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:longwing_egg",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:carpet",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:carpet_caterpillar",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:carpet_chrysalis",
-      "weight": 12
+      "weight": 100
     },
     {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:carpet_egg",
-      "weight": 12
+      "weight": 100
     }
   ],
   "type": "neoforge:add_spawns"

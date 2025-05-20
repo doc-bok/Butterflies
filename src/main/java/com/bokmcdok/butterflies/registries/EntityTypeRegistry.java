@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.entity.ButterflyMobCategory;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -218,7 +219,7 @@ public class EntityTypeRegistry {
         // Ice Butterfly
         if (registryId.equals("ice")) {
             return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(this::createIceButterfly, MobCategory.CREATURE)
+                    () -> EntityType.Builder.of(this::createIceButterfly, ButterflyMobCategory.BUTTERFLY)
                             .sized(width, height)
                             .clientTrackingRange(10)
                             .build(key));
@@ -227,14 +228,14 @@ public class EntityTypeRegistry {
         // Lava Moth
         if (registryId.equals("lava")) {
             return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(this::createLavaMoth, MobCategory.CREATURE)
+                    () -> EntityType.Builder.of(this::createLavaMoth, ButterflyMobCategory.BUTTERFLY)
                             .sized(width, height)
                             .clientTrackingRange(10)
                             .build(key));
         }
 
         return this.deferredRegister.register(registryId,
-                () -> EntityType.Builder.of(this::createButterfly, MobCategory.CREATURE)
+                () -> EntityType.Builder.of(this::createButterfly, ButterflyMobCategory.BUTTERFLY)
                         .sized(width, height)
                         .clientTrackingRange(10)
                         .build(key));
@@ -246,7 +247,6 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerCaterpillar(int butterflyIndex) {
-        float sized = 0.1f;
 
         // Create the resource key.
         ResourceKey<EntityType<?>> key = ResourceKey.create(
@@ -256,8 +256,8 @@ public class EntityTypeRegistry {
                         Caterpillar.getRegistryId(butterflyIndex)));
 
         return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Caterpillar::new, MobCategory.CREATURE)
-                .sized(sized, sized)
+                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
+                .sized(0.1f, 0.1f)
                 .build(key));
     }
 
@@ -267,7 +267,6 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        float sized = 0.1f;
 
         // Create the resource key.
         ResourceKey<EntityType<?>> key = ResourceKey.create(
@@ -277,8 +276,8 @@ public class EntityTypeRegistry {
                         Chrysalis.getRegistryId(butterflyIndex)));
 
         return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Chrysalis::new, MobCategory.CREATURE)
-                        .sized(sized, sized)
+                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
+                        .sized(0.1f, 0.1f)
                 .build(key));
     }
 
@@ -288,7 +287,6 @@ public class EntityTypeRegistry {
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
-        float sized = 0.1f;
 
         // Create the resource key.
         ResourceKey<EntityType<?>> key = ResourceKey.create(
@@ -298,8 +296,8 @@ public class EntityTypeRegistry {
                         ButterflyEgg.getRegistryId(butterflyIndex)));
 
         return this.deferredRegister.register(ButterflyEgg.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(ButterflyEgg::new, MobCategory.CREATURE)
-                        .sized(sized, sized)
+                () -> EntityType.Builder.of(ButterflyEgg::new, ButterflyMobCategory.BUTTERFLY)
+                        .sized(0.1f, 0.1f)
                         .build(key));
     }
 
