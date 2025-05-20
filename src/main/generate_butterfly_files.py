@@ -348,15 +348,15 @@ def addSpawns(folder, species, is_male):
 
     # Generate weights/min/max
     if (rarity == "common"):
-        weight = 4
+        weight = 100
         maximum = 4
 
     elif (rarity == "uncommon"):
-        weight = 2
+        weight = 50
         maximum = 3
 
     else:
-        weight = 1
+        weight = 20
         maximum = 2
 
     # Open relevant files and add butterfly spawns

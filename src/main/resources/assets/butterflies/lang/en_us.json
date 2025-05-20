@@ -594,10 +594,10 @@
   "item.butterflies.swallowtail_caterpillar": "Swallowtail Caterpillar",
   "item.butterflies.swallowtail_egg": "Swallowtail Butterfly Egg",
   "tooltip.butterflies.butterfly_net": "Swing (left-click) at a butterfly to catch it",
+  "tooltip.butterflies.pages": "%s pages",
   "tooltip.butterflies.place_caterpillar": "Right-click on leaves to place the caterpillar",
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
-  "tooltip.butterflies.pages": "%s pages"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
 }
