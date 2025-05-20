@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.5 (2025-05-20)
+- Moved butterflies to their own spawn pool.
+
 ### 6.1.4 (2025-03-17)
 - Fixed scale methods accidentally overriding base entity behaviour.
 
