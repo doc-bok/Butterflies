@@ -2,7 +2,7 @@
   "entries": [
     {
       "enum": "net/minecraft/world/entity/MobCategory",
-      "name": "BUTTERFLY_SPAWNS",
+      "name": "BUTTERFLIES_BUTTERFLY_SPAWNS",
       "constructor": "(Ljava/lang/String;IZZI)V",
       "parameters": [ "butterflies:butterfly_spawns", 70, true, true, 128 ]
     }

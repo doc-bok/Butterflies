@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.6 (2025-05-22)
+- Fixed enum extensions for new spawn category.
+
 ### 6.1.5 (2025-05-20)
 - Moved butterflies to their own spawn pool.
 
