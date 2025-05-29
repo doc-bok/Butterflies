@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.village;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.VillagerProfessionRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflySpeciesList;
 import com.bokmcdok.butterflies.world.entity.npc.BuyingItemTrade;
 import com.bokmcdok.butterflies.world.entity.npc.SellingItemTrade;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -49,8 +50,6 @@ public class VillageEventListener {
         if (event.getType() == villagerProfessionRegistry.getLepidopterist().get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
-            Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataList();
-
             List<VillagerTrades.ItemListing> tradesLevel1 = trades.get(1);
             List<VillagerTrades.ItemListing> tradesLevel2 = trades.get(2);
             List<VillagerTrades.ItemListing> tradesLevel3 = trades.get(3);
@@ -68,10 +67,9 @@ public class VillageEventListener {
             List<DeferredHolder<Item, Item>> butterflyScrolls = itemRegistry.getButterflyScrolls();
             List<DeferredHolder<Item, Item>> caterpillars = itemRegistry.getCaterpillars();
 
-            for (ButterflyData butterfly : butterflies) {
-                if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
-                    int i = butterfly.butterflyIndex();
-                    switch (butterfly.rarity()) {
+            for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                if (ButterflySpeciesList.TYPES[i] != ButterflyData.ButterflyType.SPECIAL) {
+                    switch (ButterflySpeciesList.RARITIES[i]) {
                         case COMMON:
                             tradesLevel1.add(new BuyingItemTrade(butterflyEggs.get(i).get(), 15, 16, 2));
                             tradesLevel1.add(new SellingItemTrade(butterflyEggs.get(i).get(), 6, 1, 1));

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.8 (2025-05-29)
+- Fixed villager trades not having correct data.
+
 ### 6.1.7 (2025-05-29)
 - Fixed translation strings for butterfly origami.
 
