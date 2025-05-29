@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.7 (2025-05-29)
+- Fixed translation strings for butterfly origami.
+
 ### 6.1.6 (2025-05-22)
 - Fixed enum extensions for new spawn category.
 
