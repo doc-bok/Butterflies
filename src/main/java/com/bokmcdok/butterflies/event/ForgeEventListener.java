@@ -40,19 +40,19 @@ public class ForgeEventListener {
             addToPool(event.getRegistryAccess(),
                     new ResourceLocation("village/plains/houses"),
                     new ResourceLocation("butterflies", "village/plains/houses/plains_butterfly_house_1"),
-                    3);
+                    6);
 
             // Savanna
             addToPool(event.getRegistryAccess(),
                     new ResourceLocation("village/savanna/houses"),
                     new ResourceLocation("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
-                    2);
+                    4);
 
             // Taiga
             addToPool(event.getRegistryAccess(),
                     new ResourceLocation("village/taiga/houses"),
                     new ResourceLocation("butterflies", "village/taiga/houses/taiga_butterfly_house_1"),
-                    2);
+                    4);
         }
     }
 
