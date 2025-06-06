@@ -271,13 +271,80 @@ def generate_code(all):
 
 /**
  * Generated code - do not modify
+ * Provides data that needs to be accessed before butterfly data files areAdd commentMore actions
+ * loaded.
  */
 public class ButterflySpeciesList {
+
+    // A list of all the species in the mod.
     public static final String[] SPECIES = {
 """)
 
         for butterfly in all:
             output_file.write("""            \"""" + butterfly + """\",
+""")
+
+        output_file.write("""    };
+""")
+
+        output_file.write("""
+    // A list of types of  butterflies.
+    public static final ButterflyData.ButterflyType[] TYPES = {
+""")
+
+        for butterfly in all:
+            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            type = None
+            i = 0
+
+            while type is None and i < len(folders):
+                folder = folders[i]
+                try:
+                    with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
+                        json_data = json.load(input_file)
+
+                    type = json_data["type"]
+                except FileNotFoundError:
+                    # doesn't exist
+                    pass
+                else:
+                    # exists
+                    pass
+
+                i = i + 1
+
+            output_file.write("""            ButterflyData.ButterflyType.""" + type.upper() + """,
+""")
+
+        output_file.write("""    };
+""")
+        output_file.write("""
+    // A list of how rare each butterfly is.
+    public static final ButterflyData.Rarity[] RARITIES = {
+""")
+
+        for butterfly in all:
+            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            rarity = None
+            i = 0
+
+            while rarity is None and i < len(folders):
+                folder = folders[i]
+                try:
+                    with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
+                        json_data = json.load(input_file)
+
+                    rarity = json_data["rarity"]
+                except FileNotFoundError:
+                    # doesn't exist
+                    pass
+                else:
+                    # exists
+                    pass
+
+                i = i + 1
+
+            output_file.write("""            ButterflyData.Rarity.""" + rarity.upper() + """,
 """)
 
         output_file.write("""    };
