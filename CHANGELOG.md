@@ -1,8 +1,20 @@
 ## Changelog
 
+### 6.1.13 (2025-06-06)
+- Backported advancement fixes from 1.21.4.
+
+### 6.1.12 (2025-06-06)
+- Backported trade fixes from 1.21.4.
+
+### 6.1.10 (2025-06-06)
+- Increase Lepidopterist house spawn rates.
+
+### 6.1.9 (2025-06-06)
+- Added missing recipes for moth scrolls.
+- 
 ### 6.1.8 (2025-05-29)
 - Fixed villager trades not having correct data.
-
+- 
 ### 6.1.7 (2025-05-29)
 - Fixed translation strings for butterfly origami.
 

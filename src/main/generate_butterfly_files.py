@@ -277,7 +277,7 @@ def generate_code(all):
         output_file.write("""package com.bokmcdok.butterflies.world;
 
 /**
- * Generated code - do not modify.
+ * Generated code - do not modify
  * Provides data that needs to be accessed before butterfly data files are
  * loaded.
  */
@@ -310,7 +310,8 @@ public class ButterflySpeciesList {
                     with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
                         json_data = json.load(input_file)
 
-                    habitat = json_data["type"]
+                    type = json_data["type"]
+
                 except FileNotFoundError:
                     # doesn't exist
                     pass
@@ -320,7 +321,7 @@ public class ButterflySpeciesList {
 
                 i = i + 1
 
-            output_file.write("""            ButterflyData.ButterflyType.""" + habitat.upper() + """,
+            output_file.write("""            ButterflyData.ButterflyType.""" + type.upper() + """,
 """)
 
         output_file.write("""    };
