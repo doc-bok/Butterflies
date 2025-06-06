@@ -165,7 +165,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "butterflies:clothes_egg"
+      "id": "butterflies:clothes_egg"
     },
     "show_toast": true,
     "title": {

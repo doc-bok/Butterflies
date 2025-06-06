@@ -1,7 +1,10 @@
 ## Changelog
 
+### 6.1.13 (2025-06-06)
+- Backported advancement fixes from 1.21.4.
+
 ### 6.1.12 (2025-06-06)
-- Backported trade fixes from 1.21.4
+- Backported trade fixes from 1.21.4.
 
 ### 6.1.10 (2025-06-06)
 - Increase Lepidopterist house spawn rates.

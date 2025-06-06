@@ -177,7 +177,7 @@
     "frame": "challenge",
     "hidden": false,
     "icon": {
-      "item": "butterflies:bottled_butterfly_clothes"
+      "id": "butterflies:bottled_butterfly_clothes"
     },
     "show_toast": true,
     "title": {

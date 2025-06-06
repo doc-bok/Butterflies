@@ -21,7 +21,7 @@
     "frame": "goal",
     "hidden": true,
     "icon": {
-      "item": "butterflies:butterfly_net_burnt"
+      "id": "butterflies:butterfly_net_burnt"
     },
     "show_toast": true,
     "title": {

@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/root",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_zhuangzi"
+      "id": "butterflies:butterfly_zhuangzi"
     },
     "title": {
       "translate": "advancements.butterfly.zhuangzi.title"

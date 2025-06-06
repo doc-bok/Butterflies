@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/root",
   "display": {
     "icon": {
-      "item": "butterflies:admiral_egg"
+      "id": "butterflies:admiral_egg"
     },
     "title": {
       "translate": "advancements.butterfly.find_butterfly_egg.title"

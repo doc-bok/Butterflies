@@ -177,7 +177,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:glass_bottle"
+      "id": "minecraft:glass_bottle"
     },
     "show_toast": true,
     "title": {

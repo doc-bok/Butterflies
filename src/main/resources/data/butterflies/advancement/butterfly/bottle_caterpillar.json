@@ -465,7 +465,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:bottled_caterpillar_swallowtail"
+      "id": "butterflies:bottled_caterpillar_swallowtail"
     },
     "show_toast": true,
     "title": {

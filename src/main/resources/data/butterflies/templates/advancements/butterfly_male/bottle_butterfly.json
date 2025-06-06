@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/catch_butterfly",
   "display": {
     "icon": {
-      "item": "minecraft:glass_bottle"
+      "id": "minecraft:glass_bottle"
     },
     "title": {
       "translate": "advancements.butterfly.bottle_butterfly.title"

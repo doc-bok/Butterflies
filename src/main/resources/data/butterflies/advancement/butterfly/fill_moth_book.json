@@ -2,7 +2,7 @@
   "parent": "butterflies:butterfly/create_butterfly_scroll",
   "display": {
     "icon": {
-      "item": "butterflies:butterfly_book"
+      "id": "butterflies:butterfly_book"
     },
     "title": {
       "translate": "advancements.butterfly.moth_book.title"
@@ -27,20 +27,11 @@
             "items": [
               "butterflies:butterfly_book"
             ],
-            "nbt": "{CustomModelData:2}"
-          }
-        ]
-      }
-    },
-    "filled_book_both": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:butterfly_book"
-            ],
-            "nbt": "{CustomModelData:3}"
+            "components": {
+              "minecraft:custom_data": {
+                "filled_moth": true
+              }
+            }
           }
         ]
       }
@@ -48,8 +39,7 @@
   },
   "requirements": [
     [
-      "filled_book_moth",
-      "filled_book_both"
+      "filled_book_moth"
     ]
   ]
 }

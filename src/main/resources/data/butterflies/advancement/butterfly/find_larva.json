@@ -165,7 +165,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:caterpillar_clothes"
+      "id": "butterflies:caterpillar_clothes"
     },
     "show_toast": true,
     "title": {
