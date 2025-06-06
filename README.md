@@ -45,15 +45,14 @@ attempt to do so.
 Some moth cocoons will drop silk, which can be crafted into string or paper.
 Unfortunately, this kills the moth.
 
-### Scrolls, Microscopes, and Books
+### Scrolls and Books
 
 Butterflies can also be pinned to a piece of paper to create a scroll where you
 can look at the butterfly in detail. Unfortunately this kills the butterfly.
 These scrolls can also be placed around your world as decoration. 
 
-Scrolls can be examined using the butterfly microscope, so you can learn more
-about the various species. You can also use the microscope to place the scrolls
-in a book, allowing the player to collect all the information in one place.
+Scrolls can also be placed in a book, allowing the player to collect
+more detailed information on each butterfly species.
 
 ### Jars
 
@@ -118,39 +117,16 @@ cause them to spread (default: `true`)
 **debug_info** If set to TRUE debug information will be rendered (default: `false`)
 
 ## Latest Release
-- [NeoForge 1.21.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.21.4.jar)
-- [NeoForge 1.21.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.21.1.jar)
-- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.20.4.jar)
-- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.20.2.jar)
-- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.20.1.jar)
-- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.19.2.jar)
-- [Forge 1.18.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.4/butterflies-6.1.4-for-1.18.2.jar)
+- [NeoForge 1.21.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.21.4.jar)
+- [NeoForge 1.21.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.21.1.jar)
+- [NeoForge 1.20.4](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.20.4.jar)
+- [Forge 1.20.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.20.2.jar)
+- [Forge 1.20.1](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.20.1.jar)
+- [Forge 1.19.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.19.2.jar)
+- [Forge 1.18.2](https://github.com/doc-bok/Butterflies/releases/download/6.1.5/butterflies-6.1.5-for-1.18.2.jar)
 
 ## Development Diary
 - [Minecraft Mod Diaries](https://www.bokmcdok.com/minecraft-modding-diaries/)
-
-## Older Versions
-- [Bok’s Butterflies v6.1.2](https://github.com/doc-bok/Butterflies/releases/tag/6.1.2)
-- [Bok’s Butterflies v6.1.1](https://github.com/doc-bok/Butterflies/releases/tag/6.1.1)
-- [Bok’s Butterflies v6.1.0](https://github.com/doc-bok/Butterflies/releases/tag/6.1.0)
-- [Bok’s Butterflies v6.0.1](https://github.com/doc-bok/Butterflies/releases/tag/6.0.1)
-- [Bok’s Butterflies v6.0.0](https://github.com/doc-bok/Butterflies/releases/tag/6.0.0)
-- [Bok’s Butterflies v5.0.0](https://github.com/doc-bok/Butterflies/releases/tag/5.0.0)
-- [Bok’s Butterflies v4.0.0](https://github.com/doc-bok/Butterflies/releases/tag/4.0.0)
-- [Bok’s Butterflies v3.4.0](https://github.com/doc-bok/Butterflies/releases/tag/3.4.0)
-- [Bok’s Butterflies v3.1.0](https://github.com/doc-bok/Butterflies/releases/tag/3.1.0)
-- [Bok’s Butterflies v3.0.2](https://github.com/doc-bok/Butterflies/releases/tag/3.0.2)
-- [Bok’s Butterflies v3.0.0](https://github.com/doc-bok/Butterflies/releases/tag/3.0.0)
-- [Bok’s Butterflies v2.1.1](https://github.com/doc-bok/Butterflies/releases/tag/2.1.1)
-- [Bok’s Butterflies v2.0.9](https://github.com/doc-bok/Butterflies/releases/tag/2.0.9)
-- [Bok’s Butterflies v2.0.6](https://github.com/doc-bok/Butterflies/releases/tag/2.0.6)
-- [Bok’s Butterflies v2.0.5](https://github.com/doc-bok/Butterflies/releases/tag/2.0.5)
-- [Bok’s Butterflies v2.0.1](https://github.com/doc-bok/Butterflies/releases/tag/2.0.1)
-- [Bok’s Butterflies v1.0.4](https://github.com/doc-bok/Butterflies/releases/tag/1.0.4)
-- [Bok’s Butterflies v1.0.3](https://github.com/doc-bok/Butterflies/releases/tag/1.0.3)
-- [Bok’s Butterflies v1.0.2](https://github.com/doc-bok/Butterflies/releases/tag/1.0.2)
-- [Bok’s Butterflies v1.0.1](https://github.com/doc-bok/Butterflies/releases/tag/1.0.1)
-- [Bok’s Butterflies v1.0.0](https://github.com/doc-bok/Butterflies/releases/tag/1.0.0)
 
 ## Source Code
 - [GitHub Repository](https://github.com/doc-bok/Butterflies)
@@ -158,7 +134,6 @@ cause them to spread (default: `true`)
 - [Report a Bug](https://github.com/doc-bok/Butterflies/issues)
 
 ## Other Locations
-- [Homepage](https://www.bokmcdok.com/minecraft-modding-diaries/boks-butterflies/)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-butterflies)
 - [Modrinth](https://modrinth.com/mod/boks-butterflies/)
 - [Planet Minecraft](https://www.planetminecraft.com/mod/bok-s-butterflies/)

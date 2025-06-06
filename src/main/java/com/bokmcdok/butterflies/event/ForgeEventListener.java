@@ -42,19 +42,19 @@ public class ForgeEventListener {
             addToPool(event.getRegistryAccess(),
                     ResourceLocation.withDefaultNamespace("village/plains/houses"),
                     ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/plains/houses/plains_butterfly_house_1"),
-                    3);
+                    6);
 
             // Savanna
             addToPool(event.getRegistryAccess(),
                     ResourceLocation.withDefaultNamespace("village/savanna/houses"),
                     ResourceLocation.fromNamespaceAndPath("butterflies", "village/savanna/houses/savanna_butterfly_house_1"),
-                    2);
+                    4);
 
             // Taiga
             addToPool(event.getRegistryAccess(),
                     ResourceLocation.withDefaultNamespace("village/taiga/houses"),
                     ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "village/taiga/houses/taiga_butterfly_house_1"),
-                    2);
+                    4);
         }
     }
 

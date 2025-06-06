@@ -1,4 +1,9 @@
 ## Changelog
+### 6.1.10 (2025-06-06)
+- Increase Lepidopterist house spawn rates.
+
+### 6.1.9 (2025-06-06)
+- Added missing recipes for moth scrolls.
 
 ### 6.1.6 (2025-05-22)
 - Fixed enum extensions for new spawn category.
