@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.11 (2025-06-06)
+- Deleted Cherry Grove biome modifier template.
+
 ### 6.1.10 (2025-06-06)
 - Increase Lepidopterist house spawn rates.
 
