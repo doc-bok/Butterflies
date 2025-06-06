@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_case-bearing-clothes"
+    "id": "butterflies:butterfly_scroll_case-bearing-clothes"
   },
   "type": "minecraft:crafting_shapeless"
 }

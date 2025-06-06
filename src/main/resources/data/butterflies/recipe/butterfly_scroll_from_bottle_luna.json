@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_luna"
+    "id": "butterflies:butterfly_scroll_luna"
   },
   "type": "minecraft:crafting_shapeless"
 }

@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_indianmeal"
+    "id": "butterflies:butterfly_scroll_indianmeal"
   },
   "type": "minecraft:crafting_shapeless"
 }

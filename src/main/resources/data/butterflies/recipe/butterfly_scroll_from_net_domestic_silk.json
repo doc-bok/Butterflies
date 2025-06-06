@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_domestic_silk"
+    "id": "butterflies:butterfly_scroll_domestic_silk"
   },
   "type": "minecraft:crafting_shapeless"
 }

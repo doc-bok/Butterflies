@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_atlas"
+    "id": "butterflies:butterfly_scroll_atlas"
   },
   "type": "minecraft:crafting_shapeless"
 }

@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_codling"
+    "id": "butterflies:butterfly_scroll_codling"
   },
   "type": "minecraft:crafting_shapeless"
 }

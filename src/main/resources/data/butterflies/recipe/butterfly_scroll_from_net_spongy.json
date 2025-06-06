@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_spongy"
+    "id": "butterflies:butterfly_scroll_spongy"
   },
   "type": "minecraft:crafting_shapeless"
 }

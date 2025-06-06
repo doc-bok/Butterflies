@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_hummingbird"
+    "id": "butterflies:butterfly_scroll_hummingbird"
   },
   "type": "minecraft:crafting_shapeless"
 }

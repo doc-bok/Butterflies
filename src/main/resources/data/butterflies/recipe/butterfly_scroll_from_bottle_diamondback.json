@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "butterflies:butterfly_scroll_diamondback"
+    "id": "butterflies:butterfly_scroll_diamondback"
   },
   "type": "minecraft:crafting_shapeless"
 }
