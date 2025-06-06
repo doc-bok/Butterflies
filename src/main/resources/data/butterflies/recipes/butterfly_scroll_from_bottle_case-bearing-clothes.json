@@ -1,0 +1,18 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:bottled_butterfly_case-bearing-clothes"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_scroll_case-bearing-clothes"
+  },
+  "type": "minecraft:crafting_shapeless"
+}
