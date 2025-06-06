@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.1.9 (2025-06-06)
+- Added missing recipes for moth scrolls.
+
 ### 6.1.5 (2025-05-20)
 - Moved butterflies to their own spawn pool.
 
