@@ -5,7 +5,7 @@
   "entityId": "peppered",
   "extraLandingBlocks": "logs",
   "habitat": "forests",
-  "index": 50,
+  "index": 51,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
@@ -15,7 +15,7 @@
   "plantEffect": "pollinate",
   "preferredFlower": "lily_of_the_valley",
   "rarity": "common",
-  "size": "small",
+  "size": "medium",
   "sounds": {
     "butterfly": false,
     "caterpillar": false

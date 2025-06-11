@@ -1,11 +1,11 @@
 {
   "breedTarget": "none",
-  "diurnality": "nocturnal",
+  "diurnality": "diurnal",
   "eggMultiplier": "normal",
-  "entityId": "atlas",
+  "entityId": "common-mime",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
-  "index": 40,
+  "habitat": "hills_and_plateaus",
+  "index": 23,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -13,13 +13,13 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "white_tulip",
-  "rarity": "rare",
-  "size": "huge",
+  "preferredFlower": "pink_tulip",
+  "rarity": "common",
+  "size": "medium",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
-  "type": "moth"
+  "type": "butterfly"
 }

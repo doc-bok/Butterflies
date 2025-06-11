@@ -5,7 +5,7 @@
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
   "habitat": "plains_and_wetlands",
-  "index": 40,
+  "index": 41,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -15,7 +15,7 @@
   "plantEffect": "pollinate",
   "preferredFlower": "cornflower",
   "rarity": "common",
-  "size": "medium",
+  "size": "tiny",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
