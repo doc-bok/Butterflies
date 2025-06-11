@@ -4,7 +4,9 @@
   "eggMultiplier": "double",
   "entityId": "spongy",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 52,
   "lifespan": {
     "butterfly": "short",

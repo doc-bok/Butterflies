@@ -4,7 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "buckeye",
   "extraLandingBlocks": "fruit",
-  "habitat": "plains_and_savannas",
+  "habitats": [
+    "plains",
+    "savanna"
+  ],
   "index": 2,
   "lifespan": {
     "butterfly": "medium",

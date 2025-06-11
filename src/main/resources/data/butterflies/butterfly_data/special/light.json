@@ -4,7 +4,7 @@
   "eggMultiplier": "none",
   "entityId": "light",
   "extraLandingBlocks": "none",
-  "habitat": "none",
+  "habitats": [],
   "index": 56,
   "lifespan": {
     "butterfly": "immortal",

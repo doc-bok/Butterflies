@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
+  "habitats": [
+    "plains"
+  ],
   "index": 47,
   "lifespan": {
     "butterfly": "short",

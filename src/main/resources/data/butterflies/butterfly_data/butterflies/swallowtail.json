@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "swallowtail",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
+  "habitats": [
+    "plains"
+  ],
   "index": 38,
   "lifespan": {
     "butterfly": "short",

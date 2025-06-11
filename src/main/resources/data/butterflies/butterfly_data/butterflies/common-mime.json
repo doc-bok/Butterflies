@@ -4,7 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "common-mime",
   "extraLandingBlocks": "none",
-  "habitat": "hills_and_plateaus",
+  "habitats": [
+    "hills",
+    "plateaus"
+  ],
   "index": 23,
   "lifespan": {
     "butterfly": "short",

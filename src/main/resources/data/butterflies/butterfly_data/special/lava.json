@@ -4,7 +4,9 @@
   "eggMultiplier": "none",
   "entityId": "lava",
   "extraLandingBlocks": "none",
-  "habitat": "nether",
+  "habitats": [
+    "nether"
+  ],
   "index": 55,
   "lifespan": {
     "butterfly": "immortal",

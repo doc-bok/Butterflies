@@ -79,7 +79,7 @@ public class NetworkEventListener {
                                                       buffer.readEnum(ButterflyData.Size.class),
                                                       buffer.readEnum(ButterflyData.Speed.class),
                                                       buffer.readEnum(ButterflyData.Rarity.class),
-                                                      buffer.readEnum(ButterflyData.Habitat.class),
+                                                      buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
                                                       buffer.readInt(),
                                                       buffer.readInt(),
                                                       buffer.readInt(),

@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "luna",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 49,
   "lifespan": {
     "butterfly": "medium",

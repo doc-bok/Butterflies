@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "peppered",
   "extraLandingBlocks": "logs",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 51,
   "lifespan": {
     "butterfly": "medium",

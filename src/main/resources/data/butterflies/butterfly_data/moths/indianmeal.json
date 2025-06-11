@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "indianmeal",
   "extraLandingBlocks": "hay_bale",
-  "habitat": "jungles",
+  "habitats": [
+    "jungles"
+  ],
   "index": 48,
   "lifespan": {
     "butterfly": "long",

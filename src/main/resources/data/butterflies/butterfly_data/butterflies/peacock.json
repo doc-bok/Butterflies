@@ -4,7 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "peacock",
   "extraLandingBlocks": "none",
-  "habitat": "forests_and_plains",
+  "habitats": [
+    "forests",
+    "plains"
+  ],
   "index": 36,
   "lifespan": {
     "butterfly": "medium",

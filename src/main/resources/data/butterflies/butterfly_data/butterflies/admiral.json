@@ -4,7 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "admiral",
   "extraLandingBlocks": "none",
-  "habitat": "forests_and_wetlands",
+  "habitats": [
+    "forests",
+    "wetlands"
+  ],
   "index": 0,
   "lifespan": {
     "butterfly": "medium",

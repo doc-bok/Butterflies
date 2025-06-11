@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "oak-silk",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 50,
   "lifespan": {
     "butterfly": "short",

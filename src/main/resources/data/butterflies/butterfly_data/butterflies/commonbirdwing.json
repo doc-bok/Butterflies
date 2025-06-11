@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "commonbirdwing",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 25,
   "lifespan": {
     "butterfly": "medium",

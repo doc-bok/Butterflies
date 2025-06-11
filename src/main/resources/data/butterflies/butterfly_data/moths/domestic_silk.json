@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "domestic_silk",
   "extraLandingBlocks": "none",
-  "habitat": "villages",
+  "habitats": [
+    "villages"
+  ],
   "index": 46,
   "lifespan": {
     "butterfly": "medium",

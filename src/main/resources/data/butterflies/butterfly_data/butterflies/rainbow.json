@@ -4,7 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "rainbow",
   "extraLandingBlocks": "none",
-  "habitat": "forests_and_plains",
+  "habitats": [
+    "forests",
+    "plains"
+  ],
   "index": 37,
   "lifespan": {
     "butterfly": "medium",

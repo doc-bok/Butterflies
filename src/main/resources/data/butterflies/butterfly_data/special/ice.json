@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "ice",
   "extraLandingBlocks": "none",
-  "habitat": "ice",
+  "habitats": [
+    "ice"
+  ],
   "index": 54,
   "lifespan": {
     "butterfly": "long",

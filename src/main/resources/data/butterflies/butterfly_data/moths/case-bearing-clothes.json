@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "case-bearing-clothes",
   "extraLandingBlocks": "wool",
-  "habitat": "villages",
+  "habitats": [
+    "villages"
+  ],
   "index": 42,
   "lifespan": {
     "butterfly": "long",

@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "codling",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 44,
   "lifespan": {
     "butterfly": "medium",

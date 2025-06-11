@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "diamondback",
   "extraLandingBlocks": "fruit",
-  "habitat": "plains",
+  "habitats": [
+    "plains"
+  ],
   "index": 45,
   "lifespan": {
     "butterfly": "medium",

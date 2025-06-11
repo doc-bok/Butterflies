@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "green-skirt-baron",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 30,
   "lifespan": {
     "butterfly": "medium",
