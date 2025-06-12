@@ -64,6 +64,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.INT);
     protected static final EntityDataAccessor<String> DATA_GOAL_STATE =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
+    protected static final EntityDataAccessor<String> DATA_MIMIC_TEXTURE =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
 
     // Names of the attributes stored in the save data.
     protected static final String IS_FERTILE = "is_fertile";
@@ -463,6 +465,24 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Set the texture index for mimics.
+     * @param i The texture index.
+     */
+    public void setMimicTextureIndex(int i) {
+
+        if (i >= 0) {
+            ButterflyData data = ButterflyData.getEntry(i);
+            if (data != null) {
+
+                String species = data.entityId();
+                entityData.set(DATA_MIMIC_TEXTURE, "textures/entity/butterfly/butterfly_" + species + ".png");
+            }
+        } else {
+            entityData.set(DATA_MIMIC_TEXTURE, "");
+        }
+    }
+
+    /**
      * Create a flying navigator for the butterfly.
      * @param level The current level.
      * @return The flying navigation.
@@ -470,7 +490,19 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
+        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
+
+            /**
+             * All destinations are stable for butterflies.
+             * @param blockPos The block position of the destination.
+             * @return Always TRUE.
+             */
+            @Override
+            public boolean isStableDestination(@NotNull BlockPos blockPos) {
+                return true;
+            }
+
+        };
 
         if (getData().speed() == ButterflyData.Speed.FAST) {
 
@@ -547,15 +579,17 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         if (Objects.equals(getData().entityId(), "forester")) {
             this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
                     LivingEntity.class,
-                    3,
-                    0.8,
-                    1.33, Butterfly::isNotScaredOfCats));
+                    10.0F,
+                    2.2,
+                    2.2,
+                    Butterfly::isNotScaredOfCats));
         } else {
             this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
                     LivingEntity.class,
-                    3,
-                    0.8,
-                    1.33, Butterfly::isScaredOfEverything));
+                    10.0F,
+                    2.2,
+                    2.2,
+                    Butterfly::isScaredOfEverything));
         }
 
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
@@ -568,11 +602,11 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                     break;
 
                 case POLLINATE:
-                    this.goalSelector.addGoal(4, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+                    this.goalSelector.addGoal(3, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
                     break;
 
                 case CONSUME:
-                    this.goalSelector.addGoal(4, new ButterflyEatCropGoal(this, 0.8d, 8, 8));
+                    this.goalSelector.addGoal(3, new ButterflyEatCropGoal(this, 0.8d, 8, 8));
                     break;
             }
         }
@@ -738,6 +772,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.entityData.define(DATA_LANDED, false);
         this.entityData.define(DATA_NUM_EGGS, 1);
         this.entityData.define(DATA_GOAL_STATE, "");
+        this.entityData.define(DATA_MIMIC_TEXTURE, "");
     }
 
     /**
@@ -766,7 +801,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return The resource location of the texture.
      */
     public ResourceLocation getTexture() {
-        return texture;
+        String mimicTexture = entityData.get(DATA_MIMIC_TEXTURE);
+        if (!mimicTexture.isEmpty()) {
+            return new ResourceLocation(ButterfliesMod.MOD_ID, mimicTexture);
+        }
+
+        return this.texture;
     }
 
     /**
