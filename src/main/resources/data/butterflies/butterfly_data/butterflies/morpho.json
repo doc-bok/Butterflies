@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "morpho",
   "extraLandingBlocks": "none",
-  "habitat": "jungles",
-  "index": 34,
+  "habitats": [
+    "jungles"
+  ],
+  "index": 35,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "butterfly"
 }

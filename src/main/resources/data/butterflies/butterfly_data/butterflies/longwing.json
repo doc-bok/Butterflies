@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "longwing",
   "extraLandingBlocks": "none",
-  "habitat": "wetlands",
-  "index": 32,
+  "habitats": [
+    "wetlands"
+  ],
+  "index": 33,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "short",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "butterfly"
 }

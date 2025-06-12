@@ -4,8 +4,10 @@
   "eggMultiplier": "none",
   "entityId": "spongymale",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
-  "index": 52,
+  "habitats": [
+    "forests"
+  ],
+  "index": 53,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "short",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

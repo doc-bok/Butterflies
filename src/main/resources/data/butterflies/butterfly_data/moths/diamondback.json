@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "diamondback",
   "extraLandingBlocks": "fruit",
-  "habitat": "plains",
-  "index": 44,
+  "habitats": [
+    "plains"
+  ],
+  "index": 45,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "short",
@@ -15,11 +17,12 @@
   "plantEffect": "pollinate",
   "preferredFlower": "cornflower",
   "rarity": "common",
-  "size": "small",
+  "size": "tiny",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }
