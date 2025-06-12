@@ -1,0 +1,31 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "common-mime",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "hills",
+    "plateaus"
+  ],
+  "index": 23,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "medium",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "pink_tulip",
+  "rarity": "common",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [
+    "mimicry"
+  ],
+  "type": "butterfly"
+}

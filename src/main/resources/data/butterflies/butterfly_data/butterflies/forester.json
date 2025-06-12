@@ -4,8 +4,12 @@
   "eggMultiplier": "normal",
   "entityId": "forester",
   "extraLandingBlocks": "none",
-  "habitat": "forests_plains_wetlands",
-  "index": 27,
+  "habitats": [
+    "forests",
+    "plains",
+    "wetlands"
+  ],
+  "index": 28,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "long",
@@ -21,5 +25,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [
+    "catfriend"
+  ],
   "type": "butterfly"
 }

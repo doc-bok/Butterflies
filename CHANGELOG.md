@@ -1,5 +1,9 @@
 ## Changelog
 
+
+### 6.2.0 (2025-06-12)
+- Added the mimic butterfly.
+
 ### 6.1.13 (2025-06-06)
 - Backported advancement fixes from 1.21.4.
 
