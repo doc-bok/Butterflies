@@ -24,6 +24,30 @@
       "minCount": 1,
       "type": "butterflies:chalkhill_egg",
       "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-mime",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-mime_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-mime_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-mime_egg",
+      "weight": 100
     }
   ],
   "type": "forge:add_spawns"

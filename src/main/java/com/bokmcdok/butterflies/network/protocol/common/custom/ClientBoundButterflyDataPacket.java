@@ -29,7 +29,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
             collectionBuffer.writeEnum(i.size());
             collectionBuffer.writeEnum(i.speed());
             collectionBuffer.writeEnum(i.rarity());
-            collectionBuffer.writeEnum(i.habitat());
+            collectionBuffer.writeCollection(i.habitats(), FriendlyByteBuf::writeEnum);
             collectionBuffer.writeInt(i.eggLifespan());
             collectionBuffer.writeInt(i.caterpillarLifespan());
             collectionBuffer.writeInt(i.chrysalisLifespan());
@@ -43,6 +43,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
             collectionBuffer.writeEnum(i.eggMultiplier());
             collectionBuffer.writeBoolean(i.caterpillarSounds());
             collectionBuffer.writeBoolean(i.butterflySounds());
+            collectionBuffer.writeCollection(i.traits(), FriendlyByteBuf::writeEnum);
         });
     }
 

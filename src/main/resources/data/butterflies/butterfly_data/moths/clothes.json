@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "clothes",
   "extraLandingBlocks": "wool",
-  "habitat": "villages",
-  "index": 42,
+  "habitats": [
+    "villages"
+  ],
+  "index": 43,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
@@ -15,11 +17,12 @@
   "plantEffect": "pollinate",
   "preferredFlower": "cornflower",
   "rarity": "common",
-  "size": "small",
+  "size": "tiny",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

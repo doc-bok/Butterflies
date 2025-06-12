@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "domestic_silk",
   "extraLandingBlocks": "none",
-  "habitat": "villages",
-  "index": 45,
+  "habitats": [
+    "villages"
+  ],
+  "index": 46,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }
