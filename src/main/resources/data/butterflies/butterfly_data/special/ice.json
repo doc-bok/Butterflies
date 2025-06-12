@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "ice",
   "extraLandingBlocks": "none",
-  "habitat": "ice",
-  "index": 53,
+  "habitats": [
+    "ice"
+  ],
+  "index": 54,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "fast",
+  "traits": [],
   "type": "special"
 }

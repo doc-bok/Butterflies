@@ -4,8 +4,8 @@
   "eggMultiplier": "none",
   "entityId": "light",
   "extraLandingBlocks": "none",
-  "habitat": "none",
-  "index": 55,
+  "habitats": [],
+  "index": 56,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -21,5 +21,6 @@
     "caterpillar": false
   },
   "speed": "fast",
+  "traits": [],
   "type": "special"
 }

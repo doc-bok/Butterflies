@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "oak-silk",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
-  "index": 49,
+  "habitats": [
+    "forests"
+  ],
+  "index": 50,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -15,11 +17,12 @@
   "plantEffect": "pollinate",
   "preferredFlower": "blue_orchid",
   "rarity": "common",
-  "size": "small",
+  "size": "huge",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

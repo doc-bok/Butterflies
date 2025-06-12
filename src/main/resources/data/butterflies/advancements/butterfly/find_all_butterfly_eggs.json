@@ -288,6 +288,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "common-mime": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:common-mime_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "commonbirdwing": {
       "conditions": {
         "items": [
@@ -542,6 +554,9 @@
     ],
     [
       "commander"
+    ],
+    [
+      "common-mime"
     ],
     [
       "common"

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.2.0 (2025-06-12)
+- Added the mimic butterfly.
+- 
 ### 6.1.11 (2025-06-06)
 - Deleted Cherry Grove biome modifier template.
 

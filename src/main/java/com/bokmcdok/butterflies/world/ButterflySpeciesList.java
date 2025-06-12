@@ -32,6 +32,7 @@ public class ButterflySpeciesList {
             "clipperwhite",
             "clipperyellow",
             "commander",
+            "common-mime",
             "common",
             "commonbirdwing",
             "commongrassyellow",

@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "swallowtail",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
-  "index": 37,
+  "habitats": [
+    "plains"
+  ],
+  "index": 38,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "short",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "butterfly"
 }
