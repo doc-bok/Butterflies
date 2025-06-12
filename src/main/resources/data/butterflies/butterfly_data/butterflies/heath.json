@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "heath",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
-  "index": 31,
+  "habitats": [
+    "plains"
+  ],
+  "index": 32,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
@@ -21,5 +23,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [
+    "mothwanderer"
+  ],
   "type": "butterfly"
 }

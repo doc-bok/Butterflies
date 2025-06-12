@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "atlas",
   "extraLandingBlocks": "none",
-  "habitat": "forests",
-  "index": 39,
+  "habitats": [
+    "forests"
+  ],
+  "index": 40,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -15,11 +17,12 @@
   "plantEffect": "pollinate",
   "preferredFlower": "white_tulip",
   "rarity": "rare",
-  "size": "large",
+  "size": "huge",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }
