@@ -23,5 +23,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [
+    "christmassy"
+  ],
   "type": "butterfly"
 }

@@ -125,6 +125,8 @@ def generate_data_files(entries):
                 json_data["index"] = BUTTERFLY_INDEX
                 BUTTERFLY_INDEX = BUTTERFLY_INDEX + 1
 
+                json_data["traits"] = []
+
             if "entityId" in json_data:
                 json_data["entityId"] = entry
 

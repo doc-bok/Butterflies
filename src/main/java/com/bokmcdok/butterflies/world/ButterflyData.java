@@ -57,7 +57,8 @@ public record ButterflyData(int butterflyIndex,
                             ResourceLocation breedTarget,
                             EggMultiplier eggMultiplier,
                             boolean caterpillarSounds,
-                            boolean butterflySounds) {
+                            boolean butterflySounds,
+                            List<Trait> traits) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -155,6 +156,14 @@ public record ButterflyData(int butterflyIndex,
         FAST
     }
 
+    // The various traits butterflies can have.
+    public enum Trait {
+        CATFRIEND,
+        CHRISTMASSY,
+        MIMICRY,
+        MOTHWANDERER
+    }
+
     // Constants representing the base life spans of each butterfly cycle.
     public static int[] LIFESPAN = {
             24000 * 2,
@@ -218,7 +227,8 @@ public record ButterflyData(int butterflyIndex,
                          ResourceLocation breedTarget,
                          EggMultiplier eggMultiplier,
                          boolean caterpillarSounds,
-                         boolean butterflySounds) {
+                         boolean butterflySounds,
+                         List<Trait> traits) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -243,6 +253,8 @@ public record ButterflyData(int butterflyIndex,
 
         this.caterpillarSounds = caterpillarSounds;
         this.butterflySounds = butterflySounds;
+
+        this.traits = traits;
     }
 
     /**
@@ -272,21 +284,7 @@ public record ButterflyData(int butterflyIndex,
                 Speed speed = getEnumValue(object, Speed.class, "speed", Speed.MODERATE);
                 Rarity rarity = getEnumValue(object, Rarity.class, "rarity", Rarity.COMMON);
 
-                // Extract Habitats
-                JsonArray habitatData = object.get("habitats").getAsJsonArray();//object, Habitat.class, "habitat", Habitat.PLAINS);
-                List<Habitat> habitats = new ArrayList<>();
-                for (int i = 0; i < habitatData.size(); ++i) {
-                    try {
-                        Habitat habitat = EnumExtensions.searchEnum(Habitat.class, habitatData.get(i).getAsString());
-                        habitats.add(habitat);
-                    } catch (IllegalArgumentException e) {
-
-                        // The value specified is invalid, so make sure it's written to the log.
-                        LogUtils.getLogger().error("Invalid habitat([{}]) specified on [{}]",
-                                habitatData.get(i).getAsString(),
-                                object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
-                    }
-                }
+                List<Habitat> habitats = getEnumCollection(object, Habitat.class, "habitats");
 
                 JsonObject lifespan = object.get("lifespan").getAsJsonObject();
                 Lifespan eggLifespan = getEnumValue(lifespan, Lifespan.class, "egg", Lifespan.MEDIUM);
@@ -308,6 +306,8 @@ public record ButterflyData(int butterflyIndex,
                 boolean caterpillarSounds = sounds.get("caterpillar").getAsBoolean();
                 boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
 
+                List<Trait> traits = getEnumCollection(object, Trait.class, "traits");
+
                 entry = new ButterflyData(
                         index,
                         entityId,
@@ -327,11 +327,44 @@ public record ButterflyData(int butterflyIndex,
                         new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier,
                         caterpillarSounds,
-                        butterflySounds
+                        butterflySounds,
+                        traits
                 );
             }
 
             return entry;
+        }
+
+        /**
+         * Helper method for pulling out a collection of enumerated values.
+         * @param object The JSON object to read the value from.
+         * @param enumeration The enumerated type to extract.
+         * @param key The key to look for.
+         * @return A value of the enumerated type.
+         * @param <T> (Inferred) The type of the enumeration.
+         */
+        private static <T extends Enum<?>> List<T> getEnumCollection(
+                JsonObject object,
+                Class<T> enumeration,
+                String key
+        ) {
+            JsonArray jsonData = object.get(key).getAsJsonArray();
+            List<T> result = new ArrayList<>();
+            for (int i = 0; i < jsonData.size(); ++i) {
+                try {
+                    T value = EnumExtensions.searchEnum(enumeration, jsonData.get(i).getAsString());
+                    result.add(value);
+                } catch (IllegalArgumentException e) {
+
+                    // The value specified is invalid, so make sure it's written to the log.
+                    LogUtils.getLogger().error("Invalid [{}]([{}]) specified on [{}]",
+                            key,
+                            jsonData.get(i).getAsString(),
+                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                }
+            }
+
+            return result;
         }
 
         /**
@@ -791,6 +824,15 @@ public record ButterflyData(int butterflyIndex,
                 return 1.0f;
             }
         }
+    }
+
+    /**
+     * Check if a butterfly has a specific trait.
+     * @param trait The trait we are looking for.
+     * @return TRUE if the butterfly has the trait, FALSE otherwise.
+     */
+    public boolean hasTrait(Trait trait) {
+        return traits.contains(trait);
     }
 
     /**

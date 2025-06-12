@@ -383,12 +383,16 @@
   "gui.butterflies.fact.spongymale": "Spongy moths are destructive to foliage.",
   "gui.butterflies.fact.swallowtail": "Swallowtails are the largest butterflies in the world.",
   "gui.butterflies.habitat": "Habitat: ",
+  "gui.butterflies.habitat.comma": ", ",
   "gui.butterflies.habitat.forests": "Forests",
+  "gui.butterflies.habitat.hills": "hills",
   "gui.butterflies.habitat.ice": "Ice",
   "gui.butterflies.habitat.jungles": "Jungle",
   "gui.butterflies.habitat.nether": "Nether",
   "gui.butterflies.habitat.none": "None",
   "gui.butterflies.habitat.plains": "Plains",
+  "gui.butterflies.habitat.plateaus": "plateaus",
+  "gui.butterflies.habitat.savannas": "savannas",
   "gui.butterflies.habitat.villages": "Villages",
   "gui.butterflies.habitat.wetlands": "Wetlands",
   "gui.butterflies.lifespan": "Lifespan: ",
@@ -600,9 +604,5 @@
   "tooltip.butterflies.place_egg": "Right-click on leaves to place the butterfly egg",
   "tooltip.butterflies.release_butterfly": "Right click to release the butterfly",
   "tooltip.butterflies.release_caterpillar": "Right click to release the caterpillar",
-  "tooltip.butterflies.scroll": "Right-click to read or to place on a block",
-  "gui.butterflies.habitat.comma": ", ",
-  "gui.butterflies.habitat.hills": "hills",
-  "gui.butterflies.habitat.plateaus": "plateaus",
-  "gui.butterflies.habitat.savannas": "savannas"
+  "tooltip.butterflies.scroll": "Right-click to read or to place on a block"
 }

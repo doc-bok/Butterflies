@@ -23,5 +23,6 @@
     "caterpillar": true
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

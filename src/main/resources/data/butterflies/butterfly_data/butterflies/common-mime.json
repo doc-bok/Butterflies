@@ -24,5 +24,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [
+    "mimicry"
+  ],
   "type": "butterfly"
 }

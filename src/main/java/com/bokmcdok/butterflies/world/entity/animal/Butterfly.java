@@ -48,6 +48,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The butterfly entity that flies around the world, adding some ambience and
@@ -212,9 +213,10 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        // Support for Christmas Butterfly texture change.
         String species = ButterflyData.getSpeciesString(this);
-        if (species.contains("christmas")) {
+
+        // Support for Christmas Butterfly texture change.
+        if (getData().hasTrait(ButterflyData.Trait.CHRISTMASSY)) {
             Calendar calendar = Calendar.getInstance();
             if (calendar.get(Calendar.MONTH) + 1 == 12 &&
                     calendar.get(Calendar.DAY_OF_MONTH) >= 24 &&
@@ -575,21 +577,27 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     protected void registerGoals() {
         super.registerGoals();
 
-        // Forester butterflies are not scared of cats.
-        if (Objects.equals(getData().entityId(), "forester")) {
-            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+        // Some butterflies are not scared of cats.
+        Predicate<LivingEntity> predicateOnAvoidEntity = Butterfly::isScaredOfEverything;
+        if (getData().hasTrait(ButterflyData.Trait.CATFRIEND)) {
+            predicateOnAvoidEntity = Butterfly::isNotScaredOfCats;
+        }
+
+        // Some butterflies can mimic others.
+        if (getData().hasTrait(ButterflyData.Trait.MIMICRY)) {
+            this.goalSelector.addGoal(1, new ButterflyMimicGoal(this,
                     LivingEntity.class,
                     10.0F,
                     2.2,
                     2.2,
-                    Butterfly::isNotScaredOfCats));
+                    predicateOnAvoidEntity));
         } else {
             this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
                     LivingEntity.class,
                     10.0F,
                     2.2,
                     2.2,
-                    Butterfly::isScaredOfEverything));
+                    predicateOnAvoidEntity));
         }
 
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
@@ -615,7 +623,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         // Heath butterflies and moths are drawn to light.
         if (getData().type() == ButterflyData.ButterflyType.MOTH ||
-                Objects.equals(getData().entityId(), "heath")) {
+                getData().hasTrait(ButterflyData.Trait.MOTHWANDERER)) {
             this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
         } else {
             this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
