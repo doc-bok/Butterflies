@@ -4,7 +4,9 @@
   "eggMultiplier": "normal",
   "entityId": "christmas",
   "extraLandingBlocks": "fruit",
-  "habitat": "forests",
+  "habitats": [
+    "forests"
+  ],
   "index": 5,
   "lifespan": {
     "butterfly": "short",
@@ -21,5 +23,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [
+    "christmassy"
+  ],
   "type": "butterfly"
 }

@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
-  "habitat": "plains",
-  "index": 46,
+  "habitats": [
+    "plains"
+  ],
+  "index": 47,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -15,11 +17,12 @@
   "plantEffect": "consume",
   "preferredFlower": "lily_of_the_valley",
   "rarity": "uncommon",
-  "size": "tiny",
+  "size": "small",
   "sounds": {
     "butterfly": true,
     "caterpillar": false
   },
   "speed": "fast",
+  "traits": [],
   "type": "moth"
 }

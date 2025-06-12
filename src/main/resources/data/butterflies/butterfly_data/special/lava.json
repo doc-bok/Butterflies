@@ -4,8 +4,10 @@
   "eggMultiplier": "none",
   "entityId": "lava",
   "extraLandingBlocks": "none",
-  "habitat": "nether",
-  "index": 54,
+  "habitats": [
+    "nether"
+  ],
+  "index": 55,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "fast",
+  "traits": [],
   "type": "special"
 }

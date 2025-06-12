@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.2.0 (2025-06-12)
+- Added the mimic butterfly.
+
 ### 6.1.10 (2025-06-06)
 - Increase Lepidopterist house spawn rates.
 
