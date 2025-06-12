@@ -6,6 +6,7 @@ import com.google.gson.*;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -199,7 +200,7 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readEnum(ButterflyData.Size.class),
                     buffer.readEnum(ButterflyData.Speed.class),
                     buffer.readEnum(ButterflyData.Rarity.class),
-                    buffer.readEnum(ButterflyData.Habitat.class),
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt(),
@@ -212,7 +213,8 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readResourceLocation(),
                     buffer.readEnum(ButterflyData.EggMultiplier.class),
                     buffer.readBoolean(),
-                    buffer.readBoolean());
+                    buffer.readBoolean(),
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)));
         }
 
         /**
@@ -228,7 +230,7 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeEnum(data.size());
             buffer.writeEnum(data.speed());
             buffer.writeEnum(data.rarity());
-            buffer.writeEnum(data.habitat());
+            buffer.writeCollection(data.habitats(), FriendlyByteBuf::writeEnum);
             buffer.writeInt(data.eggLifespan());
             buffer.writeInt(data.caterpillarLifespan());
             buffer.writeInt(data.chrysalisLifespan());
@@ -242,6 +244,7 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeEnum(data.eggMultiplier());
             buffer.writeBoolean(data.caterpillarSounds());
             buffer.writeBoolean(data.butterflySounds());
+            buffer.writeCollection(data.traits(), FriendlyByteBuf::writeEnum);
         }
     };
 

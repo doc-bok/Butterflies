@@ -804,7 +804,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public ResourceLocation getTexture() {
         String mimicTexture = entityData.get(DATA_MIMIC_TEXTURE);
         if (!mimicTexture.isEmpty()) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, mimicTexture);
+            return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, mimicTexture);
         }
 
         return this.texture;
