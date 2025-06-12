@@ -30,7 +30,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readEnum(ButterflyData.Size.class),
                     entry.readEnum(ButterflyData.Speed.class),
                     entry.readEnum(ButterflyData.Rarity.class),
-                    entry.readEnum(ButterflyData.Habitat.class),
+                    entry.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
@@ -43,7 +43,8 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readResourceLocation(),
                     entry.readEnum(ButterflyData.EggMultiplier.class),
                     entry.readBoolean(),
-                    entry.readBoolean())));
+                    entry.readBoolean(),    
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)))));
     }
 
     /**

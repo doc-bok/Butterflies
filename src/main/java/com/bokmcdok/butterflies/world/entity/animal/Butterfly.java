@@ -209,7 +209,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
-        
+
         String species = ButterflyData.getSpeciesString(this);
 
         // Support for Christmas Butterfly texture change.
