@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "case-bearing-clothes",
   "extraLandingBlocks": "wool",
-  "habitat": "villages",
-  "index": 41,
+  "habitats": [
+    "villages"
+  ],
+  "index": 42,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
@@ -21,5 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

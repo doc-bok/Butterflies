@@ -4,8 +4,11 @@
   "eggMultiplier": "normal",
   "entityId": "common",
   "extraLandingBlocks": "none",
-  "habitat": "forests_and_plains",
-  "index": 23,
+  "habitats": [
+    "forests",
+    "plains"
+  ],
+  "index": 24,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "short",
@@ -21,5 +24,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "butterfly"
 }

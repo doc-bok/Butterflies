@@ -32,6 +32,7 @@ public class ButterflySpeciesList {
             "clipperwhite",
             "clipperyellow",
             "commander",
+            "common-mime",
             "common",
             "commonbirdwing",
             "commongrassyellow",
@@ -69,6 +70,7 @@ public class ButterflySpeciesList {
 
     // A list of types of  butterflies.
     public static final ButterflyData.ButterflyType[] TYPES = {
+            ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
@@ -151,6 +153,7 @@ public class ButterflySpeciesList {
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.RARE,

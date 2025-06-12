@@ -419,7 +419,7 @@ def addSpawns(folder, species, is_male):
         json_data = json.load(input_file)
 
     rarity = json_data["rarity"]
-    habitat = json_data["habitat"]
+    habitat = json_data["habitats"]
 
     # Generate weights/min/max
     if (rarity == "common"):

@@ -4,8 +4,10 @@
   "eggMultiplier": "normal",
   "entityId": "indianmeal",
   "extraLandingBlocks": "hay_bale",
-  "habitat": "jungles",
-  "index": 47,
+  "habitats": [
+    "jungles"
+  ],
+  "index": 48,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "medium",
@@ -15,11 +17,12 @@
   "plantEffect": "consume",
   "preferredFlower": "wheat",
   "rarity": "common",
-  "size": "small",
+  "size": "tiny",
   "sounds": {
     "butterfly": false,
     "caterpillar": false
   },
   "speed": "moderate",
+  "traits": [],
   "type": "moth"
 }

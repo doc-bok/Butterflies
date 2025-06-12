@@ -7,6 +7,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
@@ -26,10 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.zip.DataFormatException;
 
 /**
@@ -39,7 +37,7 @@ import java.util.zip.DataFormatException;
  * @param size                The size of the butterfly
  * @param speed               The speed of the butterfly
  * @param rarity              How rare the butterfly is
- * @param habitat             The description of the butterfly's habitat
+ * @param habitats            A list of the butterflies habitats
  * @param eggLifespan         The lifespan of the caterpillar phase
  * @param caterpillarLifespan The lifespan of the caterpillar phase
  * @param chrysalisLifespan   The lifespan of the chrysalis phase
@@ -51,7 +49,7 @@ public record ButterflyData(int butterflyIndex,
                             Size size,
                             Speed speed,
                             Rarity rarity,
-                            Habitat habitat,
+                            List<Habitat> habitats,
                             int eggLifespan,
                             int caterpillarLifespan,
                             int chrysalisLifespan,
@@ -64,7 +62,8 @@ public record ButterflyData(int butterflyIndex,
                             ResourceLocation breedTarget,
                             EggMultiplier eggMultiplier,
                             boolean caterpillarSounds,
-                            boolean butterflySounds) {
+                            boolean butterflySounds,
+                            List<Trait> traits) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -102,18 +101,14 @@ public record ButterflyData(int butterflyIndex,
     // only affects the description. The biome modifiers will determine where
     // they will actually spawn.
     public enum Habitat {
-        NONE,
         FORESTS,
-        FORESTS_AND_PLAINS,
         ICE,
         JUNGLES,
         PLAINS,
         NETHER,
-        FORESTS_AND_WETLANDS,
-        PLAINS_AND_SAVANNAS,
-        PLAINS_AND_WETLANDS,
-        HILLS_AND_PLATEAUS,
-        FORESTS_PLAINS_WETLANDS,
+        SAVANNAS,
+        HILLS,
+        PLATEAUS,
         VILLAGES,
         WETLANDS
     }
@@ -166,6 +161,14 @@ public record ButterflyData(int butterflyIndex,
         FAST
     }
 
+    // The various traits butterflies can have.
+    public enum Trait {
+        CATFRIEND,
+        CHRISTMASSY,
+        MIMICRY,
+        MOTHWANDERER
+    }
+
     // Constants representing the base life spans of each butterfly cycle.
     public static int[] LIFESPAN = {
             24000 * 2,
@@ -199,7 +202,7 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readEnum(ButterflyData.Size.class),
                     buffer.readEnum(ButterflyData.Speed.class),
                     buffer.readEnum(ButterflyData.Rarity.class),
-                    buffer.readEnum(ButterflyData.Habitat.class),
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt(),
@@ -212,7 +215,8 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readResourceLocation(),
                     buffer.readEnum(ButterflyData.EggMultiplier.class),
                     buffer.readBoolean(),
-                    buffer.readBoolean());
+                    buffer.readBoolean(),
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)));
         }
 
         /**
@@ -228,7 +232,7 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeEnum(data.size());
             buffer.writeEnum(data.speed());
             buffer.writeEnum(data.rarity());
-            buffer.writeEnum(data.habitat());
+            buffer.writeCollection(data.habitats(), FriendlyByteBuf::writeEnum);
             buffer.writeInt(data.eggLifespan());
             buffer.writeInt(data.caterpillarLifespan());
             buffer.writeInt(data.chrysalisLifespan());
@@ -242,6 +246,7 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeEnum(data.eggMultiplier());
             buffer.writeBoolean(data.caterpillarSounds());
             buffer.writeBoolean(data.butterflySounds());
+            buffer.writeCollection(data.traits(), FriendlyByteBuf::writeEnum);
         }
     };
 
@@ -280,7 +285,7 @@ public record ButterflyData(int butterflyIndex,
                          Size size,
                          Speed speed,
                          Rarity rarity,
-                         Habitat habitat,
+                         List<Habitat> habitats,
                          int eggLifespan,
                          int caterpillarLifespan,
                          int chrysalisLifespan,
@@ -293,13 +298,14 @@ public record ButterflyData(int butterflyIndex,
                          ResourceLocation breedTarget,
                          EggMultiplier eggMultiplier,
                          boolean caterpillarSounds,
-                         boolean butterflySounds) {
+                         boolean butterflySounds,
+                         List<Trait> traits) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
         this.speed = speed;
         this.rarity = rarity;
-        this.habitat = habitat;
+        this.habitats = habitats;
 
         this.eggLifespan = eggLifespan;
         this.caterpillarLifespan = caterpillarLifespan * 2;
@@ -318,6 +324,8 @@ public record ButterflyData(int butterflyIndex,
 
         this.caterpillarSounds = caterpillarSounds;
         this.butterflySounds = butterflySounds;
+
+        this.traits = traits;
     }
 
     /**
@@ -346,7 +354,8 @@ public record ButterflyData(int butterflyIndex,
                 Size size = getEnumValue(object, Size.class, "size", Size.MEDIUM);
                 Speed speed = getEnumValue(object, Speed.class, "speed", Speed.MODERATE);
                 Rarity rarity = getEnumValue(object, Rarity.class, "rarity", Rarity.COMMON);
-                Habitat habitat = getEnumValue(object, Habitat.class, "habitat", Habitat.PLAINS);
+
+                List<Habitat> habitats = getEnumCollection(object, Habitat.class, "habitats");
 
                 JsonObject lifespan = object.get("lifespan").getAsJsonObject();
                 Lifespan eggLifespan = getEnumValue(lifespan, Lifespan.class, "egg", Lifespan.MEDIUM);
@@ -368,13 +377,15 @@ public record ButterflyData(int butterflyIndex,
                 boolean caterpillarSounds = sounds.get("caterpillar").getAsBoolean();
                 boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
 
+                List<Trait> traits = getEnumCollection(object, Trait.class, "traits");
+
                 entry = new ButterflyData(
                         index,
                         entityId,
                         size,
                         speed,
                         rarity,
-                        habitat,
+                        habitats,
                         LIFESPAN[eggLifespan.getIndex()],
                         LIFESPAN[caterpillarLifespan.getIndex()],
                         LIFESPAN[chrysalisLifespan.getIndex()],
@@ -387,11 +398,44 @@ public record ButterflyData(int butterflyIndex,
                         ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier,
                         caterpillarSounds,
-                        butterflySounds
+                        butterflySounds,
+                        traits
                 );
             }
 
             return entry;
+        }
+
+        /**
+         * Helper method for pulling out a collection of enumerated values.
+         * @param object The JSON object to read the value from.
+         * @param enumeration The enumerated type to extract.
+         * @param key The key to look for.
+         * @return A value of the enumerated type.
+         * @param <T> (Inferred) The type of the enumeration.
+         */
+        private static <T extends Enum<?>> List<T> getEnumCollection(
+                JsonObject object,
+                Class<T> enumeration,
+                String key
+        ) {
+            JsonArray jsonData = object.get(key).getAsJsonArray();
+            List<T> result = new ArrayList<>();
+            for (int i = 0; i < jsonData.size(); ++i) {
+                try {
+                    T value = EnumExtensions.searchEnum(enumeration, jsonData.get(i).getAsString());
+                    result.add(value);
+                } catch (IllegalArgumentException e) {
+
+                    // The value specified is invalid, so make sure it's written to the log.
+                    LogUtils.getLogger().error("Invalid [{}]([{}]) specified on [{}]",
+                            key,
+                            jsonData.get(i).getAsString(),
+                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                }
+            }
+
+            return result;
         }
 
         /**
@@ -643,29 +687,36 @@ public record ButterflyData(int butterflyIndex,
             // Habitat
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.habitat"));
-            switch (entry.habitat()) {
-                case FORESTS -> component.append(Component.translatable("gui.butterflies.habitat.forests"));
-                case FORESTS_AND_PLAINS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsandplains"));
-                case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
-                case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
-                case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
-                case NETHER -> component.append(Component.translatable("gui.butterflies.habitat.nether"));
-                case NONE -> component.append(Component.translatable("gui.butterflies.habitat.none"));
-                case FORESTS_AND_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsandwetlands"));
-                case PLAINS_AND_SAVANNAS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.plainsandsavannas"));
-                case PLAINS_AND_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.plainsandwetlands"));
-                case HILLS_AND_PLATEAUS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.hillsandplateaus"));
-                case FORESTS_PLAINS_WETLANDS ->
-                        component.append(Component.translatable("gui.butterflies.habitat.forestsplainswetlands"));
-                case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
-                case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
-                default -> {
+
+            // If there are no habitats we still need a string.
+            if (entry.habitats().isEmpty()) {
+                component.append(Component.translatable("gui.butterflies.habitat.none"));
+            }
+
+            // When this flag is true we add commas
+            boolean comma = false;
+            for (Habitat habitat : entry.habitats()) {
+                if (comma) {
+                    component.append(Component.translatable("gui.butterflies.habitat.comma"));
                 }
+
+                switch (habitat) {
+                    case FORESTS -> component.append(Component.translatable("gui.butterflies.habitat.forests"));
+                    case HILLS -> component.append(Component.translatable("gui.butterflies.habitat.hills"));
+                    case JUNGLES -> component.append(Component.translatable("gui.butterflies.habitat.jungles"));
+                    case PLAINS -> component.append(Component.translatable("gui.butterflies.habitat.plains"));
+                    case ICE -> component.append(Component.translatable("gui.butterflies.habitat.ice"));
+                    case NETHER -> component.append(Component.translatable("gui.butterflies.habitat.nether"));
+                    case PLATEAUS -> component.append(Component.translatable("gui.butterflies.habitat.plateaus"));
+                    case SAVANNAS -> component.append(Component.translatable("gui.butterflies.habitat.savannas"));
+                    case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
+                    case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
+                    default -> {
+                    }
+                }
+
+                // If there is more than one habitat, create a comma-separated list.
+                comma = true;
             }
 
             // Preferred Flower
@@ -856,6 +907,15 @@ public record ButterflyData(int butterflyIndex,
                 return 1.0f;
             }
         }
+    }
+
+    /**
+     * Check if a butterfly has a specific trait.
+     * @param trait The trait we are looking for.
+     * @return TRUE if the butterfly has the trait, FALSE otherwise.
+     */
+    public boolean hasTrait(Trait trait) {
+        return traits.contains(trait);
     }
 
     /**
