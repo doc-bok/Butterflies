@@ -361,7 +361,6 @@ def addSpawns(folder, species, is_male):
 
     # Open relevant files and add butterfly spawns
     if "forests" in habitat:
-        addSingleSpawn("cherry_grove", species, weight, maximum, is_male)
         addSingleSpawn("dense", species, weight, maximum, is_male)
         addSingleSpawn("forest", species, weight, maximum, is_male)
         addSingleSpawn("lush", species, weight, maximum, is_male)
