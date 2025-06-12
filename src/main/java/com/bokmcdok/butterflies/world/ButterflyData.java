@@ -619,11 +619,11 @@ public record ButterflyData(int butterflyIndex,
 
             // Habitat
             component.append("\n");
-            component.append(Component.translatable("gui.butterflies.habitat"));
+            component.append(new TranslatableComponent("gui.butterflies.habitat"));
 
             // If there are no habitats we still need a string.
             if (entry.habitats().isEmpty()) {
-                component.append(Component.translatable("gui.butterflies.habitat.none"));
+                component.append(new TranslatableComponent("gui.butterflies.habitat.none"));
             }
 
             // When this flag is true we add commas

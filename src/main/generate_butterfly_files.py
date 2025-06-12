@@ -287,7 +287,7 @@ public class ButterflySpeciesList {
 
         output_file.write("""
     // A list of habitats butterflies can be found in.
-    public static final ButterflyData.Habitat[] HABITATS = {
+    public static final ButterflyData.Habitat[][] HABITATS = {
 """)
 
         for butterfly in all:
@@ -301,7 +301,7 @@ public class ButterflySpeciesList {
                     with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
                             json_data = json.load(input_file)
 
-                    habitat = json_data["habitat"]
+                    habitats = json_data["habitats"]
                 except FileNotFoundError:
                     # doesn't exist
                     pass
@@ -311,9 +311,15 @@ public class ButterflySpeciesList {
 
                 i = i + 1
 
-            output_file.write("""            ButterflyData.Habitat.""" + habitat.upper() + """,
+
+            output_file.write("""        {
 """)
 
+            for habitat in habitats:
+                output_file.write("""            ButterflyData.Habitat.""" + habitat.upper() + """,
+""")
+            output_file.write("""        },
+""")
         output_file.write("""    };
 """)
         output_file.write("""
