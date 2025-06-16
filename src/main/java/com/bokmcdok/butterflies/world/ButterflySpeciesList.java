@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world;
 
 /**
- * Generated code - do not modify.
+ * Generated code - do not modify
  * Provides data that needs to be accessed before butterfly data files are
  * loaded.
  */

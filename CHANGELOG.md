@@ -1,5 +1,7 @@
 ## Changelog
 
+### 6.2.1 (2025-06-16)
+- Regenerated butterfly data.
 
 ### 6.2.0 (2025-06-12)
 - Added the mimic butterfly.
