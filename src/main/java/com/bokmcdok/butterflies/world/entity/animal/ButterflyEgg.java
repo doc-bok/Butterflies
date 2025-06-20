@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -22,7 +22,7 @@ public class ButterflyEgg extends DirectionalCreature {
 
     //  The name this block is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_egg";
+        return ButterflyInfo.SPECIES[butterflyIndex] + "_egg";
     }
 
     /**
