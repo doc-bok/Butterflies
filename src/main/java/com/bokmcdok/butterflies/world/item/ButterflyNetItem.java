@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -33,7 +33,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return "butterfly_net_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "butterfly_net_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     // The name this item is registered under.

@@ -1,12 +1,11 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -123,7 +122,7 @@ public class BlockRegistry {
         
         this.bottledButterflyBlocks = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     DeferredHolder<Block, Block> newBlock = registerBottledButterfly(i);
                     add(newBlock);
                 }
@@ -132,7 +131,7 @@ public class BlockRegistry {
         
         this.bottledCaterpillarBlocks = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     DeferredHolder<Block, Block> newBlock =
                             deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
                     add(newBlock);
@@ -486,7 +485,7 @@ public class BlockRegistry {
      * @return The registry ID.
      */
     private String getBottledButterflyRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     /**
@@ -495,7 +494,7 @@ public class BlockRegistry {
      * @return The registry ID.
      */
     private String getBottledCaterpillarRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_caterpillar_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     /**

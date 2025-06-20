@@ -43,7 +43,7 @@ FLOWERS = [
 ACHIEVEMENTS = "resources/data/butterflies/advancements/butterfly/"
 BIOME_MODIFIERS = "resources/data/butterflies/neoforge/biome_modifier/"
 BUTTERFLY_DATA = "resources/data/butterflies/butterfly_data/"
-CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflySpeciesList.java"
+CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflyInfo.java"
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly/"
@@ -158,7 +158,31 @@ class FrogFood(object):
 def generate_frog_food(species):
     print("Generating frog food...")
 
-    values = ["butterflies:" + i for i in species]
+    folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+    values = []
+
+    # Iterate over so we can exclude inedible butterflies.
+    for butterfly in species:
+        for i in range(len(folders)):
+            folder = folders[i]
+            try:
+                with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
+                    json_data = json.load(input_file)
+
+                # Check for the inedible trait before we add it.
+                traits = json_data["traits"]
+                if "inedible" not in traits:
+                    values += ["butterflies:" + butterfly]
+
+            except FileNotFoundError:
+                # doesn't exist
+                pass
+            else:
+                # exists
+                pass
+
+
+    #values = ["butterflies:" + i for i in species]
     frog_food = FrogFood(values)
 
     with open(FROG_FOOD, 'w') as file:
@@ -272,12 +296,50 @@ def generate_code(all):
 /**
  * Generated code - do not modify
  */
-public class ButterflySpeciesList {
+public class ButterflyInfo {
     public static final String[] SPECIES = {
 """)
 
         for butterfly in all:
             output_file.write("""            \"""" + butterfly + """\",
+""")
+        output_file.write("""    };
+""")
+
+        output_file.write("""
+    // A list of traits each butterfly has.
+    public static final ButterflyData.Trait[][] TRAITS = {
+""")
+
+        for butterfly in all:
+            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            traits = None
+            i = 0
+
+            while traits is None and i < len(folders):
+                folder = folders[i]
+                try:
+                    with open(BUTTERFLY_DATA + folder + butterfly + ".json", 'r', encoding="utf8") as input_file:
+                        json_data = json.load(input_file)
+
+                    traits = json_data["traits"]
+                except FileNotFoundError:
+                    # doesn't exist
+                    pass
+                else:
+                    # exists
+                    pass
+
+                i = i + 1
+
+
+            output_file.write("""        {
+""")
+
+            for trait in traits:
+                output_file.write("""            ButterflyData.Trait.""" + trait.upper() + """,
+""")
+            output_file.write("""        },
 """)
 
         output_file.write("""    };
@@ -387,7 +449,7 @@ def addSpawns(folder, species, is_male):
         addSingleSpawn("lush", species, weight, maximum, is_male)
         addSingleSpawn("plateau", species, weight, maximum, is_male)
 
-    if "savanna" in habitat:
+    if "savannas" in habitat:
         addSingleSpawn("savanna", species, weight, maximum, is_male)
 
     if "villages" in habitat:

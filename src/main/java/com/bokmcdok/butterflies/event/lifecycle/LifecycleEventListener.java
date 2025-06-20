@@ -5,7 +5,8 @@ import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscope
 import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.google.common.collect.Maps;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceKey;
@@ -58,12 +59,15 @@ public class LifecycleEventListener {
     @SubscribeEvent
     private void commonSetup(FMLCommonSetupEvent event) {
 
-        // Brewing Monarch Butterflies into poison.
-        int monarchIndex = Arrays.asList(ButterflySpeciesList.SPECIES).indexOf("monarch");
-        BrewingRecipeRegistry.addRecipe(
-                Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-                Ingredient.of(itemRegistry.getBottledButterflies().get(monarchIndex).get()),
-                PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
+        // Check for the poisonous trait
+        for (int i = 0; i < ButterflyInfo.TRAITS.length; ++i) {
+            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
+                BrewingRecipeRegistry.addRecipe(
+                        Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
+                        Ingredient.of(itemRegistry.getBottledButterflies().get(i).get()),
+                        PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
+            }
+        }
 
         // Butterfly Sherd Pattern.
         Map<Item, ResourceKey<String>> itemToPotTextureMap = Maps.newHashMap(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
