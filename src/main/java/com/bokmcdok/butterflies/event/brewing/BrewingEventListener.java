@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.event.brewing;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import net.minecraft.world.item.alchemy.Potions;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -36,12 +37,15 @@ public class BrewingEventListener {
     @SubscribeEvent
     private void onRegisterBrewingRecipes(RegisterBrewingRecipesEvent event) {
 
-        // Brewing Monarch Butterflies into poison.
-        int monarchIndex = Arrays.asList(ButterflySpeciesList.SPECIES).indexOf("monarch");
-        event.getBuilder().addMix(
-                Potions.AWKWARD,
-                itemRegistry.getBottledButterflies().get(monarchIndex).get(),
-                Potions.POISON
-        );
+        // Check for the poisonous trait
+        for (int i = 0; i < ButterflyInfo.TRAITS.length; ++i) {
+            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
+                event.getBuilder().addMix(
+                        Potions.AWKWARD,
+                        itemRegistry.getBottledButterflies().get(i).get(),
+                        Potions.POISON
+                );
+            }
+        }
     }
 }
