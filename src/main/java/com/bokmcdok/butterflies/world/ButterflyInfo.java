@@ -5,7 +5,7 @@ package com.bokmcdok.butterflies.world;
  * Provides data that needs to be accessed before butterfly data files are
  * loaded.
  */
-public class ButterflySpeciesList {
+public class ButterflyInfo {
 
     // A list of all the species in the mod.
     public static final String[] SPECIES = {
@@ -32,6 +32,7 @@ public class ButterflySpeciesList {
             "clipperwhite",
             "clipperyellow",
             "commander",
+            "common-crow",
             "common-mime",
             "common",
             "commonbirdwing",
@@ -68,8 +69,136 @@ public class ButterflySpeciesList {
             "light",
     };
 
+    // A list of traits each butterfly has.
+    public static final ButterflyData.Trait[][] TRAITS = {
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.CHRISTMASSY,
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.INEDIBLE,
+            ButterflyData.Trait.POISONOUS,
+        },
+        {
+            ButterflyData.Trait.MIMICRY,
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.CATFRIEND,
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.MOTHWANDERER,
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.POISONOUS,
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+    };
+
     // A list of types of  butterflies.
     public static final ButterflyData.ButterflyType[] TYPES = {
+            ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
@@ -153,6 +282,7 @@ public class ButterflySpeciesList {
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,

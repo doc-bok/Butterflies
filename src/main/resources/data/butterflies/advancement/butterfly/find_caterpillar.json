@@ -288,6 +288,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "common-crow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_common-crow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common-mime": {
       "conditions": {
         "items": [
@@ -510,6 +522,7 @@
       "clipperwhite",
       "clipperyellow",
       "commander",
+      "common-crow",
       "common-mime",
       "common",
       "commonbirdwing",

@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.*;
@@ -98,7 +98,7 @@ public class ItemRegistry {
 
         this.bottledButterflies = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerBottledButterfly(i));
                 }
             }
@@ -106,7 +106,7 @@ public class ItemRegistry {
 
         this.bottledCaterpillars = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerBottledCaterpillar(i));
                 }
             }
@@ -118,7 +118,7 @@ public class ItemRegistry {
 
         this.butterflyEggs = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterflyEgg(i));
                 }
             }
@@ -129,7 +129,7 @@ public class ItemRegistry {
 
         this.butterflyNets = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterflyNet(i));
                 }
             }
@@ -156,7 +156,7 @@ public class ItemRegistry {
 
         this.butterflyScrolls = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterflyScroll(i));
                 }
             }
@@ -166,7 +166,7 @@ public class ItemRegistry {
 
         this.butterflySpawnEggs = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterflySpawnEgg(i));
                 }
             }
@@ -174,7 +174,7 @@ public class ItemRegistry {
 
         this.caterpillars = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerCaterpillar(i));
                 }
             }
@@ -182,7 +182,7 @@ public class ItemRegistry {
 
         this.caterpillarSpawnEggs = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerCaterpillarSpawnEgg(i));
                 }
             }
@@ -258,7 +258,7 @@ public class ItemRegistry {
     public DeferredHolder<Item, Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return emptyButterflyNet;
-        } else if (Objects.equals(ButterflySpeciesList.SPECIES[butterflyIndex], "lava")) {
+        } else if (Objects.equals(ButterflyInfo.SPECIES[butterflyIndex], "lava")) {
             return burntButterflyNet;
         } else {
             return butterflyNets.get(butterflyIndex);

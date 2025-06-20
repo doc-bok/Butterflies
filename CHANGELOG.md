@@ -1,5 +1,9 @@
 ## Changelog
 
+
+### 6.3.0 (2026-06-20)
+- Added the crow butterfly.
+
 ### 6.2.1 (2025-06-16)
 - Regenerated butterfly data.
 

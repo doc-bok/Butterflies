@@ -1,0 +1,18 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:bottled_butterfly_common-crow"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_scroll_common-crow"
+  },
+  "type": "minecraft:crafting_shapeless"
+}

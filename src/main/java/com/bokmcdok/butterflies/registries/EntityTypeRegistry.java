@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.ButterflyMobCategory;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
@@ -82,7 +82,7 @@ public class EntityTypeRegistry {
 
         this.butterflies = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterfly(i));
                 }
             }
@@ -90,7 +90,7 @@ public class EntityTypeRegistry {
 
         this.caterpillars = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerCaterpillar(i));
                 }
             }
@@ -98,7 +98,7 @@ public class EntityTypeRegistry {
 
         this.chrysalises = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerChrysalis(i));
                 }
             }
@@ -106,7 +106,7 @@ public class EntityTypeRegistry {
 
         this.butterflyEggs = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterflyEgg(i));
                 }
             }
