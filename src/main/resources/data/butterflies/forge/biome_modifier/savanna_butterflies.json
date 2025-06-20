@@ -24,6 +24,30 @@
       "minCount": 1,
       "type": "butterflies:buckeye_egg",
       "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_egg",
+      "weight": 100
     }
   ],
   "type": "forge:add_spawns"

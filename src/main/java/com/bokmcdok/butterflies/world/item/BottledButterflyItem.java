@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -35,7 +35,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
 
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     private static final String NAME = "block.butterflies.bottled_butterfly";
