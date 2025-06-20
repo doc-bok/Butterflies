@@ -1,9 +1,14 @@
 package com.bokmcdok.butterflies.world;
 
 /**
- * Generated code - do not modify
+ * Generated code - do not modify.
+ * Provides data that needs to be accessed before butterfly data files are
+ * loaded.
  */
+ 
 public class ButterflyInfo {
+
+    // A list of all the species in the mod.
     public static final String[] SPECIES = {
             "admiral",
             "bluemoon",
@@ -190,5 +195,261 @@ public class ButterflyInfo {
         },
         {
         },
+    };
+
+    // A list of habitats butterflies can be found in.
+    public static final ButterflyData.Habitat[][] HABITATS = {
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.SAVANNAS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.HILLS,
+            ButterflyData.Habitat.PLATEAUS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.HILLS,
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.PLATEAUS,
+            ButterflyData.Habitat.SAVANNAS,
+        },
+        {
+            ButterflyData.Habitat.HILLS,
+            ButterflyData.Habitat.PLATEAUS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.WETLANDS,
+        },
+        {
+            ButterflyData.Habitat.VILLAGES,
+        },
+        {
+            ButterflyData.Habitat.VILLAGES,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.VILLAGES,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
+            ButterflyData.Habitat.JUNGLES,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.ICE,
+        },
+        {
+            ButterflyData.Habitat.NETHER,
+        },
+        {
+        },
+    };
+
+    // A list of how rare each butterfly is.
+    public static final ButterflyData.Rarity[] RARITIES = {
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
+            ButterflyData.Rarity.RARE,
     };
 }
