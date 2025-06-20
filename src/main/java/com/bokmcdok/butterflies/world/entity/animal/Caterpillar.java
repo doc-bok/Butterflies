@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
 
     //  The name this block is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_caterpillar";
+        return ButterflyInfo.SPECIES[butterflyIndex] + "_caterpillar";
     }
 
     // Serializers for data stored in the save data.
