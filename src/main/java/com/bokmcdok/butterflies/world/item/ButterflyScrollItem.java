@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.ChatFormatting;
@@ -43,7 +43,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
 
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return "butterfly_scroll_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "butterfly_scroll_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     //  TODO: Remove in future version.

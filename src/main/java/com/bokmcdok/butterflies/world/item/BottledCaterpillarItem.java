@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
@@ -39,7 +39,7 @@ public class BottledCaterpillarItem extends BlockItem {
     //  The name this item is registered under.
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_caterpillar_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     private static final String NAME = "block.butterflies.bottled_caterpillar";

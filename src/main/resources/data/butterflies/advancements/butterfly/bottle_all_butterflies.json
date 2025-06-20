@@ -300,6 +300,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "common-crow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_common-crow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "common-mime": {
       "conditions": {
         "items": [
@@ -566,6 +578,9 @@
     ],
     [
       "commander"
+    ],
+    [
+      "common-crow"
     ],
     [
       "common-mime"
