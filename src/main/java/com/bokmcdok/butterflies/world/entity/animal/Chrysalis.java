@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,7 +21,7 @@ public class Chrysalis extends DirectionalCreature {
 
     //  The name this entity is registered under.
     public static String getRegistryId(int butterflyIndex) {
-        return ButterflySpeciesList.SPECIES[butterflyIndex] + "_chrysalis";
+        return ButterflyInfo.SPECIES[butterflyIndex] + "_chrysalis";
     }
 
     /**

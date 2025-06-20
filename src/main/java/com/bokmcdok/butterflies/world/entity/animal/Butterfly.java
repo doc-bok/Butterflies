@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import net.minecraft.core.BlockPos;
@@ -46,7 +46,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Calendar;
-import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -124,7 +123,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return The Registry ID of this entity type.
      */
     public static String getRegistryId(int butterflyIndex) {
-        return ButterflySpeciesList.SPECIES[butterflyIndex];
+        return ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     /**
@@ -496,12 +495,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             public boolean isStableDestination(@NotNull BlockPos blockPos) {
                 return true;
             }
-
         };
 
-        if (getData().speed() == ButterflyData.Speed.FAST) {
-
-            navigation.setSpeedModifier(1.2);
+        switch (getData().speed()) {
+            case SLOW -> navigation.setSpeedModifier(0.8);
+            case MODERATE -> navigation.setSpeedModifier(1.0);
+            case FAST -> navigation.setSpeedModifier(1.2);
         }
 
         navigation.setCanOpenDoors(false);

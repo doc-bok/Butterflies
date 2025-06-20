@@ -1,5 +1,7 @@
 ## Changelog
 
+### 6.3.0 (2026-06-20)
+- Added the crow butterfly.
 
 ### 6.2.0 (2025-06-12)
 - Added the mimic butterfly.

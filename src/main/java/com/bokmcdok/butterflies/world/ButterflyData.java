@@ -100,13 +100,13 @@ public record ButterflyData(int butterflyIndex,
     // they will actually spawn.
     public enum Habitat {
         FORESTS,
+        HILLS,
         ICE,
         JUNGLES,
-        PLAINS,
         NETHER,
-        SAVANNAS,
-        HILLS,
+        PLAINS,
         PLATEAUS,
+        SAVANNAS,
         VILLAGES,
         WETLANDS
     }
@@ -155,6 +155,7 @@ public record ButterflyData(int butterflyIndex,
 
     // Represents the speed of a butterfly.
     public enum Speed {
+        SLOW,
         MODERATE,
         FAST
     }
@@ -163,8 +164,10 @@ public record ButterflyData(int butterflyIndex,
     public enum Trait {
         CATFRIEND,
         CHRISTMASSY,
+        INEDIBLE,
         MIMICRY,
-        MOTHWANDERER
+        MOTHWANDERER,
+        POISONOUS
     }
 
     // Constants representing the base life spans of each butterfly cycle.
@@ -664,6 +667,7 @@ public record ButterflyData(int butterflyIndex,
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.speed"));
             switch (entry.speed()) {
+                case SLOW -> component.append(Component.translatable("gui.butterflies.speed.slow"));
                 case MODERATE -> component.append(Component.translatable("gui.butterflies.speed.moderate"));
                 case FAST -> component.append(Component.translatable("gui.butterflies.speed.fast"));
                 default -> {
