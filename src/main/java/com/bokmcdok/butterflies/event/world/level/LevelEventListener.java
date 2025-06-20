@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.event.world.level;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
@@ -55,16 +55,16 @@ public class LevelEventListener {
             int weight = 12;
             int maximum = 4;
             
-            if (ButterflySpeciesList.RARITIES[i] == ButterflyData.Rarity.UNCOMMON) {
+            if (ButterflyInfo.RARITIES[i] == ButterflyData.Rarity.UNCOMMON) {
                 weight = 8;
                 maximum = 3;
-            } else if (ButterflySpeciesList.RARITIES[i] == ButterflyData.Rarity.RARE) {
+            } else if (ButterflyInfo.RARITIES[i] == ButterflyData.Rarity.RARE) {
                 weight = 4;
                 maximum = 2;
             }
 
             // If the butterfly is in this habitat then add them to the spawn list.
-            for (ButterflyData.Habitat habitat : ButterflySpeciesList.HABITATS[i]) {
+            for (ButterflyData.Habitat habitat : ButterflyInfo.HABITATS[i]) {
                 switch (habitat) {
                     case FORESTS:
                         if (event.getCategory().equals(Biome.BiomeCategory.FOREST)) {
