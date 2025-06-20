@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.event.entity;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -15,8 +16,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.SpawnPlacementRegisterEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.Objects;
 
 /**
  * Holds event listeners for entities.
@@ -44,13 +43,27 @@ public class EntityEventListener {
     }
 
     /**
+     * Used to stop entities from attacking inedible butterflies.
+     * @param entity The entity the cat wants to target.
+     * @return TRUE if the entity is any butterfly except for a Forester.
+     */
+    private static boolean isButterflyEdible(LivingEntity entity) {
+        if (entity instanceof Butterfly butterfly) {
+            return !butterfly.getData().hasTrait(ButterflyData.Trait.INEDIBLE);
+        }
+
+        return false;
+    }
+
+    /**
      * Used to stop cats from attacking forester butterflies.
      * @param entity The entity the cat wants to target.
      * @return TRUE if the entity is any butterfly except for a Forester.
      */
     private static boolean isButterflyAttackableByCat(LivingEntity entity) {
         if (entity instanceof Butterfly butterfly) {
-            return !Objects.equals(butterfly.getData().entityId(), "forester");
+            return !butterfly.getData().hasTrait(ButterflyData.Trait.CATFRIEND) &&
+                    isButterflyEdible(entity);
         }
 
         return false;
@@ -94,7 +107,7 @@ public class EntityEventListener {
         //  Foxes
         if (event.getEntity() instanceof Fox fox) {
             fox.targetSelector.addGoal(5, new NearestAttackableTargetGoal<>(
-                    fox, Butterfly.class, false));
+                    fox, Butterfly.class, false, EntityEventListener::isButterflyEdible));
         }
 
         //  Ocelots and Parrots
@@ -103,7 +116,7 @@ public class EntityEventListener {
 
             Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(
-                    mob, Butterfly.class, false));
+                    mob, Butterfly.class, false, EntityEventListener::isButterflyEdible));
         }
 
         //  Spiders, Cave Spiders, Witches, and Zombies of all kinds
@@ -113,13 +126,13 @@ public class EntityEventListener {
 
             Mob mob = (Mob) event.getEntity();
             mob.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(
-                    mob, Butterfly.class, false));
+                    mob, Butterfly.class, false, EntityEventListener::isButterflyEdible));
         }
 
         //  Wolf
         if (event.getEntity() instanceof Wolf wolf) {
             wolf.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(
-                    wolf, Butterfly.class, false, null));
+                    wolf, Butterfly.class, false, EntityEventListener::isButterflyEdible));
         }
     }
 

@@ -7,7 +7,7 @@
   "habitats": [
     "plains"
   ],
-  "index": 34,
+  "index": 35,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "short",
@@ -23,6 +23,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
-  "traits": [],
+  "traits": [
+    "poisonous"
+  ],
   "type": "butterfly"
 }
