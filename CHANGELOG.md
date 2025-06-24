@@ -1,6 +1,9 @@
 ## Changelog
 
-### 6.3.0 (2026-06-20)
+### 6.3.1 (2025-06-24)
+- Fixed items not dropping from Butterfly Scrolls after reload.
+
+### 6.3.0 (2025-06-20)
 - Added the crow butterfly.
 
 ### 6.2.0 (2025-06-12)
