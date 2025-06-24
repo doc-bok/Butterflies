@@ -24,7 +24,8 @@
   },
   "speed": "fast",
   "traits": [
-    "glow"
+    "glow",
+    "icy"
   ],
   "type": "special"
 }

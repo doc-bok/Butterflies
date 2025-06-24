@@ -195,9 +195,11 @@ public class ButterflyInfo {
         },
         {
             ButterflyData.Trait.GLOW,
+            ButterflyData.Trait.ICY,
         },
         {
             ButterflyData.Trait.GLOW,
+            ButterflyData.Trait.LAVA,
         },
         {
             ButterflyData.Trait.GLOW,

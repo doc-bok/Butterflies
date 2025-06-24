@@ -24,7 +24,8 @@
   },
   "speed": "fast",
   "traits": [
-    "glow"
+    "glow",
+    "lava"
   ],
   "type": "special"
 }
