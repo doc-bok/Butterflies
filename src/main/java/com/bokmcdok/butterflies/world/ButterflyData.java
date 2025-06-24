@@ -161,6 +161,8 @@ public record ButterflyData(int butterflyIndex,
     public enum Trait {
         CATFRIEND,
         CHRISTMASSY,
+        GLOW,
+        HUMMINGBIRD,
         INEDIBLE,
         MIMICRY,
         MOTHWANDERER,

@@ -171,6 +171,7 @@ public class ButterflyInfo {
         {
         },
         {
+            ButterflyData.Trait.HUMMINGBIRD,
         },
         {
         },
@@ -185,10 +186,13 @@ public class ButterflyInfo {
         {
         },
         {
+            ButterflyData.Trait.GLOW,
         },
         {
+            ButterflyData.Trait.GLOW,
         },
         {
+            ButterflyData.Trait.GLOW,
         },
     };
 }

@@ -23,6 +23,8 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [],
+  "traits": [
+    "glow"
+  ],
   "type": "special"
 }
