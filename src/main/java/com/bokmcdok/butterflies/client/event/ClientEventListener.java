@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.client.event;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.*;
 import com.bokmcdok.butterflies.client.renderer.blockentity.ButterflyFeederEntityRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
@@ -13,7 +12,6 @@ import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;

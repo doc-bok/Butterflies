@@ -1,13 +1,13 @@
 {
   "breedTarget": "none",
-  "diurnality": "nocturnal",
+  "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
   "habitats": [
     "plains"
   ],
-  "index": 48,
+  "index": 49,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
