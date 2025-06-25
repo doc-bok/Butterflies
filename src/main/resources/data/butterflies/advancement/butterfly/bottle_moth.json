@@ -36,6 +36,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "clearwing-hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_clearwing-hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clothes": {
       "conditions": {
         "items": [
@@ -167,6 +179,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "white-lined-sphinx": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_white-lined-sphinx"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -190,6 +214,7 @@
       "atlas",
       "carpet",
       "case-bearing-clothes",
+      "clearwing-hummingbird",
       "clothes",
       "codling",
       "diamondback",
@@ -200,6 +225,7 @@
       "oak-silk",
       "peppered",
       "spongy",
+      "white-lined-sphinx",
       "spongymale"
     ]
   ]

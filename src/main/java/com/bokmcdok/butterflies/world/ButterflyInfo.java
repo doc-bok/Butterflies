@@ -53,6 +53,7 @@ public class ButterflyInfo {
             "atlas",
             "carpet",
             "case-bearing-clothes",
+            "clearwing-hummingbird",
             "clothes",
             "codling",
             "diamondback",
@@ -63,6 +64,7 @@ public class ButterflyInfo {
             "oak-silk",
             "peppered",
             "spongy",
+            "white-lined-sphinx",
             "spongymale",
             "ice",
             "lava",
@@ -167,6 +169,18 @@ public class ButterflyInfo {
         {
         },
         {
+            ButterflyData.Trait.HUMMINGBIRD,
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+            ButterflyData.Trait.HUMMINGBIRD,
         },
         {
         },
@@ -179,20 +193,20 @@ public class ButterflyInfo {
         {
         },
         {
+            ButterflyData.Trait.HUMMINGBIRD,
         },
         {
         },
         {
+            ButterflyData.Trait.GLOW,
+            ButterflyData.Trait.ICY,
         },
         {
+            ButterflyData.Trait.GLOW,
+            ButterflyData.Trait.LAVA,
         },
         {
-        },
-        {
-        },
-        {
-        },
-        {
+            ButterflyData.Trait.GLOW,
         },
     };
 

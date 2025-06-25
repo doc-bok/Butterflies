@@ -1,0 +1,30 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "white-lined-sphinx",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "plains"
+  ],
+  "index": 55,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "consume",
+  "preferredFlower": "azure_bluet",
+  "rarity": "uncommon",
+  "size": "medium",
+  "sounds": {
+    "butterfly": true,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [
+    "hummingbird"
+  ],
+  "type": "moth"
+}
