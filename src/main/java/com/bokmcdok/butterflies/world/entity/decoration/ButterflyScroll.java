@@ -9,6 +9,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -78,9 +82,9 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void dropItem(@Nullable Entity entity) {
         if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
-            ResourceLocation location = new ResourceLocation(
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(
                     ButterfliesMod.MOD_ID,
-                    ButterflyScrollItem.getRegistryId(butterflyIndex));
+                    ButterflyScrollItem.getRegistryId(getButterflyIndex()));
             Item item = BuiltInRegistries.ITEM.get(location);
             ItemStack stack = new ItemStack(item);
             this.spawnAtLocation(stack);
