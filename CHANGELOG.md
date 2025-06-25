@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.4.0 (2025-06-25)
+- Added Hummingbird Moth variants.
+
 ### 6.3.1 (2025-06-24)
 - Fixed items not dropping from Butterfly Scrolls after reload.
 
