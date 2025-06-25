@@ -1,10 +1,12 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -19,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -82,11 +83,9 @@ public class ButterflyScroll extends HangingEntity {
             ResourceLocation location = new ResourceLocation(
                     ButterfliesMod.MOD_ID,
                     ButterflyScrollItem.getRegistryId(butterflyIndex));
-            Item item = ForgeRegistries.ITEMS.getValue(location);
-            if (item != null) {
-                ItemStack stack = new ItemStack(item);
-                this.spawnAtLocation(stack);
-            }
+            Item item = BuiltInRegistries.ITEM.get(location);
+            ItemStack stack = new ItemStack(item);
+            this.spawnAtLocation(stack);
         }
     }
 
