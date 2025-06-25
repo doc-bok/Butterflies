@@ -1,0 +1,31 @@
+{
+  "breedTarget": "none",
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "clearwing-hummingbird",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "plains",
+    "ice"
+  ],
+  "index": 44,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "consume",
+  "preferredFlower": "white_tulip",
+  "rarity": "uncommon",
+  "size": "small",
+  "sounds": {
+    "butterfly": true,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [
+    "hummingbird"
+  ],
+  "type": "moth"
+}
