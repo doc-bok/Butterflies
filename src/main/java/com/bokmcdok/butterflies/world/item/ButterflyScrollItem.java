@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
@@ -39,7 +38,6 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
 
     // Reference to the entity type registry.
     private final EntityTypeRegistry entityTypeRegistry;
-    private final ItemRegistry itemRegistry;
 
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
@@ -56,12 +54,10 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
      * Construction
      */
     public ButterflyScrollItem(EntityTypeRegistry entityTypeRegistry,
-                               ItemRegistry itemRegistry,
                                int butterflyIndex) {
         super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
 
         this.entityTypeRegistry = entityTypeRegistry;
-        this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -168,7 +164,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                 }
 
                 if (butterflyIndex >= 0) {
-                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, itemRegistry, level, blockPos, clickedFace);
+                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, level, blockPos, clickedFace);
 
                     butterflyScroll.setButterflyIndex(butterflyIndex);
 
