@@ -79,7 +79,7 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+        if (this.level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
             ResourceLocation location = new ResourceLocation(
                     ButterfliesMod.MOD_ID,
                     ButterflyScrollItem.getRegistryId(butterflyIndex));

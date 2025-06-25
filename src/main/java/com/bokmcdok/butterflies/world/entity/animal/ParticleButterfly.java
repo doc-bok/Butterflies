@@ -27,7 +27,7 @@ public class ParticleButterfly extends Butterfly {
         super.aiStep();
 
         if (this.random.nextInt(16) == 1) {
-            this.level().addParticle(this.particleType,
+            this.level.addParticle(this.particleType,
                     this.getRandomX(0.6),
                     this.getRandomY(),
                     this.getRandomZ(0.6),
