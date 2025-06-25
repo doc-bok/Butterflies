@@ -165,10 +165,14 @@ public record ButterflyData(int butterflyIndex,
     public enum Trait {
         CATFRIEND,
         CHRISTMASSY,
+        GLOW,
+        HUMMINGBIRD,
+        ICY,
         INEDIBLE,
         MIMICRY,
         MOTHWANDERER,
-        POISONOUS
+        POISONOUS,
+        LAVA
     }
 
     // Constants representing the base life spans of each butterfly cycle.
