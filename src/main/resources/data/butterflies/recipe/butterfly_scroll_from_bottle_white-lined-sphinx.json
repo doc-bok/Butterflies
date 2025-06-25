@@ -1,0 +1,18 @@
+{
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:bottled_butterfly_white-lined-sphinx"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "id": "butterflies:butterfly_scroll_white-lined-sphinx"
+  },
+  "type": "minecraft:crafting_shapeless"
+}
