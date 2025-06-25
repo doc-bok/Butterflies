@@ -547,7 +547,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(entityTypeRegistry, this, butterflyIndex));
+                () -> new ButterflyScrollItem(entityTypeRegistry, butterflyIndex));
     }
 
     /**
