@@ -2,6 +2,16 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -13,6 +23,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 /**
  * An entity representing a hanging butterfly scroll.
@@ -59,13 +71,17 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void dropItem(@NotNull ServerLevel level,
                          @Nullable Entity entity) {
-        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+        if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(
                     ButterfliesMod.MOD_ID,
                     ButterflyScrollItem.getRegistryId(getButterflyIndex()));
-            Item item = BuiltInRegistries.ITEM.get(location);
-            ItemStack stack = new ItemStack(item);
-            this.spawnAtLocation(stack);
+
+            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(location);
+            if (item.isPresent()) {
+                ItemStack stack = new ItemStack(item.get());
+                this.spawnAtLocation(level, stack);
+            }
         }
     }
 

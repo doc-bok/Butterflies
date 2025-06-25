@@ -76,14 +76,14 @@ public class ClientEventListener {
     {
         event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
         // Register the butterfly renderers.
-        List<DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>>> butterflies = entityTypeRegistry.getButterflies();
+        List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> butterflies = entityTypeRegistry.getButterflies();
         for (int i = 0; i < butterflies.size(); ++i) {
 
             // Get the renderer provider.
             EntityRendererProvider<Butterfly> rendererProvider = getButterflyEntityRendererProvider(i);
 
             // Register the selected renderer provider.
-            event.registerEntityRenderer(butterflies.get(i).get(), rendererProvider);
+            event.registerEntityRenderer((EntityType<Butterfly>)butterflies.get(i).get(), rendererProvider);
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getCaterpillars()) {
