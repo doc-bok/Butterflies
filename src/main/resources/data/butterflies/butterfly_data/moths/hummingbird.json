@@ -1,13 +1,13 @@
 {
   "breedTarget": "none",
-  "diurnality": "nocturnal",
+  "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
   "habitats": [
     "plains"
   ],
-  "index": 47,
+  "index": 49,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -23,6 +23,8 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [],
+  "traits": [
+    "hummingbird"
+  ],
   "type": "moth"
 }

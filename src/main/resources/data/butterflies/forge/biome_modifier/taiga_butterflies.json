@@ -100,6 +100,30 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:common-crow",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:common-crow_egg",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:common",
       "weight": 100
     },
@@ -318,6 +342,30 @@
       "minCount": 1,
       "type": "butterflies:atlas_egg",
       "weight": 20
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_caterpillar",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_chrysalis",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_egg",
+      "weight": 50
     },
     {
       "maxCount": 4,

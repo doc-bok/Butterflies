@@ -1,11 +1,11 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflySpeciesList;
+import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,6 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -122,7 +123,7 @@ public class BlockRegistry {
         
         this.bottledButterflyBlocks = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     RegistryObject<Block> newBlock = registerBottledButterfly(i);
                     add(newBlock);
                 }
@@ -131,7 +132,7 @@ public class BlockRegistry {
         
         this.bottledCaterpillarBlocks = new ArrayList<>() {
             {
-                for (int i = 0; i < ButterflySpeciesList.SPECIES.length; ++i) {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     RegistryObject<Block> newBlock =
                             deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
                     add(newBlock);
@@ -485,7 +486,7 @@ public class BlockRegistry {
      * @return The registry ID.
      */
     private String getBottledButterflyRegistryId(int butterflyIndex) {
-        return "bottled_butterfly_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     /**
@@ -494,7 +495,7 @@ public class BlockRegistry {
      * @return The registry ID.
      */
     private String getBottledCaterpillarRegistryId(int butterflyIndex) {
-        return "bottled_caterpillar_" + ButterflySpeciesList.SPECIES[butterflyIndex];
+        return "bottled_caterpillar_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
     /**
@@ -514,7 +515,7 @@ public class BlockRegistry {
                 .strength(0.3F);
 
         // Light Butterflies glow when they are in a bottle.
-        if (registryId.equals("bottled_butterfly_light")) {
+        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
             properties.lightLevel((blockState) -> 15);
         }
 

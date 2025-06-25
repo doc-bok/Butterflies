@@ -7,7 +7,7 @@
   "habitats": [
     "nether"
   ],
-  "index": 55,
+  "index": 58,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -23,6 +23,9 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [],
+  "traits": [
+    "glow",
+    "lava"
+  ],
   "type": "special"
 }

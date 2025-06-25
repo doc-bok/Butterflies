@@ -1,10 +1,26 @@
 {
-  "luna": {
-    "subtitle": "butterflies.subtitle.luna_caterpillar",
-    "sounds": [ "butterflies:luna_caterpillar" ]
+  "clearwing-hummingbird": {
+    "subtitle": "butterflies.subtitle.clearwing-hummingbird",
+    "sounds": [
+      "butterflies:hummingbird"
+    ]
   },
   "hummingbird": {
     "subtitle": "butterflies.subtitle.hummingbird",
-    "sounds": [ "butterflies:hummingbird" ]
+    "sounds": [
+      "butterflies:hummingbird"
+    ]
+  },
+  "luna": {
+    "subtitle": "butterflies.subtitle.luna_caterpillar",
+    "sounds": [
+      "butterflies:luna_caterpillar"
+    ]
+  },
+  "white-lined-sphinx": {
+    "subtitle": "butterflies.subtitle.clearwing-hummingbird",
+    "sounds": [
+      "butterflies:hummingbird"
+    ]
   }
 }

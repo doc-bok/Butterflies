@@ -108,6 +108,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "clearwing-hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clearwing-hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "clipper": {
       "conditions": {
         "items": [
@@ -342,6 +354,18 @@
           {
             "items": [
               "butterflies:butterfly_scroll_common"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "common-crow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_common-crow"
             ]
           }
         ]
@@ -623,6 +647,18 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "white-lined-sphinx": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_white-lined-sphinx"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -666,6 +702,7 @@
       "clipperwhite",
       "clipperyellow",
       "commander",
+      "common-crow",
       "common-mime",
       "common",
       "commonbirdwing",
@@ -685,6 +722,7 @@
       "atlas",
       "carpet",
       "case-bearing-clothes",
+      "clearwing-hummingbird",
       "clothes",
       "codling",
       "diamondback",
@@ -694,7 +732,8 @@
       "luna",
       "oak-silk",
       "peppered",
-      "spongy"
+      "spongy",
+      "white-lined-sphinx"
     ]
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "breedTarget": "none",
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "common-crow",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "forests",
+    "hills",
+    "plains",
+    "plateaus",
+    "savannas"
+  ],
+  "index": 23,
+  "lifespan": {
+    "butterfly": "long",
+    "caterpillar": "long",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "red_tulip",
+  "rarity": "common",
+  "size": "large",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "slow",
+  "traits": [
+    "inedible",
+    "poisonous"
+  ],
+  "type": "butterfly"
+}

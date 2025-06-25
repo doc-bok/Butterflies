@@ -2,21 +2,25 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
+import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,9 +28,6 @@ import org.jetbrains.annotations.Nullable;
  * An entity representing a hanging butterfly scroll.
  */
 public class ButterflyScroll extends HangingEntity {
-
-    // Reference to the item registry.
-    private ItemRegistry itemRegistry;
 
     // The name used for registration.
     public static final String NAME = "butterfly_scroll";
@@ -52,13 +53,11 @@ public class ButterflyScroll extends HangingEntity {
      * @param direction The direction the scroll is facing.
      */
     public ButterflyScroll(EntityTypeRegistry entityTypeRegistry,
-                           ItemRegistry itemRegistry,
                            Level level,
                            BlockPos blockPos,
                            Direction direction) {
         this(entityTypeRegistry.getButterflyScroll().get(), level);
 
-        this.itemRegistry = itemRegistry;
         this.pos = blockPos;
         this.setDirection(direction);
     }
@@ -70,7 +69,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putByte("Facing", (byte)this.direction.get3DDataValue());
+        tag.putByte(CompoundTagId.FACING, (byte)this.direction.get3DDataValue());
         tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, this.butterflyIndex);
     }
 
@@ -80,8 +79,16 @@ public class ButterflyScroll extends HangingEntity {
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(this.butterflyIndex).get());
-        this.spawnAtLocation(stack);
+        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+            ResourceLocation location = new ResourceLocation(
+                    ButterfliesMod.MOD_ID,
+                    ButterflyScrollItem.getRegistryId(butterflyIndex));
+            Item item = ForgeRegistries.ITEMS.getValue(location);
+            if (item != null) {
+                ItemStack stack = new ItemStack(item);
+                this.spawnAtLocation(stack);
+            }
+        }
     }
 
     /**
@@ -136,7 +143,7 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.setDirection(Direction.from3DDataValue(tag.getByte("Facing")));
+        this.setDirection(Direction.from3DDataValue(tag.getByte(CompoundTagId.FACING)));
 
         if (tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
             this.butterflyIndex = tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA);
