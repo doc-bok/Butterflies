@@ -314,6 +314,30 @@
       "weight": 100
     },
     {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_caterpillar",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_chrysalis",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_egg",
+      "weight": 50
+    },
+    {
       "maxCount": 4,
       "minCount": 1,
       "type": "butterflies:diamondback",
@@ -359,6 +383,30 @@
       "maxCount": 3,
       "minCount": 1,
       "type": "butterflies:hummingbird_egg",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:white-lined-sphinx",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:white-lined-sphinx_caterpillar",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:white-lined-sphinx_chrysalis",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:white-lined-sphinx_egg",
       "weight": 50
     }
   ],

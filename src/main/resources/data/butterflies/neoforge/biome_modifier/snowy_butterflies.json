@@ -2,6 +2,30 @@
   "biomes": "#c:is_snowy",
   "spawners": [
     {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_caterpillar",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_chrysalis",
+      "weight": 50
+    },
+    {
+      "maxCount": 3,
+      "minCount": 1,
+      "type": "butterflies:clearwing-hummingbird_egg",
+      "weight": 50
+    },
+    {
       "maxCount": 2,
       "minCount": 1,
       "type": "butterflies:ice",

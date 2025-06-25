@@ -654,7 +654,6 @@ public class ItemRegistry {
                         new Item.Properties().setId(key),
                         dataComponentRegistry,
                         entityTypeRegistry,
-                        this,
                         butterflyIndex));
     }
 

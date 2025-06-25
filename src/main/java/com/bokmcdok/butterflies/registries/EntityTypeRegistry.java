@@ -1,10 +1,12 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.ButterflyMobCategory;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -17,8 +19,10 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -182,7 +186,7 @@ public class EntityTypeRegistry {
      */
     private Butterfly createIceButterfly(EntityType<? extends Butterfly> entityType,
                                          Level level) {
-        return new IceButterfly(blockRegistry, entityType, level);
+        return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.ELECTRIC_SPARK);
     }
 
     /**
@@ -193,7 +197,28 @@ public class EntityTypeRegistry {
      */
     private Butterfly createLavaMoth(EntityType<? extends Butterfly> entityType,
                                          Level level) {
-        return new LavaMoth(blockRegistry, entityType, level);
+        return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
+    }
+
+    /**
+     * Get the entity factory to use based on butterfly traits.
+     * @param butterflyIndex The index of the butterfly.
+     * @return A new entity factory.
+     */
+    private EntityType.@NotNull EntityFactory<Butterfly> getEntityFactory(int butterflyIndex) {
+        EntityType.EntityFactory<Butterfly> entityFactory = this::createButterfly;
+
+        // Ice Butterfly
+        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.ICY)) {
+            entityFactory = this::createIceButterfly;
+        }
+
+        // Lava Moth
+        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.LAVA)) {
+            entityFactory = this::createLavaMoth;
+        }
+
+        return entityFactory;
     }
 
     /**
@@ -206,9 +231,6 @@ public class EntityTypeRegistry {
 
         String registryId = Butterfly.getRegistryId(butterflyIndex);
 
-        float width = 0.3f;
-        float height = 0.2f;
-
         // Create the resource key.
         ResourceKey<EntityType<?>> key = ResourceKey.create(
                 Registries.ENTITY_TYPE,
@@ -216,27 +238,10 @@ public class EntityTypeRegistry {
                         ButterfliesMod.MOD_ID,
                         Butterfly.getRegistryId(butterflyIndex)));
 
-        // Ice Butterfly
-        if (registryId.equals("ice")) {
-            return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(this::createIceButterfly, ButterflyMobCategory.BUTTERFLY)
-                            .sized(width, height)
-                            .clientTrackingRange(10)
-                            .build(key));
-        }
-
-        // Lava Moth
-        if (registryId.equals("lava")) {
-            return this.deferredRegister.register(registryId,
-                    () -> EntityType.Builder.of(this::createLavaMoth, ButterflyMobCategory.BUTTERFLY)
-                            .sized(width, height)
-                            .clientTrackingRange(10)
-                            .build(key));
-        }
-
+        EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
         return this.deferredRegister.register(registryId,
-                () -> EntityType.Builder.of(this::createButterfly, ButterflyMobCategory.BUTTERFLY)
-                        .sized(width, height)
+                () -> EntityType.Builder.of(entityFactory, ButterflyMobCategory.BUTTERFLY)
+                        .sized(0.3f, 0.2f)
                         .clientTrackingRange(10)
                         .build(key));
     }

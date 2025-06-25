@@ -5,7 +5,7 @@
   "entityId": "light",
   "extraLandingBlocks": "none",
   "habitats": [],
-  "index": 57,
+  "index": 59,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -21,6 +21,8 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [],
+  "traits": [
+    "glow"
+  ],
   "type": "special"
 }

@@ -1,18 +1,14 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -25,9 +21,6 @@ public class ButterflyScroll extends HangingEntity {
 
     private static final EntityDataAccessor<Integer> BUTTERFLY_INDEX;
     private static final EntityDataAccessor<Direction> DATA_DIRECTION;
-
-    // Reference to the item registry.
-    private ItemRegistry itemRegistry;
 
     // The name used for registration.
     public static final String NAME = "butterfly_scroll";
@@ -50,13 +43,11 @@ public class ButterflyScroll extends HangingEntity {
      * @param direction The direction the scroll is facing.
      */
     public ButterflyScroll(@NotNull EntityTypeRegistry entityTypeRegistry,
-                           @NotNull ItemRegistry itemRegistry,
                            Level level,
                            BlockPos blockPos,
                            Direction direction) {
         this(entityTypeRegistry.getButterflyScroll().get(), level);
 
-        this.itemRegistry = itemRegistry;
         this.pos = blockPos;
         this.setDirection(direction);
     }
@@ -68,9 +59,13 @@ public class ButterflyScroll extends HangingEntity {
     @Override
     public void dropItem(@NotNull ServerLevel level,
                          @Nullable Entity entity) {
-        if (itemRegistry != null) {
-            ItemStack stack = new ItemStack(itemRegistry.getButterflyScrolls().get(getButterflyIndex()).get());
-            this.spawnAtLocation(level, stack);
+        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(
+                    ButterfliesMod.MOD_ID,
+                    ButterflyScrollItem.getRegistryId(getButterflyIndex()));
+            Item item = BuiltInRegistries.ITEM.get(location);
+            ItemStack stack = new ItemStack(item);
+            this.spawnAtLocation(stack);
         }
     }
 
@@ -108,7 +103,6 @@ public class ButterflyScroll extends HangingEntity {
 
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
-        builder.define(BUTTERFLY_INDEX, 0);
         builder.define(DATA_DIRECTION, Direction.NORTH);
     }
 

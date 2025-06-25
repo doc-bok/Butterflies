@@ -3,7 +3,6 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.ChatFormatting;
@@ -36,7 +35,6 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     // Reference to the entity type registry.
     private final DataComponentRegistry dataComponentRegistry;
     private final EntityTypeRegistry entityTypeRegistry;
-    private final ItemRegistry itemRegistry;
 
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
@@ -60,13 +58,11 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     public ButterflyScrollItem(Properties properties,
                                DataComponentRegistry dataComponentRegistry,
                                EntityTypeRegistry entityTypeRegistry,
-                               ItemRegistry itemRegistry,
                                int butterflyIndex) {
         super(properties);
 
         this.dataComponentRegistry = dataComponentRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
-        this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -164,7 +160,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                 int butterflyIndex = getButterflyIndex();
 
                 if (butterflyIndex >= 0) {
-                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, itemRegistry, level, blockPos, clickedFace);
+                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, level, blockPos, clickedFace);
 
                     butterflyScroll.setButterflyIndex(butterflyIndex);
 
