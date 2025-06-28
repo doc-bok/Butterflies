@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
@@ -43,8 +44,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         return "butterfly_scroll_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    //  TODO: Remove in future version.
-    public static final String NAME = "item.butterflies.butterfly_scroll";
+    //  The localisation string for butterfly scrolls.
+    public static final String BUTTERFLY_SCROLL_STRING = "item.butterflies.butterfly_scroll";
+    public static final String MOTH_SCROLL_STRING = "item.butterflies.moth_scroll";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -101,7 +103,12 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+            return Component.translatable(MOTH_SCROLL_STRING);
+        } else {
+            return Component.translatable(BUTTERFLY_SCROLL_STRING);
+        }
     }
 
     /**

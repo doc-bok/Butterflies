@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.4.1 (2025-06-29)
+- Renamed items to take into account moths.
+
 ### 6.4.0 (2025-06-25)
 - Added Hummingbird Moth variants.
 
