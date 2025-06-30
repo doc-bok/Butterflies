@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
@@ -31,7 +32,9 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    private static final String NAME = "block.butterflies.bottled_butterfly";
+    //  The localisation strings.
+    public static final String BOTTLED_BUTTERFLY_STRING = "block.butterflies.bottled_butterfly";
+    public static final String BOTTLED_MOTH_STRING = "block.butterflies.bottled_moth";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -89,7 +92,12 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return new TranslatableComponent(NAME);
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+            return new TranslatableComponent(BOTTLED_MOTH_STRING);
+        } else {
+            return new TranslatableComponent(BOTTLED_BUTTERFLY_STRING);
+        }
     }
 
     /**

@@ -420,34 +420,6 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Converts an Entity ID to an index.
-     * @param entityId The entity ID to convert.
-     * @return The index of said entity ID.
-     */
-    private static int entityIdToIndex(String entityId) {
-        String species = entityId;
-        if (species.contains(":")) {
-            String[] splits = species.split(":");
-            species = splits[1];
-        }
-
-        // Another workaround. In the future don't use underscores in butterfly
-        // IDs.
-        if (species.contains("domestic_silk")) {
-            return ENTITY_ID_TO_INDEX_MAP.get("domestic_silk");
-        }
-
-        String[] components = species.split("_");
-        for (String component : components) {
-            if (ENTITY_ID_TO_INDEX_MAP.containsKey(component)) {
-                return ENTITY_ID_TO_INDEX_MAP.get(component);
-            }
-        }
-
-        return -1;
-    }
-
-    /**
      * Create new butterfly data.
      * @param entry The butterfly data.
      */
@@ -537,7 +509,35 @@ public record ButterflyData(int butterflyIndex,
      * found.
      */
     public static int getButterflyIndex(ResourceLocation location) {
-        return entityIdToIndex(location.toString());
+        return getButterflyIndex(location.toString());
+    }
+
+    /**
+     * Converts an Entity ID to an index.
+     * @param entityId The entity ID to convert.
+     * @return The index of said entity ID.
+     */
+    public static int getButterflyIndex(String entityId) {
+        String species = entityId;
+        if (species.contains(":")) {
+            String[] splits = species.split(":");
+            species = splits[1];
+        }
+
+        // Another workaround. In the future don't use underscores in butterfly
+        // IDs.
+        if (species.contains("domestic_silk")) {
+            return ENTITY_ID_TO_INDEX_MAP.get("domestic_silk");
+        }
+
+        String[] components = species.split("_");
+        for (String component : components) {
+            if (ENTITY_ID_TO_INDEX_MAP.containsKey(component)) {
+                return ENTITY_ID_TO_INDEX_MAP.get(component);
+            }
+        }
+
+        return -1;
     }
 
     /**

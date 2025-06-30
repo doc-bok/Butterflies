@@ -39,7 +39,9 @@ public class BottledCaterpillarItem extends BlockItem {
         return "bottled_caterpillar_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    private static final String NAME = "block.butterflies.bottled_caterpillar";
+    //  The localisation strings.
+    public static final String BOTTLED_CATERPILLAR_STRING = "block.butterflies.bottled_caterpillar";
+    public static final String BOTTLED_LARVA_STRING = "block.butterflies.bottled_larva";
 
     // The butterfly index for this species.
     private final int butterflyIndex;
@@ -98,7 +100,12 @@ public class BottledCaterpillarItem extends BlockItem {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return new TranslatableComponent(NAME);
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+            return new TranslatableComponent(BOTTLED_LARVA_STRING);
+        } else {
+            return new TranslatableComponent(BOTTLED_CATERPILLAR_STRING);
+        }
     }
 
     /**

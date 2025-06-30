@@ -33,23 +33,27 @@ public class EntityTypeRegistry {
     // The block registry.
     private BlockRegistry blockRegistry;
 
-    // The Butterfly Scroll entity.
-    private RegistryObject<EntityType<ButterflyScroll>> butterflyScroll;
-
     // The butterfly and moth entities.
     private List<RegistryObject<EntityType<? extends Butterfly>>> butterflies;
-
-    // The caterpillar and larva entities.
-    private List<RegistryObject<EntityType<Caterpillar>>> caterpillars;
-
-    // The chrysalis and cocoon entities.
-    private List<RegistryObject<EntityType<Chrysalis>>> chrysalises;
 
     // The egg entities (not spawn eggs!).
     private List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs;
 
     // The butterfly golem
     private RegistryObject<EntityType<IronGolem>> butterflyGolem;
+
+    // The Butterfly Scroll entity.
+    // TODO: Kept for backwards compatibility. This can be removed eventually.
+    private RegistryObject<EntityType<ButterflyScroll>> butterflyScroll;
+
+    // The Butterfly Scroll entities.
+    private List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls;
+
+    // The caterpillar and larva entities.
+    private List<RegistryObject<EntityType<Caterpillar>>> caterpillars;
+
+    // The chrysalis and cocoon entities.
+    private List<RegistryObject<EntityType<Chrysalis>>> chrysalises;
 
     /**
      * Construction
@@ -67,16 +71,36 @@ public class EntityTypeRegistry {
     public void initialise(BlockRegistry blockRegistry) {
 
         this.blockRegistry = blockRegistry;
-        
-        this.butterflyScroll =
-                this.deferredRegister.register(ButterflyScroll.NAME, () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
-                        .sized(1.0f, 1.0f)
-                        .build(ButterflyScroll.NAME));
 
         this.butterflies = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterfly(i));
+                }
+            }
+        };
+
+        this.butterflyEggs = new ArrayList<>() {
+            {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+                    add(registerButterflyEgg(i));
+                }
+            }
+        };
+
+        this.butterflyGolem = registerButterflyGolem();
+        
+        this.butterflyScroll =
+                this.deferredRegister.register(
+                        ButterflyScroll.NAME,
+                        () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                                .sized(1.0f, 1.0f)
+                                .build(ButterflyScroll.NAME));
+
+        this.butterflyScrolls = new ArrayList<>() {
+            {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+                    add(registerButterflyScroll(i));
                 }
             }
         };
@@ -96,16 +120,6 @@ public class EntityTypeRegistry {
                 }
             }
         };
-
-        this.butterflyEggs = new ArrayList<>() {
-            {
-                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-                    add(registerButterflyEgg(i));
-                }
-            }
-        };
-
-        this.butterflyGolem = registerButterflyGolem();
     }
 
     /**
@@ -125,11 +139,27 @@ public class EntityTypeRegistry {
     }
 
     /**
+     * Accessor for the butterfly golem.
+     * @return The registry entry.
+     */
+    public RegistryObject<EntityType<IronGolem>> getButterflyGolem() {
+        return butterflyGolem;
+    }
+
+    /**
      * Accessor for the butterfly scroll.
      * @return The registry object.
      */
     public RegistryObject<EntityType<ButterflyScroll>> getButterflyScroll() {
         return butterflyScroll;
+    }
+
+    /**
+     * Accessor for the butterfly Scrolls.
+     * @return The list of registry objects.
+     */
+    public List<RegistryObject<EntityType<ButterflyScroll>>> getButterflyScrolls() {
+        return butterflyScrolls;
     }
 
     /**
@@ -146,14 +176,6 @@ public class EntityTypeRegistry {
      */
     public List<RegistryObject<EntityType<Chrysalis>>> getChrysalises() {
         return chrysalises;
-    }
-
-    /**
-     * Accessor for the butterfly golem.
-     * @return The registry entry.
-     */
-    public RegistryObject<EntityType<IronGolem>> getButterflyGolem() {
-        return butterflyGolem;
     }
 
     /**
@@ -218,37 +240,13 @@ public class EntityTypeRegistry {
     private RegistryObject<EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
 
         String registryId = Butterfly.getRegistryId(butterflyIndex);
-
         EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
+
         return this.deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(entityFactory, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.3f, 0.2f)
                         .clientTrackingRange(10)
-                        .build(Butterfly.getRegistryId(butterflyIndex)));
-    }
-
-    /**
-     * Register the caterpillars.
-     * @param butterflyIndex The index of the caterpillar to register.
-     * @return The new registry object.
-     */
-    private RegistryObject<EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
-        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
-                .sized(0.1f, 0.1f)
-                .build(Caterpillar.getRegistryId(butterflyIndex)));
-    }
-
-    /**
-     * Register the chrysalises.
-     * @param butterflyIndex The index of the chrysalis to register.
-     * @return The new registry object.
-     */
-    private RegistryObject<EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
-                .sized(0.1f, 0.1f)
-                .build(Chrysalis.getRegistryId(butterflyIndex)));
+                        .build(registryId));
     }
 
     /**
@@ -273,5 +271,46 @@ public class EntityTypeRegistry {
                         .sized(1.4F, 2.7F)
                         .clientTrackingRange(10)
                         .build("butterfly_golem"));
+    }
+
+    /**
+     * Register the butterflies.
+     * @param butterflyIndex The index of the butterfly to register.
+     * @return The new registry object.
+     */
+    private RegistryObject<EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
+
+        String registryId = ButterflyScroll.getRegistryId(butterflyIndex);
+
+        return this.deferredRegister.register(
+                registryId,
+                () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                        .sized(1.0f, 1.0f)
+                        .build(registryId));
+
+    }
+
+    /**
+     * Register the caterpillars.
+     * @param butterflyIndex The index of the caterpillar to register.
+     * @return The new registry object.
+     */
+    private RegistryObject<EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
+        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
+                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
+                .sized(0.1f, 0.1f)
+                .build(Caterpillar.getRegistryId(butterflyIndex)));
+    }
+
+    /**
+     * Register the chrysalises.
+     * @param butterflyIndex The index of the chrysalis to register.
+     * @return The new registry object.
+     */
+    private RegistryObject<EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
+        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
+                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
+                .sized(0.1f, 0.1f)
+                .build(Chrysalis.getRegistryId(butterflyIndex)));
     }
 }
