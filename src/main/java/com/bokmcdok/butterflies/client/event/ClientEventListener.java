@@ -11,6 +11,7 @@ import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
+import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -68,8 +69,6 @@ public class ClientEventListener {
      */
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
-        event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
-
         // Register the butterfly renderers.
         List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = entityTypeRegistry.getButterflies();
         for (int i = 0; i < butterflies.size(); ++i) {
@@ -81,21 +80,34 @@ public class ClientEventListener {
             event.registerEntityRenderer(butterflies.get(i).get(), rendererProvider);
         }
 
-        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
-            event.registerEntityRenderer(i.get(), CaterpillarRenderer::new);
-        }
-
-        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
-            event.registerEntityRenderer(i.get(), ChrysalisRenderer::new);
-        }
-
+        // Register the butterfly egg renderers.
         for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
             event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
         }
 
+        // Register the butterfly feeder renderer.
+        event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
+
+        // Register the butterfly golem renderer.
         event.registerEntityRenderer(entityTypeRegistry.getButterflyGolem().get(), ButterflyGolemRenderer::new);
 
-        event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
+        // Register the butterfly scroll renderers.
+        event.registerEntityRenderer(entityTypeRegistry.getButterflyScroll().get(), ButterflyScrollRenderer::new);
+
+        List<RegistryObject<EntityType<ButterflyScroll>>> scrolls = entityTypeRegistry.getButterflyScrolls();
+        for (RegistryObject<EntityType<ButterflyScroll>> scroll : scrolls) {
+            event.registerEntityRenderer(scroll.get(), ButterflyScrollRenderer::new);
+        }
+
+        // Register the caterpillar renderers.
+        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+            event.registerEntityRenderer(i.get(), CaterpillarRenderer::new);
+        }
+
+        // Register the chrysalis renderers.
+        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+            event.registerEntityRenderer(i.get(), ChrysalisRenderer::new);
+        }
     }
 
     /**
