@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.ButterflyScrollModel;
 import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyScrollRenderState;
 import com.bokmcdok.butterflies.world.ButterflyData;
@@ -61,6 +60,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll, But
 
         renderState.butterflyIndex = entity.getButterflyIndex();
         renderState.direction = entity.getDirection();
+        renderState.scrollTexture = entity.getTextureLocation();
     }
 
     /**
@@ -78,8 +78,7 @@ public class ButterflyScrollRenderer extends EntityRenderer<ButterflyScroll, But
      */
     @NotNull
     public ResourceLocation getTextureLocation(@NotNull ButterflyScrollRenderState renderState) {
-        ButterflyData data = ButterflyData.getEntry(renderState.butterflyIndex);
-        return data == null ? ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png") : data.getScrollTexture();
+        return renderState.scrollTexture;
     }
 
     /**
