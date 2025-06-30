@@ -234,8 +234,20 @@ public class EntityTypeRegistry {
     }
 
     /**
+     * Helper method that creates resource keys.
+     * @param registryId The Registry ID to create the key from.
+     * @return A new Resource Key.
+     */
+    private ResourceKey<EntityType<?>> createResourceKey(String registryId) {
+        return ResourceKey.create(
+                Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(
+                        ButterfliesMod.MOD_ID,
+                        registryId));
+    }
+
+    /**
      * Get the entity factory to use based on butterfly traits.
-     *
      * @param butterflyIndex The index of the butterfly.
      * @return A new entity factory.
      */
@@ -264,65 +276,17 @@ public class EntityTypeRegistry {
 
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerButterfly(int butterflyIndex) {
 
-        // Get the Registry Id.
         String registryId = Butterfly.getRegistryId(butterflyIndex);
-
-        // Create the resource key.
-        ResourceKey<EntityType<?>> key = ResourceKey.create(
-                Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        registryId));
-
-        // Get the entity factory.
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
         EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
 
         // Register the butterfly
-        return this.deferredRegister.register(registryId,
+        return this.deferredRegister.register(
+                registryId,
                 () -> EntityType.Builder.of(entityFactory, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.3f, 0.2f)
                         .clientTrackingRange(10)
-                        .build(key));
-    }
-
-    /**
-     * Register the caterpillars.
-     * @param butterflyIndex The index of the caterpillar to register.
-     * @return The new registry object.
-     */
-    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerCaterpillar(int butterflyIndex) {
-
-        // Create the resource key.
-        ResourceKey<EntityType<?>> key = ResourceKey.create(
-                Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        Caterpillar.getRegistryId(butterflyIndex)));
-
-        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
-                .sized(0.1f, 0.1f)
-                .build(key));
-    }
-
-    /**
-     * Register the chrysalises.
-     * @param butterflyIndex The index of the chrysalis to register.
-     * @return The new registry object.
-     */
-    private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-
-        // Create the resource key.
-        ResourceKey<EntityType<?>> key = ResourceKey.create(
-                Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        Chrysalis.getRegistryId(butterflyIndex)));
-
-        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
-                        .sized(0.1f, 0.1f)
-                        .build(key));
+                        .build(resourceKey));
     }
 
     /**
@@ -333,17 +297,14 @@ public class EntityTypeRegistry {
      */
     private DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
 
-        // Create the resource key.
-        ResourceKey<EntityType<?>> key = ResourceKey.create(
-                Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        ButterflyEgg.getRegistryId(butterflyIndex)));
+        String registryId = ButterflyEgg.getRegistryId(butterflyIndex);
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
 
-        return this.deferredRegister.register(ButterflyEgg.getRegistryId(butterflyIndex),
+        return this.deferredRegister.register(
+                registryId,
                 () -> EntityType.Builder.of(ButterflyEgg::new, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.1f, 0.1f)
-                        .build(key));
+                        .build(resourceKey));
     }
 
     /**
@@ -353,18 +314,15 @@ public class EntityTypeRegistry {
      */
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerButterflyGolem() {
 
-        // Create the resource key.
-        ResourceKey<EntityType<?>> key = ResourceKey.create(
-                Registries.ENTITY_TYPE,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        "butterfly_golem"));
+        String registryId = "butterfly_golem";
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
 
-        return this.deferredRegister.register("butterfly_golem",
+        return this.deferredRegister.register(
+                registryId,
                 () -> EntityType.Builder.of(IronGolem::new, MobCategory.MISC)
                         .sized(1.4F, 2.7F)
                         .clientTrackingRange(10)
-                        .build(key));
+                        .build(resourceKey));
     }
 
     /**
@@ -376,38 +334,47 @@ public class EntityTypeRegistry {
     private DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
 
         String registryId = ButterflyScroll.getRegistryId(butterflyIndex);
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
 
         return this.deferredRegister.register(
                 registryId,
                 () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
                         .sized(1.0f, 1.0f)
-                        .build(registryId));
+                        .build(resourceKey));
 
     }
 
     /**
      * Register the caterpillars.
-     *
      * @param butterflyIndex The index of the caterpillar to register.
      * @return The new registry object.
      */
-    private DeferredHolder<EntityType<?>, EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
-        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
+    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerCaterpillar(int butterflyIndex) {
+
+        String registryId = Caterpillar.getRegistryId(butterflyIndex);
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
+
+        return this.deferredRegister.register(
+                registryId,
                 () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.1f, 0.1f)
-                        .build(Caterpillar.getRegistryId(butterflyIndex)));
+                        .build(resourceKey));
     }
 
     /**
      * Register the chrysalises.
-     *
      * @param butterflyIndex The index of the chrysalis to register.
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
+
+        String registryId = Chrysalis.getRegistryId(butterflyIndex);
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
+
+        return this.deferredRegister.register(
+                registryId,
                 () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.1f, 0.1f)
-                        .build(Chrysalis.getRegistryId(butterflyIndex)));
+                        .build(resourceKey));
     }
 }
