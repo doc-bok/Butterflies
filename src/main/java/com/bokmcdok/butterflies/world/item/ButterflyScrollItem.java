@@ -162,7 +162,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             } else {
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
-                
+
                 List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
                 if (butterflyIndex >= 0 && butterflyIndex < butterflyScrolls.size()) {
                     DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);

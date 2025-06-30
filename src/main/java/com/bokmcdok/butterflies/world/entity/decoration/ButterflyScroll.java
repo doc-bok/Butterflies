@@ -121,7 +121,7 @@ public class ButterflyScroll extends HangingEntity {
     @NotNull
     public ResourceLocation getTextureLocation() {
         ButterflyData data = ButterflyData.getEntry(getButterflyIndex());
-        return data == null ? new ResourceLocation(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png")
+        return data == null ? ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png")
                 : data.getScrollTexture();
     }
 
