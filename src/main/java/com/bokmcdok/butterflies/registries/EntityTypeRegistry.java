@@ -33,17 +33,8 @@ public class EntityTypeRegistry {
     // The block registry.
     private BlockRegistry blockRegistry;
 
-    // The Butterfly Scroll entity.
-    private DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> butterflyScroll;
-
     // The butterfly and moth entities.
     private List<DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>>> butterflies;
-
-    // The caterpillar and larva entities.
-    private List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> caterpillars;
-
-    // The chrysalis and cocoon entities.
-    private List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> chrysalises;
 
     // The egg entities (not spawn eggs!).
     private List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> butterflyEggs;
@@ -51,8 +42,22 @@ public class EntityTypeRegistry {
     // The butterfly golem
     private DeferredHolder<EntityType<?>, EntityType<IronGolem>> butterflyGolem;
 
+    // The Butterfly Scroll entity.
+    // TODO: Kept for backwards compatibility. This can be removed eventually.
+    private DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> butterflyScroll;
+
+    // The Butterfly Scroll entities.
+    private List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> butterflyScrolls;
+
+    // The caterpillar and larva entities.
+    private List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> caterpillars;
+
+    // The chrysalis and cocoon entities.
+    private List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> chrysalises;
+
     /**
      * Construction
+     *
      * @param modEventBus The event bus to register with.
      */
     public EntityTypeRegistry(IEventBus modEventBus) {
@@ -62,21 +67,42 @@ public class EntityTypeRegistry {
 
     /**
      * Register the entity types.
+     *
      * @param blockRegistry The block registry.
      */
     public void initialise(BlockRegistry blockRegistry) {
 
         this.blockRegistry = blockRegistry;
-        
-        this.butterflyScroll =
-                this.deferredRegister.register(ButterflyScroll.NAME, () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
-                        .sized(1.0f, 1.0f)
-                        .build(ButterflyScroll.NAME));
 
         this.butterflies = new ArrayList<>() {
             {
                 for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
                     add(registerButterfly(i));
+                }
+            }
+        };
+
+        this.butterflyEggs = new ArrayList<>() {
+            {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+                    add(registerButterflyEgg(i));
+                }
+            }
+        };
+
+        this.butterflyGolem = registerButterflyGolem();
+
+        this.butterflyScroll =
+                this.deferredRegister.register(
+                        ButterflyScroll.NAME,
+                        () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                                .sized(1.0f, 1.0f)
+                                .build(ButterflyScroll.NAME));
+
+        this.butterflyScrolls = new ArrayList<>() {
+            {
+                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+                    add(registerButterflyScroll(i));
                 }
             }
         };
@@ -96,20 +122,11 @@ public class EntityTypeRegistry {
                 }
             }
         };
-
-        this.butterflyEggs = new ArrayList<>() {
-            {
-                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-                    add(registerButterflyEgg(i));
-                }
-            }
-        };
-
-        this.butterflyGolem = registerButterflyGolem();
     }
 
     /**
      * Accessor for the butterflies.
+     *
      * @return The list of registry objects.
      */
     public List<DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>>> getButterflies() {
@@ -118,6 +135,7 @@ public class EntityTypeRegistry {
 
     /**
      * Accessor for the caterpillars.
+     *
      * @return The list of registry objects.
      */
     public List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> getButterflyEggs() {
@@ -125,7 +143,17 @@ public class EntityTypeRegistry {
     }
 
     /**
+     * Accessor for the butterfly golem.
+     *
+     * @return The registry entry.
+     */
+    public DeferredHolder<EntityType<?>, EntityType<IronGolem>> getButterflyGolem() {
+        return butterflyGolem;
+    }
+
+    /**
      * Accessor for the butterfly scroll.
+     *
      * @return The registry object.
      */
     public DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> getButterflyScroll() {
@@ -133,7 +161,17 @@ public class EntityTypeRegistry {
     }
 
     /**
+     * Accessor for the butterfly Scrolls.
+     *
+     * @return The list of registry objects.
+     */
+    public List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> getButterflyScrolls() {
+        return butterflyScrolls;
+    }
+
+    /**
      * Accessor for the caterpillars.
+     *
      * @return The list of registry objects.
      */
     public List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> getCaterpillars() {
@@ -142,6 +180,7 @@ public class EntityTypeRegistry {
 
     /**
      * Accessor for the caterpillars.
+     *
      * @return The list of registry objects.
      */
     public List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> getChrysalises() {
@@ -149,17 +188,10 @@ public class EntityTypeRegistry {
     }
 
     /**
-     * Accessor for the butterfly golem.
-     * @return The registry entry.
-     */
-    public DeferredHolder<EntityType<?>, EntityType<IronGolem>> getButterflyGolem() {
-        return butterflyGolem;
-    }
-
-    /**
      * Helper method to create a butterfly entity.
+     *
      * @param entityType The entity's type.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A new butterfly.
      */
     private Butterfly createButterfly(EntityType<? extends Butterfly> entityType,
@@ -169,8 +201,9 @@ public class EntityTypeRegistry {
 
     /**
      * Helper method to create an ice butterfly entity.
+     *
      * @param entityType The entity's type.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A new butterfly.
      */
     private Butterfly createIceButterfly(EntityType<? extends Butterfly> entityType,
@@ -180,17 +213,19 @@ public class EntityTypeRegistry {
 
     /**
      * Helper method to create a lava moth entity.
+     *
      * @param entityType The entity's type.
-     * @param level The current level.
+     * @param level      The current level.
      * @return A new butterfly.
      */
     private Butterfly createLavaMoth(EntityType<? extends Butterfly> entityType,
-                                         Level level) {
+                                     Level level) {
         return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
     }
 
     /**
      * Get the entity factory to use based on butterfly traits.
+     *
      * @param butterflyIndex The index of the butterfly.
      * @return A new entity factory.
      */
@@ -212,6 +247,7 @@ public class EntityTypeRegistry {
 
     /**
      * Register the butterflies.
+     *
      * @param butterflyIndex The index of the butterfly to register.
      * @return The new registry object.
      */
@@ -219,41 +255,18 @@ public class EntityTypeRegistry {
     private DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
 
         String registryId = Butterfly.getRegistryId(butterflyIndex);
-
         EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
+
         return this.deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(entityFactory, ButterflyMobCategory.BUTTERFLY)
                         .sized(0.3f, 0.2f)
                         .clientTrackingRange(10)
-                        .build(Butterfly.getRegistryId(butterflyIndex)));
-    }
-
-    /**
-     * Register the caterpillars.
-     * @param butterflyIndex The index of the caterpillar to register.
-     * @return The new registry object.
-     */
-    private DeferredHolder<EntityType<?>, EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
-        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
-                .sized(0.1f, 0.1f)
-                .build(Caterpillar.getRegistryId(butterflyIndex)));
-    }
-
-    /**
-     * Register the chrysalises.
-     * @param butterflyIndex The index of the chrysalis to register.
-     * @return The new registry object.
-     */
-    private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
-                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
-                .sized(0.1f, 0.1f)
-                .build(Chrysalis.getRegistryId(butterflyIndex)));
+                        .build(registryId));
     }
 
     /**
      * Register the butterfly eggs.
+     *
      * @param butterflyIndex The index of the butterfly egg to register.
      * @return The new registry object.
      */
@@ -266,6 +279,7 @@ public class EntityTypeRegistry {
 
     /**
      * Register a butterfly golem.
+     *
      * @return The new registry object.
      */
     private DeferredHolder<EntityType<?>, EntityType<IronGolem>> registerButterflyGolem() {
@@ -274,5 +288,49 @@ public class EntityTypeRegistry {
                         .sized(1.4F, 2.7F)
                         .clientTrackingRange(10)
                         .build("butterfly_golem"));
+    }
+
+    /**
+     * Register the butterflies.
+     *
+     * @param butterflyIndex The index of the butterfly to register.
+     * @return The new registry object.
+     */
+    private DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
+
+        String registryId = ButterflyScroll.getRegistryId(butterflyIndex);
+
+        return this.deferredRegister.register(
+                registryId,
+                () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                        .sized(1.0f, 1.0f)
+                        .build(registryId));
+
+    }
+
+    /**
+     * Register the caterpillars.
+     *
+     * @param butterflyIndex The index of the caterpillar to register.
+     * @return The new registry object.
+     */
+    private DeferredHolder<EntityType<?>, EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
+        return this.deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
+                () -> EntityType.Builder.of(Caterpillar::new, ButterflyMobCategory.BUTTERFLY)
+                        .sized(0.1f, 0.1f)
+                        .build(Caterpillar.getRegistryId(butterflyIndex)));
+    }
+
+    /**
+     * Register the chrysalises.
+     *
+     * @param butterflyIndex The index of the chrysalis to register.
+     * @return The new registry object.
+     */
+    private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
+        return this.deferredRegister.register(Chrysalis.getRegistryId(butterflyIndex),
+                () -> EntityType.Builder.of(Chrysalis::new, ButterflyMobCategory.BUTTERFLY)
+                        .sized(0.1f, 0.1f)
+                        .build(Chrysalis.getRegistryId(butterflyIndex)));
     }
 }

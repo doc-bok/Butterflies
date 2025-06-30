@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.BlockPos;
@@ -30,11 +31,19 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyScroll extends HangingEntity {
 
+    // Data accessor for the butterfly index.
+    // TODO: Kept for backwards compatibility. This can be removed eventually.
     private static final EntityDataAccessor<Integer> BUTTERFLY_INDEX = SynchedEntityData.defineId(
             ButterflyScroll.class, EntityDataSerializers.INT
     );
 
+    //  The name this block is registered under.
+    public static String getRegistryId(int butterflyIndex) {
+        return "butterfly_scroll_" + ButterflyInfo.SPECIES[butterflyIndex];
+    }
+
     // The name used for registration.
+    // TODO: Kept for backwards compatibility. This can be removed eventually.
     public static final String NAME = "butterfly_scroll";
 
     /**
@@ -50,15 +59,16 @@ public class ButterflyScroll extends HangingEntity {
 
     /**
      * Create a Butterfly Scroll Entity.
+     * @param entityType The type of butterfly scroll to create.
      * @param level The current level.
      * @param blockPos The position of the block it is being placed upon.
      * @param direction The direction the scroll is facing.
      */
-    public ButterflyScroll(EntityTypeRegistry entityTypeRegistry,
+    public ButterflyScroll(EntityType<ButterflyScroll> entityType,
                            Level level,
                            BlockPos blockPos,
                            Direction direction) {
-        this(entityTypeRegistry.getButterflyScroll().get(), level);
+        this(entityType, level);
 
         this.pos = blockPos;
         this.setDirection(direction);
@@ -96,7 +106,8 @@ public class ButterflyScroll extends HangingEntity {
      * @return The butterfly index.
      */
     public int getButterflyIndex() {
-        return this.entityData.get(BUTTERFLY_INDEX);
+        int result = ButterflyData.getButterflyIndex(this.getType().getDescriptionId());
+        return result < 0 ? this.entityData.get(BUTTERFLY_INDEX) : result;
     }
 
     /**
@@ -105,6 +116,13 @@ public class ButterflyScroll extends HangingEntity {
      */
     public int getHeight() {
         return 14;
+    }
+
+    @NotNull
+    public ResourceLocation getTextureLocation() {
+        ButterflyData data = ButterflyData.getEntry(getButterflyIndex());
+        return data == null ? new ResourceLocation(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png")
+                : data.getScrollTexture();
     }
 
     /**
@@ -226,7 +244,8 @@ public class ButterflyScroll extends HangingEntity {
      * @param entityType The type of the entity.
      * @param level The current level.
      */
-    private ButterflyScroll(EntityType<? extends ButterflyScroll> entityType, Level level) {
+    private ButterflyScroll(EntityType<? extends ButterflyScroll> entityType,
+                            Level level) {
         super(entityType, level);
     }
 }

@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.ChatFormatting;
@@ -17,6 +18,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -42,8 +45,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
         return "butterfly_scroll_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    //  TODO: Remove in future version.
-    public static final String NAME = "item.butterflies.butterfly_scroll";
+    //  The localisation string for butterfly scrolls.
+    public static final String BUTTERFLY_SCROLL_STRING = "item.butterflies.butterfly_scroll";
+    public static final String MOTH_SCROLL_STRING = "item.butterflies.moth_scroll";
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
@@ -102,7 +106,12 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+            return Component.translatable(MOTH_SCROLL_STRING);
+        } else {
+            return Component.translatable(BUTTERFLY_SCROLL_STRING);
+        }
     }
 
     /**
@@ -153,11 +162,11 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             } else {
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
-
-                if (butterflyIndex >= 0) {
-                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, level, blockPos, clickedFace);
-
-                    butterflyScroll.setButterflyIndex(butterflyIndex);
+                
+                List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
+                if (butterflyIndex >= 0 && butterflyIndex < butterflyScrolls.size()) {
+                    DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);
+                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityType.get(), level, blockPos, clickedFace);
 
                     if (butterflyScroll.survives()) {
                         if (!level.isClientSide) {
