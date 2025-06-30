@@ -30,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -163,9 +164,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
 
-                List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
+                List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
                 if (butterflyIndex >= 0 && butterflyIndex < butterflyScrolls.size()) {
-                    RegistryObject<EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);
+                    DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);
                     ButterflyScroll butterflyScroll = new ButterflyScroll(entityType.get(), level, blockPos, clickedFace);
 
                     if (butterflyScroll.survives()) {
