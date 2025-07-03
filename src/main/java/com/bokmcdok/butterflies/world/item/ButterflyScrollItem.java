@@ -19,6 +19,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -161,18 +163,11 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
             } else {
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
-                CompoundTag tag = itemInHand.getTag();
 
-                if (butterflyIndex < 0) {
-                    if (tag != null && tag.contains(CompoundTagId.CUSTOM_MODEL_DATA)) {
-                        butterflyIndex = tag.getInt(CompoundTagId.CUSTOM_MODEL_DATA);
-                    }
-                }
-
-                if (butterflyIndex >= 0) {
-                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityTypeRegistry, level, blockPos, clickedFace);
-
-                    butterflyScroll.setButterflyIndex(butterflyIndex);
+                List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
+                if (butterflyIndex >= 0 && butterflyIndex < butterflyScrolls.size()) {
+                    RegistryObject<EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);
+                    ButterflyScroll butterflyScroll = new ButterflyScroll(entityType.get(), level, blockPos, clickedFace);
 
                     if (butterflyScroll.survives()) {
                         if (!level.isClientSide) {
