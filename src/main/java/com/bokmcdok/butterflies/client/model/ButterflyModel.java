@@ -19,6 +19,12 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(Dist.CLIENT)
 public class ButterflyModel  extends EntityModel<ButterflyRenderState> {
 
+    // Names for the various model parts.
+    private static final String ANTENNAE = "antennae";
+    private static final String BODY = "body";
+    private static final String LEFT_WING = "left_wing";
+    private static final String RIGHT_WING = "right_wing";
+
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly"), "main");
@@ -39,10 +45,9 @@ public class ButterflyModel  extends EntityModel<ButterflyRenderState> {
     public ButterflyModel(ModelPart root) {
         super(root);
 
-        //  The root of the model.
-        this.body = root.getChild("body");
-        this.left_wing = this.body.getChild("left_wing");
-        this.right_wing = this.body.getChild("right_wing");
+        this.body = root.getChild(BODY);
+        this.left_wing = this.body.getChild(LEFT_WING);
+        this.right_wing = this.body.getChild(RIGHT_WING);
     }
 
     /**
@@ -53,21 +58,21 @@ public class ButterflyModel  extends EntityModel<ButterflyRenderState> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild("body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild(BODY, CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        body.addOrReplaceChild("body", CubeListBuilder.create()
+        body.addOrReplaceChild(BODY, CubeListBuilder.create()
                 .texOffs(0, 20).addBox(-5.0F, -2.0F, -1.0F, 10.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
-        body.addOrReplaceChild("left_wing", CubeListBuilder.create()
+        body.addOrReplaceChild(LEFT_WING, CubeListBuilder.create()
                 .texOffs(0, 0).addBox(-9.0F, -1.0F, 1.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
                 PartPose.offset(0.0F, -1.0F, 0.0F));
 
-        body.addOrReplaceChild("right_wing", CubeListBuilder.create()
+        body.addOrReplaceChild(RIGHT_WING, CubeListBuilder.create()
                 .texOffs(0, 10).addBox(-9.0F, -1.0F, -11.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
                 PartPose.offset(0.0F, -1.0F, 0.0F));
 
-        body.addOrReplaceChild("antannae", CubeListBuilder.create()
+        body.addOrReplaceChild(ANTENNAE, CubeListBuilder.create()
                 .texOffs(0, 0).addBox(-8.0F, -4.0F, -1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
                 .texOffs(0, 0).addBox(-8.0F, -4.0F, 1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
@@ -82,35 +87,27 @@ public class ButterflyModel  extends EntityModel<ButterflyRenderState> {
     @Override
     public void setupAnim(@NotNull ButterflyRenderState renderState) {
 
-        // The angle that the body rests at.
-        final float BODY_REST_ANGLE = 0.7853982f;
+        // Adjust these to modify wing animations
+        final float WING_ARC = 0.25F;
+        final float WING_SPEED = 1.3F;
 
-        // The speed at which the body "hovers".
-        final float BODY_MOVE_SPEED = 0.1f;
+        // Adjust these to modify body animations.
+        final float BODY_ANGLE = 0.7853982F;
+        final float BODY_ARC = 0.15f;
+        final float BODY_SPEED = 0.1f;
 
-        // The arc through which the body moves.
-        final float BODY_MOVE_ARC = 0.15f;
-
-        // The arc through which the wings travel.
-        final float WING_ARC = 0.25f;
-
-        // The speed at which wings flap.
-        final float WING_SPEED = 1.3f;
-
-        //  When landed wings don't flap.
+        //  When landed butterflies hold their wings together.
         if (renderState.isLanded) {
-            this.body.yRot = BODY_REST_ANGLE;
-
-            // Moths hold their wings flat.
+            this.body.yRot = BODY_ANGLE;
             if (renderState.isMoth) {
                 this.right_wing.xRot = 0.15F;
 
             // Butterflies raise their wings up.
             } else {
-                this.right_wing.xRot = (0.15F - Mth.PI) * 0.5F;
+                this.right_wing.xRot = -1.495796F; // (0.15 - Mth.PI) * 0.5
             }
         } else {
-            this.body.yRot = BODY_REST_ANGLE + Mth.cos(renderState.ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
+            this.body.yRot = BODY_ANGLE + Mth.cos(renderState.ageInTicks * BODY_SPEED) * BODY_ARC;
             this.right_wing.xRot = Mth.sin(renderState.ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
         }
 
