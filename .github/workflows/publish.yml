@@ -58,6 +58,6 @@ jobs:                                             #The place where you actually 
           version-type: release
           changelog-file: CHANGELOG.md                                      #The file in which the changes of your new update are specified (the path starts at your project root)
 
-          loaders: forge
+          loaders: neoforge
           game-versions: "${{env.MINECRAFT_VERSION}}"
           java: "${{env.JAVA_VERSION}}"
