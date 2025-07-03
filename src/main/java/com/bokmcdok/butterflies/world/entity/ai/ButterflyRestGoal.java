@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -75,12 +76,16 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
      */
     @Override
     public void tick() {
-        if (this.isReachedTarget()) {
-            this.butterfly.setLanded(true);
-        } else {
-            ++this.tryTicks;
-            if (this.shouldRecalculatePath()) {
-                moveMobToBlock();
+        if (!butterfly.getIsLanded()) {
+            if (this.isReachedTarget()) {
+                --this.tryTicks;
+                this.mob.getNavigation().stop();
+                this.butterfly.setLanded(true);
+            } else {
+                ++this.tryTicks;
+                if (this.shouldRecalculatePath()) {
+                    moveMobToBlock();
+                }
             }
         }
     }
@@ -96,6 +101,7 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
                 "] / Position = [" + butterfly.blockPosition() +
                 "] / Reached = [" + this.isReachedTarget() +
                 "] / Landed = [" + butterfly.getIsLanded() +
+                "] / Direction = [" + butterfly.getLandedDirection() +
                 "]";
     }
 
@@ -106,7 +112,50 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
     protected boolean isReachedTarget() {
         Level level = this.butterfly.level();
         BlockPos position = this.butterfly.blockPosition();
-        return this.butterfly.isValidLandingBlock(level.getBlockState(position.below()));
+
+        //  Land on top of a block.
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.below()))) {
+            this.blockPos = position.below();
+            this.butterfly.setLandedDirection(Direction.DOWN);
+            return true;
+        }
+
+        //  Land underneath a block.
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.above()))) {
+            this.blockPos = position.above();
+            this.butterfly.setLandedDirection(Direction.UP);
+            return true;
+        }
+
+        // Land north of a block
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.north()))) {
+            this.blockPos = position.north();
+            this.butterfly.setLandedDirection(Direction.NORTH);
+            return true;
+        }
+
+        // Land south of a block
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.south()))) {
+            this.blockPos = position.south();
+            this.butterfly.setLandedDirection(Direction.SOUTH);
+            return true;
+        }
+
+        // Land east of a block
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.east()))) {
+            this.blockPos = position.east();
+            this.butterfly.setLandedDirection(Direction.EAST);
+            return true;
+        }
+
+        // Land south of a block
+        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.west()))) {
+            this.blockPos = position.west();
+            this.butterfly.setLandedDirection(Direction.WEST);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -118,10 +167,7 @@ public class ButterflyRestGoal extends MoveToBlockGoal {
     @Override
     protected boolean isValidTarget(@NotNull LevelReader levelReader,
                                     @NotNull BlockPos blockPos) {
-
-        return blockPos.getY() < this.butterfly.getBlockY() &&
-                levelReader.isEmptyBlock(blockPos) &&
-                this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos.below()));
+        return this.butterfly.isValidLandingBlock(levelReader.getBlockState(blockPos));
     }
 
     /**

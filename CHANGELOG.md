@@ -1,5 +1,8 @@
 ## Changelog
 
+## 6.4.4 (2025-07-03)
+- Butterflies can now land on any surface.
+
 ## 6.4.3 (2025-07-03)
 - Created hummingbird moth landing animations.
 - 

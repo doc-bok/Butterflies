@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.client.model.HummingbirdMothModel;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -63,9 +64,39 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
                 this.getFont(),
                 packedLightCoordinates);
 
-        // Shift the model down slightly, so it fits within the bounding box.
         poseStack.pushPose();
+
+        // Shift the model down slightly, so it fits within the bounding box.
         poseStack.translate(0.0, -0.1, 0.0);
+
+        // Rotate the butterfly if it is landed.
+        if (entity.getIsLanded()) {
+            switch (entity.getLandedDirection()) {
+                case UP:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
+                    break;
+
+                case NORTH:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
+                    break;
+
+                case SOUTH:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
+                    break;
+
+                case EAST:
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
+                    break;
+
+                case WEST:
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
         poseStack.popPose();
     }
