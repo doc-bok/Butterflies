@@ -5,8 +5,8 @@ on: [ push, pull_request, workflow_dispatch ]     #When your GitHub Action will 
 env:                                              #Environment variables that can later be referenced using ${{ env.MINECRAFT_VERSION }}. These are useful for repeating information and allow for quick changes for new mod updates
   MINECRAFT_VERSION: 1.20.2
   JAVA_VERSION: 17
-  VERSION: 6.4.4+1.20.2
-  RELEASE_NAME: Bok's Banging Butterflies v6.4.4
+  VERSION: 6.4.4
+  RELEASE_NAME: Bok's Banging Butterflies v
   MODRINTH_TOKEN: ${{ secrets.PUBLISH_MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.PUBLISH_CURSEFORGE_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
@@ -51,7 +51,7 @@ jobs:                                             #The place where you actually 
           github-tag: "v${{env.VERSION}}"
           github-token: "${{env.GITHUB_TOKEN}}"
 
-          name: "${{env.RELEASE_NAME}}"
+          name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
           version: "${{env.VERSION}}"
           version-type: release
           changelog-file: CHANGELOG.md                                      #The file in which the changes of your new update are specified (the path starts at your project root)
