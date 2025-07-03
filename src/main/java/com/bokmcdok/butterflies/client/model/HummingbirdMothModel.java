@@ -19,6 +19,17 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(Dist.CLIENT)
 public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
 
+    // Names for the various model parts.
+    private static final String ABDOMEN = "abdomen";
+    private static final String ANTENNAE = "antennae";
+    private static final String HEAD = "head";
+    private static final String LEFT_WING = "left_wing";
+    private static final String PROBOSCIS = "proboscis";
+    private static final String RIGHT_WING = "right_wing";
+    private static final String TAIL = "tail";
+    private static final String THORAX = "thorax";
+    private static final String WINGS = "wings";
+
     //  Holds the layers for the butterfly.
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "hummingbird_moth"), "main");
@@ -37,11 +48,11 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
      * @param root The root part to attach the model to.
      */
     public HummingbirdMothModel(ModelPart root) {
-        this.thorax = root.getChild("thorax");
+        this.thorax = root.getChild(THORAX);
         // The wings.
-        ModelPart wings = this.thorax.getChild("wings");
-        this.left_wing = wings.getChild("left_wing");
-        this.right_wing = wings.getChild("right_wing");
+        ModelPart wings = this.thorax.getChild(WINGS);
+        this.left_wing = wings.getChild(LEFT_WING);
+        this.right_wing = wings.getChild(RIGHT_WING);
     }
 
     /**
@@ -53,34 +64,34 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
         PartDefinition partdefinition = meshdefinition.getRoot();
 
         // The upper part of the body.
-        PartDefinition thorax = partdefinition.addOrReplaceChild("thorax", CubeListBuilder.create().texOffs(0, 0)
+        PartDefinition thorax = partdefinition.addOrReplaceChild(THORAX, CubeListBuilder.create().texOffs(0, 0)
                 .addBox(-2.0F, -2.0F, -2.0F, 4.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 13.0F, 0.0F));
 
         // The lower part of the body.
-        PartDefinition abdomen = thorax.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(14, 0)
+        PartDefinition abdomen = thorax.addOrReplaceChild(ABDOMEN, CubeListBuilder.create().texOffs(14, 0)
                 .addBox(-2.0F, 0.0F, 0.0F, 4.0F, 4.0F, 2.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 3.0F, -1.0F));
 
         // The tail.
-        abdomen.addOrReplaceChild("tail", CubeListBuilder.create().texOffs(14, 6)
+        abdomen.addOrReplaceChild(TAIL, CubeListBuilder.create().texOffs(14, 6)
                 .addBox(-3.0F, 0.0F, 3.0F, 6.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 4.0F, -1.0F));
 
         // The head.
-        PartDefinition head = thorax.addOrReplaceChild("head", CubeListBuilder.create().texOffs(10, 9)
+        PartDefinition head = thorax.addOrReplaceChild(HEAD, CubeListBuilder.create().texOffs(10, 9)
                 .addBox(-2.0F, -3.0F, -2.0F, 4.0F, 3.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -2.0F, 0.0F));
 
         // The antennae
-        head.addOrReplaceChild("antennae", CubeListBuilder.create().texOffs(0, 15)
+        head.addOrReplaceChild(ANTENNAE, CubeListBuilder.create().texOffs(0, 15)
                 .addBox(-3.0F, -7.0F, -2.0F, 6.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         // The proboscis that feeds on flowers.
-        head.addOrReplaceChild("proboscis", CubeListBuilder.create().texOffs(0, -2)
+        head.addOrReplaceChild(PROBOSCIS, CubeListBuilder.create().texOffs(0, -2)
                 .addBox(0.0F, -2.0F, -12.0F, 0.0F, 1.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
 
         // The wings.
-        PartDefinition wings = thorax.addOrReplaceChild("wings", CubeListBuilder.create(), PartPose.offset(0.0F, 13.0F, 0.0F));
-        wings.addOrReplaceChild("left_wing", CubeListBuilder.create().texOffs(0, 4)
+        PartDefinition wings = thorax.addOrReplaceChild(WINGS, CubeListBuilder.create(), PartPose.offset(0.0F, 13.0F, 0.0F));
+        wings.addOrReplaceChild(LEFT_WING, CubeListBuilder.create().texOffs(0, 4)
                 .addBox(0.0F, -3.0F, 0.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(-1.0F, -13.0F, 1.0F));
-        wings.addOrReplaceChild("right_wing", CubeListBuilder.create().texOffs(0, 4)
+        wings.addOrReplaceChild(RIGHT_WING, CubeListBuilder.create().texOffs(0, 4)
                 .addBox(0.0F, -3.0F, 0.0F, 0.0F, 6.0F, 5.0F, new CubeDeformation(0.0F)), PartPose.offset(1.0F, -13.0F, 1.0F));
 
         return LayerDefinition.create(meshdefinition, 32, 32);
@@ -103,23 +114,23 @@ public class HummingbirdMothModel extends HierarchicalModel<Butterfly> {
                           float netHeadYaw,
                           float headPitch) {
 
-        // The angle that the body rests at.
-        final float BODY_REST_ANGLE = 0.2853982f;
-
-        // The speed at which the body "hovers".
-        final float BODY_MOVE_SPEED = 0.1f;
-
-        // The arc through which the body moves.
-        final float BODY_MOVE_ARC = 0.15f;
-
-        // The arc through which the wings travel.
+        // Adjust these to modify wing animations
         final float WING_ARC = 0.2f;
-
-        // The speed at which wings flap.
         final float WING_SPEED = 13.0f;
 
-        this.thorax.xRot = BODY_REST_ANGLE + Mth.cos(ageInTicks * BODY_MOVE_SPEED) * BODY_MOVE_ARC;
-        this.right_wing.yRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
+        // Adjust these to modify body animations.
+        final float BODY_ANGLE = 0.2853982f;
+        final float BODY_ARC = 0.15f;
+        final float BODY_SPEED = 0.1f;
+
+        if (entity.getIsLanded()) {
+            this.thorax.xRot = BODY_ANGLE + 0.8f;
+            this.right_wing.yRot = 0.15f;
+        } else {
+            this.thorax.xRot = BODY_ANGLE + Mth.cos(ageInTicks * BODY_SPEED) * BODY_ARC;
+            this.right_wing.yRot = Mth.sin(ageInTicks * WING_SPEED) * Mth.PI * WING_ARC;
+        }
+
         this.left_wing.yRot = -right_wing.yRot;
     }
 

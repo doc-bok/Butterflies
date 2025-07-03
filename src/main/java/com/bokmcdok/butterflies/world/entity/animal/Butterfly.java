@@ -7,7 +7,9 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
+import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -65,8 +67,13 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
     protected static final EntityDataAccessor<String> DATA_MIMIC_TEXTURE =
             SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.STRING);
+    protected static final EntityDataAccessor<Direction> DATA_DIRECTION =
+            SynchedEntityData.defineId(Butterfly.class, EntityDataSerializers.DIRECTION);
 
     // Names of the attributes stored in the save data.
+
+    // Names of the attributes stored in the save data.
+    protected static final String DIRECTION = "direction";
     protected static final String IS_FERTILE = "is_fertile";
     protected static final String LANDED = "landed";
     protected static final String NUM_EGGS = "num_eggs";
@@ -232,6 +239,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        tag.putString(DIRECTION, this.entityData.get(DATA_DIRECTION).getName());
         tag.putBoolean(IS_FERTILE, this.entityData.get(DATA_IS_FERTILE));
         tag.putBoolean(LANDED, this.entityData.get(DATA_LANDED));
         tag.putInt(NUM_EGGS, this.entityData.get(DATA_NUM_EGGS));
@@ -375,6 +383,14 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Get the direction of the surface the butterfly has landed on.
+     * @return The landed direction.
+     */
+    public Direction getLandedDirection() {
+        return entityData.get(DATA_DIRECTION);
+    }
+
+    /**
      * Get the number of eggs this butterfly can lay.
      * @return The number of eggs left for this butterfly.
      */
@@ -484,18 +500,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
-        FlyingPathNavigation navigation = new FlyingPathNavigation(this, level) {
-
-            /**
-             * All destinations are stable for butterflies.
-             * @param blockPos The block position of the destination.
-             * @return Always TRUE.
-             */
-            @Override
-            public boolean isStableDestination(@NotNull BlockPos blockPos) {
-                return true;
-            }
-        };
+        FlyingPathNavigation navigation = new ButterflyFlyingPathNavigation(this, level);
 
         switch (getData().speed()) {
             case SLOW -> navigation.setSpeedModifier(0.8);
@@ -503,9 +508,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             case FAST -> navigation.setSpeedModifier(1.2);
         }
 
-        navigation.setCanOpenDoors(false);
-        navigation.setCanFloat(false);
-        navigation.setCanPassDoors(true);
         return navigation;
     }
 
@@ -545,6 +547,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+
+        // Get the landing direction
+        if (tag.contains(DIRECTION)) {
+            String name = tag.getString(DIRECTION);
+            Direction direction = Direction.byName(name);
+            if (direction != null) {
+                this.entityData.set(DATA_DIRECTION, direction);
+            }
+        }
 
         // Get the fertile state.
         if (tag.contains(IS_FERTILE)) {
@@ -655,8 +666,45 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @param landed TRUE if the butterfly has landed.
      */
     public void setLanded(boolean landed) {
+
+        // Don't repeat this otherwise the butterflies fall
+        if (!this.getIsLanded()) {
+            switch (this.getLandedDirection()) {
+                case DOWN:
+                    this.setPos(this.getX(), Math.floor(this.getY()), this.getZ());
+                    break;
+
+                case UP:
+                    this.setPos(this.getX(), Math.floor(this.getY()) + 0.9, this.getZ());
+                    break;
+
+                case NORTH:
+                    this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()));
+                    break;
+
+                case SOUTH:
+                    this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()) + 0.9);
+                    break;
+
+                case WEST:
+                    this.setPos(Math.floor(this.getX()), this.getY(), this.getZ());
+                    break;
+
+                case EAST:
+                    this.setPos(Math.floor(this.getX()) + 0.9, this.getY(), this.getZ());
+                    break;
+            }
+        }
+
         entityData.set(DATA_LANDED, landed);
-        this.setNoGravity(!landed);
+    }
+
+    /**
+     * Set the direction of the surface the butterfly has landed on.
+     * @param direction The surface direction.
+     */
+    public void setLandedDirection(Direction direction) {
+        this.entityData.set(DATA_DIRECTION, direction);
     }
 
     /**
@@ -768,6 +816,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
+        builder.define(DATA_DIRECTION, Direction.DOWN);
         builder.define(DATA_IS_FERTILE, false);
         builder.define(DATA_LANDED, false);
         builder.define(DATA_NUM_EGGS, 1);
