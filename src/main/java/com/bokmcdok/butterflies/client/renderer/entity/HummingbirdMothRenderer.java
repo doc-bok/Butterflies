@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.client.model.HummingbirdMothModel;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -73,23 +73,23 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
         if (entity.getIsLanded()) {
             switch (entity.getLandedDirection()) {
                 case UP:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
+                    poseStack.mulPose(Vector3f.XP.rotationDegrees(180.f));
                     break;
 
                 case NORTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
+                    poseStack.mulPose(Vector3f.XP.rotationDegrees(90.f));
                     break;
 
                 case SOUTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
+                    poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.f));
                     break;
 
                 case EAST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
+                    poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.f));
                     break;
 
                 case WEST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+                    poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.f));
                     break;
 
                 default:
