@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.HummingbirdMothModel;
-import com.bokmcdok.butterflies.client.renderer.entity.state.HummingbirdMothRenderState;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * The renderer for a hummingbird moth.
  */
 @OnlyIn(Dist.CLIENT)
-public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdMothRenderState, HummingbirdMothModel> {
+public class HummingbirdMothRenderer extends MobRenderer<Butterfly, ButterflyRenderState, HummingbirdMothModel> {
 
     /**
      * Bakes a new model for the renderer
@@ -34,8 +34,8 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      */
     @NotNull
     @Override
-    public HummingbirdMothRenderState createRenderState() {
-        return new HummingbirdMothRenderState();
+    public ButterflyRenderState createRenderState() {
+        return new ButterflyRenderState();
     }
 
     /**
@@ -46,10 +46,17 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      */
     @Override
     public void extractRenderState(@NotNull Butterfly entity,
-                                   @NotNull HummingbirdMothRenderState renderState,
+                                   @NotNull ButterflyRenderState renderState,
                                    float partialTick) {
         super.extractRenderState(entity, renderState, partialTick);
 
+        // Only extract debug info if we need it.
+        if (ButterfliesConfig.debugInformation.get()) {
+            renderState.debugInfo = entity.getDebugInfo();
+        }
+
+        renderState.isLanded = entity.getIsLanded();
+        renderState.landedDirection = entity.getLandedDirection();
         renderState.renderScale = entity.getRenderScale();
         renderState.texture = entity.getTexture();
     }
@@ -61,32 +68,28 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      */
     @NotNull
     @Override
-    public ResourceLocation getTextureLocation(@NotNull HummingbirdMothRenderState renderState) {
+    public ResourceLocation getTextureLocation(@NotNull ButterflyRenderState renderState) {
         return renderState.texture;
     }
 
 
 
     /**
-     * Override to provide debug information.
-     * @param entity            The butterfly entity.
-     * @param p_115456_         Unknown.
-     * @param p_115457_         Unknown.
+     * Override to fix a bug with the model's orientation.
+     * @param renderState The current render state.
      * @param poseStack         The pose stack.
      * @param multiBufferSource The render buffer (I think...)
      * @param packedLightCoordinates The light coordinates.
      */
     @Override
-    public void render(@NotNull Butterfly entity,
-                       float p_115456_,
-                       float p_115457_,
+    public void render(@NotNull ButterflyRenderState renderState,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
                        int packedLightCoordinates) {
 
         // Render any debug information for this entity.
         EntityDebugInfoRenderer.renderDebugInfo(
-                entity,
+                renderState.debugInfo,
                 poseStack,
                 multiBufferSource,
                 this.entityRenderDispatcher.cameraOrientation(),
@@ -99,8 +102,8 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
         poseStack.translate(0.0, -0.1, 0.0);
 
         // Rotate the butterfly if it is landed.
-        if (entity.getIsLanded()) {
-            switch (entity.getLandedDirection()) {
+        if (renderState.isLanded) {
+            switch (renderState.landedDirection) {
                 case UP:
                     poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
                     break;
@@ -126,7 +129,7 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
             }
         }
 
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
+        super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
         poseStack.popPose();
     }
 
@@ -136,7 +139,7 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, HummingbirdM
      * @param poses The current entity pose
      */
     @Override
-    protected void scale(@NotNull HummingbirdMothRenderState renderState, PoseStack poses) {
+    protected void scale(@NotNull ButterflyRenderState renderState, PoseStack poses) {
         float s = renderState.renderScale;
         poses.scale(s, s, s);
     }

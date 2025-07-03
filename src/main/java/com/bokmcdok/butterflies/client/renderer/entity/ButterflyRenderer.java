@@ -57,6 +57,7 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyRenderSta
 
         renderState.isLanded = entity.getIsLanded();
         renderState.isMoth = entity.getIsMoth();
+        renderState.landedDirection = entity.getLandedDirection();
         renderState.renderScale = entity.getRenderScale();
         renderState.texture = entity.getTexture();
     }
@@ -97,8 +98,8 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyRenderSta
         poseStack.pushPose();
 
         // Rotate the butterfly if it is landed.
-        if (entity.getIsLanded()) {
-            switch (entity.getLandedDirection()) {
+        if (renderState.isLanded) {
+            switch (renderState.landedDirection) {
                 case UP:
                     poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
                     break;

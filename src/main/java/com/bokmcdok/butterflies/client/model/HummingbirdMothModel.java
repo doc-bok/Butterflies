@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.client.renderer.entity.state.HummingbirdMothRenderState;
+import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * The model for the hummingbird moth.
  */
 @OnlyIn(Dist.CLIENT)
-public class HummingbirdMothModel extends EntityModel<HummingbirdMothRenderState> {
+public class HummingbirdMothModel extends EntityModel<ButterflyRenderState> {
 
     // Names for the various model parts.
     private static final String ABDOMEN = "abdomen";
@@ -105,7 +105,7 @@ public class HummingbirdMothModel extends EntityModel<HummingbirdMothRenderState
      * @param renderState The current render state.
      */
     @Override
-    public void setupAnim(@NotNull HummingbirdMothRenderState renderState) {
+    public void setupAnim(@NotNull ButterflyRenderState renderState) {
 
         // Adjust these to modify wing animations
         final float WING_ARC = 0.2f;
@@ -116,7 +116,7 @@ public class HummingbirdMothModel extends EntityModel<HummingbirdMothRenderState
         final float BODY_ARC = 0.15f;
         final float BODY_SPEED = 0.1f;
 
-        if (entity.getIsLanded()) {
+        if (renderState.isLanded) {
             this.thorax.xRot = BODY_ANGLE + 0.8f;
             this.right_wing.yRot = 0.15f;
         } else {

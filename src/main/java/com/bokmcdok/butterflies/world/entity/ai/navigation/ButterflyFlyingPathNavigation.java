@@ -23,7 +23,6 @@ public class ButterflyFlyingPathNavigation extends FlyingPathNavigation {
 
         setCanOpenDoors(false);
         setCanFloat(false);
-        setCanPassDoors(true);
     }
 
     /**
