@@ -64,12 +64,42 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
                 this.getFont(),
                 packedLightCoordinates);
 
+        poseStack.pushPose();
+
+        // Rotate the butterfly if it is landed.
+        if (entity.getIsLanded()) {
+            switch (entity.getLandedDirection()) {
+                case UP:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
+                    break;
+
+                case NORTH:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
+                    break;
+
+                case SOUTH:
+                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
+                    break;
+
+                case EAST:
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
+                    break;
+
+                case WEST:
+                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         // When the models were initially created no thought was given as to
         // what orientation they needed to be in. Rotating them here allows
         // them to use Minecraft's pathfinding systems without having to redo
         // the model from scratch.
-        poseStack.pushPose();
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.f));
+
         super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
         poseStack.popPose();
     }
