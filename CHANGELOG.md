@@ -1,5 +1,8 @@
 ## Changelog
 
+## 6.4.2 (2025-07-03)
+- Created hummingbird moth landing animations.
+
 ### 6.4.1 (2025-06-29)
 - Renamed items to take into account moths.
 
