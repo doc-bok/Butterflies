@@ -5,7 +5,6 @@ import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderStat
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -18,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * The renderer for a hummingbird moth.
  */
 @OnlyIn(Dist.CLIENT)
-public class HummingbirdMothRenderer extends MobRenderer<Butterfly, ButterflyRenderState, HummingbirdMothModel> {
+public class HummingbirdMothRenderer extends ButterflyBaseRenderer<Butterfly, HummingbirdMothModel> {
 
     /**
      * Bakes a new model for the renderer
@@ -95,42 +94,15 @@ public class HummingbirdMothRenderer extends MobRenderer<Butterfly, ButterflyRen
                 this.entityRenderDispatcher.cameraOrientation(),
                 this.getFont(),
                 packedLightCoordinates);
-
         poseStack.pushPose();
-
-        // Shift the model down slightly, so it fits within the bounding box.
         poseStack.translate(0.0, -0.1, 0.0);
-
-        // Rotate the butterfly if it is landed.
-        if (renderState.isLanded) {
-            switch (renderState.landedDirection) {
-                case UP:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
-                    break;
-
-                case NORTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
-                    break;
-
-                case SOUTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
-                    break;
-
-                case EAST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
-                    break;
-
-                case WEST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
-                    break;
-
-                default:
-                    break;
-            }
-        }
+        rotateIfLanded(entity, poseStack);
 
         super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
+
         poseStack.popPose();
+
+        renderDebugInfo(entity, poseStack, multiBufferSource, packedLightCoordinates);
     }
 
     /**

@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
  * This is the renderer for all the butterflies and moths in the game.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyRenderState, ButterflyModel> {
+public class ButterflyRenderer extends ButterflyBaseRenderer<Butterfly, ButterflyModel> {
+
     /**
      * Bakes a new model for the renderer
-     *
      * @param context The current rendering context
      */
     public ButterflyRenderer(EntityRendererProvider.Context context) {
@@ -96,43 +96,16 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyRenderSta
                 packedLightCoordinates);
 
         poseStack.pushPose();
-
-        // Rotate the butterfly if it is landed.
-        if (renderState.isLanded) {
-            switch (renderState.landedDirection) {
-                case UP:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
-                    break;
-
-                case NORTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
-                    break;
-
-                case SOUTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
-                    break;
-
-                case EAST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
-                    break;
-
-                case WEST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        // When the models were initially created no thought was given as to
-        // what orientation they needed to be in. Rotating them here allows
-        // them to use Minecraft's pathfinding systems without having to redo
-        // the model from scratch.
+        rotateIfLanded(entity, poseStack);
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.f));
 
         super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
+
         poseStack.popPose();
+
+        renderDebugInfo(entity, poseStack, multiBufferSource, packedLightCoordinates);
+
+        poseStack.pushPose();
     }
 
     /**
