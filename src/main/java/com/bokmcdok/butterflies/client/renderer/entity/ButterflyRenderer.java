@@ -2,14 +2,11 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyModel;
 import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
-import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -25,52 +22,7 @@ public class ButterflyRenderer extends ButterflyBaseRenderer<Butterfly, Butterfl
      * @param context The current rendering context
      */
     public ButterflyRenderer(EntityRendererProvider.Context context) {
-        super(context, new ButterflyModel(context.bakeLayer(ButterflyModel.LAYER_LOCATION)), 0.2F);
-    }
-
-    /**
-     * Creates a reusable render state.
-     * @return The new render state.
-     */
-    @NotNull
-    @Override
-    public ButterflyRenderState createRenderState() {
-        return new ButterflyRenderState();
-    }
-
-    /**
-     * Extracts the render state for use in rendering.
-     * @param entity The butterfly entity.
-     * @param renderState The current render state.
-     * @param partialTick The number of partial ticks.
-     */
-    @Override
-    public void extractRenderState(@NotNull Butterfly entity,
-                                   @NotNull ButterflyRenderState renderState,
-                                   float partialTick) {
-        super.extractRenderState(entity, renderState, partialTick);
-
-        // Only extract debug info if we need it.
-        if (ButterfliesConfig.debugInformation.get()) {
-            renderState.debugInfo = entity.getDebugInfo();
-        }
-
-        renderState.isLanded = entity.getIsLanded();
-        renderState.isMoth = entity.getIsMoth();
-        renderState.landedDirection = entity.getLandedDirection();
-        renderState.renderScale = entity.getRenderScale();
-        renderState.texture = entity.getTexture();
-    }
-
-    /**
-     * Gets the texture to use.
-     * @param renderState The current render state.
-     * @return The texture to use for this entity
-     */
-    @NotNull
-    @Override
-    public ResourceLocation getTextureLocation(@NotNull ButterflyRenderState renderState) {
-        return renderState.texture;
+        super(context, new ButterflyModel(context.bakeLayer(ButterflyModel.LAYER_LOCATION)));
     }
 
     /**
@@ -96,27 +48,13 @@ public class ButterflyRenderer extends ButterflyBaseRenderer<Butterfly, Butterfl
                 packedLightCoordinates);
 
         poseStack.pushPose();
-        rotateIfLanded(entity, poseStack);
+        rotateIfLanded(renderState, poseStack);
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.f));
 
         super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
 
         poseStack.popPose();
 
-        renderDebugInfo(entity, poseStack, multiBufferSource, packedLightCoordinates);
-
-        poseStack.pushPose();
-    }
-
-    /**
-     * Scale the entity down
-     * @param renderState The current render state.
-     * @param poses  The current entity pose
-     */
-    @Override
-    protected void scale(@NotNull ButterflyRenderState renderState,
-                         PoseStack poses) {
-        float s = renderState.renderScale;
-        poses.scale(s, s, s);
+        renderDebugInfo(renderState, poseStack, multiBufferSource, packedLightCoordinates);
     }
 }
