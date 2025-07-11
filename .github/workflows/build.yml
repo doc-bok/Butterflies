@@ -1,0 +1,34 @@
+name: Build
+
+on: [ push, pull_request, workflow_dispatch ]     #When your GitHub Action will be executed ('pull_request' -> on every Merge(/Pull) Request; 'workflow_dispatch' -> allows manual execution through github.com
+
+env:
+  JAVA_VERSION: 17
+
+permissions:
+  contents: write
+
+jobs:                                             #The place where you actually tell the GitHub server what to do.
+  build:                                          #To publish your mod you only need one 'job', here it is called 'build'.
+    runs-on: ubuntu-latest                        #'runs-on' specifies the operating system (linux).
+    steps:                                        #Under 'steps' you will list all the individual commands, such as MC-Publish by Kir-Antipov.
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "${{env.JAVA_VERSION}}"
+
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      - name: Build
+        run: ./gradlew clean build
