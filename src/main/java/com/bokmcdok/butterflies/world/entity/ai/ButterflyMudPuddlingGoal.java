@@ -2,11 +2,12 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
 
 /**
  * Handles butterflies flying around mud puddles to gain nutrients.
@@ -109,10 +110,10 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
     protected boolean isValidTarget(@NotNull LevelReader levelReader,
                                     @NotNull BlockPos blockPos) {
         if (levelReader.getBlockState(blockPos).is(Blocks.WATER)) {
-            return levelReader.getBlockState(blockPos.north()).is(Blocks.MUD) ||
-                    levelReader.getBlockState(blockPos.east()).is(Blocks.MUD) ||
-                    levelReader.getBlockState(blockPos.south()).is(Blocks.MUD) ||
-                    levelReader.getBlockState(blockPos.west()).is(Blocks.MUD);
+            return levelReader.getBlockState(blockPos.north()).is(Blocks.CLAY) ||
+                    levelReader.getBlockState(blockPos.east()).is(Blocks.CLAY) ||
+                    levelReader.getBlockState(blockPos.south()).is(Blocks.CLAY) ||
+                    levelReader.getBlockState(blockPos.west()).is(Blocks.CLAY);
         }
 
         return false;
@@ -123,7 +124,7 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
      * block above it.
      */
     protected void moveMobToBlock() {
-        RandomSource random = this.mob.getRandom();
+        Random random = this.mob.getRandom();
         this.mob.getNavigation().moveTo(
                 (double)this.blockPos.getX() + (3.0 * random.nextDouble()) - 1.5,
                 (double)this.blockPos.getY() + random.nextDouble() + 1.0,
