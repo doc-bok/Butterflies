@@ -628,6 +628,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             }
         }
 
+        this.goalSelector.addGoal(4, new ButterflyMudPuddlingGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
 
         // Heath butterflies and moths are drawn to light.
@@ -674,31 +675,14 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public void setLanded(boolean landed) {
 
         // Don't repeat this otherwise the butterflies fall
-        if (!this.getIsLanded()) {
+        if (!this.getIsLanded() && landed) {
             switch (this.getLandedDirection()) {
-                case DOWN:
-                    this.setPos(this.getX(), Math.floor(this.getY()), this.getZ());
-                    break;
-
-                case UP:
-                    this.setPos(this.getX(), Math.floor(this.getY()) + 0.9, this.getZ());
-                    break;
-
-                case NORTH:
-                    this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()));
-                    break;
-
-                case SOUTH:
-                    this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()) + 0.9);
-                    break;
-
-                case WEST:
-                    this.setPos(Math.floor(this.getX()), this.getY(), this.getZ());
-                    break;
-
-                case EAST:
-                    this.setPos(Math.floor(this.getX()) + 0.9, this.getY(), this.getZ());
-                    break;
+                case DOWN -> this.setPos(this.getX(), Math.floor(this.getY()), this.getZ());
+                case UP -> this.setPos(this.getX(), Math.floor(this.getY()) + 0.9, this.getZ());
+                case NORTH -> this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()));
+                case SOUTH -> this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()) + 0.9);
+                case WEST -> this.setPos(Math.floor(this.getX()), this.getY(), this.getZ());
+                case EAST -> this.setPos(Math.floor(this.getX()) + 0.9, this.getY(), this.getZ());
             }
         }
 
