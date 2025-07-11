@@ -48,7 +48,7 @@ jobs:                                             #The place where you actually 
           #modrinth-id: hUw80ZZs                                             #The id of your modrinth project
           #modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
-          github-tag: "v${{env.VERSION}}"
+          github-tag: "v${{env.VERSION}}-for-{{env.MINECRAFT_VERSION}}"
           github-token: "${{env.GITHUB_TOKEN}}"
 
           name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
