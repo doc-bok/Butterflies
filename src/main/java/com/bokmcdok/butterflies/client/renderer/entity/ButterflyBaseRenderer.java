@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -73,11 +73,11 @@ public abstract class ButterflyBaseRenderer<T extends Butterfly, M extends Entit
 
         if (entity.getIsLanded()) {
             switch (entity.getLandedDirection()) {
-                case UP -> poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
-                case NORTH -> poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
-                case SOUTH -> poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
-                case EAST -> poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
-                case WEST -> poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
+                case UP -> poseStack.mulPose(Vector3f.XP.rotationDegrees(180.f));
+                case NORTH -> poseStack.mulPose(Vector3f.XP.rotationDegrees(90.f));
+                case SOUTH -> poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.f));
+                case EAST -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.f));
+                case WEST -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.f));
                 default -> {
                 }
             }
