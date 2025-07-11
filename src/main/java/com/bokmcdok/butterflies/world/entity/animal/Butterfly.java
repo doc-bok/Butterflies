@@ -629,6 +629,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             }
         }
 
+        this.goalSelector.addGoal(4, new ButterflyMudPuddlingGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
 
         // Heath butterflies and moths are drawn to light.
