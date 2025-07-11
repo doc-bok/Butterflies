@@ -16,10 +16,10 @@ import org.jetbrains.annotations.NotNull;
  * This is the renderer for all the butterflies and moths in the game.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
+public class ButterflyRenderer extends ButterflyBaseRenderer<Butterfly, ButterflyModel> {
+
     /**
      * Bakes a new model for the renderer
-     *
      * @param context The current rendering context
      */
     public ButterflyRenderer(EntityRendererProvider.Context context) {
@@ -27,19 +27,7 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
     }
 
     /**
-     * Gets the texture to use
-     *
-     * @param entity The butterfly entity
-     * @return The texture to use for this entity
-     */
-    @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull Butterfly entity) {
-        return entity.getTexture();
-    }
-
-    /**
      * Override to fix a bug with the model's orientation.
-     *
      * @param entity            The butterfly entity.
      * @param p_115456_         Unknown.
      * @param p_115457_         Unknown.
@@ -55,65 +43,14 @@ public class ButterflyRenderer extends MobRenderer<Butterfly, ButterflyModel> {
                        @NotNull MultiBufferSource multiBufferSource,
                        int packedLightCoordinates) {
 
-        // Render any debug information for this entity.
-        EntityDebugInfoRenderer.renderDebugInfo(
-                entity,
-                poseStack,
-                multiBufferSource,
-                this.entityRenderDispatcher.cameraOrientation(),
-                this.getFont(),
-                packedLightCoordinates);
-
         poseStack.pushPose();
-
-        // Rotate the butterfly if it is landed.
-        if (entity.getIsLanded()) {
-            switch (entity.getLandedDirection()) {
-                case UP:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
-                    break;
-
-                case NORTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
-                    break;
-
-                case SOUTH:
-                    poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
-                    break;
-
-                case EAST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
-                    break;
-
-                case WEST:
-                    poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        // When the models were initially created no thought was given as to
-        // what orientation they needed to be in. Rotating them here allows
-        // them to use Minecraft's pathfinding systems without having to redo
-        // the model from scratch.
+        rotateIfLanded(entity, poseStack);
         poseStack.mulPose(Axis.YP.rotationDegrees(-90.f));
 
         super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
-        poseStack.popPose();
-    }
 
-    /**
-     * Scale the entity down
-     *
-     * @param entity The butterfly entity
-     * @param poses  The current entity pose
-     * @param scale  The scale that should be applied
-     */
-    @Override
-    protected void scale(@NotNull Butterfly entity, PoseStack poses, float scale) {
-        float s = entity.getRenderScale();
-        poses.scale(s, s, s);
+        poseStack.popPose();
+
+        renderDebugInfo(entity, poseStack, multiBufferSource, packedLightCoordinates);
     }
 }
