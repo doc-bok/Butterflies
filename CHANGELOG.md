@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.4.5 (2025-07-11)
+- Implemented mud puddling behaviour.
+
 ### 6.4.4 (2025-07-03)
 - Butterflies can now land on any surface.
 
