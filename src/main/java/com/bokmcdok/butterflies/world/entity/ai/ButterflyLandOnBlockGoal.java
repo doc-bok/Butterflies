@@ -83,42 +83,42 @@ public abstract class ButterflyLandOnBlockGoal extends MoveToBlockGoal {
         BlockPos position = this.butterfly.blockPosition();
 
         //  Land on top of a block.
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.below()))) {
+        if (isValidTarget(level, position.below())) {
             this.blockPos = position.below();
             this.butterfly.setLandedDirection(Direction.DOWN);
             return true;
         }
 
         //  Land underneath a block.
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.above()))) {
+        if (isValidTarget(level, position.above())) {
             this.blockPos = position.above();
             this.butterfly.setLandedDirection(Direction.UP);
             return true;
         }
 
         // Land north of a block
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.north()))) {
+        if (isValidTarget(level, position.north())) {
             this.blockPos = position.north();
             this.butterfly.setLandedDirection(Direction.NORTH);
             return true;
         }
 
         // Land south of a block
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.south()))) {
+        if (isValidTarget(level, position.south())) {
             this.blockPos = position.south();
             this.butterfly.setLandedDirection(Direction.SOUTH);
             return true;
         }
 
         // Land east of a block
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.east()))) {
+        if (isValidTarget(level, position.east())) {
             this.blockPos = position.east();
             this.butterfly.setLandedDirection(Direction.EAST);
             return true;
         }
 
-        // Land south of a block
-        if (this.butterfly.isValidLandingBlock(level.getBlockState(position.west()))) {
+        // Land west of a block
+        if (isValidTarget(level, position.west())) {
             this.blockPos = position.west();
             this.butterfly.setLandedDirection(Direction.WEST);
             return true;
