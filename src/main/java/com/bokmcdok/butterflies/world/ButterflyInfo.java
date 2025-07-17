@@ -42,6 +42,8 @@ public class ButterflyInfo {
             "longwing",
             "monarch",
             "morpho",
+            "peacock-pansy-dry",
+            "peacock-pansy-wet",
             "peacock",
             "rainbow",
             "swallowtail",
@@ -147,6 +149,10 @@ public class ButterflyInfo {
         },
         {
             ButterflyData.Trait.POISONOUS,
+        },
+        {
+        },
+        {
         },
         {
         },

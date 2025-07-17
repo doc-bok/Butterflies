@@ -468,6 +468,30 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "peacock-pansy-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peacock-pansy-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "peacock-pansy-wet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peacock-pansy-wet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "rainbow": {
       "conditions": {
         "items": [
@@ -620,6 +644,12 @@
     ],
     [
       "morpho"
+    ],
+    [
+      "peacock-pansy-dry"
+    ],
+    [
+      "peacock-pansy-wet"
     ],
     [
       "peacock"

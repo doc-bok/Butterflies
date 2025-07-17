@@ -791,8 +791,8 @@ public record ButterflyData(int butterflyIndex,
      * @return The entity ID of the butterfly that should spawn.
      */
     public ResourceLocation getMateButterflyEntity(RandomSource random) {
-        int mateIndex = getMateButterflyIndex();
         if (random.nextInt() % 2 == 0) {
+            int mateIndex = getMateButterflyIndex();
             ButterflyData entry = getEntry(mateIndex);
             if (entry != null) {
                 return entry.getButterflyEntity();

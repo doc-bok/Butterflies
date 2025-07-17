@@ -220,6 +220,54 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_egg",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-wet",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-wet_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-wet_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-wet_egg",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:peacock",
       "weight": 100
     },

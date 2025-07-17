@@ -175,6 +175,8 @@ public class Chrysalis extends DirectionalCreature {
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
+
+            this.level().getBiome(this.blockPosition()).get().getBaseTemperature();
             ResourceLocation newLocation = getData().getMateButterflyEntity(this.random);
             Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
             this.remove(RemovalReason.DISCARDED);
