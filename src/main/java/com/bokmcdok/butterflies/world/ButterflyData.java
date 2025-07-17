@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -705,7 +704,6 @@ public record ButterflyData(int butterflyIndex,
             Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
             component.append(description);
 
-
             // Fact
             component.append("\n\n");
             component.append(Component.translatable("gui.butterflies.fact." + entry.entityId()));
@@ -813,34 +811,40 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Returns the butterfly index of the butterfly's base variant.
+     * @return The index of the butterfly to try and mate with.
+     */
+    public int getBaseButterflyIndex() {
+        int index = getButterflyIndex(this.baseVariant);
+        if (index < 0) {
+            index = this.butterflyIndex;
+        }
+
+        return index;
+    }
+
+    /**
+     * Returns the butterfly index of the butterfly's cold variant.
+     * @return The index of the butterfly to try and mate with.
+     */
+    public int getColdButterflyIndex() {
+        return getButterflyIndex(this.coldVariant);
+    }
+
+    /**
      * Returns the butterfly index of the butterfly's mate.
      * @return The index of the butterfly to try and mate with.
      */
     public int getMateButterflyIndex() {
-        int mateIndex = getButterflyIndex(this.mateVariant);
-        if (mateIndex < 0) {
-            mateIndex = this.butterflyIndex;
-        }
-
-        return mateIndex;
+        return getButterflyIndex(this.mateVariant);
     }
 
     /**
-     * Gets the entity that a chrysalis will spawn. For dimorphic species there
-     * is a 50/50 chance it will be male or female.
-     * @param random A random source used to determine the sex of dimorphic species.
-     * @return The entity ID of the butterfly that should spawn.
+     * Returns the butterfly index of the butterfly's warm variant.
+     * @return The index of the butterfly to try and mate with.
      */
-    public ResourceLocation getMateButterflyEntity(RandomSource random) {
-        if (random.nextInt() % 2 == 0) {
-            int mateIndex = getMateButterflyIndex();
-            ButterflyData entry = getEntry(mateIndex);
-            if (entry != null) {
-                return entry.getButterflyEntity();
-            }
-        }
-
-        return this.getButterflyEntity();
+    public int getWarmButterflyIndex() {
+        return getButterflyIndex(this.warmVariant);
     }
 
     /**
