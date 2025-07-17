@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "crepuscular",
   "eggMultiplier": "normal",
   "entityId": "peacock-pansy-wet",
@@ -8,7 +7,7 @@
     "plains",
     "wetlands"
   ],
-  "index": 38,
+  "index": 42,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",

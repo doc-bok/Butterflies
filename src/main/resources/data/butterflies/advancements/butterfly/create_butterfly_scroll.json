@@ -612,18 +612,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "peacock-pansy-wet": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "butterflies:butterfly_scroll_peacock-pansy-wet"
-            ]
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "peppered": {
       "conditions": {
         "items": [
@@ -741,7 +729,6 @@
       "monarch",
       "morpho",
       "peacock-pansy-dry",
-      "peacock-pansy-wet",
       "peacock",
       "rainbow",
       "swallowtail",
