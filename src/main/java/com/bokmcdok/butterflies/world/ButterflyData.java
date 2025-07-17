@@ -54,11 +54,14 @@ public record ButterflyData(int butterflyIndex,
                             Diurnality diurnality,
                             ExtraLandingBlocks extraLandingBlocks,
                             PlantEffect plantEffect,
-                            ResourceLocation breedTarget,
                             EggMultiplier eggMultiplier,
                             boolean caterpillarSounds,
                             boolean butterflySounds,
-                            List<Trait> traits) {
+                            List<Trait> traits,
+                            String baseVariant,
+                            String coldVariant,
+                            String mateVariant,
+                            String warmVariant) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -231,11 +234,14 @@ public record ButterflyData(int butterflyIndex,
                          Diurnality diurnality,
                          ExtraLandingBlocks extraLandingBlocks,
                          PlantEffect plantEffect,
-                         ResourceLocation breedTarget,
                          EggMultiplier eggMultiplier,
                          boolean caterpillarSounds,
                          boolean butterflySounds,
-                         List<Trait> traits) {
+                         List<Trait> traits,
+                         String baseVariant,
+                         String coldVariant,
+                         String mateVariant,
+                         String warmVariant) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -255,13 +261,17 @@ public record ButterflyData(int butterflyIndex,
         this.extraLandingBlocks = extraLandingBlocks;
         this.plantEffect = plantEffect;
 
-        this.breedTarget = breedTarget;
         this.eggMultiplier = eggMultiplier;
 
         this.caterpillarSounds = caterpillarSounds;
         this.butterflySounds = butterflySounds;
 
         this.traits = traits;
+
+        this.baseVariant = baseVariant;
+        this.coldVariant = coldVariant;
+        this.mateVariant = mateVariant;
+        this.warmVariant = warmVariant;
     }
 
     /**
@@ -306,7 +316,6 @@ public record ButterflyData(int butterflyIndex,
                 ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
                 PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
-                String breedTarget = object.get("breedTarget").getAsString();
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
 
                 JsonObject sounds = object.get("sounds").getAsJsonObject();
@@ -314,6 +323,35 @@ public record ButterflyData(int butterflyIndex,
                 boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
 
                 List<Trait> traits = getEnumCollection(object, Trait.class, "traits");
+
+                String baseVariant = entityId;
+                String coldVariant = entityId;
+                String mateVariant = entityId;
+                String warmVariant = entityId;
+                JsonElement variantElement = object.get("variants");
+                if (variantElement != null) {
+                    JsonObject variants = variantElement.getAsJsonObject();
+
+                    JsonElement baseElement = variants.get("base");
+                    if (baseElement != null) {
+                        baseVariant = baseElement.getAsString();
+                    }
+
+                    JsonElement coldElement = variants.get("cold");
+                    if (coldElement != null) {
+                        coldVariant = coldElement.getAsString();
+                    }
+
+                    JsonElement mateElement = variants.get("mate");
+                    if (mateElement != null) {
+                        mateVariant = mateElement.getAsString();
+                    }
+
+                    JsonElement warmElement = variants.get("warm");
+                    if (warmElement != null) {
+                        warmVariant = warmElement.getAsString();
+                    }
+                }
 
                 entry = new ButterflyData(
                         index,
@@ -331,11 +369,14 @@ public record ButterflyData(int butterflyIndex,
                         diurnality,
                         extraLandingBlocks,
                         plantEffect,
-                        new ResourceLocation(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier,
                         caterpillarSounds,
                         butterflySounds,
-                        traits
+                        traits,
+                        baseVariant,
+                        coldVariant,
+                        mateVariant,
+                        warmVariant
                 );
             }
 
@@ -776,7 +817,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The index of the butterfly to try and mate with.
      */
     public int getMateButterflyIndex() {
-        int mateIndex = getButterflyIndex(this.breedTarget);
+        int mateIndex = getButterflyIndex(this.mateVariant);
         if (mateIndex < 0) {
             mateIndex = this.butterflyIndex;
         }

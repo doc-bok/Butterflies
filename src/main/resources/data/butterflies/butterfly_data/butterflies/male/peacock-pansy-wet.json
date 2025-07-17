@@ -25,5 +25,10 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "butterfly"
+  "type": "butterfly",
+  "variants": {
+    "base": "peacock-pansy-dry",
+    "cold": "peacock-pansy-dry",
+    "warm": "peacock-pansy-wet"
+  }
 }

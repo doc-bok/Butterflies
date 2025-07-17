@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "crepuscular",
   "eggMultiplier": "normal",
   "entityId": "peacock-pansy-dry",
@@ -25,5 +24,10 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "butterfly"
+  "type": "butterfly",
+  "variants": {
+    "base": "peacock-pansy-dry",
+    "cold": "peacock-pansy-dry",
+    "warm": "peacock-pansy-wet"
+  }
 }

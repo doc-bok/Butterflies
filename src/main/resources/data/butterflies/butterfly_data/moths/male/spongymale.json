@@ -1,5 +1,4 @@
 {
-  "breedTarget": "spongy",
   "diurnality": "nocturnal",
   "eggMultiplier": "none",
   "entityId": "spongymale",
@@ -24,5 +23,9 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "moth"
+  "type": "moth",
+  "variants": {
+    "base": "spongy",
+    "mate": "spongy"
+  }
 }
