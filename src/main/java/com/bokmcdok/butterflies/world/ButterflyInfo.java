@@ -46,10 +46,12 @@ public class ButterflyInfo {
             "longwing",
             "monarch",
             "morpho",
+            "peacock-pansy-dry",
             "peacock",
             "rainbow",
             "swallowtail",
             "bluemoonmale",
+            "peacock-pansy-wet",
             "atlas",
             "carpet",
             "case-bearing-clothes",
@@ -169,6 +171,10 @@ public class ButterflyInfo {
         {
         },
         {
+        },
+        {
+        },
+        {
             ButterflyData.Trait.HUMMINGBIRD,
         },
         {
@@ -212,6 +218,8 @@ public class ButterflyInfo {
 
     // A list of types of  butterflies.
     public static final ButterflyData.ButterflyType[] TYPES = {
+            ButterflyData.ButterflyType.BUTTERFLY,
+            ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
             ButterflyData.ButterflyType.BUTTERFLY,
@@ -314,7 +322,9 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.RARE,

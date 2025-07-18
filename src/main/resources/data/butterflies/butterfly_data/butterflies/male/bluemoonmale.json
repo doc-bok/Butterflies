@@ -1,5 +1,4 @@
 {
-  "breedTarget": "bluemoon",
   "diurnality": "diurnal",
   "eggMultiplier": "none",
   "entityId": "bluemoonmale",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 40,
+  "index": 41,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -24,5 +23,9 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "butterfly"
+  "type": "butterfly",
+  "variants": {
+    "base": "bluemoon",
+    "mate": "bluemoon"
+  }
 }

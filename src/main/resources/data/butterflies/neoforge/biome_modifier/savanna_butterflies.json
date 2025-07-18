@@ -48,6 +48,30 @@
       "minCount": 1,
       "type": "butterflies:common-crow_egg",
       "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_caterpillar",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_chrysalis",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
+      "type": "butterflies:peacock-pansy-dry_egg",
+      "weight": 100
     }
   ],
   "type": "neoforge:add_spawns"

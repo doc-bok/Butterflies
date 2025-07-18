@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -59,11 +58,14 @@ public record ButterflyData(int butterflyIndex,
                             Diurnality diurnality,
                             ExtraLandingBlocks extraLandingBlocks,
                             PlantEffect plantEffect,
-                            ResourceLocation breedTarget,
                             EggMultiplier eggMultiplier,
                             boolean caterpillarSounds,
                             boolean butterflySounds,
-                            List<Trait> traits) {
+                            List<Trait> traits,
+                            String baseVariant,
+                            String coldVariant,
+                            String mateVariant,
+                            String warmVariant) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -219,11 +221,14 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readEnum(ButterflyData.Diurnality.class),
                     buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
                     buffer.readEnum(ButterflyData.PlantEffect.class),
-                    buffer.readResourceLocation(),
                     buffer.readEnum(ButterflyData.EggMultiplier.class),
                     buffer.readBoolean(),
                     buffer.readBoolean(),
-                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)));
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                    buffer.readUtf(),
+                    buffer.readUtf(),
+                    buffer.readUtf(),
+                    buffer.readUtf());
         }
 
         /**
@@ -249,11 +254,14 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeEnum(data.diurnality());
             buffer.writeEnum(data.extraLandingBlocks());
             buffer.writeEnum(data.plantEffect());
-            buffer.writeResourceLocation(data.breedTarget());
             buffer.writeEnum(data.eggMultiplier());
             buffer.writeBoolean(data.caterpillarSounds());
             buffer.writeBoolean(data.butterflySounds());
             buffer.writeCollection(data.traits(), FriendlyByteBuf::writeEnum);
+            buffer.writeUtf(data.baseVariant);
+            buffer.writeUtf(data.coldVariant);
+            buffer.writeUtf(data.mateVariant);
+            buffer.writeUtf(data.warmVariant);
         }
     };
 
@@ -302,11 +310,14 @@ public record ButterflyData(int butterflyIndex,
                          Diurnality diurnality,
                          ExtraLandingBlocks extraLandingBlocks,
                          PlantEffect plantEffect,
-                         ResourceLocation breedTarget,
                          EggMultiplier eggMultiplier,
                          boolean caterpillarSounds,
                          boolean butterflySounds,
-                         List<Trait> traits) {
+                         List<Trait> traits,
+                         String baseVariant,
+                         String coldVariant,
+                         String mateVariant,
+                         String warmVariant) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -326,13 +337,17 @@ public record ButterflyData(int butterflyIndex,
         this.extraLandingBlocks = extraLandingBlocks;
         this.plantEffect = plantEffect;
 
-        this.breedTarget = breedTarget;
         this.eggMultiplier = eggMultiplier;
 
         this.caterpillarSounds = caterpillarSounds;
         this.butterflySounds = butterflySounds;
 
         this.traits = traits;
+
+        this.baseVariant = baseVariant;
+        this.coldVariant = coldVariant;
+        this.mateVariant = mateVariant;
+        this.warmVariant = warmVariant;
     }
 
     /**
@@ -377,7 +392,6 @@ public record ButterflyData(int butterflyIndex,
                 ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
                 PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
-                String breedTarget = object.get("breedTarget").getAsString();
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
 
                 JsonObject sounds = object.get("sounds").getAsJsonObject();
@@ -385,6 +399,35 @@ public record ButterflyData(int butterflyIndex,
                 boolean butterflySounds = sounds.get("butterfly").getAsBoolean();
 
                 List<Trait> traits = getEnumCollection(object, Trait.class, "traits");
+
+                String baseVariant = entityId;
+                String coldVariant = entityId;
+                String mateVariant = entityId;
+                String warmVariant = entityId;
+                JsonElement variantElement = object.get("variants");
+                if (variantElement != null) {
+                    JsonObject variants = variantElement.getAsJsonObject();
+
+                    JsonElement baseElement = variants.get("base");
+                    if (baseElement != null) {
+                        baseVariant = baseElement.getAsString();
+                    }
+
+                    JsonElement coldElement = variants.get("cold");
+                    if (coldElement != null) {
+                        coldVariant = coldElement.getAsString();
+                    }
+
+                    JsonElement mateElement = variants.get("mate");
+                    if (mateElement != null) {
+                        mateVariant = mateElement.getAsString();
+                    }
+
+                    JsonElement warmElement = variants.get("warm");
+                    if (warmElement != null) {
+                        warmVariant = warmElement.getAsString();
+                    }
+                }
 
                 entry = new ButterflyData(
                         index,
@@ -402,11 +445,14 @@ public record ButterflyData(int butterflyIndex,
                         diurnality,
                         extraLandingBlocks,
                         plantEffect,
-                        ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, breedTarget),
                         eggMultiplier,
                         caterpillarSounds,
                         butterflySounds,
-                        traits
+                        traits,
+                        baseVariant,
+                        coldVariant,
+                        mateVariant,
+                        warmVariant
                 );
             }
 
@@ -855,34 +901,40 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Returns the butterfly index of the butterfly's base variant.
+     * @return The index of the butterfly to try and mate with.
+     */
+    public int getBaseButterflyIndex() {
+        int index = getButterflyIndex(this.baseVariant);
+        if (index < 0) {
+            index = this.butterflyIndex;
+        }
+
+        return index;
+    }
+
+    /**
+     * Returns the butterfly index of the butterfly's cold variant.
+     * @return The index of the butterfly to try and mate with.
+     */
+    public int getColdButterflyIndex() {
+        return getButterflyIndex(this.coldVariant);
+    }
+
+    /**
      * Returns the butterfly index of the butterfly's mate.
      * @return The index of the butterfly to try and mate with.
      */
     public int getMateButterflyIndex() {
-        int mateIndex = getButterflyIndex(this.breedTarget);
-        if (mateIndex < 0) {
-            mateIndex = this.butterflyIndex;
-        }
-
-        return mateIndex;
+        return getButterflyIndex(this.mateVariant);
     }
 
     /**
-     * Gets the entity that a chrysalis will spawn. For dimorphic species there
-     * is a 50/50 chance it will be male or female.
-     * @param random A random source used to determine the sex of dimorphic species.
-     * @return The entity ID of the butterfly that should spawn.
+     * Returns the butterfly index of the butterfly's warm variant.
+     * @return The index of the butterfly to try and mate with.
      */
-    public ResourceLocation getMateButterflyEntity(RandomSource random) {
-        int mateIndex = getMateButterflyIndex();
-        if (random.nextInt() % 2 == 0) {
-            ButterflyData entry = getEntry(mateIndex);
-            if (entry != null) {
-                return entry.getButterflyEntity();
-            }
-        }
-
-        return this.getButterflyEntity();
+    public int getWarmButterflyIndex() {
+        return getButterflyIndex(this.warmVariant);
     }
 
     /**
