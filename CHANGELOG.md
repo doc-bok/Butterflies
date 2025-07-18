@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.0 (2025-07-18)
+- Added the Peacock Pansy Butterfly.
+
 ### 6.4.5 (2025-07-11)
 - Implemented mud puddling behaviour.
 
