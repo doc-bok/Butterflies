@@ -33,6 +33,7 @@ public class NetworkEventListener {
 
     /**
      * Construction
+     *
      * @param forgeEventBus The event bus to register with.
      */
     public NetworkEventListener(IEventBus forgeEventBus) {
@@ -43,6 +44,7 @@ public class NetworkEventListener {
     /**
      * Called when there is a datapack sync requested. Used to send butterfly
      * data to the clients.
+     *
      * @param event The sync event.
      */
     private void onDatapackSync(OnDatapackSyncEvent event) {
@@ -71,6 +73,7 @@ public class NetworkEventListener {
 
     /**
      * Called when a custom payload is received.
+     *
      * @param event The payload event.
      */
     public static void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
@@ -80,25 +83,28 @@ public class NetworkEventListener {
         if (payload != null) {
             List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
                     (buffer) -> new ButterflyData(buffer.readInt(),
-                                                  buffer.readUtf(),
-                                                  buffer.readEnum(ButterflyData.Size.class),
-                                                  buffer.readEnum(ButterflyData.Speed.class),
-                                                  buffer.readEnum(ButterflyData.Rarity.class),
-                                                  buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
-                                                  buffer.readInt(),
-                                                  buffer.readInt(),
-                                                  buffer.readInt(),
-                                                  buffer.readInt(),
-                                                  buffer.readResourceLocation(),
-                                                  buffer.readEnum(ButterflyData.ButterflyType.class),
-                                                  buffer.readEnum(ButterflyData.Diurnality.class),
-                                                  buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
-                                                  buffer.readEnum(ButterflyData.PlantEffect.class),
-                                                  buffer.readResourceLocation(),
-                                                  buffer.readEnum(ButterflyData.EggMultiplier.class),
-                                                  buffer.readBoolean(),
-                                                  buffer.readBoolean(),
-                                                  buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class))));
+                            buffer.readUtf(),
+                            buffer.readEnum(ButterflyData.Size.class),
+                            buffer.readEnum(ButterflyData.Speed.class),
+                            buffer.readEnum(ButterflyData.Rarity.class),
+                            buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
+                            buffer.readInt(),
+                            buffer.readInt(),
+                            buffer.readInt(),
+                            buffer.readInt(),
+                            buffer.readResourceLocation(),
+                            buffer.readEnum(ButterflyData.ButterflyType.class),
+                            buffer.readEnum(ButterflyData.Diurnality.class),
+                            buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
+                            buffer.readEnum(ButterflyData.PlantEffect.class),
+                            buffer.readEnum(ButterflyData.EggMultiplier.class),
+                            buffer.readBoolean(),
+                            buffer.readBoolean(),
+                            buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                            buffer.readUtf(),
+                            buffer.readUtf(),
+                            buffer.readUtf(),
+                            buffer.readUtf()));
 
             // Register the new data.
             for (ButterflyData butterfly : butterflyData) {

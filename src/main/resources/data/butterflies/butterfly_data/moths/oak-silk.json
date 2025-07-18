@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "oak-silk",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 52,
+  "index": 54,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
