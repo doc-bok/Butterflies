@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "diamondback",
@@ -7,7 +6,7 @@
   "habitats": [
     "plains"
   ],
-  "index": 47,
+  "index": 49,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "short",

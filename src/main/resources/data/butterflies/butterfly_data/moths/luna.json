@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "luna",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 51,
+  "index": 53,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "short",

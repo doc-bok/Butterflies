@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.Direction;
@@ -75,10 +76,15 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
 
                     Direction direction = this.butterfly.getLandedDirection().getOpposite();
                     if (this.butterfly.level().getBlockState(this.blockPos.relative(direction)).isAir()) {
-                        ResourceLocation eggEntity = this.butterfly.getData().getButterflyEggEntity();
-                        ButterflyEgg.spawn((ServerLevel) this.butterfly.level(), eggEntity, this.blockPos, direction);
-                        this.butterfly.setIsFertile(false);
-                        this.butterfly.useEgg();
+
+                        // Always use the base butterfly type for eggs.
+                        ButterflyData data = ButterflyData.getEntry(this.butterfly.getData().getBaseButterflyIndex());
+                        if (data != null) {
+                            ResourceLocation eggEntity = data.getButterflyEggEntity();
+                            ButterflyEgg.spawn((ServerLevel) this.butterfly.level(), eggEntity, this.blockPos, direction);
+                            this.butterfly.setIsFertile(false);
+                            this.butterfly.useEgg();
+                        }
                     }
                 }
             }

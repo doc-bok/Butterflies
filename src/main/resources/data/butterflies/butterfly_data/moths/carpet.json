@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "carpet",
@@ -8,7 +7,7 @@
     "plains",
     "wetlands"
   ],
-  "index": 42,
+  "index": 44,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",

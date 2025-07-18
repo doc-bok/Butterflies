@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "crepuscular",
   "eggMultiplier": "normal",
   "entityId": "domestic_silk",
@@ -7,7 +6,7 @@
   "habitats": [
     "villages"
   ],
-  "index": 48,
+  "index": 50,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
