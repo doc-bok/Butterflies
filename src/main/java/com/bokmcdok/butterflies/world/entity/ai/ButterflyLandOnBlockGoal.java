@@ -79,7 +79,7 @@ public abstract class ButterflyLandOnBlockGoal extends MoveToBlockGoal {
      * @return TRUE if the butterfly can land.
      */
     protected boolean isReachedTarget() {
-        Level level = this.butterfly.level();
+        Level level = this.butterfly.getLevel();
         BlockPos position = this.butterfly.blockPosition();
 
         //  Land on top of a block.
