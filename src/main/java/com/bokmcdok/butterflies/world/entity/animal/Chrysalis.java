@@ -181,8 +181,7 @@ public class Chrysalis extends DirectionalCreature {
             int butterflyIndex = getData().getBaseButterflyIndex();
 
             // Check for cold and warm variants.
-            float temperature = this.getLevel().getBiome(this.blockPosition()).get().getModifiedClimateSettings().temperature();
-            if (temperature < 0.5) {
+            if (this.getLevel().getBiome(this.blockPosition()).value().warmEnoughToRain(this.blockPosition())) {
                 int coldIndex = getData().getColdButterflyIndex();
                 if (coldIndex >= 0) {
                     butterflyIndex = coldIndex;

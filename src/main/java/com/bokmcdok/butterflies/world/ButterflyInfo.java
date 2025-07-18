@@ -345,18 +345,26 @@ public class ButterflyInfo {
             ButterflyData.Habitat.JUNGLES,
         },
         {
-            ButterflyData.Habitat.FORESTS,
             ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.SAVANNAS,
         },
         {
             ButterflyData.Habitat.FORESTS,
             ButterflyData.Habitat.PLAINS,
         },
         {
+            ButterflyData.Habitat.FORESTS,
+            ButterflyData.Habitat.PLAINS,
+        },
+        {
             ButterflyData.Habitat.PLAINS,
         },
         {
             ButterflyData.Habitat.FORESTS,
+        },
+        {
+            ButterflyData.Habitat.PLAINS,
+            ButterflyData.Habitat.WETLANDS,
         },
         {
             ButterflyData.Habitat.FORESTS,
@@ -458,7 +466,9 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.RARE,
