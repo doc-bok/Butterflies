@@ -46,10 +46,12 @@ public class ButterflyInfo {
             "longwing",
             "monarch",
             "morpho",
+            "peacock-pansy-dry",
             "peacock",
             "rainbow",
             "swallowtail",
             "bluemoonmale",
+            "peacock-pansy-wet",
             "atlas",
             "carpet",
             "case-bearing-clothes",
@@ -151,6 +153,10 @@ public class ButterflyInfo {
         },
         {
             ButterflyData.Trait.POISONOUS,
+        },
+        {
+        },
+        {
         },
         {
         },

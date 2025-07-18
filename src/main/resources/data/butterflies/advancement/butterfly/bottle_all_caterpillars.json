@@ -456,6 +456,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "peacock-pansy-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_caterpillar_peacock-pansy-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "rainbow": {
       "conditions": {
         "items": [
@@ -608,6 +620,9 @@
     ],
     [
       "morpho"
+    ],
+    [
+      "peacock-pansy-dry"
     ],
     [
       "peacock"

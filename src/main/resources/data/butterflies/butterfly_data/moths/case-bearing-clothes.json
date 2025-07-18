@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "case-bearing-clothes",
@@ -7,7 +6,7 @@
   "habitats": [
     "villages"
   ],
-  "index": 43,
+  "index": 45,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
