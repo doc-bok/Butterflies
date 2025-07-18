@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "cathemeral",
   "eggMultiplier": "normal",
   "entityId": "ice",
@@ -7,7 +6,7 @@
   "habitats": [
     "ice"
   ],
-  "index": 57,
+  "index": 59,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",

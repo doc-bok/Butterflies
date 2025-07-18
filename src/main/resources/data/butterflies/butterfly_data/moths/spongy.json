@@ -1,5 +1,4 @@
 {
-  "breedTarget": "spongymale",
   "diurnality": "crepuscular",
   "eggMultiplier": "double",
   "entityId": "spongy",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 54,
+  "index": 56,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "long",
@@ -24,5 +23,9 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "moth"
+  "type": "moth",
+  "variants": {
+    "base": "spongy",
+    "mate": "spongymale"
+  }
 }

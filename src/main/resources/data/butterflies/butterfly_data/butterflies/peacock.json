@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "peacock",
@@ -8,7 +7,7 @@
     "forests",
     "plains"
   ],
-  "index": 37,
+  "index": 38,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
