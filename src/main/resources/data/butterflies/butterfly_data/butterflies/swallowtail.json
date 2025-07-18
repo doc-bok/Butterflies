@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "swallowtail",
@@ -7,7 +6,7 @@
   "habitats": [
     "plains"
   ],
-  "index": 39,
+  "index": 40,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "short",

@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "white-lined-sphinx",
@@ -7,7 +6,7 @@
   "habitats": [
     "plains"
   ],
-  "index": 55,
+  "index": 57,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
