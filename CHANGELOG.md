@@ -1,17 +1,19 @@
 ## Changelog
 
-## 6.4.5 (2025-07-11)
+### 6.5.0 (2025-07-18)
+- Added the Peacock Pansy Butterfly.
+
+### 6.4.5 (2025-07-11)
 - Implemented mud puddling behaviour.
 
-## 6.4.4 (2025-07-03)
+### 6.4.4 (2025-07-03)
 - Butterflies can now land on any surface.
 
-## 6.4.3 (2025-07-03)
+### 6.4.3 (2025-07-03)
 - Created hummingbird moth landing animations.
-- 
+
 ### 6.4.2 (2025-06-30)
 - Fixed Butterfly Scroll entities changing between versions.
-- 
 
 ### 6.4.1 (2025-06-29)
 - Renamed items to take into account moths.

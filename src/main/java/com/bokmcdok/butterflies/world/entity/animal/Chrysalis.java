@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -173,9 +174,38 @@ public class Chrysalis extends DirectionalCreature {
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
-            ResourceLocation newLocation = getData().getMateButterflyEntity(this.random);
-            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
-            this.remove(RemovalReason.DISCARDED);
+
+            // The base, fallback variant.
+            int butterflyIndex = getData().getBaseButterflyIndex();
+
+            // Check for cold and warm variants.
+            float temperature = this.level().getBiome(this.blockPosition()).get().getModifiedClimateSettings().temperature();
+            if (temperature < 0.5) {
+                int coldIndex = getData().getColdButterflyIndex();
+                if (coldIndex >= 0) {
+                    butterflyIndex = coldIndex;
+                }
+            } else {
+                int warmIndex = getData().getWarmButterflyIndex();
+                if (warmIndex >= 0) {
+                    butterflyIndex = warmIndex;
+                }
+            }
+
+            // Check for dimorphic variants.
+            if (random.nextInt() % 2 == 0) {
+                int mateIndex = getData().getMateButterflyIndex();
+                if (mateIndex >= 0) {
+                    butterflyIndex = mateIndex;
+                }
+            }
+
+            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            if (data != null) {
+                ResourceLocation newLocation = data.getButterflyEntity();
+                Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                this.remove(RemovalReason.DISCARDED);
+            }
         }
     }
 

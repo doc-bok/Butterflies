@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "codling",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 46,
+  "index": 48,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
