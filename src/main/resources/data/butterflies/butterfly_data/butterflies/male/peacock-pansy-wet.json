@@ -1,0 +1,33 @@
+{
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "peacock-pansy-wet",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "plains",
+    "wetlands"
+  ],
+  "index": 42,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "medium"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "blue_orchid",
+  "rarity": "common",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [],
+  "type": "butterfly",
+  "variants": {
+    "base": "peacock-pansy-dry",
+    "cold": "peacock-pansy-dry",
+    "warm": "peacock-pansy-wet"
+  }
+}

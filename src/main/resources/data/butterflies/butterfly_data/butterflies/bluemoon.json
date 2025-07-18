@@ -1,5 +1,4 @@
 {
-  "breedTarget": "bluemoonmale",
   "diurnality": "diurnal",
   "eggMultiplier": "double",
   "entityId": "bluemoon",
@@ -24,5 +23,9 @@
   },
   "speed": "moderate",
   "traits": [],
-  "type": "butterfly"
+  "type": "butterfly",
+  "variants": {
+    "base": "bluemoon",
+    "mate": "bluemoonmale"
+  }
 }

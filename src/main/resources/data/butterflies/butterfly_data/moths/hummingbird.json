@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
@@ -7,7 +6,7 @@
   "habitats": [
     "plains"
   ],
-  "index": 49,
+  "index": 51,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",

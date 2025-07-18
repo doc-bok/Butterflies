@@ -1,5 +1,4 @@
 {
-  "breedTarget": "none",
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "peppered",
@@ -7,7 +6,7 @@
   "habitats": [
     "forests"
   ],
-  "index": 53,
+  "index": 55,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
