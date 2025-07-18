@@ -40,11 +40,14 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readEnum(ButterflyData.Diurnality.class),
                     entry.readEnum(ButterflyData.ExtraLandingBlocks.class),
                     entry.readEnum(ButterflyData.PlantEffect.class),
-                    entry.readResourceLocation(),
                     entry.readEnum(ButterflyData.EggMultiplier.class),
                     entry.readBoolean(),
                     entry.readBoolean(),    
-                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)))));
+                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                    entry.readUtf(),
+                    entry.readUtf(),
+                    entry.readUtf(),
+                    entry.readUtf())));
     }
 
     /**
