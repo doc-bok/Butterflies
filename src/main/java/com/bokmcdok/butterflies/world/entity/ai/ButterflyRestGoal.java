@@ -28,7 +28,7 @@ public class ButterflyRestGoal extends ButterflyLandOnBlockGoal {
      */
     @Override
     public boolean canContinueToUse() {
-        return !this.butterfly.getIsActive() && this.isValidTarget(this.mob.getLevel(), this.blockPos);
+        return !this.butterfly.getIsActive() && super.canContinueToUse();
     }
 
     /**
