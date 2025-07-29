@@ -37,7 +37,7 @@ public abstract class ButterflyLandOnBlockGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.isValidTarget(this.mob.level(), this.blockPos);
+        return this.isValidTarget(this.mob.getLevel(), this.blockPos);
     }
 
     /**
