@@ -663,24 +663,21 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Set whether the butterfly has landed.
-     * @param landed TRUE if the butterfly has landed.
+     * Set a butterfly to landed.
+     * @param landingBlockPosition The position of the block the butterfly has landed on.
      */
-    public void setLanded(boolean landed) {
+    public void setLanded(BlockPos landingBlockPosition) {
 
-        // Don't repeat this otherwise the butterflies fall
-        if (!this.getIsLanded() && landed) {
-            switch (this.getLandedDirection()) {
-                case DOWN -> this.setPos(this.getX(), Math.floor(this.getY()), this.getZ());
-                case UP -> this.setPos(this.getX(), Math.floor(this.getY()) + 0.9, this.getZ());
-                case NORTH -> this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()));
-                case SOUTH -> this.setPos(this.getX(), this.getY(), Math.floor(this.getZ()) + 0.9);
-                case WEST -> this.setPos(Math.floor(this.getX()), this.getY(), this.getZ());
-                case EAST -> this.setPos(Math.floor(this.getX()) + 0.9, this.getY(), this.getZ());
-            }
+        switch (this.getLandedDirection()) {
+            case DOWN -> this.setPos(this.getX(), landingBlockPosition.getY() + 1.1, this.getZ());
+            case UP -> this.setPos(this.getX(), landingBlockPosition.getY() - 0.1, this.getZ());
+            case NORTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() + 1.1);
+            case SOUTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() - 0.1);
+            case WEST -> this.setPos(landingBlockPosition.getX() + 1.1, this.getY(), this.getZ());
+            case EAST -> this.setPos(landingBlockPosition.getX() - 0.1, this.getY(), this.getZ());
         }
 
-        entityData.set(DATA_LANDED, landed);
+        entityData.set(DATA_LANDED, true);
     }
 
     /**
@@ -689,6 +686,13 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     public void setLandedDirection(Direction direction) {
         this.entityData.set(DATA_DIRECTION, direction);
+    }
+
+    /**
+     * Set a butterfly to not landed.
+     */
+    public void setNotLanded() {
+        entityData.set(DATA_LANDED, false);
     }
 
     /**
