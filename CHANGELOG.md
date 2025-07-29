@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.1 (2025-07-29)
+- Tweaked the landing/movement code, so it's more robust.
+
 ### 6.5.0 (2025-07-18)
 - Added the Peacock Pansy Butterfly.
 
