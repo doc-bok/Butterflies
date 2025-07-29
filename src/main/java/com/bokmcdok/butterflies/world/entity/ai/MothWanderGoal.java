@@ -8,6 +8,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class MothWanderGoal extends ButterflyWanderGoal {
 
+    //  The butterfly using this goal.
+    protected final Butterfly butterfly;
+
     /**
      * Construction - set this to a movement goal.
      * @param butterfly     The entity this goal belongs to.
@@ -15,6 +18,16 @@ public class MothWanderGoal extends ButterflyWanderGoal {
      */
     public MothWanderGoal(Butterfly butterfly, double speedModifier) {
         super(butterfly, speedModifier);
+        this.butterfly = butterfly;
+    }
+
+    /**
+     * Fix to force the animation into the "not landed" state.
+     */
+    @Override
+    public void start() {
+        this.butterfly.setNotLanded();
+        super.start();
     }
 
     /**
