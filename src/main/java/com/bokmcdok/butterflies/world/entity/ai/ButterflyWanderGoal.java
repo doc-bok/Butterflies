@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ButterflyWanderGoal extends WaterAvoidingRandomFlyingGoal {
 
+    //  The butterfly using this goal.
+    protected final Butterfly butterfly;
+
     /**
      * Construction - set this to a movement goal.
      * @param butterfly The entity this goal belongs to.
@@ -16,7 +19,17 @@ public class ButterflyWanderGoal extends WaterAvoidingRandomFlyingGoal {
      */
     public ButterflyWanderGoal(Butterfly butterfly, double speedModifier) {
         super(butterfly, speedModifier);
+        this.butterfly = butterfly;
         this.setInterval(1);
+    }
+
+    /**
+     * Fix to force the animation into the "not landed" state.
+     */
+    @Override
+    public void start() {
+        this.butterfly.setNotLanded();
+        super.start();
     }
 
     /**
