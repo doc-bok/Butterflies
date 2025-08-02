@@ -52,7 +52,7 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarRen
         super.extractRenderState(entity, renderState, partialTick);
 
         // Only extract debug info if we need it.
-        if (ButterfliesConfig.debugInformation.get()) {
+        if (ButterfliesConfig.Server.debugInformation.get()) {
             renderState.debugInfo = entity.getDebugInfo();
         }
 
