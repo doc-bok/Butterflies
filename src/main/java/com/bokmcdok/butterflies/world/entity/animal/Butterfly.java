@@ -284,8 +284,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         //  Small chance the butterfly has more eggs.
-        int numEggs = ButterfliesConfig.eggLimit.get();
-        if (this.random.nextDouble() < ButterfliesConfig.doubleEggChance.get()) {
+        int numEggs = ButterfliesConfig.Common.eggLimit.get();
+        if (this.random.nextDouble() < ButterfliesConfig.Common.doubleEggChance.get()) {
             numEggs *= 2;
         }
 
@@ -614,7 +614,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.goalSelector.addGoal(2, new ButterflyMatingGoal(this, 1.1, 8));
 
         // Pollination can be configured to be off.
-        if (ButterfliesConfig.enablePollination.get()) {
+        if (ButterfliesConfig.Common.enablePollination.get()) {
             switch (this.getData().plantEffect()) {
                 case NONE:
                     break;
@@ -781,7 +781,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
-        if (ButterfliesConfig.enableLifespan.get()) {
+        if (ButterfliesConfig.Common.enableLifespan.get()) {
             if (getData().getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
                 if (!this.isPersistenceRequired() &&
                         this.getAge() >= 0 &&
@@ -792,7 +792,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         //  Don't do this unless the debug information flag is set.
-        if (ButterfliesConfig.debugInformation.get()) {
+        if (ButterfliesConfig.Server.debugInformation.get()) {
             StringBuilder debugOutput = new StringBuilder();
             WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
 
