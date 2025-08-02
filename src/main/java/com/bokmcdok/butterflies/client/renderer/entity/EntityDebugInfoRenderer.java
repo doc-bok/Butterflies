@@ -15,46 +15,81 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 /**
- * Helper class that provides debug rendering to entities.
+ * Helper class that renders debug information for entities implementing DebugInfoSupplier.
+ * This debug info is shown only if enabled in server config.
  */
 @OnlyIn(Dist.CLIENT)
 public class EntityDebugInfoRenderer {
 
     /**
-     * Renders debug information for the butterfly.
-     * @param entity The butterfly entity.
-     * @param poseStack The current pose stack.
-     * @param multiBufferSource The render buffer.
-     * @param cameraOrientation The current camera orientation.
-     * @param font The font to use for rendering.
-     * @param packedLightCoordinates The light coordinates.
+     * Renders debug information above the entity if enabled.
+     *
+     * @param <T>                   The entity type that extends Entity and implements DebugInfoSupplier
+     * @param entity                The entity to render debug info for
+     * @param poseStack             The current rendering pose stack
+     * @param multiBufferSource     The buffer source for rendering
+     * @param cameraOrientation     The orientation quaternion of the camera
+     * @param font                  The font renderer
+     * @param packedLightCoordinates The packed light coordinates for the render
      */
-    public static <T extends Entity & DebugInfoSupplier>
-    void renderDebugInfo(T entity,
-                         PoseStack poseStack,
-                         MultiBufferSource multiBufferSource,
-                         Quaternion cameraOrientation,
-                         Font font,
-                         int packedLightCoordinates) {
-        if (ButterfliesConfig.debugInformation.get()) {
-            String debugInfo = entity.getDebugInfo();
-            if (!debugInfo.isBlank()) {
+    public static <T extends Entity & DebugInfoSupplier> void renderDebugInfo(
+            final T entity,
+            final PoseStack poseStack,
+            final MultiBufferSource multiBufferSource,
+            final Quaternion cameraOrientation,
+            final Font font,
+            final int packedLightCoordinates) {
 
-                MutableComponent component = new TextComponent(debugInfo);
-
-                float nameTagOffsetY = entity.getBbHeight() + 0.5f;
-                poseStack.pushPose();
-                poseStack.translate(0.0F, nameTagOffsetY, 0.0F);
-                poseStack.mulPose(cameraOrientation);
-                poseStack.scale(-0.025F, -0.025F, 0.025F);
-                Matrix4f pose = poseStack.last().pose();
-                float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-                int alpha = (int) (backgroundOpacity * 255.0F) << 24;
-                float fontWidth = (float) (-font.width(component) / 2);
-                font.drawInBatch(component, fontWidth, 0, 553648127, false, pose, multiBufferSource, false, alpha, packedLightCoordinates);
-                font.drawInBatch(component, fontWidth, 0, -1, false, pose, multiBufferSource, false, 0, packedLightCoordinates);
-                poseStack.popPose();
-            }
+        if (!ButterfliesConfig.Server.debugInformation.get()) {
+            return;
         }
+
+        final String debugInfo = entity.getDebugInfo();
+        if (debugInfo.isBlank()) {
+            return;
+        }
+
+        final MutableComponent debugTextComponent = new TextComponent(debugInfo);
+
+        final float nameTagOffsetY = entity.getBbHeight() + 0.5f;
+
+        poseStack.pushPose();
+        poseStack.translate(0.0F, nameTagOffsetY, 0.0F);
+        poseStack.mulPose(cameraOrientation);
+        poseStack.scale(-0.025F, -0.025F, 0.025F);
+
+        final Matrix4f poseMatrix = poseStack.last().pose();
+
+        final float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        final int alpha = (int) (backgroundOpacity * 255.0F) << 24; // background alpha for text box
+
+        final float fontWidthCenter = (float) (-font.width(debugTextComponent) / 2);
+
+        // Draw background text (semi-transparent)
+        font.drawInBatch(
+                debugTextComponent,
+                fontWidthCenter,
+                0, 553648127,
+                false,
+                poseMatrix,
+                multiBufferSource,
+                false,
+                alpha,
+                packedLightCoordinates);
+
+        // Draw foreground text (solid)
+        font.drawInBatch(
+                debugTextComponent,
+                fontWidthCenter,
+                0,
+                -1,
+                false,
+                poseMatrix,
+                multiBufferSource,
+                false,
+                0,
+                packedLightCoordinates);
+
+        poseStack.popPose();
     }
 }

@@ -25,20 +25,16 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 
 /**
- * The main entry point for the mod.
+ * Main mod class for Butterflies.
+ * Handles mod setup including registries, event listeners, and configs.
  */
 @Mod(ButterfliesMod.MOD_ID)
-public class ButterfliesMod
-{
-    // Define mod id in a common place for everything to reference
+public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
-    /**
-     * Constructor.
-     */
     public ButterfliesMod() {
-        final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        final IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         // Create a banner pattern
         BannerPattern.create("BUTTERFLY", "banner_pattern_butterfly", "banner_pattern_butterfly", true);
@@ -65,15 +61,16 @@ public class ButterfliesMod
         poiTypesRegistry.initialise(blockRegistry);
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
-        // Create the Mod event listeners
+        // Register client-only listeners
         if (FMLEnvironment.dist == Dist.CLIENT) {
             new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
         }
 
+        // Register mod lifecycle and mod-specific event listeners
         new LifecycleEventListener(modEventBus, blockRegistry, itemRegistry,menuTypeRegistry);
         new ModEventListener(modEventBus, entityTypeRegistry);
 
-        // Create the Forge event listeners.
+        // Register Forge event listeners
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
         new ForgeEventListener(forgeEventBus);
         new LevelEventListener(forgeEventBus, entityTypeRegistry);
@@ -84,7 +81,9 @@ public class ButterfliesMod
         new ServerEventListener(forgeEventBus);
         new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
 
-        // Mod Config Settings
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
+        // Register mod configuration files
+        ModLoadingContext modLoadingContext = ModLoadingContext.get();
+        modLoadingContext.registerConfig(ModConfig.Type.COMMON, ButterfliesConfig.COMMON_CONFIG);
+        modLoadingContext.registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
     }
 }
