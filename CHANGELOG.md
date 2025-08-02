@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.2 (2025-08-02)
+- Moved settings to the common config so they can be set by mod pack creators.
+
 ### 6.5.1 (2025-07-29)
 - Tweaked the landing/movement code, so it's more robust.
 
