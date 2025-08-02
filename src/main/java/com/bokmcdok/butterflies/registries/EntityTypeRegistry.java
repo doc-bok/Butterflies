@@ -27,13 +27,7 @@ public class EntityTypeRegistry {
     /**
      * The mob category for registering butterflies.
      */
-    public static final MobCategory BUTTERFLY_SPAWN_POOL = MobCategory.create(
-            "BUTTERFLY_SPAWNS",
-            "butterfly_spawns",
-            30,
-            true,
-            true,
-            128);
+    public static final MobCategory BUTTERFLY_SPAWN_POOL = MobCategory.valueOf("BUTTERFLIES_BUTTERFLY_SPAWNS");
 
     private final DeferredRegister<EntityType<?>> deferredRegister;
 
