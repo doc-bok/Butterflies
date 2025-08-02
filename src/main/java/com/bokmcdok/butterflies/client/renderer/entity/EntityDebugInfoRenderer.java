@@ -15,45 +15,79 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 /**
- * Helper class that provides debug rendering to entities.
+ * Helper class that renders debug information for entities implementing DebugInfoSupplier.
+ * This debug info is shown only if enabled in server config.
  */
 @OnlyIn(Dist.CLIENT)
 public class EntityDebugInfoRenderer {
 
     /**
-     * Renders debug information for the butterfly.
-     * @param debugInfo The information to render.
-     * @param poseStack The current pose stack.
-     * @param multiBufferSource The render buffer.
-     * @param cameraOrientation The current camera orientation.
-     * @param font The font to use for rendering.
-     * @param packedLightCoordinates The light coordinates.
+     * Renders debug information above the entity if enabled.
+     *
+     * @param <T>                   The entity type that extends Entity and implements DebugInfoSupplier
+     * @param debugInfo             The information to render
+     * @param poseStack             The current rendering pose stack
+     * @param multiBufferSource     The buffer source for rendering
+     * @param cameraOrientation     The orientation quaternion of the camera
+     * @param font                  The font renderer
+     * @param packedLightCoordinates The packed light coordinates for the render
      */
-    public static <T extends Entity & DebugInfoSupplier>
-    void renderDebugInfo(String debugInfo,
-                         PoseStack poseStack,
-                         MultiBufferSource multiBufferSource,
-                         Quaternionf cameraOrientation,
-                         Font font,
-                         int packedLightCoordinates) {
-        if (ButterfliesConfig.debugInformation.get()) {
-            if (!debugInfo.isBlank()) {
+    public static <T extends Entity & DebugInfoSupplier> void renderDebugInfo(
+            final String debugInfo,
+            final PoseStack poseStack,
+            final MultiBufferSource multiBufferSource,
+            final Quaternionf cameraOrientation,
+            final Font font,
+            final int packedLightCoordinates) {
 
-                MutableComponent component = Component.literal(debugInfo);
-
-                poseStack.pushPose();
-                poseStack.translate(0.0F, 0.5F, 0.0F);
-                poseStack.mulPose(cameraOrientation);
-                poseStack.scale(-0.025F, -0.025F, 0.025F);
-                Matrix4f pose = poseStack.last().pose();
-                float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
-                int alpha = (int) (backgroundOpacity * 255.0F) << 24;
-                float fontWidth = (float) (-font.width(component) / 2);
-                font.drawInBatch(component, fontWidth, 0, 553648127, false, pose, multiBufferSource, Font.DisplayMode.SEE_THROUGH, alpha, packedLightCoordinates);
-                font.drawInBatch(component, fontWidth, 0, -1, false, pose, multiBufferSource, Font.DisplayMode.NORMAL, 0, packedLightCoordinates);
-
-                poseStack.popPose();
-            }
+        if (!ButterfliesConfig.Server.debugInformation.get()) {
+            return;
         }
+
+        if (debugInfo.isBlank()) {
+            return;
+        }
+
+        final MutableComponent debugTextComponent = Component.literal(debugInfo);
+
+        poseStack.pushPose();
+        poseStack.translate(0.0F, 0.5F, 0.0F);
+        poseStack.mulPose(cameraOrientation);
+        poseStack.scale(-0.025F, -0.025F, 0.025F);
+
+        final Matrix4f poseMatrix = poseStack.last().pose();
+
+        final float backgroundOpacity = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+        final int alpha = (int) (backgroundOpacity * 255.0F) << 24; // background alpha for text box
+
+        final float fontWidthCenter = (float) (-font.width(debugTextComponent) / 2);
+
+        // Draw background text (semi-transparent)
+        font.drawInBatch(
+                debugTextComponent,
+                fontWidthCenter,
+                0,
+                553648127,
+                false,
+                poseMatrix,
+                multiBufferSource,
+                Font.DisplayMode.SEE_THROUGH,
+                alpha,
+                packedLightCoordinates);
+
+        // Draw foreground text (solid)
+        font.drawInBatch(
+                debugTextComponent,
+                fontWidthCenter,
+                0,
+                -1,
+                false,
+                poseMatrix,
+                multiBufferSource,
+                Font.DisplayMode.NORMAL,
+                0,
+                packedLightCoordinates);
+
+        poseStack.popPose();
     }
 }
