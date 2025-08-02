@@ -71,7 +71,7 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
                         butterfly,
                         this.butterfly.getBoundingBox().inflate(32.0D));
 
-                int maxDensity = ButterfliesConfig.maxDensity.get();
+                int maxDensity = ButterfliesConfig.Common.maxDensity.get();
                 if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
 
                     Direction direction = this.butterfly.getLandedDirection().getOpposite();

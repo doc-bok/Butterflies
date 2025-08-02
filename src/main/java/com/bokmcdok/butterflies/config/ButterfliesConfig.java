@@ -3,62 +3,57 @@ package com.bokmcdok.butterflies.config;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-/**
- * Holds config options for the butterflies.
- */
 public class ButterfliesConfig {
+
+    public static final ModConfigSpec COMMON_CONFIG;
     public static final ModConfigSpec SERVER_CONFIG;
 
-
-    public static ModConfigSpec.DoubleValue doubleEggChance;
-    public static ModConfigSpec.IntValue eggLimit;
-    public static ModConfigSpec.IntValue maxDensity;
-    public static ModConfigSpec.BooleanValue enableLifespan;
-    public static ModConfigSpec.BooleanValue enablePollination;
-    public static ModConfigSpec.BooleanValue debugInformation;
-
-    /*
-      Static initialisation for the configurations - they need to be loaded
-      before anything else.
-     */
-    static {
-        ModConfigSpec.Builder configBuilder = new ModConfigSpec.Builder();
-        setupServerConfig(configBuilder);
-        SERVER_CONFIG = configBuilder.build();
+    // Group common config values in a static inner class
+    public static class Common {
+        public static ModConfigSpec.DoubleValue doubleEggChance;
+        public static ModConfigSpec.IntValue eggLimit;
+        public static ModConfigSpec.IntValue maxDensity;
+        public static ModConfigSpec.BooleanValue enableLifespan;
+        public static ModConfigSpec.BooleanValue enablePollination;
     }
-    /**
-     * Set up the server configuration.
-     * @param builder The spec builder.
-     */
-    private static void setupServerConfig(ModConfigSpec.Builder builder) {
-        builder.comment("This category holds configs for the butterflies mod.");
-        builder.push("Butterfly Options");
 
-        doubleEggChance = builder
-                .comment("Defines the chance a butterfly has double the eggs.")
+    // Group server config values in a static inner class
+    public static class Server {
+        public static ModConfigSpec.BooleanValue debugInformation;
+    }
+
+    static {
+        // Build Common Config
+        ModConfigSpec.Builder commonBuilder = new ModConfigSpec.Builder();
+        commonBuilder.comment("Common configs for the butterflies mod.");
+        commonBuilder.push("butterfly_options");
+
+        Common.doubleEggChance = commonBuilder
+                .comment("Chance a butterfly has double eggs (0-1).")
                 .defineInRange("double_egg_chance", 0.0625, 0, 1);
-
-        eggLimit = builder
-                .comment("Defines how many eggs each butterfly can lay.")
+        Common.eggLimit = commonBuilder
+                .comment("Eggs per butterfly (0-1024).")
                 .defineInRange("egg_limit", 1, 0, 1024);
-
-        maxDensity = builder
-                .comment("Defines how many butterflies can be in a 32x32x32 region" +
-                        " before breeding is disabled. If set to zero, this is ignored.")
+        Common.maxDensity = commonBuilder
+                .comment("Butterfly max density in a 32x32x32 area before breeding is disabled (0 ignores).")
                 .defineInRange("max_density", 16, 0, 1024);
-
-        enableLifespan = builder
-                .comment("If set to TRUE butterflies will die naturally.")
+        Common.enableLifespan = commonBuilder
+                .comment("If true, butterflies will die naturally.")
                 .define("enable_lifespan", true);
+        Common.enablePollination = commonBuilder
+                .comment("If true, butterflies will pollinate flowers.")
+                .define("enable_pollination", true);
+        commonBuilder.pop();
+        COMMON_CONFIG = commonBuilder.build();
 
-        enablePollination = builder
-                .comment("If set to TRUE butterflies will pollinate flowers and cause new ones to grow.")
-                        .define("enable_pollination", true);
-
-        debugInformation = builder
-                .comment("If set to TRUE debug information will be rendered.")
+        // Build Server Config
+        ModConfigSpec.Builder serverBuilder = new ModConfigSpec.Builder();
+        serverBuilder.comment("Server configs for the butterflies mod.");
+        serverBuilder.push("butterfly_options");
+        Server.debugInformation = serverBuilder
+                .comment("If true, render debug info.")
                 .define("debug_info", false);
-
-        builder.pop();
+        serverBuilder.pop();
+        SERVER_CONFIG = serverBuilder.build();
     }
 }

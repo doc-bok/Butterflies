@@ -23,22 +23,19 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 
 /**
- * The main entry point for the mod.
+ * Main mod class for Butterflies.
+ * Handles mod setup including registries, event listeners, and configs.
  */
 @Mod(ButterfliesMod.MOD_ID)
-public class ButterfliesMod
-{
-    // Define mod id in a common place for everything to reference
+public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
-    /**
-     * Constructor.
-     */
     public ButterfliesMod() {
-        final IEventBus modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
-        final IEventBus forgeEventBus = NeoForge.EVENT_BUS;
 
-        // Create the registries.
+        IEventBus modEventBus = ModLoadingContext.get().getActiveContainer().getEventBus();
+        IEventBus forgeEventBus = NeoForge.EVENT_BUS;
+
+        // Initialize registries with explicit dependency ordering
         BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
@@ -51,9 +48,6 @@ public class ButterfliesMod
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        // Initialise the registries. Do this here because (e.g.)
-        // blockEntityTypeRegistry requires blockRegistry to be created and
-        // vice-versa.
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, dataComponentRegistry, itemRegistry, menuTypeRegistry);
@@ -66,7 +60,7 @@ public class ButterfliesMod
         poiTypesRegistry.initialise(blockRegistry);
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
-        // Create the Mod event listeners
+        // Register client-only listeners
         if (modEventBus != null) {
             if (FMLEnvironment.dist == Dist.CLIENT) {
                 new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
@@ -77,7 +71,7 @@ public class ButterfliesMod
             new ModEventListener(modEventBus, itemRegistry);
         }
 
-        // Create the Forge event listeners.
+        // Register Forge event listeners
         new ForgeEventListener(forgeEventBus);
         new ForgeEntityEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
@@ -87,7 +81,9 @@ public class ButterfliesMod
         new ServerEventListener(forgeEventBus);
         new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
 
-        // Mod Config Settings
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
+        // Register mod configuration files
+        ModLoadingContext modLoadingContext = ModLoadingContext.get().getActiveContainer();
+        modLoadingContext.registerConfig(ModConfig.Type.COMMON, ButterfliesConfig.COMMON_CONFIG);
+        modLoadingContext.registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
     }
 }
