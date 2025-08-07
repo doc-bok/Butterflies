@@ -20,9 +20,10 @@ public class ButterflyZhuangziItem extends Item {
 
     /**
      * Construction
+     * @param properties The properties to apply to the item.
      */
-    public ButterflyZhuangziItem() {
-        super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
+    public ButterflyZhuangziItem(Properties properties) {
+        super(properties);
     }
 
     /**

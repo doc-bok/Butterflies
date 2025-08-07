@@ -53,10 +53,14 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     
     /**
      * Construction
+     * @param properties The properties to apply to the item.
+     * @param entityTypeRegistry The entity type registry.
+     * @param butterflyIndex The butterfly index.
      */
-    public ButterflyScrollItem(EntityTypeRegistry entityTypeRegistry,
+    public ButterflyScrollItem(Properties properties,
+                               EntityTypeRegistry entityTypeRegistry,
                                int butterflyIndex) {
-        super(new Item.Properties().tab(CreativeModeTab.TAB_MISC));
+        super(properties);
 
         this.entityTypeRegistry = entityTypeRegistry;
         this.butterflyIndex = butterflyIndex;

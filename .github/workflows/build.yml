@@ -31,4 +31,4 @@ jobs:                                             #The place where you actually 
         run: chmod +x ./gradlew
 
       - name: Build
-        run: ./gradlew clean build
+        run: ./gradlew clean build --info
