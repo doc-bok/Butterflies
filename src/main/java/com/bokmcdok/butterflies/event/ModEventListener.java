@@ -1,29 +1,33 @@
 package com.bokmcdok.butterflies.event;
 
+import com.bokmcdok.butterflies.registries.CreativeTabRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
- * Listens for mod based events.
+ * Handles creative tab content building for Butterflies Mod
  */
 public class ModEventListener {
 
-    // Reference to the item registry.
+    // References to the registries.
+    private final CreativeTabRegistry creativeTabRegistry;
     private final ItemRegistry itemRegistry;
 
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ModEventListener(IEventBus modEventBus,
-                            ItemRegistry itemRegistry) {
+    public ModEventListener(@NotNull IEventBus modEventBus,
+                            @NotNull CreativeTabRegistry creativeTabRegistry,
+                            @NotNull ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onBuildCreativeModeTabContents);
 
+        this.creativeTabRegistry = creativeTabRegistry;
         this.itemRegistry = itemRegistry;
     }
 
@@ -31,85 +35,56 @@ public class ModEventListener {
      * Registers items with the relevant creative tab
      * @param event The event information
      */
-    public void onBuildCreativeModeTabContents(BuildCreativeModeTabContentsEvent event) {
+    public void onBuildCreativeModeTabContents(@NotNull BuildCreativeModeTabContentsEvent event) {
 
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(itemRegistry.getButterflyFeeder());
-            event.accept(itemRegistry.getButterflyMicroscope());
+        if (!Objects.equals(event.getTabKey(), creativeTabRegistry.getButterflyCreativeTab().getKey())) {
+            return;
         }
 
-        else if (event.getTabKey() == CreativeModeTabs.COLORED_BLOCKS) {
-            event.accept(itemRegistry.getButterflyOrigamiBlack());
-            event.accept(itemRegistry.getButterflyOrigamiBlue());
-            event.accept(itemRegistry.getButterflyOrigamiBrown());
-            event.accept(itemRegistry.getButterflyOrigamiCyan());
-            event.accept(itemRegistry.getButterflyOrigamiGray());
-            event.accept(itemRegistry.getButterflyOrigamiGreen());
-            event.accept(itemRegistry.getButterflyOrigamiLightBlue());
-            event.accept(itemRegistry.getButterflyOrigamiLightGray());
-            event.accept(itemRegistry.getButterflyOrigamiLime());
-            event.accept(itemRegistry.getButterflyOrigamiMagenta());
-            event.accept(itemRegistry.getButterflyOrigamiOrange());
-            event.accept(itemRegistry.getButterflyOrigamiPink());
-            event.accept(itemRegistry.getButterflyOrigamiPurple());
-            event.accept(itemRegistry.getButterflyOrigamiRed());
-            event.accept(itemRegistry.getButterflyOrigamiWhite());
-            event.accept(itemRegistry.getButterflyOrigamiYellow());
-        }
+        // Nets
+        event.accept(itemRegistry.getEmptyButterflyNet());
+        itemRegistry.getButterflyNets().forEach(event::accept);
+        event.accept(itemRegistry.getBurntButterflyNet());
 
-        else if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(itemRegistry.getButterflyPotterySherd());
-            event.accept(itemRegistry.getInfestedApple());
-            event.accept(itemRegistry.getSilk());
-            event.accept(itemRegistry.getButterflyBannerPattern());
-        }
+        // Eggs
+        itemRegistry.getButterflyEggs().forEach(event::accept);
 
-        else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+        // Caterpillars
+        itemRegistry.getCaterpillars().forEach(event::accept);
 
-            for (RegistryObject<Item> i : itemRegistry.getButterflyEggs()) {
-                event.accept(i);
-            }
+        // Bottles
+        itemRegistry.getBottledButterflies().forEach(event::accept);
+        itemRegistry.getBottledCaterpillars().forEach(event::accept);
 
-            for (RegistryObject<Item> i : itemRegistry.getCaterpillars()) {
-                event.accept(i);
-            }
-        }
+        // Scrolls
+        itemRegistry.getButterflyScrolls().forEach(event::accept);
 
-        else if (event.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            for (RegistryObject<Item> i : itemRegistry.getButterflySpawnEggs()) {
-                event.accept(i);
-            }
+        // Books
+        event.accept(itemRegistry.getButterflyBook());
+        event.accept(itemRegistry.getZhuangziBook());
 
-            for (RegistryObject<Item> i : itemRegistry.getCaterpillarSpawnEggs()) {
-                event.accept(i);
-            }
+        // Blocks
+        event.accept(itemRegistry.getButterflyFeeder());
+        event.accept(itemRegistry.getButterflyMicroscope());
 
-            event.accept(itemRegistry.getButterflyGolemSpawnEgg());
-        }
+        // Infested Apple
+        event.accept(itemRegistry.getInfestedApple());
 
-        else if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+        // Silk
+        event.accept(itemRegistry.getSilk());
 
-            event.accept(itemRegistry.getEmptyButterflyNet());
-            for (RegistryObject<Item> i : itemRegistry.getButterflyNets()) {
-                event.accept(i);
-            }
+        // Origami
+        itemRegistry.getButterflyOrigami().forEach(event::accept);
 
-            event.accept(itemRegistry.getBurntButterflyNet());
+        // Sherd
+        event.accept(itemRegistry.getButterflyPotterySherd());
 
-            for (RegistryObject<Item> i : itemRegistry.getBottledButterflies()) {
-                event.accept(i);
-            }
+        // Banner Pattern
+        event.accept(itemRegistry.getButterflyBannerPattern());
 
-            for (RegistryObject<Item> i : itemRegistry.getBottledCaterpillars()) {
-                event.accept(i);
-            }
-
-            for (RegistryObject<Item> i : itemRegistry.getButterflyScrolls()) {
-                event.accept(i);
-            }
-
-            event.accept(itemRegistry.getButterflyBook());
-            event.accept(itemRegistry.getZhuangziBook());
-        }
+        // Spawn Eggs
+        itemRegistry.getButterflySpawnEggs().forEach(event::accept);
+        itemRegistry.getCaterpillarSpawnEggs().forEach(event::accept);
+        event.accept(itemRegistry.getButterflyGolemSpawnEgg());
     }
 }
