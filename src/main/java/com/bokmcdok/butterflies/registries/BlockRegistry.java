@@ -16,15 +16,48 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Registers the blocks used by the mod.
  */
 public class BlockRegistry {
+
+    // A list of Butterfly Origami IDs used by the registry.
+    private static final String[] ORIGAMI_IDS = {
+            "butterfly_origami_black",
+            "butterfly_origami_blue",
+            "butterfly_origami_brown",
+            "butterfly_origami_cyan",
+            "butterfly_origami_gray",
+            "butterfly_origami_green",
+            "butterfly_origami_light_blue",
+            "butterfly_origami_light_gray",
+            "butterfly_origami_lime",
+            "butterfly_origami_magenta",
+            "butterfly_origami_orange",
+            "butterfly_origami_pink",
+            "butterfly_origami_purple",
+            "butterfly_origami_red",
+            "butterfly_origami_white",
+            "butterfly_origami_yellow"
+    };
+
+    // The base properties for bottled butterflies.
+    private static final BlockBehaviour.Properties BOTTLED_BUTTERFLY_PROPERTIES =
+            BlockBehaviour.Properties.copy(Blocks.GLASS)
+                    .isRedstoneConductor(BlockRegistry::never)
+                    .isSuffocating(BlockRegistry::never)
+                    .isValidSpawn(BlockRegistry::never)
+                    .isViewBlocking(BlockRegistry::never)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)
+                    .strength(0.3F);
 
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Block> deferredRegister;
@@ -55,22 +88,7 @@ public class BlockRegistry {
     private RegistryObject<Block> witherRoseBud;
 
     // Origami
-    private RegistryObject<Block> butterflyOrigamiBlack;
-    private RegistryObject<Block> butterflyOrigamiBlue;
-    private RegistryObject<Block> butterflyOrigamiBrown;
-    private RegistryObject<Block> butterflyOrigamiCyan;
-    private RegistryObject<Block> butterflyOrigamiGray;
-    private RegistryObject<Block> butterflyOrigamiGreen;
-    private RegistryObject<Block> butterflyOrigamiLightBlue;
-    private RegistryObject<Block> butterflyOrigamiLightGray;
-    private RegistryObject<Block> butterflyOrigamiLime;
-    private RegistryObject<Block> butterflyOrigamiMagenta;
-    private RegistryObject<Block> butterflyOrigamiOrange;
-    private RegistryObject<Block> butterflyOrigamiPink;
-    private RegistryObject<Block> butterflyOrigamiPurple;
-    private RegistryObject<Block> butterflyOrigamiRed;
-    private RegistryObject<Block> butterflyOrigamiWhite;
-    private RegistryObject<Block> butterflyOrigamiYellow;
+    private List<RegistryObject<Block>> butterflyOrigami;
 
     /**
      * Helper method for the "never" attribute. Used in block properties during
@@ -106,7 +124,7 @@ public class BlockRegistry {
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public BlockRegistry(IEventBus modEventBus) {
+    public BlockRegistry(@NotNull IEventBus modEventBus) {
         this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
         this.deferredRegister.register(modEventBus);
     }
@@ -117,28 +135,25 @@ public class BlockRegistry {
      * @param itemRegistry The item registry.
      * @param menuTypeRegistry The menu type registry.
      */
-    public void initialise(BlockEntityTypeRegistry blockEntityTypeRegistry,
-                           ItemRegistry itemRegistry,
-                           MenuTypeRegistry menuTypeRegistry) {
+    public void initialise(@NotNull BlockEntityTypeRegistry blockEntityTypeRegistry,
+                           @NotNull ItemRegistry itemRegistry,
+                           @NotNull MenuTypeRegistry menuTypeRegistry) {
+
+        Objects.requireNonNull(blockEntityTypeRegistry);
+        Objects.requireNonNull(itemRegistry);
+        Objects.requireNonNull(menuTypeRegistry);
+
+        this.bottledButterflyBlocks = new ArrayList<>();
+        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+            RegistryObject<Block> newBlock = registerBottledButterfly(i);
+            this.bottledButterflyBlocks.add(newBlock);
+        }
         
-        this.bottledButterflyBlocks = new ArrayList<>() {
-            {
-                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-                    RegistryObject<Block> newBlock = registerBottledButterfly(i);
-                    add(newBlock);
-                }
-            }
-        };
-        
-        this.bottledCaterpillarBlocks = new ArrayList<>() {
-            {
-                for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-                    RegistryObject<Block> newBlock =
-                            deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
-                    add(newBlock);
-                }
-            }
-        };
+        this.bottledCaterpillarBlocks = new ArrayList<>();
+        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+            RegistryObject<Block> newBlock = deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
+            this.bottledCaterpillarBlocks.add(newBlock);
+        }
         
         this.alliumBud = deferredRegister.register(
                 "bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM)
@@ -198,22 +213,10 @@ public class BlockRegistry {
         this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
                 () -> new ButterflyMicroscopeBlock(itemRegistry, menuTypeRegistry));
 
-        this.butterflyOrigamiBlack = registerButterflyOrigami("butterfly_origami_black");
-        this.butterflyOrigamiBlue = registerButterflyOrigami("butterfly_origami_blue");
-        this.butterflyOrigamiBrown = registerButterflyOrigami("butterfly_origami_brown");
-        this.butterflyOrigamiCyan = registerButterflyOrigami("butterfly_origami_cyan");
-        this.butterflyOrigamiGray = registerButterflyOrigami("butterfly_origami_gray");
-        this.butterflyOrigamiGreen = registerButterflyOrigami("butterfly_origami_green");
-        this.butterflyOrigamiLightBlue = registerButterflyOrigami("butterfly_origami_light_blue");
-        this.butterflyOrigamiLightGray = registerButterflyOrigami("butterfly_origami_light_gray");
-        this.butterflyOrigamiLime = registerButterflyOrigami("butterfly_origami_lime");
-        this.butterflyOrigamiMagenta = registerButterflyOrigami("butterfly_origami_magenta");
-        this.butterflyOrigamiOrange = registerButterflyOrigami("butterfly_origami_orange");
-        this.butterflyOrigamiPink = registerButterflyOrigami("butterfly_origami_pink");
-        this.butterflyOrigamiPurple = registerButterflyOrigami("butterfly_origami_purple");
-        this.butterflyOrigamiRed = registerButterflyOrigami("butterfly_origami_red");
-        this.butterflyOrigamiWhite = registerButterflyOrigami("butterfly_origami_white");
-        this.butterflyOrigamiYellow = registerButterflyOrigami("butterfly_origami_yellow");
+        this.butterflyOrigami = new ArrayList<>();
+        for(String id : ORIGAMI_IDS) {
+            butterflyOrigami.add(registerButterflyOrigami(id));
+        }
     }
 
     /**
@@ -272,132 +275,8 @@ public class BlockRegistry {
         return butterflyMicroscope;
     }
 
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiBlack() {
-        return butterflyOrigamiBlack;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiBlue() {
-        return butterflyOrigamiBlue;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiBrown() {
-        return butterflyOrigamiBrown;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiCyan() {
-        return butterflyOrigamiCyan;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiGray() {
-        return butterflyOrigamiGray;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiGreen() {
-        return butterflyOrigamiGreen;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiLightBlue() {
-        return butterflyOrigamiLightBlue;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiLightGray() {
-        return butterflyOrigamiLightGray;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiLime() {
-        return butterflyOrigamiLime;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiMagenta() {
-        return butterflyOrigamiMagenta;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiOrange() {
-        return butterflyOrigamiOrange;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiPink() {
-        return butterflyOrigamiPink;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiPurple() {
-        return butterflyOrigamiPurple;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiRed() {
-        return butterflyOrigamiRed;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiWhite() {
-        return butterflyOrigamiWhite;
-    }
-
-    /**
-     * Get a butterfly origami.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getButterflyOrigamiYellow() {
-        return butterflyOrigamiYellow;
+    public List<RegistryObject<Block>> getButterflyOrigami() {
+        return butterflyOrigami;
     }
 
     /**
@@ -505,14 +384,7 @@ public class BlockRegistry {
      */
     private RegistryObject<Block> registerBottledButterfly(int butterflyIndex) {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
-        BlockBehaviour.Properties properties = BlockBehaviour.Properties.copy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
-                .noOcclusion()
-                .sound(SoundType.GLASS)
-                .strength(0.3F);
+        BlockBehaviour.Properties properties = BOTTLED_BUTTERFLY_PROPERTIES;
 
         // Light Butterflies glow when they are in a bottle.
         if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
