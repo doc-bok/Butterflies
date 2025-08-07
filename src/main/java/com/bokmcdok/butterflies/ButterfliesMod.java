@@ -39,6 +39,7 @@ public class ButterfliesMod {
         BannerPatternRegistry bannerPatternRegistry = new BannerPatternRegistry(modEventBus);
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
         DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
@@ -50,6 +51,7 @@ public class ButterfliesMod {
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
+        creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
@@ -64,9 +66,9 @@ public class ButterfliesMod {
         }
 
         // Register mod lifecycle and mod-specific event listeners
-        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry,menuTypeRegistry);
+        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry, menuTypeRegistry);
         new ModEntityEventListener(modEventBus, entityTypeRegistry);
-        new ModEventListener(modEventBus, itemRegistry);
+        new ModEventListener(modEventBus, creativeTabRegistry, itemRegistry);
 
         // Register Forge event listeners
         new ForgeEventListener(forgeEventBus);
