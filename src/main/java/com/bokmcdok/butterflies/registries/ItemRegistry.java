@@ -91,15 +91,11 @@ public class ItemRegistry {
     /**
      * Register the items. Must be called after construction and after block
      * registry initialisation.
-     * @param bannerPatternRegistry The banner pattern registry.
      * @param blockRegistry The block registry.
      * @param entityTypeRegistry The entity type registry.
      */
-    public void initialise(@NotNull BannerPatternRegistry bannerPatternRegistry,
-                           @NotNull BlockRegistry blockRegistry,
+    public void initialise(@NotNull BlockRegistry blockRegistry,
                            @NotNull EntityTypeRegistry entityTypeRegistry) {
-
-        Objects.requireNonNull(bannerPatternRegistry, "bannerPatternRegistry cannot be null");
 
         this.blockRegistry = Objects.requireNonNull(blockRegistry, "blockRegistry cannot be null");
         this.entityTypeRegistry =Objects.requireNonNull(entityTypeRegistry, "entityTypeRegistry cannot be null");
