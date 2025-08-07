@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.3 (2025-08-07)
+- Moved all butterfly items to their own creative tab.
+
 ### 6.5.2 (2025-08-02)
 - Moved settings to the common config so they can be set by mod pack creators.
 
