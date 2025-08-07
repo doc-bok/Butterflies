@@ -161,8 +161,7 @@ public class BlockRegistry {
 
         this.bottledCaterpillarBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            DeferredHolder<Block, Block> newBlock = deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
-            this.bottledCaterpillarBlocks.add(newBlock);
+            this.bottledCaterpillarBlocks.add(registerBottledCaterpillar(i));
         }
         
         this.alliumBud = registerFlowerCropBlock("bud_allium", Blocks.ALLIUM);
@@ -354,7 +353,7 @@ public class BlockRegistry {
      */
     private DeferredHolder<Block, Block> registerBottledButterfly(int butterflyIndex) {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
-        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId)
+        ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId);
         ResourceKey<Block> resourceKey = ResourceKey.create(Registries.BLOCK, resourceLocation);
         BlockBehaviour.Properties properties = BOTTLED_BUTTERFLY_PROPERTIES.setId(resourceKey);
 

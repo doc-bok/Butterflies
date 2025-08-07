@@ -138,6 +138,7 @@ public class ButterflyScroll extends HangingEntity {
 
     @Override
     protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        builder.define(BUTTERFLY_INDEX, -1);
         builder.define(DATA_DIRECTION, Direction.NORTH);
     }
 
