@@ -41,6 +41,7 @@ public class ButterfliesMod {
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
         DataComponentRegistry dataComponentRegistry = new DataComponentRegistry(modEventBus);
+        CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
         DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
@@ -53,6 +54,7 @@ public class ButterfliesMod {
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, dataComponentRegistry, itemRegistry, menuTypeRegistry);
         dataComponentRegistry.initialise();
+        creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, dataComponentRegistry, entityTypeRegistry);
@@ -69,7 +71,7 @@ public class ButterfliesMod {
 
             new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry, menuTypeRegistry);
             new ModEntityEventListener(modEventBus, entityTypeRegistry);
-            new ModEventListener(modEventBus, itemRegistry);
+            new ModEventListener(modEventBus, creativeTabRegistry, itemRegistry);
         }
 
         // Register Forge event listeners
