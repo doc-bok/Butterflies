@@ -17,23 +17,23 @@ jobs:                                             #The place where you actually 
   build:                                          #To publish your mod you only need one 'job', here it is called 'build'.
     runs-on: ubuntu-latest                        #'runs-on' specifies the operating system (linux).
     steps:                                        #Under 'steps' you will list all the individual commands, such as MC-Publish by Kir-Antipov.
+      - name: Check Environment Variables
+        run: env
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
       - name: Extract version from gradle.properties
         id: get_version
         run: |
-          VERSION=$(grep '^mod_version=' ../gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          VERSION=$(grep '^mod_version=' ./gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Show extracted VERSION
         run: echo "Version is $VERSION"
 
-#      - name: Check Environment Variables
-#        run: env
-#
-#      - name: Checkout Repository
-#        uses: actions/checkout@v4
-#        with:
-#          submodules: true
-#
 #      - name: Setup Java
 #        uses: actions/setup-java@v4
 #        with:
