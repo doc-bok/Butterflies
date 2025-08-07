@@ -1,31 +1,71 @@
-name: Publish on GitHub, CurseForge & Modrinth    #The name of your GitHub Action on github.com
+name: Publish on GitHub, CurseForge & Modrinth
 
-on: [ push, pull_request, workflow_dispatch ]     #When your GitHub Action will be executed ('pull_request' -> on every Merge(/Pull) Request; 'workflow_dispatch' -> allows manual execution through github.com
+# Triggers: run on push, pull request, or manual dispatch
+on: [ push, pull_request, workflow_dispatch ]
 
-env:                                              #Environment variables that can later be referenced using ${{ env.MINECRAFT_VERSION }}. These are useful for repeating information and allow for quick changes for new mod updates
-  MINECRAFT_VERSION: 1.21.1
-  JAVA_VERSION: 21
-  VERSION: 6.5.2
+env:
+  # Centralize key environment variables for easy updates
+  JAVA_VERSION: 17
+
+  # Release name prefix for tagging and naming builds/releases
   RELEASE_NAME: Bok's Banging Butterflies v
+
+  # Secure tokens stored as encrypted secrets for publishing platforms
   MODRINTH_TOKEN: ${{ secrets.PUBLISH_MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.PUBLISH_CURSEFORGE_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.PUBLISH_GITHUB_TOKEN }}
 
+# Minimum deploy permissions for the workflow to improve security
 permissions:
   contents: write
 
-jobs:                                             #The place where you actually tell the GitHub server what to do.
-  build:                                          #To publish your mod you only need one 'job', here it is called 'build'.
-    runs-on: ubuntu-latest                        #'runs-on' specifies the operating system (linux).
-    steps:                                        #Under 'steps' you will list all the individual commands, such as MC-Publish by Kir-Antipov.
+jobs:
+  build:
+    # The environment where workflow runs, here Ubuntu latest stable
+    runs-on: ubuntu-latest
+
+    steps:
+      # Display all environment variables for debugging purposes
       - name: Check Environment Variables
         run: env
 
+      # Checkout the repository's latest state including submodules (if any)
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           submodules: true
 
+      # Extract the mod version dynamically from gradle.properties for consistent versioning
+      - name: Extract version from gradle.properties
+        id: get_version
+        run: |
+          VERSION=$(grep '^mod_version=' ./gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # Display the extracted mod version for confirmation/debugging
+      - name: Show extracted VERSION
+        run: echo "Version is $VERSION"
+
+      # Extract the Minecraft version dynamically from gradle.properties for consistent versioning
+      - name: Extract Minecraft version from gradle.properties
+        id: get_mc_version
+        run: |
+          # Try to get mapping_version first
+          MC_VERSION=$(grep '^mapping_version=' ./gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          
+          # If empty, fallback to minecraft_version
+          if [ -z "$MC_VERSION" ]; then
+            MC_VERSION=$(grep '^minecraft_version=' ./gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          fi
+          
+          # Export the value as an environment variable
+          echo "MINECRAFT_VERSION=$MC_VERSION" >> $GITHUB_ENV
+
+      # Display the extracted Minecraft version for confirmation/debugging
+      - name: Show extracted MINECRAFT_VERSION
+        run: echo "Minecraft version is $MINECRAFT_VERSION"
+
+      # Set up the Java environment using specified distribution and version
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -35,22 +75,34 @@ jobs:                                             #The place where you actually 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      # Ensure the Gradle wrapper script is executable on non-Windows runners
       - name: Make Gradle Wrapper Executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
 
+      # Cache the Gradle packages to speed up runs.
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*','gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Build the project using Gradle clean and build tasks
       - name: Build with Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           arguments: build
 
+      # Publish the built mod to CurseForge, Modrinth, and GitHub Releases
       - name: Publish (CurseForge/Modrinth/GitHub)
-        uses: Kir-Antipov/mc-publish@v3.3                                   #The specified MC-Publish GitHub Action in the version 3.2
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
-          curseforge-id: 929419                                             #The id of your CurseForge project
+          curseforge-id: 929419
           curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
-#
-          modrinth-id: hUw80ZZs                                             #The id of your modrinth project
+
+          modrinth-id: hUw80ZZs
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
 
           github-tag: "v${{env.VERSION}}-for-${{env.MINECRAFT_VERSION}}"
@@ -59,7 +111,7 @@ jobs:                                             #The place where you actually 
           name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
           version: "${{env.VERSION}}"
           version-type: release
-          changelog-file: CHANGELOG.md                                      #The file in which the changes of your new update are specified (the path starts at your project root)
+          changelog-file: CHANGELOG.md
 
           loaders: neoforge
           game-versions: "${{env.MINECRAFT_VERSION}}"
