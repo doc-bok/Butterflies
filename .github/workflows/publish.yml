@@ -65,48 +65,49 @@ jobs:
       - name: Show extracted MINECRAFT_VERSION
         run: echo "Minecraft version is $MINECRAFT_VERSION"
 
-#      # Setup the Java environment using specified distribution and version
-#      - name: Setup Java
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: "temurin"
-#          java-version: "${{env.JAVA_VERSION}}"
-#
-#      # Ensure the Gradle wrapper script is executable on non-Windows runners
-#      - name: Make Gradle Wrapper Executable
-#        if: ${{ runner.os != 'Windows' }}
-#        run: chmod +x ./gradlew
-#
-#      - name: Cache Gradle packages
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.gradle/caches
-#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*','gradle-wrapper.properties') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-
-#
-#      # Build the project using Gradle clean and build tasks
-#      - name: Build
-#        run: ./gradlew clean build
-#
-#      # Publish the built mod to CurseForge, Modrinth, and GitHub Releases
-#      - name: Publish (CurseForge/Modrinth/GitHub)
-#        uses: Kir-Antipov/mc-publish@v3.3
-#        with:
-#          curseforge-id: 929419
-#          curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
-#
-#          modrinth-id: hUw80ZZs
-#          modrinth-token: "${{env.MODRINTH_TOKEN}}"
-#
-#          github-tag: "v${{env.VERSION}}-for-${{env.MINECRAFT_VERSION}}"
-#          github-token: "${{env.GITHUB_TOKEN}}"
-#
-#          name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
-#          version: "${{env.VERSION}}"
-#          version-type: release
-#          changelog-file: CHANGELOG.md
-#
-#          loaders: forge
-#          game-versions: "${{env.MINECRAFT_VERSION}}"
-#          java: "${{env.JAVA_VERSION}}"
+      # Set up the Java environment using specified distribution and version
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "${{env.JAVA_VERSION}}"
+
+      # Ensure the Gradle wrapper script is executable on non-Windows runners
+      - name: Make Gradle Wrapper Executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+
+      # Cache the Gradle packages to speed up runs.
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*','gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # Build the project using Gradle clean and build tasks
+      - name: Build
+        run: ./gradlew clean build
+
+      # Publish the built mod to CurseForge, Modrinth, and GitHub Releases
+      - name: Publish (CurseForge/Modrinth/GitHub)
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 929419
+          curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
+
+          modrinth-id: hUw80ZZs
+          modrinth-token: "${{env.MODRINTH_TOKEN}}"
+
+          github-tag: "v${{env.VERSION}}-for-${{env.MINECRAFT_VERSION}}"
+          github-token: "${{env.GITHUB_TOKEN}}"
+
+          name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
+          version: "${{env.VERSION}}"
+          version-type: release
+          changelog-file: CHANGELOG.md
+
+          loaders: forge
+          game-versions: "${{env.MINECRAFT_VERSION}}"
+          java: "${{env.JAVA_VERSION}}"
