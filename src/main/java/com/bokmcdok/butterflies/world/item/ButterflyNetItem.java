@@ -15,7 +15,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -51,11 +50,14 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     /**
      * Construction
+     * @param properties The properties to apply to the item.
+     * @param itemRegistry The item registry.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(ItemRegistry itemRegistry,
+    public ButterflyNetItem(Properties properties,
+                            ItemRegistry itemRegistry,
                             int butterflyIndex) {
-        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
+        super(properties);
 
         this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;

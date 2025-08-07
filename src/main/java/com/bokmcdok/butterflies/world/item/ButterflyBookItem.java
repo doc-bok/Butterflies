@@ -17,7 +17,6 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -90,9 +89,10 @@ public class ButterflyBookItem extends Item {
 
     /**
      * Construction
+     * @param properties The properties to apply to the item.
      */
-    public ButterflyBookItem() {
-        super(new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
+    public ButterflyBookItem(Properties properties) {
+        super(properties);
     }
 
     /**

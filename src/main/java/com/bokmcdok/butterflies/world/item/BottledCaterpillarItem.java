@@ -51,12 +51,14 @@ public class BottledCaterpillarItem extends BlockItem {
 
     /**
      * Construction
+     * @param properties The properties to apply to the item.
      * @param block The block to place in the world.
      * @param butterflyIndex The butterfly index of the species.
      */
-    public BottledCaterpillarItem(RegistryObject<Block> block,
+    public BottledCaterpillarItem(Properties properties,
+                                  RegistryObject<Block> block,
                                   int butterflyIndex) {
-        super(block.get(), new Item.Properties().stacksTo(1).tab(CreativeModeTab.TAB_MISC));
+        super(block.get(), properties);
 
         this.butterflyIndex = butterflyIndex;
     }
