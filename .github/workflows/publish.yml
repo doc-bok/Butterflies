@@ -20,7 +20,7 @@ jobs:                                             #The place where you actually 
       - name: Extract version from gradle.properties
         id: get_version
         run: |
-          VERSION=$(grep '^mod_version=' ./gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          VERSION=$(grep '^mod_version=' ../../gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Show extracted VERSION
