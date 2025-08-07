@@ -5,7 +5,6 @@ on: [ push, pull_request, workflow_dispatch ]     #When your GitHub Action will 
 env:                                              #Environment variables that can later be referenced using ${{ env.MINECRAFT_VERSION }}. These are useful for repeating information and allow for quick changes for new mod updates
   MINECRAFT_VERSION: 1.20.2
   JAVA_VERSION: 17
-  VERSION: 6.5.2
   RELEASE_NAME: Bok's Banging Butterflies v
   MODRINTH_TOKEN: ${{ secrets.PUBLISH_MODRINTH_TOKEN }}
   CURSEFORGE_TOKEN: ${{ secrets.PUBLISH_CURSEFORGE_TOKEN }}
@@ -18,6 +17,15 @@ jobs:                                             #The place where you actually 
   build:                                          #To publish your mod you only need one 'job', here it is called 'build'.
     runs-on: ubuntu-latest                        #'runs-on' specifies the operating system (linux).
     steps:                                        #Under 'steps' you will list all the individual commands, such as MC-Publish by Kir-Antipov.
+      - name: Extract version from gradle.properties
+        id: get_version
+        run: |
+          VERSION=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Show extracted VERSION
+        run: echo "Version is $VERSION"
+
       - name: Check Environment Variables
         run: env
 
@@ -39,23 +47,23 @@ jobs:                                             #The place where you actually 
       - name: Build
         run: ./gradlew clean build
 
-      - name: Publish (CurseForge/Modrinth/GitHub)
-        uses: Kir-Antipov/mc-publish@v3.3                                   #The specified MC-Publish GitHub Action in the version 3.2
-        with:
-          curseforge-id: 929419                                             #The id of your CurseForge project
-          curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
+      #- name: Publish (CurseForge/Modrinth/GitHub)
+      #  uses: Kir-Antipov/mc-publish@v3.3                                   #The specified MC-Publish GitHub Action in the version 3.2
+      #  with:
+      #    curseforge-id: 929419                                             #The id of your CurseForge project
+      #    curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
+##
+      #    modrinth-id: hUw80ZZs                                             #The id of your modrinth project
+      #    modrinth-token: "${{env.MODRINTH_TOKEN}}"
 #
-          modrinth-id: hUw80ZZs                                             #The id of your modrinth project
-          modrinth-token: "${{env.MODRINTH_TOKEN}}"
-
-          github-tag: "v${{env.VERSION}}-for-${{env.MINECRAFT_VERSION}}"
-          github-token: "${{env.GITHUB_TOKEN}}"
-
-          name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
-          version: "${{env.VERSION}}"
-          version-type: release
-          changelog-file: CHANGELOG.md                                      #The file in which the changes of your new update are specified (the path starts at your project root)
-
-          loaders: forge
-          game-versions: "${{env.MINECRAFT_VERSION}}"
-          java: "${{env.JAVA_VERSION}}"
+      #    github-tag: "v${{env.VERSION}}-for-${{env.MINECRAFT_VERSION}}"
+      #    github-token: "${{env.GITHUB_TOKEN}}"
+#
+      #    name: "${{env.RELEASE_NAME}}${{env.VERSION}}"
+      #    version: "${{env.VERSION}}"
+      #    version-type: release
+      #    changelog-file: CHANGELOG.md                                      #The file in which the changes of your new update are specified (the path starts at your project root)
+#
+      #    loaders: forge
+      #    game-versions: "${{env.MINECRAFT_VERSION}}"
+      #    java: "${{env.JAVA_VERSION}}"
