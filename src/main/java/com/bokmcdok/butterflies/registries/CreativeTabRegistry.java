@@ -4,9 +4,9 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -19,7 +19,7 @@ public class CreativeTabRegistry {
     private final DeferredRegister<CreativeModeTab> deferredRegister;
 
     // The Butterfly Creative Tab
-    private RegistryObject<CreativeModeTab> butterflyCreativeTab;
+    private DeferredHolder<CreativeModeTab, CreativeModeTab> butterflyCreativeTab;
 
 
     /**
@@ -55,7 +55,7 @@ public class CreativeTabRegistry {
      * @throws IllegalStateException if called before initialise().
      */
     @NotNull
-    public RegistryObject<CreativeModeTab> getButterflyCreativeTab() {
+    public DeferredHolder<CreativeModeTab, CreativeModeTab> getButterflyCreativeTab() {
         if (butterflyCreativeTab == null) {
             throw new IllegalStateException("Creative tab has not been initialised. Call initialise() first.");
         }

@@ -4,14 +4,11 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientPayloadHandler;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import com.bokmcdok.butterflies.registries.CreativeTabRegistry;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,50 +48,50 @@ public class ModEventListener {
         }
 
         // Nets
-        event.accept(itemRegistry.getEmptyButterflyNet());
-        itemRegistry.getButterflyNets().forEach(event::accept);
-        event.accept(itemRegistry.getBurntButterflyNet());
+        event.accept(itemRegistry.getEmptyButterflyNet().get());
+        itemRegistry.getButterflyNets().forEach((x) -> event.accept(x.get()));
+        event.accept(itemRegistry.getBurntButterflyNet().get());
 
         // Eggs
-        itemRegistry.getButterflyEggs().forEach(event::accept);
+        itemRegistry.getButterflyEggs().forEach((x) -> event.accept(x.get()));
 
         // Caterpillars
-        itemRegistry.getCaterpillars().forEach(event::accept);
+        itemRegistry.getCaterpillars().forEach((x) -> event.accept(x.get()));
 
         // Bottles
-        itemRegistry.getBottledButterflies().forEach(event::accept);
-        itemRegistry.getBottledCaterpillars().forEach(event::accept);
+        itemRegistry.getBottledButterflies().forEach((x) -> event.accept(x.get()));
+        itemRegistry.getBottledCaterpillars().forEach((x) -> event.accept(x.get()));
 
         // Scrolls
-        itemRegistry.getButterflyScrolls().forEach(event::accept);
+        itemRegistry.getButterflyScrolls().forEach((x) -> event.accept(x.get()));
 
         // Books
-        event.accept(itemRegistry.getButterflyBook());
-        event.accept(itemRegistry.getZhuangziBook());
+        event.accept(itemRegistry.getButterflyBook().get());
+        event.accept(itemRegistry.getZhuangziBook().get());
 
         // Blocks
-        event.accept(itemRegistry.getButterflyFeeder());
-        event.accept(itemRegistry.getButterflyMicroscope());
+        event.accept(itemRegistry.getButterflyFeeder().get());
+        event.accept(itemRegistry.getButterflyMicroscope().get());
 
         // Infested Apple
-        event.accept(itemRegistry.getInfestedApple());
+        event.accept(itemRegistry.getInfestedApple().get());
 
         // Silk
-        event.accept(itemRegistry.getSilk());
+        event.accept(itemRegistry.getSilk().get());
 
         // Origami
-        itemRegistry.getButterflyOrigami().forEach(event::accept);
+        itemRegistry.getButterflyOrigami().forEach((x) -> event.accept(x.get()));
 
         // Sherd
-        event.accept(itemRegistry.getButterflyPotterySherd());
+        event.accept(itemRegistry.getButterflyPotterySherd().get());
 
         // Banner Pattern
-        event.accept(itemRegistry.getButterflyBannerPattern());
+        event.accept(itemRegistry.getButterflyBannerPattern().get());
 
         // Spawn Eggs
-        itemRegistry.getButterflySpawnEggs().forEach(event::accept);
-        itemRegistry.getCaterpillarSpawnEggs().forEach(event::accept);
-        event.accept(itemRegistry.getButterflyGolemSpawnEgg());
+        itemRegistry.getButterflySpawnEggs().forEach((x) -> event.accept(x.get()));
+        itemRegistry.getCaterpillarSpawnEggs().forEach((x) -> event.accept(x.get()));
+        event.accept(itemRegistry.getButterflyGolemSpawnEgg().get());
     }
 
     /**
