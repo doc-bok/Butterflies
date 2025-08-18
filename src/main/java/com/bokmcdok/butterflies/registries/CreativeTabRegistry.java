@@ -45,7 +45,6 @@ public class CreativeTabRegistry {
                 () -> CreativeModeTab.builder()
                         .title(Component.translatable("itemGroup.butterfly_tab"))
                         .icon(itemRegistry.getButterflyBook().get()::getDefaultInstance)
-                        .withSearchBar()
                         .build()
         );
     }
