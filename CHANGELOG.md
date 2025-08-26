@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.4 (2025-08-26)
+- Renamed 'male' to 'variant' for consistency.
+
 ### 6.5.3 (2025-08-07)
 - Moved all butterfly items to their own creative tab.
 
