@@ -24,24 +24,24 @@ class Config:
         self.FROG_FOOD = Path("resources/data/minecraft/tags/entity_types/frog_food.json")
         self.LOCALISATION = Path("resources/assets/butterflies/lang/en_us.json")
         self.BUTTERFLY_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/butterfly/")
-        self.MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/butterfly_male/")
+        self.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/butterfly_variant/")
         self.MOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/moth/")
-        self.MALE_MOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/moth_male/")
+        self.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/moth_variant/")
         self.BOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/both/")
         self.BIOME_MODIFIER_TEMPLATES = Path("resources/data/butterflies/templates/biome_modifiers/")
 
         self.BUTTERFLIES_FOLDER = "butterflies"
-        self.MALE_BUTTERFLIES_FOLDER = "butterflies/male"
+        self.VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant"
         self.MOTHS_FOLDER = "moths"
-        self.MALE_MOTHS_FOLDER = "moths/male"
+        self.VARIANT_MOTHS_FOLDER = "moths/variant"
         self.SPECIAL_FOLDER = "special"
 
         # Folders for butterfly classes
         self.FOLDERS = [
             self.BUTTERFLIES_FOLDER,
-            self.MALE_BUTTERFLIES_FOLDER,
+            self.VARIANT_BUTTERFLIES_FOLDER,
             self.MOTHS_FOLDER,
-            self.MALE_MOTHS_FOLDER,
+            self.VARIANT_MOTHS_FOLDER,
             self.SPECIAL_FOLDER
         ]
 
