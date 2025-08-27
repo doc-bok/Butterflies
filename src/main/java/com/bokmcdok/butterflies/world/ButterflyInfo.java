@@ -1,10 +1,11 @@
 package com.bokmcdok.butterflies.world;
 
 /**
- * Generated code - do not modify
- * Provides data that needs to be accessed before butterfly data files areAdd commentMore actions
+ * Generated code - do not modify.
+ * Provides data that needs to be accessed before butterfly data files are
  * loaded.
  */
+ 
 public class ButterflyInfo {
 
     // A list of all the species in the mod.
@@ -75,53 +76,31 @@ public class ButterflyInfo {
 
     // A list of traits each butterfly has.
     public static final ButterflyData.Trait[][] TRAITS = {
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for admiral
+        {}, // No traits for bluemoon
+        {}, // No traits for buckeye
+        {}, // No traits for cabbage
+        {}, // No traits for chalkhill
         {
             ButterflyData.Trait.CHRISTMASSY,
         },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for clipper
+        {}, // No traits for clipperblack
+        {}, // No traits for clipperblue
+        {}, // No traits for clipperbrown
+        {}, // No traits for clippercyan
+        {}, // No traits for clippergray
+        {}, // No traits for clippergreen
+        {}, // No traits for clipperlightgray
+        {}, // No traits for clipperlime
+        {}, // No traits for clippermagenta
+        {}, // No traits for clipperorange
+        {}, // No traits for clipperpink
+        {}, // No traits for clipperpurple
+        {}, // No traits for clipperred
+        {}, // No traits for clipperwhite
+        {}, // No traits for clipperyellow
+        {}, // No traits for commander
         {
             ButterflyData.Trait.INEDIBLE,
             ButterflyData.Trait.POISONOUS,
@@ -129,80 +108,52 @@ public class ButterflyInfo {
         {
             ButterflyData.Trait.MIMICRY,
         },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for common
+        {}, // No traits for commonbirdwing
+        {}, // No traits for commongrassyellow
+        {}, // No traits for emperor
         {
             ButterflyData.Trait.CATFRIEND,
         },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for glasswing
+        {}, // No traits for green-skirt-baron
+        {}, // No traits for hairstreak
         {
             ButterflyData.Trait.MOTHWANDERER,
         },
-        {
-        },
+        {}, // No traits for longwing
         {
             ButterflyData.Trait.POISONOUS,
         },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for morpho
+        {}, // No traits for peacock-pansy-dry
+        {}, // No traits for peacock
+        {}, // No traits for rainbow
+        {}, // No traits for swallowtail
+        {}, // No traits for bluemoonmale
+        {}, // No traits for peacock-pansy-wet
+        {}, // No traits for atlas
+        {}, // No traits for carpet
+        {}, // No traits for case-bearing-clothes
         {
             ButterflyData.Trait.HUMMINGBIRD,
         },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for clothes
+        {}, // No traits for codling
+        {}, // No traits for diamondback
+        {}, // No traits for domestic_silk
         {
             ButterflyData.Trait.HUMMINGBIRD,
         },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
+        {}, // No traits for indianmeal
+        {}, // No traits for luna
+        {}, // No traits for oak-silk
+        {}, // No traits for peppered
+        {}, // No traits for spongy
         {
             ButterflyData.Trait.HUMMINGBIRD,
         },
-        {
-        },
+        {}, // No traits for spongymale
         {
             ButterflyData.Trait.GLOW,
             ButterflyData.Trait.ICY,
@@ -347,4 +298,5 @@ public class ButterflyInfo {
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
     };
+
 }

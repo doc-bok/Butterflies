@@ -27,7 +27,7 @@ class DataGenerator:
         files: List[Path] = []
         cwd = Path.cwd()
         for path in cwd.rglob("*.json"):
-            if base_entry in path.name and "loot_tables" not in str(path.parent):
+            if base_entry in path.name and "loot_table" not in str(path.parent):
                 files.append(path)
 
         for entry in entries:
