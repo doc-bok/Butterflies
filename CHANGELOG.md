@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.5.4
+- Removed the search bar from the butterfly creative mode tab.
+
 ### 6.5.3 (2025-08-07)
 - Moved all butterfly items to their own creative tab.
 
