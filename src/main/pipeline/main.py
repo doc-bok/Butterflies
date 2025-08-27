@@ -25,23 +25,23 @@ def main():
 
     # Step 1: Gather species lists
     butterflies = data_gen.generate_butterfly_list(config.BUTTERFLIES_FOLDER)
-    male_butterflies = data_gen.generate_butterfly_list(config.MALE_BUTTERFLIES_FOLDER)
+    variant_butterflies = data_gen.generate_butterfly_list(config.VARIANT_BUTTERFLIES_FOLDER)
     moths = data_gen.generate_butterfly_list(config.MOTHS_FOLDER)
-    male_moths = data_gen.generate_butterfly_list(config.MALE_MOTHS_FOLDER)
+    variant_moths = data_gen.generate_butterfly_list(config.VARIANT_MOTHS_FOLDER)
     special = data_gen.generate_butterfly_list(config.SPECIAL_FOLDER)
 
-    all_species = butterflies + male_butterflies + moths + male_moths + special
-    all_butterflies = butterflies + male_butterflies
-    all_moths = moths + male_moths
+    all_species = butterflies + variant_butterflies + moths + variant_moths + special
+    all_butterflies = butterflies + variant_butterflies
+    all_moths = moths + variant_moths
 
     logger.info(f"Total species count: {len(all_species)}")
 
     # Step 2: Generate JSON data files for all groups
     for group_name, group_list in [
         ("butterflies", butterflies),
-        ("male butterflies", male_butterflies),
+        ("male butterflies", variant_butterflies),
         ("moths", moths),
-        ("male moths", male_moths),
+        ("male moths", variant_moths),
         ("special", special),
     ]:
         logger.info(f"Generating data files for {group_name} ({len(group_list)})")
@@ -59,9 +59,9 @@ def main():
 
     # Step 5: Generate advancements JSON files for various groups
     adv_gen.generate_advancements(butterflies, config.BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_butterflies, config.MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    adv_gen.generate_advancements(all_butterflies, config.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
     adv_gen.generate_advancements(moths, config.MOTH_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_moths, config.MALE_MOTH_ACHIEVEMENT_TEMPLATES)
+    adv_gen.generate_advancements(all_moths, config.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES)
     adv_gen.generate_advancements(butterflies + moths, config.BOTH_ACHIEVEMENT_TEMPLATES)
 
     # Step 6: Generate Java code with species and traits
@@ -72,15 +72,15 @@ def main():
 
     biome_groups = [
         (butterflies, config.BUTTERFLIES_FOLDER, False),
-        (male_butterflies, config.MALE_BUTTERFLIES_FOLDER, True),
+        (variant_butterflies, config.VARIANT_BUTTERFLIES_FOLDER, True),
         (moths, config.MOTHS_FOLDER, False),
-        (male_moths, config.MALE_MOTHS_FOLDER, True),
+        (variant_moths, config.VARIANT_MOTHS_FOLDER, True),
         (special, config.SPECIAL_FOLDER, False),
     ]
 
-    for species_group, folder, is_male in biome_groups:
-        logger.info(f"Generating biome modifiers for folder '{folder}' with is_male={is_male}")
-        biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_male)
+    for species_group, folder, is_variant in biome_groups:
+        logger.info(f"Generating biome modifiers for folder '{folder}' with is_variant={is_variant}")
+        biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
 

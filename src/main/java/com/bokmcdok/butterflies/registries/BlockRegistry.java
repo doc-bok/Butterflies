@@ -54,17 +54,6 @@ public class BlockRegistry {
             "butterfly_origami_yellow"
     };
 
-    // The base properties for bottled butterflies.
-    private static final BlockBehaviour.Properties BOTTLED_BUTTERFLY_PROPERTIES =
-            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::never)
-                    .isSuffocating(BlockRegistry::never)
-                    .isValidSpawn(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
-                    .noOcclusion()
-                    .sound(SoundType.GLASS)
-                    .strength(0.3F);
-
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Block> deferredRegister;
 
@@ -355,11 +344,19 @@ public class BlockRegistry {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
         ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId);
         ResourceKey<Block> resourceKey = ResourceKey.create(Registries.BLOCK, resourceLocation);
-        BlockBehaviour.Properties properties = BOTTLED_BUTTERFLY_PROPERTIES.setId(resourceKey);
+        BlockBehaviour.Properties properties = BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::never)
+                .isSuffocating(BlockRegistry::never)
+                .isValidSpawn(BlockRegistry::never)
+                .isViewBlocking(BlockRegistry::never)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F)
+                .setId(resourceKey);
 
         // Light Butterflies glow when they are in a bottle.
         if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
-            properties.lightLevel((blockState) -> 15);
+            return deferredRegister.register(registryId, () -> new BottledButterflyBlock(properties.lightLevel((blockState) -> 15)));
         }
 
         return deferredRegister.register(registryId, () -> new BottledButterflyBlock(properties));
