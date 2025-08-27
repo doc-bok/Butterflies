@@ -18,7 +18,7 @@ class Config:
 
         # === File and Directory Paths ===
         self.ACHIEVEMENTS = Path("resources/data/butterflies/advancements/butterfly/")
-        self.BIOME_MODIFIERS = Path("resources/data/butterflies/forge/biome_modifier/")
+        self.BIOME_MODIFIERS = Path("resources/data/butterflies/neoforge/biome_modifier/")
         self.BUTTERFLY_DATA = Path("resources/data/butterflies/butterfly_data/")
         self.CODE_GENERATION = Path("java/com/bokmcdok/butterflies/world/ButterflyInfo.java")
         self.FROG_FOOD = Path("resources/data/minecraft/tags/entity_types/frog_food.json")
