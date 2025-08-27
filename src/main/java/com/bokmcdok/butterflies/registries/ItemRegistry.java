@@ -198,7 +198,7 @@ public class ItemRegistry {
         }
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyGolem().get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -460,7 +460,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -471,7 +471,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -482,7 +482,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerChrysalisSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new DeferredSpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -493,7 +493,7 @@ public class ItemRegistry {
      */
     private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
+                () -> new DeferredSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 }
