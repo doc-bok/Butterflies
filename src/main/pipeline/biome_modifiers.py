@@ -47,7 +47,7 @@ class BiomeModifierManager:
         }.get(rarity, (50, 3))
         # habitat mapping as before
         habitat_to_tags = {
-            "forests":   ["cherry_grove", "dense", "forest", "lush", "taiga"],
+            "forests":   ["dense", "forest", "lush", "taiga"],
             "hills":     ["hill"],
             "ice":       ["snowy", "taiga"],
             "jungles":   ["jungle"],
