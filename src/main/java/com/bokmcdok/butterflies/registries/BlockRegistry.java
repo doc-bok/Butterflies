@@ -59,6 +59,17 @@ public class BlockRegistry {
                     .sound(SoundType.GLASS)
                     .strength(0.3F);
 
+    private static final BlockBehaviour.Properties GLOWING_BOTTLED_BUTTERFLY_PROPERTIES =
+            BlockBehaviour.Properties.copy(Blocks.GLASS)
+                    .isRedstoneConductor(BlockRegistry::never)
+                    .isSuffocating(BlockRegistry::never)
+                    .isValidSpawn(BlockRegistry::never)
+                    .isViewBlocking(BlockRegistry::never)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)
+                    .strength(0.3F)
+                    .lightLevel((blockstate) -> 15);
+
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Block> deferredRegister;
 
@@ -384,14 +395,13 @@ public class BlockRegistry {
      */
     private RegistryObject<Block> registerBottledButterfly(int butterflyIndex) {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
-        BlockBehaviour.Properties properties = BOTTLED_BUTTERFLY_PROPERTIES;
 
         // Light Butterflies glow when they are in a bottle.
         if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
-            properties.lightLevel((blockState) -> 15);
+            return deferredRegister.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
         }
 
-        return deferredRegister.register(registryId, () -> new BottledButterflyBlock(properties));
+        return deferredRegister.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));
     }
 
     /**
