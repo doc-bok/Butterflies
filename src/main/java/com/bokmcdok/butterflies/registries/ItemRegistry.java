@@ -447,8 +447,8 @@ public class ItemRegistry {
      * @return A new registry object.
      */
     private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
-        return deferredRegister.register(Caterpillar.getRegistryId(butterflyIndex),
+        return deferredRegister.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
-                        0x0088ff, 0x880000, new Item.Properties()));
+                        0xffffff, 0xffffff, new Item.Properties()));
     }
 }
