@@ -201,9 +201,9 @@ public class ItemRegistry {
             this.butterflySpawnEggs.add(registerButterflySpawnEgg(i));
         }
 
-        this.butterflyGolemSpawnEgg = deferredRegister.register("butterfly_golem",
+        this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
-                        0x888800, 0x333333, new Item.Properties()));
+                        0xffffff, 0xffffff, new Item.Properties()));
     }
 
     /**
