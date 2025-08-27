@@ -5,7 +5,6 @@ from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager
 from .advancements import AdvancementGenerator
-from .biome_modifiers import BiomeModifierManager
 from .code_generation import CodeGenerator
 
 
@@ -20,7 +19,6 @@ def main():
     data_gen = DataGenerator(config)
     localisation = LocalisationManager(config)
     adv_gen = AdvancementGenerator(config)
-    biome_mod_mgr = BiomeModifierManager(config)
     code_gen = CodeGenerator(config)
 
     # Step 1: Gather species lists
@@ -66,21 +64,6 @@ def main():
 
     # Step 6: Generate Java code with species and traits
     code_gen.generate_code(all_species)
-
-    # Step 7: Reset and generate biome modifier files
-    biome_mod_mgr.reset_biome_modifiers()
-
-    biome_groups = [
-        (butterflies, config.BUTTERFLIES_FOLDER, False),
-        (variant_butterflies, config.VARIANT_BUTTERFLIES_FOLDER, True),
-        (moths, config.MOTHS_FOLDER, False),
-        (variant_moths, config.VARIANT_MOTHS_FOLDER, True),
-        (special, config.SPECIAL_FOLDER, False),
-    ]
-
-    for species_group, folder, is_variant in biome_groups:
-        logger.info(f"Generating biome modifiers for folder '{folder}' with is_variant={is_variant}")
-        biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
 
