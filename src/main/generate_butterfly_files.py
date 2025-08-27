@@ -46,15 +46,15 @@ CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflyInfo.java"
 FROG_FOOD = "resources/data/minecraft/tags/entity_types/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly/"
-MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly_male/"
+VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly_variant/"
 MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth/"
-MALE_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth_male/"
+VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth_variant/"
 BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/both/"
 
 BUTTERFLIES_FOLDER = "butterflies/"
-MALE_BUTTERFLIES_FOLDER = "butterflies/male/"
+VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant/"
 MOTHS_FOLDER = "moths/"
-MALE_MOTHS_FOLDER = "moths/male/"
+VARIANT_MOTHS_FOLDER = "moths/variant/"
 SPECIAL_FOLDER = "special/"
 
 
@@ -156,7 +156,7 @@ class FrogFood(object):
 def generate_frog_food(species):
     print("Generating frog food...")
 
-    folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+    folders = [BUTTERFLIES_FOLDER, VARIANT_BUTTERFLIES_FOLDER, MOTHS_FOLDER, VARIANT_MOTHS_FOLDER, SPECIAL_FOLDER]
     values = []
 
     # Iterate over so we can exclude inedible butterflies.
@@ -315,7 +315,7 @@ public class ButterflyInfo {
 """)
 
         for butterfly in all:
-            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            folders = [BUTTERFLIES_FOLDER, VARIANT_BUTTERFLIES_FOLDER, MOTHS_FOLDER, VARIANT_MOTHS_FOLDER, SPECIAL_FOLDER]
             traits = None
             i = 0
 
@@ -451,20 +451,20 @@ def generate_textures(entries, base):
 if __name__ == "__main__":
     # Get the species lists
     butterflies = generate_butterfly_list(BUTTERFLIES_FOLDER)
-    male_butterflies = generate_butterfly_list(MALE_BUTTERFLIES_FOLDER)
+    variant_butterflies = generate_butterfly_list(VARIANT_BUTTERFLIES_FOLDER)
     moths = generate_butterfly_list(MOTHS_FOLDER)
-    male_moths = generate_butterfly_list(MALE_MOTHS_FOLDER)
+    variant_moths = generate_butterfly_list(VARIANT_MOTHS_FOLDER)
     special = generate_butterfly_list(SPECIAL_FOLDER)
 
-    all = butterflies + male_butterflies + moths + male_moths + special
-    all_butterflies = butterflies + male_butterflies
-    all_moths = moths + male_moths
+    all = butterflies + variant_butterflies + moths + variant_moths + special
+    all_butterflies = butterflies + variant_butterflies
+    all_moths = moths + variant_moths
 
     # Generate the data files
     generate_data_files(butterflies)
-    generate_data_files(male_butterflies)
+    generate_data_files(variant_butterflies)
     generate_data_files(moths)
-    generate_data_files(male_moths)
+    generate_data_files(variant_moths)
     generate_data_files(special)
 
     #generate_textures(BUTTERFLIES, "clipper") # Change this to use a different base for textures
@@ -476,9 +476,9 @@ if __name__ == "__main__":
 
     # Generate the advancements
     generate_advancements(butterflies, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(all_butterflies, MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_butterflies, VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
     generate_advancements(moths, MOTH_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(all_moths, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_moths, VARIANT_MOTH_ACHIEVEMENT_TEMPLATES)
     generate_advancements(butterflies + moths, BOTH_ACHIEVEMENT_TEMPLATES)
 
     generate_code(all)

@@ -24,12 +24,12 @@ class BiomeModifierManager:
                 shutil.copy(src_file, dst_file)
                 self.logger.debug(f"Copied biome modifier: {src_file.name}")
 
-    def generate_biome_modifiers(self, species_list: List[str], folder: str, is_male: bool) -> None:
-        self.logger.info(f"Generating biome modifiers for folder {folder} (is_male={is_male})")
+    def generate_biome_modifiers(self, species_list: List[str], folder: str, is_variant: bool) -> None:
+        self.logger.info(f"Generating biome modifiers for folder {folder} (is_variant={is_variant})")
         for species in species_list:
-            self.add_spawns(folder, species, is_male)
+            self.add_spawns(folder, species, is_variant)
 
-    def add_spawns(self, folder: str, species: str, is_male: bool) -> None:
+    def add_spawns(self, folder: str, species: str, is_variant: bool) -> None:
         json_path = self.config.BUTTERFLY_DATA / folder / f"{species}.json"
         try:
             with json_path.open(encoding="utf8") as file:
@@ -47,7 +47,7 @@ class BiomeModifierManager:
         }.get(rarity, (50, 3))
         # habitat mapping as before
         habitat_to_tags = {
-            "forests":   ["cherry_grove", "dense", "forest", "lush", "taiga"],
+            "forests":   ["dense", "forest", "lush", "taiga"],
             "hills":     ["hill"],
             "ice":       ["snowy", "taiga"],
             "jungles":   ["jungle"],
@@ -64,10 +64,10 @@ class BiomeModifierManager:
         for habitat, tags in habitat_to_tags.items():
             if habitat in habitats:
                 for tag in tags:
-                    spawn_is_male = is_male if habitat != "nether" else True
-                    self.add_single_spawn(tag, species, weight, maximum, spawn_is_male)
+                    spawn_is_variant = is_variant if habitat != "nether" else True
+                    self.add_single_spawn(tag, species, weight, maximum, spawn_is_variant)
 
-    def add_single_spawn(self, tag: str, species: str, weight: int, maximum: int, is_male: bool) -> None:
+    def add_single_spawn(self, tag: str, species: str, weight: int, maximum: int, is_variant: bool) -> None:
         target_file = self.config.BIOME_MODIFIERS / f"{tag}_butterflies.json"
         try:
             with target_file.open(encoding="utf8") as file:
@@ -83,7 +83,7 @@ class BiomeModifierManager:
             "minCount": 1,
             "maxCount": maximum
         })
-        if not is_male:
+        if not is_variant:
             for suffix in ["_caterpillar", "_chrysalis", "_egg"]:
                 spawners.append({
                     "type": f"butterflies:{species}{suffix}",
