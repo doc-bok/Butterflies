@@ -1,6 +1,9 @@
 ## Changelog
 
-### 6.5.5 (2025-08-26)
+### 6.6.0 (2025-08-27)
+- Add spawn eggs with textures for all custom mobs.
+
+### 6.5.5 (2025-08-27)
 - Stopped ALL bottled butterflies from glowing.
 
 ### 6.5.4 (2025-08-26)
