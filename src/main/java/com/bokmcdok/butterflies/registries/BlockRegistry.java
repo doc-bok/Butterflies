@@ -60,7 +60,7 @@ public class BlockRegistry {
                     .strength(0.3F);
 
     private static final BlockBehaviour.Properties GLOWING_BOTTLED_BUTTERFLY_PROPERTIES =
-            BlockBehaviour.Properties.copy(Blocks.GLASS)
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                     .isRedstoneConductor(BlockRegistry::never)
                     .isSuffocating(BlockRegistry::never)
                     .isValidSpawn(BlockRegistry::never)

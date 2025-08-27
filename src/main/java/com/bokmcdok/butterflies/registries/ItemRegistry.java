@@ -190,7 +190,7 @@ public class ItemRegistry {
         }
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflyGolem(),
+                () -> new SpawnEggItem(entityTypeRegistry.getButterflyGolem().get(),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -333,7 +333,7 @@ public class ItemRegistry {
      * Accessor for egg spawn eggs.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getEggSpawnEggs() {
+    public List<DeferredHolder<Item, Item>> getEggSpawnEggs() {
         return eggSpawnEggs;
     }
 
@@ -341,7 +341,7 @@ public class ItemRegistry {
      * Accessor for egg spawn eggs.
      * @return The registry objects.
      */
-    public List<RegistryObject<Item>> getChrysalisSpawnEggs() {
+    public List<DeferredHolder<Item, Item>> getChrysalisSpawnEggs() {
         return chrysalisSpawnEggs;
     }
 
@@ -450,7 +450,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new SpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex).get(),
                         0xffffff, 0xffffff, new Item.Properties()));
@@ -472,7 +472,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerChrysalisSpawnEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerChrysalisSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new SpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex).get(),
                         0xffffff, 0xffffff, new Item.Properties()));
@@ -483,7 +483,7 @@ public class ItemRegistry {
      * @param butterflyIndex The index of the butterfly.
      * @return A new registry object.
      */
-    private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
+    private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new SpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
                         0xffffff, 0xffffff, new Item.Properties()));
