@@ -9,7 +9,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
-
 /**
  * This class registers new creative tabs for the Butterflies Mod
  */
@@ -45,7 +44,6 @@ public class CreativeTabRegistry {
                 () -> CreativeModeTab.builder()
                         .title(Component.translatable("itemGroup.butterfly_tab"))
                         .icon(itemRegistry.getButterflyBook().get()::getDefaultInstance)
-                        .withSearchBar()
                         .build()
         );
     }

@@ -47,16 +47,16 @@ CODE_GENERATION = "java/com/bokmcdok/butterflies/world/ButterflyInfo.java"
 FROG_FOOD = "resources/data/minecraft/tags/entity_type/frog_food.json"
 LOCALISATION = "resources/assets/butterflies/lang/en_us.json"
 BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly/"
-MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly_male/"
+VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/butterfly_variant/"
 MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth/"
-MALE_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth_male/"
+VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/moth_variant/"
 BOTH_ACHIEVEMENT_TEMPLATES = "resources/data/butterflies/templates/advancements/both/"
 BIOME_MODIFIER_TEMPLATES = "resources/data/butterflies/templates/biome_modifiers/"
 
 BUTTERFLIES_FOLDER = "butterflies/"
-MALE_BUTTERFLIES_FOLDER = "butterflies/male/"
+VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant/"
 MOTHS_FOLDER = "moths/"
-MALE_MOTHS_FOLDER = "moths/male/"
+VARIANT_MOTHS_FOLDER = "moths/variant/"
 SPECIAL_FOLDER = "special/"
 
 
@@ -158,7 +158,7 @@ class FrogFood(object):
 def generate_frog_food(species):
     print("Generating frog food...")
 
-    folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+    folders = [BUTTERFLIES_FOLDER, VARIANT_BUTTERFLIES_FOLDER, MOTHS_FOLDER, VARIANT_MOTHS_FOLDER, SPECIAL_FOLDER]
     values = []
 
     # Iterate over so we can exclude inedible butterflies.
@@ -316,7 +316,7 @@ public class ButterflyInfo {
 """)
 
         for butterfly in all:
-            folders = [BUTTERFLIES_FOLDER, MALE_BUTTERFLIES_FOLDER, MOTHS_FOLDER, MALE_MOTHS_FOLDER, SPECIAL_FOLDER]
+            folders = [BUTTERFLIES_FOLDER, VARIANT_BUTTERFLIES_FOLDER, MOTHS_FOLDER, VARIANT_MOTHS_FOLDER, SPECIAL_FOLDER]
             traits = None
             i = 0
 
@@ -457,16 +457,16 @@ def reset_biome_modifiers():
 
 
 # Generate biome modifiers based on rarity and habitat
-def generate_biome_modifiers(list, folder, is_male):
+def generate_biome_modifiers(list, folder, is_variant):
     print("Generating biome modifiers...")
 
     # Iterate over butterflies
     for i in list:
-        addSpawns(folder, i, is_male)
+        addSpawns(folder, i, is_variant)
 
 
 # Add a group of spawns for a single butterfly.
-def addSpawns(folder, species, is_male):
+def addSpawns(folder, species, is_variant):
 
     # Open Butterfly data
     with open(BUTTERFLY_DATA + folder + species + ".json", 'r', encoding="utf8") as input_file:
@@ -490,50 +490,50 @@ def addSpawns(folder, species, is_male):
 
     # Open relevant files and add butterfly spawns
     if "forests" in habitat:
-        addSingleSpawn("cherry_grove", species, weight, maximum, is_male)
-        addSingleSpawn("dense", species, weight, maximum, is_male)
-        addSingleSpawn("forest", species, weight, maximum, is_male)
-        addSingleSpawn("lush", species, weight, maximum, is_male)
-        addSingleSpawn("taiga", species, weight, maximum, is_male)
+        addSingleSpawn("cherry_grove", species, weight, maximum, is_variant)
+        addSingleSpawn("dense", species, weight, maximum, is_variant)
+        addSingleSpawn("forest", species, weight, maximum, is_variant)
+        addSingleSpawn("lush", species, weight, maximum, is_variant)
+        addSingleSpawn("taiga", species, weight, maximum, is_variant)
 
     if "hills" in habitat:
-        addSingleSpawn("hill", species, weight, maximum, is_male)
+        addSingleSpawn("hill", species, weight, maximum, is_variant)
 
     if "ice" in habitat:
-        addSingleSpawn("snowy", species, weight, maximum, is_male)
-        addSingleSpawn("taiga", species, weight, maximum, is_male)
+        addSingleSpawn("snowy", species, weight, maximum, is_variant)
+        addSingleSpawn("taiga", species, weight, maximum, is_variant)
 
     if "jungles" in habitat:
-        addSingleSpawn("jungle", species, weight, maximum, is_male)
+        addSingleSpawn("jungle", species, weight, maximum, is_variant)
 
     if "nether" in habitat:
         addSingleSpawn("nether", species, weight, maximum, True)
 
     if "plains" in habitat:
-        addSingleSpawn("plains", species, weight, maximum, is_male)
+        addSingleSpawn("plains", species, weight, maximum, is_variant)
 
     if "plateaus" in habitat:
-        addSingleSpawn("lush", species, weight, maximum, is_male)
-        addSingleSpawn("plateau", species, weight, maximum, is_male)
+        addSingleSpawn("lush", species, weight, maximum, is_variant)
+        addSingleSpawn("plateau", species, weight, maximum, is_variant)
 
     if "savannas" in habitat:
-        addSingleSpawn("savanna", species, weight, maximum, is_male)
+        addSingleSpawn("savanna", species, weight, maximum, is_variant)
 
     if "villages" in habitat:
-        addSingleSpawn("village_desert", species, weight, maximum, is_male)
-        addSingleSpawn("village_plains", species, weight, maximum, is_male)
-        addSingleSpawn("village_savanna", species, weight, maximum, is_male)
-        addSingleSpawn("village_snowy", species, weight, maximum, is_male)
-        addSingleSpawn("village_taiga", species, weight, maximum, is_male)
+        addSingleSpawn("village_desert", species, weight, maximum, is_variant)
+        addSingleSpawn("village_plains", species, weight, maximum, is_variant)
+        addSingleSpawn("village_savanna", species, weight, maximum, is_variant)
+        addSingleSpawn("village_snowy", species, weight, maximum, is_variant)
+        addSingleSpawn("village_taiga", species, weight, maximum, is_variant)
 
     if "wetlands" in habitat:
-        addSingleSpawn("mushroom", species, weight, maximum, is_male)
-        addSingleSpawn("river", species, weight, maximum, is_male)
-        addSingleSpawn("swamp", species, weight, maximum, is_male)
+        addSingleSpawn("mushroom", species, weight, maximum, is_variant)
+        addSingleSpawn("river", species, weight, maximum, is_variant)
+        addSingleSpawn("swamp", species, weight, maximum, is_variant)
 
 
 # Add a single spawn for a butterfly.
-def addSingleSpawn(tag, species, weight, maximum, is_male):
+def addSingleSpawn(tag, species, weight, maximum, is_variant):
     target_file = BIOME_MODIFIERS + tag + "_butterflies.json"
 
     with open(target_file, 'r', encoding="utf8") as input_file:
@@ -546,7 +546,7 @@ def addSingleSpawn(tag, species, weight, maximum, is_male):
         "maxCount" : maximum
     })
 
-    if not is_male:
+    if not is_variant:
         json_data["spawners"].append({
             "type" : "butterflies:" + species + "_caterpillar",
             "weight" : weight,
@@ -579,20 +579,20 @@ def addSingleSpawn(tag, species, weight, maximum, is_male):
 if __name__ == "__main__":
     # Get the species lists
     butterflies = generate_butterfly_list(BUTTERFLIES_FOLDER)
-    male_butterflies = generate_butterfly_list(MALE_BUTTERFLIES_FOLDER)
+    variant_butterflies = generate_butterfly_list(VARIANT_BUTTERFLIES_FOLDER)
     moths = generate_butterfly_list(MOTHS_FOLDER)
-    male_moths = generate_butterfly_list(MALE_MOTHS_FOLDER)
+    variant_moths = generate_butterfly_list(VARIANT_MOTHS_FOLDER)
     special = generate_butterfly_list(SPECIAL_FOLDER)
 
-    all = butterflies + male_butterflies + moths + male_moths + special
-    all_butterflies = butterflies + male_butterflies
-    all_moths = moths + male_moths
+    all = butterflies + variant_butterflies + moths + variant_moths + special
+    all_butterflies = butterflies + variant_butterflies
+    all_moths = moths + variant_moths
 
     # Generate the data files
     generate_data_files(butterflies)
-    generate_data_files(male_butterflies)
+    generate_data_files(variant_butterflies)
     generate_data_files(moths)
-    generate_data_files(male_moths)
+    generate_data_files(variant_moths)
     generate_data_files(special)
 
     #generate_textures(BUTTERFLIES, "clipper") # Change this to use a different base for textures
@@ -604,9 +604,9 @@ if __name__ == "__main__":
 
     # Generate the advancements
     generate_advancements(butterflies, BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(all_butterflies, MALE_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_butterflies, VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
     generate_advancements(moths, MOTH_ACHIEVEMENT_TEMPLATES)
-    generate_advancements(all_moths, MALE_MOTH_ACHIEVEMENT_TEMPLATES)
+    generate_advancements(all_moths, VARIANT_MOTH_ACHIEVEMENT_TEMPLATES)
     generate_advancements(butterflies + moths, BOTH_ACHIEVEMENT_TEMPLATES)
 
     generate_code(all)
@@ -614,7 +614,7 @@ if __name__ == "__main__":
     # Generate biome modifiers.
     reset_biome_modifiers()
     generate_biome_modifiers(butterflies, BUTTERFLIES_FOLDER, False)
-    generate_biome_modifiers(male_butterflies, MALE_BUTTERFLIES_FOLDER, True)
+    generate_biome_modifiers(variant_butterflies, VARIANT_BUTTERFLIES_FOLDER, True)
     generate_biome_modifiers(moths, MOTHS_FOLDER, False)
-    generate_biome_modifiers(male_moths, MALE_MOTHS_FOLDER, True)
+    generate_biome_modifiers(variant_moths, VARIANT_MOTHS_FOLDER, True)
     generate_biome_modifiers(special, SPECIAL_FOLDER, False)
