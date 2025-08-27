@@ -42,7 +42,9 @@ class LocalisationManager:
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_caterpillar", "Larva")
             self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_caterpillar_{species}", f"{name} Larva")
         for species in all_butterflies + all_moths:
+            name = format_name(species)
             self.try_add_localisation_string(json_data, f"gui.butterflies.fact.{species}", "")
+            self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_egg_{species}", f"{name} Egg")
 
         with self.config.LOCALISATION.open('w', encoding='utf8') as outp:
             json.dump(json_data, outp, ensure_ascii=False, sort_keys=True, indent=2)

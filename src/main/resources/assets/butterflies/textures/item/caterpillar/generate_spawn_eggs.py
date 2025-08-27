@@ -1,7 +1,7 @@
 import os
+from PIL import Image
 
 def overlay_images(base_path, overlay_path, output_path):
-    from PIL import Image
     base_img = Image.open(base_path).convert('RGBA')
     overlay_img = Image.open(overlay_path).convert('RGBA')
     if overlay_img.size != base_img.size:
