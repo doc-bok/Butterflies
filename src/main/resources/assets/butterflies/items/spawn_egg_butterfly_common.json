@@ -1,0 +1,6 @@
+{
+  "model": {
+    "model": "butterflies:item/spawn_egg_butterfly_common",
+    "type": "minecraft:model"
+  }
+}

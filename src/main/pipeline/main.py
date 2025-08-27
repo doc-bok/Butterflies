@@ -51,6 +51,8 @@ def main():
     # logger.info("Generating placeholder textures...")
     # data_gen.generate_textures(butterflies, "clipper")
 
+    data_gen.generate_item_models()
+
     # Step 3: Generate frog food file
     data_gen.generate_frog_food(all_species)
 

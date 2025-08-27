@@ -87,8 +87,8 @@ public class ClientEventListener {
         }
 
         // Register the butterfly egg renderers.
-        for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
-            event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getButterflyEggs()) {
+            event.registerEntityRenderer((EntityType<ButterflyEgg>)i.get(), ButterflyEggRenderer::new);
         }
 
         // Register the butterfly feeder renderer.
@@ -111,8 +111,8 @@ public class ClientEventListener {
         }
 
         // Register the chrysalis renderers.
-        for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
-            event.registerEntityRenderer(i.get(), ChrysalisRenderer::new);
+        for (DeferredHolder<EntityType<?>, EntityType<? extends Mob>> i : entityTypeRegistry.getChrysalises()) {
+            event.registerEntityRenderer((EntityType<Chrysalis>)i.get(), ChrysalisRenderer::new);
         }
     }
 

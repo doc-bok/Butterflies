@@ -38,12 +38,12 @@ public class EntityTypeRegistry {
     private BlockRegistry blockRegistry;
 
     private List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> butterflies;
-    private List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> butterflyEggs;
+    private List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> butterflyEggs;
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> butterflyGolem;
     private DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> butterflyScroll; // TODO: Remove after migration, kept for backwards compatibility
     private List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>>  butterflyScrolls;
     private List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> caterpillars;
-    private List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> chrysalises;
+    private List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> chrysalises;
 
     /**
      * Constructs the entity type registry and registers the deferred register with the given event bus.
@@ -98,7 +98,7 @@ public class EntityTypeRegistry {
         return butterflies;
     }
 
-    public List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> getButterflyEggs() {
+    public List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> getButterflyEggs() {
         return butterflyEggs;
     }
 
@@ -118,7 +118,7 @@ public class EntityTypeRegistry {
         return caterpillars;
     }
 
-    public List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> getChrysalises() {
+    public List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> getChrysalises() {
         return chrysalises;
     }
 
@@ -182,7 +182,7 @@ public class EntityTypeRegistry {
                         .build(resourceKey));
     }
 
-    private DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
+    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerButterflyEgg(int butterflyIndex) {
         String registryId = ButterflyEgg.getRegistryId(butterflyIndex);
         ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
         return deferredRegister.register(registryId,
@@ -219,7 +219,7 @@ public class EntityTypeRegistry {
                         .build(resourceKey));
     }
 
-    private DeferredHolder<EntityType<?>, EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
+    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerChrysalis(int butterflyIndex) {
         String registryId = Chrysalis.getRegistryId(butterflyIndex);
         ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
         return deferredRegister.register(registryId,
