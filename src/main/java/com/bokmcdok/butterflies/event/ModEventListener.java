@@ -85,6 +85,7 @@ public class ModEventListener {
         // Spawn Eggs
         itemRegistry.getEggSpawnEggs().forEach(event::accept);
         itemRegistry.getCaterpillarSpawnEggs().forEach(event::accept);
+        itemRegistry.getChrysalisSpawnEggs().forEach(event::accept);
         itemRegistry.getButterflySpawnEggs().forEach(event::accept);
         event.accept(itemRegistry.getButterflyGolemSpawnEgg());
     }

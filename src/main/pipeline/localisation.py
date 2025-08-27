@@ -31,6 +31,7 @@ class LocalisationManager:
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_egg", f"{name} Butterfly Egg")
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_caterpillar", f"{name} Caterpillar")
             self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_caterpillar_{species}", f"{name} Caterpillar")
+            self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_chrysalis_{species}", f"{name} Chrysalis")
         for species in all_moths:
             name = format_name(species)
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}", f"{name} Moth")
@@ -41,6 +42,7 @@ class LocalisationManager:
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_egg", f"{name} Moth Egg")
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_caterpillar", "Larva")
             self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_caterpillar_{species}", f"{name} Larva")
+            self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_chrysalis_{species}", f"{name} Larva")
         for species in all_butterflies + all_moths:
             name = format_name(species)
             self.try_add_localisation_string(json_data, f"gui.butterflies.fact.{species}", "")
