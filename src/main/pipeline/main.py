@@ -1,6 +1,3 @@
-# main.py
-import logging
-
 from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager

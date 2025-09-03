@@ -20,7 +20,7 @@ def overlay_images(base_path, overlay_path, output_path, crop_start=(0, 0), crop
     if overlay_resized.size > base_img.size:
         new_width = base_img.width
         new_height = base_img.height
-        overlay_resized = overlay_cropped.resize(base_img.size, Image.Resampling.LANCZOS)
+        overlay_resized = overlay_resized.resize(base_img.size, Image.Resampling.LANCZOS)
 
     position = (((base_img.width - new_width) // 2) + offset[0], ((base_img.height - new_height) // 2) + offset[1])
 

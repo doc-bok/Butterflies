@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.6.1 (2025-08-28)
+- Backported improved pipeline scripts.
+
 ### 6.6.0 (2025-08-27)
 - Add spawn eggs with textures for all custom mobs.
 
