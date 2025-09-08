@@ -1,27 +1,10 @@
-import json
-from typing import Optional
+from typing import Any
 from .config import Config
 
 class CodeGenerator:
     def __init__(self, config: Config):
         self.config = config
         self.logger = config.logger
-
-    def _load_species_data(self, species: str) -> Optional[dict]:
-        """
-        Attempts to load the JSON data for this species across known folders.
-        Returns dict if found, None otherwise.
-        """
-        for folder in self.config.FOLDERS:
-            json_path = self.config.BUTTERFLY_DATA / folder / f"{species}.json"
-            if json_path.exists():
-                try:
-                    return json.loads(json_path.read_text(encoding="utf8"))
-                except (OSError, json.JSONDecodeError) as e:
-                    self.logger.error(f"Failed to read {json_path}: {e}")
-                    return None
-        return None
-
 
     @staticmethod
     def _write_enum_array(
@@ -63,15 +46,12 @@ class CodeGenerator:
         out.write("    };\n\n")
 
 
-    def generate_code(self, all_species: list[str]) -> None:
+    def generate_code(self, all_species: list[str], species_data: dict[str, dict | None | dict[Any, Any]]) -> None:
         """
         Generate the Java source file ButterflyInfo.java containing
         species arrays and traits arrays used by your mod code.
         """
         self.logger.info(f"Generating Java code file at {self.config.CODE_GENERATION}")
-
-        # Preload butterfly data.
-        species_data = {s: self._load_species_data(s) or {} for s in all_species}
 
         with open(self.config.CODE_GENERATION, "w", encoding="utf8") as out:
             # Write the java package and class header
