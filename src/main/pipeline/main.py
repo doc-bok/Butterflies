@@ -1,6 +1,7 @@
 import json
 from typing import Optional
 
+from .image_generation import ImageGenerator
 from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager
@@ -37,6 +38,7 @@ def main():
     adv_gen = AdvancementGenerator(config)
     biome_mod_mgr = BiomeModifierManager(config)
     code_gen = CodeGenerator(config)
+    image_gen = ImageGenerator(config)
 
     # Step 1: Gather species lists
     butterflies = data_gen.generate_butterfly_list(config.BUTTERFLIES_FOLDER)
@@ -99,6 +101,9 @@ def main():
     for species_group, folder, is_variant in biome_groups:
         logger.info(f"Generating biome modifiers for folder '{folder}' with is_variant={is_variant}")
         biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
+
+    # Step 8: Generate images
+    image_gen.generate_spawn_eggs()
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
 
