@@ -16,18 +16,25 @@ class Config:
         ]
 
         # === File and Directory Paths ===
-        self.ACHIEVEMENTS = Path("resources/data/butterflies/advancements/butterfly/")
-        self.BIOME_MODIFIERS = Path("resources/data/butterflies/forge/biome_modifier/")
-        self.BUTTERFLY_DATA = Path("resources/data/butterflies/butterfly_data/")
+        self.TEMPLATES_FOLDER = Path("pipeline/templates")
+        self.RESOURCES_FOLDER = Path("resources")
+        self.DATA_FOLDER = self.RESOURCES_FOLDER / "data"
+        self.MOD_DATA_FOLDER = self.DATA_FOLDER / "butterflies"
+
         self.CODE_GENERATION = Path("java/com/bokmcdok/butterflies/world/ButterflyInfo.java")
-        self.FROG_FOOD = Path("resources/data/minecraft/tags/entity_types/frog_food.json")
-        self.LOCALISATION = Path("resources/assets/butterflies/lang/en_us.json")
-        self.BUTTERFLY_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/butterfly/")
-        self.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/butterfly_variant/")
-        self.MOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/moth/")
-        self.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/moth_variant/")
-        self.BOTH_ACHIEVEMENT_TEMPLATES = Path("resources/data/butterflies/templates/advancements/both/")
-        self.BIOME_MODIFIER_TEMPLATES = Path("resources/data/butterflies/templates/biome_modifiers/")
+        self.LOCALISATION = self.RESOURCES_FOLDER / "assets/butterflies/lang/en_us.json"
+        self.FROG_FOOD = self.DATA_FOLDER / "minecraft/tags/entity_types/frog_food.json"
+
+        self.ACHIEVEMENTS = self.MOD_DATA_FOLDER / "advancements/butterfly/"
+        self.BIOME_MODIFIERS = self.MOD_DATA_FOLDER / "forge/biome_modifier/"
+        self.BUTTERFLY_DATA = self.MOD_DATA_FOLDER / "butterfly_data/"
+
+        self.BUTTERFLY_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/butterfly/"
+        self.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/butterfly_variant/"
+        self.MOTH_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/moth/"
+        self.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/moth_variant/"
+        self.BOTH_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/both/"
+        self.BIOME_MODIFIER_TEMPLATES = self.TEMPLATES_FOLDER / "biome_modifiers/"
 
         self.BUTTERFLIES_FOLDER = "butterflies"
         self.VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant"
