@@ -16,13 +16,25 @@ class Config:
         ]
 
         # === File and Directory Paths ===
-        self.TEMPLATES_FOLDER = Path("pipeline/templates")
+        self.PIPELINE_FOLDER = Path('pipeline')
+        self.TEMPLATES_FOLDER = self.PIPELINE_FOLDER / "templates"
+        self.IMAGES_FOLDER = self.PIPELINE_FOLDER / "images"
+        self.SPAWN_EGG_BASE_TEXTURE_PATH = self.IMAGES_FOLDER / "spawn_egg.png"
+
         self.RESOURCES_FOLDER = Path("resources")
+
+        self.ASSETS_FOLDER = self.RESOURCES_FOLDER / "assets"
+        self.MOD_ASSETS_FOLDER = self.ASSETS_FOLDER / "butterflies"
+        self.MOD_TEXTURES_FOLDER = self.MOD_ASSETS_FOLDER / "textures"
+        self.MOD_ENTITY_TEXTURES_FOLDER = self.MOD_TEXTURES_FOLDER / "entity"
+        self.MOD_ITEM_TEXTURES_FOLDER = self.MOD_TEXTURES_FOLDER / "item"
+        self.MOD_SPAWN_EGG_TEXTURES_FOLDER = self.MOD_ITEM_TEXTURES_FOLDER / "spawn_egg"
+
         self.DATA_FOLDER = self.RESOURCES_FOLDER / "data"
         self.MOD_DATA_FOLDER = self.DATA_FOLDER / "butterflies"
 
         self.CODE_GENERATION = Path("java/com/bokmcdok/butterflies/world/ButterflyInfo.java")
-        self.LOCALISATION = self.RESOURCES_FOLDER / "assets/butterflies/lang/en_us.json"
+        self.LOCALISATION = self.MOD_ASSETS_FOLDER / "lang/en_us.json"
         self.FROG_FOOD = self.DATA_FOLDER / "minecraft/tags/entity_types/frog_food.json"
 
         self.ACHIEVEMENTS = self.MOD_DATA_FOLDER / "advancements/butterfly/"
@@ -35,6 +47,16 @@ class Config:
         self.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/moth_variant/"
         self.BOTH_ACHIEVEMENT_TEMPLATES = self.TEMPLATES_FOLDER / "advancements/both/"
         self.BIOME_MODIFIER_TEMPLATES = self.TEMPLATES_FOLDER / "biome_modifiers/"
+
+        self.BUTTERFLY_ENTITY_TEXTURE_PATH = self.MOD_ENTITY_TEXTURES_FOLDER / "butterfly"
+        self.CATERPILLAR_ITEM_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "caterpillar"
+        self.CHRYSALIS_ENTITY_TEXTURE_PATH = self.MOD_ENTITY_TEXTURES_FOLDER / "chrysalis"
+        self.EGG_ITEM_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "butterfly_egg"
+
+        self.BUTTERFLY_SPAWN_EGG_TEXTURE_PATH = self.MOD_SPAWN_EGG_TEXTURES_FOLDER / "butterfly"
+        self.CATERPILLAR_SPAWN_EGG_TEXTURE_PATH = self.MOD_SPAWN_EGG_TEXTURES_FOLDER / "caterpillar"
+        self.CHRYSALIS_SPAWN_EGG_TEXTURE_PATH = self.MOD_SPAWN_EGG_TEXTURES_FOLDER / "chrysalis"
+        self.EGG_SPAWN_EGG_TEXTURE_PATH = self.MOD_SPAWN_EGG_TEXTURES_FOLDER / "egg"
 
         self.BUTTERFLIES_FOLDER = "butterflies"
         self.VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant"
