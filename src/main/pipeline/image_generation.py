@@ -142,7 +142,8 @@ class ImageGenerator:
         self.logger.info(f"Generating butterfly spawn egg textures")
 
         for texture_info in butterfly_entity_textures:
-            overlay_image = self._resize_image(texture_info[1], int(egg_image.width * 0.8), int(egg_image.height * 0.8))
+            overlay_image = self._rotate_image(texture_info[1], 90)
+            overlay_image = self._resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8))
             overlay_image = self._combine_images(egg_image, overlay_image, (0, 1))
             self._save_image(self.config.BUTTERFLY_SPAWN_EGG_TEXTURE_PATH / os.path.basename(texture_info[0])[10:], overlay_image)
 
@@ -164,10 +165,24 @@ class ImageGenerator:
         bottle_image = self._load_image(self.config.GLASS_BOTTLE_TEXTURE_PATH)
 
         for texture_info in butterfly_entity_textures:
-            overlay_image = self._resize_image(texture_info[1], int(bottle_image.width * 0.45), int(bottle_image.height * 0.45))
+            overlay_image = self._rotate_image(texture_info[1], 90)
+            overlay_image = self._resize_image(overlay_image, int(bottle_image.width * 0.45), int(bottle_image.height * 0.45))
             overlay_image = self._combine_images(bottle_image, overlay_image, (1, 4))
             overlay_image = self._combine_images(overlay_image, bottle_image)
             self._save_image(self.config.BOTTLED_BUTTERFLY_TEXTURE_PATH / ('bottled_' + os.path.basename(texture_info[0])[10:]), overlay_image)
+
+    def _generate_butterfly_scroll(self, butterfly_entity_textures) -> None:
+        """
+        Generate butterfly scroll textures.
+        """
+        self.logger.info(f"Generating butterfly scroll textures")
+        paper_image = self._load_image(self.config.PAPER_TEXTURE_PATH)
+
+        for texture_info in butterfly_entity_textures:
+            overlay_image = self._rotate_image(texture_info[1], 45)
+            overlay_image = self._resize_image(overlay_image, int(paper_image.width * 0.65), int(paper_image.height * 0.65))
+            overlay_image = self._combine_images(paper_image, overlay_image, (1, 0))
+            self._save_image(self.config.BUTTERFLY_SCROLL_TEXTURE_PATH / ('butterfly_scroll_' + os.path.basename(texture_info[0])[10:]), overlay_image)
 
 
     def generate_textures(self) -> None:
@@ -175,10 +190,11 @@ class ImageGenerator:
         Generate all derivative textures.
         """
         butterfly_entity_textures = [
-            [f, self._rotate_image(self._crop_image(self._load_image(f), (10, 0), (17, 20)), 90)]
+            [f, self._crop_image(self._load_image(f), (10, 0), (17, 20))]
             for f in self.config.BUTTERFLY_ENTITY_TEXTURE_PATH.iterdir()
             if f.suffix == ".png" and os.path.basename(f).startswith("butterfly_")
         ]
 
         self._generate_spawn_eggs(butterfly_entity_textures)
         self._generate_bottled_butterfly(butterfly_entity_textures)
+        self._generate_butterfly_scroll(butterfly_entity_textures)
