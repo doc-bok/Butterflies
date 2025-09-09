@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.6.2
+- Added image generation for most textures to the pipeline.
+
 ### 6.6.1 (2025-08-28)
 - Backported improved pipeline scripts.
 

@@ -103,7 +103,7 @@ def main():
         biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
 
     # Step 8: Generate images
-    image_gen.generate_spawn_eggs()
+    image_gen.generate_textures()
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
 
