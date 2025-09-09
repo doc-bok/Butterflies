@@ -13,12 +13,26 @@ class ImageGenerator:
         self.config = config
         self.logger = config.logger
 
-    @staticmethod
-    def _load_image(image_path: Path) -> Image.Image:
+    def _load_image(self, image_path: Path) -> Image.Image:
         """
-        Load an image from the given path
+        Loads an image from the given path.
+
+        Args:
+            image_path (Path): Path to the image file.
+
+        Returns:
+            Image.Image: Loaded image.
+
+        Raises:
+            OSError: If the image could not be opened.
         """
-        return Image.open(image_path)
+        try:
+            with Image.open(image_path) as img:
+                img.load()
+                return img.copy()
+        except OSError as e:
+            self.logger.error(f"Could not open image {image_path}: {e}")
+            raise
 
     @staticmethod
     def _crop_image(
@@ -48,9 +62,19 @@ class ImageGenerator:
             image: Image.Image,
             new_width: int,
             new_height: int,
-            resampling: Image.Resampling = Image.Resampling.LANCZOS) -> Image.Image:
+            resampling: Image.Resampling = Image.Resampling.LANCZOS
+    ) -> Image.Image:
         """
-        Resize the given image and return the resized image.
+        Resizes the given image.
+
+        Args:
+            image (Image.Image): Source image.
+            new_width (int): Target width.
+            new_height (int): Target height.
+            resampling (Image.Resampling): Resampling algorithm.
+
+        Returns:
+            Image.Image: Resized image.
         """
         return image.resize((new_width, new_height), resampling)
 
@@ -63,6 +87,13 @@ class ImageGenerator:
         """
         Combine the given images and return the combined image.
         """
+
+        # Ensure we are using RGBA in our images.
+        if base_image.mode != 'RGBA':
+            base_image = base_image.convert('RGBA')
+
+        if overlay_image.mode != 'RGBA':
+            overlay_image = overlay_image.convert('RGBA')
 
         # Ensure the overlay fits
         if overlay_image.size > base_image.size:
@@ -80,12 +111,23 @@ class ImageGenerator:
 
         return Image.alpha_composite(base_image, overlay_final)
 
-    @staticmethod
-    def _save_image(image_path: Path, image: Image.Image) -> None:
+    def _save_image(self, image_path: Path, image: Image.Image) -> None:
         """
-        Save the given image to the given path.
+        Saves the image to the path, optimizing PNG files.
+
+        Args:
+            image_path (Path): Path to save image.
+            image (Image.Image): Image to save.
         """
-        image.save(image_path)
+        try:
+            suffix = image_path.suffix.lstrip(".").upper()
+            if suffix == "PNG":
+                image.save(image_path, optimize=True)
+            else:
+                image.save(image_path)
+        except Exception as e:
+            self.logger.error(f"Failed to save image {image_path}: {e}")
+            raise
 
     def _generate_egg_spawn_eggs(self, egg_image: Image.Image) -> None:
         """
