@@ -66,6 +66,7 @@ class Config:
         self.EGG_SPAWN_EGG_TEXTURE_PATH = self.MOD_SPAWN_EGG_TEXTURES_FOLDER / "egg"
 
         self.BOTTLED_BUTTERFLY_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "bottled_butterfly"
+        self.BOTTLED_CATERPILLAR_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "bottled_caterpillar"
         self.BUTTERFLY_SCROLL_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "butterfly_scroll"
         self.BUTTERFLY_SCROLL_GUI_TEXTURE_PATH = self.MOD_TEXTURES_FOLDER / 'gui' / 'butterfly_scroll'
 

@@ -161,12 +161,11 @@ class ImageGenerator:
         self._generate_chrysalis_spawn_eggs(egg_image)
         self._generate_butterfly_spawn_eggs(egg_image, butterfly_entity_textures)
 
-    def _generate_bottled_butterfly(self, butterfly_entity_textures) -> None:
+    def _generate_bottled_butterfly(self, bottle_image, butterfly_entity_textures) -> None:
         """
         Generate bottled butterfly textures.
         """
         self.logger.info(f"Generating bottled butterfly textures")
-        bottle_image = self._load_image(self.config.GLASS_BOTTLE_TEXTURE_PATH)
 
         for texture_info in butterfly_entity_textures:
             overlay_image = self._rotate_image(texture_info[1], 90)
@@ -174,6 +173,18 @@ class ImageGenerator:
             overlay_image = self._combine_images(bottle_image, overlay_image, (1, 4))
             overlay_image = self._combine_images(overlay_image, bottle_image)
             self._save_image(self.config.BOTTLED_BUTTERFLY_TEXTURE_PATH / ('bottled_' + os.path.basename(texture_info[0])[10:]), overlay_image)
+
+    def _generate_bottled_caterpillar(self, bottle_image, caterpillar_item_textures) -> None:
+        """
+        Generate bottled butterfly textures.
+        """
+        self.logger.info(f"Generating bottled butterfly textures")
+
+        for texture_info in caterpillar_item_textures:
+            overlay_image = self._resize_image(texture_info[1], int(bottle_image.width * 0.58), int(bottle_image.height * 0.58))
+            overlay_image = self._combine_images(bottle_image, overlay_image, (1, 3))
+            overlay_image = self._combine_images(overlay_image, bottle_image)
+            self._save_image(self.config.BOTTLED_CATERPILLAR_TEXTURE_PATH / ('bottled_caterpillar_' + os.path.basename(texture_info[0])[12:]), overlay_image)
 
     def _generate_butterfly_scroll(self, butterfly_entity_textures) -> None:
         """
@@ -357,14 +368,25 @@ class ImageGenerator:
         """
         Generate all derivative textures.
         """
+
+        self._generate_caterpillars()
+
         butterfly_entity_textures = [
             [f, self._crop_image(self._load_image(f), (10, 0), (17, 20))]
             for f in self.config.BUTTERFLY_ENTITY_TEXTURE_PATH.iterdir()
             if f.suffix == ".png" and os.path.basename(f).startswith("butterfly_")
         ]
 
-        self._generate_caterpillars()
+        caterpillar_item_textures = [
+            [f, self._load_image(f)]
+            for f in self.config.CATERPILLAR_ITEM_TEXTURE_PATH.iterdir()
+            if f.suffix == ".png" and os.path.basename(f).startswith("caterpillar_")
+        ]
+
+        bottle_image = self._load_image(self.config.GLASS_BOTTLE_TEXTURE_PATH)
+
         self._generate_spawn_eggs(butterfly_entity_textures)
-        self._generate_bottled_butterfly(butterfly_entity_textures)
+        self._generate_bottled_butterfly(bottle_image, butterfly_entity_textures)
+        self._generate_bottled_caterpillar(bottle_image, caterpillar_item_textures)
         self._generate_butterfly_scroll(butterfly_entity_textures)
         self._generate_butterfly_scroll_gui()
