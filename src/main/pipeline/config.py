@@ -55,6 +55,7 @@ class Config:
         self.BIOME_MODIFIER_TEMPLATES = self.TEMPLATES_FOLDER / "biome_modifiers/"
 
         self.BUTTERFLY_ENTITY_TEXTURE_PATH = self.MOD_ENTITY_TEXTURES_FOLDER / "butterfly"
+        self.CATERPILLAR_ENTITY_TEXTURE_PATH = self.MOD_ENTITY_TEXTURES_FOLDER / "caterpillar"
         self.CATERPILLAR_ITEM_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "caterpillar"
         self.CHRYSALIS_ENTITY_TEXTURE_PATH = self.MOD_ENTITY_TEXTURES_FOLDER / "chrysalis"
         self.EGG_ITEM_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "butterfly_egg"
