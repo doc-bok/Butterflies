@@ -19,9 +19,13 @@ class Config:
         self.PIPELINE_FOLDER = Path('pipeline')
         self.TEMPLATES_FOLDER = self.PIPELINE_FOLDER / "templates"
         self.IMAGES_FOLDER = self.PIPELINE_FOLDER / "images"
+
+        # === Base Textures for image generation
         self.GLASS_BOTTLE_TEXTURE_PATH = self.IMAGES_FOLDER / "glass_bottle.png"
         self.PAPER_TEXTURE_PATH = self.IMAGES_FOLDER / "paper.png"
         self.SPAWN_EGG_BASE_TEXTURE_PATH = self.IMAGES_FOLDER / "spawn_egg.png"
+        self.SCROLL_TEXTURE_PATH = self.IMAGES_FOLDER / "scroll.png"
+        self.NAIL_TEXTURE_PATH = self.IMAGES_FOLDER / "nail.png"
 
         self.RESOURCES_FOLDER = Path("resources")
 
@@ -62,6 +66,7 @@ class Config:
 
         self.BOTTLED_BUTTERFLY_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "bottled_butterfly"
         self.BUTTERFLY_SCROLL_TEXTURE_PATH = self.MOD_ITEM_TEXTURES_FOLDER / "butterfly_scroll"
+        self.BUTTERFLY_SCROLL_GUI_TEXTURE_PATH = self.MOD_TEXTURES_FOLDER / 'gui' / 'butterfly_scroll'
 
         self.BUTTERFLIES_FOLDER = "butterflies"
         self.VARIANT_BUTTERFLIES_FOLDER = "butterflies/variant"
