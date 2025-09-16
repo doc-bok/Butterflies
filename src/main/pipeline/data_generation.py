@@ -12,7 +12,7 @@ class DataGenerator:
     replicating templates as needed.
     """
     TRAIT_INEDIBLE = "inedible"
-    DATA_LOOT_TABLE = "loot_table"
+    DATA_LOOT_TABLE = "loot_tables\entities"
 
     def __init__(self, config: Config):
         self.config = config
