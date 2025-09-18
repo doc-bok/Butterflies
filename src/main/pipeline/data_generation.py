@@ -1,4 +1,3 @@
-# data_generation.py
 import json
 import shutil
 from pathlib import Path
@@ -13,7 +12,7 @@ class DataGenerator:
     replicating templates as needed.
     """
     TRAIT_INEDIBLE = "inedible"
-    DATA_LOOT_TABLE = "loot_table"
+    DATA_LOOT_TABLE = "loot_table\entities"
 
     def __init__(self, config: Config):
         self.config = config
@@ -61,6 +60,7 @@ class DataGenerator:
         self.logger.info("Generating data files...")
         base_entry = entries[0]
         cwd = Path.cwd()
+
         src_files = [
             p for p in cwd.rglob("*.json")
             if base_entry in p.name and self.DATA_LOOT_TABLE not in str(p.parent)
