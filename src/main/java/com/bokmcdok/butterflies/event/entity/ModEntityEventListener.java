@@ -108,9 +108,9 @@ public class ModEntityEventListener {
         }
 
         event.register(entityTypeRegistry.getButterflyGolem().get(),
-                SpawnPlacements.Type.ON_GROUND,
+                SpawnPlacementTypes.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
+                RegisterSpawnPlacementsEvent.Operation.AND);
     }
 }
