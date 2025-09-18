@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.6.4 (2025-09-18)
+- Hummingbird Moth textures now generate and look nice.
+
 ### 6.6.3 (2025-09-16)
 - Fixed loot tables for bottled butterflies not generating.
 
