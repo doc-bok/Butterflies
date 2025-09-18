@@ -172,5 +172,11 @@ public class EntityEventListener {
                     DirectionalCreature::checkDirectionalSpawnRules,
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
+
+        event.register(entityTypeRegistry.getButterflyGolem().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
     }
 }
