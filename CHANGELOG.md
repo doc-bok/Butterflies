@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.6.5 (2025-09-18)
+- Register spawn rules for Butterfly Golem.
+
 ### 6.6.4 (2025-09-18)
 - Hummingbird Moth textures now generate and look nice.
 
