@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -108,5 +109,11 @@ public class ModEntityEventListener {
                     DirectionalCreature::checkDirectionalSpawnRules,
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
+
+        event.register(entityTypeRegistry.getButterflyGolem().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
     }
 }
