@@ -1,4 +1,3 @@
-# localisation.py
 import json
 from typing import Dict, List
 from .config import Config
@@ -50,6 +49,6 @@ class LocalisationManager:
             self.try_add_localisation_string(json_data, f"gui.butterflies.fact.{species}", "")
             self.try_add_localisation_string(json_data, f"item.butterflies.spawn_egg_egg_{species}", f"{name} Egg")
 
-        with self.config.LOCALISATION.open('w', encoding='utf8') as outp:
-            json.dump(json_data, outp, ensure_ascii=False, sort_keys=True, indent=2)
+        with self.config.LOCALISATION.open('w', encoding='utf8') as output:
+            json.dump(json_data, output, ensure_ascii=False, sort_keys=True, indent=2)
         self.logger.info("Localization file updated.")
