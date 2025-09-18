@@ -1,5 +1,17 @@
 ## Changelog
 
+### 6.6.4 (2025-09-18)
+- Hummingbird Moth textures now generate and look nice.
+
+### 6.6.3 (2025-09-16)
+- Fixed loot tables for bottled butterflies not generating.
+
+### 6.6.2 (2025-09-05)
+- Added image generation for most textures to the pipeline.
+
+### 6.6.1 (2025-08-28)
+- Backported improved pipeline scripts.
+
 ### 6.6.0 (2025-08-27)
 - Add spawn eggs with textures for all custom mobs.
 
