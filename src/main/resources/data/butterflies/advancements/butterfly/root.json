@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "butterflies:monarch"
+      "item": "butterflies:spawn_egg_butterfly_monarch"
     },
     "title": {
       "translate": "advancements.butterfly.root.title"

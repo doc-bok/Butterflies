@@ -67,6 +67,9 @@ public class NetworkEventListener {
      */
     private void onCustomPayload(CustomPayloadEvent event) {
 
+        // First reset the Butterfly Data
+        ButterflyData.reset();
+
         // Handle a butterfly data collection.
         if (event.getChannel().compareTo(ClientBoundButterflyDataPacket.ID) == 0) {
 
