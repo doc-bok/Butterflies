@@ -43,7 +43,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
                     entry.readEnum(ButterflyData.EggMultiplier.class),
                     entry.readBoolean(),
                     entry.readBoolean(),    
-                    buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                    entry.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
                     entry.readUtf(),
                     entry.readUtf(),
                     entry.readUtf(),
