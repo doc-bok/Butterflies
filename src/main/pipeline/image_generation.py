@@ -516,14 +516,27 @@ class ImageGenerator:
 
     def _load_butterfly_entity_texture(self, f):
         image = self._load_image(f)
+
+        # Is this a hummingbird moth?
         if any(moth in str(f) for moth in self.HUMMINGBIRD_MOTHS):
+
+            # Get the wing texture
             image = self._crop_image(image, (0, 9), (5, 6))
+
+            # Create a mirror image of the texture
             reflected_image = image.transpose(Image.FLIP_LEFT_RIGHT)
+
+            # Create a new image with both wings
             new_image = Image.new('RGBA', (image.width * 2, image.height))
             new_image.paste(image, (0, 0))
             new_image.paste(reflected_image, (image.width, 0))
+
+            # Rotate the image so it is facing the same way as other butterfly
+            # images
             return self._rotate_image(new_image, -90)
         else:
+
+            # Not a hummingbird, just extract the wings
             return self._crop_image(image, (10, 0), (17, 20))
 
     def generate_textures(self) -> None:
