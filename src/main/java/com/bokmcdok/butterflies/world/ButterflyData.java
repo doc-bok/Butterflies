@@ -741,6 +741,8 @@ public record ButterflyData(int butterflyIndex,
      * @param resourceManager The resource manager to use for loading.
      */
     public static void load(ResourceManager resourceManager) {
+        ButterflyData.reset();
+
         Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
 
         // Get the butterfly JSON files
@@ -758,6 +760,16 @@ public record ButterflyData(int butterflyIndex,
                 LogUtils.getLogger().error("Failed to load butterfly data.", e);
             }
         }
+    }
+
+    /**
+     * Resets the butterfly data to its unloaded state.
+     */
+    public static void reset() {
+        ButterflyData.BUTTERFLY_ENTRIES.clear();
+        ButterflyData.ENTITY_ID_TO_INDEX_MAP.clear();
+        ButterflyData.NUM_BUTTERFLIES = 0;
+        ButterflyData.NUM_MOTHS = 0;
     }
 
     /**

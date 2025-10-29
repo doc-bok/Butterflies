@@ -1,5 +1,12 @@
 ## Changelog
 
+### 6.6.6 (2025-10-08)
+- Fixed config showing unnecessary values.
+- Fixed stale butterfly data remaining when loading a new level.
+- Improved comments in image generation pipeline
+- Fixed allium not having a stage 7 model
+- Fixed advancements not using correct item
+
 ### 6.6.5 (2025-09-18)
 - Register spawn rules for Butterfly Golem.
 
