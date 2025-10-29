@@ -27,10 +27,10 @@ public class ButterfliesConfig {
         commonBuilder.push("butterfly_options");
 
         Common.doubleEggChance = commonBuilder
-                .comment("Chance a butterfly has double eggs (0-1).")
+                .comment("Chance a butterfly has double eggs.")
                 .defineInRange("double_egg_chance", 0.0625, 0, 1);
         Common.eggLimit = commonBuilder
-                .comment("Eggs per butterfly (0-1024).")
+                .comment("Eggs per butterfly.")
                 .defineInRange("egg_limit", 1, 0, 1024);
         Common.maxDensity = commonBuilder
                 .comment("Butterfly max density in a 32x32x32 area before breeding is disabled (0 ignores).")
