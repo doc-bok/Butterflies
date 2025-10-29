@@ -81,6 +81,9 @@ public class NetworkEventListener {
      */
     private void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
 
+        // First reset the Butterfly Data
+        ButterflyData.reset();
+
         // Extract the data from the payload.
         FriendlyByteBuf payload = event.getPayload();
         if (payload != null) {
