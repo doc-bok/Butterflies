@@ -814,6 +814,8 @@ public record ButterflyData(int butterflyIndex,
      * @param resourceManager The resource manager to use for loading.
      */
     public static void load(ResourceManager resourceManager) {
+        ButterflyData.reset();
+
         Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new ButterflyData.Serializer()).create();
 
         // Get the butterfly JSON files
@@ -834,14 +836,13 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Resets the data. Used before applying data from a server.
+     * Resets the butterfly data to its unloaded state.
      */
     public static void reset() {
-        ENTITY_ID_TO_INDEX_MAP.clear();
-        BUTTERFLY_ENTRIES.clear();
-
-        NUM_BUTTERFLIES = 0;
-        NUM_MOTHS = 0;
+        ButterflyData.BUTTERFLY_ENTRIES.clear();
+        ButterflyData.ENTITY_ID_TO_INDEX_MAP.clear();
+        ButterflyData.NUM_BUTTERFLIES = 0;
+        ButterflyData.NUM_MOTHS = 0;
     }
 
     /**
