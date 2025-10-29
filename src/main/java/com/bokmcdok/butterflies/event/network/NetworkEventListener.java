@@ -9,6 +9,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,8 +34,8 @@ public class NetworkEventListener {
     @SubscribeEvent
     private void onDatapackSync(OnDatapackSyncEvent event) {
 
-        // Get the butterfly data collection.
-        List<ButterflyData> butterflyDataCollection = ButterflyData.getButterflyDataList();
+        // Get a COPY of the butterfly data collection.
+        List<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyData.getButterflyDataList());
 
         // Create our packet.
         ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
