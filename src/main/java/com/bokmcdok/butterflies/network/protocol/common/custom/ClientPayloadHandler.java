@@ -35,6 +35,10 @@ public class ClientPayloadHandler {
 
         // Do something with the data, on the main thread
         context.workHandler().submitAsync(() -> {
+            
+                    // First reset the Butterfly Data
+                    ButterflyData.reset();
+
                     // Extract the data from the payload.
                     Collection<ButterflyData> butterflyData = data.data();
 
