@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.6.7
+ - Added an effect when butterflies mud puddle.
+
 ### 6.6.6 (2025-10-08)
 - Fixed config showing unnecessary values.
 - Fixed stale butterfly data remaining when loading a new level.
