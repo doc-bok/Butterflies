@@ -1,0 +1,32 @@
+{
+  "diurnality": "diurnal",
+  "eggMultiplier": "double",
+  "entityId": "commongrassyellow-dry",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "plains"
+  ],
+  "index": 42,
+  "lifespan": {
+    "butterfly": "medium",
+    "caterpillar": "medium",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "azure_bluet",
+  "rarity": "common",
+  "size": "small",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [],
+  "type": "butterfly",
+  "variants": {
+    "base": "commongrassyellow",
+    "cold": "commongrassyellow-dry",
+    "warm": "commongrassyellow"
+  }
+}
