@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.7.0 (2025-12-05)
+ - Added Cold Common Yellow Grass variant.
+
 ### 6.6.7
  - Added an effect when butterflies mud puddle.
 

@@ -348,6 +348,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commongrassyellow-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_commongrassyellow-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "emperor": {
       "conditions": {
         "items": [
@@ -577,6 +589,7 @@
       "rainbow",
       "swallowtail",
       "bluemoonmale",
+      "commongrassyellow-dry",
       "peacock-pansy-wet"
     ]
   ]
