@@ -53,6 +53,7 @@ public class ButterflyInfo {
             "swallowtail",
             "bluemoonmale",
             "commongrassyellow-dry",
+            "peacock-pansy-aged",
             "peacock-pansy-wet",
             "atlas",
             "carpet",
@@ -133,6 +134,7 @@ public class ButterflyInfo {
         {}, // No traits for swallowtail
         {}, // No traits for bluemoonmale
         {}, // No traits for commongrassyellow-dry
+        {}, // No traits for peacock-pansy-aged
         {}, // No traits for peacock-pansy-wet
         {}, // No traits for atlas
         {}, // No traits for carpet

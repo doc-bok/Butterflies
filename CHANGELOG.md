@@ -1,5 +1,8 @@
 ## Changelog
 
+### 6.8.0 (2025-12-09)
+ - Added Aged Peacock Pansy variant.
+
 ### 6.7.0 (2025-12-05)
  - Added Cold Common Yellow Grass variant.
 

@@ -100,6 +100,7 @@ public class NetworkEventListener {
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
+                                                      buffer.readUtf(),
                                                       buffer.readUtf()));
 
                 // Register the new data.
