@@ -787,7 +787,19 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                 if (!this.isPersistenceRequired() &&
                         this.getAge() >= 0 &&
                         this.random.nextInt(0, 15) == 0) {
-                    this.kill();
+
+                    // Check for aged variants
+                    int agedIndex = getData().getAgedButterflyIndex();
+                    if (agedIndex != getData().butterflyIndex()) {
+                        ButterflyData data = ButterflyData.getEntry(agedIndex);
+                        if (data != null) {
+                            ResourceLocation newLocation = data.getButterflyEntity();
+                            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                            this.remove(RemovalReason.DISCARDED);
+                        }
+                    } else {
+                        this.kill();
+                    }
                 }
             }
         }
@@ -929,9 +941,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     private boolean isValidMate(LivingEntity other) {
         if (other instanceof Butterfly butterfly) {
-            return butterfly.getButterflyIndex() == this.getData().getMateButterflyIndex() &&
-                    butterfly.getNumEggs() > 0 &&
-                    !butterfly.getIsFertile();
+
+            if (butterfly.getNumEggs() > 0 && !butterfly.getIsFertile()) {
+                int butterflyIndex = butterfly.getButterflyIndex();
+
+                // Warm and cold variants can mate with each other.
+                return butterflyIndex == this.getData().getMateButterflyIndex() ||
+                       butterflyIndex == this.getData().getWarmButterflyIndex() ||
+                       butterflyIndex == this.getData().getColdButterflyIndex();
+            }
         }
 
         return false;

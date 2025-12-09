@@ -311,7 +311,15 @@ class ImageGenerator:
         )
 
         overlay_image = self._combine_images(overlay_image, wing_image, (-68, -35))
-        wing_image = wing_image.transpose(Image.FLIP_LEFT_RIGHT)
+
+        wing_image = self._crop_image(butterfly_image, (10, 10), (17, 10))
+        wing_image = self._rotate_image(wing_image, 90)
+        wing_image = self._resize_image(
+            wing_image,
+            int(wing_image.width * 5),
+            int(wing_image.height * 5),
+            Image.Resampling.NEAREST
+        )
         overlay_image = self._combine_images(overlay_image, wing_image, (-11, -35))
 
         # Nail
