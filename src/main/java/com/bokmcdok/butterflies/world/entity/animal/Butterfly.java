@@ -10,6 +10,7 @@ import com.bokmcdok.butterflies.world.entity.ai.*;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -121,7 +122,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 3d)
                 .add(Attributes.FLYING_SPEED, BUTTERFLY_SPEED)
-                .add(Attributes.MOVEMENT_SPEED, BUTTERFLY_SPEED * 05.d);
+                .add(Attributes.MOVEMENT_SPEED, BUTTERFLY_SPEED * 5d);
     }
 
     /**
@@ -143,9 +144,20 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                              ResourceLocation location,
                              BlockPos position,
                              Boolean placed) {
-        if (level instanceof ServerLevel) {
-            EntityType<?> entityType =
-                    BuiltInRegistries.ENTITY_TYPE.get(location);
+
+        // On clients, we just need to play a sound effect.
+        if (!(level instanceof ServerLevel)) {
+            level.playSound(null,
+                    position.getX(), position.getY(), position.getZ(),
+                    SoundEvents.PLAYER_ATTACK_WEAK,
+                    SoundSource.NEUTRAL, 1.0f, 1.0f);
+
+            return;
+        }
+
+        EntityType<?> entityType =
+                BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityType != null) {
             Entity entity = entityType.create(level);
             if (entity instanceof Butterfly butterfly) {
 
@@ -169,9 +181,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
                 level.addFreshEntity(butterfly);
             }
-        } else {
-            level.playSound(null, position.getX(), position.getY(), position.getZ(), SoundEvents.PLAYER_ATTACK_WEAK,
-                            SoundSource.NEUTRAL, 1.0f, 1.0f);
         }
     }
 
@@ -341,24 +350,16 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return TRUE if the butterfly is active at this time of day.
      */
     public boolean getIsActive() {
-        switch (getData().diurnality()) {
-            case DIURNAL -> {
-                return this.level().isDay();
-            }
+        return switch (getData().diurnality()) {
+            case DIURNAL -> this.level().isDay();
 
-            case NOCTURNAL -> {
-                return this.level().isNight();
-            }
+            case NOCTURNAL -> this.level().isNight();
 
-            case CREPUSCULAR -> {
-                return !this.level().dimensionType().hasFixedTime() &&
-                        this.level().getSkyDarken() == 4;
-            }
+            case CREPUSCULAR -> !this.level().dimensionType().hasFixedTime() &&
+                                this.level().getSkyDarken() == 4;
 
-            default -> {
-                return true;
-            }
-        }
+            case CATHEMERAL -> true;
+        };
     }
 
     /**
@@ -406,20 +407,20 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return A scale value based on the butterfly's size.
      */
     public float getRenderScale() {
-        switch (getData().size()) {
-            case TINY -> { return 0.15f; }
-            case SMALL -> { return 0.25f; }
-            case LARGE ->{ return 0.45f; }
-            case HUGE ->{ return 0.55f; }
-            default -> { return 0.35f; }
-        }
+        return switch (getData().size()) {
+            case TINY -> 0.15f;
+            case SMALL -> 0.25f;
+            case LARGE -> 0.45f;
+            case HUGE -> 0.55f;
+            default -> 0.35f;
+        };
     }
 
     /**
      * Butterflies can be fed to increase the number of eggs available,
      * allowing players to breed them as they can other animals.
      * @param stack The item stack the player tried to feed the butterfly.
-     * @return FALSE, indicating it isn't food.
+     * @return TRUE if the item is the butterfly's preferred flower.
      */
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
@@ -637,15 +638,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         // Butterflies use targets to select mates.
-        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, (target) -> {
-            if (target instanceof Butterfly butterfly) {
-                return butterfly.getButterflyIndex() == this.getData().getMateButterflyIndex() &&
-                        butterfly.getNumEggs() > 0 &&
-                        !butterfly.getIsFertile();
-            }
-
-            return false;
-        }));
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Butterfly.class, true, this::isValidMate));
     }
 
     /**
@@ -692,6 +685,16 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Set that the butterfly is mud puddling. Sends a message to the client so
+     * an effect will be rendered.
+     */
+    public void setMudPuddling() {
+        if (this.random.nextInt(10) == 0) {
+            this.level().broadcastEntityEvent(this, (byte) 38);
+        }
+    }
+
+    /**
      * Set a butterfly to not landed.
      */
     public void setNotLanded() {
@@ -700,7 +703,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
     /**
      * Set the number of eggs this butterfly can lay.
-     * @param numEggs The number of eggs remaining.
+     * @param numEggs The number of eggs remaining. This will be clamped, so it
+     *                can't drop below zero.
      */
     public void setNumEggs(int numEggs) {
         entityData.set(DATA_NUM_EGGS, Math.max(0, numEggs));
@@ -782,7 +786,19 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                 if (!this.isPersistenceRequired() &&
                         this.getAge() >= 0 &&
                         this.random.nextInt(0, 15) == 0) {
-                    this.kill();
+
+                    // Check for aged variants
+                    int agedIndex = getData().getAgedButterflyIndex();
+                    if (agedIndex != getData().butterflyIndex()) {
+                        ButterflyData data = ButterflyData.getEntry(agedIndex);
+                        if (data != null) {
+                            ResourceLocation newLocation = data.getButterflyEntity();
+                            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                            this.remove(RemovalReason.DISCARDED);
+                        }
+                    } else {
+                        this.kill();
+                    }
                 }
             }
         }
@@ -865,8 +881,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Override to control an entity's relative volume. Butterflies are silent.
-     * @return Always zero, so butterflies are silent.
+     * Override to control an entity's relative volume. Butterflies are almost silent.
+     * @return A low volume.
      */
     @Override
     protected float getSoundVolume() {
@@ -892,5 +908,49 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         return this.data;
+    }
+
+    /**
+     * Handle an event from the server. Spawns particles when mud puddling.
+     * @param eventId The ID of the event.
+     */
+    @Override
+    public void handleEntityEvent(byte eventId) {
+        if (eventId == 38) {
+            double d0 = this.random.nextGaussian() * 0.02;
+            double d1 = this.random.nextGaussian() * 0.02;
+            double d2 = this.random.nextGaussian() * 0.02;
+            this.level().addParticle(
+                    ParticleTypes.HAPPY_VILLAGER,
+                    this.getRandomX(1.0),
+                    this.getRandomY() + 0.5,
+                    this.getRandomZ(1.0),
+                    d0,
+                    d1,
+                    d2);
+        } else {
+            super.handleEntityEvent(eventId);
+        }
+    }
+
+    /**
+     * Check if the target entity is a valid mate.
+     * @param other The other entity to check.
+     * @return TRUE if the target entity can mate with the butterfly.
+     */
+    private boolean isValidMate(LivingEntity other) {
+        if (other instanceof Butterfly butterfly) {
+
+            if (butterfly.getNumEggs() > 0 && !butterfly.getIsFertile()) {
+                int butterflyIndex = butterfly.getButterflyIndex();
+
+                // Warm and cold variants can mate with each other.
+                return butterflyIndex == this.getData().getMateButterflyIndex() ||
+                       butterflyIndex == this.getData().getWarmButterflyIndex() ||
+                       butterflyIndex == this.getData().getColdButterflyIndex();
+            }
+        }
+
+        return false;
     }
 }

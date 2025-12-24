@@ -4,7 +4,7 @@
   "entityId": "light",
   "extraLandingBlocks": "none",
   "habitats": [],
-  "index": 61,
+  "index": 63,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
