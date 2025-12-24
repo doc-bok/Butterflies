@@ -60,7 +60,8 @@ public record ButterflyData(int butterflyIndex,
                             String baseVariant,
                             String coldVariant,
                             String mateVariant,
-                            String warmVariant) {
+                            String warmVariant,
+                            String agedVariant) {
 
     // Represents the type of "butterfly"
     public enum ButterflyType {
@@ -240,7 +241,8 @@ public record ButterflyData(int butterflyIndex,
                          String baseVariant,
                          String coldVariant,
                          String mateVariant,
-                         String warmVariant) {
+                         String warmVariant,
+                         String agedVariant) {
         this.butterflyIndex = butterflyIndex;
         this.entityId = entityId;
         this.size = size;
@@ -271,6 +273,7 @@ public record ButterflyData(int butterflyIndex,
         this.coldVariant = coldVariant;
         this.mateVariant = mateVariant;
         this.warmVariant = warmVariant;
+        this.agedVariant = agedVariant;
     }
 
     /**
@@ -327,6 +330,7 @@ public record ButterflyData(int butterflyIndex,
                 String coldVariant = entityId;
                 String mateVariant = entityId;
                 String warmVariant = entityId;
+                String agedVariant = entityId;
                 JsonElement variantElement = object.get("variants");
                 if (variantElement != null) {
                     JsonObject variants = variantElement.getAsJsonObject();
@@ -349,6 +353,11 @@ public record ButterflyData(int butterflyIndex,
                     JsonElement warmElement = variants.get("warm");
                     if (warmElement != null) {
                         warmVariant = warmElement.getAsString();
+                    }
+
+                    JsonElement agedElement = variants.get("aged");
+                    if (agedElement != null) {
+                        agedVariant = agedElement.getAsString();
                     }
                 }
 
@@ -375,7 +384,8 @@ public record ButterflyData(int butterflyIndex,
                         baseVariant,
                         coldVariant,
                         mateVariant,
-                        warmVariant
+                        warmVariant,
+                        agedVariant
                 );
             }
 
@@ -823,6 +833,14 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Returns the butterfly index of the butterfly's aged variant.
+     * @return The index of the butterfly to age into.
+     */
+    public int getAgedButterflyIndex() {
+        return getButterflyIndex(this.agedVariant);
+    }
+
+    /**
      * Returns the butterfly index of the butterfly's base variant.
      * @return The index of the butterfly to try and mate with.
      */
@@ -837,7 +855,7 @@ public record ButterflyData(int butterflyIndex,
 
     /**
      * Returns the butterfly index of the butterfly's cold variant.
-     * @return The index of the butterfly to try and mate with.
+     * @return The index of the cold variant of the butterfly.
      */
     public int getColdButterflyIndex() {
         return getButterflyIndex(this.coldVariant);
