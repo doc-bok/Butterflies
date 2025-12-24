@@ -26,6 +26,7 @@
   "traits": [],
   "type": "butterfly",
   "variants": {
+    "aged": "peacock-pansy-aged",
     "base": "peacock-pansy-dry",
     "cold": "peacock-pansy-dry",
     "warm": "peacock-pansy-wet"

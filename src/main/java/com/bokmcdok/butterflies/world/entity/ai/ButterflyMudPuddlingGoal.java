@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -27,7 +28,7 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
 
     /**
      * Set the accepted distance for mud puddling to provide benefits.
-     * @return The distance at which mud puddling works.
+     * @return The distance at which mud puddling starts reducing age.
      */
     @Override
     public double acceptedDistance() {
@@ -45,7 +46,7 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
 
     /**
      * Butterflies can only mud puddle when active.
-     * @return TRUE if the butterfly can pollinate right now.
+     * @return TRUE if the butterfly can mud puddle right now.
      */
     @Override
     public boolean canUse() {
@@ -70,7 +71,17 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
         ++this.tryTicks;
 
         if (this.isReachedTarget()) {
-            this.butterfly.setAge(this.butterfly.getAge() - 2);
+
+            // Don't allow butterflies to have an age outside its lifespan
+            ButterflyData data = this.butterfly.getData();
+            if (data.getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
+                int newAge = Math.max(this.butterfly.getData().butterflyLifespan(), this.butterfly.getAge() - 2);
+                this.butterfly.setAge(newAge);
+            }
+
+            // Even if the butterfly is immortal we should still have the
+            // effect.
+            this.butterfly.setMudPuddling();
         }
 
         if (this.shouldRecalculatePath()) {
@@ -109,20 +120,23 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
     @Override
     protected boolean isValidTarget(@NotNull LevelReader levelReader,
                                     @NotNull BlockPos blockPos) {
-        if (levelReader.getBlockState(blockPos).is(Blocks.WATER)) {
-            return levelReader.getBlockState(blockPos.north()).is(Blocks.CLAY) ||
-                    levelReader.getBlockState(blockPos.east()).is(Blocks.CLAY) ||
-                    levelReader.getBlockState(blockPos.south()).is(Blocks.CLAY) ||
-                    levelReader.getBlockState(blockPos.west()).is(Blocks.CLAY);
+
+        var state = levelReader.getBlockState(blockPos);
+        if (!state.is(Blocks.WATER)) {
+            return false;
         }
 
-        return false;
+        return levelReader.getBlockState(blockPos.north()).is(Blocks.CLAY)
+                || levelReader.getBlockState(blockPos.east()).is(Blocks.CLAY)
+                || levelReader.getBlockState(blockPos.south()).is(Blocks.CLAY)
+                || levelReader.getBlockState(blockPos.west()).is(Blocks.CLAY);
     }
 
     /**
-     * Override so the butterfly moves to the specified target block, not the
-     * block above it.
+     * Override so the butterfly moves to the specified target block and
+     * "orbits" around it, not just the block above it.
      */
+    @Override
     protected void moveMobToBlock() {
         Random random = this.mob.getRandom();
         this.mob.getNavigation().moveTo(
