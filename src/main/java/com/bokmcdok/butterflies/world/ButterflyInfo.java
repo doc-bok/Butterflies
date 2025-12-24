@@ -318,6 +318,10 @@ public class ButterflyInfo {
         },
         {
             ButterflyData.Habitat.PLAINS,
+        },
+        {}, // No habitats for peacock-pansy-aged
+        {
+            ButterflyData.Habitat.PLAINS,
             ButterflyData.Habitat.WETLANDS,
         },
         {
@@ -421,6 +425,8 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
