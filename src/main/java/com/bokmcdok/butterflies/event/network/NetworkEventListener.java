@@ -53,7 +53,7 @@ public class NetworkEventListener {
     private void onDatapackSync(OnDatapackSyncEvent event) {
 
         // Get the butterfly data collection.
-        Collection<ButterflyData> butterflyDataCollection = ButterflyData.getButterflyDataCollection();
+        Collection<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyData.getButterflyDataCollection());
 
         // Create our packet.
         ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
@@ -81,12 +81,13 @@ public class NetworkEventListener {
      */
     private void onButterflyCollectionPayload(NetworkEvent.ServerCustomPayloadEvent event) {
 
-        // First reset the Butterfly Data
-        ButterflyData.reset();
-
         // Extract the data from the payload.
         FriendlyByteBuf payload = event.getPayload();
         if (payload != null) {
+
+            // First reset the Butterfly Data
+            ButterflyData.reset();
+
             List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
                     (buffer) -> new ButterflyData(buffer.readInt(),
                             buffer.readUtf(),
