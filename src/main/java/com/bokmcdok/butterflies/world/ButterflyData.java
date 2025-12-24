@@ -227,6 +227,7 @@ public record ButterflyData(int butterflyIndex,
                     buffer.readUtf(),
                     buffer.readUtf(),
                     buffer.readUtf(),
+                    buffer.readUtf(),
                     buffer.readUtf());
         }
 
@@ -261,6 +262,7 @@ public record ButterflyData(int butterflyIndex,
             buffer.writeUtf(data.coldVariant);
             buffer.writeUtf(data.mateVariant);
             buffer.writeUtf(data.warmVariant);
+            buffer.writeUtf(data.agedVariant);
         }
     };
 
