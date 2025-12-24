@@ -162,25 +162,24 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             Entity entity = entityType.get().value().create(level, EntitySpawnReason.NATURAL);
             if (entity instanceof Butterfly butterfly) {
 
-                    butterfly.moveTo(position.getX() + 0.45D,
-                            position.getY() + 0.2D,
-                            position.getZ() + 0.5D,
-                            0.0F, 0.0F);
+                butterfly.moveTo(position.getX() + 0.45D,
+                        position.getY() + 0.2D,
+                        position.getZ() + 0.5D,
+                        0.0F, 0.0F);
 
-                    butterfly.setYBodyRot(butterfly.random.nextFloat());
+                butterfly.setYBodyRot(butterfly.random.nextFloat());
 
-                    butterfly.finalizeSpawn((ServerLevel) level,
-                            level.getCurrentDifficultyAt(position),
-                            EntitySpawnReason.NATURAL,
-                            null);
+                butterfly.finalizeSpawn((ServerLevel) level,
+                        level.getCurrentDifficultyAt(position),
+                        EntitySpawnReason.NATURAL,
+                        null);
 
-                    if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
-                        butterfly.setInvulnerable(true);
-                        butterfly.setPersistenceRequired();
-                    }
-
-                    level.addFreshEntity(butterfly);
+                if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
+                    butterfly.setInvulnerable(true);
+                    butterfly.setPersistenceRequired();
                 }
+
+                level.addFreshEntity(butterfly);
             }
         }
     }
@@ -938,7 +937,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @param other The other entity to check.
      * @return TRUE if the target entity can mate with the butterfly.
      */
-    private boolean isValidMate(LivingEntity other) {
+    private boolean isValidMate(LivingEntity other,
+                                Level level) {
         if (other instanceof Butterfly butterfly) {
 
             if (butterfly.getNumEggs() > 0 && !butterfly.getIsFertile()) {
