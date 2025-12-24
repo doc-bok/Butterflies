@@ -348,6 +348,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "commongrassyellow-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_commongrassyellow-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "emperor": {
       "conditions": {
         "items": [
@@ -468,6 +480,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "peacock-pansy-aged": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peacock-pansy-aged"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peacock-pansy-dry": {
       "conditions": {
         "items": [
@@ -577,6 +601,8 @@
       "rainbow",
       "swallowtail",
       "bluemoonmale",
+      "commongrassyellow-dry",
+      "peacock-pansy-aged",
       "peacock-pansy-wet"
     ]
   ]

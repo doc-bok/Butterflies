@@ -34,7 +34,7 @@ public class NetworkEventListener {
     @SubscribeEvent
     private void onDatapackSync(OnDatapackSyncEvent event) {
 
-        // Get a COPY of the butterfly data collection.
+        // Get the butterfly data collection.
         List<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyData.getButterflyDataList());
 
         // Create our packet.

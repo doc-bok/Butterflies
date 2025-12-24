@@ -316,6 +316,12 @@
     {
       "maxCount": 4,
       "minCount": 1,
+      "type": "butterflies:commongrassyellow-dry",
+      "weight": 100
+    },
+    {
+      "maxCount": 4,
+      "minCount": 1,
       "type": "butterflies:peacock-pansy-wet",
       "weight": 100
     },
