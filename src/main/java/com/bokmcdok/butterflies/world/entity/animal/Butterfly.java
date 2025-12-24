@@ -10,6 +10,7 @@ import com.bokmcdok.butterflies.world.entity.ai.*;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -688,7 +689,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     public void setMudPuddling() {
         if (this.random.nextInt(10) == 0) {
-            this.level().broadcastEntityEvent(this, (byte) 38);
+            this.getLevel().broadcastEntityEvent(this, (byte) 38);
         }
     }
 
@@ -791,7 +792,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                         ButterflyData data = ButterflyData.getEntry(agedIndex);
                         if (data != null) {
                             ResourceLocation newLocation = data.getButterflyEntity();
-                            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                            Butterfly.spawn(this.getLevel(), newLocation, this.blockPosition(), false);
                             this.remove(RemovalReason.DISCARDED);
                         }
                     } else {
@@ -918,7 +919,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            this.level().addParticle(
+            this.getLevel().addParticle(
                     ParticleTypes.HAPPY_VILLAGER,
                     this.getRandomX(1.0),
                     this.getRandomY() + 0.5,
