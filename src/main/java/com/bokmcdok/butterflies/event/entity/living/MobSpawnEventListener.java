@@ -1,10 +1,16 @@
 package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 
@@ -24,8 +30,18 @@ public class MobSpawnEventListener {
                                  EntityTypeRegistry entityTypeRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
+        forgeEventBus.addListener(this::onLivingDrops);
 
         this.entityTypeRegistry = entityTypeRegistry;
+    }
+
+    /**
+     * Handle mobs being replaced on spawn.
+     * @param event The event context.
+     */
+    private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
+        trySpawnButterflyGolem(event);
+        trySpawnPeacemakerButterfly(event);
     }
 
     /**
@@ -33,9 +49,7 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
-    private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
-
-        // Only affect Iron Golems.
+    private void trySpawnButterflyGolem(MobSpawnEvent.FinalizeSpawn event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
 
@@ -44,7 +58,8 @@ public class MobSpawnEventListener {
                 ServerLevelAccessor level = event.getLevel();
                 EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
 
-                if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {})) {
+                if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
+                })) {
                     IronGolem newMob = ironGolem.convertTo(entityType, false);
                     if (newMob != null) {
                         newMob.finalizeSpawn(level,
@@ -60,6 +75,39 @@ public class MobSpawnEventListener {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
+     * @param event The event context.
+     */
+    private void trySpawnPeacemakerButterfly(MobSpawnEvent.FinalizeSpawn event) {
+        Entity entity = event.getEntity();
+
+        // Handle raiders being infected.
+        if (entity instanceof Raider raider) {
+            ServerLevelAccessor level = event.getLevel();
+            if (raider.getRandom().nextInt(100) < 5) {
+                PeacemakerButterfly.possess(level, raider);
+                event.setCanceled(true);
+            }
+        }
+    }
+
+    /**
+     * If a villager, illager, or witch is killed by a peacemaker butterfly
+     * then it shouldn't drop loot.
+     * @param event The drop event to cancel
+     */
+    private void onLivingDrops(LivingDropsEvent event) {
+        if (event.getSource().getEntity() instanceof PeacemakerButterfly) {
+            LivingEntity killed = event.getEntity();
+            if (killed instanceof Villager ||
+                    killed instanceof AbstractIllager ||
+                    killed instanceof Witch) {
+                event.setCanceled(true);
             }
         }
     }

@@ -12,10 +12,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
-import net.minecraft.world.item.BannerPatternItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -87,6 +84,12 @@ public class ItemRegistry {
     private List<RegistryObject<Item>> caterpillarSpawnEggs;
     private List<RegistryObject<Item>> butterflySpawnEggs;
     private RegistryObject<Item> butterflyGolemSpawnEgg;
+    private RegistryObject<Item> peacemakerButterflySpawnEgg;
+    private RegistryObject<Item> peacemakerEvokerSpawnEgg;
+    private RegistryObject<Item> peacemakerIllusionerSpawnEgg;
+    private RegistryObject<Item> peacemakerPillagerSpawnEgg;
+    private RegistryObject<Item> peacemakerVindicatorSpawnEgg;
+    private RegistryObject<Item> peacemakerWitchSpawnEgg;
 
 
     /**
@@ -106,7 +109,8 @@ public class ItemRegistry {
      */
     public void initialise(@NotNull BannerPatternRegistry bannerPatternRegistry,
                            @NotNull BlockRegistry blockRegistry,
-                           @NotNull EntityTypeRegistry entityTypeRegistry) {
+                           @NotNull EntityTypeRegistry entityTypeRegistry,
+                           @NotNull TagRegistry tagRegistry) {
 
         this.blockRegistry = Objects.requireNonNull(blockRegistry, "blockRegistry cannot be null");
         this.entityTypeRegistry = Objects.requireNonNull(entityTypeRegistry, "entityTypeRegistry cannot be null");
@@ -178,7 +182,7 @@ public class ItemRegistry {
 
         // Banner Pattern
         this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
+                tagRegistry.getButterflyBannerPattern(),
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
         // Spawn Eggs
@@ -204,62 +208,30 @@ public class ItemRegistry {
         this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
                         0xffffff, 0xffffff, new Item.Properties()));
-    }
 
-    /**
-     * Accessor for bottled butterflies.
-     * @return The registry objects.
-     */
-    public List<RegistryObject<Item>> getBottledButterflies() {
-        return bottledButterflies;
-    }
+        this.peacemakerButterflySpawnEgg = deferredRegister.register("spawn_egg_peacemaker_butterfly",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerButterfly(),
+                        0xffffff, 0xffffff, new Item.Properties()));
 
-    /**
-     * Accessor for bottled caterpillars.
-     * @return The registry objects.
-     */
-    public List<RegistryObject<Item>> getBottledCaterpillars() {
-        return bottledCaterpillars;
-    }
+        this.peacemakerEvokerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_evoker",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerEvoker(),
+                        0xffffff, 0xffffff, new Item.Properties()));
 
-    /**
-     * Accessor for butterfly banner pattern.
-     * @return The registry object.
-     */
-    public RegistryObject<Item> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
-    }
+        this.peacemakerIllusionerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_illusioner",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerIllusioner(),
+                        0xffffff, 0xffffff, new Item.Properties()));
 
-    /**
-     * Accessor for butterfly book.
-     * @return The registry object.
-     */
-    public RegistryObject<Item> getButterflyBook() {
-        return butterflyBook;
-    }
+        this.peacemakerPillagerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_pillager",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerPillager(),
+                        0xffffff, 0xffffff, new Item.Properties()));
 
-    /**
-     * Accessor for butterfly microscope.
-     * @return The registry object.
-     */
-    public RegistryObject<Item> getButterflyMicroscope() {
-        return butterflyMicroscope;
-    }
+        this.peacemakerVindicatorSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_vindicator",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerVindicator(),
+                        0xffffff, 0xffffff, new Item.Properties()));
 
-    /**
-     * Accessor for burnt butterfly net.
-     * @return The registry object.
-     */
-    public RegistryObject<Item> getBurntButterflyNet() {
-        return burntButterflyNet;
-    }
-
-    /**
-     * Accessor for butterfly eggs.
-     * @return The registry objects.
-     */
-    public List<RegistryObject<Item>> getButterflyEggs() {
-        return butterflyEggs;
+        this.peacemakerWitchSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_witch",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWitch(),
+                        0xffffff, 0xffffff, new Item.Properties()));
     }
 
     /**
@@ -277,224 +249,170 @@ public class ItemRegistry {
         }
     }
 
-    /**
-     * Accessor for the butterfly feeder.
-     * @return The registry object.
-     */
+    // Accessor Methods
+
+    public List<RegistryObject<Item>> getBottledButterflies() {
+        return bottledButterflies;
+    }
+
+    public List<RegistryObject<Item>> getBottledCaterpillars() {
+        return bottledCaterpillars;
+    }
+
+    public RegistryObject<Item> getButterflyBannerPattern() {
+        return butterflyBannerPattern;
+    }
+
+    public RegistryObject<Item> getButterflyBook() {
+        return butterflyBook;
+    }
+
+    public RegistryObject<Item> getButterflyMicroscope() {
+        return butterflyMicroscope;
+    }
+
+    public RegistryObject<Item> getBurntButterflyNet() {
+        return burntButterflyNet;
+    }
+
+    public List<RegistryObject<Item>> getButterflyEggs() {
+        return butterflyEggs;
+    }
+
     public RegistryObject<Item> getButterflyFeeder() {
         return butterflyFeeder;
     }
 
-    /**
-     * Accessor for butterfly nets.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getButterflyNets() {
         return butterflyNets;
     }
 
-    /**
-     * Returns a list of all butterfly origami.
-     * @return The list of origami.
-     */
     public List<RegistryObject<Item>> getButterflyOrigami() {
         return butterflyOrigami;
     }
 
-    /**
-     * Accessor for butterfly pottery sherd.
-     * @return The butterfly pottery sherd.
-     */
     public RegistryObject<Item> getButterflyPotterySherd() {
         return butterflyPotterySherd;
     }
 
-    /**
-     * Accessor for butterfly scrolls.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getButterflyScrolls() {
         return butterflyScrolls;
     }
 
-    /**
-     * Accessor for butterfly spawn eggs.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getButterflySpawnEggs() {
         return butterflySpawnEggs;
     }
 
-    /**
-     * Accessor for butterfly golem spawn eggs.
-     * @return The registry object.
-     */
     public RegistryObject<Item> getButterflyGolemSpawnEgg() {
         return butterflyGolemSpawnEgg;
     }
 
-    /**
-     * Accessor for caterpillars.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getCaterpillars() {
         return caterpillars;
     }
 
-    /**
-     * Accessor for egg spawn eggs.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getEggSpawnEggs() {
         return eggSpawnEggs;
     }
 
-    /**
-     * Accessor for egg spawn eggs.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getChrysalisSpawnEggs() {
         return chrysalisSpawnEggs;
     }
 
-    /**
-     * Accessor for caterpillar spawn eggs.
-     * @return The registry objects.
-     */
     public List<RegistryObject<Item>> getCaterpillarSpawnEggs() {
         return caterpillarSpawnEggs;
     }
 
-    /**
-     * Accessor for empty butterfly net.
-     * @return The registry object.
-     */
     public RegistryObject<Item> getEmptyButterflyNet() {
         return emptyButterflyNet;
     }
 
-    /**
-     * Accessor for infested apple.
-     * @return The registry object.
-     */
     public RegistryObject<Item> getInfestedApple() {
         return infestedApple;
     }
 
-    /**
-     * Accessor for silk.
-     * @return The registry object.
-     */
+    public RegistryObject<Item> getPeacemakerButterflySpawnEgg() {
+        return peacemakerButterflySpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerEvokerSpawnEgg() {
+        return peacemakerEvokerSpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerIllusionerSpawnEgg() {
+        return peacemakerIllusionerSpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerPillagerSpawnEgg() {
+        return peacemakerPillagerSpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerVindicatorSpawnEgg() {
+        return peacemakerVindicatorSpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerWitchSpawnEgg() {
+        return peacemakerWitchSpawnEgg;
+    }
+
     public RegistryObject<Item> getSilk() {
         return this.silk;
     }
 
-    /**
-     * Accessor for secret book.
-     * @return The registry object.
-     */
     public RegistryObject<Item> getZhuangziBook() {
         return zhuangziBook;
     }
 
-    /**
-     * Register a butterfly net for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
+    // Register Methods
+
     private RegistryObject<Item> registerButterflyNet(int butterflyIndex) {
         return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyNetItem(this, butterflyIndex));
     }
 
-    /**
-     * Register a bottled butterfly for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
         return deferredRegister.register(BottledButterflyItem.getRegistryId(butterflyIndex),
                 () -> new BottledButterflyItem(blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
     }
 
-    /**
-     * Register a bottled caterpillar for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerBottledCaterpillar(int butterflyIndex) {
         return deferredRegister.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new BottledCaterpillarItem(blockRegistry.getBottledCaterpillarBlocks().get(butterflyIndex), butterflyIndex));
     }
 
-    /**
-     * Register a butterfly egg for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerButterflyEgg(int butterflyIndex) {
         return deferredRegister.register(ButterflyEggItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
     }
 
-    /**
-     * Register a butterfly scroll for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyScrollItem(entityTypeRegistry, butterflyIndex));
     }
 
-    /**
-     * Register a caterpillar for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
         return deferredRegister.register(CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
     }
 
-    /**
-     * Register an egg spawn egg for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
-    /**
-     * Register a caterpillar spawn egg for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
-    /**
-     * Register a chrysalis spawn egg for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerChrysalisSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
-    /**
-     * Register a butterfly spawn egg for the given butterfly index.
-     * @param butterflyIndex The index of the butterfly.
-     * @return A new registry object.
-     */
     private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
