@@ -96,6 +96,7 @@ public class EntityEventListener {
         event.put(entityTypeRegistry.getPeacemakerEvoker().get(), PeacemakerEvoker.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerIllusioner().get(), PeacemakerIllusioner.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerPillager().get(), PeacemakerPillager.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerVillager().get(), PeacemakerVillager.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerVindicator().get(), PeacemakerVindicator.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerWitch().get(), PeacemakerWitch.createAttributes().build());
     }
@@ -206,6 +207,12 @@ public class EntityEventListener {
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(entityTypeRegistry.getPeacemakerPillager().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerVillager().get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,

@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.event.entity.living;
 
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
@@ -84,14 +85,27 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     private void trySpawnPeacemakerButterfly(MobSpawnEvent.FinalizeSpawn event) {
-        Entity entity = event.getEntity();
 
-        // Handle raiders being infected.
-        if (entity instanceof Raider raider) {
-            ServerLevelAccessor level = event.getLevel();
-            if (raider.getRandom().nextInt(100) < 5) {
-                PeacemakerButterfly.possess(level, raider);
-                event.setCanceled(true);
+        // Peacemaker butterflies can be disabled via a config.
+        if (ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            Entity entity = event.getEntity();
+
+            // Handle Villagers being infected.
+            if (entity instanceof Villager villager) {
+                ServerLevelAccessor level = event.getLevel();
+                if (villager.getRandom().nextInt(1000) < 17) {
+                    PeacemakerButterfly.possess(level, villager);
+                    event.setCanceled(true);
+                }
+            }
+
+            // Handle raiders being infected.
+            if (entity instanceof Raider raider) {
+                ServerLevelAccessor level = event.getLevel();
+                if (raider.getRandom().nextInt(100) < 5) {
+                    PeacemakerButterfly.possess(level, raider);
+                    event.setCanceled(true);
+                }
             }
         }
     }

@@ -94,6 +94,7 @@ public class ModEventListener {
         event.accept(itemRegistry.getPeacemakerEvokerSpawnEgg());
         event.accept(itemRegistry.getPeacemakerIllusionerSpawnEgg());
         event.accept(itemRegistry.getPeacemakerPillagerSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerVillagerSpawnEgg());
         event.accept(itemRegistry.getPeacemakerVindicatorSpawnEgg());
         event.accept(itemRegistry.getPeacemakerWitchSpawnEgg());
     }

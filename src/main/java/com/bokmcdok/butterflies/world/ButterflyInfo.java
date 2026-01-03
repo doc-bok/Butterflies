@@ -74,6 +74,7 @@ public class ButterflyInfo {
             "ice",
             "lava",
             "light",
+            "peacemaker",
     };
 
     // A list of traits each butterfly has.
@@ -169,6 +170,7 @@ public class ButterflyInfo {
         {
             ButterflyData.Trait.GLOW,
         },
+        {}, // No traits for peacemaker
     };
 
 }

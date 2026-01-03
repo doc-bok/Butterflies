@@ -52,6 +52,7 @@ public class EntityTypeRegistry {
     private RegistryObject<EntityType<PeacemakerEvoker>> peacemakerEvoker;
     private RegistryObject<EntityType<PeacemakerIllusioner>> peacemakerIllusioner;
     private RegistryObject<EntityType<PeacemakerPillager>> peacemakerPillager;
+    private RegistryObject<EntityType<PeacemakerVillager>> peacemakerVillager;
     private RegistryObject<EntityType<PeacemakerVindicator>> peacemakerVindicator;
     private RegistryObject<EntityType<PeacemakerWitch>> peacemakerWitch;
 
@@ -103,6 +104,7 @@ public class EntityTypeRegistry {
         peacemakerEvoker = registerPeacemakerEvoker();
         peacemakerIllusioner = registerPeacemakerIllusioner();
         peacemakerPillager = registerPeacemakerPillager();
+        peacemakerVillager = registerPeacemakerVillager();
         peacemakerVindicator = registerPeacemakerVindicator();
         peacemakerWitch = registerPeacemakerWitch();
     }
@@ -152,6 +154,10 @@ public class EntityTypeRegistry {
         return peacemakerPillager;
     }
 
+    public RegistryObject<EntityType<PeacemakerVillager>> getPeacemakerVillager() {
+        return peacemakerVillager;
+    }
+
     public RegistryObject<EntityType<PeacemakerVindicator>> getPeacemakerVindicator() {
         return peacemakerVindicator;
     }
@@ -195,6 +201,12 @@ public class EntityTypeRegistry {
             EntityType<? extends PeacemakerPillager> entityType,
             Level level) {
         return new PeacemakerPillager(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerVillager createPeacemakerVillager(
+            EntityType<? extends PeacemakerVillager> entityType,
+            Level level) {
+        return new PeacemakerVillager(entityType, level);
     }
 
     private PeacemakerVindicator createPeacemakerVindicator(
@@ -312,6 +324,15 @@ public class EntityTypeRegistry {
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerPillager, MobCategory.MONSTER)
                         .sized(0.3f, 0.4f)
+                        .build(registryId));
+    }
+
+    private RegistryObject<EntityType<PeacemakerVillager>> registerPeacemakerVillager() {
+        String registryId = "peacemaker_villager";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerVillager, MobCategory.MONSTER)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(10)
                         .build(registryId));
     }
 

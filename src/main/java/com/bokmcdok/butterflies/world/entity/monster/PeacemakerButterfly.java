@@ -5,11 +5,14 @@ import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -21,6 +24,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
@@ -68,6 +72,57 @@ public class PeacemakerButterfly extends Monster {
                 possess(level, raider, "peacemaker_vindicator");
             } else if (raider instanceof Witch) {
                 possess(level, raider, "peacemaker_witch");
+            }
+        }
+    }
+
+    /**
+     * Convert a villager to one with a butterfly host
+     * @param level The current level
+     * @param villager The villager to convert
+     */
+    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    public static void possess(ServerLevelAccessor level,
+                               Villager villager) {
+
+
+        if (villager.level().isClientSide()) {
+            return;
+        }
+        Difficulty difficulty = level.getDifficulty();
+        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+            if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
+                return;
+            }
+
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            if (entityType == null) {
+                return;
+            }
+
+            if (ForgeEventFactory.canLivingConvert(villager, entityType, (x) -> {
+            })) {
+                PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
+                if (peacemakerVillager != null) {
+                    peacemakerVillager.setVillagerData(villager.getVillagerData());
+                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                    peacemakerVillager.setOffers(villager.getOffers());
+                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
+                    peacemakerVillager.finalizeSpawn(level,
+                            level.getCurrentDifficultyAt(peacemakerVillager.blockPosition()),
+                            MobSpawnType.CONVERSION,
+                            null,
+                            null);
+
+                    peacemakerVillager.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+
+                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(villager, peacemakerVillager);
+
+                    if (!peacemakerVillager.isSilent()) {
+                        level.levelEvent(null, 1026, peacemakerVillager.blockPosition(), 0);
+                    }
+                }
             }
         }
     }
@@ -122,9 +177,9 @@ public class PeacemakerButterfly extends Monster {
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
 
         if (!raider.level().isClientSide()) {
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
             EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITY_TYPES.getValue(location);
             if (entityType != null) {
 
@@ -214,6 +269,15 @@ public class PeacemakerButterfly extends Monster {
     @Override
     public boolean killedEntity(@NotNull ServerLevel level,
                        @NotNull LivingEntity victim) {
+
+        if (victim instanceof Villager villager) {
+            possess(level, villager);
+            if (!this.isSilent()) {
+                level.levelEvent(null, 1027, this.blockPosition(), 0);
+            }
+
+            this.remove(RemovalReason.DISCARDED);
+        }
 
         if (victim instanceof Raider raider) {
             possess(level, raider);
