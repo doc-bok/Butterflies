@@ -45,7 +45,7 @@ public class PeacemakerPillager extends Pillager {
                               Level level) {
         super(type, level);
 
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             this.peacemakerGoals.setTagRegistry(tagRegistry);
         }
     }

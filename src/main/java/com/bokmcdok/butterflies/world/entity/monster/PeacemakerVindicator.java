@@ -45,7 +45,7 @@ public class PeacemakerVindicator extends Vindicator {
                                 Level level) {
         super(type, level);
 
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             this.peacemakerGoals.setTagRegistry(tagRegistry);
         }
     }

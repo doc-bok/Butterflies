@@ -48,7 +48,7 @@ public class ButterfliesMod {
         bannerPatternRegistry.initialise();
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
-        entityTypeRegistry.initialise(blockRegistry);
+        entityTypeRegistry.initialise(blockRegistry, tagRegistry);
         itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();

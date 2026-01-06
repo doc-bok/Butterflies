@@ -100,7 +100,7 @@ public class PeacemakerButterfly extends Monster {
                                Villager villager) {
 
 
-        if (villager.level().isClientSide()) {
+        if (villager.level.isClientSide()) {
             return;
         }
         Difficulty difficulty = level.getDifficulty();
@@ -120,7 +120,7 @@ public class PeacemakerButterfly extends Monster {
                 PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
                 if (peacemakerVillager != null) {
                     peacemakerVillager.setVillagerData(villager.getVillagerData());
-                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE).getValue());
                     peacemakerVillager.setOffers(villager.getOffers());
                     peacemakerVillager.setVillagerXp(villager.getVillagerXp());
                     peacemakerVillager.finalizeSpawn(level,
@@ -161,20 +161,20 @@ public class PeacemakerButterfly extends Monster {
         final ResourceLocation PEACEMAKER_BUTTERFLY =
                 new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_butterfly");
 
-        if (!entity.level().isClientSide()) {
+        if (!entity.level.isClientSide()) {
             EntityType<?> entityType =
                     ForgeRegistries.ENTITY_TYPES.getValue(PEACEMAKER_BUTTERFLY);
             if (entityType != null) {
 
-                Entity newEntity = entityType.create(entity.level());
+                Entity newEntity = entityType.create(entity.level);
                 if (newEntity instanceof PeacemakerButterfly butterfly) {
                     butterfly.copyPosition(entity);
-                    butterfly.finalizeSpawn((ServerLevel) entity.level(),
-                            butterfly.level().getCurrentDifficultyAt(butterfly.getOnPos()),
+                    butterfly.finalizeSpawn((ServerLevel) entity.level,
+                            butterfly.level.getCurrentDifficultyAt(butterfly.getOnPos()),
                             MobSpawnType.CONVERSION,
                             null,
                             null);
-                    entity.level().addFreshEntity(butterfly);
+                    entity.level.addFreshEntity(butterfly);
                 }
             }
         }
@@ -192,7 +192,7 @@ public class PeacemakerButterfly extends Monster {
                                                 Raider raider,
                                                 String entityId) {
 
-        if (!raider.level().isClientSide()) {
+        if (!raider.level.isClientSide()) {
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
             EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITY_TYPES.getValue(location);
             if (entityType != null) {
@@ -228,7 +228,7 @@ public class PeacemakerButterfly extends Monster {
                                Level level) {
         super(entityType, level);
 
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             this.peacemakerGoals.setTagRegistry(tagRegistry);
         }
 
@@ -261,7 +261,6 @@ public class PeacemakerButterfly extends Monster {
      * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
@@ -281,9 +280,8 @@ public class PeacemakerButterfly extends Monster {
      * @param victim The entity just "killed"
      */
     @Override
-    public boolean killedEntity(@NotNull ServerLevel level,
-                       @NotNull LivingEntity victim) {
-
+    public boolean wasKilled(@NotNull ServerLevel level,
+                             @NotNull LivingEntity victim) {
         if (victim instanceof Villager villager) {
             possess(level, villager);
             if (!this.isSilent()) {
@@ -298,7 +296,7 @@ public class PeacemakerButterfly extends Monster {
             this.remove(RemovalReason.DISCARDED);
         }
 
-        return super.killedEntity(level, victim);
+        return super.wasKilled(level, victim);
     }
 
     /**

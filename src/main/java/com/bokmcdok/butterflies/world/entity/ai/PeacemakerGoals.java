@@ -25,7 +25,7 @@ public class PeacemakerGoals {
      */
     public void registerGoals(PathfinderMob entity) {
         GoalSelector targetSelector = entity.targetSelector;
-        targetSelector.removeAllGoals((x) -> true);
+        targetSelector.removeAllGoals();
         targetSelector.addGoal(1, (new HurtByTargetGoal(entity, Raider.class))
                 .setAlertOthers()
                 .setAlertOthers(PeacemakerButterfly.class)

@@ -43,7 +43,7 @@ public class PeacemakerEvoker extends Evoker {
                             Level level) {
         super(type, level);
 
-        if (!this.level().isClientSide()) {
+        if (!this.level.isClientSide()) {
             this.peacemakerGoals.setTagRegistry(tagRegistry);
         }
     }

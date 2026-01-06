@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
@@ -22,8 +21,8 @@ public class TagRegistry {
      * Create all the needed tags.
      */
     public TagRegistry() {
-        this.butterflyBannerPattern = create(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
-        this.peacemakerEntities = create(Registries.ENTITY_TYPE, "peacemaker_entities");
+        this.butterflyBannerPattern = create(Registry.BANNER_PATTERN_REGISTRY, "banner_pattern_butterfly");
+        this.peacemakerEntities = create(Registry.ENTITY_TYPE_REGISTRY, "peacemaker_entities");
     }
 
     /**
