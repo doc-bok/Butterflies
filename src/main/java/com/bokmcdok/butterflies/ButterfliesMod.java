@@ -45,6 +45,7 @@ public class ButterfliesMod {
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         MenuTypeRegistry menuTypeRegistry = new MenuTypeRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
+        TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
         bannerPatternRegistry.initialise();
@@ -52,8 +53,8 @@ public class ButterfliesMod {
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
-        entityTypeRegistry.initialise(blockRegistry);
-        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry);
+        entityTypeRegistry.initialise(blockRegistry, tagRegistry);
+        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);
