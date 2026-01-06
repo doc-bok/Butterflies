@@ -3,10 +3,13 @@ package com.bokmcdok.butterflies.event.entity;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
+import com.bokmcdok.butterflies.world.entity.monster.*;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;
 import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.monster.Zombie;
@@ -90,6 +93,13 @@ public class EntityEventListener {
         }
 
         event.put(entityTypeRegistry.getButterflyGolem().get(), IronGolem.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterfly.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerEvoker().get(), PeacemakerEvoker.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerIllusioner().get(), PeacemakerIllusioner.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerPillager().get(), PeacemakerPillager.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerVillager().get(), PeacemakerVillager.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerVindicator().get(), PeacemakerVindicator.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerWitch().get(), PeacemakerWitch.createAttributes().build());
     }
 
     /**
@@ -174,6 +184,48 @@ public class EntityEventListener {
         }
 
         event.register(entityTypeRegistry.getButterflyGolem().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerButterfly().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Monster::checkMonsterSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerEvoker().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerIllusioner().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerPillager().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerVillager().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerVindicator().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerWitch().get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,

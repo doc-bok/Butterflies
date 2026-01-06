@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    {"id": "butterflies:peacemaker_butterfly", 	"required": false},
+    {"id": "butterflies:peacemaker_butterfly",	"required": false},
+    {"id": "butterflies:peacemaker_evoker",	    "required": false},
+    {"id": "butterflies:peacemaker_illusioner",	"required": false},
+    {"id": "butterflies:peacemaker_pillager",	"required": false},
+    {"id": "butterflies:peacemaker_villager",	"required": false},
+    {"id": "butterflies:peacemaker_vindicator",	"required": false},
+    {"id": "butterflies:peacemaker_witch",	    "required": false}
+  ]
+}
