@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.bokmcdok.butterflies.world.entity.monster.*;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -297,7 +298,8 @@ public class EntityTypeRegistry {
         String registryId = "peacemaker_butterfly";
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerButterfly, MobCategory.MONSTER)
-                        .sized(0.3f, 0.4f)
+                        .sized(1.0f, 0.4f)
+                        .clientTrackingRange(8)
                         .build(registryId));
     }
 
@@ -323,14 +325,14 @@ public class EntityTypeRegistry {
         String registryId = "peacemaker_pillager";
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerPillager, MobCategory.MONSTER)
-                        .sized(0.3f, 0.4f)
+                        .sized(0.6f, 1.95f)
                         .build(registryId));
     }
 
     private RegistryObject<EntityType<PeacemakerVillager>> registerPeacemakerVillager() {
         String registryId = "peacemaker_villager";
         return deferredRegister.register(registryId,
-                () -> EntityType.Builder.of(this::createPeacemakerVillager, MobCategory.MONSTER)
+                () -> EntityType.Builder.of(this::createPeacemakerVillager, MobCategory.MISC)
                         .sized(0.6f, 1.95f)
                         .clientTrackingRange(10)
                         .build(registryId));

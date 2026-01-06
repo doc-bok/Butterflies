@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.monster.*;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NonTameRandomTargetGoal;

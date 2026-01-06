@@ -84,6 +84,11 @@ This new village will provide players with Butterfly-related trades.
 Butterfly Banners and Butterfly Origami add some Butterfly-related flavour for
 builders and collectors.
 
+### Peacemaker Butterflies
+
+These creatures look like butterflies, but are actually aliens intent on taking
+over your Minecraft world. Be wary if you encounter them.
+
 ### Secrets
 
 There are a few secret features in the mod. Books with ancient poetry, strange
@@ -96,13 +101,14 @@ your installation folder under:
 
 `/mods/Butterflies-common.toml`
 
-| Option               | Description                                                                                  | Default |
-|----------------------|----------------------------------------------------------------------------------------------|---------|
-| `double_Egg_chance`  | Chance a Butterfly lays double Eggs (range 0 to 1).                                          | 0.0625  |
-| `Egg_limit`          | Maximum Eggs a Butterfly can lay (range 0 to 1024).                                          | 1       |
-| `max_density`        | Maximum Butterflies per 32x32x32 block area before breeding is disabled; 0 to disable limit. | 16      |
-| `enable_lifespan`    | If true, Butterflies will have natural lifespans and can die.                                | true    |
-| `enable_pollination` | If true, Butterflies will pollinate flowers, helping them spread.                            | true    |
+| Option                        | Description                                                                                | Default |
+|-------------------------------|--------------------------------------------------------------------------------------------|---------|
+| `double_Egg_chance`           | Chance a Butterfly lays double Eggs (range 0 to 1).                                        | 0.0625  |
+| `Egg_limit`                   | Maximum Eggs a Butterfly can lay (range 0 to 1024).                                        | 1       |
+| `max_density`                 | Maximum Butterflies per 32x32x32 block area before breeding is disabled; 0 to disable limit. | 16      |
+| `enable_lifespan`             | If true, Butterflies will have natural lifespans and can die.                              | true    |
+| `enable_pollination`          | If true, Butterflies will pollinate flowers, helping them spread.
+| `enable_hostile_butterflies`  | If true, Peacemaker Butterflies will spawn in your world.
 
 ### Server Config Options
 

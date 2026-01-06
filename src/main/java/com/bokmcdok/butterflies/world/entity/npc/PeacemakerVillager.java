@@ -1,5 +1,6 @@
-package com.bokmcdok.butterflies.world.entity.monster;
+package com.bokmcdok.butterflies.world.entity.npc;
 
+import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;

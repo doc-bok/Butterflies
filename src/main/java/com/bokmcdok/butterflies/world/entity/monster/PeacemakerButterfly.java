@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -74,6 +75,19 @@ public class PeacemakerButterfly extends Monster {
                 possess(level, raider, "peacemaker_witch");
             }
         }
+    }
+
+    /**
+     * Set the eye height of the Peacemaker Butterfly. Ensures the bounding box
+     * is correct.
+     * @param pose The current pose of the entity.
+     * @param entityDimensions The dimensions of the entity.
+     * @return The height of the entity's eyes.
+     */
+    @Override
+    protected float getStandingEyeHeight(@NotNull Pose pose,
+                                         @NotNull EntityDimensions entityDimensions) {
+        return 0.4f;
     }
 
     /**
