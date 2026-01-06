@@ -47,6 +47,7 @@ public class ButterfliesMod {
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         MenuTypeRegistry menuTypeRegistry = new MenuTypeRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
+        TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
         // Initialise the registries. Do this here because (e.g.)
@@ -54,8 +55,8 @@ public class ButterfliesMod {
         // vice-versa.
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
-        entityTypeRegistry.initialise(blockRegistry);
-        itemRegistry.initialise(blockRegistry, entityTypeRegistry);
+        entityTypeRegistry.initialise(blockRegistry, tagRegistry);
+        itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);
