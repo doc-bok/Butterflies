@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
@@ -31,8 +32,7 @@ import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -110,12 +110,8 @@ public class PeacemakerButterfly extends Monster {
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
-            if (entityType == null) {
-                return;
-            }
-
-            if (ForgeEventFactory.canLivingConvert(villager, entityType, (x) -> {
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
             })) {
                 PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
                 if (peacemakerVillager != null) {
@@ -131,7 +127,7 @@ public class PeacemakerButterfly extends Monster {
 
                     peacemakerVillager.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
 
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(villager, peacemakerVillager);
+                    EventHooks.onLivingConvert(villager, peacemakerVillager);
 
                     if (!peacemakerVillager.isSilent()) {
                         level.levelEvent(null, 1026, peacemakerVillager.blockPosition(), 0);
@@ -163,7 +159,7 @@ public class PeacemakerButterfly extends Monster {
 
         if (!entity.level().isClientSide()) {
             EntityType<?> entityType =
-                    ForgeRegistries.ENTITY_TYPES.getValue(PEACEMAKER_BUTTERFLY);
+                    BuiltInRegistries.ENTITY_TYPE.get(PEACEMAKER_BUTTERFLY);
             if (entityType != null) {
 
                 Entity newEntity = entityType.create(entity.level());
@@ -194,10 +190,10 @@ public class PeacemakerButterfly extends Monster {
 
         if (!raider.level().isClientSide()) {
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-            EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<T> entityType = (EntityType<T>)BuiltInRegistries.ENTITY_TYPE.get(location);
             if (entityType != null) {
 
-                if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
+                if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
                 })) {
                     T newMob = raider.convertTo(entityType, false);
                     if (newMob != null) {
@@ -207,7 +203,7 @@ public class PeacemakerButterfly extends Monster {
                                 null,
                                 null);
 
-                        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
+                        EventHooks.onLivingConvert(raider, newMob);
 
                         if (!newMob.isSilent()) {
                             level.levelEvent(null, 1026, newMob.blockPosition(), 0);

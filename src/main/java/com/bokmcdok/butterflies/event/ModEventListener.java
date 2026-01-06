@@ -96,13 +96,13 @@ public class ModEventListener {
         event.accept(itemRegistry.getButterflyGolemSpawnEgg().get());
 
         // Peacemaker Spawn Eggs
-        event.accept(itemRegistry.getPeacemakerButterflySpawnEgg());
-        event.accept(itemRegistry.getPeacemakerEvokerSpawnEgg());
-        event.accept(itemRegistry.getPeacemakerIllusionerSpawnEgg());
-        event.accept(itemRegistry.getPeacemakerPillagerSpawnEgg());
-        event.accept(itemRegistry.getPeacemakerVillagerSpawnEgg());
-        event.accept(itemRegistry.getPeacemakerVindicatorSpawnEgg());
-        event.accept(itemRegistry.getPeacemakerWitchSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerButterflySpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerEvokerSpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerIllusionerSpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerPillagerSpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerVillagerSpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerVindicatorSpawnEgg().get());
+        event.accept(itemRegistry.getPeacemakerWitchSpawnEgg().get());
     }
 
     /**
