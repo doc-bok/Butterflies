@@ -5,8 +5,8 @@ import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -80,14 +80,11 @@ public class PeacemakerButterfly extends Monster {
     /**
      * Set the eye height of the Peacemaker Butterfly. Ensures the bounding box
      * is correct.
-     * @param pose The current pose of the entity.
-     * @param entityDimensions The dimensions of the entity.
      * @return The height of the entity's eyes.
      */
     @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         @NotNull EntityDimensions entityDimensions) {
-        return 0.4f;
+    public double getEyeY() {
+        return this.position().y + 0.4f;
     }
 
     /**
@@ -109,7 +106,7 @@ public class PeacemakerButterfly extends Monster {
                 return;
             }
 
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_villager");
             EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) BuiltInRegistries.ENTITY_TYPE.get(location);
             if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
             })) {
@@ -122,7 +119,6 @@ public class PeacemakerButterfly extends Monster {
                     peacemakerVillager.finalizeSpawn(level,
                             level.getCurrentDifficultyAt(peacemakerVillager.blockPosition()),
                             MobSpawnType.CONVERSION,
-                            null,
                             null);
 
                     peacemakerVillager.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
@@ -155,7 +151,7 @@ public class PeacemakerButterfly extends Monster {
      */
     public static void spawn(LivingEntity entity) {
         final ResourceLocation PEACEMAKER_BUTTERFLY =
-                new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_butterfly");
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_butterfly");
 
         if (!entity.level().isClientSide()) {
             EntityType<?> entityType =
@@ -168,7 +164,6 @@ public class PeacemakerButterfly extends Monster {
                     butterfly.finalizeSpawn((ServerLevel) entity.level(),
                             butterfly.level().getCurrentDifficultyAt(butterfly.getOnPos()),
                             MobSpawnType.CONVERSION,
-                            null,
                             null);
                     entity.level().addFreshEntity(butterfly);
                 }
@@ -189,7 +184,7 @@ public class PeacemakerButterfly extends Monster {
                                                 String entityId) {
 
         if (!raider.level().isClientSide()) {
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
             EntityType<T> entityType = (EntityType<T>)BuiltInRegistries.ENTITY_TYPE.get(location);
             if (entityType != null) {
 
@@ -200,7 +195,6 @@ public class PeacemakerButterfly extends Monster {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
                                 MobSpawnType.CONVERSION,
-                                null,
                                 null);
 
                         EventHooks.onLivingConvert(raider, newMob);
@@ -254,7 +248,6 @@ public class PeacemakerButterfly extends Monster {
      * @param difficulty The local difficulty.
      * @param spawnType The type of spawn.
      * @param groupData The group data.
-     * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
     @SuppressWarnings("deprecation")
@@ -262,13 +255,12 @@ public class PeacemakerButterfly extends Monster {
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
                                         @NotNull MobSpawnType spawnType,
-                                        @Nullable SpawnGroupData groupData,
-                                        @Nullable CompoundTag compoundTag) {
+                                        @Nullable SpawnGroupData groupData) {
         if (spawnType == MobSpawnType.SPAWN_EGG) {
             setPersistenceRequired();
         }
 
-        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData, compoundTag);
+        return super.finalizeSpawn(levelAccessor, difficulty, spawnType, groupData);
     }
 
     /**
@@ -363,5 +355,12 @@ public class PeacemakerButterfly extends Monster {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
                 peacemakerGoals::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+    }
+
+    @Override
+    public boolean hurt(DamageSource source,
+                        float amount) {
+        LogUtils.getLogger().info("Damaged for [{}] by [{}]", amount, source.toString());
+        return super.hurt(source, amount);
     }
 }

@@ -30,7 +30,7 @@ public class PeacemakerButterflyModel extends HierarchicalModel<PeacemakerButter
     private static final String HEAD = "head";
 
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_butterfly"), "main");
+            new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_butterfly"), "main");
 
     //  The parts of the model
     private final ModelPart root;

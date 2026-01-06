@@ -14,7 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
@@ -43,7 +42,8 @@ public class MobSpawnEventListener {
      * Handle mobs being replaced on spawn.
      * @param event The event context.
      */
-    private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
+    @SubscribeEvent
+    private void onMobSpawn(FinalizeSpawnEvent event) {
         trySpawnButterflyGolem(event);
         trySpawnPeacemakerButterfly(event);
     }
@@ -53,7 +53,7 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
-    private void trySpawnButterflyGolem(MobSpawnEvent.FinalizeSpawn event) {
+    private void trySpawnButterflyGolem(FinalizeSpawnEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
 
@@ -85,7 +85,7 @@ public class MobSpawnEventListener {
      * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
      * @param event The event context.
      */
-    private void trySpawnPeacemakerButterfly(MobSpawnEvent.FinalizeSpawn event) {
+    private void trySpawnPeacemakerButterfly(FinalizeSpawnEvent event) {
 
         // Peacemaker butterflies can be disabled via a config.
         if (ButterfliesConfig.Common.enableHostileButterflies.get()) {
@@ -116,6 +116,7 @@ public class MobSpawnEventListener {
      * then it shouldn't drop loot.
      * @param event The drop event to cancel
      */
+    @SubscribeEvent
     private void onLivingDrops(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof PeacemakerButterfly) {
             LivingEntity killed = event.getEntity();

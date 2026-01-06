@@ -53,6 +53,6 @@ public class TagRegistry {
                                  String tagName) {
         return TagKey.create(
                 registry,
-                new ResourceLocation(ButterfliesMod.MOD_ID, tagName));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, tagName));
     }
 }
