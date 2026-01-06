@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
@@ -54,7 +55,8 @@ public class PeacemakerGoals {
      * @param entity The entity to check.
      * @return True if the entity is a Peacemaker Butterfly.
      */
-    public boolean isNotPeacemaker(LivingEntity entity) {
+    public boolean isNotPeacemaker(LivingEntity entity,
+                                   ServerLevel level) {
         if (this.tagRegistry != null) {
              return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
         }

@@ -12,6 +12,8 @@ import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import com.bokmcdok.butterflies.world.entity.monster.*;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -117,13 +119,13 @@ public class ClientEventListener {
         }
 
         // Register the peacemaker renderers.
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterflyRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerEvoker().get(), EvokerRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerIllusioner().get(), IllusionerRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerPillager().get(), PillagerRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerVillager().get(), VillagerRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerVindicator().get(), VindicatorRenderer::new);
-        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerWitch().get(), WitchRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerButterfly>)entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterflyRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerEvoker>)entityTypeRegistry.getPeacemakerEvoker().get(), EvokerRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerIllusioner>)entityTypeRegistry.getPeacemakerIllusioner().get(), IllusionerRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerPillager>)entityTypeRegistry.getPeacemakerPillager().get(), PillagerRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerVillager>)entityTypeRegistry.getPeacemakerVillager().get(), VillagerRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerVindicator>)entityTypeRegistry.getPeacemakerVindicator().get(), VindicatorRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerWitch>)entityTypeRegistry.getPeacemakerWitch().get(), WitchRenderer::new);
 
     }
 

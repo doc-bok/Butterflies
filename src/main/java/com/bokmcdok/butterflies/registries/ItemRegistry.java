@@ -34,6 +34,7 @@ public class ItemRegistry {
     private BlockRegistry blockRegistry;
     private DataComponentRegistry dataComponentRegistry;
     private EntityTypeRegistry entityTypeRegistry;
+    private TagRegistry tagRegistry;
 
     // Nets
     private DeferredHolder<Item, Item> emptyButterflyNet;
@@ -114,6 +115,7 @@ public class ItemRegistry {
         this.blockRegistry = Objects.requireNonNull(blockRegistry, "blockRegistry cannot be null");
         this.dataComponentRegistry = Objects.requireNonNull(dataComponentRegistry, "dataComponentRegistry cannot be null");
         this.entityTypeRegistry = Objects.requireNonNull(entityTypeRegistry, "entityTypeRegistry cannot be null");
+        this.tagRegistry = Objects.requireNonNull(tagRegistry, "tagRegistry cannot be null");
 
         // Nets
         this.emptyButterflyNet = registerButterflyNet(-1, ButterflyNetItem.EMPTY_NAME);
@@ -385,7 +387,7 @@ public class ItemRegistry {
         ResourceKey<Item> key = createResourceKey(registryId);
 
         return deferredRegister.register(registryId, () -> new BannerPatternItem(
-                bannerPatternRegistry.getButterflyBannerPatternTagKey(),
+                tagRegistry.getButterflyBannerPattern(),
                 new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).setId(key)));
     }
 
