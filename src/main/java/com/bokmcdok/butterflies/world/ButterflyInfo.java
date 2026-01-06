@@ -383,6 +383,7 @@ public class ButterflyInfo {
             ButterflyData.Habitat.NETHER,
         },
         {}, // No habitats for light
+        {}, // No habitats for peacemaker
     };
 
     // A list of how rare each butterfly is.
@@ -448,6 +449,7 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
             ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,

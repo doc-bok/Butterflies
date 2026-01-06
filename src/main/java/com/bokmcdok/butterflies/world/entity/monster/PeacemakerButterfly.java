@@ -110,7 +110,7 @@ public class PeacemakerButterfly extends Monster {
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITIES.getValue(location);
             if (entityType == null) {
                 return;
             }
@@ -163,7 +163,7 @@ public class PeacemakerButterfly extends Monster {
 
         if (!entity.level.isClientSide()) {
             EntityType<?> entityType =
-                    ForgeRegistries.ENTITY_TYPES.getValue(PEACEMAKER_BUTTERFLY);
+                    ForgeRegistries.ENTITIES.getValue(PEACEMAKER_BUTTERFLY);
             if (entityType != null) {
 
                 Entity newEntity = entityType.create(entity.level);
@@ -194,7 +194,7 @@ public class PeacemakerButterfly extends Monster {
 
         if (!raider.level.isClientSide()) {
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-            EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITIES.getValue(location);
             if (entityType != null) {
 
                 if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
@@ -280,8 +280,8 @@ public class PeacemakerButterfly extends Monster {
      * @param victim The entity just "killed"
      */
     @Override
-    public boolean wasKilled(@NotNull ServerLevel level,
-                             @NotNull LivingEntity victim) {
+    public void killed(@NotNull ServerLevel level,
+                       @NotNull LivingEntity victim) {
         if (victim instanceof Villager villager) {
             possess(level, villager);
             if (!this.isSilent()) {
@@ -296,7 +296,7 @@ public class PeacemakerButterfly extends Monster {
             this.remove(RemovalReason.DISCARDED);
         }
 
-        return super.wasKilled(level, victim);
+        super.killed(level, victim);
     }
 
     /**

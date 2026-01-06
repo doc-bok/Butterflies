@@ -94,22 +94,22 @@ public class MobSpawnEventListener {
 
             // Handle Villagers being infected.
             if (entity instanceof Villager villager) {
-                LevelAccessor levelAccessor = event.getLevel();
+                LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
                     if (villager.getRandom().nextInt(1000) < 17) {
                         PeacemakerButterfly.possess(level, villager);
-                        event.setCanceled(true);
+                        //event.setCanceled(true);
                     }
                 }
             }
 
             // Handle raiders being infected.
             if (entity instanceof Raider raider) {
-                LevelAccessor levelAccessor = event.getLevel();
+                LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
                     if (raider.getRandom().nextInt(100) < 5) {
                         PeacemakerButterfly.possess(level, raider);
-                        event.setCanceled(true);
+                        //event.setCanceled(true);
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class MobSpawnEventListener {
      */
     private void onLivingDrops(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof PeacemakerButterfly) {
-            LivingEntity killed = event.getEntity();
+            Entity killed = event.getEntity();
             if (killed instanceof Villager ||
                     killed instanceof AbstractIllager ||
                     killed instanceof Witch) {

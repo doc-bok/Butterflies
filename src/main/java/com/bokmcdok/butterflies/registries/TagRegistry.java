@@ -14,23 +14,13 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 public class TagRegistry {
 
     // The available tags for this mod.
-    private final TagKey<BannerPattern> butterflyBannerPattern;
     private final TagKey<EntityType<?>> peacemakerEntities;
 
     /**
      * Create all the needed tags.
      */
     public TagRegistry() {
-        this.butterflyBannerPattern = create(Registry.BANNER_PATTERN_REGISTRY, "banner_pattern_butterfly");
         this.peacemakerEntities = create(Registry.ENTITY_TYPE_REGISTRY, "peacemaker_entities");
-    }
-
-    /**
-     * Accessor to the butterfly banner pattern tag key.
-     * @return The tag key.
-     */
-    public TagKey<BannerPattern> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
     }
 
     /**
