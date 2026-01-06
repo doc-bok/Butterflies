@@ -11,7 +11,18 @@ import net.neoforged.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ButterflyTextures {
 
-    public static final ResourceLocation BOOK = ResourceLocation.withDefaultNamespace("textures/gui/book.png");
-    public static final ResourceLocation MICROSCOPE = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_microscope/butterfly_microscope.png");
-    public static final ResourceLocation SCROLL = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/blank.png");
+    public static final ResourceLocation BOOK = ResourceLocation.withDefaultNamespace(
+            "textures/gui/book.png");
+
+    public static final ResourceLocation MICROSCOPE = ResourceLocation.fromNamespaceAndPath(
+            ButterfliesMod.MOD_ID,
+            "textures/gui/butterfly_microscope/butterfly_microscope.png");
+
+    public static ResourceLocation PEACEMAKER_BUTTERFLY = ResourceLocation.fromNamespaceAndPath(
+            ButterfliesMod.MOD_ID,
+            "textures/entity/peacemaker_butterfly/peacemaker_butterfly.png");
+
+    public static final ResourceLocation SCROLL = ResourceLocation.fromNamespaceAndPath(
+            ButterfliesMod.MOD_ID,
+            "textures/gui/butterfly_scroll/blank.png");
 }

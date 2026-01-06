@@ -74,6 +74,7 @@ public class ButterflyInfo {
             "ice",
             "lava",
             "light",
+            "peacemaker",
     };
 
     // A list of traits each butterfly has.
@@ -169,6 +170,7 @@ public class ButterflyInfo {
         {
             ButterflyData.Trait.GLOW,
         },
+        {}, // No traits for peacemaker
     };
 
     // A list of types of  butterflies.
@@ -237,6 +239,7 @@ public class ButterflyInfo {
             ButterflyData.ButterflyType.SPECIAL,
             ButterflyData.ButterflyType.SPECIAL,
             ButterflyData.ButterflyType.SPECIAL,
+            ButterflyData.ButterflyType.SPECIAL,
     };
 
     // A list of how rare each butterfly is.
@@ -302,6 +305,7 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
             ButterflyData.Rarity.COMMON,
+            ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
             ButterflyData.Rarity.RARE,
