@@ -5,6 +5,8 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import com.bokmcdok.butterflies.world.entity.monster.*;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
@@ -38,6 +40,7 @@ public class EntityTypeRegistry {
     private final DeferredRegister<EntityType<?>> deferredRegister;
 
     private BlockRegistry blockRegistry;
+    private TagRegistry tagRegistry;
 
     private List<DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>>> butterflies;
     private List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> butterflyEggs;
@@ -46,6 +49,13 @@ public class EntityTypeRegistry {
     private List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>>  butterflyScrolls;
     private List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> caterpillars;
     private List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> chrysalises;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerButterfly>> peacemakerButterfly;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerEvoker>> peacemakerEvoker;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerIllusioner>> peacemakerIllusioner;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerPillager>> peacemakerPillager;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerVillager>> peacemakerVillager;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerVindicator>> peacemakerVindicator;
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerWitch>> peacemakerWitch;
 
     /**
      * Constructs the entity type registry and registers the deferred register with the given event bus.
@@ -60,8 +70,10 @@ public class EntityTypeRegistry {
      * Initializes entity types based on the provided block registry.
      * @param blockRegistry The block registry instance.
      */
-    public void initialise(BlockRegistry blockRegistry) {
+    public void initialise(BlockRegistry blockRegistry,
+                           TagRegistry tagRegistry) {
         this.blockRegistry = blockRegistry;
+        this.tagRegistry = tagRegistry;
 
         final int speciesCount = ButterflyInfo.SPECIES.length;
 
@@ -83,10 +95,18 @@ public class EntityTypeRegistry {
 
         // Register the single butterfly scroll separately (backwards compatibility)
         butterflyScroll = deferredRegister.register(
-                        ButterflyScroll.NAME,
-                        () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
-                                .sized(1.0f, 1.0f)
-                                .build(ButterflyScroll.NAME));
+                ButterflyScroll.NAME,
+                () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
+                        .sized(1.0f, 1.0f)
+                        .build(ButterflyScroll.NAME));
+
+        peacemakerButterfly = registerPeacemakerButterfly();
+        peacemakerEvoker = registerPeacemakerEvoker();
+        peacemakerIllusioner = registerPeacemakerIllusioner();
+        peacemakerPillager = registerPeacemakerPillager();
+        peacemakerVillager = registerPeacemakerVillager();
+        peacemakerVindicator = registerPeacemakerVindicator();
+        peacemakerWitch = registerPeacemakerWitch();
     }
 
     // Accessors
@@ -119,6 +139,35 @@ public class EntityTypeRegistry {
         return chrysalises;
     }
 
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerButterfly>> getPeacemakerButterfly() {
+        return peacemakerButterfly;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerEvoker>> getPeacemakerEvoker() {
+        return peacemakerEvoker;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerIllusioner>> getPeacemakerIllusioner() {
+        return peacemakerIllusioner;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerPillager>> getPeacemakerPillager() {
+        return peacemakerPillager;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerVillager>> getPeacemakerVillager() {
+        return peacemakerVillager;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerVindicator>> getPeacemakerVindicator() {
+        return peacemakerVindicator;
+    }
+
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerWitch>> getPeacemakerWitch() {
+        return peacemakerWitch;
+    }
+
+    // Entity factory methods
     private Butterfly createButterfly(EntityType<? extends Butterfly> entityType, Level level) {
         return new Butterfly(blockRegistry, entityType, level);
     }
@@ -129,6 +178,48 @@ public class EntityTypeRegistry {
 
     private Butterfly createLavaMoth(EntityType<? extends Butterfly> entityType, Level level) {
         return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
+    }
+
+    private PeacemakerButterfly createPeacemakerButterfly(
+            EntityType<? extends PeacemakerButterfly> entityType,
+            Level level) {
+        return new PeacemakerButterfly(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerEvoker createPeacemakerEvoker(
+            EntityType<? extends PeacemakerEvoker> entityType,
+            Level level) {
+        return new PeacemakerEvoker(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerIllusioner createPeacemakerIllusioner(
+            EntityType<? extends PeacemakerIllusioner> entityType,
+            Level level) {
+        return new PeacemakerIllusioner(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerPillager createPeacemakerPillager(
+            EntityType<? extends PeacemakerPillager> entityType,
+            Level level) {
+        return new PeacemakerPillager(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerVillager createPeacemakerVillager(
+            EntityType<? extends PeacemakerVillager> entityType,
+            Level level) {
+        return new PeacemakerVillager(entityType, level);
+    }
+
+    private PeacemakerVindicator createPeacemakerVindicator(
+            EntityType<? extends PeacemakerVindicator> entityType,
+            Level level) {
+        return new PeacemakerVindicator(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerWitch createPeacemakerWitch(
+            EntityType<? extends PeacemakerWitch> entityType,
+            Level level) {
+        return new PeacemakerWitch(entityType, level);
     }
 
     /**
@@ -152,7 +243,6 @@ public class EntityTypeRegistry {
     }
 
     // Registration methods
-
     private DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
         String registryId = Butterfly.getRegistryId(butterflyIndex);
         EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
@@ -202,6 +292,68 @@ public class EntityTypeRegistry {
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(Chrysalis::new, BUTTERFLY_SPAWN_POOL)
                         .sized(0.1f, 0.1f)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerButterfly>> registerPeacemakerButterfly() {
+        String registryId = "peacemaker_butterfly";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerButterfly, MobCategory.MONSTER)
+                        .sized(1.0f, 0.4f)
+                        .clientTrackingRange(8)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerEvoker>> registerPeacemakerEvoker() {
+        String registryId = "peacemaker_evoker";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerEvoker, MobCategory.MONSTER)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(8)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerIllusioner>> registerPeacemakerIllusioner() {
+        String registryId = "peacemaker_illusioner";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerIllusioner, MobCategory.MONSTER)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(8)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerPillager>> registerPeacemakerPillager() {
+        String registryId = "peacemaker_pillager";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerPillager, MobCategory.MONSTER)
+                        .sized(0.6f, 1.95f)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerVillager>> registerPeacemakerVillager() {
+        String registryId = "peacemaker_villager";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerVillager, MobCategory.MISC)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(10)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerVindicator>> registerPeacemakerVindicator() {
+        String registryId = "peacemaker_vindicator";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerVindicator, MobCategory.MONSTER)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(10)
+                        .build(registryId));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerWitch>> registerPeacemakerWitch() {
+        String registryId = "peacemaker_witch";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerWitch, MobCategory.MONSTER)
+                        .sized(0.6F, 1.95F)
+                        .clientTrackingRange(8)
                         .build(registryId));
     }
 }

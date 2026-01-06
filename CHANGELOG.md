@@ -1,7 +1,10 @@
 ## Changelog
 
+### 7.0.0 (2026-01-03)
+- Added Peacemaker Butterflies.
+
 ### 6.8.0 (2025-12-09)
- - Added Aged Peacock Pansy variant.
+- Added Aged Peacock Pansy variant.
 
 ### 6.7.0 (2025-12-05)
  - Added Cold Common Yellow Grass variant.

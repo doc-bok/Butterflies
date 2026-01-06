@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * A model of a butterfly.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyModel  extends HierarchicalModel<Butterfly> {
+public class ButterflyModel extends HierarchicalModel<Butterfly> {
 
     // Names for the various model parts.
     private static final String ANTENNAE = "antennae";
@@ -88,8 +88,8 @@ public class ButterflyModel  extends HierarchicalModel<Butterfly> {
      * @param limbSwing Unused
      * @param limbSwingAmount Unused
      * @param ageInTicks The current age of the entity in ticks
-     * @param netHeadYaw unused
-     * @param headPitch unused
+     * @param netHeadYaw The current yaw of the head.
+     * @param headPitch The current pitch of the head.
      */
     @Override
     public void setupAnim(@NotNull Butterfly entity,
