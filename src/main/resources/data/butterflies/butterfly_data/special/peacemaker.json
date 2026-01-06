@@ -1,0 +1,25 @@
+{
+  "diurnality": "cathemeral",
+  "eggMultiplier": "none",
+  "entityId": "peacemaker",
+  "extraLandingBlocks": "none",
+  "habitats": [],
+  "index": 64,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "none",
+  "preferredFlower": "wither_rose",
+  "rarity": "rare",
+  "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "traits": [],
+  "type": "special"
+}

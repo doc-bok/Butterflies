@@ -260,7 +260,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @param fallDistance The distance fallen.
      * @param blockModifier The damage modifier for the block landed on.
      * @param damageSource The source of the damage.
-     * @return Always FALSE, as no damage is applied.
+     * @return Always false, as no damage is applied.
      */
     @Override
     public boolean causeFallDamage(float fallDistance,

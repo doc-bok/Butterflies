@@ -15,6 +15,7 @@ public class ButterfliesConfig {
         public static ModConfigSpec.IntValue maxDensity;
         public static ModConfigSpec.BooleanValue enableLifespan;
         public static ModConfigSpec.BooleanValue enablePollination;
+        public static ModConfigSpec.BooleanValue enableHostileButterflies;
     }
 
     // Group server config values in a static inner class
@@ -43,6 +44,9 @@ public class ButterfliesConfig {
         Common.enablePollination = commonBuilder
                 .comment("If true, butterflies will pollinate flowers.")
                 .define("enable_pollination", true);
+        Common.enableHostileButterflies = commonBuilder
+                .comment("If true, hostile butterflies will spawn.")
+                .define("enable_hostile_butterflies", true);
         commonBuilder.pop();
         COMMON_CONFIG = commonBuilder.build();
 
