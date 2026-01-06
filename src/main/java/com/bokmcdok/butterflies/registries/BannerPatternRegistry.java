@@ -13,8 +13,6 @@ public class BannerPatternRegistry {
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<BannerPattern> deferredRegister;
 
-    // The banner pattern tags.
-    private TagKey<BannerPattern> butterflyBannerPatternTagKey;
 
     /**
      * Construction
@@ -31,18 +29,5 @@ public class BannerPatternRegistry {
     public void initialise() {
         // Register the banner pattern itself.
         deferredRegister.register("banner_pattern_butterfly", () -> new BannerPattern("banner_pattern_butterfly"));
-
-        // Register the tag used to link everything together.
-        this.butterflyBannerPatternTagKey = TagKey.create(
-                Registries.BANNER_PATTERN,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
-    }
-
-    /**
-     * Accessor to the butterfly banner pattern tag key.
-     * @return The tag key.
-     */
-    public TagKey<BannerPattern> getButterflyBannerPatternTagKey() {
-        return butterflyBannerPatternTagKey;
     }
 }

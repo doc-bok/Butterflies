@@ -88,5 +88,14 @@ public class ModEventListener {
         itemRegistry.getChrysalisSpawnEggs().forEach(event::accept);
         itemRegistry.getButterflySpawnEggs().forEach(event::accept);
         event.accept(itemRegistry.getButterflyGolemSpawnEgg());
+
+        // Peacemaker Spawn Eggs
+        event.accept(itemRegistry.getPeacemakerButterflySpawnEgg());
+        event.accept(itemRegistry.getPeacemakerEvokerSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerIllusionerSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerPillagerSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerVillagerSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerVindicatorSpawnEgg());
+        event.accept(itemRegistry.getPeacemakerWitchSpawnEgg());
     }
 }
