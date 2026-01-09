@@ -90,6 +90,7 @@ public class ItemRegistry {
     private RegistryObject<Item> peacemakerPillagerSpawnEgg;
     private RegistryObject<Item> peacemakerVillagerSpawnEgg;
     private RegistryObject<Item> peacemakerVindicatorSpawnEgg;
+    private RegistryObject<Item> peacemakerWanderingTraderSpawnEgg;
     private RegistryObject<Item> peacemakerWitchSpawnEgg;
 
 
@@ -234,6 +235,10 @@ public class ItemRegistry {
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerVindicator(),
                         0xffffff, 0xffffff, new Item.Properties()));
 
+        this.peacemakerWanderingTraderSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_wandering_trader",
+                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWanderingTrader(),
+                        0xffffff, 0xffffff, new Item.Properties()));
+
         this.peacemakerWitchSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_witch",
                 () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWitch(),
                         0xffffff, 0xffffff, new Item.Properties()));
@@ -358,6 +363,10 @@ public class ItemRegistry {
 
     public RegistryObject<Item> getPeacemakerVindicatorSpawnEgg() {
         return peacemakerVindicatorSpawnEgg;
+    }
+
+    public RegistryObject<Item> getPeacemakerWanderingTraderSpawnEgg() {
+        return peacemakerWanderingTraderSpawnEgg;
     }
 
     public RegistryObject<Item> getPeacemakerWitchSpawnEgg() {
