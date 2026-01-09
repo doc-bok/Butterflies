@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.1.0 (2026-01-10)
+- Peacemaker Butterflies can now infest Wandering Traders.
+
 ### 7.0.0 (2026-01-03)
 - Added Peacemaker Butterflies.
 
