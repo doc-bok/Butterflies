@@ -159,12 +159,12 @@ public class PeacemakerButterfly extends Monster {
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)BuiltInRegistries.ENTITY_TYPE.get(location);
             if (entityType == null) {
                 return;
             }
 
-            if (ForgeEventFactory.canLivingConvert(wanderingTrader, entityType, (x) -> {
+            if (EventHooks.canLivingConvert(wanderingTrader, entityType, (x) -> {
             })) {
                 PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(entityType, false);
                 if (peacemakerWanderingTrader != null) {
@@ -177,7 +177,7 @@ public class PeacemakerButterfly extends Monster {
 
                     peacemakerWanderingTrader.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
 
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(wanderingTrader, peacemakerWanderingTrader);
+                    EventHooks.onLivingConvert(wanderingTrader, peacemakerWanderingTrader);
 
                     if (!peacemakerWanderingTrader.isSilent()) {
                         level.levelEvent(null, 1026, peacemakerWanderingTrader.blockPosition(), 0);

@@ -227,7 +227,7 @@ public class ItemRegistry {
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerWanderingTraderSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_wandering_trader",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWanderingTrader(),
+                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerWanderingTrader().get(),
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerWitchSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_witch",
