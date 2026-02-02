@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.1.2 (2026-02-02)
+- Butterfly nets can only catch butterflies when empty.
+
 ### 7.1.1 (2026-02-02)
 - Added localisation strings for Peacemaker villagers with jobs.
 
@@ -13,10 +16,10 @@
 - Added Aged Peacock Pansy variant.
 
 ### 6.7.0 (2025-12-05)
- - Added Cold Common Yellow Grass variant.
+- Added Cold Common Yellow Grass variant.
 
 ### 6.6.7
- - Added an effect when butterflies mud puddle.
+- Added an effect when butterflies mud puddle.
 
 ### 6.6.6 (2025-10-08)
 - Fixed config showing unnecessary values.
