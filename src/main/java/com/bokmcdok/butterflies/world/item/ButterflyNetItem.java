@@ -148,7 +148,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                      @NotNull Entity entity) {
 
         // Needs to target a butterfly with an empty net.
-        if (getButterflyEntity(stack) == null &&
+        if (getButterflyEntity(dataComponentRegistry, stack) == null &&
                 entity instanceof Butterfly butterfly) {
             DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
 
