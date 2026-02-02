@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.1.1 (2026-02-02)
+- Added localisation strings for Peacemaker villagers with jobs.
+
 ### 7.1.0 (2026-01-10)
 - Peacemaker Butterflies can now infest Wandering Traders.
 
