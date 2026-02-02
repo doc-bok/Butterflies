@@ -173,7 +173,7 @@ public class EntityTypeRegistry {
         return peacemakerWitch;
     }
 
-    public DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> getPeacemakerWanderingTrader() {
+    public DeferredHolder<EntityType<?>, EntityType<? extends Mob>> getPeacemakerWanderingTrader() {
         return peacemakerWanderingTrader;
     }
 
@@ -400,12 +400,13 @@ public class EntityTypeRegistry {
                         .build(resourceKey));
     }
 
-    private DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> registerPeacemakerWanderingTrader() {
+    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> registerPeacemakerWanderingTrader() {
         String registryId = "peacemaker_wandering_trader";
+        ResourceKey<EntityType<?>> resourceKey = createResourceKey(registryId);
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerWanderingTrader, MobCategory.MISC)
                         .sized(0.6f, 1.95f)
                         .clientTrackingRange(10)
-                        .build(registryId));
+                        .build(resourceKey));
     }
 }

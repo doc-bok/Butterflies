@@ -164,19 +164,26 @@ public class PeacemakerButterfly extends Monster {
             }
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)BuiltInRegistries.ENTITY_TYPE.get(location);
-            if (entityType == null) {
+            Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (!entityType.isPresent()) {
                 return;
             }
 
-            if (EventHooks.canLivingConvert(wanderingTrader, entityType, (x) -> {
+            EntityType<PeacemakerWanderingTrader> entityTypeValue = (EntityType<PeacemakerWanderingTrader>)entityType.get().value();
+            if (EventHooks.canLivingConvert(wanderingTrader, entityTypeValue, (x) -> {
             })) {
-                PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(entityType, false);
+
+                PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(
+                        entityTypeValue,
+                        ConversionParams.single(wanderingTrader, true, true),
+                        EntitySpawnReason.CONVERSION,
+                        entity -> {});
+                
                 if (peacemakerWanderingTrader != null) {
 
                     peacemakerWanderingTrader.finalizeSpawn(level,
                             level.getCurrentDifficultyAt(peacemakerWanderingTrader.blockPosition()),
-                            MobSpawnType.CONVERSION,
+                            EntitySpawnReason.CONVERSION,
                             null);
 
                     peacemakerWanderingTrader.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));

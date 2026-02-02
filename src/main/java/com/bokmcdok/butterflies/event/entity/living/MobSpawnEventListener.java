@@ -100,7 +100,7 @@ public class MobSpawnEventListener {
         }
 
         // Entities can't be born with butterflies.
-        if (event.getSpawnType() == MobSpawnType.BREEDING) {
+        if (event.getSpawnType() == EntitySpawnReason.BREEDING) {
             return;
         }
 
