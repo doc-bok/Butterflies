@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
@@ -91,7 +93,7 @@ public class PeacemakerButterfly extends Monster {
     }
 
     /**
-     * Convert a villager to one with a butterfly host
+     * Convert a Villager to one with a Butterfly host
      * @param level The current level
      * @param villager The villager to convert
      */
@@ -131,6 +133,54 @@ public class PeacemakerButterfly extends Monster {
 
                     if (!peacemakerVillager.isSilent()) {
                         level.levelEvent(null, 1026, peacemakerVillager.blockPosition(), 0);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Convert a Wandering Trader to one with a Butterfly host
+     * @param level The current level
+     * @param wanderingTrader The wanderingTrader to convert
+     */
+    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    public static void possess(ServerLevelAccessor level,
+                               WanderingTrader wanderingTrader) {
+
+
+        if (wanderingTrader.level().isClientSide()) {
+            return;
+        }
+        Difficulty difficulty = level.getDifficulty();
+        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+            if (difficulty != Difficulty.HARD && wanderingTrader.getRandom().nextBoolean()) {
+                return;
+            }
+
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
+            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            if (entityType == null) {
+                return;
+            }
+
+            if (ForgeEventFactory.canLivingConvert(wanderingTrader, entityType, (x) -> {
+            })) {
+                PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(entityType, false);
+                if (peacemakerWanderingTrader != null) {
+
+                    peacemakerWanderingTrader.finalizeSpawn(level,
+                            level.getCurrentDifficultyAt(peacemakerWanderingTrader.blockPosition()),
+                            MobSpawnType.CONVERSION,
+                            null,
+                            null);
+
+                    peacemakerWanderingTrader.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+
+                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(wanderingTrader, peacemakerWanderingTrader);
+
+                    if (!peacemakerWanderingTrader.isSilent()) {
+                        level.levelEvent(null, 1026, peacemakerWanderingTrader.blockPosition(), 0);
                     }
                 }
             }
@@ -280,6 +330,11 @@ public class PeacemakerButterfly extends Monster {
     public boolean killedEntity(@NotNull ServerLevel level,
                        @NotNull LivingEntity victim) {
 
+        if (victim instanceof Raider raider) {
+            possess(level, raider);
+            this.remove(RemovalReason.DISCARDED);
+        }
+
         if (victim instanceof Villager villager) {
             possess(level, villager);
             if (!this.isSilent()) {
@@ -289,8 +344,12 @@ public class PeacemakerButterfly extends Monster {
             this.remove(RemovalReason.DISCARDED);
         }
 
-        if (victim instanceof Raider raider) {
-            possess(level, raider);
+        if (victim instanceof WanderingTrader wanderingTrader) {
+            possess(level, wanderingTrader);
+            if (!this.isSilent()) {
+                level.levelEvent(null, 1027, this.blockPosition(), 0);
+            }
+
             this.remove(RemovalReason.DISCARDED);
         }
 
