@@ -117,6 +117,7 @@ public class ClientEventListener {
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerPillager().get(), PillagerRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerVillager().get(), VillagerRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerVindicator().get(), VindicatorRenderer::new);
+        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerWanderingTrader().get(), WanderingTraderRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerWitch().get(), WitchRenderer::new);
 
     }
