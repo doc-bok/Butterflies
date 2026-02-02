@@ -104,9 +104,8 @@ public class MobSpawnEventListener {
 
         Entity entity = event.getEntity();
 
-
         // Needs to be on a server.
-        LevelAccessor levelAccessor = event.getLevel();
+        LevelAccessor levelAccessor = event.getWorld();
         if (levelAccessor instanceof ServerLevelAccessor level) {
 
             // Handle Villagers being infected.

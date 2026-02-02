@@ -169,7 +169,7 @@ public class PeacemakerButterfly extends Monster {
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITIES.getValue(location);
             if (entityType == null) {
                 return;
             }
