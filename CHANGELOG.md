@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.1.3 (2026-02-02)
+- Peacemaker butterflies won't attempt to spawn in already possessed entities.
+- Peacemaker butterflies won't spawn in naturally born baby villagers. 
+
 ### 7.1.2 (2026-02-02)
 - Butterfly nets can only catch butterflies when empty.
 
