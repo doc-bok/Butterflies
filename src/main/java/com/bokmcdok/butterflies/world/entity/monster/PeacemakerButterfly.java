@@ -153,7 +153,7 @@ public class PeacemakerButterfly extends Monster {
                                WanderingTrader wanderingTrader) {
 
 
-        if (wanderingTrader.level().isClientSide()) {
+        if (wanderingTrader.level.isClientSide()) {
             return;
         }
         Difficulty difficulty = level.getDifficulty();

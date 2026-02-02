@@ -9,7 +9,7 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
@@ -46,16 +46,18 @@ public class MobSpawnEventListener {
      * Handle mobs being replaced on spawn.
      * @param event The event context.
      */
-    private void onMobSpawn(LivingSpawnEvent event) {
-        trySpawnButterflyGolem(event);
-        trySpawnPeacemakerButterfly(event);
+    private void onMobSpawn(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && !event.loadedFromDisk()) {
+            trySpawnButterflyGolem(event);
+            trySpawnPeacemakerButterfly(event);
+        }
     }
 
     /**
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    private void trySpawnButterflyGolem(LivingSpawnEvent event) {
+    private void trySpawnButterflyGolem(EntityJoinLevelEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
 
@@ -91,15 +93,10 @@ public class MobSpawnEventListener {
      * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
      * @param event The event context.
      */
-    private void trySpawnPeacemakerButterfly(LivingSpawnEvent event) {
+    private void trySpawnPeacemakerButterfly(EntityJoinLevelEvent event) {
 
         // Peacemaker butterflies can be disabled via a config.
         if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
-            return;
-        }
-
-        // Entities can't be born with butterflies.
-        if (event.getSpawnType() == MobSpawnType.BREEDING) {
             return;
         }
 
