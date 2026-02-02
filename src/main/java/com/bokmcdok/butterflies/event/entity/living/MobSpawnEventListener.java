@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +18,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.raid.Raider;
 
 /**
@@ -26,16 +28,19 @@ public class MobSpawnEventListener {
 
     // The entity type registry.
     private final EntityTypeRegistry entityTypeRegistry;
+    private final TagRegistry tagRegistry;
 
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
     public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry) {
+                                 EntityTypeRegistry entityTypeRegistry,
+                                 TagRegistry tagRegistry) {
         forgeEventBus.register(this);
 
         this.entityTypeRegistry = entityTypeRegistry;
+        this.tagRegistry = tagRegistry;
     }
 
     /**
@@ -88,25 +93,45 @@ public class MobSpawnEventListener {
     private void trySpawnPeacemakerButterfly(FinalizeSpawnEvent event) {
 
         // Peacemaker butterflies can be disabled via a config.
-        if (ButterfliesConfig.Common.enableHostileButterflies.get()) {
-            Entity entity = event.getEntity();
+        if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            return;
+        }
 
-            // Handle Villagers being infected.
-            if (entity instanceof Villager villager) {
-                ServerLevelAccessor level = event.getLevel();
-                if (villager.getRandom().nextInt(1000) < 17) {
-                    PeacemakerButterfly.possess(level, villager);
-                    event.setCanceled(true);
-                }
+        // Entities can't be born with butterflies.
+        if (event.getSpawnType() == MobSpawnType.BREEDING) {
+            return;
+        }
+
+        // Don't infest entities if they are already infested.
+        Entity entity = event.getEntity();
+        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
+            return;
+        }
+
+        // Handle Villagers being infected.
+        if (entity instanceof Villager villager) {
+            ServerLevelAccessor level = event.getLevel();
+            if (villager.getRandom().nextInt(1000) < 17) {
+                PeacemakerButterfly.possess(level, villager);
+                event.setCanceled(true);
             }
+        }
 
-            // Handle raiders being infected.
-            if (entity instanceof Raider raider) {
-                ServerLevelAccessor level = event.getLevel();
-                if (raider.getRandom().nextInt(100) < 5) {
-                    PeacemakerButterfly.possess(level, raider);
-                    event.setCanceled(true);
-                }
+        // Handle Wandering Traders being infected.
+        if (entity instanceof WanderingTrader wanderingTrader) {
+            ServerLevelAccessor level = event.getLevel();
+            if (wanderingTrader.getRandom().nextInt(1000) < 35) {
+                PeacemakerButterfly.possess(level, wanderingTrader);
+                event.setCanceled(true);
+            }
+        }
+
+        // Handle raiders being infected.
+        if (entity instanceof Raider raider) {
+            ServerLevelAccessor level = event.getLevel();
+            if (raider.getRandom().nextInt(100) < 5) {
+                PeacemakerButterfly.possess(level, raider);
+                event.setCanceled(true);
             }
         }
     }

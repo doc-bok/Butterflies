@@ -146,7 +146,10 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     public boolean onLeftClickEntity(@NotNull ItemStack stack,
                                      @NotNull Player player,
                                      @NotNull Entity entity) {
-        if (entity instanceof Butterfly butterfly) {
+
+        // Needs to target a butterfly with an empty net.
+        if (getButterflyEntity(stack) == null &&
+                entity instanceof Butterfly butterfly) {
             DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
 
             if (item != null) {
