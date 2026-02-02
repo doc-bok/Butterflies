@@ -13,6 +13,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -103,33 +104,37 @@ public class MobSpawnEventListener {
 
         Entity entity = event.getEntity();
 
-        // Don't do this if the entity is already a Peacemaker entity.
-        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
-            return;
-        }
 
-        // Handle Villagers being infected.
-        if (entity instanceof Villager villager) {
-            if (villager.getRandom().nextInt(1000) < 17) {
-                LevelAccessor levelAccessor = event.getWorld();
-                if (levelAccessor instanceof ServerLevelAccessor level) {
+        // Needs to be on a server.
+        LevelAccessor levelAccessor = event.getLevel();
+        if (levelAccessor instanceof ServerLevelAccessor level) {
+
+            // Handle Villagers being infected.
+            if (entity instanceof Villager villager) {
+                if (villager.getRandom().nextInt(1000) < 17) {
                     PeacemakerButterfly.possess(level, villager);
                     event.setCanceled(true);
                 }
             }
-        }
 
-        // Handle raiders being infected.
-        if (entity instanceof Raider raider) {
-            if (raider.getRandom().nextInt(100) < 5) {
-                LevelAccessor levelAccessor = event.getWorld();
-                if (levelAccessor instanceof ServerLevelAccessor level) {
+            // Handle Wandering Traders being infected.
+            if (entity instanceof WanderingTrader wanderingTrader) {
+                if (wanderingTrader.getRandom().nextInt(1000) < 35) {
+                    PeacemakerButterfly.possess(level, wanderingTrader);
+                    event.setCanceled(true);
+                }
+            }
+
+            // Handle raiders being infected.
+            if (entity instanceof Raider raider) {
+                if (raider.getRandom().nextInt(100) < 5) {
                     PeacemakerButterfly.possess(level, raider);
                     event.setCanceled(true);
                 }
             }
         }
     }
+
 
     /**
      * If a villager, illager, or witch is killed by a peacemaker butterfly
