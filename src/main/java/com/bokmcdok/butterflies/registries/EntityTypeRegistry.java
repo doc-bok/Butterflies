@@ -7,6 +7,7 @@ import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -53,6 +54,7 @@ public class EntityTypeRegistry {
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> peacemakerPillager;
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> peacemakerVillager;
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> peacemakerVindicator;
+    private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> peacemakerWanderingTrader;
     private DeferredHolder<EntityType<?>, EntityType<? extends Mob>> peacemakerWitch;
 
     /**
@@ -109,6 +111,7 @@ public class EntityTypeRegistry {
         peacemakerPillager = registerPeacemakerPillager();
         peacemakerVillager = registerPeacemakerVillager();
         peacemakerVindicator = registerPeacemakerVindicator();
+        peacemakerWanderingTrader = registerPeacemakerWanderingTrader();
         peacemakerWitch = registerPeacemakerWitch();
     }
 
@@ -170,6 +173,10 @@ public class EntityTypeRegistry {
         return peacemakerWitch;
     }
 
+    public DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> getPeacemakerWanderingTrader() {
+        return peacemakerWanderingTrader;
+    }
+
     // Entity factory methods
     private Butterfly createButterfly(EntityType<? extends Butterfly> entityType, Level level) {
         return new Butterfly(blockRegistry, entityType, level);
@@ -217,6 +224,12 @@ public class EntityTypeRegistry {
             EntityType<? extends PeacemakerVindicator> entityType,
             Level level) {
         return new PeacemakerVindicator(this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerWanderingTrader createPeacemakerWanderingTrader(
+            EntityType<? extends PeacemakerWanderingTrader> entityType,
+            Level level) {
+        return new PeacemakerWanderingTrader(entityType, level);
     }
 
     private PeacemakerWitch createPeacemakerWitch(
@@ -385,5 +398,14 @@ public class EntityTypeRegistry {
                         .sized(0.6F, 1.95F)
                         .clientTrackingRange(8)
                         .build(resourceKey));
+    }
+
+    private DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> registerPeacemakerWanderingTrader() {
+        String registryId = "peacemaker_wandering_trader";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerWanderingTrader, MobCategory.MISC)
+                        .sized(0.6f, 1.95f)
+                        .clientTrackingRange(10)
+                        .build(registryId));
     }
 }

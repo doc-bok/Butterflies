@@ -14,6 +14,7 @@ import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -125,6 +126,7 @@ public class ClientEventListener {
         event.registerEntityRenderer((EntityType<PeacemakerPillager>)entityTypeRegistry.getPeacemakerPillager().get(), PillagerRenderer::new);
         event.registerEntityRenderer((EntityType<PeacemakerVillager>)entityTypeRegistry.getPeacemakerVillager().get(), VillagerRenderer::new);
         event.registerEntityRenderer((EntityType<PeacemakerVindicator>)entityTypeRegistry.getPeacemakerVindicator().get(), VindicatorRenderer::new);
+        event.registerEntityRenderer((EntityType<PeacemakerWanderingTrader>)entityTypeRegistry.getPeacemakerWanderingTrader().get(), WanderingTraderRenderer::new);
         event.registerEntityRenderer((EntityType<PeacemakerWitch>)entityTypeRegistry.getPeacemakerWitch().get(), WitchRenderer::new);
 
     }

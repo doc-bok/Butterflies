@@ -89,6 +89,7 @@ public class ItemRegistry {
     private DeferredHolder<Item, Item> peacemakerPillagerSpawnEgg;
     private DeferredHolder<Item, Item> peacemakerVillagerSpawnEgg;
     private DeferredHolder<Item, Item> peacemakerVindicatorSpawnEgg;
+    private DeferredHolder<Item, Item> peacemakerWanderingTraderSpawnEgg;
     private DeferredHolder<Item, Item> peacemakerWitchSpawnEgg;
 
     /**
@@ -211,6 +212,7 @@ public class ItemRegistry {
         this.peacemakerPillagerSpawnEgg = registerSpawnEgg("spawn_egg_peacemaker_pillager", entityTypeRegistry.getPeacemakerPillager());
         this.peacemakerVillagerSpawnEgg = registerSpawnEgg("spawn_egg_peacemaker_villager", entityTypeRegistry.getPeacemakerVillager());
         this.peacemakerVindicatorSpawnEgg = registerSpawnEgg("spawn_egg_peacemaker_vindicator", entityTypeRegistry.getPeacemakerVindicator());
+        this.peacemakerWanderingTraderSpawnEgg = registerSpawnEgg("spawn_egg_peacemaker_wandering_trader", entityTypeRegistry.getPeacemakerWanderingTrader());
         this.peacemakerWitchSpawnEgg = registerSpawnEgg("spawn_egg_peacemaker_witch", entityTypeRegistry.getPeacemakerWitch());
     }
     
@@ -360,6 +362,10 @@ public class ItemRegistry {
 
     public DeferredHolder<Item, Item> getPeacemakerVindicatorSpawnEgg() {
         return peacemakerVindicatorSpawnEgg;
+    }
+
+    public DeferredHolder<Item, Item> getPeacemakerWanderingTraderSpawnEgg() {
+        return peacemakerWanderingTraderSpawnEgg;
     }
 
     public DeferredHolder<Item, Item> getPeacemakerWitchSpawnEgg() {
