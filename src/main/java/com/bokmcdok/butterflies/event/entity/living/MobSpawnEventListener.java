@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
@@ -12,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,18 +25,21 @@ public class MobSpawnEventListener {
 
     // The entity type registry.
     private final EntityTypeRegistry entityTypeRegistry;
+    private final TagRegistry tagRegistry;
 
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
     public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry) {
+                                 EntityTypeRegistry entityTypeRegistry,
+                                 TagRegistry tagRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);
 
         this.entityTypeRegistry = entityTypeRegistry;
+        this.tagRegistry = tagRegistry;
     }
 
     /**
@@ -89,28 +94,46 @@ public class MobSpawnEventListener {
     private void trySpawnPeacemakerButterfly(LivingSpawnEvent event) {
 
         // Peacemaker butterflies can be disabled via a config.
-        if (ButterfliesConfig.Common.enableHostileButterflies.get()) {
-            Entity entity = event.getEntity();
+        if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            return;
+        }
+
+        // Entities can't be born with butterflies.
+        if (event.getSpawnType() == MobSpawnType.BREEDING) {
+            return;
+        }
+
+        // Don't infest entities if they are already infested.
+        Entity entity = event.getEntity();
+        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
+            return;
+        }
+
+        // Needs to be on a server.
+        LevelAccessor levelAccessor = event.getLevel();
+        if (levelAccessor instanceof ServerLevelAccessor level) {
 
             // Handle Villagers being infected.
             if (entity instanceof Villager villager) {
-                LevelAccessor levelAccessor = event.getLevel();
-                if (levelAccessor instanceof ServerLevelAccessor level) {
-                    if (villager.getRandom().nextInt(1000) < 17) {
-                        PeacemakerButterfly.possess(level, villager);
-                        event.setCanceled(true);
-                    }
+                if (villager.getRandom().nextInt(1000) < 17) {
+                    PeacemakerButterfly.possess(level, villager);
+                    event.setCanceled(true);
+                }
+            }
+
+            // Handle Wandering Traders being infected.
+            if (entity instanceof WanderingTrader wanderingTrader) {
+                if (wanderingTrader.getRandom().nextInt(1000) < 35) {
+                    PeacemakerButterfly.possess(level, wanderingTrader);
+                    event.setCanceled(true);
                 }
             }
 
             // Handle raiders being infected.
             if (entity instanceof Raider raider) {
-                LevelAccessor levelAccessor = event.getLevel();
-                if (levelAccessor instanceof ServerLevelAccessor level) {
-                    if (raider.getRandom().nextInt(100) < 5) {
-                        PeacemakerButterfly.possess(level, raider);
-                        event.setCanceled(true);
-                    }
+                if (raider.getRandom().nextInt(100) < 5) {
+                    PeacemakerButterfly.possess(level, raider);
+                    event.setCanceled(true);
                 }
             }
         }

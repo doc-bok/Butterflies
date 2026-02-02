@@ -7,13 +7,13 @@ import com.mojang.serialization.Dynamic;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.VillagerGoalPackages;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.schedule.Activity;
@@ -33,13 +33,13 @@ public class PeacemakerVillager extends Villager {
      */
     @NotNull
     public static AttributeSupplier.Builder createAttributes() {
-        return Monster.createMonsterAttributes()
+        return Mob.createMobAttributes()
                 .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_VILLAGER_SPEED)
                 .add(Attributes.FOLLOW_RANGE, PEACEMAKER_VILLAGER_FOLLOW_RANGE);
     }
 
     /**
-     * Create a peacemaker vindicator.
+     * Create a peacemaker villager.
      * @param type The entity type
      * @param level The current level
      */
