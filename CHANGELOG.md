@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.0.1 (2026-02-02)
+- Fixed Peacemaker Butterflies constantly spawning in villagers.
+
 ### 7.0.0 (2026-01-03)
 - Added Peacemaker Butterflies.
 

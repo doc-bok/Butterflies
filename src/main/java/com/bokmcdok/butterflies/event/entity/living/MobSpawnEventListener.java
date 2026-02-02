@@ -2,13 +2,14 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.entity.npc.Villager;
@@ -23,34 +24,39 @@ public class MobSpawnEventListener {
 
     // The entity type registry.
     private final EntityTypeRegistry entityTypeRegistry;
+    private final TagRegistry tagRegistry;
 
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
     public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry) {
+                                 EntityTypeRegistry entityTypeRegistry,
+                                 TagRegistry tagRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);
 
         this.entityTypeRegistry = entityTypeRegistry;
+        this.tagRegistry = tagRegistry;
     }
 
     /**
      * Handle mobs being replaced on spawn.
      * @param event The event context.
      */
-    private void onMobSpawn(LivingSpawnEvent event) {
-        trySpawnButterflyGolem(event);
-        trySpawnPeacemakerButterfly(event);
+    private void onMobSpawn(EntityJoinWorldEvent event) {
+        if (!event.getWorld().isClientSide() && !event.loadedFromDisk()) {
+            trySpawnButterflyGolem(event);
+            trySpawnPeacemakerButterfly(event);
+        }
     }
 
     /**
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    private void trySpawnButterflyGolem(LivingSpawnEvent event) {
+    private void trySpawnButterflyGolem(EntityJoinWorldEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
 
@@ -75,6 +81,8 @@ public class MobSpawnEventListener {
                             if (!newMob.isSilent()) {
                                 level.levelEvent(null, 1026, newMob.blockPosition(), 0);
                             }
+
+                            event.setCanceled(true);
                         }
                     }
                 }
@@ -86,31 +94,38 @@ public class MobSpawnEventListener {
      * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
      * @param event The event context.
      */
-    private void trySpawnPeacemakerButterfly(LivingSpawnEvent event) {
+    private void trySpawnPeacemakerButterfly(EntityJoinWorldEvent event) {
 
         // Peacemaker butterflies can be disabled via a config.
-        if (ButterfliesConfig.Common.enableHostileButterflies.get()) {
-            Entity entity = event.getEntity();
+        if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            return;
+        }
 
-            // Handle Villagers being infected.
-            if (entity instanceof Villager villager) {
+        Entity entity = event.getEntity();
+
+        // Don't do this if the entity is already a Peacemaker entity.
+        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
+            return;
+        }
+
+        // Handle Villagers being infected.
+        if (entity instanceof Villager villager) {
+            if (villager.getRandom().nextInt(1000) < 17) {
                 LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
-                    if (villager.getRandom().nextInt(1000) < 17) {
-                        PeacemakerButterfly.possess(level, villager);
-                        //event.setCanceled(true);
-                    }
+                    PeacemakerButterfly.possess(level, villager);
+                    event.setCanceled(true);
                 }
             }
+        }
 
-            // Handle raiders being infected.
-            if (entity instanceof Raider raider) {
+        // Handle raiders being infected.
+        if (entity instanceof Raider raider) {
+            if (raider.getRandom().nextInt(100) < 5) {
                 LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
-                    if (raider.getRandom().nextInt(100) < 5) {
-                        PeacemakerButterfly.possess(level, raider);
-                        //event.setCanceled(true);
-                    }
+                    PeacemakerButterfly.possess(level, raider);
+                    event.setCanceled(true);
                 }
             }
         }

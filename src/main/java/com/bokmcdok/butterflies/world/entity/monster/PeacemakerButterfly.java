@@ -99,10 +99,16 @@ public class PeacemakerButterfly extends Monster {
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
-
+        // Only need to do this on a server.
         if (villager.level.isClientSide()) {
             return;
         }
+
+        // Don't do this if the villager is already possessed.
+        if (villager instanceof  PeacemakerVillager) {
+            return;
+        }
+
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
             if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
@@ -191,7 +197,6 @@ public class PeacemakerButterfly extends Monster {
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
-
         if (!raider.level.isClientSide()) {
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
             EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITIES.getValue(location);
