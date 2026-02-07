@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.0 (2026-02-07)
+- Peacemaker butterflies can now be caught and released like normal butterflies.
+
 ### 7.0.0 (2026-01-03)
 - Added Peacemaker Butterflies.
 
