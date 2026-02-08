@@ -307,7 +307,7 @@ public class ItemRegistry {
         }
     }
 
-    public RegistryObject<Item> getPeacemakerButterflyNet() {
+    public DeferredHolder<Item, Item> getPeacemakerButterflyNet() {
         return peacemakerButterflyNet;
     }
 

@@ -159,7 +159,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             }
         } else if (entity instanceof PeacemakerButterfly) {
 
-            RegistryObject<Item> item = itemRegistry.getPeacemakerButterflyNet();
+            DeferredHolder<Item, Item>  item = itemRegistry.getPeacemakerButterflyNet();
             if (item != null) {
 
                 ItemStack newStack = new ItemStack(item.get(), 1);
