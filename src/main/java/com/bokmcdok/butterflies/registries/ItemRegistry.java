@@ -446,7 +446,6 @@ public class ItemRegistry {
                                                             String registryId) {
         ResourceKey<Item> key = createResourceKey(registryId);
 
-        String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
         DeferredHolder<Item, Item> result = deferredRegister.register(registryId,
                 () -> new ButterflyNetItem(
                         new Item.Properties().stacksTo(1).setId(key),
