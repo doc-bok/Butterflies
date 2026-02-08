@@ -8,6 +8,7 @@ import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
+import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Direction;
@@ -154,6 +155,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                     SoundEvents.PLAYER_ATTACK_WEAK,
                     SoundSource.NEUTRAL, 1.0f, 1.0f);
 
+            return;
+        }
+
+        // Peacemaker butterflies spawn the hostile version instead.
+        if (location.getPath().contains("peacemaker")) {
+            PeacemakerButterfly.spawn((ServerLevel) level, position);
             return;
         }
 

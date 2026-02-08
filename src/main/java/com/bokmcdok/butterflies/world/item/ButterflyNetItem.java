@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
+import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -152,6 +153,20 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                 if (item != itemRegistry.getBurntButterflyNet()) {
                     entity.discard();
                 }
+
+                player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
+                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+
+                return true;
+            }
+        } else if (entity instanceof PeacemakerButterfly) {
+
+            DeferredHolder<Item, Item>  item = itemRegistry.getPeacemakerButterflyNet();
+            if (item != null) {
+
+                ItemStack newStack = new ItemStack(item.get(), 1);
+
+                entity.discard();
 
                 player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
