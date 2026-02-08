@@ -34,6 +34,7 @@ public class ItemRegistry {
     private RegistryObject<Item> emptyButterflyNet;
     private List<RegistryObject<Item>> butterflyNets;
     private RegistryObject<Item> burntButterflyNet;
+    private RegistryObject<Item> peacemakerButterflyNet;
 
     // Eggs
     private List<RegistryObject<Item>> butterflyEggs;
@@ -263,6 +264,10 @@ public class ItemRegistry {
         }
     }
 
+    public RegistryObject<Item> getPeacemakerButterflyNet() {
+        return peacemakerButterflyNet;
+    }
+
     // Accessor Methods
 
     public List<RegistryObject<Item>> getBottledButterflies() {
@@ -386,14 +391,21 @@ public class ItemRegistry {
     }
 
     // Register Methods
-
     private RegistryObject<Item> registerButterflyNet(Item.Properties properties,
                                                       int butterflyIndex) {
-        return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
+        String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
+        RegistryObject<Item> result = deferredRegister.register(registryId,
                 () -> new ButterflyNetItem(
                         properties,
                         this,
                         butterflyIndex));
+
+        // Support Peacemaker Butterfly
+        if (registryId.contains("peacemaker")) {
+            peacemakerButterflyNet = result;
+        }
+
+        return result;
     }
 
     private RegistryObject<Item> registerBottledButterfly(Item.Properties properties,
