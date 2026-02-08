@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.0 (2026-02-07)
+- Peacemaker butterflies can now be caught and released like normal butterflies.
+
 ### 7.1.3 (2026-02-02)
 - Peacemaker butterflies won't attempt to spawn in already possessed entities.
 - Peacemaker butterflies won't spawn in naturally born baby villagers. 

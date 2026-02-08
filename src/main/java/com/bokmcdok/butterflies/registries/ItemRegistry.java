@@ -35,6 +35,7 @@ public class ItemRegistry {
     private DeferredHolder<Item, Item> emptyButterflyNet;
     private List<DeferredHolder<Item, Item>> butterflyNets;
     private DeferredHolder<Item, Item> burntButterflyNet;
+    private DeferredHolder<Item, Item> peacemakerButterflyNet;
 
     // Eggs
     private List<DeferredHolder<Item, Item>> butterflyEggs;
@@ -314,6 +315,10 @@ public class ItemRegistry {
         }
     }
 
+    public DeferredHolder<Item, Item> getPeacemakerButterflyNet() {
+        return peacemakerButterflyNet;
+    }
+
     // Accessor Methods
     public DeferredHolder<Item, Item> getButterflyFeeder() {
         return butterflyFeeder;
@@ -410,8 +415,17 @@ public class ItemRegistry {
     // Register Methods
 
     private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex) {
-        return deferredRegister.register(ButterflyNetItem.getRegistryId(butterflyIndex),
+        String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
+        DeferredHolder<Item, Item> result = deferredRegister.register(
+                registryId,
                 () -> new ButterflyNetItem(this.dataComponentRegistry, this, butterflyIndex));
+
+        // Support Peacemaker Butterfly
+        if (registryId.contains("peacemaker")) {
+            peacemakerButterflyNet = result;
+        }
+
+        return result;
     }
 
     private DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {

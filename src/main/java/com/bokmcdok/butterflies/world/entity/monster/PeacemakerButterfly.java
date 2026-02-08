@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
+import net.minecraft.core.BlockPos;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import com.mojang.logging.LogUtils;
@@ -199,23 +200,37 @@ public class PeacemakerButterfly extends Monster {
      * @param entity The host entity
      */
     public static void spawn(LivingEntity entity) {
+        if (!entity.level().isClientSide()) {
+            spawn((ServerLevel) entity.level(), entity.blockPosition());
+        }
+    }
+
+    /**
+     * Spawns a peacemaker butterfly at the specified position.
+     * @param level The current level.
+     * @param position The position to spawn the butterfly.
+     */
+    public static void spawn(ServerLevel level,
+                             BlockPos position) {
+
         final ResourceLocation PEACEMAKER_BUTTERFLY =
                 ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_butterfly");
 
-        if (!entity.level().isClientSide()) {
-            EntityType<?> entityType =
-                    BuiltInRegistries.ENTITY_TYPE.get(PEACEMAKER_BUTTERFLY);
-            if (entityType != null) {
+        EntityType<?> entityType =
+                BuiltInRegistries.ENTITY_TYPE.get(PEACEMAKER_BUTTERFLY);
 
-                Entity newEntity = entityType.create(entity.level());
-                if (newEntity instanceof PeacemakerButterfly butterfly) {
-                    butterfly.copyPosition(entity);
-                    butterfly.finalizeSpawn((ServerLevel) entity.level(),
-                            butterfly.level().getCurrentDifficultyAt(butterfly.getOnPos()),
-                            MobSpawnType.CONVERSION,
-                            null);
-                    entity.level().addFreshEntity(butterfly);
-                }
+        if (entityType != null) {
+            Entity newEntity = entityType.create(level);
+
+            if (newEntity instanceof PeacemakerButterfly butterfly) {
+                butterfly.setPos(position.getCenter());
+
+                butterfly.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(butterfly.getOnPos()),
+                        MobSpawnType.CONVERSION,
+                        null);
+
+                level.addFreshEntity(butterfly);
             }
         }
     }
