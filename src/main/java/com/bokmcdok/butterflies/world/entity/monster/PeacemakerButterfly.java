@@ -209,8 +209,8 @@ public class PeacemakerButterfly extends Monster {
      * @param entity The host entity
      */
     public static void spawn(LivingEntity entity) {
-        if (!entity.level().isClientSide()) {
-            spawn((ServerLevel) entity.level(), entity.blockPosition());
+        if (!entity.level.isClientSide()) {
+            spawn((ServerLevel) entity.level, entity.blockPosition());
         }
     }
 
@@ -231,7 +231,7 @@ public class PeacemakerButterfly extends Monster {
 
             Entity newEntity = entityType.create(level);
             if (newEntity instanceof PeacemakerButterfly butterfly) {
-                butterfly.setPos(position.getCenter());
+                butterfly.setPos(position.getX(), position.getY(), position.getZ());
                 butterfly.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(butterfly.getOnPos()),
                         MobSpawnType.CONVERSION,
