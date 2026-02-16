@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -46,6 +48,9 @@ public class PeacemakerButterfly extends Monster {
     private static final double PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE = 3.0d;
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
+
+    // The item registry
+    private final ItemRegistry itemRegistry;
 
     // The goals for shared code.
     private PeacemakerGoals peacemakerGoals;
@@ -288,13 +293,18 @@ public class PeacemakerButterfly extends Monster {
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(TagRegistry tagRegistry,
+    public PeacemakerButterfly(ItemRegistry itemRegistry,
+                               TagRegistry tagRegistry,
                                EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
 
+        this.itemRegistry = itemRegistry;
+
+        this.registerGoalsPost();
+
         if (!this.level().isClientSide()) {
-            this.peacemakerGoals.setTagRegistry(tagRegistry);
+            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
         }
 
         // Setup for a flying mob.
@@ -422,9 +432,6 @@ public class PeacemakerButterfly extends Monster {
         //  Attack goals
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
 
-        //  Tempt goals
-        //this.goalSelector.addGoal(1, new TemptGoal(this, 1.25D, Ingredient.of(ItemList.PEACEMAKER_HONEY_BOTTLE.get()), false));
-
         //  Targets
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this))
                 .setAlertOthers()
@@ -441,5 +448,19 @@ public class PeacemakerButterfly extends Monster {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
                 peacemakerGoals::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+    }
+
+    /**
+     * Used to register goals after registry references have been set.
+     */
+    private void registerGoalsPost() {
+
+        //  Tempt goals
+        this.goalSelector.addGoal(1,
+                new TemptGoal(
+                        this,
+                        1.25D,
+                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        false));
     }
 }

@@ -79,6 +79,9 @@ public class ItemRegistry {
     // Banner Pattern
     private RegistryObject<Item> butterflyBannerPattern;
 
+    // Peacemaker Honey
+    private RegistryObject<Item> peacemakerHoneyBottle;
+
     // Spawn Eggs
     private List<RegistryObject<Item>> eggSpawnEggs;
     private List<RegistryObject<Item>> chrysalisSpawnEggs;
@@ -109,9 +112,9 @@ public class ItemRegistry {
      * registry initialisation.
      * @param blockRegistry The block registry.
      * @param entityTypeRegistry The entity type registry.
+     * @param tagRegistry The tag registry.
      */
-    public void initialise(@NotNull BannerPatternRegistry bannerPatternRegistry,
-                           @NotNull BlockRegistry blockRegistry,
+    public void initialise(@NotNull BlockRegistry blockRegistry,
                            @NotNull EntityTypeRegistry entityTypeRegistry,
                            @NotNull TagRegistry tagRegistry) {
 
@@ -187,6 +190,10 @@ public class ItemRegistry {
         this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
                 tagRegistry.getButterflyBannerPattern(),
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+        // Peacemaker Honey
+        this.peacemakerHoneyBottle = deferredRegister.register("peacemaker_honey_bottle",
+                () -> new Item(new Item.Properties()));
 
         // Spawn Eggs
         this.eggSpawnEggs = new ArrayList<>();
@@ -276,6 +283,10 @@ public class ItemRegistry {
 
     public RegistryObject<Item> getButterflyBannerPattern() {
         return butterflyBannerPattern;
+    }
+
+    public RegistryObject<Item> getPeacemakerHoneyBottle() {
+        return peacemakerHoneyBottle;
     }
 
     public RegistryObject<Item> getButterflyBook() {

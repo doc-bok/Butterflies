@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import net.minecraft.world.damagesource.DamageSource;
@@ -38,13 +39,14 @@ public class PeacemakerEvoker extends Evoker {
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerEvoker(TagRegistry tagRegistry,
+    public PeacemakerEvoker(ItemRegistry itemRegistry,
+                            TagRegistry tagRegistry,
                             EntityType<? extends PeacemakerEvoker> type,
                             Level level) {
         super(type, level);
 
         if (!this.level().isClientSide()) {
-            this.peacemakerGoals.setTagRegistry(tagRegistry);
+            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
         }
     }
 
