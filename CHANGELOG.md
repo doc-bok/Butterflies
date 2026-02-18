@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.1 (2026-02-18)
+ - Butterflies, Moths, and Peacemaker Butterflies now move smoothly.
+
 ### 7.2.0 (2026-02-07)
 - Peacemaker butterflies can now be caught and released like normal butterflies.
 
