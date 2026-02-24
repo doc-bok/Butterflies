@@ -1,7 +1,10 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
@@ -9,6 +12,9 @@ import net.minecraft.core.BlockPos;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
@@ -33,6 +39,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -40,7 +47,13 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public class PeacemakerButterfly extends Monster {
+public class PeacemakerButterfly
+        extends Monster
+        implements DebugInfoSupplier {
+
+    // Data accessor for debug info
+    protected static final EntityDataAccessor<String> DATA_DEBUG_INFO =
+            SynchedEntityData.defineId(PeacemakerButterfly.class, EntityDataSerializers.STRING);
 
     // Constants for Peacemaker Butterfly attributes.
     private static final double PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE = 3.0d;
@@ -341,6 +354,15 @@ public class PeacemakerButterfly extends Monster {
     }
 
     /**
+     * Get debug info for the Peacemaker Butterfly.
+     * @return Any info that needs rendering.
+     */
+    @Override
+    public String getDebugInfo() {
+        return entityData.get(DATA_DEBUG_INFO);
+    }
+
+    /**
      * Convert villagers and pillagers to Peacemaker mobs
      * @param level The current level
      * @param victim The entity just "killed"
@@ -376,18 +398,35 @@ public class PeacemakerButterfly extends Monster {
     }
 
     /**
-     * Hacky fix to stop butterflies teleporting.
-     * TODO: We need a better fix than this.
-     * @param x The x-position.
-     * @param y The y-position.
-     * @param z The z-position.
+     * Peacemaker Butterflies are never on a climbable block.
+     * @return Always false.
+     */
+    public boolean onClimbable() {
+        return false;
+    }
+
+    /**
+     * Use custom travel code for flying creatures.
+     * @param velocity The current velocity.
      */
     @Override
-    public void setPos(double x, double y, double z) {
-        Vec3 delta = new Vec3(x, y, z).subtract(this.position());
-        if (delta.lengthSqr() <= 5 || this.position().lengthSqr() == 0) {
-            super.setPos(x, y, z);
-        }
+    public void travel(@NotNull Vec3 velocity) {
+        EntityBehaviours.travel(this, velocity, this.getBlockPosBelowThatAffectsMyMovement());
+    }
+
+    /**
+     * Peacemaker Butterflies don't take fall damage.
+     * @param fallDistance The distance the entity has fallen.
+     * @param onGround Whether the entity is on the ground.
+     * @param blockState The current block state.
+     * @param blockPos The current position.
+     */
+    @Override
+    protected void checkFallDamage(double fallDistance,
+                                   boolean onGround,
+                                   @NotNull BlockState blockState,
+                                   @NotNull BlockPos blockPos) {
+        // No-op
     }
 
     /**
@@ -400,6 +439,36 @@ public class PeacemakerButterfly extends Monster {
     @NotNull
     protected PathNavigation createNavigation(@NotNull Level level) {
         return new ButterflyFlyingPathNavigation(this, level);
+    }
+
+    /**
+     * A custom step for the AI update loop.
+     */
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+
+        //  Don't do this unless the debug information flag is set.
+        if (ButterfliesConfig.Server.debugInformation.get()) {
+            StringBuilder debugOutput = new StringBuilder();
+            WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
+
+            for (WrappedGoal goal : runningGoals) {
+                debugOutput.append(goal.getGoal());
+                debugOutput.append(" / ");
+            }
+
+            setDebugInfo(debugOutput.toString());
+        }
+    }
+
+    /**
+     * Override to define extra data to be synced between server and client.
+     */
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(DATA_DEBUG_INFO, "");
     }
 
     /**
@@ -441,5 +510,13 @@ public class PeacemakerButterfly extends Monster {
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
                 peacemakerGoals::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
+    }
+
+    /**
+     * Set the debug info so it can be synchronised with the client for display.
+     * @param debugInfo The debug info to set.
+     */
+    private void setDebugInfo(String debugInfo) {
+        entityData.set(DATA_DEBUG_INFO, debugInfo);
     }
 }
