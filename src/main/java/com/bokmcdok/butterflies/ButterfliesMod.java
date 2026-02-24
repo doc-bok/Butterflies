@@ -22,6 +22,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Main mod class for Butterflies.
@@ -30,6 +32,8 @@ import net.neoforged.neoforge.common.NeoForge;
 @Mod(ButterfliesMod.MOD_ID)
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
+
+    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public ButterfliesMod() {
 
