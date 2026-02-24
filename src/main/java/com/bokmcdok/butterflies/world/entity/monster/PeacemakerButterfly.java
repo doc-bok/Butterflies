@@ -438,7 +438,7 @@ public class PeacemakerButterfly
         //  Don't do this unless the debug information flag is set.
         if (ButterfliesConfig.Server.debugInformation.get()) {
             StringBuilder debugOutput = new StringBuilder();
-            WrappedGoal[] runningGoals = goalSelector.getRunningGoals().toArray(WrappedGoal[]::new);
+            WrappedGoal[] runningGoals = goalSelector.getAvailableGoals().toArray(WrappedGoal[]::new);
 
             for (WrappedGoal goal : runningGoals) {
                 debugOutput.append(goal.getGoal());
@@ -453,9 +453,9 @@ public class PeacemakerButterfly
      * Override to define extra data to be synced between server and client.
      */
     @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(DATA_DEBUG_INFO, "");
+    protected void defineSynchedData(@NotNull SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_DEBUG_INFO, "");
     }
 
     /**
