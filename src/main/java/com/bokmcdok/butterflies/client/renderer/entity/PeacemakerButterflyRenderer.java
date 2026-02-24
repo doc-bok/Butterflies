@@ -1,13 +1,14 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.PeacemakerButterflyModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.PeacemakerButterflyRenderState;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * Renders the Peacemaker Butterfly model.
  */
 @OnlyIn(Dist.CLIENT)
-public class PeacemakerButterflyRenderer extends MobRenderer<PeacemakerButterfly, LivingEntityRenderState, PeacemakerButterflyModel> {
+public class PeacemakerButterflyRenderer extends MobRenderer<PeacemakerButterfly, PeacemakerButterflyRenderState, PeacemakerButterflyModel> {
 
     /**
      * Create a new renderer for the Peacemaker Butterfly.
@@ -33,8 +34,8 @@ public class PeacemakerButterflyRenderer extends MobRenderer<PeacemakerButterfly
      */
     @NotNull
     @Override
-    public LivingEntityRenderState createRenderState() {
-        return new LivingEntityRenderState();
+    public PeacemakerButterflyRenderState createRenderState() {
+        return new PeacemakerButterflyRenderState();
     }
 
     /**
@@ -44,31 +45,45 @@ public class PeacemakerButterflyRenderer extends MobRenderer<PeacemakerButterfly
      */
     @NotNull
     @Override
-    public ResourceLocation getTextureLocation(@NotNull LivingEntityRenderState renderState) {
+    public ResourceLocation getTextureLocation(@NotNull PeacemakerButterflyRenderState renderState) {
         return ButterflyTextures.PEACEMAKER_BUTTERFLY;
     }
 
     /**
-     * Override to fix a bug with the model's orientation.
-     * @param entity            The entity.
-     * @param p_115456_         Unknown.
-     * @param p_115457_         Unknown.
+     * Extracts the render state for use in rendering.
+     * @param entity The butterfly entity.
+     * @param renderState The current render state.
+     * @param partialTick The number of partial ticks.
+     */
+    @Override
+    public void extractRenderState(@NotNull PeacemakerButterfly entity,
+                                   @NotNull PeacemakerButterflyRenderState renderState,
+                                   float partialTick) {
+        super.extractRenderState(entity, renderState, partialTick);
+
+        // Only extract debug info if we need it.
+        if (ButterfliesConfig.Server.debugInformation.get()) {
+            renderState.debugInfo = entity.getDebugInfo();
+        }
+    }
+
+    /**
+     * Render debug information if its enabled.
+     * @param renderState The current render state.
      * @param poseStack         The pose stack.
      * @param multiBufferSource The render buffer (I think...)
      * @param packedLightCoordinates The light coordinates.
      */
     @Override
-    public void render(@NotNull PeacemakerButterfly entity,
-                       float p_115456_,
-                       float p_115457_,
+    public void render(@NotNull PeacemakerButterflyRenderState renderState,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource multiBufferSource,
                        int packedLightCoordinates) {
 
-        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
+        super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
 
         EntityDebugInfoRenderer.renderDebugInfo(
-                entity,
+                renderState.debugInfo,
                 poseStack,
                 multiBufferSource,
                 this.entityRenderDispatcher.cameraOrientation(),

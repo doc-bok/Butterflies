@@ -452,8 +452,8 @@ public class PeacemakerButterfly
      * A custom step for the AI update loop.
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         //  Don't do this unless the debug information flag is set.
         if (ButterfliesConfig.Server.debugInformation.get()) {
