@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.ai.*;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
@@ -285,6 +286,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
+    @NotNull
     @Override
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
                                         @NotNull DifficultyInstance difficulty,
@@ -551,6 +553,14 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Butterflies are never on a climbable block.
+     * @return Always false.
+     */
+    public boolean onClimbable() {
+        return false;
+    }
+
+    /**
      * Override to read any additional save data.
      * @param tag The tag containing the entity's save data.
      */
@@ -725,21 +735,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Hacky fix to stop butterflies teleporting.
-     * TODO: We need a better fix than this.
-     * @param x The x-position.
-     * @param y The y-position.
-     * @param z The z-position.
-     */
-    @Override
-    public void setPos(double x, double y, double z) {
-        Vec3 delta = new Vec3(x, y, z).subtract(this.position());
-        if (delta.lengthSqr() <= 1 || this.position().lengthSqr() == 0) {
-            super.setPos(x, y, z);
-        }
-    }
-
-    /**
      * Overridden so that butterfly entities will render at a decent distance.
      * @param distance The distance to check.
      * @return TRUE if we should render the entity.
@@ -756,6 +751,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Use custom travel code for flying creatures.
+     * @param velocity The current velocity.
+     */
+    @Override
+    public void travel(@NotNull Vec3 velocity) {
+        EntityBehaviours.travel(this, velocity, this.getBlockPosBelowThatAffectsMyMovement());
+    }
+
+    /**
      * Reduce the number of eggs the butterfly can lay by 1.
      */
     public void useEgg() {
@@ -763,19 +767,18 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Override to control how an entity checks for fall damage. In this case
-     * butterflies just ignore the check.
-     * @param yPos The current height of the entity.
-     * @param onGround TRUE if the entity is on the ground.
-     * @param blockState The state of the block just below the entity.
-     * @param position The entity's current position.
+     * Butterflies don't take fall damage.
+     * @param fallDistance The distance the entity has fallen.
+     * @param onGround Whether the entity is on the ground.
+     * @param blockState The current block state.
+     * @param blockPos The current position.
      */
     @Override
-    protected void checkFallDamage(double yPos,
+    protected void checkFallDamage(double fallDistance,
                                    boolean onGround,
                                    @NotNull BlockState blockState,
-                                   @NotNull BlockPos position) {
-        //No-op
+                                   @NotNull BlockPos blockPos) {
+        // No-op
     }
 
     /**

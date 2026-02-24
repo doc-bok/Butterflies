@@ -60,7 +60,6 @@ public abstract class ButterflyBaseRenderer<T extends Butterfly, M extends Entit
                 this.entityRenderDispatcher.cameraOrientation(),
                 this.getFont(),
                 packedLightCoordinates);
-
     }
 
     /**
