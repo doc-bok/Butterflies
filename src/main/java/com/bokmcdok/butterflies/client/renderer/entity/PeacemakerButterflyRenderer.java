@@ -3,6 +3,8 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 import com.bokmcdok.butterflies.client.model.PeacemakerButterflyModel;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -33,5 +35,33 @@ public class PeacemakerButterflyRenderer extends MobRenderer<PeacemakerButterfly
     @Override
     public ResourceLocation getTextureLocation(@NotNull PeacemakerButterfly entity) {
         return ButterflyTextures.PEACEMAKER_BUTTERFLY;
+    }
+
+    /**
+     * Override to fix a bug with the model's orientation.
+     * @param entity            The entity.
+     * @param p_115456_         Unknown.
+     * @param p_115457_         Unknown.
+     * @param poseStack         The pose stack.
+     * @param multiBufferSource The render buffer (I think...)
+     * @param packedLightCoordinates The light coordinates.
+     */
+    @Override
+    public void render(@NotNull PeacemakerButterfly entity,
+                       float p_115456_,
+                       float p_115457_,
+                       @NotNull PoseStack poseStack,
+                       @NotNull MultiBufferSource multiBufferSource,
+                       int packedLightCoordinates) {
+
+        super.render(entity, p_115456_, p_115457_, poseStack, multiBufferSource, packedLightCoordinates);
+
+        EntityDebugInfoRenderer.renderDebugInfo(
+                entity,
+                poseStack,
+                multiBufferSource,
+                this.entityRenderDispatcher.cameraOrientation(),
+                this.getFont(),
+                packedLightCoordinates);
     }
 }
