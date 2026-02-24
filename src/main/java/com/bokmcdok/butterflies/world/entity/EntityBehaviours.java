@@ -35,18 +35,18 @@ public class EntityBehaviours {
 
             } else {
                 float friction = 0.91F;
-                if (entity.onGround()) {
-                    friction = entity.level().getBlockState(ground).getFriction(entity.level(), ground, entity) * 0.91F;
+                if (entity.isOnGround()) {
+                    friction = entity.level.getBlockState(ground).getFriction(entity.level, ground, entity) * 0.91F;
                 }
 
                 float frictionCoefficient = 0.16277137F / (friction * friction * friction);
 
-                entity.moveRelative(entity.onGround() ? 0.1F * frictionCoefficient : 0.02F, velocity);
+                entity.moveRelative(entity.isOnGround() ? 0.1F * frictionCoefficient : 0.02F, velocity);
                 entity.move(MoverType.SELF, entity.getDeltaMovement());
                 entity.setDeltaMovement(entity.getDeltaMovement().scale(friction));
             }
         }
 
-        entity.calculateEntityAnimation(false);
+        entity.calculateEntityAnimation(entity, false);
     }
 }

@@ -751,15 +751,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Use custom travel code for flying creatures.
-     * @param velocity The current velocity.
-     */
-    @Override
-    public void travel(@NotNull Vec3 velocity) {
-        EntityBehaviours.travel(this, velocity, this.getBlockPosBelowThatAffectsMyMovement());
-    }
-
-    /**
      * Reduce the number of eggs the butterfly can lay by 1.
      */
     public void useEgg() {
