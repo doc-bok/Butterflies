@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.2.2 (2026-02-24)
+ - Moved zombie villager texture to its proper place.
+
 ### 7.2.1 (2026-02-18)
  - Butterflies, Moths, and Peacemaker Butterflies now move smoothly.
 
