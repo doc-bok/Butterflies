@@ -58,8 +58,8 @@ public class ButterfliesMod {
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
-        entityTypeRegistry.initialise(blockRegistry, tagRegistry);
-        itemRegistry.initialise(bannerPatternRegistry, blockRegistry, entityTypeRegistry, tagRegistry);
+        entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
+        itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);

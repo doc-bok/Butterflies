@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.0 (2026-02-16)
+ - Added Peacemaker Honey Bottles.
+
 ### 7.2.2 (2026-02-24)
  - Moved zombie villager texture to its proper place.
 

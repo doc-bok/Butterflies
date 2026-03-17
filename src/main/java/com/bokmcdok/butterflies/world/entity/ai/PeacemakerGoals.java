@@ -1,16 +1,19 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.crafting.Ingredient;
 
 /**
  * Helper class for Peacemaker entity goals.
@@ -18,12 +21,22 @@ import net.minecraft.world.entity.raid.Raider;
 public class PeacemakerGoals {
 
     // A reference to the Tag Registry.
+    private ItemRegistry itemRegistry;
     private TagRegistry tagRegistry;
 
     /**
      * Override the target goals to ignore peacemaker mobs
      */
     public void registerGoals(PathfinderMob entity) {
+
+        //  Tempt goals
+        entity.goalSelector.addGoal(1,
+                new TemptGoal(
+                        entity,
+                        1.25D,
+                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        false));
+
         GoalSelector targetSelector = entity.targetSelector;
         targetSelector.removeAllGoals((x) -> true);
         targetSelector.addGoal(1, (new HurtByTargetGoal(entity, Raider.class))
@@ -45,7 +58,9 @@ public class PeacemakerGoals {
      * Set the tag registry for use with the target selector.
      * @param tagRegistry The tag registry to set.
      */
-    public void setTagRegistry(TagRegistry tagRegistry) {
+    public void setRegistries(ItemRegistry itemRegistry,
+                              TagRegistry tagRegistry) {
+        this.itemRegistry = itemRegistry;
         this.tagRegistry = tagRegistry;
     }
 
