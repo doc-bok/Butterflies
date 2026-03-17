@@ -249,62 +249,6 @@ public class ItemRegistry {
                 () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerWitch().get(),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
-    
-    /**
-     * Accessor for bottled butterflies.
-     * @return The registry objects.
-     */
-    public List<DeferredHolder<Item, Item>> getBottledButterflies() {
-        return bottledButterflies;
-    }
-
-    /**
-     * Accessor for bottled caterpillars.
-     * @return The registry objects.
-     */
-    public List<DeferredHolder<Item, Item>> getBottledCaterpillars() {
-        return bottledCaterpillars;
-    }
-
-    /**
-     * Accessor for butterfly banner pattern.
-     * @return The registry object.
-     */
-    public DeferredHolder<Item, Item> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
-    }
-
-    /**
-     * Accessor for butterfly book.
-     * @return The registry object.
-     */
-    public DeferredHolder<Item, Item> getButterflyBook() {
-        return butterflyBook;
-    }
-
-    /**
-     * Accessor for butterfly microscope.
-     * @return The registry object.
-     */
-    public DeferredHolder<Item, Item> getButterflyMicroscope() {
-        return butterflyMicroscope;
-    }
-
-    /**
-     * Accessor for burnt butterfly net.
-     * @return The registry object.
-     */
-    public DeferredHolder<Item, Item> getBurntButterflyNet() {
-        return burntButterflyNet;
-    }
-
-    /**
-     * Accessor for butterfly eggs.
-     * @return The registry objects.
-     */
-    public List<DeferredHolder<Item, Item>> getButterflyEggs() {
-        return butterflyEggs;
-    }
 
     /**
      * Helper method to get the correct butterfly net item.
