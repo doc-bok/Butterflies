@@ -12,6 +12,7 @@ import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
 import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -79,6 +80,9 @@ public class ItemRegistry {
     // Banner Pattern
     private RegistryObject<Item> butterflyBannerPattern;
 
+    // Peacemaker Honey
+    private RegistryObject<Item> peacemakerHoneyBottle;
+
     // Spawn Eggs
     private List<RegistryObject<Item>> eggSpawnEggs;
     private List<RegistryObject<Item>> chrysalisSpawnEggs;
@@ -109,9 +113,9 @@ public class ItemRegistry {
      * registry initialisation.
      * @param blockRegistry The block registry.
      * @param entityTypeRegistry The entity type registry.
+     * @param tagRegistry The tag registry.
      */
-    public void initialise(@NotNull BannerPatternRegistry bannerPatternRegistry,
-                           @NotNull BlockRegistry blockRegistry,
+    public void initialise(@NotNull BlockRegistry blockRegistry,
                            @NotNull EntityTypeRegistry entityTypeRegistry,
                            @NotNull TagRegistry tagRegistry) {
 
@@ -176,7 +180,12 @@ public class ItemRegistry {
         // Origami
         this.butterflyOrigami = new ArrayList<>();
         for (RegistryObject<Block> block : blockRegistry.getButterflyOrigami()) {
-            butterflyOrigami.add(deferredRegister.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties())));
+            ResourceLocation id = block.getId();
+            if (id != null) {
+                butterflyOrigami.add(deferredRegister.register(
+                        id.getPath(),
+                        () -> new BlockItem(block.get(), new Item.Properties())));
+            }
         }
 
         // Sherd
@@ -187,6 +196,10 @@ public class ItemRegistry {
         this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
                 tagRegistry.getButterflyBannerPattern(),
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+
+        // Peacemaker Honey
+        this.peacemakerHoneyBottle = deferredRegister.register("peacemaker_honey_bottle",
+                () -> new Item(new Item.Properties().stacksTo(1)));
 
         // Spawn Eggs
         this.eggSpawnEggs = new ArrayList<>();
@@ -276,6 +289,10 @@ public class ItemRegistry {
 
     public RegistryObject<Item> getButterflyBannerPattern() {
         return butterflyBannerPattern;
+    }
+
+    public RegistryObject<Item> getPeacemakerHoneyBottle() {
+        return peacemakerHoneyBottle;
     }
 
     public RegistryObject<Item> getButterflyBook() {
