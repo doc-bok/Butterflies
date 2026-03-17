@@ -39,6 +39,7 @@ public class EntityTypeRegistry {
     private final DeferredRegister<EntityType<?>> deferredRegister;
 
     private BlockRegistry blockRegistry;
+    private ItemRegistry itemRegistry;
     private TagRegistry tagRegistry;
 
     private List<DeferredHolder<EntityType<?>, EntityType<? extends Mob>>> butterflies;
@@ -71,8 +72,10 @@ public class EntityTypeRegistry {
      * @param blockRegistry The block registry instance.
      */
     public void initialise(BlockRegistry blockRegistry,
+                           ItemRegistry itemRegistry,
                            TagRegistry tagRegistry) {
         this.blockRegistry = blockRegistry;
+        this.itemRegistry = itemRegistry;
         this.tagRegistry = tagRegistry;
 
         final int speciesCount = ButterflyInfo.SPECIES.length;
@@ -193,25 +196,25 @@ public class EntityTypeRegistry {
     private PeacemakerButterfly createPeacemakerButterfly(
             EntityType<? extends PeacemakerButterfly> entityType,
             Level level) {
-        return new PeacemakerButterfly(this.tagRegistry, entityType, level);
+        return new PeacemakerButterfly(this.itemRegistry, this.tagRegistry, entityType, level);
     }
 
     private PeacemakerEvoker createPeacemakerEvoker(
             EntityType<? extends PeacemakerEvoker> entityType,
             Level level) {
-        return new PeacemakerEvoker(this.tagRegistry, entityType, level);
+        return new PeacemakerEvoker(this.itemRegistry, this.tagRegistry, entityType, level);
     }
 
     private PeacemakerIllusioner createPeacemakerIllusioner(
             EntityType<? extends PeacemakerIllusioner> entityType,
             Level level) {
-        return new PeacemakerIllusioner(this.tagRegistry, entityType, level);
+        return new PeacemakerIllusioner(this.itemRegistry, this.tagRegistry, entityType, level);
     }
 
     private PeacemakerPillager createPeacemakerPillager(
             EntityType<? extends PeacemakerPillager> entityType,
             Level level) {
-        return new PeacemakerPillager(this.tagRegistry, entityType, level);
+        return new PeacemakerPillager(this.itemRegistry, this.tagRegistry, entityType, level);
     }
 
     private PeacemakerVillager createPeacemakerVillager(
@@ -223,7 +226,7 @@ public class EntityTypeRegistry {
     private PeacemakerVindicator createPeacemakerVindicator(
             EntityType<? extends PeacemakerVindicator> entityType,
             Level level) {
-        return new PeacemakerVindicator(this.tagRegistry, entityType, level);
+        return new PeacemakerVindicator(this.itemRegistry, this.tagRegistry, entityType, level);
     }
 
     private PeacemakerWanderingTrader createPeacemakerWanderingTrader(
