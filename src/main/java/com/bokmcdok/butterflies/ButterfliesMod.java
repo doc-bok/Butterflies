@@ -59,7 +59,7 @@ public class ButterfliesMod {
         // vice-versa.
         blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
-        entityTypeRegistry.initialise(blockRegistry, tagRegistry);
+        entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
         itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();
