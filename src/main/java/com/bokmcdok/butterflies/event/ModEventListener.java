@@ -88,6 +88,9 @@ public class ModEventListener {
         // Banner Pattern
         event.accept(itemRegistry.getButterflyBannerPattern().get());
 
+        // Peacemaker Honey
+        event.accept(itemRegistry.getPeacemakerHoneyBottle().get());
+
         // Spawn Eggs
         itemRegistry.getEggSpawnEggs().forEach((x) -> event.accept(x.get()));
         itemRegistry.getCaterpillarSpawnEggs().forEach((x) -> event.accept(x.get()));
