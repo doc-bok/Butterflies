@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
@@ -10,6 +11,8 @@ import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNa
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.BlockPos;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,6 +22,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -37,6 +42,9 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,19 +54,26 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
+import java.util.UUID;
 
 public class PeacemakerButterfly
         extends Monster
         implements DebugInfoSupplier {
 
-    // Data accessor for debug info
+    // Data accessors
     protected static final EntityDataAccessor<String> DATA_DEBUG_INFO =
             SynchedEntityData.defineId(PeacemakerButterfly.class, EntityDataSerializers.STRING);
+    protected static final EntityDataAccessor<Optional<UUID>> DATA_FRIEND_UUID;
+
 
     // Constants for Peacemaker Butterfly attributes.
     private static final double PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE = 3.0d;
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
+
+    // The item registry
+    private final ItemRegistry itemRegistry;
 
     // The goals for shared code.
     private PeacemakerGoals peacemakerGoals;
@@ -111,7 +126,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param villager The villager to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
@@ -162,7 +177,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param wanderingTrader The wanderingTrader to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
 
@@ -265,7 +280,7 @@ public class PeacemakerButterfly
      * @param entityId The ID of the entity
      * @param <T>      The entity class
      */
-    @SuppressWarnings({"UnstableApiUsage", "deprecation", "OverrideOnly", "unchecked"})
+    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
@@ -301,13 +316,18 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(TagRegistry tagRegistry,
+    public PeacemakerButterfly(ItemRegistry itemRegistry,
+                               TagRegistry tagRegistry,
                                EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
 
+        this.itemRegistry = itemRegistry;
+
+        this.registerGoalsPost();
+
         if (!this.level().isClientSide()) {
-            this.peacemakerGoals.setTagRegistry(tagRegistry);
+            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
         }
 
         // Setup for a flying mob.
@@ -363,6 +383,21 @@ public class PeacemakerButterfly
     }
 
     /**
+     * Handles events sent from the server.
+     * @param eventId The ID of the event.
+     */
+    @Override
+    public void handleEntityEvent(byte eventId) {
+        if (eventId == 7) {
+            this.spawnFriendParticles(true);
+        } else if (eventId == 6) {
+            this.spawnFriendParticles(false);
+        } else {
+            super.handleEntityEvent(eventId);
+        }
+    }
+
+    /**
      * Convert villagers and pillagers to Peacemaker mobs
      * @param level The current level
      * @param victim The entity just "killed"
@@ -395,6 +430,45 @@ public class PeacemakerButterfly
         }
 
         return super.killedEntity(level, victim);
+    }
+
+    /**
+     * Handles a player attempting to feed a Peacemaker Butterfly.
+     * @param player The player interacting with the entity.
+     * @param hand The hand they are using.
+     * @return The result of the interaction.
+     */
+    @NotNull
+    @Override
+    public InteractionResult mobInteract(@NotNull Player player,
+                                         @NotNull InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+
+        if (this.level().isClientSide()) {
+            boolean shouldConsume =
+                    this.getFriendUUID() != player.getUUID() &&
+                    itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
+            return shouldConsume ? InteractionResult.CONSUME : InteractionResult.PASS;
+        }
+
+        if (itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get())) {
+            if (!player.getAbilities().instabuild) {
+                player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
+            }
+
+            if (this.random.nextInt(3) == 0) {
+                this.setFriendUUID(player.getUUID());
+                this.navigation.stop();
+                this.setTarget(null);
+                this.level().broadcastEntityEvent(this, (byte) 7);
+            } else {
+                this.level().broadcastEntityEvent(this, (byte) 6);
+            }
+
+            return InteractionResult.SUCCESS;
+        }
+
+        return super.mobInteract(player, hand);
     }
 
     /**
@@ -469,6 +543,7 @@ public class PeacemakerButterfly
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_DEBUG_INFO, "");
+        this.entityData.define(DATA_FRIEND_UUID, Optional.empty());
     }
 
     /**
@@ -491,9 +566,6 @@ public class PeacemakerButterfly
         //  Attack goals
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
 
-        //  Tempt goals
-        //this.goalSelector.addGoal(1, new TemptGoal(this, 1.25D, Ingredient.of(ItemList.PEACEMAKER_HONEY_BOTTLE.get()), false));
-
         //  Targets
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this))
                 .setAlertOthers()
@@ -504,7 +576,8 @@ public class PeacemakerButterfly
                 .setAlertOthers(PeacemakerVindicator.class)
                 .setAlertOthers(PeacemakerWitch.class));
 
-        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
+                (x) -> x.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
                 peacemakerGoals::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
@@ -513,10 +586,68 @@ public class PeacemakerButterfly
     }
 
     /**
+     * Used to register goals after registry references have been set.
+     */
+    private void registerGoalsPost() {
+
+        //  Tempt goals
+        this.goalSelector.addGoal(1,
+                new TemptGoal(
+                        this,
+                        1.25D,
+                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        false));
+    }
+
+    /**
+     * Get the current friend UUID (if any)
+     * @return The UUID of the friend.
+     */
+    @Nullable
+    public UUID getFriendUUID() {
+        return this.entityData.get(DATA_FRIEND_UUID).orElse(null);
+    }
+    
+    /**
      * Set the debug info so it can be synchronised with the client for display.
      * @param debugInfo The debug info to set.
      */
     private void setDebugInfo(String debugInfo) {
         entityData.set(DATA_DEBUG_INFO, debugInfo);
+    }
+
+    /**
+     * Set the friend's UUID.
+     * @param uuid The UUID of the friend.
+     */
+    private void setFriendUUID(@Nullable UUID uuid) {
+        this.entityData.set(DATA_FRIEND_UUID, Optional.ofNullable(uuid));
+    }
+
+    /**
+     * Spawns particles based on whether the player successfully befriends the
+     * Peacemaker Butterfly.
+     * @param success True if the befriending attempt succeeds.
+     */
+    private void spawnFriendParticles(boolean success) {
+        ParticleOptions particleType = ParticleTypes.HEART;
+        if (!success) {
+            particleType = ParticleTypes.SMOKE;
+        }
+
+        for(int i = 0; i < 7; ++i) {
+            double d0 = this.random.nextGaussian() * 0.02;
+            double d1 = this.random.nextGaussian() * 0.02;
+            double d2 = this.random.nextGaussian() * 0.02;
+            this.level().addParticle(particleType, this.getRandomX(1.0F), this.getRandomY() + (double)0.5F, this.getRandomZ(1.0F), d0, d1, d2);
+        }
+
+    }
+
+    /*
+      Static initialisation.
+     */
+    static {
+        DATA_FRIEND_UUID = SynchedEntityData.defineId(PeacemakerButterfly.class, EntityDataSerializers.OPTIONAL_UUID);
     }
 }
