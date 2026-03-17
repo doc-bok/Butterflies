@@ -440,7 +440,7 @@ public class PeacemakerButterfly
                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (this.level().isClientSide()) {
+        if (this.level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
                     itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
@@ -456,9 +456,9 @@ public class PeacemakerButterfly
                 this.setFriendUUID(player.getUUID());
                 this.navigation.stop();
                 this.setTarget(null);
-                this.level().broadcastEntityEvent(this, (byte) 7);
+                this.level.broadcastEntityEvent(this, (byte) 7);
             } else {
-                this.level().broadcastEntityEvent(this, (byte) 6);
+                this.level.broadcastEntityEvent(this, (byte) 6);
             }
 
             return InteractionResult.SUCCESS;
@@ -635,7 +635,7 @@ public class PeacemakerButterfly
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            this.level().addParticle(particleType, this.getRandomX(1.0F), this.getRandomY() + (double)0.5F, this.getRandomZ(1.0F), d0, d1, d2);
+            this.level.addParticle(particleType, this.getRandomX(1.0F), this.getRandomY() + (double)0.5F, this.getRandomZ(1.0F), d0, d1, d2);
         }
 
     }
