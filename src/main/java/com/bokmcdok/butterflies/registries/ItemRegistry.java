@@ -191,11 +191,13 @@ public class ItemRegistry {
         this.butterflyPotterySherd = registerItem("butterfly_pottery_sherd");
 
         // Banner Pattern
-        this.butterflyBannerPattern = registerBannerPattern(bannerPatternRegistry);
+        this.butterflyBannerPattern = registerBannerPattern();
 
         // Peacemaker Honey
-        this.peacemakerHoneyBottle = deferredRegister.register("peacemaker_honey_bottle",
-                () -> new Item(new Item.Properties().stacksTo(1)));
+        String peacemakerHoneyId = "peacemaker_honey_bottle";
+        ResourceKey<Item> key = createResourceKey(peacemakerHoneyId);
+        this.peacemakerHoneyBottle = deferredRegister.register(peacemakerHoneyId,
+                () -> new Item(new Item.Properties().stacksTo(1).setId(key)));
 
         // Spawn Eggs
         this.eggSpawnEggs = new ArrayList<>();
@@ -380,7 +382,7 @@ public class ItemRegistry {
 
     // Register Methods
 
-    private DeferredHolder<Item, Item> registerBannerPattern(BannerPatternRegistry bannerPatternRegistry) {
+    private DeferredHolder<Item, Item> registerBannerPattern() {
 
         final String registryId = "banner_pattern_butterfly";
         ResourceKey<Item> key = createResourceKey(registryId);

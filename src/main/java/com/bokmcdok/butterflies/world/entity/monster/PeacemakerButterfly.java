@@ -71,6 +71,7 @@ public class PeacemakerButterfly
     private static final double PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE = 3.0d;
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
+    private static final double PEACEMAKER_TEMPT_RANGE = 10.0d;
 
     // The item registry
     private final ItemRegistry itemRegistry;
@@ -235,7 +236,8 @@ public class PeacemakerButterfly
                 .add(Attributes.ATTACK_DAMAGE, PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE)
                 .add(Attributes.MAX_HEALTH, PEACEMAKER_BUTTERFLY_HEALTH)
                 .add(Attributes.FLYING_SPEED, PEACEMAKER_BUTTERFLY_SPEED)
-                .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_BUTTERFLY_SPEED * 5d);
+                .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_BUTTERFLY_SPEED * 5d)
+                .add(Attributes.TEMPT_RANGE, PEACEMAKER_TEMPT_RANGE);
     }
 
     /**
@@ -583,7 +585,7 @@ public class PeacemakerButterfly
                 .setAlertOthers(PeacemakerWitch.class));
 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
-                (x) -> x.getUUID() != this.getFriendUUID()));
+                (entity, level) -> entity.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
                 peacemakerGoals::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
