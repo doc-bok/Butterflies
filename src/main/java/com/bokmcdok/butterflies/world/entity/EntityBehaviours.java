@@ -21,7 +21,7 @@ public class EntityBehaviours {
     public static void travel(@NotNull PathfinderMob entity,
                               @NotNull Vec3 velocity,
                               BlockPos ground) {
-        if (entity.isControlledByLocalInstance()) {
+        if (entity.isEffectiveAi() || entity.isControlledByLocalInstance()) {
 
             if (entity.isInWater()) {
                 entity.moveRelative(0.02F, velocity);
