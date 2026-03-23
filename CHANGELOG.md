@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.1 (2026-03-23)
+ - Fixed butterfly movement in 1.19.2
+
 ### 7.3.0 (2026-02-16)
  - Added Peacemaker Honey Bottles.
 
