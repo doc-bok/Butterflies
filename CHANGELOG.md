@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.2 (2026-04-10)
+ - Fixed Peacemaker mobs crash-on-spawn.
+
 ### 7.3.1 (2026-03-23)
  - Fixed butterfly movement in 1.19.2
 

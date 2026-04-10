@@ -1,8 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
+import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -19,9 +17,6 @@ public class PeacemakerVindicator extends Vindicator {
     private static final double PEACEMAKER_VINDICATOR_FOLLOW_RANGE = 12.0d;
     private static final double PEACEMAKER_VINDICATOR_HEALTH = 32.0d;
     private static final double PEACEMAKER_VINDICATOR_SPEED = 0.52;
-
-    // The goals for shared code.
-    private PeacemakerGoals peacemakerGoals;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -41,14 +36,14 @@ public class PeacemakerVindicator extends Vindicator {
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerVindicator(ItemRegistry itemRegistry,
-                                TagRegistry tagRegistry,
+    public PeacemakerVindicator(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
                                 EntityType<? extends PeacemakerVindicator> type,
                                 Level level) {
         super(type, level);
 
+        // Register Peacemaker-specific goals.
         if (!this.level.isClientSide()) {
-            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
+            peacemakerGoalRegistrar.registerGoals(this);
         }
     }
 
@@ -60,15 +55,5 @@ public class PeacemakerVindicator extends Vindicator {
     public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
         PeacemakerButterfly.spawn(this);
-    }
-
-    /**
-     * Override the target goals to ignore peacemaker mobs
-     */
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.peacemakerGoals = new PeacemakerGoals();
-        this.peacemakerGoals.registerGoals(this);
     }
 }
