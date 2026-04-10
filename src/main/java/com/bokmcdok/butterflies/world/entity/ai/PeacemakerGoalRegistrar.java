@@ -15,15 +15,27 @@ import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Helper class for Peacemaker entity goals.
  */
-public class PeacemakerGoals {
+public class PeacemakerGoalRegistrar {
 
     // A reference to the Tag Registry.
-    private ItemRegistry itemRegistry;
-    private TagRegistry tagRegistry;
+    private final ItemRegistry itemRegistry;
+    private final TagRegistry tagRegistry;
+
+    /**
+     * Construction
+     * @param itemRegistry The item registry to set.
+     * @param tagRegistry The tag registry to set.
+     */
+    public PeacemakerGoalRegistrar(@NotNull ItemRegistry itemRegistry,
+                                   @NotNull TagRegistry tagRegistry) {
+        this.itemRegistry = itemRegistry;
+        this.tagRegistry = tagRegistry;
+    }
 
     /**
      * Override the target goals to ignore peacemaker mobs
@@ -56,26 +68,11 @@ public class PeacemakerGoals {
     }
 
     /**
-     * Set the tag registry for use with the target selector.
-     * @param tagRegistry The tag registry to set.
-     */
-    public void setRegistries(ItemRegistry itemRegistry,
-                              TagRegistry tagRegistry) {
-        this.itemRegistry = itemRegistry;
-        this.tagRegistry = tagRegistry;
-    }
-
-    /**
      * Checks whether the entity is a Peacemaker Butterfly.
      * @param entity The entity to check.
      * @return True if the entity is a Peacemaker Butterfly.
      */
-    public boolean isNotPeacemaker(LivingEntity entity,
-                                   ServerLevel level) {
-        if (this.tagRegistry != null) {
-             return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
-        }
-
-        return false;
+    public boolean isNotPeacemaker(LivingEntity entity) {
+        return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
     }
 }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.2 (2026-04-10)
+ - Fixed Peacemaker mobs crash-on-spawn.
+
 ### 7.3.0 (2026-02-16)
  - Added Peacemaker Honey Bottles.
 
