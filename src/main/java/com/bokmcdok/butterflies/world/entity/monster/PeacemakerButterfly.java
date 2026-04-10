@@ -3,10 +3,9 @@ package com.bokmcdok.butterflies.world.entity.monster;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
+import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.BlockPos;
@@ -75,9 +74,6 @@ public class PeacemakerButterfly
     // The item registry
     private final ItemRegistry itemRegistry;
 
-    // The goals for shared code.
-    private PeacemakerGoals peacemakerGoals;
-
     /**
      * Convert a raider to one with a butterfly host
      * @param level   The current level
@@ -126,7 +122,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param villager The villager to convert
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
@@ -183,7 +179,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param wanderingTrader The wanderingTrader to convert
      */
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
 
@@ -284,7 +280,7 @@ public class PeacemakerButterfly
      * @param entityId The ID of the entity
      * @param <T>      The entity class
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
+    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked", "UnstableApiUsage"})
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
@@ -319,18 +315,16 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(ItemRegistry itemRegistry,
-                               TagRegistry tagRegistry,
+    public PeacemakerButterfly(@NotNull ItemRegistry itemRegistry,
+                               @NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
                                EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
 
         this.itemRegistry = itemRegistry;
 
-        this.registerGoalsPost();
-
         if (!this.level.isClientSide()) {
-            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
+            this.registerGoalsPost(peacemakerGoalRegistrar);
         }
 
         // Setup for a flying mob.
@@ -551,10 +545,7 @@ public class PeacemakerButterfly
     /**
      * Register the goals for the Peacemaker Butterfly AI.
      */
-    @Override
-    protected void registerGoals() {
-
-        peacemakerGoals = new PeacemakerGoals();
+    protected void registerGoalsPost(PeacemakerGoalRegistrar peacemakerGoalRegistrar) {
 
         //  Movement goals
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -581,16 +572,10 @@ public class PeacemakerButterfly
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
                 (x) -> x.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
-                peacemakerGoals::isNotPeacemaker));
+                peacemakerGoalRegistrar::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
-                peacemakerGoals::isNotPeacemaker));
+                peacemakerGoalRegistrar::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
-    }
-
-    /**
-     * Used to register goals after registry references have been set.
-     */
-    private void registerGoalsPost() {
 
         //  Tempt goals
         this.goalSelector.addGoal(1,

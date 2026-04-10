@@ -935,6 +935,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Use custom travel code for flying creatures.
+     * @param velocity The current velocity.
+     */
+    @Override
+    public void travel(@NotNull Vec3 velocity) {
+        EntityBehaviours.travel(this, velocity, this.getBlockPosBelowThatAffectsMyMovement());
+    }
+
+    /**
      * Check if the target entity is a valid mate.
      * @param other The other entity to check.
      * @return TRUE if the target entity can mate with the butterfly.
