@@ -18,6 +18,7 @@ public class PeacemakerEvoker extends Evoker {
     private static final double PEACEMAKER_EVOKER_FOLLOW_RANGE = 12.0d;
     private static final double PEACEMAKER_EVOKER_HEALTH = 36.0d;
     private static final double PEACEMAKER_EVOKER_SPEED = 0.75d;
+    private static final double PEACEMAKER_EVOKER_TEMPT_RANGE = 10.0d;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -28,7 +29,8 @@ public class PeacemakerEvoker extends Evoker {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_EVOKER_SPEED)
                 .add(Attributes.FOLLOW_RANGE, PEACEMAKER_EVOKER_FOLLOW_RANGE)
-                .add(Attributes.MAX_HEALTH, PEACEMAKER_EVOKER_HEALTH);
+                .add(Attributes.MAX_HEALTH, PEACEMAKER_EVOKER_HEALTH)
+                .add(Attributes.TEMPT_RANGE, PEACEMAKER_EVOKER_TEMPT_RANGE);
     }
 
     /**

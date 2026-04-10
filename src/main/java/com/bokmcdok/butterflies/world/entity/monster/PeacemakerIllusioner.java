@@ -16,6 +16,7 @@ public class PeacemakerIllusioner extends Illusioner {
     private static final double PEACEMAKER_ILLUSIONER_FOLLOW_RANGE = 18.0d;
     private static final double PEACEMAKER_ILLUSIONER_HEALTH = 48.0d;
     private static final double PEACEMAKER_ILLUSIONER_SPEED = 0.75d;
+    private static final double PEACEMAKER_ILLUSIONER_TEMPT_RANGE = 10.0d;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -26,7 +27,8 @@ public class PeacemakerIllusioner extends Illusioner {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_ILLUSIONER_SPEED)
                 .add(Attributes.FOLLOW_RANGE, PEACEMAKER_ILLUSIONER_FOLLOW_RANGE)
-                .add(Attributes.MAX_HEALTH, PEACEMAKER_ILLUSIONER_HEALTH);
+                .add(Attributes.MAX_HEALTH, PEACEMAKER_ILLUSIONER_HEALTH)
+                .add(Attributes.TEMPT_RANGE, PEACEMAKER_ILLUSIONER_TEMPT_RANGE);
     }
 
     /**

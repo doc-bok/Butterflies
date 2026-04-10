@@ -17,6 +17,7 @@ public class PeacemakerPillager extends Pillager {
     private static final double PEACEMAKER_PILLAGER_FOLLOW_RANGE = 32.0d;
     private static final double PEACEMAKER_PILLAGER_HEALTH = 32.0d;
     private static final double PEACEMAKER_PILLAGER_SPEED = 0.52;
+    private static final double PEACEMAKER_PILLAGER_TEMPT_RANGE = 10.0d;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -28,7 +29,8 @@ public class PeacemakerPillager extends Pillager {
                 .add(Attributes.ATTACK_DAMAGE, PEACEMAKER_PILLAGER_ATTACK_DAMAGE)
                 .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_PILLAGER_SPEED)
                 .add(Attributes.FOLLOW_RANGE, PEACEMAKER_PILLAGER_FOLLOW_RANGE)
-                .add(Attributes.MAX_HEALTH, PEACEMAKER_PILLAGER_HEALTH);
+                .add(Attributes.MAX_HEALTH, PEACEMAKER_PILLAGER_HEALTH)
+                .add(Attributes.TEMPT_RANGE, PEACEMAKER_PILLAGER_TEMPT_RANGE);
     }
 
     /**

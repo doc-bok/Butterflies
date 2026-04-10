@@ -17,6 +17,7 @@ public class PeacemakerVindicator extends Vindicator {
     private static final double PEACEMAKER_VINDICATOR_FOLLOW_RANGE = 12.0d;
     private static final double PEACEMAKER_VINDICATOR_HEALTH = 32.0d;
     private static final double PEACEMAKER_VINDICATOR_SPEED = 0.52;
+    private static final double PEACEMAKER_VINDICATOR_TEMPT_RANGE = 10.0d;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -28,7 +29,8 @@ public class PeacemakerVindicator extends Vindicator {
                 .add(Attributes.ATTACK_DAMAGE, PEACEMAKER_VINDICATOR_ATTACK_DAMAGE)
                 .add(Attributes.MOVEMENT_SPEED, PEACEMAKER_VINDICATOR_SPEED)
                 .add(Attributes.FOLLOW_RANGE, PEACEMAKER_VINDICATOR_FOLLOW_RANGE)
-                .add(Attributes.MAX_HEALTH, PEACEMAKER_VINDICATOR_HEALTH);
+                .add(Attributes.MAX_HEALTH, PEACEMAKER_VINDICATOR_HEALTH)
+                .add(Attributes.TEMPT_RANGE, PEACEMAKER_VINDICATOR_TEMPT_RANGE);
     }
 
     /**

@@ -70,9 +70,11 @@ public class PeacemakerGoalRegistrar {
     /**
      * Checks whether the entity is a Peacemaker Butterfly.
      * @param entity The entity to check.
+     * @param level The current level.
      * @return True if the entity is a Peacemaker Butterfly.
      */
-    public boolean isNotPeacemaker(LivingEntity entity) {
+    public boolean isNotPeacemaker(LivingEntity entity,
+                                   ServerLevel level) {
         return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
     }
 }
