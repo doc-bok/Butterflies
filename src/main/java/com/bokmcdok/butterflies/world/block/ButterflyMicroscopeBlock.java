@@ -82,32 +82,6 @@ public class ButterflyMicroscopeBlock extends Block {
     }
 
     /**
-     * Drop the container's items when it is destroyed.
-     * @param blockState The current block state.
-     * @param level The current level.
-     * @param blockPos The block's position.
-     * @param newBlockState The new block state.
-     * @param unknown Unknown flag.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onRemove(BlockState blockState,
-                         @NotNull Level level,
-                         @NotNull BlockPos blockPos,
-                         BlockState newBlockState,
-                         boolean unknown) {
-        if (!blockState.is(newBlockState.getBlock())) {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof Container) {
-                Containers.dropContents(level, blockPos, (Container)blockEntity);
-                level.updateNeighbourForOutputSignal(blockPos, this);
-            }
-
-            super.onRemove(blockState, level, blockPos, newBlockState, unknown);
-        }
-    }
-
-    /**
      * Open the menu when the block is interacted with.
      * @param blockState The block's state.
      * @param level The current level.
