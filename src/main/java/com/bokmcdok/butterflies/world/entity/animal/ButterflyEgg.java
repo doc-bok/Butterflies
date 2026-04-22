@@ -86,7 +86,7 @@ public class ButterflyEgg extends DirectionalCreature {
     public boolean hurt(@NotNull DamageSource damageSource,
                         float damage) {
         if (damageSource.getEntity() instanceof Player player) {
-            if (this.level().isClientSide) {
+            if (level().isClientSide) {
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
             } else {
                 this.remove(RemovalReason.DISCARDED);
@@ -190,14 +190,15 @@ public class ButterflyEgg extends DirectionalCreature {
         super.customServerAiStep();
 
         // If the surface block is destroyed then the butterfly egg dies.
-        if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
+        Level level = level();
+        if (level.isEmptyBlock(getSurfaceBlockPos())) {
             kill();
         }
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             ResourceLocation newLocation = this.getData().getCaterpillarEntity();
-            Caterpillar.spawn((ServerLevel) this.level(), newLocation, this.blockPosition(), this.getDirection(), false);
+            Caterpillar.spawn((ServerLevel) level, newLocation, this.blockPosition(), this.getDirection(), false);
             this.remove(RemovalReason.DISCARDED);
         }
     }

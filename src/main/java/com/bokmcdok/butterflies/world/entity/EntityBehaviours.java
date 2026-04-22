@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +37,8 @@ public class EntityBehaviours {
             } else {
                 float friction = 0.91F;
                 if (entity.onGround()) {
-                    friction = entity.level().getBlockState(ground).getFriction(entity.level(), ground, entity) * 0.91F;
+                    Level level = entity.level();
+                    friction = level.getBlockState(ground).getFriction(level, ground, entity) * 0.91F;
                 }
 
                 float frictionCoefficient = 0.16277137F / (friction * friction * friction);
