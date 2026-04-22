@@ -1,5 +1,13 @@
 ## Changelog
 
+### 7.3.3 (2026-04-22)
+ - Removed redundant Chinese character strings.
+ - Removed unused imports.
+ - Tidied up level access.
+ - Added DirectionalBaseRenderer for common code.
+ - Removed unnecessary drop code from Microscope Block.
+ - Added a `finalizePossess()` method to reduce duplicate code.
+
 ### 7.3.2 (2026-04-10)
  - Fixed Peacemaker mobs crash-on-spawn.
 
