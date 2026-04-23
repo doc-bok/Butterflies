@@ -8,6 +8,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -65,7 +66,9 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
             if (this.butterfly.getIsFertile()) {
 
                 // Don't lay an egg if there are too many butterflies in the area already.
-                List<Butterfly> numButterflies = this.butterfly.level.getNearbyEntities(
+
+                Level level = butterfly.level;
+                List<Butterfly> numButterflies = level.getNearbyEntities(
                         Butterfly.class,
                         TargetingConditions.forNonCombat(),
                         butterfly,
@@ -74,13 +77,16 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
                 int maxDensity = ButterfliesConfig.Common.maxDensity.get();
                 if (maxDensity == 0 || numButterflies.size() <= maxDensity) {
                     Direction direction = this.butterfly.getLandedDirection().getOpposite();
-                    if (this.butterfly.getLevel().getBlockState(this.blockPos.relative(direction)).isAir()) {
+
+                    if (level.getBlockState(this.blockPos.relative(direction)).isAir()) {
 
                         // Always use the base butterfly type for eggs.
                         ButterflyData data = ButterflyData.getEntry(this.butterfly.getData().getBaseButterflyIndex());
                         if (data != null) {
                             ResourceLocation eggEntity = data.getButterflyEggEntity();
-                            ButterflyEgg.spawn((ServerLevel) this.butterfly.getLevel(), eggEntity, this.blockPos, direction);
+
+                            ButterflyEgg.spawn((ServerLevel) level, eggEntity, this.blockPos, direction);
+
                             this.butterfly.setIsFertile(false);
                             this.butterfly.useEgg();
                         }

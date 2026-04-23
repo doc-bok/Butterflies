@@ -13,7 +13,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -80,32 +79,6 @@ public class ButterflyMicroscopeBlock extends Block {
                                @NotNull BlockPos blockPos,
                                @NotNull CollisionContext collisionContext) {
         return SHAPE;
-    }
-
-    /**
-     * Drop the container's items when it is destroyed.
-     * @param blockState The current block state.
-     * @param level The current level.
-     * @param blockPos The block's position.
-     * @param newBlockState The new block state.
-     * @param unknown Unknown flag.
-     */
-    @Override
-    @SuppressWarnings("deprecation")
-    public void onRemove(BlockState blockState,
-                         @NotNull Level level,
-                         @NotNull BlockPos blockPos,
-                         BlockState newBlockState,
-                         boolean unknown) {
-        if (!blockState.is(newBlockState.getBlock())) {
-            BlockEntity blockEntity = level.getBlockEntity(blockPos);
-            if (blockEntity instanceof Container) {
-                Containers.dropContents(level, blockPos, (Container)blockEntity);
-                level.updateNeighbourForOutputSignal(blockPos, this);
-            }
-
-            super.onRemove(blockState, level, blockPos, newBlockState, unknown);
-        }
     }
 
     /**

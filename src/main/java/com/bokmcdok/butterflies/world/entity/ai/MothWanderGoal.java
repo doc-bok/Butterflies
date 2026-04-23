@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,8 +51,9 @@ public class MothWanderGoal extends ButterflyWanderGoal {
         Vec3 pos = super.getPosition();
 
         if (pos != null) {
-            int targetBrightness = this.mob.getLevel().getRawBrightness(new BlockPos((int)pos.x(), (int)pos.y(), (int)pos.z()), 0);
-            int localBrightness = this.mob.getLevel().getRawBrightness(this.mob.blockPosition(), 0);
+            Level level = mob.getLevel();
+            int targetBrightness = level.getRawBrightness(new BlockPos((int)pos.x(), (int)pos.y(), (int)pos.z()), 0);
+            int localBrightness = level.getRawBrightness(this.mob.blockPosition(), 0);
 
             if (targetBrightness < localBrightness) {
                 pos = super.getPosition();
