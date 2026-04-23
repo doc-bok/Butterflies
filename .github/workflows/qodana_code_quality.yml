@@ -5,6 +5,13 @@ on:
   push:
     branches: # Specify your branches here
       - main # The 'main' branch
+      - Minecraft-1.18.2
+      - Minecraft-1.19.2
+      - Minecraft-1.20.1
+      - Minecraft-1.20.2
+      - Neforge-1.20.4
+      - Neforge-1.21.1
+      - Neforge-1.21.4
       - 'releases/*' # The release branches
 
 jobs:
