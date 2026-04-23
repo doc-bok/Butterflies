@@ -5,7 +5,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -22,7 +21,7 @@ import java.util.List;
  * The GUI screen for a butterfly page.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyZhuangziScreen extends Screen {
+public class ButterflyZhuangziScreen extends AbstractButterflyBookScreen {
 
     // A cache holding the string data.
     private List<FormattedCharSequence> cache = Collections.emptyList();
@@ -64,13 +63,7 @@ public class ButterflyZhuangziScreen extends Screen {
     public void render(@NotNull PoseStack guiGraphics, int x, int y, float unknown) {
         super.render(guiGraphics, x, y, unknown);
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ButterflyTextures.BOOK);
-
-        int i = (this.width - 192) / 2;
-        this.blit(guiGraphics, i, 2, 0, 0, 192, 192);
-
+        blitBook(guiGraphics);
 
         if (this.cache.isEmpty()) {
             FormattedText formattedText = Component.translatable("gui.butterflies.zhuangzi");
@@ -79,6 +72,7 @@ public class ButterflyZhuangziScreen extends Screen {
 
         int cachedPageSize = Math.min(128 / 9, this.cache.size());
 
+        int i = (this.width - 192) / 2;
         for (int line = 0; line < cachedPageSize; ++line) {
             FormattedCharSequence formattedCharSequence = this.cache.get(line);
             this.font.draw(guiGraphics, formattedCharSequence, (float)i + 36, (float)(32 + line * 9), 0);
