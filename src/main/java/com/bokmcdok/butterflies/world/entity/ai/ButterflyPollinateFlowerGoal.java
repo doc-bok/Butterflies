@@ -204,6 +204,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                         // Torchflowers require farmland.
                         Block requiredBlock = Blocks.GRASS_BLOCK;
 
+                        Level level = butterfly.getLevel();
                         if (level.getBlockState(mutableBlockPos).isAir() &&
                             level.getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
                             return mutableBlockPos;

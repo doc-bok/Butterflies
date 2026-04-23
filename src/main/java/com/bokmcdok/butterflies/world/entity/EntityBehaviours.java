@@ -36,7 +36,7 @@ public class EntityBehaviours {
 
             } else {
                 float friction = 0.91F;
-                if (entity.onGround()) {
+                if (entity.isOnGround()) {
                     Level level = entity.level;
                     friction = level.getBlockState(ground).getFriction(level, ground, entity) * 0.91F;
                 }

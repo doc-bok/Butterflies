@@ -427,7 +427,7 @@ public class PeacemakerButterfly
                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        Level level = level;
+        Level level = getLevel();
         if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
