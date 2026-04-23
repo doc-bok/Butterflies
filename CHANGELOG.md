@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.3.4 (2026-04-23)
+ - Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
+ - Removed more unused imports.
+
 ### 7.3.3 (2026-04-22)
  - Removed redundant Chinese character strings.
  - Removed unused imports.
