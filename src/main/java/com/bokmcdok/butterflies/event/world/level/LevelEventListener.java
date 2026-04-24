@@ -16,7 +16,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Listens for level-based events on the Forge Bus.
@@ -40,7 +39,7 @@ public class LevelEventListener {
 
     /**
      * Add the spawns for each butterfly.
-     * @param event The event we respond to in order to add the villages.
+     * @param event The event used to add the spawns.
      */
     private void onBiomeLoading(BiomeLoadingEvent event)
     {
@@ -68,14 +67,7 @@ public class LevelEventListener {
                 switch (habitat) {
                     case FORESTS:
                         if (event.getCategory().equals(Biome.BiomeCategory.FOREST)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
@@ -90,28 +82,14 @@ public class LevelEventListener {
 
                     case JUNGLES:
                         if (event.getCategory().equals(Biome.BiomeCategory.JUNGLE)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
 
                     case PLAINS:
                         if (event.getCategory().equals(Biome.BiomeCategory.PLAINS)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
@@ -129,14 +107,7 @@ public class LevelEventListener {
                                 event.getCategory().equals(Biome.BiomeCategory.DESERT) ||
                                 event.getCategory().equals(Biome.BiomeCategory.FOREST) ||
                                 event.getCategory().equals(Biome.BiomeCategory.SAVANNA)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
@@ -144,42 +115,21 @@ public class LevelEventListener {
                     case HILLS:
                         if (event.getCategory().equals(Biome.BiomeCategory.EXTREME_HILLS) ||
                                 event.getCategory().equals(Biome.BiomeCategory.MOUNTAIN)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
 
                     case PLATEAUS:
                         if (event.getCategory().equals(Biome.BiomeCategory.MESA)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
 
                     case SAVANNAS:
                         if (event.getCategory().equals(Biome.BiomeCategory.SAVANNA)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
@@ -187,14 +137,7 @@ public class LevelEventListener {
                     case WETLANDS:
                         if (event.getCategory().equals(Biome.BiomeCategory.SWAMP) ||
                                 event.getCategory().equals(Biome.BiomeCategory.RIVER)) {
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflyEggs.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(caterpillars.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(chrysalises.get(i).get(), weight, 1, maximum));
-                            event.getSpawns().addSpawn(MobCategory.CREATURE,
-                                    new MobSpawnSettings.SpawnerData(butterflies.get(i).get(), weight, 1, maximum));
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
                         }
 
                         break;
@@ -204,6 +147,32 @@ public class LevelEventListener {
                 }
             }
         }
+    }
 
+    /**
+     * Add the spawns for a particular butterfly species.
+     * @param event The Biome Loading Event, used to add spawns.
+     * @param butterflyEgg The butterfly egg entity.
+     * @param caterpillar The caterpillar entity.
+     * @param chrysalis The chrysalis entity.
+     * @param butterfly The butterfly entity.
+     * @param weight The weight of the spawns.
+     * @param maximum The maximum number in a single spawn.
+     */
+    private void addSpawns(BiomeLoadingEvent event,
+                           RegistryObject<EntityType<ButterflyEgg>> butterflyEgg,
+                           RegistryObject<EntityType<Caterpillar>> caterpillar,
+                           RegistryObject<EntityType<Chrysalis>> chrysalis,
+                           RegistryObject<EntityType<? extends Butterfly>> butterfly,
+                           int weight,
+                           int maximum) {
+        event.getSpawns().addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(butterflyEgg.get(), weight, 1, maximum));
+        event.getSpawns().addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(caterpillar.get(), weight, 1, maximum));
+        event.getSpawns().addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(chrysalis.get(), weight, 1, maximum));
+        event.getSpawns().addSpawn(MobCategory.CREATURE,
+                new MobSpawnSettings.SpawnerData(butterfly.get(), weight, 1, maximum));
     }
 }
