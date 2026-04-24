@@ -25,21 +25,18 @@ public class MobSpawnEventListener {
 
     // The entity type registry.
     private final EntityTypeRegistry entityTypeRegistry;
-    private final TagRegistry tagRegistry;
 
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
     public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry,
-                                 TagRegistry tagRegistry) {
+                                 EntityTypeRegistry entityTypeRegistry) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);
 
         this.entityTypeRegistry = entityTypeRegistry;
-        this.tagRegistry = tagRegistry;
     }
 
     /**
