@@ -198,7 +198,7 @@ public class PeacemakerButterfly
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
 
-        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(unpossessed, possessed);
+        EventHooks.onLivingConvert(unpossessed, possessed);
 
         if (!possessed.isSilent()) {
             level.levelEvent(null, 1026, possessed.blockPosition(), 0);
@@ -271,7 +271,7 @@ public class PeacemakerButterfly
                                                 Raider raider,
                                                 String entityId) {
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-        EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPES.getValue(location);
+        EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
         if (entityType != null) {
 
             if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
