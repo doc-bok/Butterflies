@@ -1,11 +1,7 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 import java.util.function.Supplier;
