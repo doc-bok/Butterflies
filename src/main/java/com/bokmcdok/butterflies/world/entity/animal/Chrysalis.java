@@ -168,7 +168,8 @@ public class Chrysalis extends DirectionalCreature {
         super.customServerAiStep();
 
         // If the surface block is destroyed then the chrysalis dies.
-        if (this.level().isEmptyBlock(getSurfaceBlockPos())) {
+        Level level = level();
+        if (level.isEmptyBlock(getSurfaceBlockPos())) {
             kill();
         }
 
@@ -179,7 +180,7 @@ public class Chrysalis extends DirectionalCreature {
             int butterflyIndex = getData().getBaseButterflyIndex();
 
             // Check for cold and warm variants.
-            float temperature = this.level().getBiome(this.blockPosition()).value().getModifiedClimateSettings().temperature();
+            float temperature = level.getBiome(this.blockPosition()).value().getModifiedClimateSettings().temperature();
             if (temperature < 0.5) {
                 int coldIndex = getData().getColdButterflyIndex();
                 if (coldIndex >= 0) {
@@ -203,7 +204,7 @@ public class Chrysalis extends DirectionalCreature {
             ButterflyData data = ButterflyData.getEntry(butterflyIndex);
             if (data != null) {
                 ResourceLocation newLocation = data.getButterflyEntity();
-                Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                Butterfly.spawn(level, newLocation, this.blockPosition(), false);
                 this.remove(RemovalReason.DISCARDED);
             }
         }

@@ -118,6 +118,8 @@ public class PeacemakerVillager extends Villager {
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         brain.setDefaultActivity(Activity.IDLE);
         brain.setActiveActivityIfPossible(Activity.IDLE);
-        brain.updateActivityFromSchedule(this.level().getDayTime(), this.level().getGameTime());
+
+        Level level = level();
+        brain.updateActivityFromSchedule(level.getDayTime(), level.getGameTime());
     }
 }

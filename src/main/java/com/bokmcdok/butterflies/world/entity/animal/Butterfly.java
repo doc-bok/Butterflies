@@ -359,13 +359,14 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return TRUE if the butterfly is active at this time of day.
      */
     public boolean getIsActive() {
+        Level level = level();
         return switch (getData().diurnality()) {
-            case DIURNAL -> this.level().isDay();
+            case DIURNAL -> level.isDay();
 
-            case NOCTURNAL -> this.level().isNight();
+            case NOCTURNAL -> level.isNight();
 
-            case CREPUSCULAR -> !this.level().dimensionType().hasFixedTime() &&
-                                this.level().getSkyDarken() == 4;
+            case CREPUSCULAR -> !level.dimensionType().hasFixedTime() &&
+                                level.getSkyDarken() == 4;
 
             case CATHEMERAL -> true;
         };
@@ -472,13 +473,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         ItemStack itemstack = player.getItemInHand(interactionHand);
         if (getData().eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
             if (this.isFood(itemstack)) {
-                if (!this.level().isClientSide && this.getNumEggs() == 0) {
+
+                Level level = level();
+                if (!level.isClientSide && this.getNumEggs() == 0) {
                     this.usePlayerItem(player, interactionHand, itemstack);
                     setNumEggs(1);
                     return InteractionResult.SUCCESS;
                 }
 
-                if (this.level().isClientSide) {
+                if (level.isClientSide) {
                     return InteractionResult.CONSUME;
                 }
             }
@@ -707,7 +710,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     public void setMudPuddling() {
         if (this.random.nextInt(10) == 0) {
-            this.level().broadcastEntityEvent(this, (byte) 38);
+            level().broadcastEntityEvent(this, (byte) 38);
         }
     }
 
@@ -930,7 +933,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            this.level().addParticle(
+            level().addParticle(
                     ParticleTypes.HAPPY_VILLAGER,
                     this.getRandomX(1.0),
                     this.getRandomY() + 0.5,
