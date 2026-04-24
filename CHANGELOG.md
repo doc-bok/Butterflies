@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.3.5 (2026-04-24)
+ - Added abstract book class to cleanup repeated code.
+ - Removed more unused imports.
+
 ### 7.3.4 (2026-04-23)
  - Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
  - Removed more unused imports.
