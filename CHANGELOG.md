@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.3.6 (2024-04-24)
+ - Tidied up spawn code.
+ - Removed unused `TagRegistry` reference.
+ - Removed more unused imports.
+
 ### 7.3.5 (2026-04-24)
  - Added abstract book class to cleanup repeated code.
  - Removed more unused imports.
