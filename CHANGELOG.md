@@ -1,5 +1,21 @@
 ## Changelog
 
+### 7.3.5 (2026-04-24)
+ - Added abstract book class to cleanup repeated code.
+ - Removed more unused imports.
+
+### 7.3.4 (2026-04-23)
+ - Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
+ - Removed more unused imports.
+
+### 7.3.3 (2026-04-22)
+ - Removed redundant Chinese character strings.
+ - Removed unused imports.
+ - Tidied up level access.
+ - Added DirectionalBaseRenderer for common code.
+ - Removed unnecessary drop code from Microscope Block.
+ - Added a `finalizePossess()` method to reduce duplicate code.
+
 ### 7.3.2 (2026-04-10)
  - Fixed Peacemaker mobs crash-on-spawn.
 

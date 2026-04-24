@@ -141,7 +141,8 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     public boolean hurt(@NotNull DamageSource damageSource,
                         float damage) {
         if (damageSource.getEntity() instanceof Player player) {
-            if (this.getLevel().isClientSide) {
+
+            if (getLevel().isClientSide) {
                 player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
             } else {
                 this.remove(RemovalReason.DISCARDED);
@@ -288,10 +289,12 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
 
         if (this.getIsReleased()) {
             BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
-            if (this.getLevel().hasChunkAt(surfaceBlockPos)) {
+
+            Level level = getLevel();
+            if (level.hasChunkAt(surfaceBlockPos)) {
 
                 // If the surface block is empty then we try to look for one below.
-                if (this.getLevel().isEmptyBlock(surfaceBlockPos)) {
+                if (level.isEmptyBlock(surfaceBlockPos)) {
                     setSurfaceDirection(Direction.DOWN);
                 }
 
@@ -301,7 +304,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
 
                     // If the surface block is still empty, or the caterpillar is
                     // too far above the surface block, then it should fall.
-                    if (this.getLevel().isEmptyBlock(surfaceBlockPos)
+                    if (level.isEmptyBlock(surfaceBlockPos)
                             || this.position().y() - (double) this.blockPosition().getY() > 0.01) {
                         this.targetPosition = null;
                         isNoGravity = false;
@@ -363,9 +366,10 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
                 // If the caterpillar is not on a valid block it will starve instead.
-                if (getData().isValidLandingBlock(getLevel().getBlockState(surfaceBlockPos))) {
+                Level level = getLevel();
+                if (getData().isValidLandingBlock(level.getBlockState(surfaceBlockPos))) {
                     ResourceLocation newLocation = this.getData().getChrysalisEntity();
-                    Chrysalis.spawn((ServerLevel) this.getLevel(),
+                    Chrysalis.spawn((ServerLevel) level,
                             newLocation,
                             this.getSurfaceBlockPos(),
                             this.getSurfaceDirection(),

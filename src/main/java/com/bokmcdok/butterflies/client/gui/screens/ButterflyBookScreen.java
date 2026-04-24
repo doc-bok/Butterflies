@@ -7,7 +7,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.PageButton;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +28,7 @@ import java.util.List;
  * butterfly species.
  */
 @OnlyIn(Dist.CLIENT)
-public class ButterflyBookScreen extends Screen {
+public class ButterflyBookScreen extends AbstractButterflyBookScreen {
 
     // A cache for the page components.
     private List<FormattedCharSequence> cachedPageComponents = Collections.emptyList();
@@ -189,12 +188,7 @@ public class ButterflyBookScreen extends Screen {
 
         this.renderBackground(poseStack);
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, ButterflyTextures.BOOK);
-
-        int i = (this.width - 192) / 2;
-        this.blit(poseStack, i, 2, 0, 0, 192, 192);
+        blitBook(poseStack);
 
         if (this.cachedPage != this.currentPage) {
             FormattedText formattedText = this.bookAccess.getPage(this.currentPage);
@@ -202,6 +196,7 @@ public class ButterflyBookScreen extends Screen {
             this.pageMsg = new TranslatableComponent("book.pageIndicator", this.currentPage + 1, Math.max(this.getNumPages(), 1));
         }
 
+        int i = (this.width - 192) / 2;
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);

@@ -8,6 +8,7 @@ import net.minecraft.tags.BlockTags;
 import java.util.Random;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -113,7 +114,8 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
             if (!attemptedToPollinate) {
                 attemptedToPollinate = true;
 
-                if (butterfly.getLevel().getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+                Level level = butterfly.getLevel();
+                if (level.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
                     if (feeder.getItem(0).is(preferredFlowerItem)) {
                         butterfly.setNumEggs(1);
                         feeder.removeItem(0, 1);
@@ -122,10 +124,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                     if (this.random.nextInt() % 5 == 0) {
                         BlockPos spawnPos = findNearestFlowerSpot();
                         if (spawnPos != null) {
-                            BlockState blockState = this.mob.getLevel().getBlockState(this.blockPos);
+
+                            BlockState blockState = level.getBlockState(this.blockPos);
                             Block budBlock = getFlowerBud(blockState.getBlock());
                             if (budBlock != null) {
-                                this.mob.getLevel().setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
+                                level.setBlockAndUpdate(spawnPos, budBlock.defaultBlockState());
                             }
                         }
                     }
@@ -201,9 +204,9 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
                         // Torchflowers require farmland.
                         Block requiredBlock = Blocks.GRASS_BLOCK;
 
-                        if (this.mob.level.getBlockState(mutableBlockPos).isAir() &&
-                            this.mob.level.getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
-
+                        Level level = butterfly.getLevel();
+                        if (level.getBlockState(mutableBlockPos).isAir() &&
+                            level.getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
                             return mutableBlockPos;
                         }
                     }

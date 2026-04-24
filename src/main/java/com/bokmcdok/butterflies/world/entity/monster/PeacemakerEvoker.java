@@ -1,7 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -42,7 +40,7 @@ public class PeacemakerEvoker extends Evoker {
         super(type, level);
 
         // Register Peacemaker-specific goals.
-        if (!this.level.isClientSide()) {
+        if (!level.isClientSide()) {
             peacemakerGoalRegistrar.registerGoals(this);
         }
     }

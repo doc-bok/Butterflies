@@ -126,11 +126,6 @@ public class PeacemakerButterfly
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
-        // Only need to do this on a server.
-        if (villager.level.isClientSide()) {
-            return;
-        }
-
         // Don't do this if the villager is already possessed.
         if (villager instanceof  PeacemakerVillager) {
             return;
@@ -156,19 +151,8 @@ public class PeacemakerButterfly
                     peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE).getValue());
                     peacemakerVillager.setOffers(villager.getOffers());
                     peacemakerVillager.setVillagerXp(villager.getVillagerXp());
-                    peacemakerVillager.finalizeSpawn(level,
-                            level.getCurrentDifficultyAt(peacemakerVillager.blockPosition()),
-                            MobSpawnType.CONVERSION,
-                            null,
-                            null);
 
-                    peacemakerVillager.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(villager, peacemakerVillager);
-
-                    if (!peacemakerVillager.isSilent()) {
-                        level.levelEvent(null, 1026, peacemakerVillager.blockPosition(), 0);
-                    }
+                    finalizePossess(level, villager, peacemakerVillager);
                 }
             }
         }
@@ -183,10 +167,6 @@ public class PeacemakerButterfly
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
 
-
-        if (wanderingTrader.level.isClientSide()) {
-            return;
-        }
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
             if (difficulty != Difficulty.HARD && wanderingTrader.getRandom().nextBoolean()) {
@@ -204,21 +184,34 @@ public class PeacemakerButterfly
                 PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(entityType, false);
                 if (peacemakerWanderingTrader != null) {
 
-                    peacemakerWanderingTrader.finalizeSpawn(level,
-                            level.getCurrentDifficultyAt(peacemakerWanderingTrader.blockPosition()),
-                            MobSpawnType.CONVERSION,
-                            null,
-                            null);
-
-                    peacemakerWanderingTrader.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(wanderingTrader, peacemakerWanderingTrader);
-
-                    if (!peacemakerWanderingTrader.isSilent()) {
-                        level.levelEvent(null, 1026, peacemakerWanderingTrader.blockPosition(), 0);
-                    }
+                    finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
                 }
             }
+        }
+    }
+
+    /**
+     * Finalizes the possession for villager-based entities.
+     * @param level The current level.
+     * @param unpossessed The unpossessed version of the entity to be removed.
+     * @param possessed The possessed version of the entity to replace it with.
+     */
+    @SuppressWarnings({"UnstableApiUsage"})
+    public static void finalizePossess(ServerLevelAccessor level,
+                                       AbstractVillager unpossessed,
+                                       AbstractVillager possessed) {
+        possessed.finalizeSpawn(level,
+                level.getCurrentDifficultyAt(possessed.blockPosition()),
+                MobSpawnType.CONVERSION,
+                null,
+                null);
+
+        possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+
+        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(unpossessed, possessed);
+
+        if (!possessed.isSilent()) {
+            level.levelEvent(null, 1026, possessed.blockPosition(), 0);
         }
     }
 
@@ -239,8 +232,9 @@ public class PeacemakerButterfly
      * @param entity The host entity
      */
     public static void spawn(LivingEntity entity) {
-        if (!entity.level.isClientSide()) {
-            spawn((ServerLevel) entity.level, entity.blockPosition());
+        Level level = entity.level;
+        if (!level.isClientSide()) {
+            spawn((ServerLevel) level, entity.blockPosition());
         }
     }
 
@@ -284,26 +278,25 @@ public class PeacemakerButterfly
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
-        if (!raider.level.isClientSide()) {
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-            EntityType<T> entityType = (EntityType<T>)ForgeRegistries.ENTITIES.getValue(location);
-            if (entityType != null) {
 
-                if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
-                })) {
-                    T newMob = raider.convertTo(entityType, false);
-                    if (newMob != null) {
-                        newMob.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                MobSpawnType.CONVERSION,
-                                null,
-                                null);
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
+        EntityType<T> entityType = (EntityType<T>) ForgeRegistries.ENTITIES.getValue(location);
+        if (entityType != null) {
 
-                        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
+            if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
+            })) {
+                T newMob = raider.convertTo(entityType, false);
+                if (newMob != null) {
+                    newMob.finalizeSpawn(level,
+                            level.getCurrentDifficultyAt(newMob.blockPosition()),
+                            MobSpawnType.CONVERSION,
+                            null,
+                            null);
 
-                        if (!newMob.isSilent()) {
-                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                        }
+                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
+
+                    if (!newMob.isSilent()) {
+                        level.levelEvent(null, 1026, newMob.blockPosition(), 0);
                     }
                 }
             }
@@ -323,7 +316,7 @@ public class PeacemakerButterfly
 
         this.itemRegistry = itemRegistry;
 
-        if (!this.level.isClientSide()) {
+        if (!level.isClientSide()) {
             this.registerGoalsPost(peacemakerGoalRegistrar);
         }
 
@@ -440,7 +433,8 @@ public class PeacemakerButterfly
                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (this.level.isClientSide()) {
+        Level level = getLevel();
+        if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
                     itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
@@ -456,9 +450,9 @@ public class PeacemakerButterfly
                 this.setFriendUUID(player.getUUID());
                 this.navigation.stop();
                 this.setTarget(null);
-                this.level.broadcastEntityEvent(this, (byte) 7);
+                level.broadcastEntityEvent(this, (byte) 7);
             } else {
-                this.level.broadcastEntityEvent(this, (byte) 6);
+                level.broadcastEntityEvent(this, (byte) 6);
             }
 
             return InteractionResult.SUCCESS;
@@ -596,7 +590,7 @@ public class PeacemakerButterfly
     }
     
     /**
-     * Set the debug info so it can be synchronised with the client for display.
+     * Set the debug info so it can be synchronized with the client for display.
      * @param debugInfo The debug info to set.
      */
     private void setDebugInfo(String debugInfo) {
@@ -626,7 +620,14 @@ public class PeacemakerButterfly
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            this.level.addParticle(particleType, this.getRandomX(1.0F), this.getRandomY() + (double)0.5F, this.getRandomZ(1.0F), d0, d1, d2);
+            level.addParticle(
+                    particleType,
+                    this.getRandomX(1.0F),
+                    this.getRandomY() + (double)0.5F,
+                    this.getRandomZ(1.0F),
+                    d0,
+                    d1,
+                    d2);
         }
 
     }
