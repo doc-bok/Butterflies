@@ -113,6 +113,7 @@ public abstract class DirectionalCreature extends Animal {
      * @param groupData The group data.
      * @return The updated group data.
      */
+    @NotNull
     @Override
     @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,

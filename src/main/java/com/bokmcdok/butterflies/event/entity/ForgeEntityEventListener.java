@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.event.entity;
 
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
