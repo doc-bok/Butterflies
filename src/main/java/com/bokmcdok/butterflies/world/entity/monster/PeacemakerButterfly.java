@@ -188,7 +188,6 @@ public class PeacemakerButterfly
         possessed.finalizeSpawn(level,
                 level.getCurrentDifficultyAt(possessed.blockPosition()),
                 MobSpawnType.CONVERSION,
-                null,
                 null);
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
@@ -264,7 +263,7 @@ public class PeacemakerButterfly
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
         EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
         if (entityType != null) {
             if (EventHooks.canLivingConvert(raider, entityType, (x) -> {

@@ -73,7 +73,6 @@ public class EntityBehaviours {
             newMob.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(newMob.blockPosition()),
                     MobSpawnType.CONVERSION,
-                    null,
                     null);
 
             EventHooks.onLivingConvert(oldMob, newMob);
