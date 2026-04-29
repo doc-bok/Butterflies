@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.3.7 (2026-04-30)
+ - Removed more unused imports.
+ - Fixed some nullability issues.
+ - Added `finalizeConvert()` to reduce duplicate code.
+
 ### 7.3.4 (2026-04-23)
  - Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
  - Removed more unused imports.
