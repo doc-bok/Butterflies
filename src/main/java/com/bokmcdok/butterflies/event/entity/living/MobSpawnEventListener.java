@@ -55,6 +55,7 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
+    @SuppressWarnings("unchecked")
     private void trySpawnButterflyGolem(FinalizeSpawnEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
