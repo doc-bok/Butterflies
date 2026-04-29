@@ -122,7 +122,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param villager The villager to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
@@ -154,7 +154,7 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param wanderingTrader The wanderingTrader to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
 
@@ -186,7 +186,6 @@ public class PeacemakerButterfly
      * @param unpossessed The unpossessed version of the entity to be removed.
      * @param possessed The possessed version of the entity to replace it with.
      */
-    @SuppressWarnings({"UnstableApiUsage"})
     public static void finalizePossess(ServerLevelAccessor level,
                                        AbstractVillager unpossessed,
                                        AbstractVillager possessed) {
@@ -266,7 +265,7 @@ public class PeacemakerButterfly
      * @param entityId The ID of the entity
      * @param <T>      The entity class
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked", "UnstableApiUsage"})
+    @SuppressWarnings("unchecked")
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
@@ -277,19 +276,7 @@ public class PeacemakerButterfly
             if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
             })) {
                 T newMob = raider.convertTo(entityType, false);
-                if (newMob != null) {
-                    newMob.finalizeSpawn(level,
-                            level.getCurrentDifficultyAt(newMob.blockPosition()),
-                            MobSpawnType.CONVERSION,
-                            null,
-                            null);
-
-                    EventHooks.onLivingConvert(raider, newMob);
-
-                    if (!newMob.isSilent()) {
-                        level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                    }
-                }
+                EntityBehaviours.finalizeConvert(level, raider, newMob);
             }
         }
     }

@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -46,6 +47,7 @@ public class MobSpawnEventListener {
      * Handle mobs being replaced on spawn.
      * @param event The event context.
      */
+    @SubscribeEvent
     private void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
         trySpawnButterflyGolem(event);
         trySpawnPeacemakerButterfly(event);
@@ -55,8 +57,6 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    @SubscribeEvent
-    @SuppressWarnings({"deprecation", "UnstableApiUsage", "OverrideOnly"})
     private void trySpawnButterflyGolem(MobSpawnEvent.FinalizeSpawn event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
@@ -68,19 +68,7 @@ public class MobSpawnEventListener {
 
                 if (EventHooks.canLivingConvert(ironGolem, entityType, (x) -> {})) {
                     IronGolem newMob = ironGolem.convertTo(entityType, false);
-                    if (newMob != null) {
-                        newMob.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                MobSpawnType.CONVERSION,
-                                null,
-                                null);
-
-                        EventHooks.onLivingConvert(ironGolem, newMob);
-
-                        if (!newMob.isSilent()) {
-                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                        }
-                    }
+                    EntityBehaviours.finalizeConvert(level, ironGolem, newMob);
                 }
             }
         }
@@ -141,6 +129,7 @@ public class MobSpawnEventListener {
      * then it shouldn't drop loot.
      * @param event The drop event to cancel
      */
+    @SubscribeEvent
     private void onLivingDrops(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof PeacemakerButterfly) {
             LivingEntity killed = event.getEntity();
