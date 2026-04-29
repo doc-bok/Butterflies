@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -106,12 +107,13 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
             if (!hasEaten) {
                 hasEaten = true;
 
-                BlockState blockState = this.mob.level().getBlockState(this.blockPos);
+                Level level = mob.level();
+                BlockState blockState = level.getBlockState(this.blockPos);
                 if (blockState.is(this.foodSource)) {
                     int age = blockState.getValue(CropBlock.AGE);
                     if (age > 0) {
                         blockState.setValue(CropBlock.AGE, age -1);
-                        this.mob.level().setBlockAndUpdate(this.blockPos, blockState);
+                        level.setBlockAndUpdate(this.blockPos, blockState);
                     }
                 }
             }

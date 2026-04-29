@@ -5,11 +5,8 @@ import com.bokmcdok.butterflies.client.renderer.entity.state.CaterpillarRenderSt
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -19,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * The renderer for the caterpillar entity.
  */
 @OnlyIn(Dist.CLIENT)
-public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarRenderState, CaterpillarModel> {
+public class CaterpillarRenderer extends DirectionalBaseRenderer<Caterpillar, CaterpillarRenderState, CaterpillarModel> {
 
     /**
      * Bakes a new model for the renderer
@@ -94,30 +91,17 @@ public class CaterpillarRenderer extends MobRenderer<Caterpillar, CaterpillarRen
     @Override
     public void render(@NotNull CaterpillarRenderState renderState,
                        @NotNull PoseStack poseStack,
-                       @NotNull MultiBufferSource multiBufferSource,
-                       int packedLightCoordinates) {
+                       @NotNull MultiBufferSource buffers,
+                       int overlay) {
 
         // Render any debug information for this entity.
         EntityDebugInfoRenderer.renderDebugInfo(
                 renderState.debugInfo,
                 poseStack,
-                multiBufferSource,
+                buffers,
                 this.entityRenderDispatcher.cameraOrientation(),
                 this.getFont(),
-                packedLightCoordinates);
-
-        Direction direction = renderState.surfaceDirection;
-        if (direction == Direction.UP) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
-        } else if (direction == Direction.NORTH) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(90.f));
-        } else if (direction == Direction.SOUTH) {
-            poseStack.mulPose(Axis.XP.rotationDegrees(-90.f));
-        } else if (direction == Direction.WEST) {
-            poseStack.mulPose(Axis.ZP.rotationDegrees(-90.f));
-        } else if (direction == Direction.EAST){
-            poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
-        }
+                overlay);
 
         super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
     }

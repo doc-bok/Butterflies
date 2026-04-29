@@ -113,6 +113,7 @@ public class ItemRegistry {
      * @param entityTypeRegistry The entity type registry.
      * @param tagRegistry The tag registry.
      */
+    @SuppressWarnings("deprecation")
     public void initialise(@NotNull BlockRegistry blockRegistry,
                            @NotNull DataComponentRegistry dataComponentRegistry,
                            @NotNull EntityTypeRegistry entityTypeRegistry,

@@ -44,7 +44,7 @@ public class PeacemakerPillager extends Pillager {
         super(type, level);
 
         // Register Peacemaker-specific goals.
-        if (!this.level().isClientSide()) {
+        if (!level.isClientSide()) {
             peacemakerGoalRegistrar.registerGoals(this);
         }
     }

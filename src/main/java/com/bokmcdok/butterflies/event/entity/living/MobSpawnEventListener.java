@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -54,7 +55,6 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
     private void trySpawnButterflyGolem(FinalizeSpawnEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
@@ -71,18 +71,7 @@ public class MobSpawnEventListener {
                             EntitySpawnReason.CONVERSION,
                             entity -> {});
 
-                    if (newMob != null) {
-                        newMob.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                EntitySpawnReason.CONVERSION,
-                                null);
-
-                        EventHooks.onLivingConvert(ironGolem, newMob);
-
-                        if (!newMob.isSilent()) {
-                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                        }
-                    }
+                    EntityBehaviours.finalizeConvert(level, ironGolem, newMob);
                 }
             }
         }

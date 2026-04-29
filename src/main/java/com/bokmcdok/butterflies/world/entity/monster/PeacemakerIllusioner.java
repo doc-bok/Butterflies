@@ -42,7 +42,7 @@ public class PeacemakerIllusioner extends Illusioner {
         super(type, level);
 
         // Register Peacemaker-specific goals.
-        if (!this.level().isClientSide()) {
+        if (!level.isClientSide()) {
             peacemakerGoalRegistrar.registerGoals(this);
         }
     }

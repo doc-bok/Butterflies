@@ -1,9 +1,14 @@
 package com.bokmcdok.butterflies.world.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -36,7 +41,8 @@ public class EntityBehaviours {
             } else {
                 float friction = 0.91F;
                 if (entity.onGround()) {
-                    friction = entity.level().getBlockState(ground).getFriction(entity.level(), ground, entity) * 0.91F;
+                    Level level = entity.level();
+                    friction = level.getBlockState(ground).getFriction(level, ground, entity) * 0.91F;
                 }
 
                 float frictionCoefficient = 0.16277137F / (friction * friction * friction);
@@ -48,5 +54,32 @@ public class EntityBehaviours {
         }
 
         entity.calculateEntityAnimation(false);
+    }
+
+    /**
+     * Finalize convert - finishes off spawning mobs that are converted from
+     * one entity to another.
+     * @param level The current level.
+     * @param oldMob The old mob to replace.
+     * @param newMob The new mob to spawn.
+     * @param <T> The entity type of the old mob.
+     * @param <U> The entity type of the new mob.
+     */
+    @SuppressWarnings({"deprecation", "OverrideOnly"})
+    public static <T extends Mob, U extends Mob> void finalizeConvert(ServerLevelAccessor level,
+                                                                      T oldMob,
+                                                                      U newMob) {
+        if (newMob != null) {
+            newMob.finalizeSpawn(level,
+                    level.getCurrentDifficultyAt(newMob.blockPosition()),
+                    MobSpawnType.CONVERSION,
+                    null);
+
+            EventHooks.onLivingConvert(oldMob, newMob);
+
+            if (!newMob.isSilent()) {
+                level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+            }
+        }
     }
 }

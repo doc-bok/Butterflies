@@ -120,14 +120,9 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param villager The villager to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
-
-
-        if (villager.level().isClientSide()) {
-            return;
-        }
 
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
@@ -136,35 +131,17 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-            if (entityType.isPresent()) {
-                EntityType<PeacemakerVillager> entityTypeValue = (EntityType<PeacemakerVillager>) entityType.get().value();
-                if (EventHooks.canLivingConvert(villager, entityTypeValue, (x) -> {
-                })) {
-                    PeacemakerVillager peacemakerVillager = villager.convertTo(
-                            entityTypeValue,
-                            ConversionParams.single(villager, true, true),
-                            EntitySpawnReason.CONVERSION,
-                            entity -> {});
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
+            })) {
+                PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
+                if (peacemakerVillager != null) {
+                    peacemakerVillager.setVillagerData(villager.getVillagerData());
+                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                    peacemakerVillager.setOffers(villager.getOffers());
+                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
 
-                    if (peacemakerVillager != null) {
-                        peacemakerVillager.setVillagerData(villager.getVillagerData());
-                        peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-                        peacemakerVillager.setOffers(villager.getOffers());
-                        peacemakerVillager.setVillagerXp(villager.getVillagerXp());
-                        peacemakerVillager.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(peacemakerVillager.blockPosition()),
-                                EntitySpawnReason.CONVERSION,
-                                null);
-
-                        peacemakerVillager.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-
-                        EventHooks.onLivingConvert(villager, peacemakerVillager);
-
-                        if (!peacemakerVillager.isSilent()) {
-                            level.levelEvent(null, 1026, peacemakerVillager.blockPosition(), 0);
-                        }
-                    }
+                    finalizePossess(level, villager, peacemakerVillager);
                 }
             }
         }
@@ -175,14 +152,10 @@ public class PeacemakerButterfly
      * @param level The current level
      * @param wanderingTrader The wanderingTrader to convert
      */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
+    @SuppressWarnings({"unchecked"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
 
-
-        if (wanderingTrader.level().isClientSide()) {
-            return;
-        }
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
             if (difficulty != Difficulty.HARD && wanderingTrader.getRandom().nextBoolean()) {
@@ -206,21 +179,32 @@ public class PeacemakerButterfly
                         entity -> {});
                 
                 if (peacemakerWanderingTrader != null) {
-
-                    peacemakerWanderingTrader.finalizeSpawn(level,
-                            level.getCurrentDifficultyAt(peacemakerWanderingTrader.blockPosition()),
-                            EntitySpawnReason.CONVERSION,
-                            null);
-
-                    peacemakerWanderingTrader.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-
-                    EventHooks.onLivingConvert(wanderingTrader, peacemakerWanderingTrader);
-
-                    if (!peacemakerWanderingTrader.isSilent()) {
-                        level.levelEvent(null, 1026, peacemakerWanderingTrader.blockPosition(), 0);
-                    }
+                    finalizePossess(level, wanderingTrader, peacemakerWanderingTrader); 
                 }
             }
+        }
+    }
+
+    /**
+     * Finalizes the possession for villager-based entities.
+     * @param level The current level.
+     * @param unpossessed The unpossessed version of the entity to be removed.
+     * @param possessed The possessed version of the entity to replace it with.
+     */
+    public static void finalizePossess(ServerLevelAccessor level,
+                                       AbstractVillager unpossessed,
+                                       AbstractVillager possessed) {
+        possessed.finalizeSpawn(level,
+                level.getCurrentDifficultyAt(possessed.blockPosition()),
+                MobSpawnType.CONVERSION,
+                null);
+
+        possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+
+        EventHooks.onLivingConvert(unpossessed, possessed);
+
+        if (!possessed.isSilent()) {
+            level.levelEvent(null, 1026, possessed.blockPosition(), 0);
         }
     }
 
@@ -243,8 +227,9 @@ public class PeacemakerButterfly
      */
     @SuppressWarnings("unchecked")
     public static void spawn(LivingEntity entity) {
-        if (!entity.level().isClientSide()) {
-            spawn((ServerLevel) entity.level(), entity.blockPosition());
+        Level level = entity.level();
+        if (!level.isClientSide()) {
+            spawn((ServerLevel) level, entity.blockPosition());
         }
     }
 
@@ -282,38 +267,17 @@ public class PeacemakerButterfly
      * @param entityId The ID of the entity
      * @param <T>      The entity class
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked", "UnstableApiUsage"})
+    @SuppressWarnings("unchecked")
     private static <T extends Mob> void possess(ServerLevelAccessor level,
                                                 Raider raider,
                                                 String entityId) {
-
-        if (!raider.level().isClientSide()) {
-            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
-            Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-            if (entityType.isPresent()) {
-                EntityType<T> entityTypeValue = (EntityType<T>) entityType.get().value();
-
-                if (EventHooks.canLivingConvert(raider, entityTypeValue, (x) -> {
-                })) {
-                    T newMob = raider.convertTo(
-                            entityTypeValue,
-                            ConversionParams.single(raider, true, true),
-                            EntitySpawnReason.CONVERSION,
-                            entity -> {});
-
-                    if (newMob != null) {
-                        newMob.finalizeSpawn(level,
-                                level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                EntitySpawnReason.CONVERSION,
-                                null);
-
-                        EventHooks.onLivingConvert(raider, newMob);
-
-                        if (!newMob.isSilent()) {
-                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                        }
-                    }
-                }
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
+        EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityType != null) {
+            if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
+            })) {
+                T newMob = raider.convertTo(entityType, false);
+                EntityBehaviours.finalizeConvert(level, raider, newMob);
             }
         }
     }
@@ -331,7 +295,7 @@ public class PeacemakerButterfly
 
         this.itemRegistry = itemRegistry;
 
-        if (!this.level().isClientSide()) {
+        if (!level.isClientSide()) {
             this.registerGoalsPost(peacemakerGoalRegistrar);
         }
 
@@ -447,7 +411,8 @@ public class PeacemakerButterfly
                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        if (this.level().isClientSide()) {
+        Level level = level();
+        if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
                     itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
@@ -463,9 +428,9 @@ public class PeacemakerButterfly
                 this.setFriendUUID(player.getUUID());
                 this.navigation.stop();
                 this.setTarget(null);
-                this.level().broadcastEntityEvent(this, (byte) 7);
+                level.broadcastEntityEvent(this, (byte) 7);
             } else {
-                this.level().broadcastEntityEvent(this, (byte) 6);
+                level.broadcastEntityEvent(this, (byte) 6);
             }
 
             return InteractionResult.SUCCESS;
@@ -603,7 +568,7 @@ public class PeacemakerButterfly
     }
     
     /**
-     * Set the debug info so it can be synchronised with the client for display.
+     * Set the debug info so it can be synchronized with the client for display.
      * @param debugInfo The debug info to set.
      */
     private void setDebugInfo(String debugInfo) {
@@ -633,7 +598,14 @@ public class PeacemakerButterfly
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            this.level().addParticle(particleType, this.getRandomX(1.0F), this.getRandomY() + (double)0.5F, this.getRandomZ(1.0F), d0, d1, d2);
+            level().addParticle(
+                    particleType,
+                    this.getRandomX(1.0F),
+                    this.getRandomY() + (double)0.5F,
+                    this.getRandomZ(1.0F),
+                    d0,
+                    d1,
+                    d2);
         }
 
     }
