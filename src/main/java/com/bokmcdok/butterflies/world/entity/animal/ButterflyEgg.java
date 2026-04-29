@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -14,7 +15,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -107,14 +107,7 @@ public class ButterflyEgg extends DirectionalCreature {
             this.remove(RemovalReason.DISCARDED);
 
             ResourceLocation location = this.getData().getButterflyEggItem();
-            if (location != null) {
-                Optional<Holder.Reference<Item>> butterflyEggItem = BuiltInRegistries.ITEM.get(location);
-                if (butterflyEggItem.isPresent()) {
-                    ItemStack itemStack = new ItemStack(butterflyEggItem.get());
-                    player.addItem(itemStack);
-                }
-            }
-
+            EntityBehaviours.addEntityItem(player, location);
             return true;
         }
 
@@ -191,15 +184,14 @@ public class ButterflyEgg extends DirectionalCreature {
         super.customServerAiStep(level);
 
         // If the surface block is destroyed then the butterfly egg dies.
-        Level level = level();
         if (level.isEmptyBlock(getSurfaceBlockPos())) {
-            kill();
+            kill(level);
         }
 
         // Spawn Butterfly.
         if (this.getAge() >= 0 && this.random.nextInt(0, 15) == 0) {
             ResourceLocation newLocation = this.getData().getCaterpillarEntity();
-            Caterpillar.spawn((ServerLevel) level, newLocation, this.blockPosition(), this.getDirection(), false);
+            Caterpillar.spawn(level, newLocation, this.blockPosition(), this.getDirection(), false);
             this.remove(RemovalReason.DISCARDED);
         }
     }

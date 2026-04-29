@@ -85,8 +85,8 @@ public class CaterpillarRenderer extends DirectionalBaseRenderer<Caterpillar, Ca
      * Rotates the caterpillar, so it's attached to its block.
      * @param renderState The current render state.
      * @param poseStack The posed model to render.
-     * @param multiBufferSource The render buffer.
-     * @param packedLightCoordinates The light coordinates.
+     * @param buffers The render buffer.
+     * @param overlay The light coordinates.
      */
     @Override
     public void render(@NotNull CaterpillarRenderState renderState,
@@ -103,6 +103,6 @@ public class CaterpillarRenderer extends DirectionalBaseRenderer<Caterpillar, Ca
                 this.getFont(),
                 overlay);
 
-        super.render(renderState, poseStack, multiBufferSource, packedLightCoordinates);
+        super.render(renderState, poseStack, buffers, overlay);
     }
 }

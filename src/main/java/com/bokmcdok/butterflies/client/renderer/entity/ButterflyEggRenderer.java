@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ButterflyEggModel;
 import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyEggRenderState;
-import com.bokmcdok.butterflies.client.renderer.entity.state.ButterflyRenderState;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

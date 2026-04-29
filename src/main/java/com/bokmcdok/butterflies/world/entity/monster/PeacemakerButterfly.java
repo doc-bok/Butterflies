@@ -131,17 +131,25 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) BuiltInRegistries.ENTITY_TYPE.get(location);
-            if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
-            })) {
-                PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
-                if (peacemakerVillager != null) {
-                    peacemakerVillager.setVillagerData(villager.getVillagerData());
-                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-                    peacemakerVillager.setOffers(villager.getOffers());
-                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
+            Optional<Holder.Reference<EntityType<?>>> entityTypeHolder = BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (entityTypeHolder.isPresent()) {
+                EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) entityTypeHolder.get().value();
+                if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
+                })) {
+                    PeacemakerVillager peacemakerVillager = villager.convertTo(
+                            entityType,
+                            ConversionParams.single(villager, true, true),
+                            EntitySpawnReason.CONVERSION,
+                            entity -> {});
 
-                    finalizePossess(level, villager, peacemakerVillager);
+                    if (peacemakerVillager != null) {
+                        peacemakerVillager.setVillagerData(villager.getVillagerData());
+                        peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                        peacemakerVillager.setOffers(villager.getOffers());
+                        peacemakerVillager.setVillagerXp(villager.getVillagerXp());
+
+                        finalizePossess(level, villager, peacemakerVillager);
+                    }
                 }
             }
         }
@@ -164,7 +172,7 @@ public class PeacemakerButterfly
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
             Optional<Holder.Reference<EntityType<?>>> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
-            if (!entityType.isPresent()) {
+            if (entityType.isEmpty()) {
                 return;
             }
 
@@ -179,7 +187,7 @@ public class PeacemakerButterfly
                         entity -> {});
                 
                 if (peacemakerWanderingTrader != null) {
-                    finalizePossess(level, wanderingTrader, peacemakerWanderingTrader); 
+                    finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
                 }
             }
         }
@@ -196,7 +204,7 @@ public class PeacemakerButterfly
                                        AbstractVillager possessed) {
         possessed.finalizeSpawn(level,
                 level.getCurrentDifficultyAt(possessed.blockPosition()),
-                MobSpawnType.CONVERSION,
+                EntitySpawnReason.CONVERSION,
                 null);
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
@@ -225,7 +233,6 @@ public class PeacemakerButterfly
      * Respawns a peacemaker butterfly after its host has died
      * @param entity The host entity
      */
-    @SuppressWarnings("unchecked")
     public static void spawn(LivingEntity entity) {
         Level level = entity.level();
         if (!level.isClientSide()) {
@@ -238,6 +245,7 @@ public class PeacemakerButterfly
      * @param level The current level.
      * @param position The position to spawn the butterfly.
      */
+    @SuppressWarnings("unchecked")
     public static void spawn(ServerLevel level,
                              BlockPos position) {
 
@@ -272,11 +280,18 @@ public class PeacemakerButterfly
                                                 Raider raider,
                                                 String entityId) {
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
-        EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
-        if (entityType != null) {
+        Optional<Holder.Reference<EntityType<?>>> entityTypeHolder = BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityTypeHolder.isPresent()) {
+            EntityType<T> entityType = (EntityType<T>) entityTypeHolder.get().value();
             if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
             })) {
-                T newMob = raider.convertTo(entityType, false);
+                T newMob = raider.convertTo(
+                        entityType,
+                        ConversionParams.single(raider, true, true),
+                        EntitySpawnReason.CONVERSION,
+                        entity -> {
+                        });
+
                 EntityBehaviours.finalizeConvert(level, raider, newMob);
             }
         }

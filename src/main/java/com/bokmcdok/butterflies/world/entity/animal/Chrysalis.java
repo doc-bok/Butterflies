@@ -156,7 +156,6 @@ public class Chrysalis extends DirectionalCreature {
         super.customServerAiStep(level);
 
         // If the surface block is destroyed then the chrysalis dies.
-        Level level = level();
         if (level.isEmptyBlock(getSurfaceBlockPos())) {
             kill(level);
         }

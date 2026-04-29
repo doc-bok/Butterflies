@@ -8,7 +8,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
             if (this.butterfly.getIsFertile()) {
 
                 // Don't lay an egg if there are too many butterflies in the area already.
-                Level level = getServerLevel(this.butterfly.level());
+                ServerLevel level = getServerLevel(butterfly.level());
                 List<Butterfly> numButterflies = level.getNearbyEntities(
                         Butterfly.class,
                         TargetingConditions.forNonCombat(),
@@ -83,7 +82,7 @@ public class ButterflyLayEggGoal extends ButterflyLandOnBlockGoal {
                         ButterflyData data = ButterflyData.getEntry(this.butterfly.getData().getBaseButterflyIndex());
                         if (data != null) {
                             ResourceLocation eggEntity = data.getButterflyEggEntity();
-                            ButterflyEgg.spawn((ServerLevel) level, eggEntity, this.blockPos, direction);
+                            ButterflyEgg.spawn(level, eggEntity, this.blockPos, direction);
                             this.butterfly.setIsFertile(false);
                             this.butterfly.useEgg();
                         }

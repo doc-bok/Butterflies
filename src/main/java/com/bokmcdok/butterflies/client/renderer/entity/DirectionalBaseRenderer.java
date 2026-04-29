@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
+import com.bokmcdok.butterflies.client.renderer.entity.state.DirectionalRenderState;
 import com.bokmcdok.butterflies.world.entity.animal.DirectionalCreature;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -18,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <M> The model used to render the creature.
  */
 @OnlyIn(Dist.CLIENT)
-public abstract class DirectionalBaseRenderer<T extends DirectionalCreature, M extends EntityModel<T>> extends MobRenderer<T, M> {
+public abstract class DirectionalBaseRenderer<T extends DirectionalCreature, S extends DirectionalRenderState, M extends EntityModel<? super S>> extends MobRenderer<T, S, M> {
 
     /**
      * Construction
@@ -34,22 +35,18 @@ public abstract class DirectionalBaseRenderer<T extends DirectionalCreature, M e
 
     /**
      * Rotates the creature so it's attached to its block.
-     * @param entity The directional entity.
-     * @param yaw The current yaw.
-     * @param partialTicks The current partial ticks.
+     * @param renderState The current render state.
      * @param poseStack The matrix stack.
      * @param buffers The render buffers.
      * @param overlay The overlay.
      */
     @Override
-    public void render(@NotNull T entity,
-                       float yaw,
-                       float partialTicks,
+    public void render(@NotNull S renderState,
                        @NotNull PoseStack poseStack,
                        @NotNull MultiBufferSource buffers,
                        int overlay) {
 
-        Direction direction = entity.getSurfaceDirection();
+        Direction direction = renderState.surfaceDirection;
         if (direction == Direction.UP) {
             poseStack.mulPose(Axis.XP.rotationDegrees(180.f));
         } else if (direction == Direction.NORTH) {
@@ -62,6 +59,6 @@ public abstract class DirectionalBaseRenderer<T extends DirectionalCreature, M e
             poseStack.mulPose(Axis.ZP.rotationDegrees(90.f));
         }
 
-        super.render(entity, yaw, partialTicks, poseStack, buffers, overlay);
+        super.render(renderState, poseStack, buffers, overlay);
     }
 }

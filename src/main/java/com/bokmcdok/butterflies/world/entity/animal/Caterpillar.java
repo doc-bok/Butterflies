@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
+import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -22,7 +23,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -32,7 +32,7 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 /**
- * Creates the Caterpillar behaviour.
+ * Creates the Caterpillar behavior.
  */
 public class Caterpillar extends DirectionalCreature implements DebugInfoSupplier {
 
@@ -161,14 +161,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
             this.remove(RemovalReason.DISCARDED);
 
             ResourceLocation location = this.getData().getCaterpillarItem();
-            if (location != null) {
-                Optional<Holder.Reference<Item>> caterpillarItem = BuiltInRegistries.ITEM.get(location);
-                if (caterpillarItem.isPresent()) {
-                    ItemStack itemStack = new ItemStack(caterpillarItem.get());
-                    player.addItem(itemStack);
-                }
-            }
-
+            EntityBehaviours.addEntityItem(player, location);
             return true;
         }
 
@@ -287,7 +280,6 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
 
         if (this.getIsReleased()) {
             BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
-            Level level = level();
             if (level.hasChunkAt(surfaceBlockPos)) {
 
                 // If the surface block is empty then we try to look for one below.
@@ -363,10 +355,9 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
                 BlockPos surfaceBlockPos = this.getSurfaceBlockPos();
 
                 // If the caterpillar is not on a valid block it will starve instead.
-                Level level = level();
                 if (getData().isValidLandingBlock(level.getBlockState(surfaceBlockPos))) {
                     ResourceLocation newLocation = this.getData().getChrysalisEntity();
-                    Chrysalis.spawn((ServerLevel) level,
+                    Chrysalis.spawn(level,
                             newLocation,
                             this.getSurfaceBlockPos(),
                             this.getSurfaceDirection(),
