@@ -1,10 +1,7 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.ChrysalisModel;
-import com.bokmcdok.butterflies.client.renderer.entity.state.CaterpillarRenderState;
 import com.bokmcdok.butterflies.client.renderer.entity.state.ChrysalisRenderState;
-import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

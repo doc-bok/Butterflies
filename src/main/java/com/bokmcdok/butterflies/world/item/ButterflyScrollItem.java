@@ -56,7 +56,6 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
      * @param properties The item's properties.
      * @param dataComponentRegistry The data component registry.
      * @param entityTypeRegistry The entity type registry
-     * @param itemRegistry The item registry.
      * @param butterflyIndex The index of the butterfly.
      */
     public ButterflyScrollItem(Properties properties,
