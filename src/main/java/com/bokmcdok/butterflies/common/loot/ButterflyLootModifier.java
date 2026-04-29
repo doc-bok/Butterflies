@@ -31,7 +31,7 @@ public class ButterflyLootModifier extends BaseLootModifier {
      */
     @NotNull
     @Override
-    public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
+    public ObjectArrayList<ItemStack> doApply(@NotNull ObjectArrayList<ItemStack> generatedLoot,
                                               LootContext context) {
         RandomSource random = context.getRandom();
 

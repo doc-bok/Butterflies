@@ -103,8 +103,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * @param itemStack The current ItemStack.
      * @return An empty butterfly net.
      */
+    @NotNull
     @Override
-    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+    public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
         return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
     }
 
@@ -138,7 +139,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * @return TRUE if the left-click action is consumed.
      */
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+    public boolean onLeftClickEntity(@NotNull ItemStack stack,
+                                     @NotNull Player player,
+                                     @NotNull Entity entity) {
 
         // Needs to target a butterfly with an empty net.
         if (getButterflyEntity(stack) == null &&
