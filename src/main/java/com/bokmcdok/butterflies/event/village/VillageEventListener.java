@@ -15,7 +15,6 @@ import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.village.WandererTradesEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
