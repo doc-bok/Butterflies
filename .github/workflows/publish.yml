@@ -23,7 +23,7 @@ jobs:
 
   # First check we have changed the version
   check_version_change:
-    runs-on: 'ubuntu-20.04'
+    runs-on: 'ubuntu-latest'
 
     outputs:
       docs_changed: ${{ steps.check_file_changed.outputs.docs_changed }}
