@@ -1,5 +1,10 @@
 ## Changelog
 
+### 7.3.8 (2026-04-30)
+ - Removed more unused imports.
+ - Suppressed an unneeded warning.
+ - Updated workflow so it checks for version change before publish.
+
 ### 7.3.7 (2026-04-30)
  - Removed more unused imports.
  - Fixed some nullability issues.
