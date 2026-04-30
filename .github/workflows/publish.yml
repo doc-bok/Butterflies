@@ -44,7 +44,7 @@ jobs:
           
           # Set the output named "version_changed"
           Write-Host "::set-output name=version_changed::$HasDiff"
-          echo "VERSION_CHANGED=$HasDiff" >> $GITHUB_ENV
+          echo "VERSION_CHANGED=$HasDiff"
 
   build:
     # The environment where workflow runs, here Ubuntu latest stable
