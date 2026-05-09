@@ -95,6 +95,7 @@ public class EntityEventListener {
 
         event.put(entityTypeRegistry.getButterflyGolem().get(), IronGolem.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterfly.createAttributes().build());
+        event.put(entityTypeRegistry.getPeacemakerCow().get(), PeacemakerCow.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerEvoker().get(), PeacemakerEvoker.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerIllusioner().get(), PeacemakerIllusioner.createAttributes().build());
         event.put(entityTypeRegistry.getPeacemakerPillager().get(), PeacemakerPillager.createAttributes().build());
@@ -192,6 +193,12 @@ public class EntityEventListener {
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(entityTypeRegistry.getPeacemakerButterfly().get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Monster::checkMonsterSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(entityTypeRegistry.getPeacemakerCow().get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Monster::checkMonsterSpawnRules,

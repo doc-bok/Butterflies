@@ -52,6 +52,7 @@ public class EntityTypeRegistry {
     private List<RegistryObject<EntityType<Caterpillar>>> caterpillars;
     private List<RegistryObject<EntityType<Chrysalis>>> chrysalises;
     private RegistryObject<EntityType<PeacemakerButterfly>> peacemakerButterfly;
+    private RegistryObject<EntityType<PeacemakerCow>> peacemakerCow;
     private RegistryObject<EntityType<PeacemakerEvoker>> peacemakerEvoker;
     private RegistryObject<EntityType<PeacemakerIllusioner>> peacemakerIllusioner;
     private RegistryObject<EntityType<PeacemakerPillager>> peacemakerPillager;
@@ -107,6 +108,7 @@ public class EntityTypeRegistry {
                         .build(ButterflyScroll.NAME));
 
         peacemakerButterfly = registerPeacemakerButterfly();
+        peacemakerCow = registerPeacemakerCow();
         peacemakerEvoker = registerPeacemakerEvoker();
         peacemakerIllusioner = registerPeacemakerIllusioner();
         peacemakerPillager = registerPeacemakerPillager();
@@ -147,6 +149,10 @@ public class EntityTypeRegistry {
 
     public RegistryObject<EntityType<PeacemakerButterfly>> getPeacemakerButterfly() {
         return peacemakerButterfly;
+    }
+
+    public RegistryObject<EntityType<PeacemakerCow>> getPeacemakerCow() {
+        return peacemakerCow;
     }
 
     public RegistryObject<EntityType<PeacemakerEvoker>> getPeacemakerEvoker() {
@@ -194,6 +200,12 @@ public class EntityTypeRegistry {
             EntityType<? extends PeacemakerButterfly> entityType,
             Level level) {
         return new PeacemakerButterfly(this.itemRegistry, this.tagRegistry, entityType, level);
+    }
+
+    private PeacemakerCow createPeacemakerCow(
+            EntityType<? extends PeacemakerCow> entityType,
+            Level level) {
+        return new PeacemakerCow(entityType, level);
     }
 
     private PeacemakerEvoker createPeacemakerEvoker(
@@ -315,6 +327,15 @@ public class EntityTypeRegistry {
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerButterfly, MobCategory.MONSTER)
                         .sized(1.0f, 0.4f)
+                        .clientTrackingRange(8)
+                        .build(registryId));
+    }
+
+    private RegistryObject<EntityType<PeacemakerCow>> registerPeacemakerCow() {
+        String registryId = "peacemaker_cow";
+        return deferredRegister.register(registryId,
+                () -> EntityType.Builder.of(this::createPeacemakerCow, MobCategory.MONSTER)
+                        .sized(2.5f, 2.5f)
                         .clientTrackingRange(8)
                         .build(registryId));
     }

@@ -62,6 +62,7 @@ public class ClientEventListener {
         event.registerLayerDefinition(ButterflyGolemModel.LAYER_LOCATION, ButterflyGolemModel::createBodyLayer);
         event.registerLayerDefinition(HummingbirdMothModel.LAYER_LOCATION, HummingbirdMothModel::createBodyLayer);
         event.registerLayerDefinition(PeacemakerButterflyModel.LAYER_LOCATION, PeacemakerButterflyModel::createBodyLayer);
+        event.registerLayerDefinition(PeacemakerCowModel.LAYER_LOCATION, PeacemakerCowModel::createBodyLayer);
     }
 
     /**
@@ -112,6 +113,7 @@ public class ClientEventListener {
 
         // Register the peacemaker renderers.
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterflyRenderer::new);
+        event.registerEntityRenderer(entityTypeRegistry.getPeacemakerCow().get(), PeacemakerCowRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerEvoker().get(), EvokerRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerIllusioner().get(), IllusionerRenderer::new);
         event.registerEntityRenderer(entityTypeRegistry.getPeacemakerPillager().get(), PillagerRenderer::new);
