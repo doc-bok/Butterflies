@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
@@ -58,7 +59,7 @@ import java.util.UUID;
 
 public class PeacemakerButterfly
         extends Monster
-        implements DebugInfoSupplier {
+        implements DebugInfoSupplier, PeacemakerEntity {
 
     // Data accessors
     protected static final EntityDataAccessor<String> DATA_DEBUG_INFO =
@@ -81,6 +82,11 @@ public class PeacemakerButterfly
      */
     public static void possess(ServerLevelAccessor level,
                                Raider raider) {
+
+        // Don't do any of this if the entity is already possessed.
+        if (raider instanceof PeacemakerEntity) {
+            return;
+        }
 
         // Don't spawn in PEACEFUL difficulty, and reduce chances of spawn in
         // NORMAL difficulty.
@@ -126,6 +132,11 @@ public class PeacemakerButterfly
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
+        // Don't do any of this if the villager is already possessed.
+        if (villager instanceof PeacemakerEntity) {
+            return;
+        }
+
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
             if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
@@ -161,6 +172,11 @@ public class PeacemakerButterfly
     @SuppressWarnings({"unchecked", "UnstableApiUsage"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
+
+        // Don't do any of this if the trader is already possessed.
+        if (wanderingTrader instanceof PeacemakerEntity) {
+            return;
+        }
 
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
@@ -391,29 +407,32 @@ public class PeacemakerButterfly
      */
     @Override
     public boolean killedEntity(@NotNull ServerLevel level,
-                       @NotNull LivingEntity victim) {
+                                @NotNull LivingEntity victim) {
 
-        if (victim instanceof Raider raider) {
-            possess(level, raider);
-            this.remove(RemovalReason.DISCARDED);
-        }
-
-        if (victim instanceof Villager villager) {
-            possess(level, villager);
-            if (!this.isSilent()) {
-                level.levelEvent(null, 1027, this.blockPosition(), 0);
+        // Skip all of this if the entity was already possessed.
+        if (!(victim instanceof PeacemakerEntity)) {
+            if (victim instanceof Raider raider) {
+                possess(level, raider);
+                this.remove(RemovalReason.DISCARDED);
             }
 
-            this.remove(RemovalReason.DISCARDED);
-        }
+            if (victim instanceof Villager villager) {
+                possess(level, villager);
+                if (!this.isSilent()) {
+                    level.levelEvent(null, 1027, this.blockPosition(), 0);
+                }
 
-        if (victim instanceof WanderingTrader wanderingTrader) {
-            possess(level, wanderingTrader);
-            if (!this.isSilent()) {
-                level.levelEvent(null, 1027, this.blockPosition(), 0);
+                this.remove(RemovalReason.DISCARDED);
             }
 
-            this.remove(RemovalReason.DISCARDED);
+            if (victim instanceof WanderingTrader wanderingTrader) {
+                possess(level, wanderingTrader);
+                if (!this.isSilent()) {
+                    level.levelEvent(null, 1027, this.blockPosition(), 0);
+                }
+
+                this.remove(RemovalReason.DISCARDED);
+            }
         }
 
         return super.killedEntity(level, victim);
