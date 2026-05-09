@@ -118,6 +118,7 @@ public abstract class DirectionalCreature extends Animal {
      * @param compoundTag Tag data for the entity.
      * @return The updated group data.
      */
+    @NotNull
     @Override
     @SuppressWarnings("deprecation")
     public SpawnGroupData finalizeSpawn(@NotNull ServerLevelAccessor levelAccessor,
