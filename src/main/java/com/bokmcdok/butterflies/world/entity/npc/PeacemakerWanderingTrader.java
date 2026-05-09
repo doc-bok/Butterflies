@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.npc;
 
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.npc.WanderingTrader;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerWanderingTrader extends WanderingTrader {
+public class PeacemakerWanderingTrader extends WanderingTrader implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_WANDERING_TRADER_FOLLOW_RANGE = 48.0d;

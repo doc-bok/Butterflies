@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -10,7 +11,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerIllusioner extends Illusioner {
+public class PeacemakerIllusioner extends Illusioner implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_ILLUSIONER_FOLLOW_RANGE = 18.0d;
