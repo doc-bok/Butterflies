@@ -43,15 +43,14 @@ public class ButterfliesMod {
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         EntityTypeRegistry.REGISTER.register(modEventBus);
         ItemRegistry.REGISTER.register(modEventBus);
+        LootModifierRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
         TAG_REGISTRY = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        lootModifierRegistry.initialise();
         poiTypesRegistry.initialise();
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
