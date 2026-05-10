@@ -22,23 +22,14 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 public class MobSpawnEventListener {
 
-    // The entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-    private final TagRegistry tagRegistry;
-
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry,
-                                 TagRegistry tagRegistry) {
+    public MobSpawnEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);
-
-        this.entityTypeRegistry = entityTypeRegistry;
-        this.tagRegistry = tagRegistry;
     }
 
     /**
@@ -62,7 +53,7 @@ public class MobSpawnEventListener {
             // 1 in 256 chance.
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
                 ServerLevelAccessor level = event.getLevel();
-                EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
+                EntityType<IronGolem> entityType = EntityTypeRegistry.BUTTERFLY_GOLEM.get();
 
                 if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
                 })) {
@@ -103,7 +94,7 @@ public class MobSpawnEventListener {
 
         // Don't infest entities if they are already infested.
         Entity entity = event.getEntity();
-        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
+        if (entity.getType().is(TagRegistry.PEACEMAKER_ENTITIES)) {
             return;
         }
 
