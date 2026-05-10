@@ -34,9 +34,6 @@ public class ItemRegistry {
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<Item> deferredRegister;
 
-    // Other registry references
-    private EntityTypeRegistry entityTypeRegistry;
-
     // Nets
     private RegistryObject<Item> emptyButterflyNet;
     private List<RegistryObject<Item>> butterflyNets;
@@ -110,13 +107,9 @@ public class ItemRegistry {
     /**
      * Register the items. Must be called after construction and after block
      * registry initialization.
-     * @param entityTypeRegistry The entity type registry.
      * @param tagRegistry The tag registry.
      */
-    public void initialise(@NotNull EntityTypeRegistry entityTypeRegistry,
-                           @NotNull TagRegistry tagRegistry) {
-
-        this.entityTypeRegistry = Objects.requireNonNull(entityTypeRegistry, "entityTypeRegistry cannot be null");
+    public void initialise(@NotNull TagRegistry tagRegistry) {
 
         // Nets
         this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(this, -1));
@@ -218,39 +211,39 @@ public class ItemRegistry {
         }
 
         this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyGolem(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_GOLEM,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerButterflySpawnEgg = deferredRegister.register("spawn_egg_peacemaker_butterfly",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerButterfly(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_BUTTERFLY,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerEvokerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_evoker",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerEvoker(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_EVOKER,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerIllusionerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_illusioner",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerIllusioner(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_ILLUSIONER,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerPillagerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_pillager",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerPillager(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_PILLAGER,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerVillagerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_villager",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerVillager(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_VILLAGER,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerVindicatorSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_vindicator",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerVindicator(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_VINDICATOR,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerWanderingTraderSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_wandering_trader",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWanderingTrader(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_WANDERING_TRADER,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         this.peacemakerWitchSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_witch",
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getPeacemakerWitch(),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.PEACEMAKER_WITCH,
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
@@ -432,7 +425,7 @@ public class ItemRegistry {
 
     private RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
         return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(entityTypeRegistry, butterflyIndex));
+                () -> new ButterflyScrollItem(butterflyIndex));
     }
 
     private RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
@@ -442,25 +435,25 @@ public class ItemRegistry {
 
     private RegistryObject<Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLY_EGGS.get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
     private RegistryObject<Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.CATERPILLARS.get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
     private RegistryObject<Item> registerChrysalisSpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.CHRYSALISES.get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 
     private RegistryObject<Item> registerButterflySpawnEgg(int butterflyIndex) {
         return deferredRegister.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new ForgeSpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex),
+                () -> new ForgeSpawnEggItem(EntityTypeRegistry.BUTTERFLIES.get(butterflyIndex),
                         0xffffff, 0xffffff, new Item.Properties()));
     }
 }

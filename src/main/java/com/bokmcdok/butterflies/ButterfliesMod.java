@@ -31,6 +31,7 @@ public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
     public static ItemRegistry ITEM_REGISTRY;
+    public static TagRegistry TAG_REGISTRY;
 
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -41,25 +42,24 @@ public class ButterfliesMod {
         BlockRegistry.REGISTER.register(modEventBus);
         CreativeTabRegistry.REGISTER.register(modEventBus);
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
+        EntityTypeRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ITEM_REGISTRY = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
-        TagRegistry tagRegistry = new TagRegistry();
+        TAG_REGISTRY = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        entityTypeRegistry.initialise(ITEM_REGISTRY, tagRegistry);
-        ITEM_REGISTRY.initialise(entityTypeRegistry, tagRegistry);
+        ITEM_REGISTRY.initialise(TAG_REGISTRY);
         lootModifierRegistry.initialise(ITEM_REGISTRY);
         poiTypesRegistry.initialise();
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Register client-only listeners
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            new ClientEventListener(modEventBus, entityTypeRegistry);
+            new ClientEventListener(modEventBus);
         }
 
         // Register mod lifecycle and mod-specific event listeners
@@ -67,10 +67,10 @@ public class ButterfliesMod {
         new ModEventListener(modEventBus, ITEM_REGISTRY);
 
         // Register Forge event listeners
-        new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
+        new EntityEventListener(forgeEventBus, modEventBus);
         new ForgeEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
-        new MobSpawnEventListener(forgeEventBus, entityTypeRegistry, tagRegistry);
+        new MobSpawnEventListener(forgeEventBus, TAG_REGISTRY);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);
