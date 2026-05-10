@@ -1,5 +1,22 @@
 ## Changelog
 
+### 7.3.8 (2026-05-09)
+ - Peacemaker possession code will now only run if the entity isn't already possessed.
+ - Removed unused imports.
+ - Added `@NotNull` to `DirectionalCreature.finalizeSpawn()`.
+ - Casting issues in `ButterflyBookScreen` removed.
+
+### 7.3.3 (2026-04-22)
+ - Removed redundant Chinese character strings.
+ - Removed unused imports.
+ - Tidied up level access.
+ - Added DirectionalBaseRenderer for common code.
+ - Removed unnecessary drop code from Microscope Block.
+ - Added a `finalizePossess()` method to reduce duplicate code.
+
+### 7.3.2 (2026-04-10)
+ - Fixed Peacemaker mobs crash-on-spawn.
+
 ### 7.3.0 (2026-02-16)
  - Added Peacemaker Honey Bottles.
 

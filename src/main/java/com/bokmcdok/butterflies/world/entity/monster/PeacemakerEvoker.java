@@ -1,8 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoals;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
+import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -12,15 +11,12 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerEvoker extends Evoker {
+public class PeacemakerEvoker extends Evoker implements PeacemakerEntity {
 
     // Constants for Peacemaker Evoker attributes.
     private static final double PEACEMAKER_EVOKER_FOLLOW_RANGE = 12.0d;
     private static final double PEACEMAKER_EVOKER_HEALTH = 36.0d;
     private static final double PEACEMAKER_EVOKER_SPEED = 0.75d;
-
-    // The goals for shared code.
-    private PeacemakerGoals peacemakerGoals;
 
     /**
      * Butterflies make their hosts faster, stronger, and tougher
@@ -39,14 +35,14 @@ public class PeacemakerEvoker extends Evoker {
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerEvoker(ItemRegistry itemRegistry,
-                            TagRegistry tagRegistry,
+    public PeacemakerEvoker(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
                             EntityType<? extends PeacemakerEvoker> type,
                             Level level) {
         super(type, level);
 
-        if (!this.level().isClientSide()) {
-            this.peacemakerGoals.setRegistries(itemRegistry, tagRegistry);
+        // Register Peacemaker-specific goals.
+        if (!level.isClientSide()) {
+            peacemakerGoalRegistrar.registerGoals(this);
         }
     }
 
@@ -58,15 +54,5 @@ public class PeacemakerEvoker extends Evoker {
     public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
         PeacemakerButterfly.spawn(this);
-    }
-
-    /**
-     * Override the target goals to ignore peacemaker mobs
-     */
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-        this.peacemakerGoals = new PeacemakerGoals();
-        this.peacemakerGoals.registerGoals(this);
     }
 }

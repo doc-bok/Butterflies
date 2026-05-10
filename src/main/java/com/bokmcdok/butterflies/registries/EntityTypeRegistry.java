@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.bokmcdok.butterflies.world.entity.monster.*;
@@ -42,7 +43,8 @@ public class EntityTypeRegistry {
 
     private BlockRegistry blockRegistry;
     private ItemRegistry itemRegistry;
-    private TagRegistry tagRegistry;
+
+    private PeacemakerGoalRegistrar peacemakerGoalRegistrar;
 
     private List<RegistryObject<EntityType<? extends Butterfly>>> butterflies;
     private List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs;
@@ -80,7 +82,6 @@ public class EntityTypeRegistry {
                            TagRegistry tagRegistry) {
         this.blockRegistry = blockRegistry;
         this.itemRegistry = itemRegistry;
-        this.tagRegistry = tagRegistry;
 
         final int speciesCount = ButterflyInfo.SPECIES.length;
 
@@ -107,6 +108,7 @@ public class EntityTypeRegistry {
                         .sized(1.0f, 1.0f)
                         .build(ButterflyScroll.NAME));
 
+        peacemakerGoalRegistrar = new PeacemakerGoalRegistrar(itemRegistry, tagRegistry);
         peacemakerButterfly = registerPeacemakerButterfly();
         peacemakerCow = registerPeacemakerCow();
         peacemakerEvoker = registerPeacemakerEvoker();
@@ -199,7 +201,7 @@ public class EntityTypeRegistry {
     private PeacemakerButterfly createPeacemakerButterfly(
             EntityType<? extends PeacemakerButterfly> entityType,
             Level level) {
-        return new PeacemakerButterfly(this.itemRegistry, this.tagRegistry, entityType, level);
+        return new PeacemakerButterfly(this.itemRegistry, this.peacemakerGoalRegistrar, entityType, level);
     }
 
     private PeacemakerCow createPeacemakerCow(
@@ -211,19 +213,19 @@ public class EntityTypeRegistry {
     private PeacemakerEvoker createPeacemakerEvoker(
             EntityType<? extends PeacemakerEvoker> entityType,
             Level level) {
-        return new PeacemakerEvoker(this.itemRegistry, this.tagRegistry, entityType, level);
+        return new PeacemakerEvoker(this.peacemakerGoalRegistrar, entityType, level);
     }
 
     private PeacemakerIllusioner createPeacemakerIllusioner(
             EntityType<? extends PeacemakerIllusioner> entityType,
             Level level) {
-        return new PeacemakerIllusioner(this.itemRegistry, this.tagRegistry, entityType, level);
+        return new PeacemakerIllusioner(this.peacemakerGoalRegistrar, entityType, level);
     }
 
     private PeacemakerPillager createPeacemakerPillager(
             EntityType<? extends PeacemakerPillager> entityType,
             Level level) {
-        return new PeacemakerPillager(this.itemRegistry, this.tagRegistry, entityType, level);
+        return new PeacemakerPillager(this.peacemakerGoalRegistrar, entityType, level);
     }
 
     private PeacemakerVillager createPeacemakerVillager(
@@ -235,7 +237,7 @@ public class EntityTypeRegistry {
     private PeacemakerVindicator createPeacemakerVindicator(
             EntityType<? extends PeacemakerVindicator> entityType,
             Level level) {
-        return new PeacemakerVindicator(this.itemRegistry, this.tagRegistry, entityType, level);
+        return new PeacemakerVindicator(this.peacemakerGoalRegistrar, entityType, level);
     }
 
     private PeacemakerWanderingTrader createPeacemakerWanderingTrader(

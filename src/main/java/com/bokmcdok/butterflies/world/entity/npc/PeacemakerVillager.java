@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.npc;
 
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
@@ -21,7 +22,7 @@ import net.minecraft.world.entity.schedule.Schedule;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerVillager extends Villager {
+public class PeacemakerVillager extends Villager implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_VILLAGER_FOLLOW_RANGE = 48.0d;
@@ -118,6 +119,8 @@ public class PeacemakerVillager extends Villager {
         brain.setCoreActivities(ImmutableSet.of(Activity.CORE));
         brain.setDefaultActivity(Activity.IDLE);
         brain.setActiveActivityIfPossible(Activity.IDLE);
-        brain.updateActivityFromSchedule(this.level().getDayTime(), this.level().getGameTime());
+
+        Level level = level();
+        brain.updateActivityFromSchedule(level.getDayTime(), level.getGameTime());
     }
 }
