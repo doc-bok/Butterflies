@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -17,46 +16,21 @@ import net.minecraftforge.registries.RegistryObject;
 public class MenuTypeRegistry {
 
     // An instance of a deferred registry we use to register menus.
-    private final DeferredRegister<MenuType<?>> deferredRegister;
+    public static final DeferredRegister<MenuType<?>> REGISTER;
 
     // The menus
-    private RegistryObject<MenuType<ButterflyFeederMenu>> butterflyFeederMenu;
-    private RegistryObject<MenuType<ButterflyMicroscopeMenu>> butterflyMicroscopeMenu;
+    public static final RegistryObject<MenuType<ButterflyFeederMenu>> BUTTERFLY_FEEDER_MENU;
+    public static final RegistryObject<MenuType<ButterflyMicroscopeMenu>> BUTTERFLY_MICROSCOPE_MENU;
 
     /**
-     * Construction
-     * @param modEventBus The event bus to register with.
+     * Helper method for creating butterfly feeder menu.
+     * @param containerId The ID of the container.
+     * @param playerInventory The player's inventory.
+     * @return A new menu instance.
      */
-    public MenuTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the menu types.
-     */
-    public void initialise() {
-        this.butterflyFeederMenu = deferredRegister.register("butterfly_feeder",
-                () -> new MenuType<>(this::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
-
-        this.butterflyMicroscopeMenu = deferredRegister.register("butterfly_microscope",
-                        () -> new MenuType<>(this::createButterflyMicroscopeMenu, FeatureFlags.DEFAULT_FLAGS));
-    }
-
-    /**
-     * Get the butterfly feeder menu.
-     * @return The menu type.
-     */
-    public RegistryObject<MenuType<ButterflyFeederMenu>> getButterflyFeederMenu() {
-        return butterflyFeederMenu;
-    }
-
-    /**
-     * Get the butterfly microscope menu.
-     * @return The menu type.
-     */
-    public RegistryObject<MenuType<ButterflyMicroscopeMenu>> getButterflyMicroscopeMenu() {
-        return butterflyMicroscopeMenu;
+    private static ButterflyFeederMenu createButterflyFeederMenu(int containerId,
+                                                                 Inventory playerInventory) {
+        return new ButterflyFeederMenu(BUTTERFLY_FEEDER_MENU.get(), containerId, playerInventory);
     }
 
     /**
@@ -65,19 +39,15 @@ public class MenuTypeRegistry {
      * @param playerInventory The player's inventory.
      * @return A new menu instance.
      */
-    private ButterflyFeederMenu createButterflyFeederMenu(int containerId,
-                                                          Inventory playerInventory) {
-        return new ButterflyFeederMenu(this.butterflyFeederMenu.get(), containerId, playerInventory);
+    private static ButterflyMicroscopeMenu createButterflyMicroscopeMenu(int containerId,
+                                                                         Inventory playerInventory) {
+        return new ButterflyMicroscopeMenu(BUTTERFLY_MICROSCOPE_MENU.get(), containerId, playerInventory);
     }
 
-    /**
-     * Helper method for creating butterfly feeder menu.
-     * @param containerId The ID of the container.
-     * @param playerInventory The player's inventory.
-     * @return A new menu instance.
-     */
-    private ButterflyMicroscopeMenu createButterflyMicroscopeMenu(int containerId,
-                                                                  Inventory playerInventory) {
-        return new ButterflyMicroscopeMenu(this.butterflyMicroscopeMenu.get(), containerId, playerInventory);
-    }
+    static {
+        REGISTER = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ButterfliesMod.MOD_ID);
+        BUTTERFLY_FEEDER_MENU = REGISTER.register("butterfly_feeder",
+                () -> new MenuType<>(MenuTypeRegistry::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
+        BUTTERFLY_MICROSCOPE_MENU = REGISTER.register("butterfly_microscope",
+                () -> new MenuType<>(MenuTypeRegistry::createButterflyMicroscopeMenu, FeatureFlags.DEFAULT_FLAGS));    }
 }

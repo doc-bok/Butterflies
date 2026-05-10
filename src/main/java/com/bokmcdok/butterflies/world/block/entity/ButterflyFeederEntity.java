@@ -24,9 +24,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
-    // Reference to the menu type registry.
-    private final MenuTypeRegistry menuTypeRegistry;
-
     // The item(s) contained in the feeder.
     NonNullList<ItemStack> items;
 
@@ -36,12 +33,10 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
      * @param blockPos The position of the block.
      * @param blockState The state of the block.
      */
-    public ButterflyFeederEntity(MenuTypeRegistry menuTypeRegistry,
-                                 BlockEntityType<?> blockEntityType,
+    public ButterflyFeederEntity(BlockEntityType<?> blockEntityType,
                                  BlockPos blockPos,
                                  BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
-        this.menuTypeRegistry = menuTypeRegistry;
         this.items = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
@@ -56,7 +51,7 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     protected AbstractContainerMenu createMenu(int containerId,
                                                @NotNull Inventory inventory) {
         return new ButterflyFeederMenu(
-                this.menuTypeRegistry.getButterflyFeederMenu().get(),
+                MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(),
                 containerId,
                 inventory,
                 this);

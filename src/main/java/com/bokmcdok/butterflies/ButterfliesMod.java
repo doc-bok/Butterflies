@@ -35,6 +35,7 @@ public class ButterfliesMod {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         BannerPatternRegistry.REGISTER.register(modEventBus);
+        MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
@@ -44,19 +45,17 @@ public class ButterfliesMod {
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
-        MenuTypeRegistry menuTypeRegistry = new MenuTypeRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
         TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        blockEntityTypeRegistry.initialise(blockRegistry, menuTypeRegistry);
-        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
+        blockEntityTypeRegistry.initialise(blockRegistry);
+        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry);
         creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
         itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
-        menuTypeRegistry.initialise();
         poiTypesRegistry.initialise(blockRegistry);
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
@@ -66,7 +65,7 @@ public class ButterfliesMod {
         }
 
         // Register mod lifecycle and mod-specific event listeners
-        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry, menuTypeRegistry);
+        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry);
         new ModEventListener(modEventBus, creativeTabRegistry, itemRegistry);
 
         // Register Forge event listeners

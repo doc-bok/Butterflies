@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -43,15 +42,12 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
 
     // The registries.
     private final BlockEntityTypeRegistry blockEntityTypeRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
 
     /**
      * Construction.
      * @param blockEntityTypeRegistry The block entity registry.
-     * @param menuTypeRegistry The menu type registry.
      */
-    public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry,
-                                MenuTypeRegistry menuTypeRegistry) {
+    public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry) {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.SAND)
                 .isRedstoneConductor(BlockRegistry::never)
@@ -63,7 +59,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
                 .strength(0.3F));
 
         this.blockEntityTypeRegistry = blockEntityTypeRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -132,7 +127,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
                                       @NotNull BlockState blockState) {
         return new ButterflyFeederEntity(
-                this.menuTypeRegistry,
                 blockEntityTypeRegistry.getButterflyFeeder().get(),
                 blockPos,
                 blockState);

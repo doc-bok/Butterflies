@@ -15,9 +15,6 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class BlockEntityTypeRegistry {
 
-    // Reference to the menu type registry.
-    private MenuTypeRegistry menuTypeRegistry;
-
     // An instance of a deferred registry we use to register items.
     private final DeferredRegister<BlockEntityType<?>> deferredRegister;
 
@@ -36,12 +33,8 @@ public class BlockEntityTypeRegistry {
     /**
      * Register the block entities.
      * @param blockRegistry The block registry.
-     * @param menuTypeRegistry The menu type registry.
      */
-    public void initialise(BlockRegistry blockRegistry,
-                           MenuTypeRegistry menuTypeRegistry) {
-
-        this.menuTypeRegistry = menuTypeRegistry;
+    public void initialise(BlockRegistry blockRegistry) {
 
         //noinspection DataFlowIssue
         this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
@@ -65,7 +58,7 @@ public class BlockEntityTypeRegistry {
      */
     private ButterflyFeederEntity createButterflyFeeder(BlockPos blockPos,
                                                         BlockState blockState) {
-        return new ButterflyFeederEntity(menuTypeRegistry,
+        return new ButterflyFeederEntity(
                 butterflyFeeder.get(),
                 blockPos,
                 blockState);

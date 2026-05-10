@@ -33,7 +33,6 @@ public class LifecycleEventListener {
     // Reference to the registries.
     private final DecoratedPotPatternsRegistry decoratedPotPatternsRegistry;
     private final ItemRegistry itemRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
 
     /**
      * Construction
@@ -41,15 +40,13 @@ public class LifecycleEventListener {
      */
     public LifecycleEventListener(IEventBus modEventBus,
                                   DecoratedPotPatternsRegistry decoratedPotPatternsRegistry,
-                                  ItemRegistry itemRegistry,
-                                  MenuTypeRegistry menuTypeRegistry) {
+                                  ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);
 
         this.decoratedPotPatternsRegistry = decoratedPotPatternsRegistry;
         this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -82,11 +79,11 @@ public class LifecycleEventListener {
      */
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(), ButterflyFeederScreen::new)
         );
 
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), ButterflyMicroscopeScreen::new)
         );
     }
 }

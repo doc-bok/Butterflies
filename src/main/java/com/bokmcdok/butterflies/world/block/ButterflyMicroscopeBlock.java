@@ -40,14 +40,10 @@ public class ButterflyMicroscopeBlock extends Block {
     // Access to items.
     private final ItemRegistry itemRegistry;
 
-    // Access to menu types.
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction
      */
-    public ButterflyMicroscopeBlock(ItemRegistry itemRegistry,
-                                    MenuTypeRegistry menuTypeRegistry) {
+    public ButterflyMicroscopeBlock(ItemRegistry itemRegistry) {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
                 .isRedstoneConductor(BlockRegistry::never)
@@ -59,7 +55,6 @@ public class ButterflyMicroscopeBlock extends Block {
                 .strength(1.0F));
 
         this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -124,7 +119,7 @@ public class ButterflyMicroscopeBlock extends Block {
                                        title) ->
                 new ButterflyMicroscopeMenu(
                         itemRegistry,
-                        menuTypeRegistry.getButterflyMicroscopeMenu().get(),
+                        MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(),
                         containerId,
                         inventory,
                         ContainerLevelAccess.create(level, blockPos)),

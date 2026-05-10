@@ -144,15 +144,12 @@ public class BlockRegistry {
      * Register the blocks.
      * @param blockEntityTypeRegistry The block entity registry.
      * @param itemRegistry The item registry.
-     * @param menuTypeRegistry The menu type registry.
      */
     public void initialise(@NotNull BlockEntityTypeRegistry blockEntityTypeRegistry,
-                           @NotNull ItemRegistry itemRegistry,
-                           @NotNull MenuTypeRegistry menuTypeRegistry) {
+                           @NotNull ItemRegistry itemRegistry) {
 
         Objects.requireNonNull(blockEntityTypeRegistry);
         Objects.requireNonNull(itemRegistry);
-        Objects.requireNonNull(menuTypeRegistry);
 
         this.bottledButterflyBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
@@ -219,10 +216,10 @@ public class BlockRegistry {
         );
 
         this.butterflyFeeder = deferredRegister.register( "butterfly_feeder",
-                () -> new ButterflyFeederBlock(blockEntityTypeRegistry, menuTypeRegistry));
+                () -> new ButterflyFeederBlock(blockEntityTypeRegistry));
 
         this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
-                () -> new ButterflyMicroscopeBlock(itemRegistry, menuTypeRegistry));
+                () -> new ButterflyMicroscopeBlock(itemRegistry));
 
         this.butterflyOrigami = new ArrayList<>();
         for(String id : ORIGAMI_IDS) {
