@@ -205,7 +205,7 @@ public class EntityTypeRegistry {
     private PeacemakerCow createPeacemakerCow(
             EntityType<? extends PeacemakerCow> entityType,
             Level level) {
-        return new PeacemakerCow(entityType, level);
+        return new PeacemakerCow(this.itemRegistry, entityType, level);
     }
 
     private PeacemakerEvoker createPeacemakerEvoker(
