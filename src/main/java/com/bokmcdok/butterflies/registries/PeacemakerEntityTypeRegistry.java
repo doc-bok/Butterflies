@@ -27,47 +27,14 @@ public class PeacemakerEntityTypeRegistry {
     static {
         PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
         
-        PEACEMAKER_BUTTERFLY = registerPeacemakerButterfly();
-        PEACEMAKER_EVOKER = registerPeacemakerEvoker();
-        PEACEMAKER_ILLUSIONER = registerPeacemakerIllusioner();
-        PEACEMAKER_PILLAGER = registerPeacemakerPillager();
-        PEACEMAKER_VILLAGER = registerPeacemakerVillager();
-        PEACEMAKER_VINDICATOR = registerPeacemakerVindicator();
-        PEACEMAKER_WANDERING_TRADER = registerPeacemakerWanderingTrader();
-        PEACEMAKER_WITCH = registerPeacemakerWitch();
-    }
-
-    // Registration methods
-    private static RegistryObject<EntityType<PeacemakerButterfly>> registerPeacemakerButterfly() {
-        return registerPeacemakerEntity("peacemaker_butterfly", PeacemakerButterfly::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerEvoker>> registerPeacemakerEvoker() {
-        return registerPeacemakerEntity("peacemaker_evoker", PeacemakerEvoker::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerIllusioner>> registerPeacemakerIllusioner() {
-        return registerPeacemakerEntity("peacemaker_illusioner", PeacemakerIllusioner::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerPillager>> registerPeacemakerPillager() {
-        return registerPeacemakerEntity("peacemaker_pillager", PeacemakerPillager::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerVillager>> registerPeacemakerVillager() {
-        return registerPeacemakerEntity("peacemaker_villager", PeacemakerVillager::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerVindicator>> registerPeacemakerVindicator() {
-        return registerPeacemakerEntity("peacemaker_vindicator", PeacemakerVindicator::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerWanderingTrader>> registerPeacemakerWanderingTrader() {
-        return registerPeacemakerEntity("peacemaker_wandering_trader", PeacemakerWanderingTrader::new);
-    }
-
-    private static RegistryObject<EntityType<PeacemakerWitch>> registerPeacemakerWitch() {
-        return registerPeacemakerEntity("peacemaker_witch", PeacemakerWitch::new);
+        PEACEMAKER_BUTTERFLY = registerPeacemakerEntity("peacemaker_butterfly", PeacemakerButterfly::new);
+        PEACEMAKER_EVOKER = registerPeacemakerEntity("peacemaker_evoker", PeacemakerEvoker::new);
+        PEACEMAKER_ILLUSIONER = registerPeacemakerEntity("peacemaker_illusioner", PeacemakerIllusioner::new);
+        PEACEMAKER_PILLAGER = registerPeacemakerEntity("peacemaker_pillager", PeacemakerPillager::new);
+        PEACEMAKER_VILLAGER = registerPeacemakerEntity("peacemaker_villager", PeacemakerVillager::new);
+        PEACEMAKER_VINDICATOR = registerPeacemakerEntity("peacemaker_vindicator", PeacemakerVindicator::new);
+        PEACEMAKER_WANDERING_TRADER = registerPeacemakerEntity("peacemaker_wandering_trader", PeacemakerWanderingTrader::new);
+        PEACEMAKER_WITCH = registerPeacemakerEntity("peacemaker_witch", PeacemakerWitch::new);
     }
 
     /**

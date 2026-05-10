@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,7 @@ import java.util.List;
 public class ButterflyEntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> BUTTERFLY_ENTITY_TYPES;
 
-    public static final List<RegistryObject<EntityType<? extends Butterfly>>> BUTTERFLIES;
+    public static final List<RegistryObject<EntityType<Butterfly>>> BUTTERFLIES;
     public static final List<RegistryObject<EntityType<ButterflyEgg>>> BUTTERFLY_EGGS;
     public static final List<RegistryObject<EntityType<Caterpillar>>> CATERPILLARS;
     public static final List<RegistryObject<EntityType<Chrysalis>>> CHRYSALISES;
@@ -40,58 +41,22 @@ public class ButterflyEntityTypeRegistry {
         BUTTERFLY_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
         final int speciesCount = ButterflyInfo.SPECIES.length;
 
-        List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = new ArrayList<>(speciesCount);
+        List<RegistryObject<EntityType<Butterfly>>> butterflies = new ArrayList<>(speciesCount);
         List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs = new ArrayList<>(speciesCount);
         List<RegistryObject<EntityType<Caterpillar>>> caterpillars = new ArrayList<>(speciesCount);
         List<RegistryObject<EntityType<Chrysalis>>> chrysalises = new ArrayList<>(speciesCount);
 
         for (int i = 0; i < speciesCount; i++) {
-            butterflies.add(registerButterfly(i));
-            butterflyEggs.add(registerButterflyEgg(i));
-            caterpillars.add(registerCaterpillar(i));
-            chrysalises.add(registerChrysalis(i));
+            butterflies.add(registerButterflyEntity(Butterfly.getRegistryId(i), getEntityFactory(i), 0.3f, 0.2f));
+            butterflyEggs.add(registerButterflyEntity(ButterflyEgg.getRegistryId(i), ButterflyEgg::new, 0.1f, 0.1f));
+            caterpillars.add(registerButterflyEntity(Caterpillar.getRegistryId(i), Caterpillar::new, 0.1f, 0.1f));
+            chrysalises.add(registerButterflyEntity(Chrysalis.getRegistryId(i), Chrysalis::new, 0.1f, 0.1f));
         }
 
         BUTTERFLIES = Collections.unmodifiableList(butterflies);
         BUTTERFLY_EGGS = Collections.unmodifiableList(butterflyEggs);
         CATERPILLARS = Collections.unmodifiableList(caterpillars);
         CHRYSALISES = Collections.unmodifiableList(chrysalises);
-    }
-
-    // Registration methods
-    private static RegistryObject<EntityType<? extends Butterfly>> registerButterfly(int butterflyIndex) {
-        String registryId = Butterfly.getRegistryId(butterflyIndex);
-        EntityType.EntityFactory<Butterfly> entityFactory = getEntityFactory(butterflyIndex);
-
-        return BUTTERFLY_ENTITY_TYPES.register(registryId,
-                () -> EntityType.Builder.of(entityFactory, BUTTERFLY_MOBS)
-                        .sized(0.3f, 0.2f)
-                        .clientTrackingRange(10)
-                        .build(registryId));
-    }
-
-    private static RegistryObject<EntityType<ButterflyEgg>> registerButterflyEgg(int butterflyIndex) {
-        String registryId = ButterflyEgg.getRegistryId(butterflyIndex);
-        return BUTTERFLY_ENTITY_TYPES.register(registryId,
-                () -> EntityType.Builder.of(ButterflyEgg::new, BUTTERFLY_MOBS)
-                        .sized(0.1f, 0.1f)
-                        .build(registryId));
-    }
-
-    private static RegistryObject<EntityType<Caterpillar>> registerCaterpillar(int butterflyIndex) {
-        String registryId = Caterpillar.getRegistryId(butterflyIndex);
-        return BUTTERFLY_ENTITY_TYPES.register(registryId,
-                () -> EntityType.Builder.of(Caterpillar::new, BUTTERFLY_MOBS)
-                        .sized(0.1f, 0.1f)
-                        .build(registryId));
-    }
-
-    private static RegistryObject<EntityType<Chrysalis>> registerChrysalis(int butterflyIndex) {
-        String registryId = Chrysalis.getRegistryId(butterflyIndex);
-        return BUTTERFLY_ENTITY_TYPES.register(registryId,
-                () -> EntityType.Builder.of(Chrysalis::new, BUTTERFLY_MOBS)
-                        .sized(0.1f, 0.1f)
-                        .build(registryId));
     }
 
     // Factory methods
@@ -121,6 +86,24 @@ public class ButterflyEntityTypeRegistry {
         }
 
         return Butterfly::new;
+    }
+
+    /**
+     * Helper method to register a Butterfly entity.
+     * @param registryId The ID of the entity.
+     * @param factory The factory (constructor) to use.
+     * @return The newly registered entity.
+     * @param <T> The type of the entity.
+     */
+    private static <T extends Entity> RegistryObject<EntityType<T>> registerButterflyEntity(String registryId,
+                                                                                            EntityType.EntityFactory<T> factory,
+                                                                                            float width,
+                                                                                            float height) {
+        return BUTTERFLY_ENTITY_TYPES.register(registryId,
+                () -> EntityType.Builder.of(factory, BUTTERFLY_MOBS)
+                        .sized(width, height)
+                        .clientTrackingRange(10)
+                        .build(registryId));
     }
 
     /**
