@@ -12,21 +12,49 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Registers the blocks used by the mod.
  */
 public class BlockRegistry {
+
+    // An instance of a deferred registry we use to register items.
+    public static final DeferredRegister<Block> REGISTER;
+
+    // Bottled creatures.
+    public static final List<RegistryObject<Block>> BOTTLED_BUTTERFLY_BLOCKS;
+    public static final List<RegistryObject<Block>> BOTTLED_CATERPILLAR_BLOCKS;
+
+    // Butterfly Feeder
+    public static final RegistryObject<Block> BUTTERFLY_FEEDER;
+
+    // Butterfly Microscope
+    public static final RegistryObject<Block> BUTTERFLY_MICROSCOPE;
+
+    // Flower Buds
+    public static final RegistryObject<Block> ALLIUM_BUD;
+    public static final RegistryObject<Block> AZURE_BLUET_BUD;
+    public static final RegistryObject<Block> BLUE_ORCHID_BUD;
+    public static final RegistryObject<Block> CORNFLOWER_BUD;
+    public static final RegistryObject<Block> DANDELION_BUD;
+    public static final RegistryObject<Block> LILY_OF_THE_VALLEY_BUD;
+    public static final RegistryObject<Block> ORANGE_TULIP_BUD;
+    public static final RegistryObject<Block> OXEYE_DAISY_BUD;
+    public static final RegistryObject<Block> PINK_TULIP_BUD;
+    public static final RegistryObject<Block> POPPY_BUD;
+    public static final RegistryObject<Block> RED_TULIP_BUD;
+    public static final RegistryObject<Block> WHITE_TULIP_BUD;
+    public static final RegistryObject<Block> WITHER_ROSE_BUD;
+
+    // Origami
+    public static final List<RegistryObject<Block>> BUTTERFLY_ORIGAMI;
 
     // A list of Butterfly Origami IDs used by the registry.
     private static final String[] ORIGAMI_IDS = {
@@ -70,37 +98,6 @@ public class BlockRegistry {
                     .strength(0.3F)
                     .lightLevel((blockstate) -> 15);
 
-    // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<Block> deferredRegister;
-
-    // Bottled creatures.
-    private List<RegistryObject<Block>> bottledButterflyBlocks;
-    private List<RegistryObject<Block>> bottledCaterpillarBlocks;
-
-    // Butterfly Feeder
-    private RegistryObject<Block> butterflyFeeder;
-
-    // Butterfly Microscope
-    private RegistryObject<Block> butterflyMicroscope;
-
-    // Flower Buds
-    private RegistryObject<Block> alliumBud;
-    private RegistryObject<Block> azureBluetBud;
-    private RegistryObject<Block> blueOrchidBud;
-    private RegistryObject<Block> cornflowerBud;
-    private RegistryObject<Block> dandelionBud;
-    private RegistryObject<Block> lilyOfTheValleyBud;
-    private RegistryObject<Block> orangeTulipBud;
-    private RegistryObject<Block> oxeyeDaisyBud;
-    private RegistryObject<Block> pinkTulipBud;
-    private RegistryObject<Block> poppyBud;
-    private RegistryObject<Block> redTulipBud;
-    private RegistryObject<Block> whiteTulipBud;
-    private RegistryObject<Block> witherRoseBud;
-
-    // Origami
-    private List<RegistryObject<Block>> butterflyOrigami;
-
     /**
      * Helper method for the "never" attribute. Used in block properties during
      * block construction.
@@ -132,244 +129,11 @@ public class BlockRegistry {
     }
 
     /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public BlockRegistry(@NotNull IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the blocks.
-     * @param itemRegistry The item registry.
-     */
-    public void initialise(@NotNull ItemRegistry itemRegistry) {
-
-        Objects.requireNonNull(itemRegistry);
-
-        this.bottledButterflyBlocks = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            RegistryObject<Block> newBlock = registerBottledButterfly(i);
-            this.bottledButterflyBlocks.add(newBlock);
-        }
-        
-        this.bottledCaterpillarBlocks = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            RegistryObject<Block> newBlock = deferredRegister.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
-            this.bottledCaterpillarBlocks.add(newBlock);
-        }
-        
-        this.alliumBud = deferredRegister.register(
-                "bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM)
-        );
-
-        this.azureBluetBud = deferredRegister.register(
-                "bud_azure_bluet", () -> new FlowerCropBlock(Blocks.AZURE_BLUET)
-        );
-
-        this.blueOrchidBud = deferredRegister.register(
-                "bud_blue_orchid", () -> new FlowerCropBlock(Blocks.BLUE_ORCHID)
-        );
-
-        this.cornflowerBud = deferredRegister.register(
-                "bud_cornflower", () -> new FlowerCropBlock(Blocks.CORNFLOWER)
-        );
-
-        this.dandelionBud = deferredRegister.register(
-                "bud_dandelion", () -> new FlowerCropBlock(Blocks.DANDELION)
-        );
-
-        this.lilyOfTheValleyBud = deferredRegister.register(
-                "bud_lily_of_the_valley", () -> new FlowerCropBlock(Blocks.LILY_OF_THE_VALLEY)
-        );
-
-        this.orangeTulipBud = deferredRegister.register(
-                "bud_orange_tulip", () -> new FlowerCropBlock(Blocks.ORANGE_TULIP)
-        );
-
-        this.oxeyeDaisyBud = deferredRegister.register(
-                "bud_oxeye_daisy", () -> new FlowerCropBlock(Blocks.OXEYE_DAISY)
-        );
-
-        this.pinkTulipBud = deferredRegister.register(
-                "bud_pink_tulip", () -> new FlowerCropBlock(Blocks.PINK_TULIP)
-        );
-
-        this.poppyBud = deferredRegister.register(
-                "bud_poppy", () -> new FlowerCropBlock(Blocks.POPPY)
-        );
-
-        this.redTulipBud = deferredRegister.register(
-                "bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP)
-        );
-
-        this.whiteTulipBud = deferredRegister.register(
-                "bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP)
-        );
-
-        this.witherRoseBud = deferredRegister.register(
-                "bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE)
-        );
-
-        this.butterflyFeeder = deferredRegister.register( "butterfly_feeder",
-                () -> new ButterflyFeederBlock());
-
-        this.butterflyMicroscope = deferredRegister.register( "butterfly_microscope",
-                () -> new ButterflyMicroscopeBlock(itemRegistry));
-
-        this.butterflyOrigami = new ArrayList<>();
-        for(String id : ORIGAMI_IDS) {
-            butterflyOrigami.add(registerButterflyOrigami(id));
-        }
-    }
-
-    /**
-     * Allium bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getAlliumBud() {
-        return alliumBud;
-    }
-
-    /**
-     * Azure bluet bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getAzureBluetBud() {
-        return azureBluetBud;
-    }
-
-    /**
-     * Blue orchid bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getBlueOrchidBud() {
-        return blueOrchidBud;
-    }
-
-    /**
-     * Get the bottled butterfly blocks.
-     * @return The list of bottled butterfly blocks.
-     */
-    public List<RegistryObject<Block>> getBottledButterflyBlocks() {
-        return this.bottledButterflyBlocks;
-    }
-
-    /**
-     * Get the bottled caterpillar blocks.
-     * @return The list of bottled caterpillar blocks.
-     */
-    public List<RegistryObject<Block>> getBottledCaterpillarBlocks() {
-        return this.bottledCaterpillarBlocks;
-    }
-
-    /**
-     * Get the butterfly feeder block.
-     * @return The butterfly feeder block.
-     */
-    public RegistryObject<Block> getButterflyFeeder() {
-        return butterflyFeeder;
-    }
-
-    /**
-     * Get the butterfly microscope block.
-     * @return The butterfly microscope block.
-     */
-    public RegistryObject<Block> getButterflyMicroscope() {
-        return butterflyMicroscope;
-    }
-
-    public List<RegistryObject<Block>> getButterflyOrigami() {
-        return butterflyOrigami;
-    }
-
-    /**
-     * Cornflower bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getCornflowerBud() {
-        return cornflowerBud;
-    }
-
-    /**
-     * Dandelion bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getDandelionBud() {
-        return dandelionBud;
-    }
-
-    /**
-     * Lily of the valley bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getLilyOfTheValleyBud() {
-        return lilyOfTheValleyBud;
-    }
-
-    /**
-     * Orange tulip bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getOrangeTulipBud() {
-        return orangeTulipBud;
-    }
-
-    /**
-     * Oxeye daisy bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getOxeyeDaisyBud() {
-        return oxeyeDaisyBud;
-    }
-
-    /**
-     * Pink tulip bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getPinkTulipBud() {
-        return pinkTulipBud;
-    }
-
-    /**
-     * Poppy bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getPoppyBud() {
-        return poppyBud;
-    }
-
-    /**
-     * Red tulip bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getRedTulipBud() {
-        return redTulipBud;
-    }
-
-    /**
-     * White tulip bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getWhiteTulipBud() {
-        return whiteTulipBud;
-    }
-
-    /**
-     * Wither rose bud accessor.
-     * @return The registry object.
-     */
-    public RegistryObject<Block> getWitherRoseBud() {
-        return witherRoseBud;
-    }
-
-    /**
      * Helper method to generate the Registry ID for bottled butterflies.
      * @param butterflyIndex The butterfly index of the species.
      * @return The registry ID.
      */
-    private String getBottledButterflyRegistryId(int butterflyIndex) {
+    private static String getBottledButterflyRegistryId(int butterflyIndex) {
         return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
@@ -378,32 +142,54 @@ public class BlockRegistry {
      * @param butterflyIndex The butterfly index of the species.
      * @return The registry ID.
      */
-    private String getBottledCaterpillarRegistryId(int butterflyIndex) {
+    private static String getBottledCaterpillarRegistryId(int butterflyIndex) {
         return "bottled_caterpillar_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    /**
-     * Register a bottled butterfly.
-     * @param butterflyIndex The butterfly index to register for.
-     * @return The registry object.
-     */
-    private RegistryObject<Block> registerBottledButterfly(int butterflyIndex) {
-        String registryId = getBottledButterflyRegistryId(butterflyIndex);
+    static {
+        REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
 
-        // Light Butterflies glow when they are in a bottle.
-        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
-            return deferredRegister.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
+        BOTTLED_BUTTERFLY_BLOCKS = new ArrayList<>();
+        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+            String registryId = getBottledButterflyRegistryId(i);
+
+            // Light Butterflies glow when they are in a bottle.
+            RegistryObject<Block> newBlock;
+            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.GLOW)) {
+                newBlock = REGISTER.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
+            } else {
+                newBlock = REGISTER.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));
+            }
+
+            BOTTLED_BUTTERFLY_BLOCKS.add(newBlock);
         }
 
-        return deferredRegister.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));
-    }
+        BOTTLED_CATERPILLAR_BLOCKS = new ArrayList<>();
+        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+            RegistryObject<Block> newBlock = REGISTER.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
+            BOTTLED_CATERPILLAR_BLOCKS.add(newBlock);
+        }
 
-    /**
-     * Registers an origami block.
-     * @param id The ID of the block to register.
-     * @return A new registry object.
-     */
-    private RegistryObject<Block> registerButterflyOrigami(String id) {
-        return deferredRegister.register(id, ButterflyOrigamiBlock::new);
+        ALLIUM_BUD = REGISTER.register("bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM));
+        AZURE_BLUET_BUD = REGISTER.register("bud_azure_bluet", () -> new FlowerCropBlock(Blocks.AZURE_BLUET));
+        BLUE_ORCHID_BUD = REGISTER.register("bud_blue_orchid", () -> new FlowerCropBlock(Blocks.BLUE_ORCHID));
+        CORNFLOWER_BUD = REGISTER.register("bud_cornflower", () -> new FlowerCropBlock(Blocks.CORNFLOWER));
+        DANDELION_BUD = REGISTER.register("bud_dandelion", () -> new FlowerCropBlock(Blocks.DANDELION));
+        LILY_OF_THE_VALLEY_BUD = REGISTER.register("bud_lily_of_the_valley", () -> new FlowerCropBlock(Blocks.LILY_OF_THE_VALLEY));
+        ORANGE_TULIP_BUD = REGISTER.register("bud_orange_tulip", () -> new FlowerCropBlock(Blocks.ORANGE_TULIP));
+        OXEYE_DAISY_BUD = REGISTER.register("bud_oxeye_daisy", () -> new FlowerCropBlock(Blocks.OXEYE_DAISY));
+        PINK_TULIP_BUD = REGISTER.register("bud_pink_tulip", () -> new FlowerCropBlock(Blocks.PINK_TULIP));
+        POPPY_BUD = REGISTER.register("bud_poppy", () -> new FlowerCropBlock(Blocks.POPPY));
+        RED_TULIP_BUD = REGISTER.register("bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP));
+        WHITE_TULIP_BUD = REGISTER.register("bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP));
+        WITHER_ROSE_BUD = REGISTER.register("bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE));
+
+        BUTTERFLY_FEEDER = REGISTER.register( "butterfly_feeder",ButterflyFeederBlock::new);
+        BUTTERFLY_MICROSCOPE = REGISTER.register( "butterfly_microscope", () -> new ButterflyMicroscopeBlock(ButterfliesMod.ITEM_REGISTRY));
+
+        BUTTERFLY_ORIGAMI = new ArrayList<>();
+        for(String id : ORIGAMI_IDS) {
+            BUTTERFLY_ORIGAMI.add(REGISTER.register(id, ButterflyOrigamiBlock::new));
+        }
     }
 }

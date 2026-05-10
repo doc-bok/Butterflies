@@ -24,7 +24,7 @@ public class BlockEntityTypeRegistry {
         REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
         BUTTERFLY_FEEDER = REGISTER.register("butterfly_feeder",
                 () -> BlockEntityType.Builder.of(BlockEntityTypeRegistry::createButterflyFeeder,
-                        ButterfliesMod.BLOCK_REGISTRY.getButterflyFeeder().get()).build(null));
+                        BlockRegistry.BUTTERFLY_FEEDER.get()).build(null));
     }
 
     /**

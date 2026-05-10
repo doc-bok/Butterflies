@@ -34,11 +34,10 @@ public class PoiTypeRegistry {
 
     /**
      * Register the POI types.
-     * @param blockRegistry The block registry.
      */
-    public void initialise(BlockRegistry blockRegistry) {
+    public void initialise() {
         lepidopterist =deferredRegister.register("lepidopterist",
-                () -> new PoiType(getBlockStates(blockRegistry.getButterflyFeeder()), 1, 1));
+                () -> new PoiType(getBlockStates(BlockRegistry.BUTTERFLY_FEEDER), 1, 1));
     }
 
     /**

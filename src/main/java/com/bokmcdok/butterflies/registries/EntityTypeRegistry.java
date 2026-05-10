@@ -41,7 +41,6 @@ public class EntityTypeRegistry {
 
     private final DeferredRegister<EntityType<?>> deferredRegister;
 
-    private BlockRegistry blockRegistry;
     private ItemRegistry itemRegistry;
 
     private PeacemakerGoalRegistrar peacemakerGoalRegistrar;
@@ -74,12 +73,9 @@ public class EntityTypeRegistry {
 
     /**
      * Initializes entity types based on the provided block registry.
-     * @param blockRegistry The block registry instance.
      */
-    public void initialise(BlockRegistry blockRegistry,
-                           ItemRegistry itemRegistry,
+    public void initialise(ItemRegistry itemRegistry,
                            TagRegistry tagRegistry) {
-        this.blockRegistry = blockRegistry;
         this.itemRegistry = itemRegistry;
 
         final int speciesCount = ButterflyInfo.SPECIES.length;
@@ -181,15 +177,15 @@ public class EntityTypeRegistry {
 
     // Entity factory methods
     private Butterfly createButterfly(EntityType<? extends Butterfly> entityType, Level level) {
-        return new Butterfly(blockRegistry, entityType, level);
+        return new Butterfly(entityType, level);
     }
 
     private Butterfly createIceButterfly(EntityType<? extends Butterfly> entityType, Level level) {
-        return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.ELECTRIC_SPARK);
+        return new ParticleButterfly(entityType, level, ParticleTypes.ELECTRIC_SPARK);
     }
 
     private Butterfly createLavaMoth(EntityType<? extends Butterfly> entityType, Level level) {
-        return new ParticleButterfly(blockRegistry, entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
+        return new ParticleButterfly(entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
     }
 
     private PeacemakerButterfly createPeacemakerButterfly(

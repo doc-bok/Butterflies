@@ -30,7 +30,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
-    public static BlockRegistry BLOCK_REGISTRY;
+    public static ItemRegistry ITEM_REGISTRY;
 
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -38,25 +38,24 @@ public class ButterfliesMod {
 
         BannerPatternRegistry.REGISTER.register(modEventBus);
         BlockEntityTypeRegistry.REGISTER.register(modEventBus);
+        BlockRegistry.REGISTER.register(modEventBus);
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        BLOCK_REGISTRY = new BlockRegistry(modEventBus);
         CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
-        ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
+        ITEM_REGISTRY = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
         TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        BLOCK_REGISTRY.initialise(itemRegistry);
-        creativeTabRegistry.initialise(itemRegistry);
-        entityTypeRegistry.initialise(BLOCK_REGISTRY, itemRegistry, tagRegistry);
-        itemRegistry.initialise(BLOCK_REGISTRY, entityTypeRegistry, tagRegistry);
-        lootModifierRegistry.initialise(itemRegistry);
-        poiTypesRegistry.initialise(BLOCK_REGISTRY);
+        creativeTabRegistry.initialise(ITEM_REGISTRY);
+        entityTypeRegistry.initialise(ITEM_REGISTRY, tagRegistry);
+        ITEM_REGISTRY.initialise(entityTypeRegistry, tagRegistry);
+        lootModifierRegistry.initialise(ITEM_REGISTRY);
+        poiTypesRegistry.initialise();
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Register client-only listeners
@@ -65,8 +64,8 @@ public class ButterfliesMod {
         }
 
         // Register mod lifecycle and mod-specific event listeners
-        new LifecycleEventListener(modEventBus, itemRegistry);
-        new ModEventListener(modEventBus, creativeTabRegistry, itemRegistry);
+        new LifecycleEventListener(modEventBus, ITEM_REGISTRY);
+        new ModEventListener(modEventBus, creativeTabRegistry, ITEM_REGISTRY);
 
         // Register Forge event listeners
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);
@@ -76,7 +75,7 @@ public class ButterfliesMod {
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);
-        new VillageEventListener(forgeEventBus, itemRegistry, villagerProfessionRegistry);
+        new VillageEventListener(forgeEventBus, ITEM_REGISTRY, villagerProfessionRegistry);
 
         // Register mod configuration files
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
