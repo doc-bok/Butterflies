@@ -21,8 +21,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Main mod class for Butterflies.
@@ -31,8 +29,6 @@ import org.apache.logging.log4j.Logger;
 @Mod(ButterfliesMod.MOD_ID)
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
-
-    public static Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -57,7 +53,7 @@ public class ButterfliesMod {
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry, menuTypeRegistry);
         creativeTabRegistry.initialise(itemRegistry);
         decoratedPotPatternsRegistry.initialise();
-        entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
+        entityTypeRegistry.initialise(blockRegistry, itemRegistry);
         itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
         menuTypeRegistry.initialise();

@@ -78,8 +78,7 @@ public class EntityTypeRegistry {
      * @param blockRegistry The block registry instance.
      */
     public void initialise(BlockRegistry blockRegistry,
-                           ItemRegistry itemRegistry,
-                           TagRegistry tagRegistry) {
+                           ItemRegistry itemRegistry) {
         this.blockRegistry = blockRegistry;
         this.itemRegistry = itemRegistry;
 
@@ -108,7 +107,7 @@ public class EntityTypeRegistry {
                         .sized(1.0f, 1.0f)
                         .build(ButterflyScroll.NAME));
 
-        peacemakerGoalRegistrar = new PeacemakerGoalRegistrar(itemRegistry, tagRegistry);
+        peacemakerGoalRegistrar = new PeacemakerGoalRegistrar(itemRegistry);
         peacemakerButterfly = registerPeacemakerButterfly();
         peacemakerCow = registerPeacemakerCow();
         peacemakerEvoker = registerPeacemakerEvoker();

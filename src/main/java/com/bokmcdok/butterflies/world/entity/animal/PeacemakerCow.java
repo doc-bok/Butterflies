@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A Peacemaker Cow entity.
  */
-public class PeacemakerCow extends Mob {
+public class PeacemakerCow extends Mob implements PeacemakerEntity {
 
     // Constants for Peacemaker Cow attributes.
     private static final double PEACEMAKER_COW_HEALTH = 60.0d;

@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -23,17 +23,13 @@ public class PeacemakerGoalRegistrar {
 
     // A reference to the Tag Registry.
     private final ItemRegistry itemRegistry;
-    private final TagRegistry tagRegistry;
 
     /**
      * Construction
      * @param itemRegistry The item registry to set.
-     * @param tagRegistry The tag registry to set.
      */
-    public PeacemakerGoalRegistrar(@NotNull ItemRegistry itemRegistry,
-                                   @NotNull TagRegistry tagRegistry) {
+    public PeacemakerGoalRegistrar(@NotNull ItemRegistry itemRegistry) {
         this.itemRegistry = itemRegistry;
-        this.tagRegistry = tagRegistry;
     }
 
     /**
@@ -72,6 +68,6 @@ public class PeacemakerGoalRegistrar {
      * @return True if the entity is a Peacemaker Butterfly.
      */
     public boolean isNotPeacemaker(LivingEntity entity) {
-        return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
+        return !(entity instanceof PeacemakerEntity);
     }
 }
