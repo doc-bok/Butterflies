@@ -3,29 +3,17 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BannerPattern;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 
+/**
+ * Registers Banner Patterns used by the mod.
+ */
 public class BannerPatternRegistry {
 
-    // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<BannerPattern> deferredRegister;
+    public static final DeferredRegister<BannerPattern> REGISTER;
 
-
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public BannerPatternRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.BANNER_PATTERN, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the banner patterns.
-     */
-    public void initialise() {
-        // Register the banner pattern itself.
-        deferredRegister.register("banner_pattern_butterfly", () -> new BannerPattern("banner_pattern_butterfly"));
+    static {
+        REGISTER = DeferredRegister.create(Registries.BANNER_PATTERN, ButterfliesMod.MOD_ID);
+        REGISTER.register("banner_pattern_butterfly", () -> new BannerPattern("banner_pattern_butterfly"));
     }
 }
