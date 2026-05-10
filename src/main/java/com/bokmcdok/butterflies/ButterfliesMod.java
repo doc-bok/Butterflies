@@ -35,13 +35,13 @@ public class ButterfliesMod {
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         BannerPatternRegistry.REGISTER.register(modEventBus);
+        DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
         BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
         BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
         CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
-        DecoratedPotPatternsRegistry decoratedPotPatternsRegistry = new DecoratedPotPatternsRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
@@ -52,7 +52,6 @@ public class ButterfliesMod {
         blockEntityTypeRegistry.initialise(blockRegistry);
         blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry);
         creativeTabRegistry.initialise(itemRegistry);
-        decoratedPotPatternsRegistry.initialise();
         entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
         itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
@@ -65,7 +64,7 @@ public class ButterfliesMod {
         }
 
         // Register mod lifecycle and mod-specific event listeners
-        new LifecycleEventListener(modEventBus, decoratedPotPatternsRegistry, itemRegistry);
+        new LifecycleEventListener(modEventBus, itemRegistry);
         new ModEventListener(modEventBus, creativeTabRegistry, itemRegistry);
 
         // Register Forge event listeners

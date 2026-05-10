@@ -31,7 +31,6 @@ import java.util.Map;
 public class LifecycleEventListener {
 
     // Reference to the registries.
-    private final DecoratedPotPatternsRegistry decoratedPotPatternsRegistry;
     private final ItemRegistry itemRegistry;
 
     /**
@@ -39,13 +38,11 @@ public class LifecycleEventListener {
      * @param modEventBus The event bus to register with.
      */
     public LifecycleEventListener(IEventBus modEventBus,
-                                  DecoratedPotPatternsRegistry decoratedPotPatternsRegistry,
                                   ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);
 
-        this.decoratedPotPatternsRegistry = decoratedPotPatternsRegistry;
         this.itemRegistry = itemRegistry;
     }
 
@@ -69,7 +66,7 @@ public class LifecycleEventListener {
         // Butterfly Sherd Pattern.
         Map<Item, ResourceKey<String>> itemToPotTextureMap = Maps.newHashMap(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
         itemToPotTextureMap.put(itemRegistry.getButterflyPotterySherd().get(),
-                                decoratedPotPatternsRegistry.getButterflyPotPattern().getKey());
+                                DecoratedPotPatternsRegistry.BUTTERFLY_POT_PATTERN.getKey());
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemToPotTextureMap;
     }
 

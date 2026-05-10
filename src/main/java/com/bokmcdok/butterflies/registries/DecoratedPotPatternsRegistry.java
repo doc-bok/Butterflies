@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.registries.Registries;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -12,32 +11,13 @@ import net.minecraftforge.registries.RegistryObject;
 public class DecoratedPotPatternsRegistry {
 
     // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<String> deferredRegister;
+    public static final DeferredRegister<String> REGISTER;
 
     // The butterfly pot pattern.
-    private RegistryObject<String> butterflyPotPattern;
+    public static final RegistryObject<String> BUTTERFLY_POT_PATTERN;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public DecoratedPotPatternsRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the items.
-     */
-    public void initialise() {
-        butterflyPotPattern = deferredRegister.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
-    }
-
-    /**
-     * Accessor for butterfly pot pattern.
-     * @return The butterfly pot pattern.
-     */
-    public RegistryObject<String> getButterflyPotPattern() {
-        return butterflyPotPattern;
+    static {
+        REGISTER = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
+        BUTTERFLY_POT_PATTERN = REGISTER.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
     }
 }

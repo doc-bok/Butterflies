@@ -58,9 +58,6 @@ public class BlockEntityTypeRegistry {
      */
     private ButterflyFeederEntity createButterflyFeeder(BlockPos blockPos,
                                                         BlockState blockState) {
-        return new ButterflyFeederEntity(
-                butterflyFeeder.get(),
-                blockPos,
-                blockState);
+        return new ButterflyFeederEntity(butterflyFeeder.get(), blockPos, blockState);
     }
 }
