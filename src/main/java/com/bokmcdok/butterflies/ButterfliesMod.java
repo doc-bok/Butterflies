@@ -39,11 +39,11 @@ public class ButterfliesMod {
         BannerPatternRegistry.REGISTER.register(modEventBus);
         BlockEntityTypeRegistry.REGISTER.register(modEventBus);
         BlockRegistry.REGISTER.register(modEventBus);
+        CreativeTabRegistry.REGISTER.register(modEventBus);
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ITEM_REGISTRY = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
@@ -51,7 +51,6 @@ public class ButterfliesMod {
         TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        creativeTabRegistry.initialise(ITEM_REGISTRY);
         entityTypeRegistry.initialise(ITEM_REGISTRY, tagRegistry);
         ITEM_REGISTRY.initialise(entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(ITEM_REGISTRY);
@@ -65,7 +64,7 @@ public class ButterfliesMod {
 
         // Register mod lifecycle and mod-specific event listeners
         new LifecycleEventListener(modEventBus, ITEM_REGISTRY);
-        new ModEventListener(modEventBus, creativeTabRegistry, ITEM_REGISTRY);
+        new ModEventListener(modEventBus, ITEM_REGISTRY);
 
         // Register Forge event listeners
         new EntityEventListener(forgeEventBus, modEventBus, entityTypeRegistry);

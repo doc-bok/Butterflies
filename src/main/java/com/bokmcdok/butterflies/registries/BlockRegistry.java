@@ -192,4 +192,7 @@ public class BlockRegistry {
             BUTTERFLY_ORIGAMI.add(REGISTER.register(id, ButterflyOrigamiBlock::new));
         }
     }
+
+    // Prevent construction.
+    private BlockRegistry() {}
 }

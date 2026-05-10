@@ -14,7 +14,6 @@ import java.util.Objects;
 public class ModEventListener {
 
     // References to the registries.
-    private final CreativeTabRegistry creativeTabRegistry;
     private final ItemRegistry itemRegistry;
 
     /**
@@ -22,12 +21,10 @@ public class ModEventListener {
      * @param modEventBus The event bus to register with.
      */
     public ModEventListener(@NotNull IEventBus modEventBus,
-                            @NotNull CreativeTabRegistry creativeTabRegistry,
                             @NotNull ItemRegistry itemRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onBuildCreativeModeTabContents);
 
-        this.creativeTabRegistry = creativeTabRegistry;
         this.itemRegistry = itemRegistry;
     }
 
@@ -37,7 +34,7 @@ public class ModEventListener {
      */
     public void onBuildCreativeModeTabContents(@NotNull BuildCreativeModeTabContentsEvent event) {
 
-        if (!Objects.equals(event.getTabKey(), creativeTabRegistry.getButterflyCreativeTab().getKey())) {
+        if (!Objects.equals(event.getTabKey(), CreativeTabRegistry.BUTTERFLY_CREATIVE_TAB.getKey())) {
             return;
         }
 

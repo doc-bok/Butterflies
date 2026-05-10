@@ -20,4 +20,7 @@ public class DecoratedPotPatternsRegistry {
         REGISTER = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
         BUTTERFLY_POT_PATTERN = REGISTER.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
     }
+
+    // Prevent construction.
+    private DecoratedPotPatternsRegistry() {}
 }

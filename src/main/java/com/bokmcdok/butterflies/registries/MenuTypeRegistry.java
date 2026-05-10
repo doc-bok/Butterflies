@@ -49,5 +49,9 @@ public class MenuTypeRegistry {
         BUTTERFLY_FEEDER_MENU = REGISTER.register("butterfly_feeder",
                 () -> new MenuType<>(MenuTypeRegistry::createButterflyFeederMenu, FeatureFlags.DEFAULT_FLAGS));
         BUTTERFLY_MICROSCOPE_MENU = REGISTER.register("butterfly_microscope",
-                () -> new MenuType<>(MenuTypeRegistry::createButterflyMicroscopeMenu, FeatureFlags.DEFAULT_FLAGS));    }
+                () -> new MenuType<>(MenuTypeRegistry::createButterflyMicroscopeMenu, FeatureFlags.DEFAULT_FLAGS));
+    }
+
+    // Prevent construction.
+    private MenuTypeRegistry() {}
 }

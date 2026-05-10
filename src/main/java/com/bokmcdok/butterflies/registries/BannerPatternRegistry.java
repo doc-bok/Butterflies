@@ -16,4 +16,7 @@ public class BannerPatternRegistry {
         REGISTER = DeferredRegister.create(Registries.BANNER_PATTERN, ButterfliesMod.MOD_ID);
         REGISTER.register("banner_pattern_butterfly", () -> new BannerPattern("banner_pattern_butterfly"));
     }
+
+    // Prevent construction.
+    private BannerPatternRegistry() {}
 }

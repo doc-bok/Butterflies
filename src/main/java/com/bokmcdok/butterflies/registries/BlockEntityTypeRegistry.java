@@ -20,13 +20,6 @@ public class BlockEntityTypeRegistry {
     // The block entities.
     public static RegistryObject<BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
 
-    static {
-        REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
-        BUTTERFLY_FEEDER = REGISTER.register("butterfly_feeder",
-                () -> BlockEntityType.Builder.of(BlockEntityTypeRegistry::createButterflyFeeder,
-                        BlockRegistry.BUTTERFLY_FEEDER.get()).build(null));
-    }
-
     /**
      * Create a butterfly feeder.
      * @param blockPos The position of the block.
@@ -37,4 +30,14 @@ public class BlockEntityTypeRegistry {
                                                         BlockState blockState) {
         return new ButterflyFeederEntity(BUTTERFLY_FEEDER.get(), blockPos, blockState);
     }
+
+    static {
+        REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BUTTERFLY_FEEDER = REGISTER.register("butterfly_feeder",
+                () -> BlockEntityType.Builder.of(BlockEntityTypeRegistry::createButterflyFeeder,
+                        BlockRegistry.BUTTERFLY_FEEDER.get()).build(null));
+    }
+
+    // Prevent construction.
+    private BlockEntityTypeRegistry() {}
 }
