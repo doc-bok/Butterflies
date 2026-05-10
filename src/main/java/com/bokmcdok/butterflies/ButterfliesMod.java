@@ -30,8 +30,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
-    public static TagRegistry TAG_REGISTRY;
-
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -45,14 +43,8 @@ public class ButterfliesMod {
         ItemRegistry.REGISTER.register(modEventBus);
         LootModifierRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
-
-        // Initialize registries with explicit dependency ordering
-        PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
-        TAG_REGISTRY = new TagRegistry();
-        VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
-
-        poiTypesRegistry.initialise();
-        villagerProfessionRegistry.initialise(poiTypesRegistry);
+        PoiTypeRegistry.REGISTER.register(modEventBus);
+        VillagerProfessionRegistry.REGISTER.register(modEventBus);
 
         // Register client-only listeners
         if (FMLEnvironment.dist == Dist.CLIENT) {
@@ -67,11 +59,11 @@ public class ButterfliesMod {
         new EntityEventListener(forgeEventBus, modEventBus);
         new ForgeEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
-        new MobSpawnEventListener(forgeEventBus, TAG_REGISTRY);
+        new MobSpawnEventListener(forgeEventBus);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);
-        new VillageEventListener(forgeEventBus, villagerProfessionRegistry);
+        new VillageEventListener(forgeEventBus);
 
         // Register mod configuration files
         ModLoadingContext modLoadingContext = ModLoadingContext.get();

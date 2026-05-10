@@ -21,17 +21,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class PeacemakerGoalRegistrar {
 
-    // A reference to the Tag Registry.
-    private final TagRegistry tagRegistry;
-
-    /**
-     * Construction
-     * @param tagRegistry The tag registry to set.
-     */
-    public PeacemakerGoalRegistrar(@NotNull TagRegistry tagRegistry) {
-        this.tagRegistry = tagRegistry;
-    }
-
     /**
      * Override the target goals to ignore peacemaker mobs
      */
@@ -68,6 +57,6 @@ public class PeacemakerGoalRegistrar {
      * @return True if the entity is a Peacemaker Butterfly.
      */
     public boolean isNotPeacemaker(LivingEntity entity) {
-        return !entity.getType().is(this.tagRegistry.getPeacemakerEntities());
+        return !entity.getType().is(TagRegistry.PEACEMAKER_ENTITIES);
     }
 }

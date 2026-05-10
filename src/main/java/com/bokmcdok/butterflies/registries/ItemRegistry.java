@@ -177,7 +177,7 @@ public class ItemRegistry {
 
         // Banner Pattern
         BUTTERFLY_BANNER_PATTERN = REGISTER.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                ButterfliesMod.TAG_REGISTRY.getButterflyBannerPattern(),
+                TagRegistry.BUTTERFLY_BANNER_PATTERN,
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
         // Peacemaker Honey

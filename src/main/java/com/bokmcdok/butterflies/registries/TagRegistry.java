@@ -15,31 +15,12 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 public class TagRegistry {
 
     // The available tags for this mod.
-    private final TagKey<BannerPattern> butterflyBannerPattern;
-    private final TagKey<EntityType<?>> peacemakerEntities;
+    public static final TagKey<BannerPattern> BUTTERFLY_BANNER_PATTERN;
+    public static final TagKey<EntityType<?>> PEACEMAKER_ENTITIES;
 
-    /**
-     * Create all the needed tags.
-     */
-    public TagRegistry() {
-        this.butterflyBannerPattern = create(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
-        this.peacemakerEntities = create(Registries.ENTITY_TYPE, "peacemaker_entities");
-    }
-
-    /**
-     * Accessor to the butterfly banner pattern tag key.
-     * @return The tag key.
-     */
-    public TagKey<BannerPattern> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
-    }
-
-    /**
-     * Accessor to the peacemaker entity tag key.
-     * @return The tag key.
-     */
-    public TagKey<EntityType<?>> getPeacemakerEntities() {
-        return peacemakerEntities;
+    static {
+        BUTTERFLY_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
+        PEACEMAKER_ENTITIES = create(Registries.ENTITY_TYPE, "peacemaker_entities");
     }
 
     /**
@@ -49,10 +30,11 @@ public class TagRegistry {
      * @return The new tag key.
      * @param <T> The type of the tag.
      */
-    private <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registry,
-                                 String tagName) {
-        return TagKey.create(
-                registry,
-                new ResourceLocation(ButterfliesMod.MOD_ID, tagName));
+    private static <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registry,
+                                        String tagName) {
+        return TagKey.create(registry, new ResourceLocation(ButterfliesMod.MOD_ID, tagName));
     }
+
+    // Prevent construction.
+    private TagRegistry() {}
 }

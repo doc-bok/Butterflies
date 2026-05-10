@@ -84,7 +84,7 @@ public class EntityTypeRegistry {
                         .sized(1.0f, 1.0f)
                         .build(ButterflyScroll.NAME));
 
-        PEACEMAKER_GOAL_REGISTRAR = new PeacemakerGoalRegistrar(ButterfliesMod.TAG_REGISTRY);
+        PEACEMAKER_GOAL_REGISTRAR = new PeacemakerGoalRegistrar();
         PEACEMAKER_BUTTERFLY = registerPeacemakerButterfly();
         PEACEMAKER_EVOKER = registerPeacemakerEvoker();
         PEACEMAKER_ILLUSIONER = registerPeacemakerIllusioner();

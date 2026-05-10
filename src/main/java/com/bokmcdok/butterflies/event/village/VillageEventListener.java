@@ -22,19 +22,14 @@ import java.util.Objects;
  */
 public class VillageEventListener {
 
-    private final VillagerProfessionRegistry villagerProfessionRegistry;
-
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public VillageEventListener(IEventBus forgeEventBus,
-                                VillagerProfessionRegistry villagerProfessionRegistry) {
+    public VillageEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onVillagerTrades);
         forgeEventBus.addListener(this::onWandererTrades);
-
-        this.villagerProfessionRegistry = villagerProfessionRegistry;
     }
 
     /**
@@ -42,7 +37,7 @@ public class VillageEventListener {
      * @param event The event information.
      */
     private void onVillagerTrades(VillagerTradesEvent event) {
-        if (event.getType() == villagerProfessionRegistry.getLepidopterist().get()) {
+        if (event.getType() == VillagerProfessionRegistry.LEPIDOPTERIST.get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
             Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
