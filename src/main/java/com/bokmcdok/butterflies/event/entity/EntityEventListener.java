@@ -201,7 +201,7 @@ public class EntityEventListener {
         event.register(entityTypeRegistry.getPeacemakerCow().get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
-                Monster::checkMonsterSpawnRules,
+                Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(entityTypeRegistry.getPeacemakerEvoker().get(),

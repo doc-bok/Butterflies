@@ -335,7 +335,7 @@ public class EntityTypeRegistry {
         String registryId = "peacemaker_cow";
         return deferredRegister.register(registryId,
                 () -> EntityType.Builder.of(this::createPeacemakerCow, MobCategory.MONSTER)
-                        .sized(2.5f, 2.5f)
+                        .sized(4.5f, 2.5f)
                         .clientTrackingRange(8)
                         .build(registryId));
     }

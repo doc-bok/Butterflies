@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.PeacemakerCowModel;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
-import com.bokmcdok.butterflies.world.entity.monster.PeacemakerCow;
+import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
