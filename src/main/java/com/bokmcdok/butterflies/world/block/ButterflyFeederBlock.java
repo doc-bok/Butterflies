@@ -40,14 +40,10 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
             Block.box( 1.0, 14.0,  0.0, 15.0, 16.0,  1.0),
             Block.box( 0.0,  0.0,  0.0,  2.0, 12.0,  2.0));
 
-    // The registries.
-    private final BlockEntityTypeRegistry blockEntityTypeRegistry;
-
     /**
      * Construction.
-     * @param blockEntityTypeRegistry The block entity registry.
      */
-    public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry) {
+    public ButterflyFeederBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.SAND)
                 .isRedstoneConductor(BlockRegistry::never)
@@ -57,8 +53,6 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
                 .noOcclusion()
                 .sound(SoundType.BAMBOO)
                 .strength(0.3F));
-
-        this.blockEntityTypeRegistry = blockEntityTypeRegistry;
     }
 
     /**
@@ -127,7 +121,7 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
                                       @NotNull BlockState blockState) {
         return new ButterflyFeederEntity(
-                blockEntityTypeRegistry.getButterflyFeeder().get(),
+                BlockEntityTypeRegistry.BUTTERFLY_FEEDER.get(),
                 blockPos,
                 blockState);
     }

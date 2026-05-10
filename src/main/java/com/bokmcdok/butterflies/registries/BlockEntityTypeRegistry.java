@@ -5,7 +5,6 @@ import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -16,38 +15,16 @@ import net.minecraftforge.registries.RegistryObject;
 public class BlockEntityTypeRegistry {
 
     // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<BlockEntityType<?>> deferredRegister;
+    public static final DeferredRegister<BlockEntityType<?>> REGISTER;
 
     // The block entities.
-    private RegistryObject<BlockEntityType<ButterflyFeederEntity>> butterflyFeeder;
+    public static RegistryObject<BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public BlockEntityTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the block entities.
-     * @param blockRegistry The block registry.
-     */
-    public void initialise(BlockRegistry blockRegistry) {
-
-        //noinspection DataFlowIssue
-        this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
-                () -> BlockEntityType.Builder.of(this::createButterflyFeeder,
-                        blockRegistry.getButterflyFeeder().get()).build(null));
-    }
-
-    /**
-     * Get the butterfly feeder.
-     * @return The block entity type.
-     */
-    public RegistryObject<BlockEntityType<ButterflyFeederEntity>> getButterflyFeeder() {
-        return butterflyFeeder;
+    static {
+        REGISTER = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BUTTERFLY_FEEDER = REGISTER.register("butterfly_feeder",
+                () -> BlockEntityType.Builder.of(BlockEntityTypeRegistry::createButterflyFeeder,
+                        ButterfliesMod.BLOCK_REGISTRY.getButterflyFeeder().get()).build(null));
     }
 
     /**
@@ -56,8 +33,8 @@ public class BlockEntityTypeRegistry {
      * @param blockState The block's state.
      * @return A new block entity.
      */
-    private ButterflyFeederEntity createButterflyFeeder(BlockPos blockPos,
+    private static ButterflyFeederEntity createButterflyFeeder(BlockPos blockPos,
                                                         BlockState blockState) {
-        return new ButterflyFeederEntity(butterflyFeeder.get(), blockPos, blockState);
+        return new ButterflyFeederEntity(BUTTERFLY_FEEDER.get(), blockPos, blockState);
     }
 }

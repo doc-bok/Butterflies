@@ -30,17 +30,19 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
+    public static BlockRegistry BLOCK_REGISTRY;
+
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
         BannerPatternRegistry.REGISTER.register(modEventBus);
+        BlockEntityTypeRegistry.REGISTER.register(modEventBus);
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        BlockEntityTypeRegistry blockEntityTypeRegistry = new BlockEntityTypeRegistry(modEventBus);
-        BlockRegistry blockRegistry = new BlockRegistry(modEventBus);
+        BLOCK_REGISTRY = new BlockRegistry(modEventBus);
         CreativeTabRegistry creativeTabRegistry = new CreativeTabRegistry(modEventBus);
         EntityTypeRegistry entityTypeRegistry = new EntityTypeRegistry(modEventBus);
         ItemRegistry itemRegistry = new ItemRegistry(modEventBus);
@@ -49,18 +51,17 @@ public class ButterfliesMod {
         TagRegistry tagRegistry = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        blockEntityTypeRegistry.initialise(blockRegistry);
-        blockRegistry.initialise(blockEntityTypeRegistry, itemRegistry);
+        BLOCK_REGISTRY.initialise(itemRegistry);
         creativeTabRegistry.initialise(itemRegistry);
-        entityTypeRegistry.initialise(blockRegistry, itemRegistry, tagRegistry);
-        itemRegistry.initialise(blockRegistry, entityTypeRegistry, tagRegistry);
+        entityTypeRegistry.initialise(BLOCK_REGISTRY, itemRegistry, tagRegistry);
+        itemRegistry.initialise(BLOCK_REGISTRY, entityTypeRegistry, tagRegistry);
         lootModifierRegistry.initialise(itemRegistry);
-        poiTypesRegistry.initialise(blockRegistry);
+        poiTypesRegistry.initialise(BLOCK_REGISTRY);
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
         // Register client-only listeners
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            new ClientEventListener(modEventBus, blockEntityTypeRegistry, entityTypeRegistry);
+            new ClientEventListener(modEventBus, entityTypeRegistry);
         }
 
         // Register mod lifecycle and mod-specific event listeners

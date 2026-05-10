@@ -31,7 +31,6 @@ import java.util.List;
 public class ClientEventListener {
 
     // Registries.
-    private final BlockEntityTypeRegistry blockEntityTypeRegistry;
     private final EntityTypeRegistry entityTypeRegistry;
 
     /**
@@ -39,13 +38,11 @@ public class ClientEventListener {
      * @param modEventBus The event bus to register with.
      */
     public ClientEventListener(IEventBus modEventBus,
-                               BlockEntityTypeRegistry blockEntityTypeRegistry,
                                EntityTypeRegistry entityTypeRegistry) {
         modEventBus.register(this);
         modEventBus.addListener(this::onRegisterLayerDefinitions);
         modEventBus.addListener(this::onRegisterRenderers);
 
-        this.blockEntityTypeRegistry = blockEntityTypeRegistry;
         this.entityTypeRegistry = entityTypeRegistry;
     }
 
@@ -87,7 +84,7 @@ public class ClientEventListener {
         }
 
         // Register the butterfly feeder renderer.
-        event.registerBlockEntityRenderer(blockEntityTypeRegistry.getButterflyFeeder().get(), ButterflyFeederEntityRenderer::new);
+        event.registerBlockEntityRenderer(BlockEntityTypeRegistry.BUTTERFLY_FEEDER.get(), ButterflyFeederEntityRenderer::new);
 
         // Register the butterfly golem renderer.
         event.registerEntityRenderer(entityTypeRegistry.getButterflyGolem().get(), ButterflyGolemRenderer::new);
