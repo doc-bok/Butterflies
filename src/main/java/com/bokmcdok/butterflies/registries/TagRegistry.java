@@ -12,21 +12,24 @@ import net.minecraft.world.level.block.entity.BannerPattern;
 public class TagRegistry {
 
     // The available tags for this mod.
-    private final TagKey<BannerPattern> butterflyBannerPattern;
+    public static final TagKey<BannerPattern> BUTTERFLY_BANNER_PATTERN;
 
-    /**
-     * Create all the needed tags.
-     */
-    public TagRegistry() {
-        this.butterflyBannerPattern = TagKey.create(Registries.BANNER_PATTERN,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
+    static {
+        BUTTERFLY_BANNER_PATTERN = createTag(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
     }
 
     /**
-     * Accessor to the butterfly banner pattern tag key.
-     * @return The tag key.
+     * Create a new tag using the current mod's ID.
+     * @param registry The registry to create a tag for.
+     * @param tagName The name of the tag.
+     * @return The new tag key.
+     * @param <T> The type of the tag.
      */
-    public TagKey<BannerPattern> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
+    private static <T> TagKey<T> createTag(ResourceKey<? extends Registry<T>> registry,
+                                           String tagName) {
+        return TagKey.create(registry, new ResourceLocation(ButterfliesMod.MOD_ID, tagName));
     }
+
+    // Prevent construction.
+    private TagRegistry() {}
 }

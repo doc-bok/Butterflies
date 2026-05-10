@@ -43,10 +43,10 @@ public class BottledCaterpillarBlock extends Block {
      */
     public BottledCaterpillarBlock() {
         super(BlockBehaviour.Properties.copy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
                 .noOcclusion()
                 .sound(SoundType.GLASS)
                 .strength(0.3F));

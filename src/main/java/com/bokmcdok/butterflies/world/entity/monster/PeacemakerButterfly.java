@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.BlockPos;
@@ -71,9 +70,6 @@ public class PeacemakerButterfly
     private static final double PEACEMAKER_BUTTERFLY_ATTACK_DAMAGE = 3.0d;
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
-
-    // The item registry
-    private final ItemRegistry itemRegistry;
 
     /**
      * Convert a raider to one with a butterfly host
@@ -321,17 +317,9 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(@NotNull ItemRegistry itemRegistry,
-                               @NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                               EntityType<? extends Monster> entityType,
+    public PeacemakerButterfly(EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
-
-        this.itemRegistry = itemRegistry;
-
-        if (!level.isClientSide()) {
-            this.registerGoalsPost(peacemakerGoalRegistrar);
-        }
 
         // Setup for a flying mob.
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -454,11 +442,11 @@ public class PeacemakerButterfly
         if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
-                    itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
+                    itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
             return shouldConsume ? InteractionResult.CONSUME : InteractionResult.PASS;
         }
 
-        if (itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get())) {
+        if (itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get())) {
             if (!player.getAbilities().instabuild) {
                 player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
             }
@@ -556,7 +544,8 @@ public class PeacemakerButterfly
     /**
      * Register the goals for the Peacemaker Butterfly AI.
      */
-    protected void registerGoalsPost(PeacemakerGoalRegistrar peacemakerGoalRegistrar) {
+    @Override
+    protected void registerGoals() {
 
         //  Movement goals
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -583,9 +572,9 @@ public class PeacemakerButterfly
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
                 (x) -> x.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 
         //  Tempt goals
@@ -593,7 +582,7 @@ public class PeacemakerButterfly
                 new TemptGoal(
                         this,
                         1.25D,
-                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        Ingredient.of(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get()),
                         false));
     }
 

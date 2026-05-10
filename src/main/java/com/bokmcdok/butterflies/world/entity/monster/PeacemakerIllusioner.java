@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -35,15 +34,9 @@ public class PeacemakerIllusioner extends Illusioner implements PeacemakerEntity
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerIllusioner(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                                EntityType<? extends PeacemakerIllusioner> type,
+    public PeacemakerIllusioner(EntityType<? extends PeacemakerIllusioner> type,
                                 Level level) {
         super(type, level);
-
-        // Register Peacemaker-specific goals.
-        if (!level.isClientSide()) {
-            peacemakerGoalRegistrar.registerGoals(this);
-        }
     }
 
     /**
@@ -54,5 +47,14 @@ public class PeacemakerIllusioner extends Illusioner implements PeacemakerEntity
     public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
         PeacemakerButterfly.spawn(this);
+    }
+
+    /**
+     * Register Peacemaker-specific goals.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        registerPathfinderGoals(this);
     }
 }

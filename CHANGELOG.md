@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.9 (2026-05-11)
+ - Refactored registries so they are now singletons.
+
 ### 7.3.8 (2026-05-09)
  - Peacemaker possession code will now only run if the entity isn't already possessed.
  - Removed unused imports.
