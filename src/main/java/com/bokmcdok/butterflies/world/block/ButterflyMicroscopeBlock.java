@@ -42,10 +42,10 @@ public class ButterflyMicroscopeBlock extends Block {
     public ButterflyMicroscopeBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
                 .noOcclusion()
                 .sound(SoundType.STONE)
                 .strength(1.0F));

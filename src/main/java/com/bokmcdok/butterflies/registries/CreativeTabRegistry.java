@@ -13,14 +13,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class CreativeTabRegistry {
 
     // An instance of a deferred registry we use to register items.
-    public static final DeferredRegister<CreativeModeTab> REGISTER;
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS;
 
     // The Butterfly Creative Tab
     public static RegistryObject<CreativeModeTab> BUTTERFLY_CREATIVE_TAB;
 
     static {
-        REGISTER = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ButterfliesMod.MOD_ID);
-        BUTTERFLY_CREATIVE_TAB = REGISTER.register("butterfly_creative_tab",
+        CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ButterfliesMod.MOD_ID);
+        BUTTERFLY_CREATIVE_TAB = CREATIVE_TABS.register("butterfly_creative_tab",
                 () -> CreativeModeTab.builder()
                         .title(Component.translatable("itemGroup.butterfly_tab"))
                         .icon(ItemRegistry.BUTTERFLY_BOOK.get()::getDefaultInstance)
@@ -28,6 +28,8 @@ public class CreativeTabRegistry {
         );
     }
 
-    // Prevent construction.
+    /**
+     * Prevent construction.
+     */
     private CreativeTabRegistry() {}
 }

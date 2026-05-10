@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.event.entity;
 
+import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.monster.*;
@@ -71,31 +73,31 @@ public class EntityEventListener {
      * Register the attributes for living entities
      */
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : EntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
-        for (RegistryObject<EntityType<Caterpillar>> i : EntityTypeRegistry.CATERPILLARS) {
+        for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             event.put(i.get(), Caterpillar.createAttributes().build());
         }
 
-        for (RegistryObject<EntityType<Chrysalis>> i : EntityTypeRegistry.CHRYSALISES) {
+        for (RegistryObject<EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             event.put(i.get(), Chrysalis.createAttributes().build());
         }
 
-        for (RegistryObject<EntityType<ButterflyEgg>> i : EntityTypeRegistry.BUTTERFLY_EGGS) {
+        for (RegistryObject<EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             event.put(i.get(), ButterflyEgg.createAttributes().build());
         }
 
         event.put(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), IronGolem.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterfly.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_EVOKER.get(), PeacemakerEvoker.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), PeacemakerIllusioner.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PeacemakerPillager.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_VILLAGER.get(), PeacemakerVillager.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), PeacemakerVindicator.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), PeacemakerWanderingTrader.createAttributes().build());
-        event.put(EntityTypeRegistry.PEACEMAKER_WITCH.get(), PeacemakerWitch.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterfly.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(), PeacemakerEvoker.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), PeacemakerIllusioner.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PeacemakerPillager.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(), PeacemakerVillager.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), PeacemakerVindicator.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), PeacemakerWanderingTrader.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(), PeacemakerWitch.createAttributes().build());
     }
 
     /**
@@ -147,7 +149,7 @@ public class EntityEventListener {
      * @param event The event information
      */
     private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : EntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -155,7 +157,7 @@ public class EntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (RegistryObject<EntityType<Caterpillar>> i : EntityTypeRegistry.CATERPILLARS) {
+        for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -163,7 +165,7 @@ public class EntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (RegistryObject<EntityType<Chrysalis>> i : EntityTypeRegistry.CHRYSALISES) {
+        for (RegistryObject<EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -171,7 +173,7 @@ public class EntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (RegistryObject<EntityType<ButterflyEgg>> i : EntityTypeRegistry.BUTTERFLY_EGGS) {
+        for (RegistryObject<EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -185,49 +187,49 @@ public class EntityEventListener {
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Monster::checkMonsterSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_EVOKER.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_PILLAGER.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_VILLAGER.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_VINDICATOR.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
-        event.register(EntityTypeRegistry.PEACEMAKER_WITCH.get(),
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,

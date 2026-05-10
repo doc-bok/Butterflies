@@ -19,8 +19,8 @@ public class TagRegistry {
     public static final TagKey<EntityType<?>> PEACEMAKER_ENTITIES;
 
     static {
-        BUTTERFLY_BANNER_PATTERN = create(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
-        PEACEMAKER_ENTITIES = create(Registries.ENTITY_TYPE, "peacemaker_entities");
+        BUTTERFLY_BANNER_PATTERN = createTag(Registries.BANNER_PATTERN, "banner_pattern_butterfly");
+        PEACEMAKER_ENTITIES = createTag(Registries.ENTITY_TYPE, "peacemaker_entities");
     }
 
     /**
@@ -30,8 +30,8 @@ public class TagRegistry {
      * @return The new tag key.
      * @param <T> The type of the tag.
      */
-    private static <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registry,
-                                        String tagName) {
+    private static <T> TagKey<T> createTag(ResourceKey<? extends Registry<T>> registry,
+                                           String tagName) {
         return TagKey.create(registry, new ResourceLocation(ButterfliesMod.MOD_ID, tagName));
     }
 

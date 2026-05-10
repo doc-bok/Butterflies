@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.BlockPos;
@@ -318,14 +317,9 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                               EntityType<? extends Monster> entityType,
+    public PeacemakerButterfly(EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
-
-        if (!level.isClientSide()) {
-            this.registerGoalsPost(peacemakerGoalRegistrar);
-        }
 
         // Setup for a flying mob.
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -550,7 +544,8 @@ public class PeacemakerButterfly
     /**
      * Register the goals for the Peacemaker Butterfly AI.
      */
-    protected void registerGoalsPost(PeacemakerGoalRegistrar peacemakerGoalRegistrar) {
+    @Override
+    protected void registerGoals() {
 
         //  Movement goals
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -577,9 +572,9 @@ public class PeacemakerButterfly
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
                 (x) -> x.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 
         //  Tempt goals

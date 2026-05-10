@@ -4,7 +4,9 @@ import com.bokmcdok.butterflies.client.model.*;
 import com.bokmcdok.butterflies.client.renderer.blockentity.ButterflyFeederEntityRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
 import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
@@ -62,7 +64,7 @@ public class ClientEventListener {
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
         // Register the butterfly renderers.
-        List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = EntityTypeRegistry.BUTTERFLIES;
+        List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
         for (int i = 0; i < butterflies.size(); ++i) {
 
             // Get the renderer provider.
@@ -73,7 +75,7 @@ public class ClientEventListener {
         }
 
         // Register the butterfly egg renderers.
-        for (RegistryObject<EntityType<ButterflyEgg>> i : EntityTypeRegistry.BUTTERFLY_EGGS) {
+        for (RegistryObject<EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             event.registerEntityRenderer(i.get(), ButterflyEggRenderer::new);
         }
 
@@ -92,24 +94,24 @@ public class ClientEventListener {
         }
 
         // Register the caterpillar renderers.
-        for (RegistryObject<EntityType<Caterpillar>> i : EntityTypeRegistry.CATERPILLARS) {
+        for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             event.registerEntityRenderer(i.get(), CaterpillarRenderer::new);
         }
 
         // Register the chrysalis renderers.
-        for (RegistryObject<EntityType<Chrysalis>> i : EntityTypeRegistry.CHRYSALISES) {
+        for (RegistryObject<EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             event.registerEntityRenderer(i.get(), ChrysalisRenderer::new);
         }
 
         // Register the peacemaker renderers.
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterflyRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_EVOKER.get(), EvokerRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), IllusionerRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PillagerRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_VILLAGER.get(), VillagerRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), VindicatorRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), WanderingTraderRenderer::new);
-        event.registerEntityRenderer(EntityTypeRegistry.PEACEMAKER_WITCH.get(), WitchRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterflyRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(), EvokerRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), IllusionerRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PillagerRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(), VillagerRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), VindicatorRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), WanderingTraderRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(), WitchRenderer::new);
 
     }
 

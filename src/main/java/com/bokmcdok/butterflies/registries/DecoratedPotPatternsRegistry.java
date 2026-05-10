@@ -10,17 +10,19 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class DecoratedPotPatternsRegistry {
 
-    // An instance of a deferred registry we use to register items.
-    public static final DeferredRegister<String> REGISTER;
+    // An instance of a deferred registry we use to register patterns.
+    public static final DeferredRegister<String> DECORATED_POT_PATTERNS;
 
     // The butterfly pot pattern.
     public static final RegistryObject<String> BUTTERFLY_POT_PATTERN;
 
     static {
-        REGISTER = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
-        BUTTERFLY_POT_PATTERN = REGISTER.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
+        DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
+        BUTTERFLY_POT_PATTERN = DECORATED_POT_PATTERNS.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
     }
 
-    // Prevent construction.
+    /**
+     * Prevent construction.
+     */
     private DecoratedPotPatternsRegistry() {}
 }

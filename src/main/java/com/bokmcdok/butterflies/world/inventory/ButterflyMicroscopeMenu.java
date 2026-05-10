@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.inventory;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyMicroscopeBlock;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
@@ -39,14 +40,12 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
     /**
      * Client constructor.
-     * @param menuType The type of this menu.
      * @param containerId The ID of the container.
      * @param playerInventory The player's inventory.
      */
-    public ButterflyMicroscopeMenu(MenuType<?> menuType,
-                                   int containerId,
+    public ButterflyMicroscopeMenu(int containerId,
                                    Inventory playerInventory) {
-        this(menuType, containerId, playerInventory, ContainerLevelAccess.NULL);
+        this(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), containerId, playerInventory, ContainerLevelAccess.NULL);
     }
 
     /**

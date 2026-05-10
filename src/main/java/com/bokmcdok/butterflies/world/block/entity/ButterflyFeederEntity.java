@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block.entity;
 
+import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.core.BlockPos;
@@ -13,7 +14,6 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -29,14 +29,12 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
     /**
      * Construction.
-     * @param blockEntityType The block entity type.
      * @param blockPos The position of the block.
      * @param blockState The state of the block.
      */
-    public ButterflyFeederEntity(BlockEntityType<?> blockEntityType,
-                                 BlockPos blockPos,
+    public ButterflyFeederEntity(BlockPos blockPos,
                                  BlockState blockState) {
-        super(blockEntityType, blockPos, blockState);
+        super(BlockEntityTypeRegistry.BUTTERFLY_FEEDER.get(), blockPos, blockState);
         this.items = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
@@ -81,7 +79,7 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
     /**
      * Get the default name for the feeder.
-     * @return The relevant localisation string.
+     * @return The relevant localization string.
      */
     @NotNull
     @Override

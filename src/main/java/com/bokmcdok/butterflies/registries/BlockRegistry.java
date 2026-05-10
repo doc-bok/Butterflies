@@ -18,6 +18,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,8 +26,8 @@ import java.util.List;
  */
 public class BlockRegistry {
 
-    // An instance of a deferred registry we use to register items.
-    public static final DeferredRegister<Block> REGISTER;
+    // An instance of a deferred registry we use to register blocks.
+    public static final DeferredRegister<Block> BLOCKS;
 
     // Bottled creatures.
     public static final List<RegistryObject<Block>> BOTTLED_BUTTERFLY_BLOCKS;
@@ -79,20 +80,20 @@ public class BlockRegistry {
     // The base properties for bottled butterflies.
     private static final BlockBehaviour.Properties BOTTLED_BUTTERFLY_PROPERTIES =
             BlockBehaviour.Properties.copy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::never)
-                    .isSuffocating(BlockRegistry::never)
-                    .isValidSpawn(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
+                    .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                    .isSuffocating(BlockRegistry::alwaysFalse)
+                    .isValidSpawn(BlockRegistry::alwaysFalse)
+                    .isViewBlocking(BlockRegistry::alwaysFalse)
                     .noOcclusion()
                     .sound(SoundType.GLASS)
                     .strength(0.3F);
 
     private static final BlockBehaviour.Properties GLOWING_BOTTLED_BUTTERFLY_PROPERTIES =
             BlockBehaviour.Properties.copy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::never)
-                    .isSuffocating(BlockRegistry::never)
-                    .isValidSpawn(BlockRegistry::never)
-                    .isViewBlocking(BlockRegistry::never)
+                    .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                    .isSuffocating(BlockRegistry::alwaysFalse)
+                    .isValidSpawn(BlockRegistry::alwaysFalse)
+                    .isViewBlocking(BlockRegistry::alwaysFalse)
                     .noOcclusion()
                     .sound(SoundType.GLASS)
                     .strength(0.3F)
@@ -107,10 +108,10 @@ public class BlockRegistry {
      * @param ignoredEntityType The entity type trying to spawn.
      * @return Always FALSE.
      */
-    public static boolean never(BlockState ignoredBlockState,
-                                BlockGetter ignoredBlockGetter,
-                                BlockPos ignoredBlockPos,
-                                EntityType<?> ignoredEntityType) {
+    public static boolean alwaysFalse(BlockState ignoredBlockState,
+                                      BlockGetter ignoredBlockGetter,
+                                      BlockPos ignoredBlockPos,
+                                      EntityType<?> ignoredEntityType) {
         return false;
     }
 
@@ -122,9 +123,9 @@ public class BlockRegistry {
      * @param ignoredBlockPos The block's position.
      * @return Always FALSE.
      */
-    public static boolean never(BlockState ignoredBlockState,
-                                BlockGetter ignoredBlockGetter,
-                                BlockPos ignoredBlockPos) {
+    public static boolean alwaysFalse(BlockState ignoredBlockState,
+                                      BlockGetter ignoredBlockGetter,
+                                      BlockPos ignoredBlockPos) {
         return false;
     }
 
@@ -147,52 +148,65 @@ public class BlockRegistry {
     }
 
     static {
-        REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
+        BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
 
-        BOTTLED_BUTTERFLY_BLOCKS = new ArrayList<>();
+        // Bottled butterflies.
+        List<RegistryObject<Block>> bottledButterflyBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             String registryId = getBottledButterflyRegistryId(i);
 
             // Light Butterflies glow when they are in a bottle.
             RegistryObject<Block> newBlock;
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.GLOW)) {
-                newBlock = REGISTER.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
+                newBlock = BLOCKS.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
             } else {
-                newBlock = REGISTER.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));
+                newBlock = BLOCKS.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));
             }
 
-            BOTTLED_BUTTERFLY_BLOCKS.add(newBlock);
+            bottledButterflyBlocks.add(newBlock);
         }
 
-        BOTTLED_CATERPILLAR_BLOCKS = new ArrayList<>();
+        BOTTLED_BUTTERFLY_BLOCKS = Collections.unmodifiableList(bottledButterflyBlocks);
+
+        // Bottled caterpillars.
+        List<RegistryObject<Block>> bottledCaterpillarBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            RegistryObject<Block> newBlock = REGISTER.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
-            BOTTLED_CATERPILLAR_BLOCKS.add(newBlock);
+            RegistryObject<Block> newBlock = BLOCKS.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
+            bottledCaterpillarBlocks.add(newBlock);
         }
 
-        ALLIUM_BUD = REGISTER.register("bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM));
-        AZURE_BLUET_BUD = REGISTER.register("bud_azure_bluet", () -> new FlowerCropBlock(Blocks.AZURE_BLUET));
-        BLUE_ORCHID_BUD = REGISTER.register("bud_blue_orchid", () -> new FlowerCropBlock(Blocks.BLUE_ORCHID));
-        CORNFLOWER_BUD = REGISTER.register("bud_cornflower", () -> new FlowerCropBlock(Blocks.CORNFLOWER));
-        DANDELION_BUD = REGISTER.register("bud_dandelion", () -> new FlowerCropBlock(Blocks.DANDELION));
-        LILY_OF_THE_VALLEY_BUD = REGISTER.register("bud_lily_of_the_valley", () -> new FlowerCropBlock(Blocks.LILY_OF_THE_VALLEY));
-        ORANGE_TULIP_BUD = REGISTER.register("bud_orange_tulip", () -> new FlowerCropBlock(Blocks.ORANGE_TULIP));
-        OXEYE_DAISY_BUD = REGISTER.register("bud_oxeye_daisy", () -> new FlowerCropBlock(Blocks.OXEYE_DAISY));
-        PINK_TULIP_BUD = REGISTER.register("bud_pink_tulip", () -> new FlowerCropBlock(Blocks.PINK_TULIP));
-        POPPY_BUD = REGISTER.register("bud_poppy", () -> new FlowerCropBlock(Blocks.POPPY));
-        RED_TULIP_BUD = REGISTER.register("bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP));
-        WHITE_TULIP_BUD = REGISTER.register("bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP));
-        WITHER_ROSE_BUD = REGISTER.register("bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE));
+        BOTTLED_CATERPILLAR_BLOCKS = Collections.unmodifiableList(bottledCaterpillarBlocks);
 
-        BUTTERFLY_FEEDER = REGISTER.register( "butterfly_feeder",ButterflyFeederBlock::new);
-        BUTTERFLY_MICROSCOPE = REGISTER.register( "butterfly_microscope", ButterflyMicroscopeBlock::new);
+        // Butterfly buds
+        ALLIUM_BUD = BLOCKS.register("bud_allium", () -> new FlowerCropBlock(Blocks.ALLIUM));
+        AZURE_BLUET_BUD = BLOCKS.register("bud_azure_bluet", () -> new FlowerCropBlock(Blocks.AZURE_BLUET));
+        BLUE_ORCHID_BUD = BLOCKS.register("bud_blue_orchid", () -> new FlowerCropBlock(Blocks.BLUE_ORCHID));
+        CORNFLOWER_BUD = BLOCKS.register("bud_cornflower", () -> new FlowerCropBlock(Blocks.CORNFLOWER));
+        DANDELION_BUD = BLOCKS.register("bud_dandelion", () -> new FlowerCropBlock(Blocks.DANDELION));
+        LILY_OF_THE_VALLEY_BUD = BLOCKS.register("bud_lily_of_the_valley", () -> new FlowerCropBlock(Blocks.LILY_OF_THE_VALLEY));
+        ORANGE_TULIP_BUD = BLOCKS.register("bud_orange_tulip", () -> new FlowerCropBlock(Blocks.ORANGE_TULIP));
+        OXEYE_DAISY_BUD = BLOCKS.register("bud_oxeye_daisy", () -> new FlowerCropBlock(Blocks.OXEYE_DAISY));
+        PINK_TULIP_BUD = BLOCKS.register("bud_pink_tulip", () -> new FlowerCropBlock(Blocks.PINK_TULIP));
+        POPPY_BUD = BLOCKS.register("bud_poppy", () -> new FlowerCropBlock(Blocks.POPPY));
+        RED_TULIP_BUD = BLOCKS.register("bud_red_tulip", () -> new FlowerCropBlock(Blocks.RED_TULIP));
+        WHITE_TULIP_BUD = BLOCKS.register("bud_white_tulip", () -> new FlowerCropBlock(Blocks.WHITE_TULIP));
+        WITHER_ROSE_BUD = BLOCKS.register("bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE));
 
-        BUTTERFLY_ORIGAMI = new ArrayList<>();
+        // Functional blocks
+        BUTTERFLY_FEEDER = BLOCKS.register( "butterfly_feeder",ButterflyFeederBlock::new);
+        BUTTERFLY_MICROSCOPE = BLOCKS.register( "butterfly_microscope", ButterflyMicroscopeBlock::new);
+
+        // Origami
+        List<RegistryObject<Block>> butterflyOrigami = new ArrayList<>();
         for(String id : ORIGAMI_IDS) {
-            BUTTERFLY_ORIGAMI.add(REGISTER.register(id, ButterflyOrigamiBlock::new));
+            butterflyOrigami.add(BLOCKS.register(id, ButterflyOrigamiBlock::new));
         }
+
+        BUTTERFLY_ORIGAMI = Collections.unmodifiableList(butterflyOrigami);
     }
 
-    // Prevent construction.
+    /**
+     * Prevent construction.
+     */
     private BlockRegistry() {}
 }

@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event;
 
 import com.bokmcdok.butterflies.registries.CreativeTabRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import org.jetbrains.annotations.NotNull;
@@ -77,20 +78,20 @@ public class ModEventListener {
         event.accept(ItemRegistry.PEACEMAKER_HONEY_BOTTLE);
 
         // Spawn Eggs
-        ItemRegistry.BUTTERFLY_SPAWN_EGGS.forEach(event::accept);
-        ItemRegistry.CATERPILLAR_SPAWN_EGGS.forEach(event::accept);
-        ItemRegistry.CHRYSALIS_SPAWN_EGGS.forEach(event::accept);
-        ItemRegistry.EGG_SPAWN_EGGS.forEach(event::accept);
-        event.accept(ItemRegistry.BUTTERFLY_GOLEM_SPAWN_EGG);
+        SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS.forEach(event::accept);
+        SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS.forEach(event::accept);
+        SpawnEggRegistry.CHRYSALIS_SPAWN_EGGS.forEach(event::accept);
+        SpawnEggRegistry.EGG_SPAWN_EGGS.forEach(event::accept);
+        event.accept(SpawnEggRegistry.BUTTERFLY_GOLEM_SPAWN_EGG);
 
         // Peacemaker Spawn Eggs
-        event.accept(ItemRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_EVOKER_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_VILLAGER_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_VINDICATOR_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_WANDERING_TRADER_SPAWN_EGG);
-        event.accept(ItemRegistry.PEACEMAKER_WITCH_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_EVOKER_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_VILLAGER_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_VINDICATOR_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_WANDERING_TRADER_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_WITCH_SPAWN_EGG);
     }
 }

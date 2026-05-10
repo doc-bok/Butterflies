@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import net.minecraft.core.BlockPos;
@@ -46,10 +45,10 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     public ButterflyFeederBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.SAND)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
                 .noOcclusion()
                 .sound(SoundType.BAMBOO)
                 .strength(0.3F));
@@ -120,10 +119,7 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
                                       @NotNull BlockState blockState) {
-        return new ButterflyFeederEntity(
-                BlockEntityTypeRegistry.BUTTERFLY_FEEDER.get(),
-                blockPos,
-                blockState);
+        return new ButterflyFeederEntity(blockPos, blockState);
     }
 
     /**

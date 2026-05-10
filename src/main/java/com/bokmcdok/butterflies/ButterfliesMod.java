@@ -27,29 +27,50 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
  * Handles mod setup including registries, event listeners, and configs.
  */
 @Mod(ButterfliesMod.MOD_ID)
-public class ButterfliesMod {
+public final class ButterfliesMod {
+
     public static final String MOD_ID = "butterflies";
 
+    /**
+     * Initialize and configure the mod.
+     */
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
 
-        BannerPatternRegistry.REGISTER.register(modEventBus);
-        BlockEntityTypeRegistry.REGISTER.register(modEventBus);
-        BlockRegistry.REGISTER.register(modEventBus);
-        CreativeTabRegistry.REGISTER.register(modEventBus);
-        DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
-        EntityTypeRegistry.REGISTER.register(modEventBus);
-        ItemRegistry.REGISTER.register(modEventBus);
-        LootModifierRegistry.REGISTER.register(modEventBus);
-        MenuTypeRegistry.REGISTER.register(modEventBus);
-        PoiTypeRegistry.REGISTER.register(modEventBus);
-        VillagerProfessionRegistry.REGISTER.register(modEventBus);
+        registerRegistries(modEventBus);
+        registerListeners(modEventBus,  forgeEventBus);
+        registerClientListeners(modEventBus);
+        registerConfigs();
+    }
 
-        // Register client-only listeners
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            new ClientEventListener(modEventBus);
-        }
+    /**
+     * Register the mod-specific registries.
+     * @param modEventBus The mod's event bus.
+     */
+    private void registerRegistries(IEventBus modEventBus) {
+        BannerPatternRegistry.BANNER_PATTERNS.register(modEventBus);
+        BlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
+        BlockRegistry.BLOCKS.register(modEventBus);
+        ButterflyEntityTypeRegistry.BUTTERFLY_ENTITY_TYPES.register(modEventBus);
+        CreativeTabRegistry.CREATIVE_TABS.register(modEventBus);
+        DecoratedPotPatternsRegistry.DECORATED_POT_PATTERNS.register(modEventBus);
+        EntityTypeRegistry.ENTITY_TYPES.register(modEventBus);
+        ItemRegistry.ITEMS.register(modEventBus);
+        LootModifierRegistry.LOOT_MODIFIERS.register(modEventBus);
+        MenuTypeRegistry.MENU_TYPES.register(modEventBus);
+        PeacemakerEntityTypeRegistry.PEACEMAKER_ENTITY_TYPES.register(modEventBus);
+        PoiTypeRegistry.POI_TYPES.register(modEventBus);
+        SpawnEggRegistry.SPAWN_EGGS.register(modEventBus);
+        VillagerProfessionRegistry.VILLAGER_PROFESSIONS.register(modEventBus);
+    }
+
+    /**
+     * Register the listeners for the mod.
+     * @param modEventBus The mod's event bus.
+     * @param forgeEventBus Forge's event bus.
+     */
+    private void registerListeners(IEventBus modEventBus, IEventBus forgeEventBus) {
 
         // Register mod lifecycle and mod-specific event listeners
         new LifecycleEventListener(modEventBus);
@@ -64,8 +85,22 @@ public class ButterfliesMod {
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);
         new VillageEventListener(forgeEventBus);
+    }
 
-        // Register mod configuration files
+    /**
+     * Register the client-specific listeners for the mod.
+     * @param modEventBus The mod's event bus.
+     */
+    private void registerClientListeners(IEventBus modEventBus) {
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            new ClientEventListener(modEventBus);
+        }
+    }
+
+    /**
+     * Register the mod's configs.
+     */
+    private void registerConfigs() {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         modLoadingContext.registerConfig(ModConfig.Type.COMMON, ButterfliesConfig.COMMON_CONFIG);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
