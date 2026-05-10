@@ -17,10 +17,9 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public TrailRuinsRareLootModifier(ItemRegistry itemRegistry,
-                                      LootItemCondition[] conditionsIn)
+    public TrailRuinsRareLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -38,7 +37,7 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
         if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {
             generatedLoot.remove(0);
 
-            ItemStack stack = new ItemStack(itemRegistry.getButterflyPotterySherd().get());
+            ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
             generatedLoot.add(stack);
         }
 
@@ -52,6 +51,6 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
      */
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
+        return new TrailRuinsRareLootModifier(conditionsIn);
     }
 }

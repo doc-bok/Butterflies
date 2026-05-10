@@ -23,7 +23,7 @@ public class CreativeTabRegistry {
         BUTTERFLY_CREATIVE_TAB = REGISTER.register("butterfly_creative_tab",
                 () -> CreativeModeTab.builder()
                         .title(Component.translatable("itemGroup.butterfly_tab"))
-                        .icon(ButterfliesMod.ITEM_REGISTRY.getButterflyBook().get()::getDefaultInstance)
+                        .icon(ItemRegistry.BUTTERFLY_BOOK.get()::getDefaultInstance)
                         .build()
         );
     }

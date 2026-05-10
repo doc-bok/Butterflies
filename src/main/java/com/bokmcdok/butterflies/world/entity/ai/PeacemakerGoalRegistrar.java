@@ -22,17 +22,13 @@ import org.jetbrains.annotations.NotNull;
 public class PeacemakerGoalRegistrar {
 
     // A reference to the Tag Registry.
-    private final ItemRegistry itemRegistry;
     private final TagRegistry tagRegistry;
 
     /**
      * Construction
-     * @param itemRegistry The item registry to set.
      * @param tagRegistry The tag registry to set.
      */
-    public PeacemakerGoalRegistrar(@NotNull ItemRegistry itemRegistry,
-                                   @NotNull TagRegistry tagRegistry) {
-        this.itemRegistry = itemRegistry;
+    public PeacemakerGoalRegistrar(@NotNull TagRegistry tagRegistry) {
         this.tagRegistry = tagRegistry;
     }
 
@@ -46,7 +42,7 @@ public class PeacemakerGoalRegistrar {
                 new TemptGoal(
                         entity,
                         1.25D,
-                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        Ingredient.of(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get()),
                         false));
 
         GoalSelector targetSelector = entity.targetSelector;

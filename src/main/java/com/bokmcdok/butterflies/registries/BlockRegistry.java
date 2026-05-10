@@ -185,7 +185,7 @@ public class BlockRegistry {
         WITHER_ROSE_BUD = REGISTER.register("bud_wither_rose", () -> new FlowerCropBlock(Blocks.WITHER_ROSE));
 
         BUTTERFLY_FEEDER = REGISTER.register( "butterfly_feeder",ButterflyFeederBlock::new);
-        BUTTERFLY_MICROSCOPE = REGISTER.register( "butterfly_microscope", () -> new ButterflyMicroscopeBlock(ButterfliesMod.ITEM_REGISTRY));
+        BUTTERFLY_MICROSCOPE = REGISTER.register( "butterfly_microscope", ButterflyMicroscopeBlock::new);
 
         BUTTERFLY_ORIGAMI = new ArrayList<>();
         for(String id : ORIGAMI_IDS) {

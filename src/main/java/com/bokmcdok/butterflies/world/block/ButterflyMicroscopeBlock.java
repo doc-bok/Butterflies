@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.core.BlockPos;
@@ -37,13 +36,10 @@ public class ButterflyMicroscopeBlock extends Block {
     // The shape of the block.
     private static final VoxelShape SHAPE;
 
-    // Access to items.
-    private final ItemRegistry itemRegistry;
-
     /**
      * Construction
      */
-    public ButterflyMicroscopeBlock(ItemRegistry itemRegistry) {
+    public ButterflyMicroscopeBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.STONE)
                 .isRedstoneConductor(BlockRegistry::never)
@@ -53,8 +49,6 @@ public class ButterflyMicroscopeBlock extends Block {
                 .noOcclusion()
                 .sound(SoundType.STONE)
                 .strength(1.0F));
-
-        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -118,7 +112,6 @@ public class ButterflyMicroscopeBlock extends Block {
                                        inventory,
                                        title) ->
                 new ButterflyMicroscopeMenu(
-                        itemRegistry,
                         MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(),
                         containerId,
                         inventory,

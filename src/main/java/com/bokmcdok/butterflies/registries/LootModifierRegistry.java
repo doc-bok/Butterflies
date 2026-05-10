@@ -31,11 +31,10 @@ public class LootModifierRegistry {
 
     /**
      * Register the loot modifiers.
-     * @param itemRegistry The item registry.
      */
-    public void initialise(ItemRegistry itemRegistry) {
-        deferredRegister.register("butterfly_loot", new ButterflyLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
-        deferredRegister.register("oak_leaves_loot", new OakLeavesLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
-        deferredRegister.register("trail_ruins_rare_loot", new TrailRuinsRareLootModifier(itemRegistry, new LootItemCondition[]{}).getCodec());
+    public void initialise() {
+        deferredRegister.register("butterfly_loot", new ButterflyLootModifier(new LootItemCondition[]{}).getCodec());
+        deferredRegister.register("oak_leaves_loot", new OakLeavesLootModifier(new LootItemCondition[]{}).getCodec());
+        deferredRegister.register("trail_ruins_rare_loot", new TrailRuinsRareLootModifier(new LootItemCondition[]{}).getCodec());
     }
 }

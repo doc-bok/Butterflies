@@ -30,7 +30,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 public class ButterfliesMod {
     public static final String MOD_ID = "butterflies";
 
-    public static ItemRegistry ITEM_REGISTRY;
     public static TagRegistry TAG_REGISTRY;
 
     public ButterfliesMod() {
@@ -43,17 +42,16 @@ public class ButterfliesMod {
         CreativeTabRegistry.REGISTER.register(modEventBus);
         DecoratedPotPatternsRegistry.REGISTER.register(modEventBus);
         EntityTypeRegistry.REGISTER.register(modEventBus);
+        ItemRegistry.REGISTER.register(modEventBus);
         MenuTypeRegistry.REGISTER.register(modEventBus);
 
         // Initialize registries with explicit dependency ordering
-        ITEM_REGISTRY = new ItemRegistry(modEventBus);
         LootModifierRegistry lootModifierRegistry = new LootModifierRegistry(modEventBus);
         PoiTypeRegistry poiTypesRegistry = new PoiTypeRegistry(modEventBus);
         TAG_REGISTRY = new TagRegistry();
         VillagerProfessionRegistry villagerProfessionRegistry = new VillagerProfessionRegistry(modEventBus);
 
-        ITEM_REGISTRY.initialise(TAG_REGISTRY);
-        lootModifierRegistry.initialise(ITEM_REGISTRY);
+        lootModifierRegistry.initialise();
         poiTypesRegistry.initialise();
         villagerProfessionRegistry.initialise(poiTypesRegistry);
 
@@ -63,8 +61,8 @@ public class ButterfliesMod {
         }
 
         // Register mod lifecycle and mod-specific event listeners
-        new LifecycleEventListener(modEventBus, ITEM_REGISTRY);
-        new ModEventListener(modEventBus, ITEM_REGISTRY);
+        new LifecycleEventListener(modEventBus);
+        new ModEventListener(modEventBus);
 
         // Register Forge event listeners
         new EntityEventListener(forgeEventBus, modEventBus);
@@ -74,7 +72,7 @@ public class ButterfliesMod {
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);
-        new VillageEventListener(forgeEventBus, ITEM_REGISTRY, villagerProfessionRegistry);
+        new VillageEventListener(forgeEventBus, villagerProfessionRegistry);
 
         // Register mod configuration files
         ModLoadingContext modLoadingContext = ModLoadingContext.get();

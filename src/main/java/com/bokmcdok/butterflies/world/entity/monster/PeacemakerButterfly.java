@@ -72,9 +72,6 @@ public class PeacemakerButterfly
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
 
-    // The item registry
-    private final ItemRegistry itemRegistry;
-
     /**
      * Convert a raider to one with a butterfly host
      * @param level   The current level
@@ -321,13 +318,10 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(@NotNull ItemRegistry itemRegistry,
-                               @NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
+    public PeacemakerButterfly(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
                                EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
-
-        this.itemRegistry = itemRegistry;
 
         if (!level.isClientSide()) {
             this.registerGoalsPost(peacemakerGoalRegistrar);
@@ -454,11 +448,11 @@ public class PeacemakerButterfly
         if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
-                    itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
+                    itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
             return shouldConsume ? InteractionResult.CONSUME : InteractionResult.PASS;
         }
 
-        if (itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get())) {
+        if (itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get())) {
             if (!player.getAbilities().instabuild) {
                 player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
             }
@@ -593,7 +587,7 @@ public class PeacemakerButterfly
                 new TemptGoal(
                         this,
                         1.25D,
-                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        Ingredient.of(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get()),
                         false));
     }
 

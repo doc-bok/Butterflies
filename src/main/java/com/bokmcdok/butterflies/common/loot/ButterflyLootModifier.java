@@ -17,10 +17,9 @@ public class ButterflyLootModifier extends BaseLootModifier {
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public ButterflyLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public ButterflyLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -36,7 +35,7 @@ public class ButterflyLootModifier extends BaseLootModifier {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(32) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getZhuangziBook().get());
+            ItemStack stack = new ItemStack(ItemRegistry.ZHUANGZI_BOOK.get());
             generatedLoot.add(stack);
         }
 
@@ -50,6 +49,6 @@ public class ButterflyLootModifier extends BaseLootModifier {
      */
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new ButterflyLootModifier(itemRegistry, conditionsIn);
+        return new ButterflyLootModifier(conditionsIn);
     }
 }
