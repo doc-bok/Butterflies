@@ -9,11 +9,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -198,6 +201,17 @@ public class ButterflyScroll extends HangingEntity {
         }
 
         return null;
+    }
+
+    /**
+     * Send entity data to the client.
+     * @return The packet to send.
+     */
+    @NotNull
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+        int data = ((this.direction.get3DDataValue() & 0xFFFF) << 16) | (getButterflyIndex() & 0xFFFF);
+        return new ClientboundAddEntityPacket(this, data, this.getPos());
     }
 
     /**
