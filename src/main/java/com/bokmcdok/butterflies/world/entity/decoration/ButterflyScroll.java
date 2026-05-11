@@ -8,11 +8,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -173,6 +178,31 @@ public class ButterflyScroll extends HangingEntity {
         breadth /= 32.0D;
 
         return new AABB(x - width, y - height, z - breadth, x + width, y + height, z + breadth);
+    }
+
+    /**
+     * Send entity data to the client.
+     * @return The packet to send.
+     */
+    @NotNull
+    @Override
+    public Packet<ClientGamePacketListener> getAddEntityPacket(@NotNull ServerEntity serverEntity) {
+        int data = ((this.direction.get3DDataValue() & 0xFFFF) << 16) | (getButterflyIndex() & 0xFFFF);
+        return new ClientboundAddEntityPacket(this, data, this.getPos());
+    }
+
+    /**
+     * Recreate the entity from a received packet.
+     * @param packet The packet sent from the server.
+     */
+    @Override
+    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+
+        int data = packet.getData();
+        int direction = ((data >> 16) & 0xFFFF);
+        this.setButterflyIndex(data & 0xFFFF);
+        this.setDirection(Direction.from3DDataValue(direction));
     }
 
     /**
