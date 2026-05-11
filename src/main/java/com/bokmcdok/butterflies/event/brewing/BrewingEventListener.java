@@ -9,7 +9,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * Events fired during the overall life cycle of the mod.
