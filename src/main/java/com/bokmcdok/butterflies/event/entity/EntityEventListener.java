@@ -73,7 +73,7 @@ public class EntityEventListener {
      * Register the attributes for living entities
      */
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
@@ -150,7 +150,7 @@ public class EntityEventListener {
      * @param event The event information
      */
     private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,

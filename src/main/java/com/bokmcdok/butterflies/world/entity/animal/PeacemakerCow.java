@@ -27,8 +27,6 @@ public class PeacemakerCow extends Mob implements PeacemakerEntity {
     private static final double PEACEMAKER_COW_KNOCKBACK_RESISTANCE = 1.0d;
     private static final double PEACEMAKER_COW_SPEED = 0.1d;
 
-    private final ItemRegistry itemRegistry;
-
     /**
      * Generates attributes for the Peacemaker Cow.
      * @return A builder containing the mob's attributes.
@@ -45,11 +43,9 @@ public class PeacemakerCow extends Mob implements PeacemakerEntity {
      * @param entityType The type of this entity.
      * @param level The current level.
      */
-    public PeacemakerCow(ItemRegistry itemRegistry,
-                         EntityType<? extends Mob> entityType,
+    public PeacemakerCow(EntityType<? extends Mob> entityType,
                          Level level) {
         super(entityType, level);
-        this.itemRegistry =  itemRegistry;
     }
 
     /**
@@ -73,7 +69,7 @@ public class PeacemakerCow extends Mob implements PeacemakerEntity {
             return InteractionResult.SUCCESS;
         }
 
-        Item peacemakerHoney = itemRegistry.getPeacemakerHoneyBottle().get();
+        Item peacemakerHoney = ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get();
         ItemStack result = new ItemStack(peacemakerHoney);
 
         itemInHand.shrink(1);

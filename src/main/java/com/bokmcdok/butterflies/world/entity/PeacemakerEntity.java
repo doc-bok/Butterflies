@@ -56,6 +56,6 @@ public interface PeacemakerEntity {
      * @return True if the entity is a Peacemaker Butterfly.
      */
     static boolean isNotPeacemaker(LivingEntity entity) {
-        return !entity.getType().is(TagRegistry.PEACEMAKER_ENTITIES);
+        return !(entity instanceof PeacemakerEntity);
     }
 }

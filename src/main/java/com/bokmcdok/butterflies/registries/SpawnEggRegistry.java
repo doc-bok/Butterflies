@@ -26,6 +26,7 @@ public class SpawnEggRegistry {
     public static final List<RegistryObject<Item>> BUTTERFLY_SPAWN_EGGS;
     public static final RegistryObject<Item> BUTTERFLY_GOLEM_SPAWN_EGG;
     public static final RegistryObject<Item> PEACEMAKER_BUTTERFLY_SPAWN_EGG;
+    public static final RegistryObject<Item> PEACEMAKER_COW_SPAWN_EGG;
     public static final RegistryObject<Item> PEACEMAKER_EVOKER_SPAWN_EGG;
     public static final RegistryObject<Item> PEACEMAKER_ILLUSIONER_SPAWN_EGG;
     public static final RegistryObject<Item> PEACEMAKER_PILLAGER_SPAWN_EGG;
@@ -59,6 +60,10 @@ public class SpawnEggRegistry {
 
         PEACEMAKER_BUTTERFLY_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_butterfly",
                 () -> new ForgeSpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY,
+                        0xffffff, 0xffffff, new Item.Properties()));
+
+        PEACEMAKER_COW_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_cow",
+                () -> new ForgeSpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_COW,
                         0xffffff, 0xffffff, new Item.Properties()));
 
         PEACEMAKER_EVOKER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_evoker",

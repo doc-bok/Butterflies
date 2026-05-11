@@ -86,6 +86,7 @@ public class ModEventListener {
 
         // Peacemaker Spawn Eggs
         event.accept(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG);
+        event.accept(SpawnEggRegistry.PEACEMAKER_COW_SPAWN_EGG);
         event.accept(SpawnEggRegistry.PEACEMAKER_EVOKER_SPAWN_EGG);
         event.accept(SpawnEggRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG);
         event.accept(SpawnEggRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG);
