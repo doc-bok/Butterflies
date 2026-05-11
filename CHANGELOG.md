@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.3.10 (2026-05-11)
+ - Added sync code to Butterfly Scroll that was accidentally removed.
+
 ### 7.3.7 (2026-04-30)
  - Removed more unused imports.
  - Fixed some nullability issues.
