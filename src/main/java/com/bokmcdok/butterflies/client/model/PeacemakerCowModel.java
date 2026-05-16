@@ -24,6 +24,12 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
     private static final String HEAD = "head";
     private static final String TAIL = "tail";
     private static final String LEGS = "legs";
+    private static final String FRONT_LEFT = "front_left";
+    private static final String FRONT_RIGHT = "front_right";
+    private static final String MIDDLE_LEFT = "middle_left";
+    private static final String MIDDLE_RIGHT = "middle_right";
+    private static final String BACK_LEFT = "back_left";
+    private static final String BACK_RIGHT = "back_right";
 
     public static final ModelLayerLocation LAYER_LOCATION = new
             ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow"), "main");
@@ -31,7 +37,12 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
     private final ModelPart body;
     private final ModelPart head;
     private final ModelPart tail;
-    private final ModelPart legs;
+    private final ModelPart frontLeftLeg;
+    private final ModelPart frontRightLeg;
+    private final ModelPart middleLeftLeg;
+    private final ModelPart middleRightLeg;
+    private final ModelPart backLeftLeg;
+    private final ModelPart backRightLeg;
 
     /**
      * Creates the 3D model.
@@ -41,25 +52,34 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition body = partdefinition.addOrReplaceChild(BODY, CubeListBuilder.create()
-                        .texOffs(0, 0).addBox(-20.0F, -34.0F, -24.0F, 40.0F, 34.0F, 48.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 18.0F, 0.0F));
+        PartDefinition body = partdefinition.addOrReplaceChild(BODY, CubeListBuilder.create().texOffs(0, 0)
+                .addBox(-20.0F, -34.0F, -24.0F, 40.0F, 34.0F, 48.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 18.0F, 0.0F));
 
-        body.addOrReplaceChild(HEAD, CubeListBuilder.create()
-                        .texOffs(0, 82).addBox(-13.0F, -27.0F, 24.0F, 26.0F, 28.0F, 18.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
+        body.addOrReplaceChild(HEAD, CubeListBuilder.create().texOffs(0, 82)
+                .addBox(-13.0F, -14.0F, 0.0F, 26.0F, 28.0F, 18.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -13.0F, 24.0F));
 
-        body.addOrReplaceChild(TAIL, CubeListBuilder.create()
-                        .texOffs(88, 82).addBox(-9.0F, -20.0F, -49.0F, 18.0F, 20.0F, 25.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
+        body.addOrReplaceChild(TAIL, CubeListBuilder.create().texOffs(88, 82)
+                .addBox(-9.0F, -10.0F, -25.0F, 18.0F, 20.0F, 25.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -10.0F, -24.0F));
 
-        body.addOrReplaceChild(LEGS, CubeListBuilder.create().texOffs(0, 128).addBox(-21.0F, 0.0F, 14.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 128).addBox(18.0F, 0.0F, 14.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 128).addBox(-21.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 128).addBox(18.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 128).addBox(-21.0F, 0.0F, -18.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F))
-                        .texOffs(0, 128).addBox(18.0F, 0.0F, -18.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)),
-                PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition legs = body.addOrReplaceChild(LEGS   , CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        legs.addOrReplaceChild(FRONT_LEFT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-2.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-19.0F, 0.0F, 16.0F));
+
+        legs.addOrReplaceChild(FRONT_RIGHT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-1.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(19.0F, 0.0F, 16.0F));
+
+        legs.addOrReplaceChild(MIDDLE_LEFT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-2.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-19.0F, 0.0F, 0.0F));
+
+        legs.addOrReplaceChild(MIDDLE_RIGHT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-1.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(19.0F, 0.0F, 0.0F));
+
+        legs.addOrReplaceChild(BACK_LEFT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-2.0F, -1.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(-19.0F, 0.0F, -16.0F));
+
+        legs.addOrReplaceChild(BACK_RIGHT, CubeListBuilder.create().texOffs(0, 128)
+                .addBox(-1.0F, 0.0F, -2.0F, 3.0F, 5.0F, 3.0F, new CubeDeformation(0.0F)), PartPose.offset(19.0F, 0.0F, -16.0F));
 
         return LayerDefinition.create(meshdefinition, 256, 256);
     }
@@ -69,10 +89,16 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
      * @param root The root of the model.
      */
     public PeacemakerCowModel(ModelPart root) {
-        this.body = root.getChild(BODY);
-        this.head = this.body.getChild(HEAD);
-        this.tail = this.body.getChild(TAIL);
-        this.legs = this.body.getChild(LEGS);
+        body = root.getChild(BODY);
+        head = body.getChild(HEAD);
+        tail = body.getChild(TAIL);
+        ModelPart legs = body.getChild(LEGS);
+        frontLeftLeg = legs.getChild(FRONT_LEFT);
+        frontRightLeg = legs.getChild(FRONT_RIGHT);
+        middleLeftLeg = legs.getChild(MIDDLE_LEFT);
+        middleRightLeg = legs.getChild(MIDDLE_RIGHT);
+        backLeftLeg = legs.getChild(BACK_LEFT);
+        backRightLeg = legs.getChild(BACK_RIGHT);
     }
 
     /**
@@ -81,7 +107,7 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
      */
     @Override
     public @NotNull ModelPart root() {
-        return this.body;
+        return body;
     }
 
     /**
@@ -100,9 +126,25 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
                           float ageInTicks,
                           float netHeadYaw,
                           float headPitch) {
+        // Precalculations
+        float sineBasedRotation = (Mth.sin(ageInTicks * 0.1f) * 0.1f);
+        float cosineBasedRotation = (Mth.cos(ageInTicks * 0.1f) * 0.1f);
+        float swingModifier = 1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount;
 
-        //  Head
-        this.head.yRot = netHeadYaw * Mth.DEG_TO_RAD;
-        this.head.xRot = headPitch * Mth.DEG_TO_RAD;
+        // Head
+        head.xRot = sineBasedRotation + (headPitch * Mth.DEG_TO_RAD);
+        head.yRot = cosineBasedRotation + (netHeadYaw * Mth.DEG_TO_RAD);
+
+        // Legs
+        frontLeftLeg.zRot = swingModifier - sineBasedRotation;
+        frontRightLeg.zRot = sineBasedRotation - swingModifier;
+        middleLeftLeg.zRot = swingModifier - cosineBasedRotation;
+        middleRightLeg.zRot = sineBasedRotation - swingModifier;
+        backLeftLeg.zRot = swingModifier - cosineBasedRotation;
+        backRightLeg.zRot = cosineBasedRotation - swingModifier;
+
+        // Tail
+        tail.yRot = cosineBasedRotation - swingModifier;
+        tail.zRot = swingModifier - sineBasedRotation;
     }
 }
