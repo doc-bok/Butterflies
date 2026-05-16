@@ -2,13 +2,18 @@ package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
+import com.bokmcdok.butterflies.world.entity.monster.*;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,12 +25,12 @@ import org.jetbrains.annotations.NotNull;
 /**
  * A Peacemaker Cow entity.
  */
-public class PeacemakerCow extends Mob implements PeacemakerEntity {
+public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
 
     // Constants for Peacemaker Cow attributes.
     private static final double PEACEMAKER_COW_HEALTH = 60.0d;
     private static final double PEACEMAKER_COW_KNOCKBACK_RESISTANCE = 1.0d;
-    private static final double PEACEMAKER_COW_SPEED = 0.1d;
+    private static final double PEACEMAKER_COW_SPEED = 0.0d;
 
     /**
      * Generates attributes for the Peacemaker Cow.
@@ -43,7 +48,7 @@ public class PeacemakerCow extends Mob implements PeacemakerEntity {
      * @param entityType The type of this entity.
      * @param level The current level.
      */
-    public PeacemakerCow(EntityType<? extends Mob> entityType,
+    public PeacemakerCow(EntityType<? extends PathfinderMob> entityType,
                          Level level) {
         super(entityType, level);
     }
@@ -81,5 +86,20 @@ public class PeacemakerCow extends Mob implements PeacemakerEntity {
 
         level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPosition());
         return InteractionResult.CONSUME;
+    }
+
+    /**
+     * Add some simple goals so the Cow seems more alive.
+     */
+    @Override
+    protected void registerGoals() {
+
+        //  Look at goals
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+
+        //  Targets
+        this.targetSelector.addGoal(1, (new HurtByTargetGoal(this))
+                .setAlertOthers(PeacemakerEntity.class));
     }
 }
