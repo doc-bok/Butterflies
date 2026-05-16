@@ -3,6 +3,8 @@ package com.bokmcdok.butterflies.world.entity.animal;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -32,6 +34,9 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
     private static final double PEACEMAKER_COW_KNOCKBACK_RESISTANCE = 1.0d;
     private static final double PEACEMAKER_COW_SPEED = 0.0d;
 
+    // Peacemaker Butterfly Spawn Timer.
+    private int nextSpawnAttempt;
+
     /**
      * Generates attributes for the Peacemaker Cow.
      * @return A builder containing the mob's attributes.
@@ -51,6 +56,8 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
     public PeacemakerCow(EntityType<? extends PathfinderMob> entityType,
                          Level level) {
         super(entityType, level);
+
+        nextSpawnAttempt = 0;
     }
 
     /**
@@ -86,6 +93,28 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
 
         level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPosition());
         return InteractionResult.CONSUME;
+    }
+
+    /**
+     * Spawn Peacemaker Butterflies
+     */
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+
+        if (nextSpawnAttempt-- <= 0) {
+            nextSpawnAttempt = random.nextInt(6000) + 3000;
+
+            final int SPAWN_RADIUS = 20;
+            BlockPos position = this.blockPosition().offset(
+                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
+                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
+                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS);
+
+            if (level().getBlockState(position).isAir()) {
+                PeacemakerButterfly.spawn((ServerLevel) level(), position);
+            }
+        }
     }
 
     /**
