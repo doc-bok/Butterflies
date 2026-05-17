@@ -1,10 +1,12 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.registries.BlockRegistry;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
+/**
+ * Creates a butterfly that emits particles.
+ */
 public class ParticleButterfly extends Butterfly {
 
     private final SimpleParticleType particleType;
@@ -14,11 +16,10 @@ public class ParticleButterfly extends Butterfly {
      * @param entityType The type of the entity.
      * @param level      The level where the entity exists.
      */
-    public ParticleButterfly(BlockRegistry blockRegistry,
-                             EntityType<? extends Butterfly> entityType,
+    public ParticleButterfly(EntityType<? extends Butterfly> entityType,
                              Level level,
                              SimpleParticleType particleType) {
-        super(blockRegistry, entityType, level);
+        super(entityType, level);
         this.particleType = particleType;
     }
 

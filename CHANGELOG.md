@@ -1,8 +1,20 @@
 ## Changelog
 
+### 7.4.0 (2026-05-17)
+ - Added the Peacemaker Cow.
+
+### 7.3.9 (2026-05-11)
+ - Refactored registries so they are now singletons.
+
+### 7.3.8 (2026-05-09)
+ - Peacemaker possession code will now only run if the entity isn't already possessed.
+ - Removed unused imports.
+ - Added `@NotNull` to `DirectionalCreature.finalizeSpawn()`.
+ - Casting issues in `ButterflyBookScreen` removed.
+
 ### 7.3.4 (2026-04-23)
- - Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
- - Removed more unused imports.
+- Added `@NotNull` to `finalizeSpawn()` in `DirectionalCreature`.
+- Removed more unused imports.
 
 ### 7.3.3 (2026-04-22)
  - Removed redundant Chinese character strings.

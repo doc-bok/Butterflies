@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -8,19 +10,27 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 /**
  * A loot modifier to add treasure to some chests.
  */
 public class ButterflyLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<Codec<ButterflyLootModifier>> CODEC = () ->
+            RecordCodecBuilder.create(inst ->
+                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
+                            .apply(inst, ButterflyLootModifier::new));
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public ButterflyLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public ButterflyLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -36,7 +46,7 @@ public class ButterflyLootModifier extends BaseLootModifier {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(32) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getZhuangziBook().get());
+            ItemStack stack = new ItemStack(ItemRegistry.ZHUANGZI_BOOK.get());
             generatedLoot.add(stack);
         }
 
@@ -50,6 +60,6 @@ public class ButterflyLootModifier extends BaseLootModifier {
      */
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new ButterflyLootModifier(itemRegistry, conditionsIn);
+        return new ButterflyLootModifier(conditionsIn);
     }
 }
