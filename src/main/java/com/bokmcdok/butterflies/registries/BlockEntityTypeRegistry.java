@@ -2,10 +2,10 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Registers block entity types.
@@ -16,10 +16,10 @@ public class BlockEntityTypeRegistry {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES;
 
     // The block entities.
-    public static final RegistryObject<BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
 
     static {
-        BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BLOCK_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ButterfliesMod.MOD_ID);
 
         //noinspection DataFlowIssue
         BUTTERFLY_FEEDER = BLOCK_ENTITY_TYPES.register("butterfly_feeder",

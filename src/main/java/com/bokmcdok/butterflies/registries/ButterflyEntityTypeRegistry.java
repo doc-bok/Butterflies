@@ -5,13 +5,13 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -21,10 +21,10 @@ import java.util.List;
 public class ButterflyEntityTypeRegistry {
     public static final DeferredRegister<EntityType<?>> BUTTERFLY_ENTITY_TYPES;
 
-    public static final List<RegistryObject<EntityType<Butterfly>>> BUTTERFLIES;
-    public static final List<RegistryObject<EntityType<ButterflyEgg>>> BUTTERFLY_EGGS;
-    public static final List<RegistryObject<EntityType<Caterpillar>>> CATERPILLARS;
-    public static final List<RegistryObject<EntityType<Chrysalis>>> CHRYSALISES;
+    public static final List<DeferredHolder<EntityType<?>, EntityType<Butterfly>>> BUTTERFLIES;
+    public static final List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> BUTTERFLY_EGGS;
+    public static final List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> CATERPILLARS;
+    public static final List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> CHRYSALISES;
 
     /**
      * The mob category for registering butterflies.
@@ -38,13 +38,13 @@ public class ButterflyEntityTypeRegistry {
             128);
 
     static {
-        BUTTERFLY_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BUTTERFLY_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ButterfliesMod.MOD_ID);
         final int speciesCount = ButterflyInfo.SPECIES.length;
 
-        List<RegistryObject<EntityType<Butterfly>>> butterflies = new ArrayList<>(speciesCount);
-        List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs = new ArrayList<>(speciesCount);
-        List<RegistryObject<EntityType<Caterpillar>>> caterpillars = new ArrayList<>(speciesCount);
-        List<RegistryObject<EntityType<Chrysalis>>> chrysalises = new ArrayList<>(speciesCount);
+        List<DeferredHolder<EntityType<?>, EntityType<Butterfly>>> butterflies = new ArrayList<>(speciesCount);
+        List<DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>>> butterflyEggs = new ArrayList<>(speciesCount);
+        List<DeferredHolder<EntityType<?>, EntityType<Caterpillar>>> caterpillars = new ArrayList<>(speciesCount);
+        List<DeferredHolder<EntityType<?>, EntityType<Chrysalis>>> chrysalises = new ArrayList<>(speciesCount);
 
         for (int i = 0; i < speciesCount; i++) {
             butterflies.add(registerButterflyEntity(Butterfly.getRegistryId(i), getEntityFactory(i), 0.3f, 0.2f));
@@ -95,7 +95,7 @@ public class ButterflyEntityTypeRegistry {
      * @return The newly registered entity.
      * @param <T> The type of the entity.
      */
-    private static <T extends Entity> RegistryObject<EntityType<T>> registerButterflyEntity(String registryId,
+    private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerButterflyEntity(String registryId,
                                                                                             EntityType.EntityFactory<T> factory,
                                                                                             float width,
                                                                                             float height) {

@@ -68,7 +68,7 @@ public class ClientEventListener {
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
         // Register the butterfly renderers.
-        List<DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
+        List<DeferredHolder<EntityType<?>, EntityType<Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
         for (int i = 0; i < butterflies.size(); ++i) {
 
             // Get the renderer provider.

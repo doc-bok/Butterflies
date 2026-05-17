@@ -6,8 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * This class registers new creative tabs for the Butterflies Mod
@@ -18,7 +16,7 @@ public class CreativeTabRegistry {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS;
 
     // The Butterfly Creative Tab
-    public static RegistryObject<CreativeModeTab> BUTTERFLY_CREATIVE_TAB;
+    public static DeferredHolder<CreativeModeTab, CreativeModeTab> BUTTERFLY_CREATIVE_TAB;
 
     static {
         CREATIVE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ButterfliesMod.MOD_ID);

@@ -5,29 +5,29 @@ import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class PeacemakerEntityTypeRegistry {
 
     public static final DeferredRegister<EntityType<?>> PEACEMAKER_ENTITY_TYPES;
 
-    public static final RegistryObject<EntityType<PeacemakerButterfly>> PEACEMAKER_BUTTERFLY;
-    public static final RegistryObject<EntityType<PeacemakerCow>> PEACEMAKER_COW;
-    public static final RegistryObject<EntityType<PeacemakerEvoker>> PEACEMAKER_EVOKER;
-    public static final RegistryObject<EntityType<PeacemakerIllusioner>> PEACEMAKER_ILLUSIONER;
-    public static final RegistryObject<EntityType<PeacemakerPillager>> PEACEMAKER_PILLAGER;
-    public static final RegistryObject<EntityType<PeacemakerVillager>> PEACEMAKER_VILLAGER;
-    public static final RegistryObject<EntityType<PeacemakerVindicator>> PEACEMAKER_VINDICATOR;
-    public static final RegistryObject<EntityType<PeacemakerWanderingTrader>> PEACEMAKER_WANDERING_TRADER;
-    public static final RegistryObject<EntityType<PeacemakerWitch>> PEACEMAKER_WITCH;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerButterfly>> PEACEMAKER_BUTTERFLY;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerCow>> PEACEMAKER_COW;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerEvoker>> PEACEMAKER_EVOKER;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerIllusioner>> PEACEMAKER_ILLUSIONER;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerPillager>> PEACEMAKER_PILLAGER;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerVillager>> PEACEMAKER_VILLAGER;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerVindicator>> PEACEMAKER_VINDICATOR;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> PEACEMAKER_WANDERING_TRADER;
+    public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerWitch>> PEACEMAKER_WITCH;
 
     static {
-        PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ButterfliesMod.MOD_ID);
 
         PEACEMAKER_BUTTERFLY = registerPeacemakerEntity("peacemaker_butterfly", PeacemakerButterfly::new, 0.6F, 1.95F);
         PEACEMAKER_COW = registerPeacemakerEntity("peacemaker_cow", PeacemakerCow::new, 4.5f, 2.5f);
@@ -47,7 +47,7 @@ public class PeacemakerEntityTypeRegistry {
      * @return The newly registered entity.
      * @param <T> The type of the entity.
      */
-    private static <T extends Entity> RegistryObject<EntityType<T>> registerPeacemakerEntity(String registryId,
+    private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerPeacemakerEntity(String registryId,
                                                                                              EntityType.EntityFactory<T> factory,
                                                                                              float width,
                                                                                              float height) {

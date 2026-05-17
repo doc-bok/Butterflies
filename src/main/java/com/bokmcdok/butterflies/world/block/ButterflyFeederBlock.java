@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public class ButterflyFeederBlock extends BaseEntityBlock {
 
     private static final MapCodec<ButterflyFeederBlock> CODEC =
-            simpleCodec((x) -> new ButterflyFeederBlock(null, null));
+            simpleCodec((x) -> new ButterflyFeederBlock());
 
     //  The bottle's "model".
     private static final VoxelShape SHAPE = Shapes.or(

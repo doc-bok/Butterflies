@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
 /**
  * Registers pottery patterns.
@@ -15,7 +14,7 @@ public class DecoratedPotPatternsRegistry {
     public static final DeferredRegister<String> DECORATED_POT_PATTERNS;
 
     // The butterfly pot pattern.
-    public static final RegistryObject<String> BUTTERFLY_POT_PATTERN;
+    public static final DeferredHolder<String, String> BUTTERFLY_POT_PATTERN;
 
     static {
         DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);

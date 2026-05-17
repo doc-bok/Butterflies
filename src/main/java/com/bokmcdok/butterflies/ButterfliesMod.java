@@ -82,7 +82,6 @@ public final class ButterfliesMod {
         new ModEventListener(modEventBus);
 
         // Register Forge event listeners
-        new EntityEventListener(forgeEventBus, modEventBus);
         new ForgeEventListener(forgeEventBus);
         new ForgeEntityEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);

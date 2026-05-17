@@ -10,8 +10,6 @@ import net.minecraft.world.entity.npc.VillagerProfession;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Predicate;
 
@@ -24,13 +22,13 @@ public class VillagerProfessionRegistry {
     public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
 
     // The lepidopterist profession.
-    public static final RegistryObject<VillagerProfession> LEPIDOPTERIST;
+    public static final DeferredHolder<VillagerProfession, VillagerProfession> LEPIDOPTERIST;
 
     static {
-        VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, ButterfliesMod.MOD_ID);
+        VILLAGER_PROFESSIONS = DeferredRegister.create(BuiltInRegistries.VILLAGER_PROFESSION, ButterfliesMod.MOD_ID);
 
         final String lepidopteristId = "lepidopterist";
-        Predicate<Holder<PoiType>> jobSite = x -> x.get() == PoiTypeRegistry.LEPIDOPTERIST.get();
+        Predicate<Holder<PoiType>> jobSite = x -> x.value() == PoiTypeRegistry.LEPIDOPTERIST.get();
         LEPIDOPTERIST = VILLAGER_PROFESSIONS.register(lepidopteristId,
                 () -> new VillagerProfession(
                         lepidopteristId,

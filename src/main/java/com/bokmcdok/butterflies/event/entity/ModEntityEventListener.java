@@ -1,9 +1,12 @@
 package com.bokmcdok.butterflies.event.entity;
 
+import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
+import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -23,18 +26,12 @@ import java.util.Objects;
  */
 public class ModEntityEventListener {
 
-    // The entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ModEntityEventListener(IEventBus modEventBus,
-                                  EntityTypeRegistry entityTypeRegistry) {
+    public ModEntityEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
-
-        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -55,30 +52,32 @@ public class ModEntityEventListener {
      */
     @SubscribeEvent
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             event.put(i.get(), Caterpillar.createAttributes().build());
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             event.put(i.get(), Chrysalis.createAttributes().build());
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
+        for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             event.put(i.get(), ButterflyEgg.createAttributes().build());
         }
 
-        event.put(entityTypeRegistry.getButterflyGolem().get(), IronGolem.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerButterfly().get(), PeacemakerButterfly.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerEvoker().get(), PeacemakerEvoker.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerIllusioner().get(), PeacemakerIllusioner.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerPillager().get(), PeacemakerPillager.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerVindicator().get(), PeacemakerVindicator.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerVillager().get(), PeacemakerVillager.createAttributes().build());
-        event.put(entityTypeRegistry.getPeacemakerWitch().get(), PeacemakerWitch.createAttributes().build());
+        event.put(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), IronGolem.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterfly.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(), PeacemakerCow.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(), PeacemakerEvoker.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), PeacemakerIllusioner.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PeacemakerPillager.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), PeacemakerVindicator.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(), PeacemakerVillager.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), PeacemakerWanderingTrader.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(), PeacemakerWitch.createAttributes().build());
     }
 
     /**
@@ -87,7 +86,7 @@ public class ModEntityEventListener {
      */
     @SubscribeEvent
     private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -95,7 +94,7 @@ public class ModEntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -103,7 +102,7 @@ public class ModEntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+        for (DeferredHolder<EntityType<?>, EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -111,7 +110,7 @@ public class ModEntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
+        for (DeferredHolder<EntityType<?>, EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -119,7 +118,7 @@ public class ModEntityEventListener {
                     SpawnPlacementRegisterEvent.Operation.AND);
         }
 
-        event.register(entityTypeRegistry.getButterflyGolem().get(),
+        event.register(EntityTypeRegistry.BUTTERFLY_GOLEM.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules,

@@ -4,20 +4,12 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import com.bokmcdok.butterflies.world.entity.monster.*;
-import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
-import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,16 +22,16 @@ public class EntityTypeRegistry {
 
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES;
 
-    public static final RegistryObject<EntityType<IronGolem>> BUTTERFLY_GOLEM;
-    public static final RegistryObject<EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
-    public static final List<RegistryObject<EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
+    public static final DeferredHolder<EntityType<?>, EntityType<IronGolem>> BUTTERFLY_GOLEM;
+    public static final DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
+    public static final List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
 
     static {
-        ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ButterfliesMod.MOD_ID);
 
         // Butterfly scrolls
         final int speciesCount = ButterflyInfo.SPECIES.length;
-        List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls = new ArrayList<>(speciesCount);
+        List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> butterflyScrolls = new ArrayList<>(speciesCount);
 
         for (int i = 0; i < speciesCount; i++) {
             butterflyScrolls.add(registerButterflyScroll(i));
@@ -58,7 +50,7 @@ public class EntityTypeRegistry {
         BUTTERFLY_GOLEM = registerButterflyGolem();
     }
 
-    private static RegistryObject<EntityType<IronGolem>> registerButterflyGolem() {
+    private static DeferredHolder<EntityType<?>, EntityType<IronGolem>> registerButterflyGolem() {
         String registryId = "butterfly_golem";
         return ENTITY_TYPES.register(registryId,
                 () -> EntityType.Builder.of(IronGolem::new, MobCategory.MISC)
@@ -67,7 +59,7 @@ public class EntityTypeRegistry {
                         .build(registryId));
     }
 
-    private static RegistryObject<EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
+    private static DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
         String registryId = ButterflyScroll.getRegistryId(butterflyIndex);
         return ENTITY_TYPES.register(registryId,
                 () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)

@@ -40,7 +40,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    // The localisation string ID for this item.
+    // The localization string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
     // The index of the butterfly species.
@@ -100,14 +100,14 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @NotNull
     @Override
-    public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
+    public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
         return new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
@@ -141,9 +141,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         // Needs to target a butterfly with an empty net.
         if (getButterflyEntity(stack) == null &&
                 entity instanceof Butterfly butterfly) {
-            DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
-
-            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            DeferredHolder<Item, Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 

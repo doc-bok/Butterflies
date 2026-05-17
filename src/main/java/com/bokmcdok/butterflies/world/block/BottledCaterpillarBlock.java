@@ -42,7 +42,7 @@ public class BottledCaterpillarBlock extends Block {
      * Create a butterfly block
      */
     public BottledCaterpillarBlock() {
-        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
+        super(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                 .isRedstoneConductor(BlockRegistry::alwaysFalse)
                 .isSuffocating(BlockRegistry::alwaysFalse)
                 .isValidSpawn(BlockRegistry::alwaysFalse)

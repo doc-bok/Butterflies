@@ -13,12 +13,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,32 +30,32 @@ public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS;
 
     // Bottled creatures.
-    public static final List<RegistryObject<Block>> BOTTLED_BUTTERFLY_BLOCKS;
-    public static final List<RegistryObject<Block>> BOTTLED_CATERPILLAR_BLOCKS;
+    public static final List<DeferredHolder<Block, Block>> BOTTLED_BUTTERFLY_BLOCKS;
+    public static final List<DeferredHolder<Block, Block>> BOTTLED_CATERPILLAR_BLOCKS;
 
     // Butterfly Feeder
-    public static final RegistryObject<Block> BUTTERFLY_FEEDER;
+    public static final DeferredHolder<Block, Block> BUTTERFLY_FEEDER;
 
     // Butterfly Microscope
-    public static final RegistryObject<Block> BUTTERFLY_MICROSCOPE;
+    public static final DeferredHolder<Block, Block> BUTTERFLY_MICROSCOPE;
 
     // Flower Buds
-    public static final RegistryObject<Block> ALLIUM_BUD;
-    public static final RegistryObject<Block> AZURE_BLUET_BUD;
-    public static final RegistryObject<Block> BLUE_ORCHID_BUD;
-    public static final RegistryObject<Block> CORNFLOWER_BUD;
-    public static final RegistryObject<Block> DANDELION_BUD;
-    public static final RegistryObject<Block> LILY_OF_THE_VALLEY_BUD;
-    public static final RegistryObject<Block> ORANGE_TULIP_BUD;
-    public static final RegistryObject<Block> OXEYE_DAISY_BUD;
-    public static final RegistryObject<Block> PINK_TULIP_BUD;
-    public static final RegistryObject<Block> POPPY_BUD;
-    public static final RegistryObject<Block> RED_TULIP_BUD;
-    public static final RegistryObject<Block> WHITE_TULIP_BUD;
-    public static final RegistryObject<Block> WITHER_ROSE_BUD;
+    public static final DeferredHolder<Block, Block> ALLIUM_BUD;
+    public static final DeferredHolder<Block, Block> AZURE_BLUET_BUD;
+    public static final DeferredHolder<Block, Block> BLUE_ORCHID_BUD;
+    public static final DeferredHolder<Block, Block> CORNFLOWER_BUD;
+    public static final DeferredHolder<Block, Block> DANDELION_BUD;
+    public static final DeferredHolder<Block, Block> LILY_OF_THE_VALLEY_BUD;
+    public static final DeferredHolder<Block, Block> ORANGE_TULIP_BUD;
+    public static final DeferredHolder<Block, Block> OXEYE_DAISY_BUD;
+    public static final DeferredHolder<Block, Block> PINK_TULIP_BUD;
+    public static final DeferredHolder<Block, Block> POPPY_BUD;
+    public static final DeferredHolder<Block, Block> RED_TULIP_BUD;
+    public static final DeferredHolder<Block, Block> WHITE_TULIP_BUD;
+    public static final DeferredHolder<Block, Block> WITHER_ROSE_BUD;
 
     // Origami
-    public static final List<RegistryObject<Block>> BUTTERFLY_ORIGAMI;
+    public static final List<DeferredHolder<Block, Block>> BUTTERFLY_ORIGAMI;
 
     // A list of Butterfly Origami IDs used by the registry.
     private static final String[] ORIGAMI_IDS = {
@@ -83,7 +79,7 @@ public class BlockRegistry {
 
     // The base properties for bottled butterflies.
     private static final BlockBehaviour.Properties BOTTLED_BUTTERFLY_PROPERTIES =
-            BlockBehaviour.Properties.copy(Blocks.GLASS)
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                     .isRedstoneConductor(BlockRegistry::alwaysFalse)
                     .isSuffocating(BlockRegistry::alwaysFalse)
                     .isValidSpawn(BlockRegistry::alwaysFalse)
@@ -93,7 +89,7 @@ public class BlockRegistry {
                     .strength(0.3F);
 
     private static final BlockBehaviour.Properties GLOWING_BOTTLED_BUTTERFLY_PROPERTIES =
-            BlockBehaviour.Properties.copy(Blocks.GLASS)
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
                     .isRedstoneConductor(BlockRegistry::alwaysFalse)
                     .isSuffocating(BlockRegistry::alwaysFalse)
                     .isValidSpawn(BlockRegistry::alwaysFalse)
@@ -152,15 +148,15 @@ public class BlockRegistry {
 
 
     static {
-        BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ButterfliesMod.MOD_ID);
+        BLOCKS = DeferredRegister.create(BuiltInRegistries.BLOCK, ButterfliesMod.MOD_ID);
 
         // Bottled butterflies.
-        List<RegistryObject<Block>> bottledButterflyBlocks = new ArrayList<>();
+        List<DeferredHolder<Block, Block>> bottledButterflyBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             String registryId = getBottledButterflyRegistryId(i);
 
             // Light Butterflies glow when they are in a bottle.
-            RegistryObject<Block> newBlock;
+            DeferredHolder<Block, Block> newBlock;
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.GLOW)) {
                 newBlock = BLOCKS.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
             } else {
@@ -173,9 +169,9 @@ public class BlockRegistry {
         BOTTLED_BUTTERFLY_BLOCKS = Collections.unmodifiableList(bottledButterflyBlocks);
 
         // Bottled caterpillars.
-        List<RegistryObject<Block>> bottledCaterpillarBlocks = new ArrayList<>();
+        List<DeferredHolder<Block, Block>> bottledCaterpillarBlocks = new ArrayList<>();
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            RegistryObject<Block> newBlock = BLOCKS.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
+            DeferredHolder<Block, Block> newBlock = BLOCKS.register(getBottledCaterpillarRegistryId(i), BottledCaterpillarBlock::new);
             bottledCaterpillarBlocks.add(newBlock);
         }
 
@@ -201,7 +197,7 @@ public class BlockRegistry {
         BUTTERFLY_MICROSCOPE = BLOCKS.register( "butterfly_microscope", ButterflyMicroscopeBlock::new);
 
         // Origami
-        List<RegistryObject<Block>> butterflyOrigami = new ArrayList<>();
+        List<DeferredHolder<Block, Block>> butterflyOrigami = new ArrayList<>();
         for(String id : ORIGAMI_IDS) {
             butterflyOrigami.add(BLOCKS.register(id, ButterflyOrigamiBlock::new));
         }

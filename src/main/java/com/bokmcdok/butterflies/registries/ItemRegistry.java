@@ -8,12 +8,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,66 +25,66 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS;
 
     // Nets
-    public static final RegistryObject<Item> EMPTY_BUTTERFLY_NET;
-    public static final List<RegistryObject<Item>> BUTTERFLY_NETS;
-    public static final RegistryObject<Item> BURNT_BUTTERFLY_NET;
-    public static final RegistryObject<Item> PEACEMAKER_BUTTERFLY_NET;
+    public static final DeferredHolder<Item, Item> EMPTY_BUTTERFLY_NET;
+    public static final List<DeferredHolder<Item, Item>> BUTTERFLY_NETS;
+    public static final DeferredHolder<Item, Item> BURNT_BUTTERFLY_NET;
+    public static final DeferredHolder<Item, Item> PEACEMAKER_BUTTERFLY_NET;
 
     // Eggs
-    public static final List<RegistryObject<Item>> BUTTERFLY_EGGS;
+    public static final List<DeferredHolder<Item, Item>> BUTTERFLY_EGGS;
 
     // Caterpillars
-    public static final List<RegistryObject<Item>> CATERPILLARS;
+    public static final List<DeferredHolder<Item, Item>> CATERPILLARS;
 
     // Bottles
-    public static final List<RegistryObject<Item>> BOTTLED_BUTTERFLIES;
-    public static final List<RegistryObject<Item>> BOTTLED_CATERPILLARS;
+    public static final List<DeferredHolder<Item, Item>> BOTTLED_BUTTERFLIES;
+    public static final List<DeferredHolder<Item, Item>> BOTTLED_CATERPILLARS;
 
     // Scrolls
-    public static final List<RegistryObject<Item>> BUTTERFLY_SCROLLS;
+    public static final List<DeferredHolder<Item, Item>> BUTTERFLY_SCROLLS;
 
     // Books
-    public static final RegistryObject<Item> BUTTERFLY_BOOK;
-    public static final RegistryObject<Item> ZHUANGZI_BOOK;
+    public static final DeferredHolder<Item, Item> BUTTERFLY_BOOK;
+    public static final DeferredHolder<Item, Item> ZHUANGZI_BOOK;
 
     // Blocks
-    public static final RegistryObject<Item> BUTTERFLY_FEEDER;
-    public static final RegistryObject<Item> BUTTERFLY_MICROSCOPE;
+    public static final DeferredHolder<Item, Item> BUTTERFLY_FEEDER;
+    public static final DeferredHolder<Item, Item> BUTTERFLY_MICROSCOPE;
 
     // Infested Apple
-    public static final RegistryObject<Item> INFESTED_APPLE;
+    public static final DeferredHolder<Item, Item> INFESTED_APPLE;
 
     // Silk
-    public static final RegistryObject<Item> SILK;
+    public static final DeferredHolder<Item, Item> SILK;
 
     // Origami
-    public static final List<RegistryObject<Item>> BUTTERFLY_ORIGAMI;
+    public static final List<DeferredHolder<Item, Item>> BUTTERFLY_ORIGAMI;
 
     // Sherd
-    public static final RegistryObject<Item> BUTTERFLY_POTTERY_SHERD;
+    public static final DeferredHolder<Item, Item> BUTTERFLY_POTTERY_SHERD;
 
     // Banner Pattern
-    public static final RegistryObject<Item> BUTTERFLY_BANNER_PATTERN;
+    public static final DeferredHolder<Item, Item> BUTTERFLY_BANNER_PATTERN;
 
     // Peacemaker Honey
-    public static final RegistryObject<Item> PEACEMAKER_HONEY_BOTTLE;
+    public static final DeferredHolder<Item, Item> PEACEMAKER_HONEY_BOTTLE;
     
     static {
-        ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
+        ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, ButterfliesMod.MOD_ID);
 
         // Species-based.
-        List<RegistryObject<Item>> butterflyNets = new ArrayList<>();
-        List<RegistryObject<Item>> butterflyEggs = new ArrayList<>();
-        List<RegistryObject<Item>> caterpillars = new ArrayList<>();
-        List<RegistryObject<Item>> bottledButterflies = new ArrayList<>();
-        List<RegistryObject<Item>> bottledCaterpillars = new ArrayList<>();
-        List<RegistryObject<Item>> butterflyScrolls = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> butterflyNets = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> butterflyEggs = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> caterpillars = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> bottledButterflies = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> bottledCaterpillars = new ArrayList<>();
+        List<DeferredHolder<Item, Item>> butterflyScrolls = new ArrayList<>();
 
         int peacemakerButterflyIndex = 0;
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             int butterflyIndex = i;
             String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
-            RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(butterflyIndex));
+            DeferredHolder<Item, Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(butterflyIndex));
             butterflyNets.add(butterflyNet);
 
             if (registryId.contains("peacemaker")) {
@@ -133,7 +129,7 @@ public class ItemRegistry {
 
         // Origami
         BUTTERFLY_ORIGAMI = new ArrayList<>();
-        for (RegistryObject<Block> block : BlockRegistry.BUTTERFLY_ORIGAMI) {
+        for (DeferredHolder<Block, Block> block : BlockRegistry.BUTTERFLY_ORIGAMI) {
             ResourceLocation id = block.getId();
             if (id != null) {
                 BUTTERFLY_ORIGAMI.add(ITEMS.register(
@@ -161,7 +157,7 @@ public class ItemRegistry {
      * @param butterflyIndex The butterfly index.
      * @return The registry entry for the related item.
      */
-    public static RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
+    public static DeferredHolder<Item, Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return EMPTY_BUTTERFLY_NET;
         } else if (Objects.equals(ButterflyInfo.SPECIES[butterflyIndex], "lava")) {
@@ -173,27 +169,27 @@ public class ItemRegistry {
 
     // Register Methods
 
-    private static RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
+    private static DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
         return ITEMS.register(BottledButterflyItem.getRegistryId(butterflyIndex),
                 () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
-    private static RegistryObject<Item> registerBottledCaterpillar(int butterflyIndex) {
+    private static DeferredHolder<Item, Item> registerBottledCaterpillar(int butterflyIndex) {
         return ITEMS.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
-    private static RegistryObject<Item> registerButterflyEgg(int butterflyIndex) {
+    private static DeferredHolder<Item, Item> registerButterflyEgg(int butterflyIndex) {
         return ITEMS.register(ButterflyEggItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
     }
 
-    private static RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
+    private static DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
         return ITEMS.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyScrollItem(butterflyIndex));
     }
 
-    private static RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
+    private static DeferredHolder<Item, Item> registerCaterpillar(int butterflyIndex) {
         return ITEMS.register(CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
     }
