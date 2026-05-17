@@ -55,6 +55,7 @@ public class ClientEventListener {
         event.registerLayerDefinition(ButterflyGolemModel.LAYER_LOCATION, ButterflyGolemModel::createBodyLayer);
         event.registerLayerDefinition(HummingbirdMothModel.LAYER_LOCATION, HummingbirdMothModel::createBodyLayer);
         event.registerLayerDefinition(PeacemakerButterflyModel.LAYER_LOCATION, PeacemakerButterflyModel::createBodyLayer);
+        event.registerLayerDefinition(PeacemakerCowModel.LAYER_LOCATION, PeacemakerCowModel::createBodyLayer);
     }
 
     /**
@@ -64,7 +65,7 @@ public class ClientEventListener {
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
         // Register the butterfly renderers.
-        List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
+        List<RegistryObject<EntityType<Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
         for (int i = 0; i < butterflies.size(); ++i) {
 
             // Get the renderer provider.
@@ -105,6 +106,7 @@ public class ClientEventListener {
 
         // Register the peacemaker renderers.
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterflyRenderer::new);
+        event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(), PeacemakerCowRenderer::new);
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(), EvokerRenderer::new);
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), IllusionerRenderer::new);
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PillagerRenderer::new);

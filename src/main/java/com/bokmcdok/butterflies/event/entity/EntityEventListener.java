@@ -73,7 +73,7 @@ public class EntityEventListener {
      * Register the attributes for living entities
      */
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.put(i.get(), Butterfly.createAttributes().build());
         }
 
@@ -91,6 +91,7 @@ public class EntityEventListener {
 
         event.put(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), IronGolem.createAttributes().build());
         event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(), PeacemakerButterfly.createAttributes().build());
+        event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(), PeacemakerCow.createAttributes().build());
         event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(), PeacemakerEvoker.createAttributes().build());
         event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(), PeacemakerIllusioner.createAttributes().build());
         event.put(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(), PeacemakerPillager.createAttributes().build());
@@ -149,7 +150,7 @@ public class EntityEventListener {
      * @param event The event information
      */
     private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
+        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             event.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
@@ -191,6 +192,12 @@ public class EntityEventListener {
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING,
                 Monster::checkMonsterSpawnRules,
+                SpawnPlacementRegisterEvent.Operation.AND);
+
+        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(),
+                SpawnPlacements.Type.ON_GROUND,
+                Heightmap.Types.MOTION_BLOCKING,
+                Mob::checkMobSpawnRules,
                 SpawnPlacementRegisterEvent.Operation.AND);
 
         event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(),

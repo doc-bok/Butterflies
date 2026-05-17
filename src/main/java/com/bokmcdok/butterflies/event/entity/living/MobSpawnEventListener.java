@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
@@ -94,7 +94,7 @@ public class MobSpawnEventListener {
 
         // Don't infest entities if they are already infested.
         Entity entity = event.getEntity();
-        if (entity.getType().is(TagRegistry.PEACEMAKER_ENTITIES)) {
+        if (entity instanceof PeacemakerEntity) {
             return;
         }
 

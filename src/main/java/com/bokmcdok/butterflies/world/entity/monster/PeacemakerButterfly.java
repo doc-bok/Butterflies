@@ -561,13 +561,7 @@ public class PeacemakerButterfly
 
         //  Targets
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this))
-                .setAlertOthers()
-                .setAlertOthers(PeacemakerButterfly.class)
-                .setAlertOthers(PeacemakerEvoker.class)
-                .setAlertOthers(PeacemakerIllusioner.class)
-                .setAlertOthers(PeacemakerPillager.class)
-                .setAlertOthers(PeacemakerVindicator.class)
-                .setAlertOthers(PeacemakerWitch.class));
+                .setAlertOthers(PeacemakerEntity.class));
 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
                 (x) -> x.getUUID() != this.getFriendUUID()));

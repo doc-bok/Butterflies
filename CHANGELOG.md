@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.4.0 (2026-05-17)
+ - Added the Peacemaker Cow.
+
 ### 7.3.9 (2026-05-11)
  - Refactored registries so they are now singletons.
 

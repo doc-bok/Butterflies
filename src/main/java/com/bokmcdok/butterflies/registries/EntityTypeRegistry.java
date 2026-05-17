@@ -45,6 +45,7 @@ public class EntityTypeRegistry {
                         .sized(1.0f, 1.0f)
                         .build(ButterflyScroll.NAME));
 
+
         BUTTERFLY_GOLEM = registerButterflyGolem();
     }
 
