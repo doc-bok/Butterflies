@@ -16,7 +16,7 @@ public class TagRegistry {
 
     static {
         BUTTERFLY_BANNER_PATTERN = TagKey.create(Registries.BANNER_PATTERN,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
     }
 
     // Prevent construction.

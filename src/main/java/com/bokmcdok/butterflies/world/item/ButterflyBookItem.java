@@ -31,22 +31,18 @@ public class ButterflyBookItem extends Item {
 
     public static final String NAME = "butterfly_book";
 
-    // The data component registry
-    private final DataComponentRegistry dataComponentRegistry;
-
     /**
      * Add a new page to the butterfly book.
      * @param newBook The book being crafted.
      * @param index   The butterfly index.
      * @return True if a new page was added.
      */
-    public static boolean addPage(DataComponentRegistry dataComponentRegistry,
-                                  @NotNull ItemStack newBook,
+    public static boolean addPage(@NotNull ItemStack newBook,
                                   int index) {
 
         boolean result = false;
 
-        List<Integer> newPages = newBook.getOrDefault(dataComponentRegistry.getButterflyBookPages(), new ArrayList<>());
+        List<Integer> newPages = newBook.getOrDefault(DataComponentRegistry.BUTTERFLY_BOOK_PAGES, new ArrayList<>());
 
 
         if (!newPages.contains(index)) {
@@ -68,7 +64,7 @@ public class ButterflyBookItem extends Item {
             }
         }
 
-        newBook.set(dataComponentRegistry.getButterflyBookPages(), newPages);
+        newBook.set(DataComponentRegistry.BUTTERFLY_BOOK_PAGES, newPages);
 
         if (numButterflies >= ButterflyData.getNumButterflySpecies()) {
             CompoundTag filledButterfly = new CompoundTag();
@@ -88,9 +84,8 @@ public class ButterflyBookItem extends Item {
     /**
      * Construction
      */
-    public ButterflyBookItem(DataComponentRegistry dataComponentRegistry) {
+    public ButterflyBookItem() {
         super(new Item.Properties().stacksTo(1));
-        this.dataComponentRegistry = dataComponentRegistry;
     }
 
     /**
@@ -109,7 +104,7 @@ public class ButterflyBookItem extends Item {
 
         String localisation = "tooltip.butterflies.pages";
 
-        List<Integer> pages = stack.getOrDefault(dataComponentRegistry.getButterflyBookPages(), new ArrayList<>());
+        List<Integer> pages = stack.getOrDefault(DataComponentRegistry.BUTTERFLY_BOOK_PAGES, new ArrayList<>());
         int numPages = 2 * pages.size();
 
         MutableComponent newComponent = Component.translatable(localisation, numPages);
@@ -149,6 +144,6 @@ public class ButterflyBookItem extends Item {
      */
     @OnlyIn(Dist.CLIENT)
     private void openScreen(ItemStack book) {
-        Minecraft.getInstance().setScreen(new ButterflyBookScreen(dataComponentRegistry, book));
+        Minecraft.getInstance().setScreen(new ButterflyBookScreen(book));
     }
 }

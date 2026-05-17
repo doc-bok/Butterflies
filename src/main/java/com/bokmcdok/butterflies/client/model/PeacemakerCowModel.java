@@ -32,7 +32,7 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
     private static final String BACK_RIGHT = "back_right";
 
     public static final ModelLayerLocation LAYER_LOCATION = new
-            ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow"), "main");
+            ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_cow"), "main");
 
     private final ModelPart body;
     private final ModelPart head;

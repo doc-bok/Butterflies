@@ -44,9 +44,9 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
 
     // Sounds
     private static final ResourceLocation PEACEMAKER_COW_AMBIENT_SOUND =
-            new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow_ambient");
+            ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_cow_ambient");
     private static final ResourceLocation PEACEMAKER_COW_HURT_SOUND =
-            new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow_hurt");
+            ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_cow_hurt");
 
     // Peacemaker Butterfly Spawn Timer.
     private int nextSpawnAttempt;

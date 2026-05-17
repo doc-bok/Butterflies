@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.client.event.ClientEventListener;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.event.ForgeEventListener;
 import com.bokmcdok.butterflies.event.ModEventListener;
+import com.bokmcdok.butterflies.event.brewing.BrewingEventListener;
 import com.bokmcdok.butterflies.event.entity.ForgeEntityEventListener;
 import com.bokmcdok.butterflies.event.entity.ModEntityEventListener;
 import com.bokmcdok.butterflies.event.entity.living.LivingEventListener;
@@ -22,6 +23,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+
 /**
  * Main mod class for Butterflies.
  * Handles mod setup including registries, event listeners, and configs.
@@ -55,6 +57,7 @@ public final class ButterfliesMod {
         BlockRegistry.BLOCKS.register(modEventBus);
         ButterflyEntityTypeRegistry.BUTTERFLY_ENTITY_TYPES.register(modEventBus);
         CreativeTabRegistry.CREATIVE_TABS.register(modEventBus);
+        DataComponentRegistry.DATA_COMPONENTS.register(modEventBus);
         DecoratedPotPatternsRegistry.DECORATED_POT_PATTERNS.register(modEventBus);
         EntityTypeRegistry.ENTITY_TYPES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
@@ -79,6 +82,7 @@ public final class ButterfliesMod {
         new ModEventListener(modEventBus);
 
         // Register Forge event listeners
+        new BrewingEventListener(modEventBus);
         new ForgeEventListener(forgeEventBus);
         new ForgeEntityEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
@@ -103,7 +107,7 @@ public final class ButterfliesMod {
      * Register the mod's configs.
      */
     private void registerConfigs() {
-        ModLoadingContext modLoadingContext = ModLoadingContext.get();
+        ModContainer modLoadingContext = ModLoadingContext.get().getActiveContainer();
         modLoadingContext.registerConfig(ModConfig.Type.COMMON, ButterfliesConfig.COMMON_CONFIG);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, ButterfliesConfig.SERVER_CONFIG);
     }

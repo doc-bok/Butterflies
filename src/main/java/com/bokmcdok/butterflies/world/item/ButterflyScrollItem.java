@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
-import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
@@ -69,7 +68,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                                 @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(dataComponentRegistry, stack, components);
+        appendButterflyNameToHoverText(stack, components);
 
         MutableComponent newComponent = Component.translatable("tooltip.butterflies.scroll");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))

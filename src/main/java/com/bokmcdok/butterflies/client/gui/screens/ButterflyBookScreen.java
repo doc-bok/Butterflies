@@ -55,12 +55,10 @@ public class ButterflyBookScreen extends Screen {
 
     /**
      * Construction
-     * @param dataComponentRegistry The data component registry.
      * @param stack The item stack we are using.
      */
-    public ButterflyBookScreen(DataComponentRegistry dataComponentRegistry,
-                               ItemStack stack) {
-        this(new BookAccess(dataComponentRegistry, stack), true);
+    public ButterflyBookScreen(ItemStack stack) {
+        this(new BookAccess(stack), true);
     }
 
     /**
@@ -348,12 +346,10 @@ public class ButterflyBookScreen extends Screen {
 
         /**
          * Construct access based on an item stack.
-         * @param dataComponentRegistry The data component registry.
          * @param stack The item stack we are using.
          */
-        public BookAccess(DataComponentRegistry dataComponentRegistry,
-                          ItemStack stack) {
-            pages = stack.getOrDefault(dataComponentRegistry.getButterflyBookPages(), new ArrayList<>());
+        public BookAccess(ItemStack stack) {
+            pages = stack.getOrDefault(DataComponentRegistry.BUTTERFLY_BOOK_PAGES, new ArrayList<>());
         }
 
         /**

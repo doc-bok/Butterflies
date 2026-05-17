@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.event.lifecycle;
 
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
+import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,9 +29,7 @@ public class LifecycleEventListener {
      */
     @SubscribeEvent
     private void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            decoratedPotPatternsRegistry.expandVanillaPatterns(itemRegistry);
-        });
+        event.enqueueWork(DecoratedPotPatternsRegistry::expandVanillaPatterns);
     }
 
     /**

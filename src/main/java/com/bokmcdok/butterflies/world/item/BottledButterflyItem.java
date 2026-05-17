@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
@@ -35,29 +34,23 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    //  The localisation strings.
+    //  The localization strings.
     public static final String BOTTLED_BUTTERFLY_STRING = "block.butterflies.bottled_butterfly";
     public static final String BOTTLED_MOTH_STRING = "block.butterflies.bottled_moth";
-
-    // The data component registry
-    private final DataComponentRegistry dataComponentRegistry;
 
     //  The index of the butterfly species.
     private final int butterflyIndex;
 
     /**
      * Construction
-     * @param dataComponentRegistry The data component registry.
      * @param block The block related to this item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public BottledButterflyItem(DataComponentRegistry dataComponentRegistry,
-                                DeferredHolder<Block, Block> block,
+    public BottledButterflyItem(DeferredHolder<Block, Block> block,
                                 int butterflyIndex) {
         super(block.get(), new Item.Properties().stacksTo(1));
 
         this.butterflyIndex = butterflyIndex;
-        this.dataComponentRegistry = dataComponentRegistry;
     }
 
     /**
@@ -72,7 +65,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                 @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> tooltipComponents,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(dataComponentRegistry, stack, tooltipComponents);
+        appendButterflyNameToHoverText(stack, tooltipComponents);
 
         MutableComponent newComponent = Component.translatable("tooltip.butterflies.release_butterfly");
         Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
@@ -93,9 +86,9 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
@@ -123,7 +116,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                                   @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(dataComponentRegistry,stack);
+        ResourceLocation entity = getButterflyEntity(stack);
         if (entity != null) {
 
             //  Move the target position slightly in front of the player
@@ -156,7 +149,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Player player = context.getPlayer();
             if (player != null) {
                 ItemStack stack = player.getItemInHand(context.getHand());
-                ResourceLocation entity = getButterflyEntity(dataComponentRegistry,stack);
+                ResourceLocation entity = getButterflyEntity(stack);
 
                 if (entity != null) {
                     BlockPos position = context.getClickedPos();

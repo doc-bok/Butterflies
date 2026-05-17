@@ -15,18 +15,12 @@ import java.util.Arrays;
  */
 public class BrewingEventListener {
 
-    // Reference to the registries.
-    private final ItemRegistry itemRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public BrewingEventListener(IEventBus modEventBus,
-                                ItemRegistry itemRegistry) {
+    public BrewingEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
-
-        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -41,7 +35,7 @@ public class BrewingEventListener {
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
                 event.getBuilder().addMix(
                         Potions.AWKWARD,
-                        itemRegistry.getBottledButterflies().get(i).get(),
+                        ItemRegistry.BOTTLED_BUTTERFLIES.get(i).get(),
                         Potions.POISON
                 );
             }

@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
@@ -20,10 +20,9 @@ public class ButterflyLootModifier extends BaseLootModifier {
     /**
      * Codec that creates the loot modifier.
      */
-    public static final Supplier<Codec<ButterflyLootModifier>> CODEC = () ->
-            RecordCodecBuilder.create(inst ->
-                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
-                            .apply(inst, ButterflyLootModifier::new));
+    public static final Supplier<MapCodec<ButterflyLootModifier>> CODEC = () ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
+                    .apply(inst, ButterflyLootModifier::new));
     /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.

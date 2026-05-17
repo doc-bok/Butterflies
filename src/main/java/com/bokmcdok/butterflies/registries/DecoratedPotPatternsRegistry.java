@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -18,24 +17,29 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class DecoratedPotPatternsRegistry {
 
     // An instance of a deferred registry we use to register patterns.
-    public static final DeferredRegister<String> DECORATED_POT_PATTERNS;
+    public static final DeferredRegister<DecoratedPotPattern> DECORATED_POT_PATTERNS;
 
     // The butterfly pot pattern.
-    public static final DeferredHolder<String, String> BUTTERFLY_POT_PATTERN;
+    public static final DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> BUTTERFLY_POT_PATTERN;
+    public static final ResourceKey<DecoratedPotPattern> BUTTERFLY_POT_PATTERN_KEY;
 
     static {
-        DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
-        BUTTERFLY_POT_PATTERN = DECORATED_POT_PATTERNS.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
+        DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, ButterfliesMod.MOD_ID);
+        BUTTERFLY_POT_PATTERN_KEY = ResourceKey.create(Registries.DECORATED_POT_PATTERN,
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_pottery_pattern"));
+        BUTTERFLY_POT_PATTERN = DECORATED_POT_PATTERNS.register("butterfly_pottery_pattern",
+                () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
+                ButterfliesMod.MOD_ID,
+                "butterfly_pottery_pattern")));
     }
 
     /**
      * Add the new butterfly pottery pattern to the list of valid patterns.
-     * @param itemRegistry The item registry.
      */
-    public void expandVanillaPatterns(ItemRegistry itemRegistry) {
+    public static void expandVanillaPatterns() {
         ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
         itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-        itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), butterflyPotPatternKey);
+        itemsToPot.put(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get(), BUTTERFLY_POT_PATTERN_KEY);
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
     }
 

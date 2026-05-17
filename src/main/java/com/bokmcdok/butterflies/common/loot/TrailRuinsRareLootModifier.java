@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
@@ -20,10 +20,9 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
     /**
      * Codec that creates the loot modifier.
      */
-    public static final Supplier<Codec<TrailRuinsRareLootModifier>> CODEC = () ->
-            RecordCodecBuilder.create(inst ->
-                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
-                            .apply(inst, TrailRuinsRareLootModifier::new));
+    public static final Supplier<MapCodec<TrailRuinsRareLootModifier>> CODEC = () ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
+                    .apply(inst, TrailRuinsRareLootModifier::new));
 
     /**
      * Construction
@@ -47,7 +46,7 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
         // 1/13 chance to replace with new sherd.
         if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {
-            generatedLoot.remove(0);
+            generatedLoot.removeFirst();
 
             ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
             generatedLoot.add(stack);

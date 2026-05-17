@@ -206,17 +206,17 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
                 ItemStack scroll = craftingContainer.getItem(1);
                 if (scroll != ItemStack.EMPTY) {
                     if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
-                        result = new ItemStack(itemRegistry.getButterflyBook().get());
+                        result = new ItemStack(ItemRegistry.BUTTERFLY_BOOK.get());
 
-                        if (book.is(itemRegistry.getButterflyBook().get())) {
-                            List<Integer> pages = book.get(dataComponentRegistry.getButterflyBookPages());
+                        if (book.is(ItemRegistry.BUTTERFLY_BOOK.get())) {
+                            List<Integer> pages = book.get(DataComponentRegistry.BUTTERFLY_BOOK_PAGES);
                             if (pages != null) {
-                                result.set(dataComponentRegistry.getButterflyBookPages(),
+                                result.set(DataComponentRegistry.BUTTERFLY_BOOK_PAGES,
                                         new ArrayList<>(pages));
                             }
                         }
 
-                        if (!ButterflyBookItem.addPage(dataComponentRegistry, result, scrollItem.getButterflyIndex())) {
+                        if (!ButterflyBookItem.addPage(result, scrollItem.getButterflyIndex())) {
                             result = ItemStack.EMPTY;
                         }
                     }

@@ -68,7 +68,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                 @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(dataComponentRegistry, stack, components);
+        appendButterflyNameToHoverText(stack, components);
 
         String localisation = "tooltip.butterflies.release_butterfly";
         if (butterflyIndex < 0) {
@@ -139,7 +139,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                      @NotNull Entity entity) {
 
         // Needs to target a butterfly with an empty net.
-        if (getButterflyEntity(dataComponentRegistry, stack) == null &&
+        if (getButterflyEntity(stack) == null &&
                 entity instanceof Butterfly butterfly) {
             DeferredHolder<Item, Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
@@ -187,7 +187,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                                    @NotNull InteractionHand hand) {
 
         ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
+        ResourceLocation entity = getButterflyEntity(stack);
 
         if (entity != null) {
             //  Move the target position slightly in front of the player

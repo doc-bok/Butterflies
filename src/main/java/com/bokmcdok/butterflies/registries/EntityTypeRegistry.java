@@ -20,13 +20,7 @@ import java.util.List;
  */
 public class EntityTypeRegistry {
 
-    /**
-     * The mob category for registering butterflies.
-     */
-    public static final MobCategory BUTTERFLY_SPAWN_POOL = MobCategory.valueOf("BUTTERFLIES_BUTTERFLY_SPAWNS");
-
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES;
-
 
     public static final DeferredHolder<EntityType<?>, EntityType<IronGolem>> BUTTERFLY_GOLEM;
     public static final DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
