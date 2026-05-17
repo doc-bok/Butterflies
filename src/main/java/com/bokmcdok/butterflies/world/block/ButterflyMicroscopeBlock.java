@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.core.BlockPos;
@@ -34,27 +35,19 @@ public class ButterflyMicroscopeBlock extends Block {
     // The shape of the block.
     private static final VoxelShape SHAPE;
 
-    // Access to data components.
-    private final DataComponentRegistry dataComponentRegistry;
-
-    // Access to items.
-    private final ItemRegistry itemRegistry;
-
-    // Access to menu types.
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction
      */
-    public ButterflyMicroscopeBlock(DataComponentRegistry dataComponentRegistry,
-                                    ItemRegistry itemRegistry,
-                                    MenuTypeRegistry menuTypeRegistry,
-                                    Properties properties) {
-        super(properties);
-
-        this.dataComponentRegistry = dataComponentRegistry;
-        this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
+    public ButterflyMicroscopeBlock() {
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
+                .noOcclusion()
+                .sound(SoundType.STONE)
+                .strength(1.0F));
     }
 
     /**
@@ -113,9 +106,7 @@ public class ButterflyMicroscopeBlock extends Block {
                                        inventory,
                                        title) ->
                 new ButterflyMicroscopeMenu(
-                        dataComponentRegistry,
-                        itemRegistry,
-                        menuTypeRegistry.getButterflyMicroscopeMenu().get(),
+                        MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(),
                         containerId,
                         inventory,
                         ContainerLevelAccess.create(level, blockPos)),

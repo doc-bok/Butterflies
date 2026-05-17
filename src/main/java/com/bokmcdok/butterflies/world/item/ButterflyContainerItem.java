@@ -29,11 +29,10 @@ public interface ButterflyContainerItem {
      * @param stack The item stack.
      * @param components The current text components.
      */
-    default void appendButterflyNameToHoverText(DataComponentRegistry dataComponentRegistry,
-                                                @NotNull ItemStack stack,
+    default void appendButterflyNameToHoverText(@NotNull ItemStack stack,
                                                 @NotNull List<Component> components) {
         String translatable = "item.butterflies.empty";
-        ResourceLocation entity = getButterflyEntity(dataComponentRegistry, stack);
+        ResourceLocation entity = getButterflyEntity(stack);
 
         if (entity != null) {
             translatable = "entity." + entity.toString().replace(':', '.');
@@ -48,18 +47,16 @@ public interface ButterflyContainerItem {
 
     /**
      * Helper method to get the entity from an item stack
-     * @param dataComponentRegistry The data component registry.
      * @param stack The item stack.
      * @return The entity held in this item, if any.
      */
-    default ResourceLocation getButterflyEntity(DataComponentRegistry dataComponentRegistry,
-                                                ItemStack stack) {
+    default ResourceLocation getButterflyEntity(ItemStack stack) {
         ResourceLocation entity = null;
 
         //  TODO: Compound tags are checked for backwards compatibility. This
         //        code should be removed in a future version.
         if (stack != null) {
-            String entityId = stack.get(dataComponentRegistry.getButterflyEntityId());
+            String entityId = stack.get(DataComponentRegistry.BUTTERFLY_ENTITY_ID);
             if (entityId != null) {
                 entity = ResourceLocation.withDefaultNamespace(entityId);
             }

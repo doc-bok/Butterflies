@@ -5,7 +5,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -14,28 +13,18 @@ import java.util.List;
 public class DataComponentRegistry {
 
     // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<DataComponentType<?>> deferredRegister;
+    public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS;
 
     // The list of pages in a butterfly book.
-    private DeferredHolder<DataComponentType<?>, DataComponentType<List<Integer>>> butterflyBookPages;
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<List<Integer>>> BUTTERFLY_BOOK_PAGES;
 
     // The entity ID of a butterfly.
-    private DeferredHolder<DataComponentType<?>, DataComponentType<String>> butterflyEntityId;
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> BUTTERFLY_ENTITY_ID;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public DataComponentRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
+    static {
+        DATA_COMPONENTS = DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, ButterfliesMod.MOD_ID);
 
-    /**
-     * Initialise the data components.
-     */
-    public void initialise() {
-        butterflyBookPages = deferredRegister.register(
+        BUTTERFLY_BOOK_PAGES = DATA_COMPONENTS.register(
                 "butterfly_book_pages",
                 () -> DataComponentType.<List<Integer>>builder()
                         .persistent(Codec.INT.listOf())
@@ -43,7 +32,7 @@ public class DataComponentRegistry {
                         .cacheEncoding()
                         .build());
 
-        butterflyEntityId = deferredRegister.register(
+        BUTTERFLY_ENTITY_ID = DATA_COMPONENTS.register(
                 "butterfly_entity_id",
                 () -> DataComponentType.<String>builder()
                         .persistent(Codec.STRING)
@@ -53,18 +42,7 @@ public class DataComponentRegistry {
     }
 
     /**
-     * Accessor for butterfly book pages.
-     * @return The data component type.
+     * Prevent construction.
      */
-    public DeferredHolder<DataComponentType<?>, DataComponentType<List<Integer>>> getButterflyBookPages() {
-        return butterflyBookPages;
-    }
-
-    /**
-     * Accessor for butterfly entity ID
-     * @return The data component type.
-     */
-    public DeferredHolder<DataComponentType<?>, DataComponentType<String>> getButterflyEntityId() {
-        return butterflyEntityId;
-    }
+    private DataComponentRegistry() {}
 }

@@ -26,25 +26,25 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     outputs:
-      docs_changed: ${{ steps.check_file_changed.outputs.docs_changed }}
+      version_changed: ${{ steps.check_version_change.outputs.version_changed }}
     steps:
       - uses: actions/checkout@v2
         with:
           # Checkout as many commits as needed for the diff
           fetch-depth: 2
       - shell: pwsh
-        id: check_file_changed
+        id: check_version_change
         run: |
           # Diff HEAD with the previous commit
           $diff = git diff --name-only HEAD^ HEAD
           
           # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
-          $SourceDiff = $diff | Where-Object { $_ -match './gradle.properties' }
+          $SourceDiff = $diff | Where-Object { $_ -match 'gradle.properties' }
           $HasDiff = $SourceDiff.Length -gt 0
           
           # Set the output named "version_changed"
           Write-Host "::set-output name=version_changed::$HasDiff"
-          echo "VERSION_CHANGED=$HasDiff"
+          echo "version_changed=$HasDiff"
 
   build:
     # The environment where workflow runs, here Ubuntu latest stable

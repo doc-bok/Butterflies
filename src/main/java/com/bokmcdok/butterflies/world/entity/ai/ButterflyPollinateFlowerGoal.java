@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
@@ -233,47 +234,47 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
      */
     private Block getFlowerBud(Block flowerBlock) {
         if (flowerBlock == Blocks.ALLIUM) {
-            return butterfly.getBlockRegistry().getAlliumBud().get();
+            return BlockRegistry.ALLIUM_BUD.get();
         }
 
         if (flowerBlock == Blocks.AZURE_BLUET) {
-            return butterfly.getBlockRegistry().getAzureBluetBud().get();
+            return BlockRegistry.AZURE_BLUET_BUD.get();
         }
 
         if (flowerBlock == Blocks.BLUE_ORCHID) {
-            return butterfly.getBlockRegistry().getBlueOrchidBud().get();
+            return BlockRegistry.BLUE_ORCHID_BUD.get();
         }
 
         if (flowerBlock == Blocks.CORNFLOWER) {
-            return butterfly.getBlockRegistry().getCornflowerBud().get();
+            return BlockRegistry.CORNFLOWER_BUD.get();
         }
 
         if (flowerBlock == Blocks.DANDELION) {
-            return butterfly.getBlockRegistry().getDandelionBud().get();
+            return BlockRegistry.DANDELION_BUD.get();
         }
 
         if (flowerBlock == Blocks.LILY_OF_THE_VALLEY) {
-            return butterfly.getBlockRegistry().getLilyOfTheValleyBud().get();
+            return BlockRegistry.LILY_OF_THE_VALLEY_BUD.get();
         }
 
         if (flowerBlock == Blocks.ORANGE_TULIP) {
-            return butterfly.getBlockRegistry().getOrangeTulipBud().get();
+            return BlockRegistry.ORANGE_TULIP_BUD.get();
         }
 
         if (flowerBlock == Blocks.OXEYE_DAISY) {
-            return butterfly.getBlockRegistry().getOxeyeDaisyBud().get();
+            return BlockRegistry.OXEYE_DAISY_BUD.get();
         }
 
         if (flowerBlock == Blocks.PINK_TULIP) {
-            return butterfly.getBlockRegistry().getPinkTulipBud().get();
+            return BlockRegistry.PINK_TULIP_BUD.get();
         }
 
         if (flowerBlock == Blocks.POPPY) {
-            return butterfly.getBlockRegistry().getPoppyBud().get();
+            return BlockRegistry.POPPY_BUD.get();
         }
 
         if (flowerBlock == Blocks.RED_TULIP) {
-            return butterfly.getBlockRegistry().getRedTulipBud().get();
+            return BlockRegistry.RED_TULIP_BUD.get();
         }
 
         if (flowerBlock == Blocks.TORCHFLOWER) {
@@ -281,11 +282,11 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
         }
 
         if (flowerBlock == Blocks.WHITE_TULIP) {
-            return butterfly.getBlockRegistry().getWhiteTulipBud().get();
+            return BlockRegistry.WHITE_TULIP_BUD.get();
         }
 
         if (flowerBlock == Blocks.WITHER_ROSE) {
-            return butterfly.getBlockRegistry().getWitherRoseBud().get();
+            return BlockRegistry.WITHER_ROSE_BUD.get();
         }
 
         if (flowerBlock == Blocks.SWEET_BERRY_BUSH) {

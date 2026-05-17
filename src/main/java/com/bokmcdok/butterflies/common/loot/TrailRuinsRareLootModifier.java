@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -8,19 +10,27 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 /**
  * A loot modifier to add treasure to some chests.
  */
 public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<MapCodec<TrailRuinsRareLootModifier>> CODEC = () ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
+                    .apply(inst, TrailRuinsRareLootModifier::new));
+
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public TrailRuinsRareLootModifier(ItemRegistry itemRegistry,
-                                      LootItemCondition[] conditionsIn)
+    public TrailRuinsRareLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -36,9 +46,9 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
         // 1/13 chance to replace with new sherd.
         if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {
-            generatedLoot.remove(0);
+            generatedLoot.removeFirst();
 
-            ItemStack stack = new ItemStack(itemRegistry.getButterflyPotterySherd().get());
+            ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
             generatedLoot.add(stack);
         }
 
@@ -52,6 +62,6 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
      */
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
+        return new TrailRuinsRareLootModifier(conditionsIn);
     }
 }

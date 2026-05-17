@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.common.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
@@ -8,19 +10,26 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 /**
  * A loot modifier to add treasure to some chests.
  */
 public class OakLeavesLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<MapCodec<OakLeavesLootModifier>> CODEC = () ->
+            RecordCodecBuilder.mapCodec(inst -> codecStart(inst)
+                    .apply(inst, OakLeavesLootModifier::new));
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public OakLeavesLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public OakLeavesLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -36,7 +45,7 @@ public class OakLeavesLootModifier extends BaseLootModifier {
         RandomSource random = context.getRandom();
 
         if (random.nextInt(4000) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());
+            ItemStack stack = new ItemStack(ItemRegistry.INFESTED_APPLE.get());
             generatedLoot.add(stack);
         }
 
@@ -51,6 +60,6 @@ public class OakLeavesLootModifier extends BaseLootModifier {
     @NotNull
     @Override
     protected BaseLootModifier create(LootItemCondition[] conditionsIn) {
-        return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+        return new OakLeavesLootModifier(conditionsIn);
     }
 }

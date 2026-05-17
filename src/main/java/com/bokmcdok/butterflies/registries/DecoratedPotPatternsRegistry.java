@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -17,55 +16,35 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  */
 public class DecoratedPotPatternsRegistry {
 
-    // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<DecoratedPotPattern> deferredRegister;
+    // An instance of a deferred registry we use to register patterns.
+    public static final DeferredRegister<DecoratedPotPattern> DECORATED_POT_PATTERNS;
 
     // The butterfly pot pattern.
-    private DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> butterflyPotPattern;
-    private final ResourceKey<DecoratedPotPattern> butterflyPotPatternKey;
+    public static final DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> BUTTERFLY_POT_PATTERN;
+    public static final ResourceKey<DecoratedPotPattern> BUTTERFLY_POT_PATTERN_KEY;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public DecoratedPotPatternsRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-
-        this.butterflyPotPatternKey = ResourceKey.create(
-                Registries.DECORATED_POT_PATTERN,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        "butterfly_pottery_pattern"));    }
-
-    /**
-     * Register the items.
-     */
-    public void initialise() {
-
-        butterflyPotPattern = deferredRegister.register(
-               "butterfly_pottery_pattern",
-               () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        "butterfly_pottery_pattern")));
-    }
-
-    /**
-     * Accessor for butterfly pot pattern.
-     * @return The butterfly pot pattern.
-     */
-    public DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> getButterflyPotPattern() {
-        return butterflyPotPattern;
+    static {
+        DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, ButterfliesMod.MOD_ID);
+        BUTTERFLY_POT_PATTERN_KEY = ResourceKey.create(Registries.DECORATED_POT_PATTERN,
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_pottery_pattern"));
+        BUTTERFLY_POT_PATTERN = DECORATED_POT_PATTERNS.register("butterfly_pottery_pattern",
+                () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
+                ButterfliesMod.MOD_ID,
+                "butterfly_pottery_pattern")));
     }
 
     /**
      * Add the new butterfly pottery pattern to the list of valid patterns.
-     * @param itemRegistry The item registry.
      */
-    public void expandVanillaPatterns(ItemRegistry itemRegistry) {
+    public static void expandVanillaPatterns() {
         ImmutableMap.Builder<Item, ResourceKey<DecoratedPotPattern>> itemsToPot = new ImmutableMap.Builder<>();
         itemsToPot.putAll(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-        itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), butterflyPotPatternKey);
+        itemsToPot.put(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get(), BUTTERFLY_POT_PATTERN_KEY);
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
     }
+
+    /*
+     * Prevent construction.
+     */
+    private DecoratedPotPatternsRegistry() {}
 }

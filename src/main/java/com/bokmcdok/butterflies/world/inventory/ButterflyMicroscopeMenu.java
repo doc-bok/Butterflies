@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.inventory;
 
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyMicroscopeBlock;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
@@ -27,12 +28,6 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     private static final int USE_ROW_SLOT_START = 30;
     private static final int USE_ROW_SLOT_END = 39;
 
-    // The data component registry.
-    private final DataComponentRegistry dataComponentRegistry;
-
-    // The item registry.
-    private final ItemRegistry itemRegistry;
-
     // The crafting slot container.
     private final CraftingContainer craftingContainer;
 
@@ -44,14 +39,12 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
     /**
      * Client constructor.
-     * @param menuType The type of this menu.
      * @param containerId The ID of the container.
      * @param playerInventory The player's inventory.
      */
-    public ButterflyMicroscopeMenu(MenuType<?> menuType,
-                                   int containerId,
+    public ButterflyMicroscopeMenu(int containerId,
                                    Inventory playerInventory) {
-        this(null, null, menuType, containerId, playerInventory, ContainerLevelAccess.NULL);
+        this(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), containerId, playerInventory, ContainerLevelAccess.NULL);
     }
 
     /**
@@ -61,16 +54,11 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
      * @param playerInventory The player's inventory.
      * @param container The container for the feeder.
      */
-    public ButterflyMicroscopeMenu(DataComponentRegistry dataComponentRegistry,
-                                   ItemRegistry itemRegistry,
-                                   MenuType<?> menuType,
+    public ButterflyMicroscopeMenu(MenuType<?> menuType,
                                    int containerId,
                                    Inventory playerInventory,
                                    ContainerLevelAccess container) {
         super(menuType, containerId);
-
-        this.dataComponentRegistry = dataComponentRegistry;
-        this.itemRegistry = itemRegistry;
 
         this.craftingContainer = new TransientCraftingContainer(this, 2, 1);
         this.resultContainer = new ResultContainer();
@@ -218,17 +206,17 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
                 ItemStack scroll = craftingContainer.getItem(1);
                 if (scroll != ItemStack.EMPTY) {
                     if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
-                        result = new ItemStack(itemRegistry.getButterflyBook().get());
+                        result = new ItemStack(ItemRegistry.BUTTERFLY_BOOK.get());
 
-                        if (book.is(itemRegistry.getButterflyBook().get())) {
-                            List<Integer> pages = book.get(dataComponentRegistry.getButterflyBookPages());
+                        if (book.is(ItemRegistry.BUTTERFLY_BOOK.get())) {
+                            List<Integer> pages = book.get(DataComponentRegistry.BUTTERFLY_BOOK_PAGES);
                             if (pages != null) {
-                                result.set(dataComponentRegistry.getButterflyBookPages(),
+                                result.set(DataComponentRegistry.BUTTERFLY_BOOK_PAGES,
                                         new ArrayList<>(pages));
                             }
                         }
 
-                        if (!ButterflyBookItem.addPage(dataComponentRegistry, result, scrollItem.getButterflyIndex())) {
+                        if (!ButterflyBookItem.addPage(result, scrollItem.getButterflyIndex())) {
                             result = ItemStack.EMPTY;
                         }
                     }
