@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.common.loot;
 
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -13,9 +12,6 @@ import java.util.function.Supplier;
 
 public abstract class BaseLootModifier extends LootModifier {
 
-    // The item registry.
-    protected final ItemRegistry itemRegistry;
-
     // The codec that is registered with Forge.
     private final Supplier<MapCodec<BaseLootModifier>> codec = Suppliers.memoize(() ->
             RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, this::create)));
@@ -24,11 +20,9 @@ public abstract class BaseLootModifier extends LootModifier {
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public BaseLootModifier(ItemRegistry itemRegistry,
-                            LootItemCondition[] conditionsIn)
+    public BaseLootModifier(LootItemCondition[] conditionsIn)
     {
         super(conditionsIn);
-        this.itemRegistry = itemRegistry;
     }
 
     /**

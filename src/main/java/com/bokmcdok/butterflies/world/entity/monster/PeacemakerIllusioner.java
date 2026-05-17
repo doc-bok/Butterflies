@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerIllusioner extends Illusioner {
+public class PeacemakerIllusioner extends Illusioner implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_ILLUSIONER_FOLLOW_RANGE = 18.0d;
@@ -34,15 +34,9 @@ public class PeacemakerIllusioner extends Illusioner {
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerIllusioner(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                                EntityType<? extends PeacemakerIllusioner> type,
+    public PeacemakerIllusioner(EntityType<? extends PeacemakerIllusioner> type,
                                 Level level) {
         super(type, level);
-
-        // Register Peacemaker-specific goals.
-        if (!level.isClientSide()) {
-            peacemakerGoalRegistrar.registerGoals(this);
-        }
     }
 
     /**
@@ -53,5 +47,14 @@ public class PeacemakerIllusioner extends Illusioner {
     public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
         PeacemakerButterfly.spawn(this);
+    }
+
+    /**
+     * Register Peacemaker-specific goals.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        registerPathfinderGoals(this);
     }
 }

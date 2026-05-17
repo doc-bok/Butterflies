@@ -40,14 +40,8 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    // The localisation string ID for this item.
+    // The localization string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
-
-    // Reference to the data component registry.
-    private final DataComponentRegistry dataComponentRegistry;
-
-    // Reference to the item registry.
-    private final ItemRegistry itemRegistry;
 
     // The index of the butterfly species.
     private final int butterflyIndex;
@@ -56,13 +50,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * Construction
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(DataComponentRegistry dataComponentRegistry,
-                            ItemRegistry itemRegistry,
-                            int butterflyIndex) {
+    public ButterflyNetItem(int butterflyIndex) {
         super(new Item.Properties().stacksTo(1));
 
-        this.dataComponentRegistry = dataComponentRegistry;
-        this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -111,13 +101,13 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @NotNull
     @Override
     public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
-        return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
+        return new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
@@ -151,12 +141,11 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         // Needs to target a butterfly with an empty net.
         if (getButterflyEntity(dataComponentRegistry, stack) == null &&
                 entity instanceof Butterfly butterfly) {
-            DeferredHolder<Item, Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
-
+            DeferredHolder<Item, Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 
-                if (item != itemRegistry.getBurntButterflyNet()) {
+                if (item != ItemRegistry.BURNT_BUTTERFLY_NET) {
                     entity.discard();
                 }
 
@@ -167,7 +156,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             }
         } else if (entity instanceof PeacemakerButterfly) {
 
-            DeferredHolder<Item, Item>  item = itemRegistry.getPeacemakerButterflyNet();
+            DeferredHolder<Item, Item> item = ItemRegistry.PEACEMAKER_BUTTERFLY_NET;
             if (item != null) {
 
                 ItemStack newStack = new ItemStack(item.get(), 1);
@@ -210,7 +199,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
             Butterfly.spawn(player.level(), entity, positionToSpawn, false);
 
-            ItemStack newStack = new ItemStack(itemRegistry.getEmptyButterflyNet().get(), 1);
+            ItemStack newStack = new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), 1);
             player.setItemInHand(hand, newStack);
 
             return InteractionResultHolder.success(stack);

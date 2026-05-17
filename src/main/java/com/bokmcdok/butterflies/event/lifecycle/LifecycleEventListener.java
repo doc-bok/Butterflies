@@ -2,8 +2,6 @@ package com.bokmcdok.butterflies.event.lifecycle;
 
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
-import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,24 +13,12 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
  */
 public class LifecycleEventListener {
 
-    // Reference to the registries.
-    private final DecoratedPotPatternsRegistry decoratedPotPatternsRegistry;
-    private final ItemRegistry itemRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public LifecycleEventListener(IEventBus modEventBus,
-                                  DecoratedPotPatternsRegistry decoratedPotPatternsRegistry,
-                                  ItemRegistry itemRegistry,
-                                  MenuTypeRegistry menuTypeRegistry) {
+    public LifecycleEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
-
-        this.decoratedPotPatternsRegistry = decoratedPotPatternsRegistry;
-        this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -53,7 +39,7 @@ public class LifecycleEventListener {
      */
     @SubscribeEvent
     private void clientSetup(RegisterMenuScreensEvent event) {
-        event.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new);
-        event.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new);
+        event.register(MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(), ButterflyFeederScreen::new);
+        event.register(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), ButterflyMicroscopeScreen::new);
     }
 }

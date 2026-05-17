@@ -10,6 +10,7 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import com.bokmcdok.butterflies.registries.CreativeTabRegistry;
+import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -19,21 +20,13 @@ import java.util.Objects;
  */
 public class ModEventListener {
 
-    // References to the registries.
-    private final CreativeTabRegistry creativeTabRegistry;
-    private final ItemRegistry itemRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ModEventListener(@NotNull IEventBus modEventBus,
-                            @NotNull CreativeTabRegistry creativeTabRegistry,
-                            @NotNull ItemRegistry itemRegistry) {
+    public ModEventListener(@NotNull IEventBus modEventBus) {
         modEventBus.register(this);
-
-        this.creativeTabRegistry = creativeTabRegistry;
-        this.itemRegistry = itemRegistry;
+        modEventBus.addListener(this::onBuildCreativeModeTabContents);
     }
 
     /**
@@ -43,70 +36,71 @@ public class ModEventListener {
     @SubscribeEvent
     public void onBuildCreativeModeTabContents(@NotNull BuildCreativeModeTabContentsEvent event) {
 
-        if (!Objects.equals(event.getTabKey(), creativeTabRegistry.getButterflyCreativeTab().getKey())) {
+        if (!Objects.equals(event.getTabKey(), CreativeTabRegistry.BUTTERFLY_CREATIVE_TAB.getKey())) {
             return;
         }
 
         // Nets
-        event.accept(itemRegistry.getEmptyButterflyNet().get());
-        itemRegistry.getButterflyNets().forEach((x) -> event.accept(x.get()));
-        event.accept(itemRegistry.getBurntButterflyNet().get());
+        event.accept(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+        ItemRegistry.BUTTERFLY_NETS.forEach((x) -> event.accept(x.get()));
+        event.accept(ItemRegistry.BURNT_BUTTERFLY_NET.get());
 
         // Eggs
-        itemRegistry.getButterflyEggs().forEach((x) -> event.accept(x.get()));
+        ItemRegistry.BUTTERFLY_EGGS.forEach((x) -> event.accept(x.get()));
 
         // Caterpillars
-        itemRegistry.getCaterpillars().forEach((x) -> event.accept(x.get()));
+        ItemRegistry.CATERPILLARS.forEach((x) -> event.accept(x.get()));
 
         // Bottles
-        itemRegistry.getBottledButterflies().forEach((x) -> event.accept(x.get()));
-        itemRegistry.getBottledCaterpillars().forEach((x) -> event.accept(x.get()));
+        ItemRegistry.BOTTLED_BUTTERFLIES.forEach((x) -> event.accept(x.get()));
+        ItemRegistry.BOTTLED_CATERPILLARS.forEach((x) -> event.accept(x.get()));
 
         // Scrolls
-        itemRegistry.getButterflyScrolls().forEach((x) -> event.accept(x.get()));
+        ItemRegistry.BUTTERFLY_SCROLLS.forEach((x) -> event.accept(x.get()));
 
         // Books
-        event.accept(itemRegistry.getButterflyBook().get());
-        event.accept(itemRegistry.getZhuangziBook().get());
+        event.accept(ItemRegistry.BUTTERFLY_BOOK.get());
+        event.accept(ItemRegistry.ZHUANGZI_BOOK.get());
 
         // Blocks
-        event.accept(itemRegistry.getButterflyFeeder().get());
-        event.accept(itemRegistry.getButterflyMicroscope().get());
+        event.accept(ItemRegistry.BUTTERFLY_FEEDER.get());
+        event.accept(ItemRegistry.BUTTERFLY_MICROSCOPE.get());
 
         // Infested Apple
-        event.accept(itemRegistry.getInfestedApple().get());
+        event.accept(ItemRegistry.INFESTED_APPLE.get());
 
         // Silk
-        event.accept(itemRegistry.getSilk().get());
+        event.accept(ItemRegistry.SILK.get());
 
         // Origami
-        itemRegistry.getButterflyOrigami().forEach((x) -> event.accept(x.get()));
+        ItemRegistry.BUTTERFLY_ORIGAMI.forEach((x) -> event.accept(x.get()));
 
         // Sherd
-        event.accept(itemRegistry.getButterflyPotterySherd().get());
+        event.accept(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
 
         // Banner Pattern
-        event.accept(itemRegistry.getButterflyBannerPattern().get());
+        event.accept(ItemRegistry.BUTTERFLY_BANNER_PATTERN.get());
 
         // Peacemaker Honey
-        event.accept(itemRegistry.getPeacemakerHoneyBottle().get());
+        event.accept(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
 
         // Spawn Eggs
-        itemRegistry.getEggSpawnEggs().forEach((x) -> event.accept(x.get()));
-        itemRegistry.getCaterpillarSpawnEggs().forEach((x) -> event.accept(x.get()));
-        itemRegistry.getChrysalisSpawnEggs().forEach((x) -> event.accept(x.get()));
-        itemRegistry.getButterflySpawnEggs().forEach((x) -> event.accept(x.get()));
-        event.accept(itemRegistry.getButterflyGolemSpawnEgg().get());
+        SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS.forEach((x) -> event.accept(x.get()));
+        SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS.forEach((x) -> event.accept(x.get()));
+        SpawnEggRegistry.CHRYSALIS_SPAWN_EGGS.forEach((x) -> event.accept(x.get()));
+        SpawnEggRegistry.EGG_SPAWN_EGGS.forEach((x) -> event.accept(x.get()));
+        event.accept(SpawnEggRegistry.BUTTERFLY_GOLEM_SPAWN_EGG.get());
 
         // Peacemaker Spawn Eggs
-        event.accept(itemRegistry.getPeacemakerButterflySpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerEvokerSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerIllusionerSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerPillagerSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerVillagerSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerVindicatorSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerWanderingTraderSpawnEgg().get());
-        event.accept(itemRegistry.getPeacemakerWitchSpawnEgg().get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_COW_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_EVOKER_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_VILLAGER_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_VINDICATOR_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_WANDERING_TRADER_SPAWN_EGG.get());
+        event.accept(SpawnEggRegistry.PEACEMAKER_WITCH_SPAWN_EGG.get());
     }
 
     /**

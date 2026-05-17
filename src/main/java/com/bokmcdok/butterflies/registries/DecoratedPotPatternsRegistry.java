@@ -17,45 +17,15 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  */
 public class DecoratedPotPatternsRegistry {
 
-    // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<DecoratedPotPattern> deferredRegister;
+    // An instance of a deferred registry we use to register patterns.
+    public static final DeferredRegister<String> DECORATED_POT_PATTERNS;
 
     // The butterfly pot pattern.
-    private DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> butterflyPotPattern;
-    private final ResourceKey<DecoratedPotPattern> butterflyPotPatternKey;
+    public static final DeferredHolder<String, String> BUTTERFLY_POT_PATTERN;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public DecoratedPotPatternsRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(Registries.DECORATED_POT_PATTERN, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-
-        this.butterflyPotPatternKey = ResourceKey.create(
-                Registries.DECORATED_POT_PATTERN,
-                ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        "butterfly_pottery_pattern"));    }
-
-    /**
-     * Register the items.
-     */
-    public void initialise() {
-
-        butterflyPotPattern = deferredRegister.register(
-               "butterfly_pottery_pattern",
-               () -> new DecoratedPotPattern(ResourceLocation.fromNamespaceAndPath(
-                        ButterfliesMod.MOD_ID,
-                        "butterfly_pottery_pattern")));
-    }
-
-    /**
-     * Accessor for butterfly pot pattern.
-     * @return The butterfly pot pattern.
-     */
-    public DeferredHolder<DecoratedPotPattern, DecoratedPotPattern> getButterflyPotPattern() {
-        return butterflyPotPattern;
+    static {
+        DECORATED_POT_PATTERNS = DeferredRegister.create(Registries.DECORATED_POT_PATTERNS, ButterfliesMod.MOD_ID);
+        BUTTERFLY_POT_PATTERN = DECORATED_POT_PATTERNS.register("butterfly_pottery_pattern", () -> "butterfly_pottery_pattern");
     }
 
     /**
@@ -68,4 +38,9 @@ public class DecoratedPotPatternsRegistry {
         itemsToPot.put(itemRegistry.getButterflyPotterySherd().get(), butterflyPotPatternKey);
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemsToPot.build();
     }
+
+    /*
+     * Prevent construction.
+     */
+    private DecoratedPotPatternsRegistry() {}
 }
