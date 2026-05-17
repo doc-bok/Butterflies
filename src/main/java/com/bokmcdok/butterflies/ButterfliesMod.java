@@ -39,7 +39,7 @@ public final class ButterfliesMod {
         IEventBus forgeEventBus = NeoForge.EVENT_BUS;
 
         registerRegistries(modEventBus);
-        registerListeners(modEventBus,  forgeEventBus);
+        registerListeners(modEventBus, forgeEventBus);
         registerClientListeners(modEventBus);
         registerConfigs();
     }
@@ -75,10 +75,6 @@ public final class ButterfliesMod {
         // Register mod lifecycle and mod-specific event listeners
         new LifecycleEventListener(modEventBus);
         new ModEntityEventListener(modEventBus);
-        new ModEventListener(modEventBus);
-
-        // Register Forge event listeners
-        new LifecycleEventListener(modEventBus);
         new ModEventListener(modEventBus);
 
         // Register Forge event listeners

@@ -37,8 +37,8 @@ public class LifecycleEventListener {
      */
     public LifecycleEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
-        modEventBus.addListener(this::clientSetup);
-        modEventBus.addListener(this::commonSetup);
+        //modEventBus.addListener(this::clientSetup);
+        //modEventBus.addListener(this::commonSetup);
     }
 
     /**
