@@ -1,13 +1,17 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -24,6 +28,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -36,6 +41,12 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
     private static final double PEACEMAKER_COW_HEALTH = 60.0d;
     private static final double PEACEMAKER_COW_KNOCKBACK_RESISTANCE = 1.0d;
     private static final double PEACEMAKER_COW_SPEED = 0.0d;
+
+    // Sounds
+    private static final ResourceLocation PEACEMAKER_COW_AMBIENT_SOUND =
+            new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow_ambient");
+    private static final ResourceLocation PEACEMAKER_COW_HURT_SOUND =
+            new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_cow_hurt");
 
     // Peacemaker Butterfly Spawn Timer.
     private int nextSpawnAttempt;
@@ -127,6 +138,34 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
                 }
             }
         }
+    }
+
+    /**
+     * Get the ambient sound for the creature.
+     * @return The resource location of the sound.
+     */
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return SoundEvent.createVariableRangeEvent(PEACEMAKER_COW_AMBIENT_SOUND);
+
+    }
+
+    /**
+     * Ensure the Peacemaker Cow doesn't scream too often.
+     * @return Around 150 seconds.
+     */
+    @Override
+    public int getAmbientSoundInterval() {
+        return 3000;
+    }
+
+    /**
+     * Get the hurt sound for the creature.
+     * @return The resource location of the sound.
+     */
+    @Override
+    protected @Nullable SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
+        return SoundEvent.createVariableRangeEvent(PEACEMAKER_COW_HURT_SOUND);
     }
 
     /**
