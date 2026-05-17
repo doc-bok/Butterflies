@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.inventory;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyMicroscopeBlock;
 import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
@@ -25,9 +26,6 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
     private static final int USE_ROW_SLOT_START = 30;
     private static final int USE_ROW_SLOT_END = 39;
 
-    // The item registry.
-    private final ItemRegistry itemRegistry;
-
     // The crafting slot container.
     private final CraftingContainer craftSlots;
 
@@ -42,14 +40,12 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
 
     /**
      * Client constructor.
-     * @param menuType The type of this menu.
      * @param containerId The ID of the container.
      * @param playerInventory The player's inventory.
      */
-    public ButterflyMicroscopeMenu(MenuType<?> menuType,
-                                   int containerId,
+    public ButterflyMicroscopeMenu(int containerId,
                                    Inventory playerInventory) {
-        this(null, menuType, containerId, playerInventory, ContainerLevelAccess.NULL);
+        this(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), containerId, playerInventory, ContainerLevelAccess.NULL);
     }
 
     /**
@@ -59,14 +55,11 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
      * @param playerInventory The player's inventory.
      * @param container The container for the feeder.
      */
-    public ButterflyMicroscopeMenu(ItemRegistry itemRegistry,
-                                   MenuType<?> menuType,
+    public ButterflyMicroscopeMenu(MenuType<?> menuType,
                                    int containerId,
                                    Inventory playerInventory,
                                    ContainerLevelAccess container) {
         super(menuType, containerId);
-
-        this.itemRegistry = itemRegistry;
 
         this.player = playerInventory.player;
 
@@ -223,10 +216,10 @@ public class ButterflyMicroscopeMenu extends AbstractContainerMenu {
                 ItemStack scroll = craftingContainer.getItem(1);
                 if (scroll != ItemStack.EMPTY) {
                     if (scroll.getItem() instanceof ButterflyScrollItem scrollItem) {
-                        if (book.is(itemRegistry.getButterflyBook().get())) {
+                        if (book.is(ItemRegistry.BUTTERFLY_BOOK.get())) {
                             result = book.copy();
                         } else {
-                            result = new ItemStack(itemRegistry.getButterflyBook().get());
+                            result = new ItemStack(ItemRegistry.BUTTERFLY_BOOK.get());
                         }
 
                         if (!ButterflyBookItem.addPage(result, scrollItem.getButterflyIndex())) {

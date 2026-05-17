@@ -1,8 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
@@ -42,29 +40,19 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
             Block.box( 1.0, 14.0,  0.0, 15.0, 16.0,  1.0),
             Block.box( 0.0,  0.0,  0.0,  2.0, 12.0,  2.0));
 
-    // The registries.
-    private final BlockEntityTypeRegistry blockEntityTypeRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction.
-     * @param blockEntityTypeRegistry The block entity registry.
-     * @param menuTypeRegistry The menu type registry.
      */
-    public ButterflyFeederBlock(BlockEntityTypeRegistry blockEntityTypeRegistry,
-                                MenuTypeRegistry menuTypeRegistry) {
-        super(BlockBehaviour.Properties.of(Material.WOOD)
-                .color(MaterialColor.SAND)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
+    public ButterflyFeederBlock() {
+        super(BlockBehaviour.Properties.of()
+                .mapColor(MapColor.SAND)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
                 .noOcclusion()
                 .sound(SoundType.BAMBOO)
                 .strength(0.3F));
-
-        this.blockEntityTypeRegistry = blockEntityTypeRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -132,11 +120,7 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos blockPos,
                                       @NotNull BlockState blockState) {
-        return new ButterflyFeederEntity(
-                this.menuTypeRegistry,
-                blockEntityTypeRegistry.getButterflyFeeder().get(),
-                blockPos,
-                blockState);
+        return new ButterflyFeederEntity(blockPos, blockState);
     }
 
     /**

@@ -43,24 +43,16 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The localisation string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
-    // Reference to the item registry.
-    private final ItemRegistry itemRegistry;
-
     // The index of the butterfly species.
     private final int butterflyIndex;
 
     /**
      * Construction
-     * @param properties The properties to apply to the item.
-     * @param itemRegistry The item registry.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(Properties properties,
-                            ItemRegistry itemRegistry,
-                            int butterflyIndex) {
-        super(properties);
+    public ButterflyNetItem(int butterflyIndex) {
+        super(new Item.Properties().stacksTo(1));
 
-        this.itemRegistry = itemRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -108,7 +100,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return new ItemStack(itemRegistry.getEmptyButterflyNet().get());
+        return new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
 
     /**
@@ -147,11 +139,11 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
         if (getButterflyEntity(stack) == null &&
                 entity instanceof Butterfly butterfly) {
 
-            RegistryObject<Item> item = itemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
             if (item != null) {
                 ItemStack newStack = new ItemStack(item.get(), 1);
 
-                if (item != itemRegistry.getBurntButterflyNet()) {
+                if (item != ItemRegistry.BURNT_BUTTERFLY_NET) {
                     entity.discard();
                 }
 
@@ -162,7 +154,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             }
         } else if (entity instanceof PeacemakerButterfly) {
 
-            RegistryObject<Item> item = itemRegistry.getPeacemakerButterflyNet();
+            RegistryObject<Item> item = ItemRegistry.PEACEMAKER_BUTTERFLY_NET;
             if (item != null) {
 
                 ItemStack newStack = new ItemStack(item.get(), 1);
@@ -205,7 +197,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
             Butterfly.spawn(player.getLevel(), entity, positionToSpawn, false);
 
-            ItemStack newStack = new ItemStack(itemRegistry.getEmptyButterflyNet().get(), 1);
+            ItemStack newStack = new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), 1);
             player.setItemInHand(hand, newStack);
 
             return InteractionResultHolder.success(stack);

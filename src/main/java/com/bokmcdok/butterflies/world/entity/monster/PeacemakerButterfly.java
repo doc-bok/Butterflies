@@ -5,7 +5,7 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.ai.navigation.ButterflyFlyingPathNavigation;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
 import net.minecraft.core.BlockPos;
@@ -58,7 +58,7 @@ import java.util.UUID;
 
 public class PeacemakerButterfly
         extends Monster
-        implements DebugInfoSupplier {
+        implements DebugInfoSupplier, PeacemakerEntity {
 
     // Data accessors
     protected static final EntityDataAccessor<String> DATA_DEBUG_INFO =
@@ -71,9 +71,6 @@ public class PeacemakerButterfly
     private static final double PEACEMAKER_BUTTERFLY_HEALTH = 6.0d;
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
 
-    // The item registry
-    private final ItemRegistry itemRegistry;
-
     /**
      * Convert a raider to one with a butterfly host
      * @param level   The current level
@@ -81,6 +78,11 @@ public class PeacemakerButterfly
      */
     public static void possess(ServerLevelAccessor level,
                                Raider raider) {
+
+        // Don't do any of this if the entity is already possessed.
+        if (raider instanceof PeacemakerEntity) {
+            return;
+        }
 
         // Don't spawn in PEACEFUL difficulty, and reduce chances of spawn in
         // NORMAL difficulty.
@@ -126,6 +128,11 @@ public class PeacemakerButterfly
     public static void possess(ServerLevelAccessor level,
                                Villager villager) {
 
+        // Don't do any of this if the villager is already possessed.
+        if (villager instanceof PeacemakerEntity) {
+            return;
+        }
+
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
             if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
@@ -161,6 +168,11 @@ public class PeacemakerButterfly
     @SuppressWarnings({"unchecked", "UnstableApiUsage"})
     public static void possess(ServerLevelAccessor level,
                                WanderingTrader wanderingTrader) {
+
+        // Don't do any of this if the trader is already possessed.
+        if (wanderingTrader instanceof PeacemakerEntity) {
+            return;
+        }
 
         Difficulty difficulty = level.getDifficulty();
         if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
@@ -302,17 +314,9 @@ public class PeacemakerButterfly
      * @param entityType The type of this entity.
      * @param level The currently loaded level.
      */
-    public PeacemakerButterfly(@NotNull ItemRegistry itemRegistry,
-                               @NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                               EntityType<? extends Monster> entityType,
+    public PeacemakerButterfly(EntityType<? extends Monster> entityType,
                                Level level) {
         super(entityType, level);
-
-        this.itemRegistry = itemRegistry;
-
-        if (!level.isClientSide()) {
-            this.registerGoalsPost(peacemakerGoalRegistrar);
-        }
 
         // Setup for a flying mob.
         this.moveControl = new FlyingMoveControl(this, 20, true);
@@ -389,27 +393,30 @@ public class PeacemakerButterfly
     public boolean wasKilled(@NotNull ServerLevel level,
                              @NotNull LivingEntity victim) {
 
-        if (victim instanceof Raider raider) {
-            possess(level, raider);
-            this.remove(RemovalReason.DISCARDED);
-        }
-
-        if (victim instanceof Villager villager) {
-            possess(level, villager);
-            if (!this.isSilent()) {
-                level.levelEvent(null, 1027, this.blockPosition(), 0);
+        // Skip all of this if the entity was already possessed.
+        if (!(victim instanceof PeacemakerEntity)) {
+            if (victim instanceof Raider raider) {
+                possess(level, raider);
+                this.remove(RemovalReason.DISCARDED);
             }
 
-            this.remove(RemovalReason.DISCARDED);
-        }
+            if (victim instanceof Villager villager) {
+                possess(level, villager);
+                if (!this.isSilent()) {
+                    level.levelEvent(null, 1027, this.blockPosition(), 0);
+                }
 
-        if (victim instanceof WanderingTrader wanderingTrader) {
-            possess(level, wanderingTrader);
-            if (!this.isSilent()) {
-                level.levelEvent(null, 1027, this.blockPosition(), 0);
+                this.remove(RemovalReason.DISCARDED);
             }
 
-            this.remove(RemovalReason.DISCARDED);
+            if (victim instanceof WanderingTrader wanderingTrader) {
+                possess(level, wanderingTrader);
+                if (!this.isSilent()) {
+                    level.levelEvent(null, 1027, this.blockPosition(), 0);
+                }
+
+                this.remove(RemovalReason.DISCARDED);
+            }
         }
 
         return super.wasKilled(level, victim);
@@ -431,11 +438,11 @@ public class PeacemakerButterfly
         if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
-                    itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get());
+                    itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
             return shouldConsume ? InteractionResult.CONSUME : InteractionResult.PASS;
         }
 
-        if (itemStack.is(itemRegistry.getPeacemakerHoneyBottle().get())) {
+        if (itemStack.is(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get())) {
             if (!player.getAbilities().instabuild) {
                 player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
             }
@@ -533,7 +540,8 @@ public class PeacemakerButterfly
     /**
      * Register the goals for the Peacemaker Butterfly AI.
      */
-    protected void registerGoalsPost(PeacemakerGoalRegistrar peacemakerGoalRegistrar) {
+    @Override
+    protected void registerGoals() {
 
         //  Movement goals
         this.goalSelector.addGoal(0, new FloatGoal(this));
@@ -549,20 +557,14 @@ public class PeacemakerButterfly
 
         //  Targets
         this.targetSelector.addGoal(1, (new HurtByTargetGoal(this))
-                .setAlertOthers()
-                .setAlertOthers(PeacemakerButterfly.class)
-                .setAlertOthers(PeacemakerEvoker.class)
-                .setAlertOthers(PeacemakerIllusioner.class)
-                .setAlertOthers(PeacemakerPillager.class)
-                .setAlertOthers(PeacemakerVindicator.class)
-                .setAlertOthers(PeacemakerWitch.class));
+                .setAlertOthers(PeacemakerEntity.class));
 
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true,
                 (x) -> x.getUUID() != this.getFriendUUID()));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Raider.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false,
-                peacemakerGoalRegistrar::isNotPeacemaker));
+                PeacemakerEntity::isNotPeacemaker));
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 
         //  Tempt goals
@@ -570,7 +572,7 @@ public class PeacemakerButterfly
                 new TemptGoal(
                         this,
                         1.25D,
-                        Ingredient.of(itemRegistry.getPeacemakerHoneyBottle().get()),
+                        Ingredient.of(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get()),
                         false));
     }
 

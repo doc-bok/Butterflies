@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
-import com.bokmcdok.butterflies.world.entity.ai.PeacemakerGoalRegistrar;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerPillager extends Pillager {
+public class PeacemakerPillager extends Pillager implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_PILLAGER_ATTACK_DAMAGE = 7.5d;
@@ -36,15 +36,9 @@ public class PeacemakerPillager extends Pillager {
      * @param type The entity type
      * @param level The current level
      */
-    public PeacemakerPillager(@NotNull PeacemakerGoalRegistrar peacemakerGoalRegistrar,
-                              EntityType<? extends PeacemakerPillager> type,
+    public PeacemakerPillager(EntityType<? extends PeacemakerPillager> type,
                               Level level) {
         super(type, level);
-
-        // Register Peacemaker-specific goals.
-        if (!level.isClientSide()) {
-            peacemakerGoalRegistrar.registerGoals(this);
-        }
     }
 
     /**
@@ -55,5 +49,14 @@ public class PeacemakerPillager extends Pillager {
     public void die(@NotNull DamageSource damageSource) {
         super.die(damageSource);
         PeacemakerButterfly.spawn(this);
+    }
+
+    /**
+     * Register Peacemaker-specific goals.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        registerPathfinderGoals(this);
     }
 }
