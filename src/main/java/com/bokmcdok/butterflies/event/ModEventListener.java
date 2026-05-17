@@ -26,7 +26,6 @@ public class ModEventListener {
      */
     public ModEventListener(@NotNull IEventBus modEventBus) {
         modEventBus.register(this);
-        modEventBus.addListener(this::onBuildCreativeModeTabContents);
     }
 
     /**

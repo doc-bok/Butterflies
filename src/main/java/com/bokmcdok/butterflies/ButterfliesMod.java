@@ -82,7 +82,7 @@ public final class ButterfliesMod {
         new ModEventListener(modEventBus);
 
         // Register Forge event listeners
-        new BrewingEventListener(modEventBus);
+        new BrewingEventListener(forgeEventBus);
         new ForgeEventListener(forgeEventBus);
         new ForgeEntityEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
