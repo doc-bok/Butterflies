@@ -1,12 +1,12 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.neoforged.api.distmarker.Dist;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  * The model and animations for a Peacemaker Butterfly.
  */
 @OnlyIn(Dist.CLIENT)
-public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
+public class PeacemakerCowModel extends EntityModel<LivingEntityRenderState> {
     
     // Names for the various model parts.
     private static final String BODY = "body";
@@ -34,7 +34,6 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
     public static final ModelLayerLocation LAYER_LOCATION = new
             ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_cow"), "main");
 
-    private final ModelPart body;
     private final ModelPart head;
     private final ModelPart tail;
     private final ModelPart frontLeftLeg;
@@ -88,8 +87,10 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
      * Construction
      * @param root The root of the model.
      */
-    public PeacemakerCowModel(ModelPart root) {
-        body = root.getChild(BODY);
+    public PeacemakerCowModel(@NotNull ModelPart root) {
+        super(root);
+
+        ModelPart body = root.getChild(BODY);
         head = body.getChild(HEAD);
         tail = body.getChild(TAIL);
         ModelPart legs = body.getChild(LEGS);
@@ -102,38 +103,19 @@ public class PeacemakerCowModel extends HierarchicalModel<PeacemakerCow> {
     }
 
     /**
-     * Get the root of the hierarchical model.
-     * @return The root node.
-     */
-    @Override
-    public @NotNull ModelPart root() {
-        return body;
-    }
-
-    /**
      * Animate the model.
-     * @param entity The entity.
-     * @param limbSwing Unused
-     * @param limbSwingAmount Unused
-     * @param ageInTicks The current age of the entity in ticks.
-     * @param netHeadYaw The current yaw of the head.
-     * @param headPitch The current pitch of the head.
+     * @param renderState The current rendering state.
      */
     @Override
-    public void setupAnim(@NotNull PeacemakerCow entity,
-                          float limbSwing,
-                          float limbSwingAmount,
-                          float ageInTicks,
-                          float netHeadYaw,
-                          float headPitch) {
+    public void setupAnim(@NotNull LivingEntityRenderState renderState) {
         // Precalculations
-        float sineBasedRotation = (Mth.sin(ageInTicks * 0.1f) * 0.1f);
-        float cosineBasedRotation = (Mth.cos(ageInTicks * 0.1f) * 0.1f);
-        float swingModifier = 1.5F * Mth.triangleWave(limbSwing, 13.0F) * limbSwingAmount;
+        float sineBasedRotation = (Mth.sin(renderState.ageInTicks * 0.1f) * 0.1f);
+        float cosineBasedRotation = (Mth.cos(renderState.ageInTicks * 0.1f) * 0.1f);
+        float swingModifier = 1.5F * Mth.triangleWave(renderState.walkAnimationPos, 13.0F) * renderState.walkAnimationSpeed;
 
         // Head
-        head.xRot = sineBasedRotation + (headPitch * Mth.DEG_TO_RAD);
-        head.yRot = cosineBasedRotation + (netHeadYaw * Mth.DEG_TO_RAD);
+        head.xRot = sineBasedRotation + (renderState.xRot * Mth.DEG_TO_RAD);
+        head.yRot = cosineBasedRotation + (renderState.yRot * Mth.DEG_TO_RAD);
 
         // Legs
         frontLeftLeg.zRot = swingModifier - sineBasedRotation;

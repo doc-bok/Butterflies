@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.mojang.serialization.MapCodec;
@@ -38,10 +37,10 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
     // The base properties of the block.
     public static final Properties PROPERTIES = BlockBehaviour.Properties.of()
             .mapColor(MapColor.SAND)
-            .isRedstoneConductor(BlockRegistry::never)
-            .isSuffocating(BlockRegistry::never)
-            .isValidSpawn(BlockRegistry::never)
-            .isViewBlocking(BlockRegistry::never)
+            .isRedstoneConductor(BlockRegistry::alwaysFalse)
+            .isSuffocating(BlockRegistry::alwaysFalse)
+            .isValidSpawn(BlockRegistry::alwaysFalse)
+            .isViewBlocking(BlockRegistry::alwaysFalse)
             .noOcclusion()
             .sound(SoundType.BAMBOO)
             .strength(0.3F)
@@ -67,15 +66,7 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      * Construction.
      */
     public ButterflyFeederBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.SAND)
-                .isRedstoneConductor(BlockRegistry::alwaysFalse)
-                .isSuffocating(BlockRegistry::alwaysFalse)
-                .isValidSpawn(BlockRegistry::alwaysFalse)
-                .isViewBlocking(BlockRegistry::alwaysFalse)
-                .noOcclusion()
-                .sound(SoundType.BAMBOO)
-                .strength(0.3F));
+        super(PROPERTIES);
     }
 
     /**

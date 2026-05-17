@@ -113,14 +113,14 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
      * Spawn Peacemaker Butterflies
      */
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
+    protected void customServerAiStep(@NotNull ServerLevel level) {
+        super.customServerAiStep(level);
 
         if (nextSpawnAttempt-- <= 0) {
             nextSpawnAttempt = random.nextInt(6000) + 3000;
 
             // Check we don't have too many nearby Butterflies already.
-            List<PeacemakerButterfly> numButterflies = level().getNearbyEntities(
+            List<PeacemakerButterfly> numButterflies = level.getNearbyEntities(
                     PeacemakerButterfly.class,
                     TargetingConditions.forNonCombat(),
                     this,

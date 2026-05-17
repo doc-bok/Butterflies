@@ -1,19 +1,24 @@
 package com.bokmcdok.butterflies.world.block;
 
-import com.bokmcdok.butterflies.registries.DataComponentRegistry;
-import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -32,6 +37,19 @@ public class ButterflyMicroscopeBlock extends Block {
     private static final Component CONTAINER_TITLE =
             Component.translatable("container.butterfly_microscope");
 
+    public static final String ID = "butterfly_microscope";
+
+    public static final Properties PROPERTIES = BlockBehaviour.Properties.of()
+            .mapColor(MapColor.STONE)
+            .isRedstoneConductor(BlockRegistry::alwaysFalse)
+            .isSuffocating(BlockRegistry::alwaysFalse)
+            .isValidSpawn(BlockRegistry::alwaysFalse)
+            .isViewBlocking(BlockRegistry::alwaysFalse)
+            .noOcclusion()
+            .sound(SoundType.STONE)
+            .strength(1.0F)
+            .setId(ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ID)));
+
     // The shape of the block.
     private static final VoxelShape SHAPE;
 
@@ -39,15 +57,7 @@ public class ButterflyMicroscopeBlock extends Block {
      * Construction
      */
     public ButterflyMicroscopeBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
-                .isRedstoneConductor(BlockRegistry::alwaysFalse)
-                .isSuffocating(BlockRegistry::alwaysFalse)
-                .isValidSpawn(BlockRegistry::alwaysFalse)
-                .isViewBlocking(BlockRegistry::alwaysFalse)
-                .noOcclusion()
-                .sound(SoundType.STONE)
-                .strength(1.0F));
+        super(PROPERTIES);
     }
 
     /**

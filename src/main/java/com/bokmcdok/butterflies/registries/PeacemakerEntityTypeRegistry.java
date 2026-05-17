@@ -55,7 +55,7 @@ public class PeacemakerEntityTypeRegistry {
                 () -> EntityType.Builder.of(factory, MobCategory.MONSTER)
                         .sized(width, height)
                         .clientTrackingRange(8)
-                        .build(registryId));
+                        .build(EntityTypeRegistry.createResourceKey(registryId)));
     }
 
     /**

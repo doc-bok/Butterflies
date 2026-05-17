@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyZhuangziScreen;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -18,10 +19,9 @@ public class ButterflyZhuangZiItem extends Item {
 
     /**
      * Construction
-     * @param properties The item's properties.
      */
-    public ButterflyZhuangZiItem(Properties properties) {
-        super(properties);
+    public ButterflyZhuangZiItem() {
+        super(new Item.Properties().stacksTo(1).setId(ItemRegistry.createResourceKey(NAME)));
     }
 
     /**

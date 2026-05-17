@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block;
 
+import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -9,7 +10,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -20,6 +24,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class BottledButterflyBlock extends Block {
+
+    // The base properties of a bottled butterfly.
+    public static final BlockBehaviour.Properties BASE_PROPERTIES =
+            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                    .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                    .isSuffocating(BlockRegistry::alwaysFalse)
+                    .isValidSpawn(BlockRegistry::alwaysFalse)
+                    .isViewBlocking(BlockRegistry::alwaysFalse)
+                    .noOcclusion()
+                    .sound(SoundType.GLASS)
+                    .strength(0.3F);
 
     private static final String NAME = "block.butterflies.bottled_butterfly";
 
@@ -57,8 +72,8 @@ public class BottledButterflyBlock extends Block {
     }
 
     /**
-     * Overridden, so we can use a single localisation string for all instances.
-     * @return The description ID, which is a reference to the localisation
+     * Overridden, so we can use a single localization string for all instances.
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull

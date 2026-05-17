@@ -1,17 +1,19 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
 import com.bokmcdok.butterflies.client.model.PeacemakerCowModel;
+import com.bokmcdok.butterflies.client.renderer.entity.state.PeacemakerButterflyRenderState;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A renderer for a Peacemaker Cow.
  */
-public class PeacemakerCowRenderer extends MobRenderer<PeacemakerCow, PeacemakerCowModel> {
+public class PeacemakerCowRenderer extends MobRenderer<PeacemakerCow, LivingEntityRenderState, PeacemakerCowModel> {
 
     /**
      * Create a new renderer for the Peacemaker Cow.
@@ -22,13 +24,23 @@ public class PeacemakerCowRenderer extends MobRenderer<PeacemakerCow, Peacemaker
     }
 
     /**
+     * Creates a reusable render state.
+     * @return The new render state.
+     */
+    @NotNull
+    @Override
+    public LivingEntityRenderState createRenderState() {
+        return new LivingEntityRenderState();
+    }
+
+    /**
      * Get the texture to map to the model.
-     * @param peacemakerCow The Peacemaker Cow entity.
+     * @param renderState The current render state.
      * @return The Resource Location of the texture.
      */
     @NotNull
     @Override
-    public ResourceLocation getTextureLocation(@NotNull PeacemakerCow peacemakerCow) {
+    public ResourceLocation getTextureLocation(@NotNull LivingEntityRenderState renderState) {
         return ButterflyTextures.PEACEMAKER_COW;
     }
 }

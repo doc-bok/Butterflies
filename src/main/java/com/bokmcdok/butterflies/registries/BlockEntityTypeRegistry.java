@@ -21,10 +21,9 @@ public class BlockEntityTypeRegistry {
     static {
         BLOCK_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, ButterfliesMod.MOD_ID);
 
-        //noinspection DataFlowIssue
         BUTTERFLY_FEEDER = BLOCK_ENTITY_TYPES.register("butterfly_feeder",
-                () -> BlockEntityType.Builder.of(ButterflyFeederEntity::new,
-                        BlockRegistry.BUTTERFLY_FEEDER.get()).build(null));
+                () -> new BlockEntityType<>(ButterflyFeederEntity::new,
+                        BlockRegistry.BUTTERFLY_FEEDER.value()));
     }
 
     /**

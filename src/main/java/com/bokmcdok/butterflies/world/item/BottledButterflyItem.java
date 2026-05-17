@@ -45,7 +45,8 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
      * @param block The block related to this item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public BottledButterflyItem(DeferredHolder<Block, Block> block,
+    public BottledButterflyItem(Properties properties,
+                                DeferredHolder<Block, Block> block,
                                 int butterflyIndex) {
         super(block.get(), properties);
 

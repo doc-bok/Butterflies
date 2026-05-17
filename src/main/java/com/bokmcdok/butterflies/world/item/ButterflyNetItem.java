@@ -49,8 +49,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * Construction
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(int butterflyIndex) {
-        super(new Item.Properties().stacksTo(1));
+    public ButterflyNetItem(Properties properties,
+                            int butterflyIndex) {
+        super(properties);
 
         this.butterflyIndex = butterflyIndex;
     }
@@ -99,7 +100,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @NotNull
     @Override
-    public ItemStack getCraftingRemainingItem(@NotNull ItemStack itemStack) {
+    public ItemStack getCraftingRemainder(@NotNull ItemStack itemStack) {
         return new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
 

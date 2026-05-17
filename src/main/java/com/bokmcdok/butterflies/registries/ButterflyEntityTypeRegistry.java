@@ -6,6 +6,9 @@ import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -62,6 +65,8 @@ public class ButterflyEntityTypeRegistry {
         return new ParticleButterfly(entityType, level, ParticleTypes.DRIPPING_DRIPSTONE_LAVA);
     }
 
+
+
     /**
      * Returns the appropriate entity factory based on butterfly traits.
      * @param butterflyIndex The index of the butterfly species.
@@ -97,7 +102,7 @@ public class ButterflyEntityTypeRegistry {
                 () -> EntityType.Builder.of(factory, BUTTERFLY_MOBS)
                         .sized(width, height)
                         .clientTrackingRange(10)
-                        .build(registryId));
+                        .build(EntityTypeRegistry.createResourceKey(registryId)));
     }
 
     /**

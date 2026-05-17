@@ -9,7 +9,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -30,6 +29,16 @@ public class EntityTypeRegistry {
     public static final DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
     public static final List<DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
 
+    /**
+     * Helper method that creates resource keys.
+     * @param registryId The Registry ID to create the key from.
+     * @return A new Resource Key.
+     */
+    public static ResourceKey<EntityType<?>> createResourceKey(String registryId) {
+        return ResourceKey.create(Registries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, registryId));
+    }
+
     static {
         ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ButterfliesMod.MOD_ID);
 
@@ -48,7 +57,7 @@ public class EntityTypeRegistry {
                 ButterflyScroll.NAME,
                 () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
                         .sized(1.0f, 1.0f)
-                        .build(butterflyScrollKey));
+                        .build(createResourceKey(ButterflyScroll.NAME)));
 
 
         BUTTERFLY_GOLEM = registerButterflyGolem();
@@ -60,7 +69,7 @@ public class EntityTypeRegistry {
                 () -> EntityType.Builder.of(IronGolem::new, MobCategory.MISC)
                         .sized(1.4F, 2.7F)
                         .clientTrackingRange(10)
-                        .build(resourceKey));
+                        .build(createResourceKey(registryId)));
     }
 
     private static DeferredHolder<EntityType<?>, EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
@@ -68,7 +77,7 @@ public class EntityTypeRegistry {
         return ENTITY_TYPES.register(registryId,
                 () -> EntityType.Builder.of(ButterflyScroll::create, MobCategory.MISC)
                         .sized(1.0f, 1.0f)
-                        .build(resourceKey));
+                        .build(createResourceKey(registryId)));
     }
 
     /**

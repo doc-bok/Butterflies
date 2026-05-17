@@ -10,6 +10,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -24,6 +26,13 @@ import javax.annotation.Nullable;
  * A class to represent a placed butterfly origami block.
  */
 public class ButterflyOrigamiBlock extends Block {
+
+    // The base properties for origami
+    public static final BlockBehaviour.Properties BASE_PROPERTIES =
+            BlockBehaviour.Properties.of()
+                    .noCollission()
+                    .strength(0.5F, 2.5F)
+                    .sound(SoundType.PINK_PETALS);
 
     // The block's facing property.
     public static final EnumProperty<FrontAndTop> ORIENTATION;
@@ -133,8 +142,8 @@ public class ButterflyOrigamiBlock extends Block {
      * @param scheduledTickAccess Access to scheduled ticks.
      * @param pos The block's position.
      * @param direction The direction of the block.
-     * @param neighborPos The neighbour's position.
-     * @param neighborState The neighbour's state.
+     * @param neighborPos The neighbor's position.
+     * @param neighborState The neighbor's state.
      * @param random The random number generator.
      * @return The updated block state.
      */

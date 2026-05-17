@@ -56,67 +56,71 @@ public class SpawnEggRegistry {
 
         BUTTERFLY_GOLEM_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_golem_butterfly",
                 () -> new SpawnEggItem(EntityTypeRegistry.BUTTERFLY_GOLEM.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_golem_butterfly"))));
 
         PEACEMAKER_BUTTERFLY_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_butterfly",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_butterfly"))));
 
         PEACEMAKER_COW_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_cow",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_cow"))));
 
         PEACEMAKER_EVOKER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_evoker",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_evoker"))));
 
         PEACEMAKER_ILLUSIONER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_illusioner",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_illusioner"))));
 
         PEACEMAKER_PILLAGER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_pillager",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_pillager"))));
 
         PEACEMAKER_VILLAGER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_villager",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_villager"))));
 
         PEACEMAKER_VINDICATOR_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_vindicator",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_vindicator"))));
 
         PEACEMAKER_WANDERING_TRADER_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_wandering_trader",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_wandering_trader"))));
 
         PEACEMAKER_WITCH_SPAWN_EGG = SPAWN_EGGS.register("spawn_egg_peacemaker_witch",
                 () -> new SpawnEggItem(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey("spawn_egg_peacemaker_witch"))));
     }
 
     private static DeferredHolder<Item, Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
-        return SPAWN_EGGS.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
+        String registryId = "spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex);
+        return SPAWN_EGGS.register(registryId,
                 () -> new SpawnEggItem(ButterflyEntityTypeRegistry.BUTTERFLY_EGGS.get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey(registryId))));
     }
 
     private static DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
-        return SPAWN_EGGS.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
+        String registryId = "spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex);
+        return SPAWN_EGGS.register(registryId,
                 () -> new SpawnEggItem(ButterflyEntityTypeRegistry.CATERPILLARS.get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey(registryId))));
     }
 
     private static DeferredHolder<Item, Item> registerChrysalisSpawnEgg(int butterflyIndex) {
-        return SPAWN_EGGS.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
+        String registryId = "spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex);
+        return SPAWN_EGGS.register(registryId,
                 () -> new SpawnEggItem(ButterflyEntityTypeRegistry.CHRYSALISES.get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey(registryId))));
     }
 
     private static DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
-        return SPAWN_EGGS.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
+        String registryId = "spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex);
+        return SPAWN_EGGS.register(registryId,
                 () -> new SpawnEggItem(ButterflyEntityTypeRegistry.BUTTERFLIES.get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
+                        new Item.Properties().setId(ItemRegistry.createResourceKey(registryId))));
     }
 
     /**

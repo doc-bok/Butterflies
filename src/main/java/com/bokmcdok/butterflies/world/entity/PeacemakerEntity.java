@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
@@ -44,9 +45,11 @@ public interface PeacemakerEntity {
     /**
      * Checks whether the entity is a Peacemaker Butterfly.
      * @param entity The entity to check.
+     * @param serverLevel The current level.
      * @return True if the entity is a Peacemaker Butterfly.
      */
-    static boolean isNotPeacemaker(LivingEntity entity) {
+    static boolean isNotPeacemaker(LivingEntity entity,
+                                   ServerLevel serverLevel) {
         return !(entity instanceof PeacemakerEntity);
     }
 }

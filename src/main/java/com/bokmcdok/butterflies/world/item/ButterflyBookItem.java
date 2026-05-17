@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyBookScreen;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -84,7 +85,7 @@ public class ButterflyBookItem extends Item {
      * Construction
      */
     public ButterflyBookItem() {
-        super(new Item.Properties().stacksTo(1));
+        super(new Item.Properties().stacksTo(1).setId(ItemRegistry.createResourceKey("butterfly_book")));
     }
 
     /**
