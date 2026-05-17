@@ -31,7 +31,7 @@ public interface PeacemakerEntity {
                         false));
 
         GoalSelector targetSelector = entity.targetSelector;
-        targetSelector.removeAllGoals((x) -> true);
+        targetSelector.removeAllGoals();
         targetSelector.addGoal(1, (new HurtByTargetGoal(entity))
                 .setAlertOthers(PeacemakerEntity.class));
         targetSelector.addGoal(2, (new NearestAttackableTargetGoal<>(entity, Player.class, true))

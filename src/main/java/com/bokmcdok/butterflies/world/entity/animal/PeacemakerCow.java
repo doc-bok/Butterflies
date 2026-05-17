@@ -89,7 +89,7 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
             return super.mobInteract(player, interactionHand);
         }
 
-        Level level = level();
+        Level level = getLevel();
         if (level.isClientSide()) {
             player.playSound(SoundEvents.COW_MILK, 1.0F, 1.0F);
             return InteractionResult.SUCCESS;
@@ -120,7 +120,7 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
             nextSpawnAttempt = random.nextInt(6000) + 3000;
 
             // Check we don't have too many nearby Butterflies already.
-            List<PeacemakerButterfly> numButterflies = level().getNearbyEntities(
+            List<PeacemakerButterfly> numButterflies = getLevel().getNearbyEntities(
                     PeacemakerButterfly.class,
                     TargetingConditions.forNonCombat(),
                     this,
@@ -133,8 +133,8 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
                         random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
                         random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS);
 
-                if (level().getBlockState(position).isAir()) {
-                    PeacemakerButterfly.spawn((ServerLevel) level(), position);
+                if (getLevel().getBlockState(position).isAir()) {
+                    PeacemakerButterfly.spawn((ServerLevel) getLevel(), position);
                 }
             }
         }
@@ -146,7 +146,7 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
      */
     @Override
     protected @Nullable SoundEvent getAmbientSound() {
-        return SoundEvent.createVariableRangeEvent(PEACEMAKER_COW_AMBIENT_SOUND);
+        return new SoundEvent(PEACEMAKER_COW_AMBIENT_SOUND);
 
     }
 
@@ -165,7 +165,7 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
      */
     @Override
     protected @Nullable SoundEvent getHurtSound(@NotNull DamageSource damageSource) {
-        return SoundEvent.createVariableRangeEvent(PEACEMAKER_COW_HURT_SOUND);
+        return new SoundEvent(PEACEMAKER_COW_HURT_SOUND);
     }
 
     /**

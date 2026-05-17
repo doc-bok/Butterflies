@@ -52,10 +52,12 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     
     /**
      * Construction
+     * @param properties The properties of the item.
      * @param butterflyIndex The butterfly index.
      */
-    public ButterflyScrollItem(int butterflyIndex) {
-        super(new Item.Properties());
+    public ButterflyScrollItem(Properties properties,
+                               int butterflyIndex) {
+        super(properties);
 
         this.butterflyIndex = butterflyIndex;
     }

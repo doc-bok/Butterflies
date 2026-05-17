@@ -44,8 +44,8 @@ public class ButterflyFeederBlock extends BaseEntityBlock {
      * Construction.
      */
     public ButterflyFeederBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.SAND)
+        super(BlockBehaviour.Properties.of(Material.WOOD)
+                .color(MaterialColor.SAND)
                 .isRedstoneConductor(BlockRegistry::alwaysFalse)
                 .isSuffocating(BlockRegistry::alwaysFalse)
                 .isValidSpawn(BlockRegistry::alwaysFalse)

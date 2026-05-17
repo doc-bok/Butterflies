@@ -68,9 +68,18 @@ public class ItemRegistry {
 
     // Peacemaker Honey
     public static final RegistryObject<Item> PEACEMAKER_HONEY_BOTTLE;
+
+    // Item Properties
+    private static final ButterflyTab BUTTERFLY_TAB;
+    public static final Item.Properties BASE_PROPERTIES;
+    private static final Item.Properties STACKS_TO_ONE;
     
     static {
         ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
+
+        BUTTERFLY_TAB = new ButterflyTab(CreativeModeTab.TABS.length, "butterfly_tab");
+        BASE_PROPERTIES =  new Item.Properties().tab(BUTTERFLY_TAB);
+        STACKS_TO_ONE = BASE_PROPERTIES.stacksTo(1);
 
         // Species-based.
         List<RegistryObject<Item>> butterflyNets = new ArrayList<>();
@@ -84,7 +93,7 @@ public class ItemRegistry {
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             int butterflyIndex = i;
             String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
-            RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(butterflyIndex));
+            RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(STACKS_TO_ONE, butterflyIndex));
             butterflyNets.add(butterflyNet);
 
             if (registryId.contains("peacemaker")) {
@@ -106,26 +115,26 @@ public class ItemRegistry {
         BUTTERFLY_SCROLLS = Collections.unmodifiableList(butterflyScrolls);
 
         // Nets
-        EMPTY_BUTTERFLY_NET = ITEMS.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(-1));
+        EMPTY_BUTTERFLY_NET = ITEMS.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(STACKS_TO_ONE, -1));
         PEACEMAKER_BUTTERFLY_NET = BUTTERFLY_NETS.get(peacemakerButterflyIndex);
-        BURNT_BUTTERFLY_NET = ITEMS.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
+        BURNT_BUTTERFLY_NET = ITEMS.register("butterfly_net_burnt", () -> new Item(BASE_PROPERTIES));
 
         // Books
-        BUTTERFLY_BOOK = ITEMS.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
-        ZHUANGZI_BOOK = ITEMS.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
+        BUTTERFLY_BOOK = ITEMS.register(ButterflyBookItem.NAME, () -> new ButterflyBookItem(BASE_PROPERTIES));
+        ZHUANGZI_BOOK = ITEMS.register(ButterflyZhuangziItem.NAME, () -> new ButterflyZhuangziItem(BASE_PROPERTIES));
 
         // Blocks
         BUTTERFLY_FEEDER = ITEMS.register("butterfly_feeder",
-                () -> new BlockItem(BlockRegistry.BUTTERFLY_FEEDER.get(), new Item.Properties()));
+                () -> new BlockItem(BlockRegistry.BUTTERFLY_FEEDER.get(), BASE_PROPERTIES));
 
         BUTTERFLY_MICROSCOPE = ITEMS.register("butterfly_microscope",
-                () -> new BlockItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), new Item.Properties()));
+                () -> new BlockItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), BASE_PROPERTIES));
 
         // Infested Apple
-        INFESTED_APPLE = ITEMS.register("infested_apple", () -> new Item(new Item.Properties()));
+        INFESTED_APPLE = ITEMS.register("infested_apple", () -> new Item(BASE_PROPERTIES));
 
         // Silk
-        SILK = ITEMS.register("silk", () -> new Item(new Item.Properties()));
+        SILK = ITEMS.register("silk", () -> new Item(BASE_PROPERTIES));
 
         // Origami
         BUTTERFLY_ORIGAMI = new ArrayList<>();
@@ -134,22 +143,22 @@ public class ItemRegistry {
             if (id != null) {
                 BUTTERFLY_ORIGAMI.add(ITEMS.register(
                         id.getPath(),
-                        () -> new BlockItem(block.get(), baseProperties)));
+                        () -> new BlockItem(block.get(), BASE_PROPERTIES)));
             }
         }
 
         // Sherd
         BUTTERFLY_POTTERY_SHERD = ITEMS.register("butterfly_pottery_sherd",
-                () -> new Item(new Item.Properties()));
+                () -> new Item(BASE_PROPERTIES));
 
         // Banner Pattern
         BUTTERFLY_BANNER_PATTERN = ITEMS.register("banner_pattern_butterfly", () -> new BannerPatternItem(
                 TagRegistry.BUTTERFLY_BANNER_PATTERN,
-                (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
+                (STACKS_TO_ONE.rarity(Rarity.UNCOMMON))));
 
         // Peacemaker Honey
         PEACEMAKER_HONEY_BOTTLE = ITEMS.register("peacemaker_honey_bottle",
-                () -> new Item(new Item.Properties().stacksTo(1)));
+                () -> new Item(STACKS_TO_ONE));
     }
 
     /**
@@ -170,27 +179,27 @@ public class ItemRegistry {
     // Register Methods
     private static RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
         return ITEMS.register(BottledButterflyItem.getRegistryId(butterflyIndex),
-                () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(butterflyIndex), butterflyIndex));
+                () -> new BottledButterflyItem(STACKS_TO_ONE, BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
     private static RegistryObject<Item> registerBottledCaterpillar(int butterflyIndex) {
         return ITEMS.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(butterflyIndex), butterflyIndex));
+                () -> new BottledCaterpillarItem(STACKS_TO_ONE, BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
     private static RegistryObject<Item> registerButterflyEgg(int butterflyIndex) {
         return ITEMS.register(ButterflyEggItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
+                () -> new ButterflyEggItem(butterflyIndex, BASE_PROPERTIES));
     }
 
     private static RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
         return ITEMS.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(butterflyIndex));
+                () -> new ButterflyScrollItem(BASE_PROPERTIES, butterflyIndex));
     }
 
     private static RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
         return ITEMS.register(CaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
+                () -> new CaterpillarItem(BASE_PROPERTIES, Caterpillar.getRegistryId(butterflyIndex)));
     }
 
     /**

@@ -40,7 +40,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    // The localisation string ID for this item.
+    // The localization string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
     // The index of the butterfly species.
@@ -48,10 +48,12 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     /**
      * Construction
+     * @param properties The properties of the item.
      * @param butterflyIndex The index of the butterfly species.
      */
-    public ButterflyNetItem(int butterflyIndex) {
-        super(new Item.Properties().stacksTo(1));
+    public ButterflyNetItem(Properties properties,
+                            int butterflyIndex) {
+        super(properties);
 
         this.butterflyIndex = butterflyIndex;
     }

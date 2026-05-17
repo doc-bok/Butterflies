@@ -41,8 +41,8 @@ public class ButterflyMicroscopeBlock extends Block {
      * Construction
      */
     public ButterflyMicroscopeBlock() {
-        super(BlockBehaviour.Properties.of()
-                .mapColor(MapColor.STONE)
+        super(BlockBehaviour.Properties.of(Material.STONE)
+                .color(MaterialColor.STONE)
                 .isRedstoneConductor(BlockRegistry::alwaysFalse)
                 .isSuffocating(BlockRegistry::alwaysFalse)
                 .isValidSpawn(BlockRegistry::alwaysFalse)
