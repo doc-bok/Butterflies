@@ -7,11 +7,15 @@ import java.util.Random;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
 
 /**
  * A loot modifier to add treasure to some chests.
@@ -19,13 +23,19 @@ import org.jetbrains.annotations.NotNull;
 public class ButterflyLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<Codec<ButterflyLootModifier>> CODEC = () ->
+            RecordCodecBuilder.create(inst ->
+                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
+                            .apply(inst, ButterflyLootModifier::new));
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public ButterflyLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public ButterflyLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -41,7 +51,7 @@ public class ButterflyLootModifier extends BaseLootModifier {
         Random random = context.getRandom();
 
         if (random.nextInt(32) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getZhuangziBook().get());
+            ItemStack stack = new ItemStack(ItemRegistry.ZHUANGZI_BOOK.get());
             generatedLoot.add(stack);
         }
 

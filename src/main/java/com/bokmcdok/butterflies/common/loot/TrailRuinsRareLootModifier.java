@@ -7,11 +7,15 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.resources.ResourceLocation;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
 
 /**
  * A loot modifier to add treasure to some chests.
@@ -19,13 +23,20 @@ import org.jetbrains.annotations.NotNull;
 public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<Codec<TrailRuinsRareLootModifier>> CODEC = () ->
+            RecordCodecBuilder.create(inst ->
+                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
+                            .apply(inst, TrailRuinsRareLootModifier::new));
+
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public TrailRuinsRareLootModifier(ItemRegistry itemRegistry,
-                                      LootItemCondition[] conditionsIn)
+    public TrailRuinsRareLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -44,7 +55,7 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
         if (!generatedLoot.isEmpty() && random.nextInt(13) == 1) {
             generatedLoot.remove(0);
 
-            ItemStack stack = new ItemStack(itemRegistry.getButterflyPotterySherd().get());
+            ItemStack stack = new ItemStack(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
             generatedLoot.add(stack);
         }
 

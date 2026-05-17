@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.inventory;
 
+import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,14 +19,12 @@ public class ButterflyFeederMenu extends AbstractContainerMenu {
 
     /**
      * Client constructor.
-     * @param menuType The type of this menu.
      * @param containerId The ID of the container.
      * @param playerInventory The player's inventory.
      */
-    public ButterflyFeederMenu(MenuType<?> menuType,
-                               int containerId,
+    public ButterflyFeederMenu(int containerId,
                                Inventory playerInventory) {
-        this(menuType, containerId, playerInventory, new SimpleContainer(1));
+        this(MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(), containerId, playerInventory, new SimpleContainer(1));
     }
 
     /**

@@ -10,31 +10,22 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ButterflyTab extends CreativeModeTab {
 
-    // A reference to the item registry.
-    private final ItemRegistry itemRegistry;
-
     /**
      * Construction.
      * @param label The label to use for the tab.
-     * @param itemRegistry A reference to the item registry.
      */
-    public ButterflyTab(String label,
-                        ItemRegistry itemRegistry) {
-        this(-1, label, itemRegistry);
+    public ButterflyTab(String label) {
+        this(-1, label);
     }
 
     /**
      * Construction.
      * @param length The length of the tab.
      * @param label The label to use for the tab.
-     * @param itemRegistry A reference to the item registry.
      */
     public ButterflyTab(int length,
-                        String label,
-                        ItemRegistry itemRegistry) {
+                        String label) {
         super(length, label);
-
-        this.itemRegistry = itemRegistry;
     }
 
     /**
@@ -44,6 +35,6 @@ public class ButterflyTab extends CreativeModeTab {
     @NotNull
     @Override
     public ItemStack makeIcon() {
-        return itemRegistry.getButterflyBook().get().getDefaultInstance();
+        return ItemRegistry.BUTTERFLY_BOOK.get().getDefaultInstance();
     }
 }

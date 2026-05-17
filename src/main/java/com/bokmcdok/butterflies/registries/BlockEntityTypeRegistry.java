@@ -2,10 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -15,59 +12,23 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class BlockEntityTypeRegistry {
 
-    // Reference to the menu type registry.
-    private MenuTypeRegistry menuTypeRegistry;
-
     // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<BlockEntityType<?>> deferredRegister;
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES;
 
     // The block entities.
-    private RegistryObject<BlockEntityType<ButterflyFeederEntity>> butterflyFeeder;
+    public static final RegistryObject<BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public BlockEntityTypeRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
-
-    /**
-     * Register the block entities.
-     * @param blockRegistry The block registry.
-     * @param menuTypeRegistry The menu type registry.
-     */
-    public void initialise(BlockRegistry blockRegistry,
-                           MenuTypeRegistry menuTypeRegistry) {
-
-        this.menuTypeRegistry = menuTypeRegistry;
+    static {
+        BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
 
         //noinspection DataFlowIssue
-        this.butterflyFeeder = this.deferredRegister.register("butterfly_feeder",
-                () -> BlockEntityType.Builder.of(this::createButterflyFeeder,
-                        blockRegistry.getButterflyFeeder().get()).build(null));
+        BUTTERFLY_FEEDER = BLOCK_ENTITY_TYPES.register("butterfly_feeder",
+                () -> BlockEntityType.Builder.of(ButterflyFeederEntity::new,
+                        BlockRegistry.BUTTERFLY_FEEDER.get()).build(null));
     }
 
     /**
-     * Get the butterfly feeder.
-     * @return The block entity type.
+     * Prevent construction.
      */
-    public RegistryObject<BlockEntityType<ButterflyFeederEntity>> getButterflyFeeder() {
-        return butterflyFeeder;
-    }
-
-    /**
-     * Create a butterfly feeder.
-     * @param blockPos The position of the block.
-     * @param blockState The block's state.
-     * @return A new block entity.
-     */
-    private ButterflyFeederEntity createButterflyFeeder(BlockPos blockPos,
-                                                        BlockState blockState) {
-        return new ButterflyFeederEntity(menuTypeRegistry,
-                butterflyFeeder.get(),
-                blockPos,
-                blockState);
-    }
+    private BlockEntityTypeRegistry() {}
 }

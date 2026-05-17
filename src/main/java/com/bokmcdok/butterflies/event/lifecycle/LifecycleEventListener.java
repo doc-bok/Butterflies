@@ -28,26 +28,14 @@ import java.util.Arrays;
  */
 public class LifecycleEventListener {
 
-    // Reference to the registries.
-    private final BlockRegistry blockRegistry;
-    private final ItemRegistry itemRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public LifecycleEventListener(IEventBus modEventBus,
-                                  BlockRegistry blockRegistry,
-                                  ItemRegistry itemRegistry,
-                                  MenuTypeRegistry menuTypeRegistry) {
+    public LifecycleEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
         modEventBus.addListener(this::clientSetup);
         modEventBus.addListener(this::commonSetup);
-
-        this.blockRegistry = blockRegistry;
-        this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
     }
 
     /**
@@ -63,7 +51,7 @@ public class LifecycleEventListener {
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
                 BrewingRecipeRegistry.addRecipe(
                         Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-                        Ingredient.of(itemRegistry.getBottledButterflies().get(i).get()),
+                        Ingredient.of(ItemRegistry.BOTTLED_BUTTERFLIES.get(i).get()),
                         PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
             }
         }
@@ -75,11 +63,11 @@ public class LifecycleEventListener {
      */
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(), ButterflyFeederScreen::new)
         );
 
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), ButterflyMicroscopeScreen::new)
         );
 
         ItemBlockRenderTypes.setRenderLayer(blockRegistry.getAlliumBud().get(), RenderType.cutout());

@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.block.entity;
 
+import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
 import com.bokmcdok.butterflies.world.inventory.ButterflyFeederMenu;
 import net.minecraft.core.BlockPos;
@@ -14,7 +15,6 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -25,24 +25,17 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
-    // Reference to the menu type registry.
-    private final MenuTypeRegistry menuTypeRegistry;
-
     // The item(s) contained in the feeder.
     NonNullList<ItemStack> items;
 
     /**
      * Construction.
-     * @param blockEntityType The block entity type.
      * @param blockPos The position of the block.
      * @param blockState The state of the block.
      */
-    public ButterflyFeederEntity(MenuTypeRegistry menuTypeRegistry,
-                                 BlockEntityType<?> blockEntityType,
-                                 BlockPos blockPos,
+    public ButterflyFeederEntity(BlockPos blockPos,
                                  BlockState blockState) {
-        super(blockEntityType, blockPos, blockState);
-        this.menuTypeRegistry = menuTypeRegistry;
+        super(BlockEntityTypeRegistry.BUTTERFLY_FEEDER.get(), blockPos, blockState);
         this.items = NonNullList.withSize(1, ItemStack.EMPTY);
     }
 
@@ -57,7 +50,7 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
     protected AbstractContainerMenu createMenu(int containerId,
                                                @NotNull Inventory inventory) {
         return new ButterflyFeederMenu(
-                this.menuTypeRegistry.getButterflyFeederMenu().get(),
+                MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(),
                 containerId,
                 inventory,
                 this);
@@ -87,7 +80,7 @@ public class ButterflyFeederEntity extends RandomizableContainerBlockEntity {
 
     /**
      * Get the default name for the feeder.
-     * @return The relevant localisation string.
+     * @return The relevant localization string.
      */
     @NotNull
     @Override

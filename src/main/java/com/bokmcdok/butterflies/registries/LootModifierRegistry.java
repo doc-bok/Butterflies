@@ -4,8 +4,8 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.common.loot.ButterflyLootModifier;
 import com.bokmcdok.butterflies.common.loot.OakLeavesLootModifier;
 import com.bokmcdok.butterflies.common.loot.TrailRuinsRareLootModifier;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
-import net.minecraftforge.eventbus.api.IEventBus;
+import com.mojang.serialization.Codec;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -15,25 +15,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class LootModifierRegistry {
 
     // The deferred register.
-    private final DeferredRegister<GlobalLootModifierSerializer<?>> deferredRegister;
+    public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public LootModifierRegistry(IEventBus modEventBus) {
-        // An instance of a deferred registry we use to register items.
-        deferredRegister = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
-        deferredRegister.register(modEventBus);
+    static {
+        LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
+        LOOT_MODIFIERS.register("butterfly_loot", ButterflyLootModifier.CODEC);
+        LOOT_MODIFIERS.register("oak_leaves_loot", OakLeavesLootModifier.CODEC);
+        LOOT_MODIFIERS.register("trail_ruins_rare_loot", TrailRuinsRareLootModifier.CODEC);
     }
 
-    /**
-     * Register the loot modifiers.
-     * @param itemRegistry The item registry.
-     */
-    public void initialise(ItemRegistry itemRegistry) {
-        deferredRegister.register("butterfly_loot", () -> new ButterflyLootModifier.Serializer(itemRegistry));
-        deferredRegister.register("oak_leaves_loot", () -> new OakLeavesLootModifier.Serializer(itemRegistry));
-        deferredRegister.register("trail_ruins_rare_loot", () -> new TrailRuinsRareLootModifier.Serializer(itemRegistry));
-    }
+    private LootModifierRegistry() {}
 }

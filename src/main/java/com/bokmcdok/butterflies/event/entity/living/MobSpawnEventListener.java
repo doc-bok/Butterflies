@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
@@ -23,9 +23,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 public class MobSpawnEventListener {
 
-    // The entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-
+}
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
@@ -35,8 +33,6 @@ public class MobSpawnEventListener {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);
-
-        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -62,7 +58,7 @@ public class MobSpawnEventListener {
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
                 LevelAccessor levelAccessor = event.getWorld();
                 if (levelAccessor instanceof ServerLevelAccessor level) {
-                    EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
+                    EntityType<IronGolem> entityType = EntityTypeRegistry.BUTTERFLY_GOLEM.get();
 
                     if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
                     })) {
@@ -100,6 +96,9 @@ public class MobSpawnEventListener {
         }
 
         Entity entity = event.getEntity();
+        if (entity instanceof PeacemakerEntity) {
+            return;
+        }
 
         // Needs to be on a server.
         LevelAccessor levelAccessor = event.getWorld();

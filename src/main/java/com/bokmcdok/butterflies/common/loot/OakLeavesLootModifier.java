@@ -7,11 +7,14 @@ import java.util.Random;
 
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Supplier;
 
 /**
  * A loot modifier to add treasure to some chests.
@@ -19,13 +22,20 @@ import org.jetbrains.annotations.NotNull;
 public class OakLeavesLootModifier extends BaseLootModifier {
 
     /**
+     * Codec that creates the loot modifier.
+     */
+    public static final Supplier<Codec<OakLeavesLootModifier>> CODEC = () ->
+            RecordCodecBuilder.create(inst ->
+                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
+                            .apply(inst, OakLeavesLootModifier::new));
+
+    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
-    public OakLeavesLootModifier(ItemRegistry itemRegistry,
-                                 LootItemCondition[] conditionsIn)
+    public OakLeavesLootModifier(LootItemCondition[] conditionsIn)
     {
-        super(itemRegistry, conditionsIn);
+        super(conditionsIn);
     }
 
     /**
@@ -40,7 +50,7 @@ public class OakLeavesLootModifier extends BaseLootModifier {
         Random random = context.getRandom();
 
         if (random.nextInt(4000) == 1) {
-            ItemStack stack = new ItemStack(itemRegistry.getInfestedApple().get());
+            ItemStack stack = new ItemStack(ItemRegistry.INFESTED_APPLE.get());
             generatedLoot.add(stack);
         }
 
