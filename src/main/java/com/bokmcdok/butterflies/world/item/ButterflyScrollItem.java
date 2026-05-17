@@ -38,15 +38,12 @@ import java.util.List;
 
 public class ButterflyScrollItem extends Item implements ButterflyContainerItem {
 
-    // Reference to the entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
         return "butterfly_scroll_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    //  The localisation string for butterfly scrolls.
+    //  The localization string for butterfly scrolls.
     public static final String BUTTERFLY_SCROLL_STRING = "item.butterflies.butterfly_scroll";
     public static final String MOTH_SCROLL_STRING = "item.butterflies.moth_scroll";
 
@@ -56,11 +53,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     /**
      * Construction
      */
-    public ButterflyScrollItem(EntityTypeRegistry entityTypeRegistry,
-                               int butterflyIndex) {
+    public ButterflyScrollItem(int butterflyIndex) {
         super(new Item.Properties());
 
-        this.entityTypeRegistry = entityTypeRegistry;
         this.butterflyIndex = butterflyIndex;
     }
 
@@ -97,9 +92,9 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
@@ -164,7 +159,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                 Level level = context.getLevel();
                 int butterflyIndex = getButterflyIndex();
 
-                List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls = entityTypeRegistry.getButterflyScrolls();
+                List<RegistryObject<EntityType<ButterflyScroll>>> butterflyScrolls = EntityTypeRegistry.BUTTERFLY_SCROLLS;
                 if (butterflyIndex >= 0 && butterflyIndex < butterflyScrolls.size()) {
                     RegistryObject<EntityType<ButterflyScroll>> entityType = butterflyScrolls.get(butterflyIndex);
                     ButterflyScroll butterflyScroll = new ButterflyScroll(entityType.get(), level, blockPos, clickedFace);

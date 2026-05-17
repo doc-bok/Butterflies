@@ -2,12 +2,15 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Predicate;
 
 /**
  * Register professions to be used by villagers.
@@ -15,40 +18,28 @@ import net.minecraftforge.registries.RegistryObject;
 public class VillagerProfessionRegistry {
 
     // An instance of a deferred registry we use to register.
-    private final DeferredRegister<VillagerProfession> deferredRegister;
+    public static final DeferredRegister<VillagerProfession> VILLAGER_PROFESSIONS;
 
     // The lepidopterist profession.
-    private RegistryObject<VillagerProfession> lepidopterist;
+    public static final RegistryObject<VillagerProfession> LEPIDOPTERIST;
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public VillagerProfessionRegistry(IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
+    static {
+        VILLAGER_PROFESSIONS = DeferredRegister.create(ForgeRegistries.VILLAGER_PROFESSIONS, ButterfliesMod.MOD_ID);
 
-    /**
-     * Register the professions.
-     * @param poiTypeRegistry The POI Type registry.
-     */
-    public void initialise(PoiTypeRegistry poiTypeRegistry) {
-        lepidopterist = deferredRegister.register("lepidopterist",
+        final String lepidopteristId = "lepidopterist";
+        Predicate<Holder<PoiType>> jobSite = x -> x.get() == PoiTypeRegistry.LEPIDOPTERIST.get();
+        LEPIDOPTERIST = VILLAGER_PROFESSIONS.register(lepidopteristId,
                 () -> new VillagerProfession(
-                        "lepidopterist",
-                        x -> x.get() == poiTypeRegistry.getLepidopterist().get(),
-                        x -> x.get() == poiTypeRegistry.getLepidopterist().get(),
+                        lepidopteristId,
+                        jobSite,
+                        jobSite,
                         ImmutableSet.of(),
                         ImmutableSet.of(),
                         SoundEvents.FLOWERING_AZALEA_PLACE));
     }
 
     /**
-     * Accessor to the lepidopterist profession.
-     * @return The POI Type.
+     * Prevent construction.
      */
-    public RegistryObject<VillagerProfession> getLepidopterist() {
-        return lepidopterist;
-    }
+    private VillagerProfessionRegistry() {}
 }

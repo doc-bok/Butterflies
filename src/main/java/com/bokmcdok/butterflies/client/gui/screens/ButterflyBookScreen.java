@@ -76,7 +76,7 @@ public class ButterflyBookScreen extends Screen {
         if (this.cachedPageComponents.isEmpty() || this.minecraft == null) {
             return null;
         } else {
-            int i = Mth.floor(x - (double)((this.width - 192) / 2) - 36.0D);
+            int i = Mth.floor(x - ((this.width - 192.0D) / 2.0D) - 36.0D);
             int j = Mth.floor(y - 2.0D - 30.0D);
             if (i >= 0 && j >= 0) {
                 int k = Math.min(128 / 9, this.cachedPageComponents.size());

@@ -17,6 +17,18 @@
       "butterflies:luna_caterpillar"
     ]
   },
+  "peacemaker_cow_ambient": {
+    "subtitle": "butterflies.subtitle.peacemaker_cow_ambient",
+    "sounds": [
+      "butterflies:peacemaker_cow_ambient"
+    ]
+  },
+  "peacemaker_cow_hurt": {
+    "subtitle": "butterflies.subtitle.peacemaker_cow_hurt",
+    "sounds": [
+      "butterflies:peacemaker_cow_hurt"
+    ]
+  },
   "white-lined-sphinx": {
     "subtitle": "butterflies.subtitle.clearwing-hummingbird",
     "sounds": [
