@@ -21,8 +21,8 @@ public class PoiTypeRegistry {
     static {
         POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, ButterfliesMod.MOD_ID);
 
-        LEPIDOPTERIST = POI_TYPES.register("lepidopterist", () ->
-                new PoiType(ImmutableSet.copyOf(BlockRegistry.BUTTERFLY_FEEDER.get().getStateDefinition().getPossibleStates()), 1, 1));
+        LEPIDOPTERIST = POI_TYPES.register("lepidopterist",
+                () -> new PoiType("lepidopterist", ImmutableSet.copyOf(BlockRegistry.BUTTERFLY_FEEDER.get().getStateDefinition().getPossibleStates()), 1, 1));
     }
 
     /**

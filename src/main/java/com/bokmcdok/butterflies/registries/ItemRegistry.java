@@ -7,6 +7,7 @@ import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -152,9 +153,9 @@ public class ItemRegistry {
                 () -> new Item(BASE_PROPERTIES));
 
         // Banner Pattern
-        BUTTERFLY_BANNER_PATTERN = ITEMS.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                TagRegistry.BUTTERFLY_BANNER_PATTERN,
-                (STACKS_TO_ONE.rarity(Rarity.UNCOMMON))));
+        BUTTERFLY_BANNER_PATTERN = ITEMS.register("banner_pattern_butterfly", () ->
+                new BannerPatternItem(BannerPattern.valueOf("BUTTERFLY"),
+                        STACKS_TO_ONE.rarity(Rarity.UNCOMMON)));
 
         // Peacemaker Honey
         PEACEMAKER_HONEY_BOTTLE = ITEMS.register("peacemaker_honey_bottle",

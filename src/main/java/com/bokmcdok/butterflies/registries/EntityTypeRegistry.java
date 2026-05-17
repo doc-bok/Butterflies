@@ -25,7 +25,7 @@ public class EntityTypeRegistry {
     public static final RegistryObject<EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
     public static final List<RegistryObject<EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
     static {
-        ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, ButterfliesMod.MOD_ID);
 
         // Butterfly scrolls
         final int speciesCount = ButterflyInfo.SPECIES.length;

@@ -54,7 +54,6 @@ public final class ButterfliesMod {
      * @param modEventBus The mod's event bus.
      */
     private void registerRegistries(IEventBus modEventBus) {
-        BannerPatternRegistry.BANNER_PATTERNS.register(modEventBus);
         BlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
         ButterflyEntityTypeRegistry.BUTTERFLY_ENTITY_TYPES.register(modEventBus);

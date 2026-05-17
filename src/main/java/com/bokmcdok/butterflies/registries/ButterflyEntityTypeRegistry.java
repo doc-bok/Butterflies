@@ -38,7 +38,7 @@ public class ButterflyEntityTypeRegistry {
             128);
 
     static {
-        BUTTERFLY_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BUTTERFLY_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, ButterfliesMod.MOD_ID);
         final int speciesCount = ButterflyInfo.SPECIES.length;
 
         List<RegistryObject<EntityType<Butterfly>>> butterflies = new ArrayList<>(speciesCount);

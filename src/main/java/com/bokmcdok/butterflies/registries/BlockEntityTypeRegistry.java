@@ -19,7 +19,7 @@ public class BlockEntityTypeRegistry {
     public static final RegistryObject<BlockEntityType<ButterflyFeederEntity>> BUTTERFLY_FEEDER;
 
     static {
-        BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        BLOCK_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ButterfliesMod.MOD_ID);
 
         //noinspection DataFlowIssue
         BUTTERFLY_FEEDER = BLOCK_ENTITY_TYPES.register("butterfly_feeder",

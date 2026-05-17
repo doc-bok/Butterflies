@@ -70,18 +70,18 @@ public class LifecycleEventListener {
                 () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), ButterflyMicroscopeScreen::new)
         );
 
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getAlliumBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getAzureBluetBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getBlueOrchidBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getCornflowerBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getDandelionBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getLilyOfTheValleyBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getOrangeTulipBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getOxeyeDaisyBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getPinkTulipBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getPoppyBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getRedTulipBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getWhiteTulipBud().get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(blockRegistry.getWitherRoseBud().get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.ALLIUM_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.AZURE_BLUET_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.BLUE_ORCHID_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.CORNFLOWER_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.DANDELION_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.LILY_OF_THE_VALLEY_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.ORANGE_TULIP_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.OXEYE_DAISY_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.PINK_TULIP_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.POPPY_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.RED_TULIP_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.WHITE_TULIP_BUD.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BlockRegistry.WITHER_ROSE_BUD.get(), RenderType.cutout());
     }
 }

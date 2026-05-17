@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.event;
 
+import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.EntityType;
@@ -15,20 +16,14 @@ import net.minecraftforge.registries.RegistryObject;
  */
 public class ModEventListener {
 
-    // The entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public ModEventListener(IEventBus modEventBus,
-                            EntityTypeRegistry entityTypeRegistry) {
+    public ModEventListener(IEventBus modEventBus) {
 
         modEventBus.register(this);
         modEventBus.addListener(this::onCommonSetup);
-
-        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -36,35 +31,35 @@ public class ModEventListener {
      * @param event The event information
      */
     private void onCommonSetup(FMLCommonSetupEvent event) {
-        for (RegistryObject<EntityType<? extends Butterfly>> i : entityTypeRegistry.getButterflies()) {
+        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
             SpawnPlacements.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     Butterfly::checkButterflySpawnRules);
         }
 
-        for (RegistryObject<EntityType<Caterpillar>> i : entityTypeRegistry.getCaterpillars()) {
+        for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
             SpawnPlacements.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules);
         }
 
-        for (RegistryObject<EntityType<Chrysalis>> i : entityTypeRegistry.getChrysalises()) {
+        for (RegistryObject<EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
             SpawnPlacements.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules);
         }
 
-        for (RegistryObject<EntityType<ButterflyEgg>> i : entityTypeRegistry.getButterflyEggs()) {
+        for (RegistryObject<EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
             SpawnPlacements.register(i.get(),
                     SpawnPlacements.Type.NO_RESTRICTIONS,
                     Heightmap.Types.MOTION_BLOCKING,
                     DirectionalCreature::checkDirectionalSpawnRules);
         }
         
-        SpawnPlacements.register(entityTypeRegistry.getButterflyGolem().get(),
+        SpawnPlacements.register(EntityTypeRegistry.BUTTERFLY_GOLEM.get(),
                 SpawnPlacements.Type.ON_GROUND,
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 Mob::checkMobSpawnRules);

@@ -36,7 +36,6 @@ public class EntityEventListener {
 
         modEventBus.register(this);
         modEventBus.addListener(this::onEntityAttributeCreation);
-        modEventBus.addListener(this::onSpawnPlacementRegister);
     }
 
     /**
@@ -140,103 +139,5 @@ public class EntityEventListener {
             wolf.targetSelector.addGoal(5, new NonTameRandomTargetGoal<>(
                     wolf, Butterfly.class, false, EntityEventListener::isButterflyEdible));
         }
-    }
-
-    /**
-     * Register entity spawn placements here
-     * @param event The event information
-     */
-    private void onSpawnPlacementRegister(SpawnPlacementRegisterEvent event) {
-        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    Butterfly::checkButterflySpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<Chrysalis>> i : ButterflyEntityTypeRegistry.CHRYSALISES) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        for (RegistryObject<EntityType<ButterflyEgg>> i : ButterflyEntityTypeRegistry.BUTTERFLY_EGGS) {
-            event.register(i.get(),
-                    SpawnPlacements.Type.NO_RESTRICTIONS,
-                    Heightmap.Types.MOTION_BLOCKING,
-                    DirectionalCreature::checkDirectionalSpawnRules,
-                    SpawnPlacementRegisterEvent.Operation.AND);
-        }
-
-        event.register(EntityTypeRegistry.BUTTERFLY_GOLEM.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING,
-                Monster::checkMonsterSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_EVOKER.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_ILLUSIONER.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_PILLAGER.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_VILLAGER.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
-
-        event.register(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(),
-                SpawnPlacements.Type.ON_GROUND,
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Mob::checkMobSpawnRules,
-                SpawnPlacementRegisterEvent.Operation.AND);
     }
 }

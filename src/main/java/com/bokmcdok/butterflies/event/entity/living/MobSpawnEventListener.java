@@ -23,13 +23,11 @@ import net.minecraftforge.eventbus.api.IEventBus;
  */
 public class MobSpawnEventListener {
 
-}
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry) {
+    public MobSpawnEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onMobSpawn);
         forgeEventBus.addListener(this::onLivingDrops);

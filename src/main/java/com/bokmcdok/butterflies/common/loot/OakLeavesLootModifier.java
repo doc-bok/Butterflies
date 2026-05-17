@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -20,14 +21,6 @@ import java.util.function.Supplier;
  * A loot modifier to add treasure to some chests.
  */
 public class OakLeavesLootModifier extends BaseLootModifier {
-
-    /**
-     * Codec that creates the loot modifier.
-     */
-    public static final Supplier<Codec<OakLeavesLootModifier>> CODEC = () ->
-            RecordCodecBuilder.create(inst ->
-                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
-                            .apply(inst, OakLeavesLootModifier::new));
 
     /**
      * Construction
@@ -62,17 +55,6 @@ public class OakLeavesLootModifier extends BaseLootModifier {
      */
     public static class Serializer extends GlobalLootModifierSerializer<OakLeavesLootModifier> {
 
-        // The item registry.
-        protected final ItemRegistry itemRegistry;
-
-        /**
-         * Construction
-         */
-        public Serializer(ItemRegistry itemRegistry)
-        {
-            this.itemRegistry = itemRegistry;
-        }
-
         /**
          * Read Loot Modifier data.
          * @param name The resource name.
@@ -84,7 +66,7 @@ public class OakLeavesLootModifier extends BaseLootModifier {
         public OakLeavesLootModifier read(ResourceLocation name,
                                           JsonObject object,
                                           LootItemCondition[] conditionsIn) {
-            return new OakLeavesLootModifier(itemRegistry, conditionsIn);
+            return new OakLeavesLootModifier(conditionsIn);
         }
 
         /**

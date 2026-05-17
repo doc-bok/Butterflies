@@ -27,7 +27,7 @@ public class PeacemakerEntityTypeRegistry {
     public static final RegistryObject<EntityType<PeacemakerWitch>> PEACEMAKER_WITCH;
 
     static {
-        PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
+        PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES, ButterfliesMod.MOD_ID);
 
         PEACEMAKER_BUTTERFLY = registerPeacemakerEntity("peacemaker_butterfly", PeacemakerButterfly::new, 0.6F, 1.95F);
         PEACEMAKER_COW = registerPeacemakerEntity("peacemaker_cow", PeacemakerCow::new, 4.5f, 2.5f);

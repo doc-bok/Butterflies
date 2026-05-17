@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.event.world.level;
 
-import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
@@ -22,19 +22,14 @@ import java.util.List;
  */
 public class LevelEventListener {
 
-    private final EntityTypeRegistry entityTypeRegistry;
-
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public LevelEventListener(IEventBus forgeEventBus,
-                              EntityTypeRegistry entityTypeRegistry) {
+    public LevelEventListener(IEventBus forgeEventBus) {
 
         forgeEventBus.register(this);
         forgeEventBus.addListener(this::onBiomeLoading);
-
-        this.entityTypeRegistry = entityTypeRegistry;
     }
 
     /**
@@ -43,10 +38,10 @@ public class LevelEventListener {
      */
     private void onBiomeLoading(BiomeLoadingEvent event)
     {
-        List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs = entityTypeRegistry.getButterflyEggs();
-        List<RegistryObject<EntityType<Caterpillar>>> caterpillars = entityTypeRegistry.getCaterpillars();
-        List<RegistryObject<EntityType<Chrysalis>>> chrysalises = entityTypeRegistry.getChrysalises();
-        List<RegistryObject<EntityType<? extends Butterfly>>> butterflies = entityTypeRegistry.getButterflies();
+        List<RegistryObject<EntityType<ButterflyEgg>>> butterflyEggs = ButterflyEntityTypeRegistry.BUTTERFLY_EGGS;
+        List<RegistryObject<EntityType<Caterpillar>>> caterpillars = ButterflyEntityTypeRegistry.CATERPILLARS;
+        List<RegistryObject<EntityType<Chrysalis>>> chrysalises = ButterflyEntityTypeRegistry.CHRYSALISES;
+        List<RegistryObject<EntityType<Butterfly>>> butterflies = ButterflyEntityTypeRegistry.BUTTERFLIES;
 
         for (int i = 0; i < butterflies.size(); ++i) {
 
@@ -163,7 +158,7 @@ public class LevelEventListener {
                            RegistryObject<EntityType<ButterflyEgg>> butterflyEgg,
                            RegistryObject<EntityType<Caterpillar>> caterpillar,
                            RegistryObject<EntityType<Chrysalis>> chrysalis,
-                           RegistryObject<EntityType<? extends Butterfly>> butterfly,
+                           RegistryObject<EntityType<Butterfly>> butterfly,
                            int weight,
                            int maximum) {
         event.getSpawns().addSpawn(MobCategory.CREATURE,

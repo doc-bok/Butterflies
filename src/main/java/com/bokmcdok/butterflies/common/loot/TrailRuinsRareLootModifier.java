@@ -23,14 +23,6 @@ import java.util.function.Supplier;
 public class TrailRuinsRareLootModifier extends BaseLootModifier {
 
     /**
-     * Codec that creates the loot modifier.
-     */
-    public static final Supplier<Codec<TrailRuinsRareLootModifier>> CODEC = () ->
-            RecordCodecBuilder.create(inst ->
-                    inst.group(LOOT_CONDITIONS_CODEC.fieldOf("conditions").forGetter(lm -> lm.conditions))
-                            .apply(inst, TrailRuinsRareLootModifier::new));
-
-    /**
      * Construction
      * @param conditionsIn The conditions needed for this loot modifier to apply.
      */
@@ -67,17 +59,6 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
      */
     public static class Serializer extends GlobalLootModifierSerializer<TrailRuinsRareLootModifier> {
 
-        // The item registry.
-        protected final ItemRegistry itemRegistry;
-
-        /**
-         * Construction
-         */
-        public Serializer(ItemRegistry itemRegistry)
-        {
-            this.itemRegistry = itemRegistry;
-        }
-
         /**
          * Read Loot Modifier data.
          * @param name The resource name.
@@ -89,7 +70,7 @@ public class TrailRuinsRareLootModifier extends BaseLootModifier {
         public TrailRuinsRareLootModifier read(ResourceLocation name,
                                           JsonObject object,
                                           LootItemCondition[] conditionsIn) {
-            return new TrailRuinsRareLootModifier(itemRegistry, conditionsIn);
+            return new TrailRuinsRareLootModifier(conditionsIn);
         }
 
         /**

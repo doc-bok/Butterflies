@@ -21,7 +21,7 @@ public class MenuTypeRegistry {
     public static final RegistryObject<MenuType<ButterflyMicroscopeMenu>> BUTTERFLY_MICROSCOPE_MENU;
 
     static {
-        MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ButterfliesMod.MOD_ID);
+        MENU_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, ButterfliesMod.MOD_ID);
         BUTTERFLY_FEEDER_MENU = MENU_TYPES.register("butterfly_feeder",
                 () -> new MenuType<>(ButterflyFeederMenu::new));
         BUTTERFLY_MICROSCOPE_MENU = MENU_TYPES.register("butterfly_microscope",
