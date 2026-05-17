@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +24,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 /**
  * A Peacemaker Cow entity.
@@ -105,14 +108,23 @@ public class PeacemakerCow extends PathfinderMob implements PeacemakerEntity {
         if (nextSpawnAttempt-- <= 0) {
             nextSpawnAttempt = random.nextInt(6000) + 3000;
 
-            final int SPAWN_RADIUS = 20;
-            BlockPos position = this.blockPosition().offset(
-                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
-                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
-                    random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS);
+            // Check we don't have too many nearby Butterflies already.
+            List<PeacemakerButterfly> numButterflies = level().getNearbyEntities(
+                    PeacemakerButterfly.class,
+                    TargetingConditions.forNonCombat(),
+                    this,
+                    getBoundingBox().inflate(20));
 
-            if (level().getBlockState(position).isAir()) {
-                PeacemakerButterfly.spawn((ServerLevel) level(), position);
+            if (numButterflies.size() < 20) {
+                final int SPAWN_RADIUS = 20;
+                BlockPos position = this.blockPosition().offset(
+                        random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
+                        random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS,
+                        random.nextInt((SPAWN_RADIUS * 2) + 1) - SPAWN_RADIUS);
+
+                if (level().getBlockState(position).isAir()) {
+                    PeacemakerButterfly.spawn((ServerLevel) level(), position);
+                }
             }
         }
     }
