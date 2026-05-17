@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -9,7 +10,7 @@ import net.minecraft.world.entity.monster.Witch;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class PeacemakerWitch extends Witch {
+public class PeacemakerWitch extends Witch implements PeacemakerEntity {
 
     // Constants for Peacemaker Illusioner attributes.
     private static final double PEACEMAKER_WITCH_HEALTH = 39.0d;

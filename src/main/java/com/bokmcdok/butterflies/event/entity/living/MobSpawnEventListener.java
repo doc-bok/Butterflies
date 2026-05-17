@@ -2,8 +2,8 @@ package com.bokmcdok.butterflies.event.entity.living;
 
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,21 +26,14 @@ import net.minecraft.world.entity.raid.Raider;
  */
 public class MobSpawnEventListener {
 
-    // The entity type registry.
-    private final EntityTypeRegistry entityTypeRegistry;
-    private final TagRegistry tagRegistry;
-
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public MobSpawnEventListener(IEventBus forgeEventBus,
-                                 EntityTypeRegistry entityTypeRegistry,
-                                 TagRegistry tagRegistry) {
+    public MobSpawnEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
-
-        this.entityTypeRegistry = entityTypeRegistry;
-        this.tagRegistry = tagRegistry;
+        forgeEventBus.addListener(this::onMobSpawn);
+        forgeEventBus.addListener(this::onLivingDrops);
     }
 
     /**
@@ -64,7 +57,7 @@ public class MobSpawnEventListener {
             // 1 in 256 chance.
             if (ironGolem.getRandom().nextInt() % 256 == 1) {
                 ServerLevelAccessor level = event.getLevel();
-                EntityType<IronGolem> entityType = entityTypeRegistry.getButterflyGolem().get();
+                EntityType<IronGolem> entityType = EntityTypeRegistry.BUTTERFLY_GOLEM.get();
 
                 if (EventHooks.canLivingConvert(ironGolem, entityType, (x) -> {})) {
                     IronGolem newMob = ironGolem.convertTo(entityType, false);
@@ -92,7 +85,7 @@ public class MobSpawnEventListener {
 
         // Don't infest entities if they are already infested.
         Entity entity = event.getEntity();
-        if (entity.getType().is(this.tagRegistry.getPeacemakerEntities())) {
+        if (entity instanceof PeacemakerEntity) {
             return;
         }
 

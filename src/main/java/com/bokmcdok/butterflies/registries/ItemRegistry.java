@@ -2,7 +2,6 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
-import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -13,8 +12,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,230 +26,134 @@ import java.util.Objects;
 public class ItemRegistry {
 
     // An instance of a deferred registry we use to register items.
-    private final DeferredRegister<Item> deferredRegister;
-
-    // Other registry references
-    private BlockRegistry blockRegistry;
-    private EntityTypeRegistry entityTypeRegistry;
+    public static final DeferredRegister<Item> ITEMS;
 
     // Nets
-    private DeferredHolder<Item, Item> emptyButterflyNet;
-    private List<DeferredHolder<Item, Item>> butterflyNets;
-    private DeferredHolder<Item, Item> burntButterflyNet;
-    private DeferredHolder<Item, Item> peacemakerButterflyNet;
+    public static final RegistryObject<Item> EMPTY_BUTTERFLY_NET;
+    public static final List<RegistryObject<Item>> BUTTERFLY_NETS;
+    public static final RegistryObject<Item> BURNT_BUTTERFLY_NET;
+    public static final RegistryObject<Item> PEACEMAKER_BUTTERFLY_NET;
 
     // Eggs
-    private List<DeferredHolder<Item, Item>> butterflyEggs;
+    public static final List<RegistryObject<Item>> BUTTERFLY_EGGS;
 
     // Caterpillars
-    private List<DeferredHolder<Item, Item>> caterpillars;
+    public static final List<RegistryObject<Item>> CATERPILLARS;
 
     // Bottles
-    private List<DeferredHolder<Item, Item>> bottledButterflies;
-    private List<DeferredHolder<Item, Item>> bottledCaterpillars;
+    public static final List<RegistryObject<Item>> BOTTLED_BUTTERFLIES;
+    public static final List<RegistryObject<Item>> BOTTLED_CATERPILLARS;
 
     // Scrolls
-    private List<DeferredHolder<Item, Item>> butterflyScrolls;
+    public static final List<RegistryObject<Item>> BUTTERFLY_SCROLLS;
 
     // Books
-    private DeferredHolder<Item, Item> butterflyBook;
-    private DeferredHolder<Item, Item> zhuangziBook;
+    public static final RegistryObject<Item> BUTTERFLY_BOOK;
+    public static final RegistryObject<Item> ZHUANGZI_BOOK;
 
     // Blocks
-    private DeferredHolder<Item, Item> butterflyFeeder;
-    private DeferredHolder<Item, Item> butterflyMicroscope;
+    public static final RegistryObject<Item> BUTTERFLY_FEEDER;
+    public static final RegistryObject<Item> BUTTERFLY_MICROSCOPE;
 
     // Infested Apple
-    private DeferredHolder<Item, Item> infestedApple;
+    public static final RegistryObject<Item> INFESTED_APPLE;
 
     // Silk
-    private DeferredHolder<Item, Item> silk;
+    public static final RegistryObject<Item> SILK;
 
     // Origami
-    private List<DeferredHolder<Item, Item>> butterflyOrigami;
+    public static final List<RegistryObject<Item>> BUTTERFLY_ORIGAMI;
 
     // Sherd
-    private DeferredHolder<Item, Item> butterflyPotterySherd;
+    public static final RegistryObject<Item> BUTTERFLY_POTTERY_SHERD;
 
     // Banner Pattern
-    private DeferredHolder<Item, Item> butterflyBannerPattern;
+    public static final RegistryObject<Item> BUTTERFLY_BANNER_PATTERN;
 
     // Peacemaker Honey
-    private DeferredHolder<Item, Item> peacemakerHoneyBottle;
+    public static final RegistryObject<Item> PEACEMAKER_HONEY_BOTTLE;
+    
+    static {
+        ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
 
-    // Spawn Eggs
-    private List<DeferredHolder<Item, Item>> eggSpawnEggs;
-    private List<DeferredHolder<Item, Item>> chrysalisSpawnEggs;
-    private List<DeferredHolder<Item, Item>> caterpillarSpawnEggs;
-    private List<DeferredHolder<Item, Item>> butterflySpawnEggs;
-    private DeferredHolder<Item, Item> butterflyGolemSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerButterflySpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerEvokerSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerIllusionerSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerPillagerSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerVillagerSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerVindicatorSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerWanderingTraderSpawnEgg;
-    private DeferredHolder<Item, Item> peacemakerWitchSpawnEgg;
+        // Species-based.
+        List<RegistryObject<Item>> butterflyNets = new ArrayList<>();
+        List<RegistryObject<Item>> butterflyEggs = new ArrayList<>();
+        List<RegistryObject<Item>> caterpillars = new ArrayList<>();
+        List<RegistryObject<Item>> bottledButterflies = new ArrayList<>();
+        List<RegistryObject<Item>> bottledCaterpillars = new ArrayList<>();
+        List<RegistryObject<Item>> butterflyScrolls = new ArrayList<>();
 
-    /**
-     * Construction
-     * @param modEventBus The event bus to register with.
-     */
-    public ItemRegistry(@NotNull IEventBus modEventBus) {
-        this.deferredRegister = DeferredRegister.create(BuiltInRegistries.ITEM, ButterfliesMod.MOD_ID);
-        this.deferredRegister.register(modEventBus);
-    }
+        int peacemakerButterflyIndex = 0;
+        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
+            int butterflyIndex = i;
+            String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
+            RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(butterflyIndex));
+            butterflyNets.add(butterflyNet);
 
-    /**
-     * Register the items. Must be called after construction and after block
-     * registry initialisation.
-     * @param blockRegistry The block registry.
-     * @param entityTypeRegistry The entity type registry.
-     * @param tagRegistry The tag registry.
-     */
-    public void initialise(@NotNull BlockRegistry blockRegistry,
-                           @NotNull EntityTypeRegistry entityTypeRegistry,
-                           @NotNull TagRegistry tagRegistry) {
+            if (registryId.contains("peacemaker")) {
+                peacemakerButterflyIndex = butterflyIndex;
+            }
 
-        this.blockRegistry = Objects.requireNonNull(blockRegistry, "blockRegistry cannot be null");
-        this.entityTypeRegistry = Objects.requireNonNull(entityTypeRegistry, "entityTypeRegistry cannot be null");
+            butterflyEggs.add(registerButterflyEgg(butterflyIndex));
+            caterpillars.add(registerCaterpillar(butterflyIndex));
+            bottledButterflies.add(registerBottledButterfly(butterflyIndex));
+            bottledCaterpillars.add(registerBottledCaterpillar(butterflyIndex));
+            butterflyScrolls.add(registerButterflyScroll(butterflyIndex));
+        }
+
+        BUTTERFLY_NETS = Collections.unmodifiableList(butterflyNets);
+        BUTTERFLY_EGGS = Collections.unmodifiableList(butterflyEggs);
+        CATERPILLARS = Collections.unmodifiableList(caterpillars);
+        BOTTLED_BUTTERFLIES = Collections.unmodifiableList(bottledButterflies);
+        BOTTLED_CATERPILLARS = Collections.unmodifiableList(bottledCaterpillars);
+        BUTTERFLY_SCROLLS = Collections.unmodifiableList(butterflyScrolls);
 
         // Nets
-        this.emptyButterflyNet = deferredRegister.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(this, -1));
-        this.butterflyNets = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.butterflyNets.add(registerButterflyNet(i));
-        }
-
-        this.burntButterflyNet = deferredRegister.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
-
-        // Eggs
-        this.butterflyEggs = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.butterflyEggs.add(registerButterflyEgg(i));
-        }
-
-        // Caterpillars
-        this.caterpillars = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.caterpillars.add(registerCaterpillar(i));
-        }
-
-        // Bottles
-        this.bottledButterflies = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.bottledButterflies.add(registerBottledButterfly(i));
-        }
-
-        this.bottledCaterpillars = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.bottledCaterpillars.add(registerBottledCaterpillar(i));
-        }
-
-        // Scrolls
-        this.butterflyScrolls = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.butterflyScrolls.add(registerButterflyScroll(i));
-        }
+        EMPTY_BUTTERFLY_NET = ITEMS.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(-1));
+        PEACEMAKER_BUTTERFLY_NET = BUTTERFLY_NETS.get(peacemakerButterflyIndex);
+        BURNT_BUTTERFLY_NET = ITEMS.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
         // Books
-        this.butterflyBook = deferredRegister.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
-        this.zhuangziBook = deferredRegister.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
+        BUTTERFLY_BOOK = ITEMS.register(ButterflyBookItem.NAME, ButterflyBookItem::new);
+        ZHUANGZI_BOOK = ITEMS.register(ButterflyZhuangziItem.NAME, ButterflyZhuangziItem::new);
 
         // Blocks
-        this.butterflyFeeder = deferredRegister.register("butterfly_feeder",
-                () -> new BlockItem(blockRegistry.getButterflyFeeder().get(), new Item.Properties()));
+        BUTTERFLY_FEEDER = ITEMS.register("butterfly_feeder",
+                () -> new BlockItem(BlockRegistry.BUTTERFLY_FEEDER.get(), new Item.Properties()));
 
-        this.butterflyMicroscope = deferredRegister.register("butterfly_microscope",
-                () -> new BlockItem(blockRegistry.getButterflyMicroscope().get(), new Item.Properties()));
+        BUTTERFLY_MICROSCOPE = ITEMS.register("butterfly_microscope",
+                () -> new BlockItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), new Item.Properties()));
 
         // Infested Apple
-        this.infestedApple = deferredRegister.register("infested_apple", () -> new Item(new Item.Properties()));
+        INFESTED_APPLE = ITEMS.register("infested_apple", () -> new Item(new Item.Properties()));
 
         // Silk
-        this.silk = deferredRegister.register("silk", () -> new Item(new Item.Properties()));
+        SILK = ITEMS.register("silk", () -> new Item(new Item.Properties()));
 
         // Origami
-        this.butterflyOrigami = new ArrayList<>();
-
-        for (DeferredHolder<Block, Block> block : blockRegistry.getButterflyOrigami()) {
+        BUTTERFLY_ORIGAMI = new ArrayList<>();
+        for (RegistryObject<Block> block : BlockRegistry.BUTTERFLY_ORIGAMI) {
             ResourceLocation id = block.getId();
             if (id != null) {
-                butterflyOrigami.add(deferredRegister.register(
+                BUTTERFLY_ORIGAMI.add(ITEMS.register(
                         id.getPath(),
                         () -> new BlockItem(block.get(), new Item.Properties())));
             }
         }
 
         // Sherd
-        this.butterflyPotterySherd = deferredRegister.register("butterfly_pottery_sherd",
+        BUTTERFLY_POTTERY_SHERD = ITEMS.register("butterfly_pottery_sherd",
                 () -> new Item(new Item.Properties()));
 
         // Banner Pattern
-        this.butterflyBannerPattern = deferredRegister.register("banner_pattern_butterfly", () -> new BannerPatternItem(
-                tagRegistry.getButterflyBannerPattern(),
+        BUTTERFLY_BANNER_PATTERN = ITEMS.register("banner_pattern_butterfly", () -> new BannerPatternItem(
+                TagRegistry.BUTTERFLY_BANNER_PATTERN,
                 (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
         // Peacemaker Honey
-        this.peacemakerHoneyBottle = deferredRegister.register("peacemaker_honey_bottle",
+        PEACEMAKER_HONEY_BOTTLE = ITEMS.register("peacemaker_honey_bottle",
                 () -> new Item(new Item.Properties().stacksTo(1)));
-
-        // Spawn Eggs
-        this.eggSpawnEggs = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.eggSpawnEggs.add(registerButterflyEggSpawnEgg(i));
-        }
-        this.chrysalisSpawnEggs = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.chrysalisSpawnEggs.add(registerChrysalisSpawnEgg(i));
-        }
-
-        this.caterpillarSpawnEggs = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.caterpillarSpawnEggs.add(registerCaterpillarSpawnEgg(i));
-        }
-
-        this.butterflySpawnEggs = new ArrayList<>();
-        for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            this.butterflySpawnEggs.add(registerButterflySpawnEgg(i));
-        }
-
-        this.butterflyGolemSpawnEgg = deferredRegister.register("spawn_egg_golem_butterfly",
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflyGolem().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerButterflySpawnEgg = deferredRegister.register("spawn_egg_peacemaker_butterfly",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerButterfly().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerEvokerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_evoker",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerEvoker().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerIllusionerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_illusioner",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerIllusioner().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerPillagerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_pillager",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerPillager().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerVillagerSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_villager",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerVillager().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerVindicatorSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_vindicator",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerVindicator().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerWanderingTraderSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_wandering_trader",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerWanderingTrader().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-
-        this.peacemakerWitchSpawnEgg = deferredRegister.register("spawn_egg_peacemaker_witch",
-                () -> new SpawnEggItem(entityTypeRegistry.getPeacemakerWitch().get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
     }
 
     /**
@@ -255,207 +161,45 @@ public class ItemRegistry {
      * @param butterflyIndex The butterfly index.
      * @return The registry entry for the related item.
      */
-    public DeferredHolder<Item, Item> getButterflyNetFromIndex(int butterflyIndex) {
+    public static RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
-            return emptyButterflyNet;
+            return EMPTY_BUTTERFLY_NET;
         } else if (Objects.equals(ButterflyInfo.SPECIES[butterflyIndex], "lava")) {
-            return burntButterflyNet;
+            return BURNT_BUTTERFLY_NET;
         } else {
-            return butterflyNets.get(butterflyIndex);
+            return BUTTERFLY_NETS.get(butterflyIndex);
         }
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerButterflyNet() {
-        return peacemakerButterflyNet;
-    }
-
-    // Accessor Methods
-    public List<DeferredHolder<Item, Item>> getBottledButterflies() {
-        return bottledButterflies;
-    }
-
-    public List<DeferredHolder<Item, Item>> getBottledCaterpillars() {
-        return bottledCaterpillars;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyBannerPattern() {
-        return butterflyBannerPattern;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerHoneyBottle() {
-        return peacemakerHoneyBottle;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyBook() {
-        return butterflyBook;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyMicroscope() {
-        return butterflyMicroscope;
-    }
-
-    public DeferredHolder<Item, Item> getBurntButterflyNet() {
-        return burntButterflyNet;
-    }
-
-    public List<DeferredHolder<Item, Item>> getButterflyEggs() {
-        return butterflyEggs;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyFeeder() {
-        return butterflyFeeder;
-    }
-    
-    public List<DeferredHolder<Item, Item>> getButterflyNets() {
-        return butterflyNets;
-    }
-
-    public List<DeferredHolder<Item, Item>> getButterflyOrigami() {
-        return butterflyOrigami;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyPotterySherd() {
-        return butterflyPotterySherd;
-    }
-
-    public List<DeferredHolder<Item, Item>> getButterflyScrolls() {
-        return butterflyScrolls;
-    }
-
-    public List<DeferredHolder<Item, Item>> getButterflySpawnEggs() {
-        return butterflySpawnEggs;
-    }
-
-    public DeferredHolder<Item, Item> getButterflyGolemSpawnEgg() {
-        return butterflyGolemSpawnEgg;
-    }
-
-    public List<DeferredHolder<Item, Item>> getCaterpillars() {
-        return caterpillars;
-    }
-
-    public List<DeferredHolder<Item, Item>> getEggSpawnEggs() {
-        return eggSpawnEggs;
-    }
-
-    public List<DeferredHolder<Item, Item>> getChrysalisSpawnEggs() {
-        return chrysalisSpawnEggs;
-    }
-
-    public List<DeferredHolder<Item, Item>> getCaterpillarSpawnEggs() {
-        return caterpillarSpawnEggs;
-    }
-
-    public DeferredHolder<Item, Item> getEmptyButterflyNet() {
-        return emptyButterflyNet;
-    }
-
-    public DeferredHolder<Item, Item> getInfestedApple() {
-        return infestedApple;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerButterflySpawnEgg() {
-        return peacemakerButterflySpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerEvokerSpawnEgg() {
-        return peacemakerEvokerSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerIllusionerSpawnEgg() {
-        return peacemakerIllusionerSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerPillagerSpawnEgg() {
-        return peacemakerPillagerSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerVillagerSpawnEgg() {
-        return peacemakerVillagerSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerVindicatorSpawnEgg() {
-        return peacemakerVindicatorSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerWanderingTraderSpawnEgg() {
-        return peacemakerWanderingTraderSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getPeacemakerWitchSpawnEgg() {
-        return peacemakerWitchSpawnEgg;
-    }
-
-    public DeferredHolder<Item, Item> getSilk() {
-        return this.silk;
-    }
-
-    public DeferredHolder<Item, Item> getZhuangziBook() {
-        return zhuangziBook;
     }
 
     // Register Methods
 
-    private DeferredHolder<Item, Item> registerButterflyNet(int butterflyIndex) {
-        String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
-        DeferredHolder<Item, Item> result = deferredRegister.register(
-                registryId,
-                () -> new ButterflyNetItem(this, butterflyIndex));
-
-        // Support Peacemaker Butterfly
-        if (registryId.contains("peacemaker")) {
-            peacemakerButterflyNet = result;
-        }
-
-        return result;
+    private static RegistryObject<Item> registerBottledButterfly(int butterflyIndex) {
+        return ITEMS.register(BottledButterflyItem.getRegistryId(butterflyIndex),
+                () -> new BottledButterflyItem(BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
-    private DeferredHolder<Item, Item> registerBottledButterfly(int butterflyIndex) {
-        return deferredRegister.register(BottledButterflyItem.getRegistryId(butterflyIndex),
-                () -> new BottledButterflyItem(blockRegistry.getBottledButterflyBlocks().get(butterflyIndex), butterflyIndex));
+    private static RegistryObject<Item> registerBottledCaterpillar(int butterflyIndex) {
+        return ITEMS.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
+                () -> new BottledCaterpillarItem(BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(butterflyIndex), butterflyIndex));
     }
 
-    private DeferredHolder<Item, Item> registerBottledCaterpillar(int butterflyIndex) {
-        return deferredRegister.register(BottledCaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new BottledCaterpillarItem(blockRegistry.getBottledCaterpillarBlocks().get(butterflyIndex), butterflyIndex));
-    }
-
-    private DeferredHolder<Item, Item> registerButterflyEgg(int butterflyIndex) {
-        return deferredRegister.register(ButterflyEggItem.getRegistryId(butterflyIndex),
+    private static RegistryObject<Item> registerButterflyEgg(int butterflyIndex) {
+        return ITEMS.register(ButterflyEggItem.getRegistryId(butterflyIndex),
                 () -> new ButterflyEggItem(butterflyIndex, new Item.Properties()));
     }
 
-    private DeferredHolder<Item, Item> registerButterflyScroll(int butterflyIndex) {
-        return deferredRegister.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
-                () -> new ButterflyScrollItem(entityTypeRegistry, butterflyIndex));
+    private static RegistryObject<Item> registerButterflyScroll(int butterflyIndex) {
+        return ITEMS.register(ButterflyScrollItem.getRegistryId(butterflyIndex),
+                () -> new ButterflyScrollItem(butterflyIndex));
     }
 
-    private DeferredHolder<Item, Item> registerCaterpillar(int butterflyIndex) {
-        return deferredRegister.register(CaterpillarItem.getRegistryId(butterflyIndex),
+    private static RegistryObject<Item> registerCaterpillar(int butterflyIndex) {
+        return ITEMS.register(CaterpillarItem.getRegistryId(butterflyIndex),
                 () -> new CaterpillarItem(Caterpillar.getRegistryId(butterflyIndex)));
     }
 
-    private DeferredHolder<Item, Item> registerButterflyEggSpawnEgg(int butterflyIndex) {
-        return deferredRegister.register("spawn_egg_egg_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflyEggs().get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-    }
-
-    private DeferredHolder<Item, Item> registerCaterpillarSpawnEgg(int butterflyIndex) {
-        return deferredRegister.register("spawn_egg_" + CaterpillarItem.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getCaterpillars().get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-    }
-
-    private DeferredHolder<Item, Item> registerChrysalisSpawnEgg(int butterflyIndex) {
-        return deferredRegister.register("spawn_egg_chrysalis_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getChrysalises().get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-    }
-
-    private DeferredHolder<Item, Item> registerButterflySpawnEgg(int butterflyIndex) {
-        return deferredRegister.register("spawn_egg_butterfly_" + Butterfly.getRegistryId(butterflyIndex),
-                () -> new SpawnEggItem(entityTypeRegistry.getButterflies().get(butterflyIndex).get(),
-                        0xffffff, 0xffffff, new Item.Properties()));
-    }
+    /**
+     * Prevent construction.
+     */
+    private ItemRegistry() {}
 }

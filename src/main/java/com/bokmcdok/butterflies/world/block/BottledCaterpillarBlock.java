@@ -42,11 +42,11 @@ public class BottledCaterpillarBlock extends Block {
      * Create a butterfly block
      */
     public BottledCaterpillarBlock() {
-        super(BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-                .isRedstoneConductor(BlockRegistry::never)
-                .isSuffocating(BlockRegistry::never)
-                .isValidSpawn(BlockRegistry::never)
-                .isViewBlocking(BlockRegistry::never)
+        super(BlockBehaviour.Properties.copy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
                 .noOcclusion()
                 .sound(SoundType.GLASS)
                 .strength(0.3F));

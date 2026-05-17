@@ -23,21 +23,14 @@ import java.util.Objects;
  */
 public class VillageEventListener {
 
-    // Registries.
-    private final ItemRegistry itemRegistry;
-    private final VillagerProfessionRegistry villagerProfessionRegistry;
-
     /**
      * Construction
      * @param forgeEventBus The event bus to register with.
      */
-    public VillageEventListener(IEventBus forgeEventBus,
-                                ItemRegistry itemRegistry,
-                                VillagerProfessionRegistry villagerProfessionRegistry) {
+    public VillageEventListener(IEventBus forgeEventBus) {
         forgeEventBus.register(this);
-
-        this.itemRegistry = itemRegistry;
-        this.villagerProfessionRegistry = villagerProfessionRegistry;
+        forgeEventBus.addListener(this::onVillagerTrades);
+        forgeEventBus.addListener(this::onWandererTrades);
     }
 
     /**
@@ -46,7 +39,7 @@ public class VillageEventListener {
      */
     @SubscribeEvent
     private void onVillagerTrades(VillagerTradesEvent event) {
-        if (event.getType() == villagerProfessionRegistry.getLepidopterist().get()) {
+        if (event.getType() == VillagerProfessionRegistry.LEPIDOPTERIST.get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
             Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
@@ -57,16 +50,16 @@ public class VillageEventListener {
             List<VillagerTrades.ItemListing> tradesLevel4 = trades.get(4);
             List<VillagerTrades.ItemListing> tradesLevel5 = trades.get(5);
 
-            tradesLevel1.add(new SellingItemTrade(itemRegistry.getEmptyButterflyNet().get(), 5, 1, 1));
-            tradesLevel3.add(new SellingItemTrade(itemRegistry.getSilk().get(), 32, 8, 10));
-            tradesLevel5.add(new SellingItemTrade(itemRegistry.getButterflyBannerPattern().get(), 8, 1, 30));
-            tradesLevel5.add(new SellingItemTrade(itemRegistry.getZhuangziBook().get(), 35, 1, 30));
+            tradesLevel1.add(new SellingItemTrade(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), 5, 1, 1));
+            tradesLevel3.add(new SellingItemTrade(ItemRegistry.SILK.get(), 32, 8, 10));
+            tradesLevel5.add(new SellingItemTrade(ItemRegistry.BUTTERFLY_BANNER_PATTERN.get(), 8, 1, 30));
+            tradesLevel5.add(new SellingItemTrade(ItemRegistry.ZHUANGZI_BOOK.get(), 35, 1, 30));
 
-            List<DeferredHolder<Item, Item>> bottledButterflies = itemRegistry.getBottledButterflies();
-            List<DeferredHolder<Item, Item>> bottledCaterpillars = itemRegistry.getBottledCaterpillars();
-            List<DeferredHolder<Item, Item>> butterflyEggs = itemRegistry.getButterflyEggs();
-            List<DeferredHolder<Item, Item>> butterflyScrolls = itemRegistry.getButterflyScrolls();
-            List<DeferredHolder<Item, Item>> caterpillars = itemRegistry.getCaterpillars();
+            List<DeferredHolder<Item, Item>> bottledButterflies = ItemRegistry.BOTTLED_BUTTERFLIES;
+            List<DeferredHolder<Item, Item>> bottledCaterpillars = ItemRegistry.BOTTLED_CATERPILLARS;
+            List<DeferredHolder<Item, Item>> butterflyEggs = ItemRegistry.BUTTERFLY_EGGS;
+            List<DeferredHolder<Item, Item>> butterflyScrolls = ItemRegistry.BUTTERFLY_SCROLLS;
+            List<DeferredHolder<Item, Item>> caterpillars = ItemRegistry.CATERPILLARS;
 
             for (ButterflyData butterfly : butterflies) {
                 if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
@@ -123,7 +116,7 @@ public class VillageEventListener {
 
         Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
 
-        List<DeferredHolder<Item, Item>> bottledButterflies = itemRegistry.getBottledButterflies();
+        List<DeferredHolder<Item, Item>> bottledButterflies = ItemRegistry.BOTTLED_BUTTERFLIES;
 
         for (ButterflyData butterfly : butterflies) {
             if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {

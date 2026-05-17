@@ -31,24 +31,14 @@ import java.util.Map;
  */
 public class LifecycleEventListener {
 
-    // Reference to the registries.
-    private final DecoratedPotPatternsRegistry decoratedPotPatternsRegistry;
-    private final ItemRegistry itemRegistry;
-    private final MenuTypeRegistry menuTypeRegistry;
-
     /**
      * Construction
      * @param modEventBus The event bus to register with.
      */
-    public LifecycleEventListener(IEventBus modEventBus,
-                                  DecoratedPotPatternsRegistry decoratedPotPatternsRegistry,
-                                  ItemRegistry itemRegistry,
-                                  MenuTypeRegistry menuTypeRegistry) {
+    public LifecycleEventListener(IEventBus modEventBus) {
         modEventBus.register(this);
-
-        this.decoratedPotPatternsRegistry = decoratedPotPatternsRegistry;
-        this.itemRegistry = itemRegistry;
-        this.menuTypeRegistry = menuTypeRegistry;
+        modEventBus.addListener(this::clientSetup);
+        modEventBus.addListener(this::commonSetup);
     }
 
     /**
@@ -64,15 +54,15 @@ public class LifecycleEventListener {
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
                 BrewingRecipeRegistry.addRecipe(
                         Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-                        Ingredient.of(itemRegistry.getBottledButterflies().get(i).get()),
+                        Ingredient.of(ItemRegistry.BOTTLED_BUTTERFLIES.get(i).get()),
                         PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON));
             }
         }
 
         // Butterfly Sherd Pattern.
         Map<Item, ResourceKey<String>> itemToPotTextureMap = Maps.newHashMap(DecoratedPotPatterns.ITEM_TO_POT_TEXTURE);
-        itemToPotTextureMap.put(itemRegistry.getButterflyPotterySherd().get(),
-                                decoratedPotPatternsRegistry.getButterflyPotPattern().getKey());
+        itemToPotTextureMap.put(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get(),
+                                DecoratedPotPatternsRegistry.BUTTERFLY_POT_PATTERN.getKey());
         DecoratedPotPatterns.ITEM_TO_POT_TEXTURE = itemToPotTextureMap;
     }
 
@@ -83,11 +73,11 @@ public class LifecycleEventListener {
     @SubscribeEvent
     private void clientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyFeederMenu().get(), ButterflyFeederScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_FEEDER_MENU.get(), ButterflyFeederScreen::new)
         );
 
         event.enqueueWork(
-                () -> MenuScreens.register(this.menuTypeRegistry.getButterflyMicroscopeMenu().get(), ButterflyMicroscopeScreen::new)
+                () -> MenuScreens.register(MenuTypeRegistry.BUTTERFLY_MICROSCOPE_MENU.get(), ButterflyMicroscopeScreen::new)
         );
     }
 }
