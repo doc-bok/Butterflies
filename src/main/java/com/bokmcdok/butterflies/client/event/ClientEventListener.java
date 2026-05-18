@@ -14,13 +14,8 @@ import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.entity.animal.Chrysalis;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
-import com.bokmcdok.butterflies.world.entity.monster.*;
-import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
-import com.bokmcdok.butterflies.world.entity.npc.PeacemakerWanderingTrader;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.IEventBus;
@@ -70,7 +65,6 @@ public class ClientEventListener {
      * @param event The event information
      */
     @SubscribeEvent
-    @SuppressWarnings("unchecked")
     private void onRegisterRenderers(final EntityRenderersEvent.RegisterRenderers event)
     {
         // Register the butterfly renderers.
@@ -81,7 +75,7 @@ public class ClientEventListener {
             EntityRendererProvider<Butterfly> rendererProvider = getButterflyEntityRendererProvider(i);
 
             // Register the selected renderer provider.
-            event.registerEntityRenderer((EntityType<Butterfly>)butterflies.get(i).get(), rendererProvider);
+            event.registerEntityRenderer(butterflies.get(i).get(), rendererProvider);
         }
 
         // Register the butterfly egg renderers.
