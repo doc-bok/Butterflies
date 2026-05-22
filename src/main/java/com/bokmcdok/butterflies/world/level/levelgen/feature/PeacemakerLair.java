@@ -1,10 +1,18 @@
 package com.bokmcdok.butterflies.world.level.levelgen.feature;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
+import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
+import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -13,12 +21,13 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+
 import java.util.function.Predicate;
 
 /**
  * Generates a Peacemaker Lair as a feature.
  */
+@SuppressWarnings("deprecation")
 public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
     // Default block states
@@ -29,23 +38,70 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     // Constants for min/max sizes
     private static final int FLOOR_Y = -1;
     private static final int INTERIOR_MIN_Y = 0;
-    private static final int INTERIOR_MAX_Y = 3;
-    private static final int CEILING_Y = 4;
+    private static final int INTERIOR_MAX_Y = 6;
+    private static final int CEILING_Y = INTERIOR_MAX_Y + 1;
     private static final int MAX_CHESTS = 2;
     private static final int CHEST_ATTEMPTS = 3;
+    private static final int MAX_BUTTERFLIES = 6;
+
+    /**
+     * Helper to get the right offset for carving doors.
+     * @param origin The position of the lair.
+     * @param alongX Whether the door is aligned with the x-axis.
+     * @param xz The x (or z) offset.
+     * @param y The y offset.
+     * @param zx The z (or x) offset.
+     */
+    private static void getDoorCarvingOffset(BlockPos.MutableBlockPos position,
+                                             BlockPos origin,
+                                             boolean alongX,
+                                             int xz,
+                                             int y,
+                                             int zx) {
+        if  (alongX) {
+            position.set(origin.offset(xz, y, zx));
+        } else {
+            position.set(origin.offset(zx, y, xz));
+        }
+    }
 
     /**
      * Check if a position will be a wall edge.
      * @param x The x-position.
      * @param z The z-position.
-     * @param minX The minimum x-position.
-     * @param maxX The maximum x-position.
-     * @param minZ The minimum z-position.
-     * @param maxZ The maximum z-position.
+     * @param roomBounds The bounds of the room.
      * @return True if the position is a wall edge.
      */
-    private static boolean isWallEdge(int x, int z, int minX, int maxX, int minZ, int maxZ) {
-        return x == minX || x == maxX || z == minZ || z == maxZ;
+    private static boolean isRoomBoundary(int x, int z, RoomBounds roomBounds) {
+        return x == roomBounds.minX || x == roomBounds.maxX || z == roomBounds.minZ || z == roomBounds.maxZ;
+    }
+
+    /**
+     * Check if a position is supposed to be a wall.
+     * @param x The x-position
+     * @param z The z-position
+     * @param roomBounds The room bounds.
+     * @return True if the positon is a wall.
+     */
+    private static boolean isWall(int x, int y, int z, RoomBounds roomBounds) {
+        boolean onOuterBoundary = isRoomBoundary(x, z, roomBounds);
+
+        boolean onInnerXWall = (x == roomBounds.minInnerX || x == roomBounds.maxInnerX)
+                && z >= roomBounds.minInnerZ
+                && z <= roomBounds.maxInnerZ;
+
+        boolean onInnerZWall = (z == roomBounds.minInnerZ || z == roomBounds.maxInnerZ)
+                && x >= roomBounds.minInnerX
+                && x <= roomBounds.maxInnerX;
+
+        boolean belowInnerRoof = y < INTERIOR_MAX_Y - 3;
+        boolean inInnerCeiling = y == INTERIOR_MAX_Y - 3
+                && x > roomBounds.minInnerX && x < roomBounds.maxInnerX
+                && z > roomBounds.minInnerZ && z < roomBounds.maxInnerZ;
+
+        return onOuterBoundary
+                || (belowInnerRoof && (onInnerXWall || onInnerZWall))
+                || inInnerCeiling;
     }
 
     /**
@@ -53,15 +109,11 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
      * @param x The x-position.
      * @param y The y-position.
      * @param z The z-position.
-     * @param minX The minimum x-position.
-     * @param maxX The maximum x-position.
-     * @param minZ The minimum z-position.
-     * @param maxZ The maximum z-position.
+     * @param roomBounds The room bounds.
      * @return True if the position is inside the lair.
      */
-    private static boolean isInterior(int x, int y, int z, int minX, int maxX, int minZ, int maxZ) {
-        return x != minX && x != maxX
-                && z != minZ && z != maxZ
+    private static boolean isInteriorAirSpace(int x, int y, int z, RoomBounds roomBounds) {
+        return !isWall(x, y, z, roomBounds)
                 && y > FLOOR_Y && y < CEILING_Y;
     }
 
@@ -92,6 +144,10 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
         carveAndBuild(level, origin, bounds, random, replaceable);
         placeChests(level, origin, bounds, random, replaceable);
+
+        spawnPeacemakerButterflies(level, origin, bounds, random);
+        spawnPeacemakerCow(level, origin);
+
         return true;
     }
 
@@ -99,24 +155,36 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
      * Class to hold the room bounds.
      */
     private static final class RoomBounds {
+        private static final int BASE_ROOM_SIZE = 6;
+
         private final int baseWidth;
-        private final int minOffsetX;
-        private final int maxOffsetX;
+        private final int minX;
+        private final int maxX;
         private final int baseLength;
-        private final int minOffsetZ;
-        private final int maxOffsetZ;
+        private final int minZ;
+        private final int maxZ;
+
+        private final int minInnerX;
+        private final int minInnerZ;
+        private final int maxInnerX;
+        private final int maxInnerZ;
 
         /**
          * Construct a new room bounds.
          * @param random A random number generator.
          */
         public RoomBounds(RandomSource random) {
-            baseWidth = random.nextInt(2) + 2;
-            minOffsetX = -baseWidth - 1;
-            maxOffsetX = baseWidth + 1;
-            baseLength = random.nextInt(2) + 2;
-            minOffsetZ = -baseLength - 1;
-            maxOffsetZ = baseLength + 1;
+            baseWidth = random.nextInt(2) + BASE_ROOM_SIZE;
+            minX = -baseWidth - 1;
+            maxX = baseWidth + 1;
+            baseLength = random.nextInt(2) + BASE_ROOM_SIZE;
+            minZ = -baseLength - 1;
+            maxZ = baseLength + 1;
+
+            minInnerX = minX + 4;
+            maxInnerX = maxX - 4;
+            minInnerZ = minZ + 4;
+            maxInnerZ = maxZ - 4;
         }
     }
 
@@ -127,16 +195,15 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
      * @param roomBounds The bounds of the lair.
      * @return True if the Peacemaker Lair can be placed.
      */
-    @SuppressWarnings("deprecation")
     private boolean canGenerate(WorldGenLevel level,
                                 BlockPos origin,
                                 RoomBounds roomBounds) {
         int numOpenings = 0;
 
         // Test if we can place the room.
-        for(int offsetX = roomBounds.minOffsetX; offsetX <= roomBounds.maxOffsetX; ++offsetX) {
+        for(int offsetX = roomBounds.minX; offsetX <= roomBounds.maxX; ++offsetX) {
             for(int offsetY = FLOOR_Y; offsetY <= CEILING_Y; ++offsetY) {
-                for(int offsetZ = roomBounds.minOffsetZ; offsetZ <= roomBounds.maxOffsetZ; ++offsetZ) {
+                for(int offsetZ = roomBounds.minZ; offsetZ <= roomBounds.maxZ; ++offsetZ) {
                     BlockPos posOffset = origin.offset(offsetX, offsetY, offsetZ);
 
                     // minY and maxY must be solid throughout
@@ -150,7 +217,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                     }
 
                     // There must be between 1 and 5 2-high openings
-                    if (isWallEdge(offsetX, offsetZ, roomBounds.minOffsetX, roomBounds.maxOffsetX, roomBounds.minOffsetZ, roomBounds.maxOffsetZ)
+                    if (isRoomBoundary(offsetX, offsetZ, roomBounds)
                             && offsetY == INTERIOR_MIN_Y
                             && level.isEmptyBlock(posOffset)
                             && level.isEmptyBlock(posOffset.above())) {
@@ -164,37 +231,36 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     }
 
     /**
-     * Check we can generate a Peacemaker Lair.
+     * Carve out and build the Peacemaker Lair
      * @param level The level being generated.
      * @param origin The position of the lair.
      * @param roomBounds The bounds of the lair.
      * @param random  A random number generator.
      * @param replaceable A predicate to check if a block is replaceable.
      */
-    @SuppressWarnings("deprecation")
     private void carveAndBuild(WorldGenLevel level,
                                BlockPos origin,
                                RoomBounds roomBounds,
                                RandomSource random,
                                Predicate<BlockState> replaceable) {
-        BlockPos.MutableBlockPos posOffset = new BlockPos.MutableBlockPos();
-        for(int offsetX = roomBounds.minOffsetX; offsetX <= roomBounds.maxOffsetX; ++offsetX) {
+        BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos();
+        for(int offsetX = roomBounds.minX; offsetX <= roomBounds.maxX; ++offsetX) {
             for(int offsetY = INTERIOR_MAX_Y; offsetY >= FLOOR_Y; --offsetY) { // Start from the top and build down
-                for(int offsetZ = roomBounds.minOffsetZ; offsetZ <= roomBounds.maxOffsetZ; ++offsetZ) {
+                for(int offsetZ = roomBounds.minZ; offsetZ <= roomBounds.maxZ; ++offsetZ) {
 
-                    posOffset.set(origin.offset(offsetX, offsetY, offsetZ));
-                    BlockState posOffsetBlockState = level.getBlockState(posOffset);
+                    position.set(origin.offset(offsetX, offsetY, offsetZ));
+                    BlockState posOffsetBlockState = level.getBlockState(position);
 
                     // If not on outer edges then set block to cave air
-                    if (isInterior(offsetX, offsetY, offsetZ, roomBounds.minOffsetX, roomBounds.maxOffsetX, roomBounds.minOffsetZ, roomBounds.maxOffsetZ)) {
+                    if (isInteriorAirSpace(offsetX, offsetY, offsetZ, roomBounds)) {
                         if (!posOffsetBlockState.is(Blocks.CHEST) && !posOffsetBlockState.is(Blocks.SPAWNER)) {
-                            this.safeSetBlock(level, posOffset, AIR, replaceable);
+                            safeSetBlock(level, position, AIR, replaceable);
                         }
 
                         // If non-solid below, air above
-                    } else if (posOffset.getY() >= level.getMinBuildHeight()
-                            && !level.getBlockState(posOffset.below()).isSolid()) {
-                        level.setBlock(posOffset, AIR, 2);
+                    } else if (position.getY() >= level.getMinBuildHeight()
+                            && !level.getBlockState(position.below()).isSolid()) {
+                        level.setBlock(position, AIR, 2);
 
                         // Build the walls
                     } else if (posOffsetBlockState.isSolid()
@@ -202,11 +268,47 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
                         // Randomly place mossy/non-mossy cobblestone
                         if (offsetY == FLOOR_Y && random.nextInt(4) != 0) {
-                            this.safeSetBlock(level, posOffset, MOSSY_COBBLESTONE, replaceable);
+                            safeSetBlock(level, position, MOSSY_COBBLESTONE, replaceable);
                         } else {
-                            this.safeSetBlock(level, posOffset, COBBLESTONE, replaceable);
+                            safeSetBlock(level, position, COBBLESTONE, replaceable);
                         }
                     }
+                }
+            }
+        }
+
+        carveDoor(level, origin, roomBounds, random, replaceable);
+    }
+
+    /**
+     * Carve a door into the Peacemaker Cow's chamber.
+     * @param level The level being generated.
+     * @param origin The position of the lair.
+     * @param roomBounds The bounds of the lair.
+     * @param random  A random number generator.
+     * @param replaceable A predicate to check if a block is replaceable.
+     */
+    private void carveDoor(WorldGenLevel level,
+                           BlockPos origin,
+                           RoomBounds roomBounds,
+                           RandomSource random,
+                           Predicate<BlockState> replaceable) {
+        boolean alongX = random.nextBoolean();
+        boolean useMinSide = random.nextBoolean();
+
+        int xz;
+        if (alongX) {
+            xz = useMinSide ? roomBounds.minInnerX : roomBounds.maxInnerX;
+        } else {
+            xz = useMinSide ? roomBounds.minInnerZ : roomBounds.maxInnerZ;
+        }
+
+        BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos();
+        for (int y = 0; y < 2; ++y) {
+            for (int zx = -1; zx <= 1; ++zx) {
+                getDoorCarvingOffset(position, origin, alongX, xz, y, zx);
+                if (level.getBlockState(position).isSolid()) {
+                    safeSetBlock(level, position, AIR, replaceable);
                 }
             }
         }
@@ -220,7 +322,6 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
      * @param random  A random number generator.
      * @param replaceable A predicate to check if a block is replaceable.
      */
-    @SuppressWarnings("deprecation")
     private void placeChests(WorldGenLevel level,
                              BlockPos origin,
                              RoomBounds roomBounds,
@@ -235,7 +336,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                 int posZ = origin.getZ() + random.nextInt(roomBounds.baseLength * 2 + 1) - roomBounds.baseLength;
                 pos.set(posX, posY, posZ);
                 if (level.isEmptyBlock(pos)) {
-                    int solidAdjacentWalls  = 0;
+                    int solidAdjacentWalls = 0;
 
                     for(Direction direction : Direction.Plane.HORIZONTAL) {
                         if (level.getBlockState(pos.relative(direction)).isSolid()) {
@@ -244,11 +345,65 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                     }
 
                     if (solidAdjacentWalls  == 1) {
-                        this.safeSetBlock(level, pos, StructurePiece.reorient(level, pos, Blocks.CHEST.defaultBlockState()), replaceable);
-                        RandomizableContainerBlockEntity.setLootTable(level, random, pos, BuiltInLootTables.SIMPLE_DUNGEON);
+                        safeSetBlock(level, pos, StructurePiece.reorient(level, pos, Blocks.CHEST.defaultBlockState()), replaceable);
+                        RandomizableContainerBlockEntity.setLootTable(level, random, pos, new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"));
                         break;
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Spawn the Peacemaker Cow.
+     * @param level The level being generated.
+     * @param origin The position of the lair.
+     */
+    @SuppressWarnings("OverrideOnly")
+    private void spawnPeacemakerCow(WorldGenLevel level,
+                                    BlockPos origin) {
+        EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get();
+        Entity entity = entityType.create(level.getLevel());
+        if (entity instanceof PeacemakerCow cow) {
+
+            cow.moveTo(origin.getX(), origin.getY(), origin.getZ(), 0.0F, 0.0F);
+            cow.setPersistenceRequired();
+            cow.finalizeSpawn(level,
+                    level.getCurrentDifficultyAt(origin),
+                    MobSpawnType.NATURAL,
+                    null,
+                    null);
+
+            level.addFreshEntity(cow);
+        }
+    }
+
+    /**
+     * Spawn some Peacemaker Butterflies.
+     * @param level The level being generated.
+     * @param origin The position of the lair.
+     */
+    private void spawnPeacemakerButterflies(WorldGenLevel level,
+                                            BlockPos origin,
+                                            RoomBounds roomBounds,
+                                            RandomSource random) {
+        for (int i = 0; i < MAX_BUTTERFLIES; ++i) {
+            EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get();
+            Entity entity = entityType.create(level.getLevel());
+            if (entity instanceof PeacemakerButterfly butterfly) {
+
+                int x = origin.getX() + (random.nextBoolean() ? 4 + random.nextInt(roomBounds.maxX - 4) : -4 - random.nextInt(-roomBounds.minX + 4));
+                int z = origin.getZ() + (random.nextBoolean() ? 4 + random.nextInt(roomBounds.maxZ - 4) : -4 - random.nextInt(-roomBounds.minZ + 4));
+
+                butterfly.moveTo(x, origin.getY(), z, 0.0F, 0.0F);
+                butterfly.setPersistenceRequired();
+                butterfly.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(origin),
+                        MobSpawnType.NATURAL,
+                        null,
+                        null);
+
+                level.addFreshEntity(butterfly);
             }
         }
     }
