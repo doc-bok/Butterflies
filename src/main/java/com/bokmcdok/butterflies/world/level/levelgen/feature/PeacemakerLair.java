@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.level.levelgen.feature;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
@@ -198,6 +199,12 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private boolean canGenerate(WorldGenLevel level,
                                 BlockPos origin,
                                 RoomBounds roomBounds) {
+
+        // Don't generate if hostile butterflies have been disabled.
+        if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            return false;
+        }
+
         int numOpenings = 0;
 
         // Test if we can place the room.
