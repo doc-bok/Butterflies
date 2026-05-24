@@ -12,8 +12,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -264,7 +264,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                         }
 
                         // If non-solid below, air above
-                    } else if (position.getY() >= level.getMinBuildHeight()
+                    } else if (position.getY() >= level.getMinY()
                             && !level.getBlockState(position.below()).isSolid()) {
                         level.setBlock(position, AIR, 2);
 
@@ -369,14 +369,14 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private void spawnPeacemakerCow(WorldGenLevel level,
                                     BlockPos origin) {
         EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get();
-        Entity entity = entityType.create(level.getLevel());
+        Entity entity = entityType.create(level.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
         if (entity instanceof PeacemakerCow cow) {
 
             cow.moveTo(origin.getX(), origin.getY(), origin.getZ(), 0.0F, 0.0F);
             cow.setPersistenceRequired();
             cow.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(origin),
-                    MobSpawnType.NATURAL,
+                    EntitySpawnReason.CHUNK_GENERATION,
                     null);
 
             level.addFreshEntity(cow);
@@ -394,7 +394,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                                             RandomSource random) {
         for (int i = 0; i < MAX_BUTTERFLIES; ++i) {
             EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get();
-            Entity entity = entityType.create(level.getLevel());
+            Entity entity = entityType.create(level.getLevel(), EntitySpawnReason.CHUNK_GENERATION);
             if (entity instanceof PeacemakerButterfly butterfly) {
 
                 int x = origin.getX() + (random.nextBoolean() ? 4 + random.nextInt(roomBounds.maxX - 4) : -4 - random.nextInt(-roomBounds.minX + 4));
@@ -404,7 +404,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                 butterfly.setPersistenceRequired();
                 butterfly.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(origin),
-                        MobSpawnType.NATURAL,
+                        EntitySpawnReason.CHUNK_GENERATION,
                         null);
 
                 level.addFreshEntity(butterfly);
