@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.5.0 (2026-05-22)
+ - Added the Peacemaker Lair.
+
 ### 7.4.0 (2026-05-17)
  - Added the Peacemaker Cow.
 
