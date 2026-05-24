@@ -55,6 +55,7 @@ public final class ButterfliesMod {
         ButterflyEntityTypeRegistry.BUTTERFLY_ENTITY_TYPES.register(modEventBus);
         CreativeTabRegistry.CREATIVE_TABS.register(modEventBus);
         DecoratedPotPatternsRegistry.DECORATED_POT_PATTERNS.register(modEventBus);
+        FeatureRegistry.FEATURES.register(modEventBus);
         EntityTypeRegistry.ENTITY_TYPES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         LootModifierRegistry.LOOT_MODIFIERS.register(modEventBus);
