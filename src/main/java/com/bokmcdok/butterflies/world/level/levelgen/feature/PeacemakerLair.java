@@ -1,14 +1,13 @@
 package com.bokmcdok.butterflies.world.level.levelgen.feature;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
+import com.bokmcdok.butterflies.registries.LootTableRegistry;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.RandomizableContainer;
@@ -353,7 +352,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
                     if (solidAdjacentWalls  == 1) {
                         safeSetBlock(level, pos, StructurePiece.reorient(level, pos, Blocks.CHEST.defaultBlockState()), replaceable);
-                        RandomizableContainer.setBlockEntityLootTable(level, random, pos, new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"));
+                        RandomizableContainer.setBlockEntityLootTable(level, random, pos, LootTableRegistry.PEACEMAKER_LAIR);
                         break;
                     }
                 }
@@ -378,7 +377,6 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
             cow.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(origin),
                     MobSpawnType.NATURAL,
-                    null,
                     null);
 
             level.addFreshEntity(cow);
@@ -407,7 +405,6 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                 butterfly.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(origin),
                         MobSpawnType.NATURAL,
-                        null,
                         null);
 
                 level.addFreshEntity(butterfly);
