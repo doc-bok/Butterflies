@@ -11,12 +11,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -353,7 +353,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
                     if (solidAdjacentWalls  == 1) {
                         safeSetBlock(level, pos, StructurePiece.reorient(level, pos, Blocks.CHEST.defaultBlockState()), replaceable);
-                        RandomizableContainerBlockEntity.setLootTable(level, random, pos, new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"));
+                        RandomizableContainer.setBlockEntityLootTable(level, random, pos, new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"));
                         break;
                     }
                 }
