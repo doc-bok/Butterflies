@@ -57,6 +57,7 @@ public final class ButterfliesMod {
         BlockEntityTypeRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
         ButterflyEntityTypeRegistry.BUTTERFLY_ENTITY_TYPES.register(modEventBus);
+        FeatureRegistry.FEATURES.register(modEventBus);
         EntityTypeRegistry.ENTITY_TYPES.register(modEventBus);
         ItemRegistry.ITEMS.register(modEventBus);
         LootModifierRegistry.LOOT_MODIFIERS.register(modEventBus);
