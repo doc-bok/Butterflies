@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "butterflies:peacemaker_lair",
+  "step": "underground_structures"
+}
