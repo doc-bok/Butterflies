@@ -28,7 +28,6 @@ import java.util.function.Predicate;
 /**
  * Generates a Peacemaker Lair as a feature.
  */
-@SuppressWarnings("deprecation")
 public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
     // Default block states
@@ -214,7 +213,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                     BlockPos posOffset = origin.offset(offsetX, offsetY, offsetZ);
 
                     // minY and maxY must be solid throughout
-                    boolean isSolid = level.getBlockState(posOffset).isSolid();
+                    boolean isSolid = level.getBlockState(posOffset).getMaterial().isSolid();
                     if (offsetY == FLOOR_Y && !isSolid) {
                         return false;
                     }
@@ -266,11 +265,11 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
 
                         // If non-solid below, air above
                     } else if (position.getY() >= level.getMinBuildHeight()
-                            && !level.getBlockState(position.below()).isSolid()) {
+                            && !level.getBlockState(position.below()).getMaterial().isSolid()) {
                         level.setBlock(position, AIR, 2);
 
                         // Build the walls
-                    } else if (posOffsetBlockState.isSolid()
+                    } else if (posOffsetBlockState.getMaterial().isSolid()
                             && !posOffsetBlockState.is(Blocks.CHEST)) {
 
                         // Randomly place mossy/non-mossy cobblestone
@@ -314,7 +313,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
         for (int y = 0; y < 2; ++y) {
             for (int zx = -1; zx <= 1; ++zx) {
                 getDoorCarvingOffset(position, origin, alongX, xz, y, zx);
-                if (level.getBlockState(position).isSolid()) {
+                if (level.getBlockState(position).getMaterial().isSolid()) {
                     safeSetBlock(level, position, AIR, replaceable);
                 }
             }
@@ -346,7 +345,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
                     int solidAdjacentWalls = 0;
 
                     for(Direction direction : Direction.Plane.HORIZONTAL) {
-                        if (level.getBlockState(pos.relative(direction)).isSolid()) {
+                        if (level.getBlockState(pos.relative(direction)).getMaterial().isSolid()) {
                             ++solidAdjacentWalls ;
                         }
                     }
@@ -366,7 +365,6 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
      * @param level The level being generated.
      * @param origin The position of the lair.
      */
-    @SuppressWarnings("OverrideOnly")
     private void spawnPeacemakerCow(WorldGenLevel level,
                                     BlockPos origin) {
         EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_COW.get();
