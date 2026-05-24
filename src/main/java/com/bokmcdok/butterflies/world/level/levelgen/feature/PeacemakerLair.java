@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -23,6 +22,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 
+import java.util.Random;
 import java.util.function.Predicate;
 
 /**
@@ -134,7 +134,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> config) {
         WorldGenLevel level = config.level();
         BlockPos origin = config.origin();
-        RandomSource random = config.random();
+        Random random = config.random();
         Predicate<BlockState> replaceable = Feature.isReplaceable(BlockTags.FEATURES_CANNOT_REPLACE);
 
         RoomBounds bounds = new RoomBounds(random);
@@ -173,7 +173,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
          * Construct a new room bounds.
          * @param random A random number generator.
          */
-        public RoomBounds(RandomSource random) {
+        public RoomBounds(Random random) {
             baseWidth = random.nextInt(2) + BASE_ROOM_SIZE;
             minX = -baseWidth - 1;
             maxX = baseWidth + 1;
@@ -247,7 +247,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private void carveAndBuild(WorldGenLevel level,
                                BlockPos origin,
                                RoomBounds roomBounds,
-                               RandomSource random,
+                               Random random,
                                Predicate<BlockState> replaceable) {
         BlockPos.MutableBlockPos position = new BlockPos.MutableBlockPos();
         for(int offsetX = roomBounds.minX; offsetX <= roomBounds.maxX; ++offsetX) {
@@ -297,7 +297,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private void carveDoor(WorldGenLevel level,
                            BlockPos origin,
                            RoomBounds roomBounds,
-                           RandomSource random,
+                           Random random,
                            Predicate<BlockState> replaceable) {
         boolean alongX = random.nextBoolean();
         boolean useMinSide = random.nextBoolean();
@@ -331,7 +331,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private void placeChests(WorldGenLevel level,
                              BlockPos origin,
                              RoomBounds roomBounds,
-                             RandomSource random,
+                             Random random,
                              Predicate<BlockState> replaceable) {
 
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -391,7 +391,7 @@ public class PeacemakerLair extends Feature<NoneFeatureConfiguration> {
     private void spawnPeacemakerButterflies(WorldGenLevel level,
                                             BlockPos origin,
                                             RoomBounds roomBounds,
-                                            RandomSource random) {
+                                            Random random) {
         for (int i = 0; i < MAX_BUTTERFLIES; ++i) {
             EntityType<?> entityType = PeacemakerEntityTypeRegistry.PEACEMAKER_BUTTERFLY.get();
             Entity entity = entityType.create(level.getLevel());
