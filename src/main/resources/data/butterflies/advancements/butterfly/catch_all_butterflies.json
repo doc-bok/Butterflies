@@ -528,6 +528,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "smile": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_smile"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "swallowtail": {
       "conditions": {
         "items": [
@@ -677,6 +689,9 @@
     ],
     [
       "rainbow"
+    ],
+    [
+      "smile"
     ],
     [
       "swallowtail"
