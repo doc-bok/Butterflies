@@ -1,0 +1,29 @@
+{
+  "diurnality": "diurnal",
+  "eggMultiplier": "normal",
+  "entityId": "smile",
+  "extraLandingBlocks": "none",
+  "habitats": [
+    "forests"
+  ],
+  "index": 40,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "short",
+    "chrysalis": "medium",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "cornflower",
+  "rarity": "common",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [
+    "fearless"
+  ],
+  "type": "butterfly"
+}
