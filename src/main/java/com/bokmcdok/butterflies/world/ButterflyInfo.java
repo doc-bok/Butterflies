@@ -50,6 +50,7 @@ public class ButterflyInfo {
             "peacock-pansy-dry",
             "peacock",
             "rainbow",
+            "smile",
             "swallowtail",
             "bluemoonmale",
             "commongrassyellow-dry",
@@ -132,6 +133,9 @@ public class ButterflyInfo {
         {}, // No traits for peacock-pansy-dry
         {}, // No traits for peacock
         {}, // No traits for rainbow
+        {
+            ButterflyData.Trait.FEARLESS,
+        },
         {}, // No traits for swallowtail
         {}, // No traits for bluemoonmale
         {}, // No traits for commongrassyellow-dry
