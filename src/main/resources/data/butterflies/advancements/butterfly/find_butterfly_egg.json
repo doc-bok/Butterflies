@@ -480,6 +480,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "smile": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:smile_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "swallowtail": {
       "conditions": {
         "items": [
@@ -551,6 +563,7 @@
       "peacock-pansy-dry",
       "peacock",
       "rainbow",
+      "smile",
       "swallowtail"
     ]
   ]

@@ -31,12 +31,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           # Checkout as many commits as needed for the diff
-          fetch-depth: 2
+          fetch-depth: 0
       - shell: pwsh
         id: check_version_change
         run: |
           # Diff HEAD with the previous commit
-          $diff = git diff --name-only HEAD^ HEAD
+          $diff = git diff --name-only ${{ github.event.before }} ${{ github.event.after }}
           
           # Check if a file under docs/ or with the .md extension has changed (added, modified, deleted)
           $SourceDiff = $diff | Where-Object { $_ -match 'gradle.properties' }
