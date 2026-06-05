@@ -317,6 +317,9 @@ public class ButterflyInfo {
             ButterflyData.Habitat.PLAINS,
         },
         {
+            ButterflyData.Habitat.FORESTS,
+        },
+        {
             ButterflyData.Habitat.PLAINS,
         },
         {
@@ -432,6 +435,7 @@ public class ButterflyInfo {
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.UNCOMMON,
+            ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
             ButterflyData.Rarity.COMMON,
