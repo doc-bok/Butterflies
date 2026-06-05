@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.6.0 (2026-06-04)
+ - Added the Smile Butterfly.
+
 ### 7.5.0 (2026-05-22)
  - Added the Peacemaker Lair.
 
