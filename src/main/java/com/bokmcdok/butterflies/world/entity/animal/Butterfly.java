@@ -588,27 +588,31 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     protected void registerGoals() {
         super.registerGoals();
 
-        // Some butterflies are not scared of cats.
-        Predicate<LivingEntity> predicateOnAvoidEntity = Butterfly::isScaredOfEverything;
-        if (getData().hasTrait(ButterflyData.Trait.CATFRIEND)) {
-            predicateOnAvoidEntity = Butterfly::isNotScaredOfCats;
-        }
+        // Some butterflies are fearless.
+        if (!getData().hasTrait(ButterflyData.Trait.FEARLESS)) {
 
-        // Some butterflies can mimic others.
-        if (getData().hasTrait(ButterflyData.Trait.MIMICRY)) {
-            this.goalSelector.addGoal(1, new ButterflyMimicGoal(this,
-                    LivingEntity.class,
-                    10.0F,
-                    2.2,
-                    2.2,
-                    predicateOnAvoidEntity));
-        } else {
-            this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
-                    LivingEntity.class,
-                    10.0F,
-                    2.2,
-                    2.2,
-                    predicateOnAvoidEntity));
+            // Some butterflies are not scared of cats.
+            Predicate<LivingEntity> predicateOnAvoidEntity = Butterfly::isScaredOfEverything;
+            if (getData().hasTrait(ButterflyData.Trait.CATFRIEND)) {
+                predicateOnAvoidEntity = Butterfly::isNotScaredOfCats;
+            }
+
+            // Some butterflies can mimic others.
+            if (getData().hasTrait(ButterflyData.Trait.MIMICRY)) {
+                this.goalSelector.addGoal(1, new ButterflyMimicGoal(this,
+                        LivingEntity.class,
+                        10.0F,
+                        2.2,
+                        2.2,
+                        predicateOnAvoidEntity));
+            } else {
+                this.goalSelector.addGoal(1, new AvoidEntityGoal<>(this,
+                        LivingEntity.class,
+                        10.0F,
+                        2.2,
+                        2.2,
+                        predicateOnAvoidEntity));
+            }
         }
 
         this.goalSelector.addGoal(2, new ButterflyLayEggGoal(this, 0.8, 8, 8));
