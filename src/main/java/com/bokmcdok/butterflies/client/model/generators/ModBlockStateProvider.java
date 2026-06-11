@@ -2,7 +2,9 @@ package com.bokmcdok.butterflies.client.model.generators;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.world.block.ButterflyOrigamiBlock;
 import com.bokmcdok.butterflies.world.block.FlowerCropBlock;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -58,6 +60,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFlowerBud(BlockRegistry.RED_TULIP_BUD);
         registerFlowerBud(BlockRegistry.WHITE_TULIP_BUD);
         registerFlowerBud(BlockRegistry.WITHER_ROSE_BUD);
+
+        // Functional Blocks
+        simpleBlock(BlockRegistry.BUTTERFLY_FEEDER.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_FEEDER.getId()));
+        simpleBlock(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
+
+        // Origami
+        for(RegistryObject<Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
+            registerButterflyOrigami(origami);
+        }
     }
 
     /**
@@ -107,6 +118,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
     }
 
+    private void registerButterflyOrigami(RegistryObject<Block> block) {
+
+        Function<BlockState, ConfiguredModel[]> function =
+                state -> generateOrientationState(state, block);
+
+        getVariantBuilder(block.get()).forAllStates(function);
+    }
+
     /**
      * Generates a block state variant for a specific age.
      * @param state The current block state.
@@ -125,6 +144,83 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         models[0] = new ConfiguredModel(models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID,
                 "block/flower_buds/" + textureName +"_stage" + age)));
+        return models;
+    }
+
+    /**
+     * Generates a block state variant based on orientation.
+     * @param state The current block state.
+     * @param block The block to generate.
+     * @return A new variant of the block state.
+     */
+    private ConfiguredModel[] generateOrientationState(BlockState state,
+                                                       RegistryObject<Block> block) {
+        ConfiguredModel[] models = new ConfiguredModel[1];
+        FrontAndTop orientation = state.getValue(ButterflyOrigamiBlock.ORIENTATION);
+        int x = 0;
+        int y = 0;
+        switch (orientation) {
+            case DOWN_EAST:
+                x = 180;
+                y = 270;
+                break;
+
+            case DOWN_NORTH:
+                x = 180;
+                y = 180;
+                break;
+
+            case DOWN_SOUTH:
+                x = 180;
+                break;
+
+            case DOWN_WEST:
+                x = 180;
+                y = 90;
+                break;
+
+            case EAST_UP:
+                x = 270;
+                y = 270;
+                break;
+
+            case NORTH_UP:
+                x = 270;
+                y = 180;
+                break;
+
+            case SOUTH_UP:
+                x = 270;
+                break;
+
+            case UP_EAST:
+                y = 270;
+                break;
+
+            case UP_NORTH:
+                y = 180;
+                break;
+
+            case UP_SOUTH:
+                break;
+
+            case UP_WEST:
+                y = 90;
+                break;
+
+            case WEST_UP:
+                x = 270;
+                y = 90;
+                break;
+        }
+
+        // This should never be null.
+        assert block.getId() != null;
+
+        models[0] = new ConfiguredModel(
+                models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID, "block/" + block.getId().getPath())),
+                x, y, false);
+
         return models;
     }
 }
