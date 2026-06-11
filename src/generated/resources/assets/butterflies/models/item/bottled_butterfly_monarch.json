@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld_rod",
+  "textures": {
+    "layer0": "butterflies:item/bottled_butterfly/bottled_monarch"
+  }
+}
