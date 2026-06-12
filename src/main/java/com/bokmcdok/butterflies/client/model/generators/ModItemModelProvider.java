@@ -35,6 +35,8 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     @Override
     protected void registerModels() {
+
+        // Butterfly-based Items.
         for(int i = 0; i < ButterflyEntityTypeRegistry.BUTTERFLIES.size(); ++i) {
             registerBottledItems(i);
             registerButterflyEgg(i);
@@ -44,15 +46,24 @@ public class ModItemModelProvider extends ItemModelProvider {
             registerCaterpillar(i);
         }
 
+        // Special Butterfly Nets.
         registerSpecialButterflyNet(ItemRegistry.EMPTY_BUTTERFLY_NET);
         registerSpecialButterflyNet(ItemRegistry.BURNT_BUTTERFLY_NET);
 
+        // General Items.
         basicItem(ItemRegistry.BUTTERFLY_BOOK.get());
         basicItem(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
         basicItem(ItemRegistry.INFESTED_APPLE.get());
         basicItem(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
         basicItem(ItemRegistry.SILK.get());
         basicItem(ItemRegistry.ZHUANGZI_BOOK.get());
+
+        // Golem Spawn Egg.
+        singleTexture(getPath(SpawnEggRegistry.BUTTERFLY_GOLEM_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/golem/butterfly"));
+
+        // Peacemaker Spawn Eggs.
+        registerPeacemakerSpawnEggs();
     }
 
     /**
@@ -110,6 +121,38 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         path = getPath(SpawnEggRegistry.EGG_SPAWN_EGGS.get(index));
         singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/egg/" + species));
+    }
+
+    /**
+     * Registers all the Peacemaker entity spawn eggs.
+     */
+    public void registerPeacemakerSpawnEggs() {
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/butterfly/peacemaker"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_COW_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_cow"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_EVOKER_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_evoker"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_illusioner"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_pillager"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_VILLAGER_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_villager"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_VINDICATOR_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_vindicator"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_WANDERING_TRADER_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_wandering_trader"));
+
+        singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_WITCH_SPAWN_EGG), HANDHELD_ROD, "layer0",
+                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_witch"));
     }
 
     /**
