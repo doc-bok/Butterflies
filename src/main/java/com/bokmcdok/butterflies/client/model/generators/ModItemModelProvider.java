@@ -39,6 +39,7 @@ public class ModItemModelProvider extends ItemModelProvider {
             registerBottledItems(i);
             registerButterflyEgg(i);
             registerFullButterflyNet(i);
+            registerButterflyScroll(i);
             registerButterflySpawnEggs(i);
         }
 
@@ -46,6 +47,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         registerSpecialButterflyNet(ItemRegistry.BURNT_BUTTERFLY_NET);
 
         basicItem(ItemRegistry.BUTTERFLY_BOOK.get());
+        basicItem(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
+        basicItem(ItemRegistry.ZHUANGZI_BOOK.get());
     }
 
     /**
@@ -62,8 +65,17 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerButterflyEgg(int index) {
         final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_butterfly_egg");
-        String path = Objects.requireNonNull(ItemRegistry.BUTTERFLY_EGGS.get(index).getId()).getPath();
+        String path = getPath(ItemRegistry.BUTTERFLY_EGGS.get(index));
         singleTexture(path, parent, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_egg/" + path));
+    }
+
+    /**
+     * Registers a butterfly scroll.
+     * @param index The butterfly index.
+     */
+    private void registerButterflyScroll(int index) {
+        String name = getPath(ItemRegistry.BUTTERFLY_SCROLLS.get(index));
+        singleTexture(name, mcLoc("generated"), "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_scroll/" + name));
     }
 
     /**
