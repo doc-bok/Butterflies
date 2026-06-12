@@ -142,9 +142,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
             textureName = "tulip";
         }
 
-        //models[0] = new ConfiguredModel(models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID,
-        //        "block/flower_buds/" + textureName +"_stage" + age)));
-
         models[0] = new ConfiguredModel(models().cross("block/flower_buds/" + textureName +"_stage" + age,
                 new ResourceLocation(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName +"_stage" + age)).renderType("cutout"));
 
@@ -221,10 +218,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
         // This should never be null.
         assert block.getId() != null;
 
+        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "block/butterfly_origami");
+        String path = block.getId().getPath();
         models[0] = new ConfiguredModel(
-                models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID, "block/" + block.getId().getPath())),
+                models().withExistingParent("block/" + path, parent).texture("all", new ResourceLocation("block/" + path.substring(18) + "_wool")),
                 x, y, false);
-
         return models;
     }
 }
