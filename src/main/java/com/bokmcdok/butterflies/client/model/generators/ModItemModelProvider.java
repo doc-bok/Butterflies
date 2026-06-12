@@ -38,6 +38,8 @@ public class ModItemModelProvider extends ItemModelProvider {
             registerButterflyEgg(i);
             registerButterflySpawnEggs(i);
         }
+        
+        basicItem(ItemRegistry.BUTTERFLY_BOOK.get());
     }
 
     /**

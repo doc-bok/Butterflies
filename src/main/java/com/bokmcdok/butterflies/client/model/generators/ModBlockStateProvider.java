@@ -62,8 +62,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFlowerBud(BlockRegistry.WITHER_ROSE_BUD);
 
         // Functional Blocks
-        simpleBlock(BlockRegistry.BUTTERFLY_FEEDER.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_FEEDER.getId()));
-        simpleBlock(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
+        simpleBlockWithItem(BlockRegistry.BUTTERFLY_FEEDER.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_FEEDER.getId()));
+        simpleBlockWithItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
 
         // Origami
         for(RegistryObject<Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
