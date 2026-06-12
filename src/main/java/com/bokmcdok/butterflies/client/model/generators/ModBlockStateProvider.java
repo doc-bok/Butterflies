@@ -223,6 +223,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         models[0] = new ConfiguredModel(
                 models().withExistingParent("block/" + path, parent).texture("all", new ResourceLocation("block/" + path.substring(18) + "_wool")),
                 x, y, false);
+
+        simpleBlockItem(block.get(), models[0].model);
+
         return models;
     }
 }
