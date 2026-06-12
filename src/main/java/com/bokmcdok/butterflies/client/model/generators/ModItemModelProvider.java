@@ -41,6 +41,7 @@ public class ModItemModelProvider extends ItemModelProvider {
             registerFullButterflyNet(i);
             registerButterflyScroll(i);
             registerButterflySpawnEggs(i);
+            registerCaterpillar(i);
         }
 
         registerSpecialButterflyNet(ItemRegistry.EMPTY_BUTTERFLY_NET);
@@ -48,6 +49,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         basicItem(ItemRegistry.BUTTERFLY_BOOK.get());
         basicItem(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
+        basicItem(ItemRegistry.INFESTED_APPLE.get());
+        basicItem(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
+        basicItem(ItemRegistry.SILK.get());
         basicItem(ItemRegistry.ZHUANGZI_BOOK.get());
     }
 
@@ -76,6 +80,16 @@ public class ModItemModelProvider extends ItemModelProvider {
     private void registerButterflyScroll(int index) {
         String name = getPath(ItemRegistry.BUTTERFLY_SCROLLS.get(index));
         singleTexture(name, mcLoc("generated"), "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_scroll/" + name));
+    }
+
+    /**
+     * Registers a caterpillar.
+     * @param index The butterfly index.
+     */
+    private void registerCaterpillar(int index) {
+        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_caterpillar");
+        String path = getPath(ItemRegistry.CATERPILLARS.get(index));
+        singleTexture(path, parent, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/caterpillar/" + path));
     }
 
     /**
