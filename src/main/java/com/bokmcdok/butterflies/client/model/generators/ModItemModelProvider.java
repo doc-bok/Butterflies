@@ -34,7 +34,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         for(int i = 0; i < ButterflyEntityTypeRegistry.BUTTERFLIES.size(); ++i) {
-            registerBottledButterfly(i);
+            registerBottledItems(i);
             registerButterflyEgg(i);
             registerButterflySpawnEggs(i);
         }
@@ -43,10 +43,15 @@ public class ModItemModelProvider extends ItemModelProvider {
     /**
      * Registers the bottled butterflies.
      */
-    private void registerBottledButterfly(int index) {
+    private void registerBottledItems(int index) {
         bottledButterflyItem(ItemRegistry.BOTTLED_BUTTERFLIES.get(index));
+        bottledCaterpillarItem(ItemRegistry.BOTTLED_CATERPILLARS.get(index));
     }
 
+    /**
+     * Registers a butterfly egg.
+     * @param index The butterfly index.
+     */
     private void registerButterflyEgg(int index) {
         final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_butterfly_egg");
         String path = Objects.requireNonNull(ItemRegistry.BUTTERFLY_EGGS.get(index).getId()).getPath();
@@ -80,12 +85,36 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void bottledButterflyItem(RegistryObject<Item> item)
     {
+        bottledItem(item, "bottled_butterfly", "bottled", 18);
+    }
+
+    /**
+     * Registers a bottled caterpillar item.
+     * @param item The item to register.
+     */
+    private void bottledCaterpillarItem(RegistryObject<Item> item)
+    {
+        bottledItem(item, "bottled_caterpillar", "bottled_caterpillar", 20);
+    }
+
+    /**
+     * Registers a bottled  item.
+     * @param item The item to register.
+     * @param textureLocation The location of the texture.
+     * @param texturePrefix The prefix for the texture name.
+     * @param substrStart The start of the substring for the texture name.
+     */
+    private void bottledItem(RegistryObject<Item> item,
+                             String textureLocation,
+                             String texturePrefix,
+                             int substrStart)
+    {
         // The key should never be null.
         assert item.getKey() != null;
 
         ResourceLocation itemKey = item.getKey().location();
         getBuilder(itemKey.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
-                .texture("layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/bottled_butterfly/bottled_" + itemKey.getPath().substring(18)));
+                .texture("layer0", new ResourceLocation(ButterfliesMod.MOD_ID,"item/" + textureLocation + "/" + texturePrefix + "_" + itemKey.getPath().substring(substrStart)));
     }
 }
