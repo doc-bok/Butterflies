@@ -35,6 +35,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         for(int i = 0; i < ButterflyEntityTypeRegistry.BUTTERFLIES.size(); ++i) {
             registerBottledButterfly(i);
+            registerButterflyEgg(i);
             registerButterflySpawnEggs(i);
         }
     }
@@ -44,6 +45,12 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerBottledButterfly(int index) {
         bottledButterflyItem(ItemRegistry.BOTTLED_BUTTERFLIES.get(index));
+    }
+
+    private void registerButterflyEgg(int index) {
+        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_butterfly_egg");
+        String path = Objects.requireNonNull(ItemRegistry.BUTTERFLY_EGGS.get(index).getId()).getPath();
+        singleTexture(path, parent, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_egg/" + path));
     }
 
     /**
