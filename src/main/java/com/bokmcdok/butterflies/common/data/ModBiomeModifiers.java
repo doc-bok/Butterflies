@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -12,6 +13,7 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * Adds biome modifiers for butterfly spawns.
  */
-public class ModSpawnsBiomeModifiers {
+public class ModBiomeModifiers {
 
     public static final ResourceKey<BiomeModifier> VILLAGE_DESERT_BUTTERFLIES = registerKey("village_desert_butterflies");
     public static final ResourceKey<BiomeModifier> VILLAGE_PLAINS_BUTTERFLIES = registerKey("village_plains_butterflies");
@@ -40,6 +42,7 @@ public class ModSpawnsBiomeModifiers {
      */
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var biomes = context.lookup(Registries.BIOME);
+        var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
         EnumMap<ButterflyData.Habitat, List<MobSpawnSettings.SpawnerData>> spawners =
                 new EnumMap<>(ButterflyData.Habitat.class);
@@ -67,6 +70,12 @@ public class ModSpawnsBiomeModifiers {
 
         // Add the village biome modifiers.
         registerVillageSpawnModifiers(context, biomes, spawners.get(ButterflyData.Habitat.VILLAGES));
+
+        // Finally register the structures.
+        context.register(registerKey("peacemaker_lair"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+                biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
+                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.PEACEMAKER_LAIR)),
+                GenerationStep.Decoration.UNDERGROUND_STRUCTURES));
     }
 
     /**

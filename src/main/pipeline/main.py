@@ -5,7 +5,6 @@ from .image_generation import ImageGenerator
 from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager
-from .biome_modifiers import BiomeModifierManager
 from .code_generation import CodeGenerator
 
 def load_species_data(config, logger, species: str) -> Optional[dict]:
@@ -34,7 +33,6 @@ def main():
     # Instantiate managers
     data_gen = DataGenerator(config)
     localisation = LocalisationManager(config)
-    biome_mod_mgr = BiomeModifierManager(config)
     code_gen = CodeGenerator(config)
     image_gen = ImageGenerator(config)
 
@@ -77,21 +75,6 @@ def main():
 
     # Step 6: Generate Java code with species and traits
     code_gen.generate_code(all_species, species_data)
-
-    # Step 7: Reset and generate biome modifier files
-    biome_mod_mgr.reset_biome_modifiers()
-
-    biome_groups = [
-        (butterflies, config.BUTTERFLIES_FOLDER, False),
-        (variant_butterflies, config.VARIANT_BUTTERFLIES_FOLDER, True),
-        (moths, config.MOTHS_FOLDER, False),
-        (variant_moths, config.VARIANT_MOTHS_FOLDER, True),
-        (special, config.SPECIAL_FOLDER, False),
-    ]
-
-    for species_group, folder, is_variant in biome_groups:
-        logger.info(f"Generating biome modifiers for folder '{folder}' with is_variant={is_variant}")
-        biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
 
     # Step 8: Generate images
     image_gen.generate_textures()
