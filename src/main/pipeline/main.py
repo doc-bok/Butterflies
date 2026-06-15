@@ -5,7 +5,6 @@ from .image_generation import ImageGenerator
 from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager
-from .advancements import AdvancementGenerator
 from .biome_modifiers import BiomeModifierManager
 from .code_generation import CodeGenerator
 
@@ -35,7 +34,6 @@ def main():
     # Instantiate managers
     data_gen = DataGenerator(config)
     localisation = LocalisationManager(config)
-    adv_gen = AdvancementGenerator(config)
     biome_mod_mgr = BiomeModifierManager(config)
     code_gen = CodeGenerator(config)
     image_gen = ImageGenerator(config)
@@ -76,13 +74,6 @@ def main():
 
     # Step 4: Generate localisation strings
     localisation.generate_localisation_strings(all_butterflies + special, all_moths)
-
-    # Step 5: Generate advancements JSON files for various groups
-    adv_gen.generate_advancements(butterflies, config.BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_butterflies, config.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(moths, config.MOTH_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_moths, config.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(butterflies + moths, config.BOTH_ACHIEVEMENT_TEMPLATES)
 
     # Step 6: Generate Java code with species and traits
     code_gen.generate_code(all_species, species_data)
