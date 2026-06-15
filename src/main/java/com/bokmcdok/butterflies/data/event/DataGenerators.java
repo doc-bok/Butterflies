@@ -3,13 +3,16 @@ package com.bokmcdok.butterflies.data.event;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.generators.ModBlockStateProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;
+import com.bokmcdok.butterflies.common.data.ModAdvancementGenerator;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -19,6 +22,7 @@ import net.minecraftforge.resource.ResourcePackLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Class used to generate data for the mod.
@@ -36,11 +40,15 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        //CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+        CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
         preloadButterflyData();
 
-        // Register the generators
+        // Server Data
+        final ModAdvancementGenerator advancements = new ModAdvancementGenerator();
+        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(advancements)));
+
+        // Client Assets
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
     }

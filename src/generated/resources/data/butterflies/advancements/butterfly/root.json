@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "butterfly_net": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.butterfly.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:butterfly_net"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.butterfly.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_net"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
