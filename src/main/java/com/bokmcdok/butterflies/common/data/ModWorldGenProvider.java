@@ -1,6 +1,9 @@
 package com.bokmcdok.butterflies.common.data;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.data.worldgen.ModBiomeModifiers;
+import com.bokmcdok.butterflies.data.worldgen.ModConfiguredFeatures;
+import com.bokmcdok.butterflies.data.worldgen.ModPlacedFeatures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:bottled_caterpillar_buckeye"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "butterflies:blocks/bottled_caterpillar_buckeye"
+}
