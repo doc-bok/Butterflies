@@ -204,12 +204,9 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 3
-        },
-        {
           "type": "minecraft:item",
-          "name": "butterflies:butterfly_zhuangzi"
+          "name": "butterflies:butterfly_zhuangzi",
+          "weight": 3
         }
       ],
       "rolls": 1.0
