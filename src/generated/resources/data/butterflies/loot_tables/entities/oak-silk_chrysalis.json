@@ -11,38 +11,25 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 0.0
+                "max": 3.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
-            }
-          ],
-          "name": "minecraft:poppy"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 5.0,
-                "min": 3.0
+                "max": 1.0,
+                "min": 0.0
               },
-              "function": "minecraft:set_count"
+              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:iron_ingot"
+          "name": "butterflies:silk"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "minecraft:entities/iron_golem"
+  "random_sequence": "butterflies:entities/oak-silk_chrysalis"
 }
