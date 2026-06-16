@@ -1,11 +1,12 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_light_blue_dye": {
       "conditions": {
         "items": [
           {
             "items": [
-              "minecraft:paper"
+              "minecraft:light_blue_dye"
             ]
           }
         ]
@@ -21,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_item",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_light_blue_dye"
     ]
   ],
   "rewards": {

@@ -5,9 +5,10 @@ import com.bokmcdok.butterflies.client.model.generators.ModBlockStateProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;
 import com.bokmcdok.butterflies.common.data.ModAdvancementGenerator;
 import com.bokmcdok.butterflies.common.data.ModGlobalLootModifierProvider;
-import com.bokmcdok.butterflies.common.data.ModRecipeAdvancementGenerator;
 import com.bokmcdok.butterflies.common.data.ModWorldGenProvider;
 import com.bokmcdok.butterflies.data.loot.ModLootTableProvider;
+import com.bokmcdok.butterflies.data.recipes.ModRecipeProvider;
+import com.bokmcdok.butterflies.data.tags.ModBannerPatternTagsProvider;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -50,13 +51,14 @@ public class DataGenerators {
 
         // Server Data
         final List<ForgeAdvancementProvider.AdvancementGenerator> advancements = List.of(
-                new ModAdvancementGenerator(),
-                new ModRecipeAdvancementGenerator());
+                new ModAdvancementGenerator());
 
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, lookupProvider, existingFileHelper));
 
         // Client Assets
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));

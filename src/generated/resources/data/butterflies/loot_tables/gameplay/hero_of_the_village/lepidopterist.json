@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:butterfly_zhuangzi"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:silk"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:butterfly_net_burnt"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:banner_pattern_butterfly"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "butterflies:butterfly_pottery_sherd"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "butterflies:gameplay/hero_of_the_village/lepidopterist"
+}

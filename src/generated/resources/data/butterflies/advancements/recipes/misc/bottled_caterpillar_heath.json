@@ -1,6 +1,7 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_caterpillar_heath": {
       "conditions": {
         "items": [
           {
@@ -21,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_item",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_caterpillar_heath"
     ]
   ],
   "rewards": {

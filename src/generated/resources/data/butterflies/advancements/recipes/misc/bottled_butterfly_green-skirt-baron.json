@@ -1,6 +1,7 @@
 {
+  "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_item": {
+    "has_butterfly_net_green-skirt-baron": {
       "conditions": {
         "items": [
           {
@@ -21,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_item",
-      "has_the_recipe"
+      "has_the_recipe",
+      "has_butterfly_net_green-skirt-baron"
     ]
   ],
   "rewards": {
