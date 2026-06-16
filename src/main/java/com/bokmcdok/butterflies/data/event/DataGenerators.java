@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.generators.ModBlockStateProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;
 import com.bokmcdok.butterflies.common.data.ModAdvancementGenerator;
+import com.bokmcdok.butterflies.common.data.ModGlobalLootModifierProvider;
 import com.bokmcdok.butterflies.common.data.ModRecipeAdvancementGenerator;
 import com.bokmcdok.butterflies.common.data.ModWorldGenProvider;
 import com.bokmcdok.butterflies.world.ButterflyData;
@@ -53,6 +54,7 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
 
         // Client Assets
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
