@@ -9,6 +9,7 @@ import com.bokmcdok.butterflies.common.data.ModWorldGenProvider;
 import com.bokmcdok.butterflies.data.loot.ModLootTableProvider;
 import com.bokmcdok.butterflies.data.recipes.ModRecipeProvider;
 import com.bokmcdok.butterflies.data.tags.ModBannerPatternTagsProvider;
+import com.bokmcdok.butterflies.data.tags.ModEntityTypeTagsProvider;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -59,6 +60,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
         generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
         generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, lookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
 
         // Client Assets
         generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
