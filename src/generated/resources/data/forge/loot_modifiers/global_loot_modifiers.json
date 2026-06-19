@@ -1,0 +1,8 @@
+{
+  "entries": [
+    "butterflies:butterfly_loot",
+    "butterflies:trail_runs_rare_loot",
+    "butterflies:oak_leaves_loot"
+  ],
+  "replace": false
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "butterflies:infested_apple"
+    }
+  ],
+  "result": {
+    "item": "butterflies:caterpillar_codling"
+  }
+}

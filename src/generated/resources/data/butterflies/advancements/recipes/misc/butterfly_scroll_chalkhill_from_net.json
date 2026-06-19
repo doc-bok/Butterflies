@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_butterfly_net_chalkhill": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_chalkhill"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:butterfly_scroll_chalkhill_from_net"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_butterfly_net_chalkhill"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_scroll_chalkhill_from_net"
+    ]
+  },
+  "sends_telemetry_event": false
+}

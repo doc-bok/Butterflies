@@ -33,3 +33,7 @@ forge*changelog.txt
 
 # Python
 __pycache__
+
+# Files from data generation
+run-data
+/src/generated/resources/.cache

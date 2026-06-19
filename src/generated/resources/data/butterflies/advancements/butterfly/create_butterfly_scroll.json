@@ -1,0 +1,1013 @@
+{
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "criteria": {
+    "butterfly_scroll_admiral": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_admiral"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_atlas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_bluemoon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_bluemoon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_bluemoonmale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_bluemoonmale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_buckeye": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_buckeye"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_cabbage": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_cabbage"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_carpet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_case-bearing-clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_chalkhill": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_chalkhill"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_christmas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_christmas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clearwing-hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clearwing-hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipper": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipper"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperblack": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperblack"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperblue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperblue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperbrown": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperbrown"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clippercyan": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clippercyan"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clippergray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clippergray"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clippergreen": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clippergreen"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperlightgray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperlightgray"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperlime": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperlime"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clippermagenta": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clippermagenta"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperorange": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperorange"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperpink": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperpink"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperpurple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperpurple"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperred": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperred"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperwhite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperwhite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clipperyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clipperyellow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_codling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commander"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_common": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_common"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_common-crow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_common-crow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_common-mime": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_common-mime"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_commonbirdwing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commonbirdwing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_commongrassyellow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commongrassyellow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_commongrassyellow-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_commongrassyellow-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_diamondback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_diamondback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_domestic_silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_domestic_silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_emperor": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_emperor"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_forester": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_forester"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_glasswing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_glasswing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_green-skirt-baron": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_green-skirt-baron"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_hairstreak": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_hairstreak"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_heath": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_heath"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_ice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_indianmeal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_indianmeal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_lava": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_lava"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_light"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_longwing": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_longwing"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_luna"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_monarch": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_monarch"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_morpho": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_morpho"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_oak-silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peacemaker": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peacemaker"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peacock": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peacock"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peacock-pansy-aged": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peacock-pansy-aged"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peacock-pansy-dry": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peacock-pansy-dry"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peacock-pansy-wet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peacock-pansy-wet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_peppered": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_peppered"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_rainbow": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_rainbow"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_smile": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_smile"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_spongy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_spongymale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_spongymale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_swallowtail": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_swallowtail"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_scroll_white-lined-sphinx": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_white-lined-sphinx"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.create_butterfly_scroll.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:butterfly_scroll_admiral"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.create_butterfly_scroll.title"
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_scroll_admiral"
+    ],
+    [
+      "butterfly_scroll_bluemoon"
+    ],
+    [
+      "butterfly_scroll_buckeye"
+    ],
+    [
+      "butterfly_scroll_cabbage"
+    ],
+    [
+      "butterfly_scroll_chalkhill"
+    ],
+    [
+      "butterfly_scroll_christmas"
+    ],
+    [
+      "butterfly_scroll_clipper"
+    ],
+    [
+      "butterfly_scroll_clipperblack"
+    ],
+    [
+      "butterfly_scroll_clipperblue"
+    ],
+    [
+      "butterfly_scroll_clipperbrown"
+    ],
+    [
+      "butterfly_scroll_clippercyan"
+    ],
+    [
+      "butterfly_scroll_clippergray"
+    ],
+    [
+      "butterfly_scroll_clippergreen"
+    ],
+    [
+      "butterfly_scroll_clipperlightgray"
+    ],
+    [
+      "butterfly_scroll_clipperlime"
+    ],
+    [
+      "butterfly_scroll_clippermagenta"
+    ],
+    [
+      "butterfly_scroll_clipperorange"
+    ],
+    [
+      "butterfly_scroll_clipperpink"
+    ],
+    [
+      "butterfly_scroll_clipperpurple"
+    ],
+    [
+      "butterfly_scroll_clipperred"
+    ],
+    [
+      "butterfly_scroll_clipperwhite"
+    ],
+    [
+      "butterfly_scroll_clipperyellow"
+    ],
+    [
+      "butterfly_scroll_commander"
+    ],
+    [
+      "butterfly_scroll_common-crow"
+    ],
+    [
+      "butterfly_scroll_common-mime"
+    ],
+    [
+      "butterfly_scroll_common"
+    ],
+    [
+      "butterfly_scroll_commonbirdwing"
+    ],
+    [
+      "butterfly_scroll_commongrassyellow"
+    ],
+    [
+      "butterfly_scroll_emperor"
+    ],
+    [
+      "butterfly_scroll_forester"
+    ],
+    [
+      "butterfly_scroll_glasswing"
+    ],
+    [
+      "butterfly_scroll_green-skirt-baron"
+    ],
+    [
+      "butterfly_scroll_hairstreak"
+    ],
+    [
+      "butterfly_scroll_heath"
+    ],
+    [
+      "butterfly_scroll_longwing"
+    ],
+    [
+      "butterfly_scroll_monarch"
+    ],
+    [
+      "butterfly_scroll_morpho"
+    ],
+    [
+      "butterfly_scroll_peacock-pansy-dry"
+    ],
+    [
+      "butterfly_scroll_peacock"
+    ],
+    [
+      "butterfly_scroll_rainbow"
+    ],
+    [
+      "butterfly_scroll_smile"
+    ],
+    [
+      "butterfly_scroll_swallowtail"
+    ],
+    [
+      "butterfly_scroll_bluemoonmale"
+    ],
+    [
+      "butterfly_scroll_commongrassyellow-dry"
+    ],
+    [
+      "butterfly_scroll_peacock-pansy-aged"
+    ],
+    [
+      "butterfly_scroll_peacock-pansy-wet"
+    ],
+    [
+      "butterfly_scroll_atlas"
+    ],
+    [
+      "butterfly_scroll_carpet"
+    ],
+    [
+      "butterfly_scroll_case-bearing-clothes"
+    ],
+    [
+      "butterfly_scroll_clearwing-hummingbird"
+    ],
+    [
+      "butterfly_scroll_clothes"
+    ],
+    [
+      "butterfly_scroll_codling"
+    ],
+    [
+      "butterfly_scroll_diamondback"
+    ],
+    [
+      "butterfly_scroll_domestic_silk"
+    ],
+    [
+      "butterfly_scroll_hummingbird"
+    ],
+    [
+      "butterfly_scroll_indianmeal"
+    ],
+    [
+      "butterfly_scroll_luna"
+    ],
+    [
+      "butterfly_scroll_oak-silk"
+    ],
+    [
+      "butterfly_scroll_peppered"
+    ],
+    [
+      "butterfly_scroll_spongy"
+    ],
+    [
+      "butterfly_scroll_white-lined-sphinx"
+    ],
+    [
+      "butterfly_scroll_spongymale"
+    ],
+    [
+      "butterfly_scroll_ice"
+    ],
+    [
+      "butterfly_scroll_lava"
+    ],
+    [
+      "butterfly_scroll_light"
+    ],
+    [
+      "butterfly_scroll_peacemaker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

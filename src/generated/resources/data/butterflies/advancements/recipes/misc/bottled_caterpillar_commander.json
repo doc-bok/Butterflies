@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_caterpillar_commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_commander"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:bottled_caterpillar_commander"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_caterpillar_commander"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_caterpillar_commander"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_butterfly_net_clipperlightgray": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_clipperlightgray"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:bottled_butterfly_clipperlightgray"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_butterfly_net_clipperlightgray"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_butterfly_clipperlightgray"
+    ]
+  },
+  "sends_telemetry_event": false
+}

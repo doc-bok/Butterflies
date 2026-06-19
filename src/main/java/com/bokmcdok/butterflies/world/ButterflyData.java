@@ -742,6 +742,14 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Returns the total number of all species in the mod.
+     * @return The total number of all species.
+     */
+    public static int getTotalNumSpecies() {
+        return BUTTERFLY_ENTRIES.size();
+    }
+
+    /**
      * Load the butterfly data.
      * @param resourceManager The resource manager to use for loading.
      */

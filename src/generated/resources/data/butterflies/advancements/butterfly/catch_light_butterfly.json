@@ -1,0 +1,41 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "criteria": {
+    "butterfly_net_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_light"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.atch_light_butterfly.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:butterfly_scroll_light"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.atch_light_butterfly.title"
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_net_light"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

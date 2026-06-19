@@ -1,0 +1,14 @@
+{
+  "type": "butterflies:replace_item_loot",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:archeology/trail_ruins_rare"
+    },
+    {
+      "chance": 0.077,
+      "condition": "minecraft:random_chance"
+    }
+  ],
+  "item": "butterflies:butterfly_pottery_sherd"
+}
