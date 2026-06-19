@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:paper_from_silk"
+        "recipe": "butterflies:paper_from_silk"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:paper_from_silk"
+      "butterflies:paper_from_silk"
     ]
   },
   "sends_telemetry_event": false
