@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -21,9 +22,6 @@ import java.util.concurrent.CompletableFuture;
  * Generates entity type tags.
  */
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
-
-    private static final TagKey<EntityType<?>> FROG_FOOD =
-            TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("minecraft", "frog_food"));
 
     /**
      * Construction.
@@ -43,7 +41,7 @@ public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
      */
     @Override
     protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
-        IntrinsicTagAppender<EntityType<?>> frogFoodTag = tag(FROG_FOOD).replace(false);
+        IntrinsicTagAppender<EntityType<?>> frogFoodTag = tag(EntityTypeTags.FROG_FOOD).replace(false);
         for(int i = 0; i < ButterflyData.getTotalNumSpecies(); ++i) {
             if(!Objects.requireNonNull(ButterflyData.getEntry(i)).hasTrait(ButterflyData.Trait.INEDIBLE)) {
                 frogFoodTag.add(ButterflyEntityTypeRegistry.BUTTERFLIES.get(i).get());
