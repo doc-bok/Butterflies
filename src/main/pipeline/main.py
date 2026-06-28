@@ -54,24 +54,6 @@ def main():
 
     logger.info(f"Total species count: {len(all_species)}")
 
-    # Step 2: Generate JSON data files for all groups
-    for group_name, group_list in [
-        ("butterflies", butterflies),
-        ("male butterflies", variant_butterflies),
-        ("moths", moths),
-        ("male moths", variant_moths),
-        ("special", special),
-    ]:
-        logger.info(f"Generating data files for {group_name} ({len(group_list)})")
-        data_gen.generate_data_files(group_list)
-
-    # Optional Step: Uncomment if texture generation is needed
-    # logger.info("Generating placeholder textures...")
-    # data_gen.generate_textures(butterflies, "clipper")
-
-    # Step 3: Generate frog food file
-    data_gen.generate_frog_food(all_species)
-
     # Step 4: Generate localisation strings
     localisation.generate_localisation_strings(all_butterflies + special, all_moths)
 
