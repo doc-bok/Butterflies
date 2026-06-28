@@ -14,10 +14,10 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ForgeBiomeModifiers;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.BiomeModifiers;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -72,7 +72,7 @@ public class ModBiomeModifiers {
         registerVillageSpawnModifiers(context, biomes, spawners.get(ButterflyData.Habitat.VILLAGES));
 
         // Finally register the structures.
-        context.register(registerKey("peacemaker_lair"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
+        context.register(registerKey("peacemaker_lair"), new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomes.getOrThrow(BiomeTags.IS_OVERWORLD),
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.PEACEMAKER_LAIR)),
                 GenerationStep.Decoration.UNDERGROUND_STRUCTURES));
@@ -111,7 +111,7 @@ public class ModBiomeModifiers {
      * @return A new ResourceKey.
      */
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(ForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(ButterfliesMod.MOD_ID, name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(ButterfliesMod.MOD_ID, name));
     }
 
     /**
@@ -129,7 +129,7 @@ public class ModBiomeModifiers {
             TagKey<Biome> biomeTag,
             List<MobSpawnSettings.SpawnerData> spawnerData) {
 
-        context.register(key, new ForgeBiomeModifiers.AddSpawnsBiomeModifier(
+        context.register(key, new BiomeModifiers.AddSpawnsBiomeModifier(
                 biomes.getOrThrow(biomeTag),
                 spawnerData));
     }

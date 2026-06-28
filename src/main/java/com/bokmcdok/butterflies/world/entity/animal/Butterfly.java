@@ -952,10 +952,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                               BlockPos position,
                               boolean persistent) {
 
-        EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(location);
-        if (entityType == null) {
-            return;
-        }
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
 
         Entity entity = entityType.create(level);
         if (!(entity instanceof Butterfly butterfly)) {

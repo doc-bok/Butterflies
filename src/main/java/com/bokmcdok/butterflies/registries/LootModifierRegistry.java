@@ -15,9 +15,9 @@ public class LootModifierRegistry {
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS;
 
     static {
-        LOOT_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
-        LOOT_MODIFIERS.register("add_item_loot", AddItemLootModifier.CODEC);
-        LOOT_MODIFIERS.register("replace_item_loot", ReplaceItemLootModifier.CODEC);
+        LOOT_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
+        LOOT_MODIFIERS.register("add_item_loot", () -> AddItemLootModifier.CODEC);
+        LOOT_MODIFIERS.register("replace_item_loot", () -> ReplaceItemLootModifier.CODEC);
     }
 
     /**

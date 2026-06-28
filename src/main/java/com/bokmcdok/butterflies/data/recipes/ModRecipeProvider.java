@@ -8,8 +8,8 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.conditions.IConditionBuilder;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -152,8 +152,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param butterflyIndex The butterfly index.
      */
     private void addBottleRecipe(@NotNull RecipeOutput recipeOutput,
-                                 List<RegistryObject<Item>> baseItems,
-                                 List<RegistryObject<Item>> outputItems,
+                                 List<DeferredHolder<Item, Item>> baseItems,
+                                 List<DeferredHolder<Item, Item>> outputItems,
                                  String groupName,
                                  int butterflyIndex) {
         Item base = baseItems.get(butterflyIndex).get();
@@ -174,7 +174,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param butterflyIndex The butterfly index.
      */
     private void addScrollRecipe(@NotNull RecipeOutput recipeOutput,
-                                 List<RegistryObject<Item>> baseItems,
+                                 List<DeferredHolder<Item, Item>> baseItems,
                                  String keySuffix,
                                  String groupName,
                                  int butterflyIndex) {

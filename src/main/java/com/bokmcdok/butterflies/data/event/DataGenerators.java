@@ -16,14 +16,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forgespi.language.IModFileInfo;
-import net.minecraftforge.resource.ResourcePackLoader;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.resource.ResourcePackLoader;
+import net.neoforged.neoforgespi.language.IModFileInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +50,10 @@ public class DataGenerators {
         preloadButterflyData();
 
         // Server Data
-        final List<ForgeAdvancementProvider.AdvancementGenerator> advancements = List.of(
+        final List<AdvancementProvider.AdvancementGenerator> advancements = List.of(
                 new ModAdvancementGenerator());
 
-        generator.addProvider(event.includeServer(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
+        generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
         generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
@@ -77,7 +77,7 @@ public class DataGenerators {
     private static void preloadButterflyData() {
         List<PackResources> candidateServerResources = new ArrayList<>();
         IModFileInfo modFileInfo = ModList.get().getModFileById(ButterfliesMod.MOD_ID);
-        candidateServerResources.add(ResourcePackLoader.createPackForMod(modFileInfo));
+        candidateServerResources.add(ResourcePackLoader.createPackForMod(modFileInfo).openPrimary("mod:" + ButterfliesMod.MOD_ID));
         MultiPackResourceManager resourceManager = new MultiPackResourceManager(PackType.SERVER_DATA, candidateServerResources);
         ButterflyData.load(resourceManager);
     }

@@ -7,10 +7,10 @@ import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.Objects;
 
@@ -168,7 +168,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * Registers a special butterfly net (e.g. burnt or empty).
      * @param item The item to register.
      */
-    private void registerSpecialButterflyNet(RegistryObject<Item> item) {
+    private void registerSpecialButterflyNet(DeferredHolder<Item, Item> item) {
         String path = getPath(item);
         singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_net/" + path));
     }
@@ -177,7 +177,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * Registers a bottled butterfly item.
      * @param item The item to register.
      */
-    private void bottledButterflyItem(RegistryObject<Item> item)
+    private void bottledButterflyItem(DeferredHolder<Item, Item> item)
     {
         bottledItem(item, "bottled_butterfly", "bottled", 18);
     }
@@ -186,7 +186,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * Registers a bottled caterpillar item.
      * @param item The item to register.
      */
-    private void bottledCaterpillarItem(RegistryObject<Item> item)
+    private void bottledCaterpillarItem(DeferredHolder<Item, Item> item)
     {
         bottledItem(item, "bottled_caterpillar", "bottled_caterpillar", 20);
     }
@@ -198,7 +198,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * @param texturePrefix The prefix for the texture name.
      * @param substrStart The start of the substring for the texture name.
      */
-    private void bottledItem(RegistryObject<Item> item,
+    private void bottledItem(DeferredHolder<Item, Item> item,
                              String textureLocation,
                              String texturePrefix,
                              int substrStart)
@@ -214,7 +214,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      * @param item The item.
      * @return The path of the item.
      */
-    private String getPath(RegistryObject<Item> item) {
+    private String getPath(DeferredHolder<Item, Item> item) {
         return Objects.requireNonNull(item.getId()).getPath();
     }
 }

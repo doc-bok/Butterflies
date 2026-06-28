@@ -54,7 +54,7 @@ public class BlockRegistry {
     public static final DeferredHolder<Block, Block> WHITE_TULIP_BUD;
     public static final DeferredHolder<Block, Block> WITHER_ROSE_BUD;
 
-    public static final List<RegistryObject<Block>> FLOWER_BUDS;
+    public static final List<DeferredHolder<Block, Block>> FLOWER_BUDS;
 
     // Origami
     public static final List<DeferredHolder<Block, Block>> BUTTERFLY_ORIGAMI;

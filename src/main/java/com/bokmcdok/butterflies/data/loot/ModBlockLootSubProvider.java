@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.registries.BlockRegistry;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -26,22 +26,22 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
      */
     @Override
     protected void generate() {
-        for(RegistryObject<Block> bottledButterfly : BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS) {
+        for(DeferredHolder<Block, Block> bottledButterfly : BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS) {
             dropSelf(bottledButterfly.get());
         }
 
-        for(RegistryObject<Block> bottledCaterpillar : BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS) {
+        for(DeferredHolder<Block, Block> bottledCaterpillar : BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS) {
             dropSelf(bottledCaterpillar.get());
         }
 
-        for(RegistryObject<Block> flowerBud : BlockRegistry.FLOWER_BUDS) {
+        for(DeferredHolder<Block, Block> flowerBud : BlockRegistry.FLOWER_BUDS) {
             add(flowerBud.get(), noDrop());
         }
 
         dropSelf(BlockRegistry.BUTTERFLY_FEEDER.get());
         dropSelf(BlockRegistry.BUTTERFLY_MICROSCOPE.get());
 
-        for(RegistryObject<Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
+        for(DeferredHolder<Block, Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
             dropSelf(origami.get());
         }
     }
@@ -53,6 +53,6 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
     @NotNull
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return BlockRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+        return BlockRegistry.BLOCKS.getEntries().stream().map((x) -> (Block)x.get())::iterator;
     }
 }

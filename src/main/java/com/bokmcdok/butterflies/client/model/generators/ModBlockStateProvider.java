@@ -10,11 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 import java.util.function.Function;
@@ -66,7 +66,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         simpleBlockWithItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
 
         // Origami
-        for(RegistryObject<Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
+        for(DeferredHolder<Block, Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
             registerButterflyOrigami(origami);
         }
     }
@@ -93,7 +93,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
      * @param blocks The block list to register from.
      */
     private void registerBottledEntity(int index,
-                                       List<RegistryObject<Block>> blocks) {
+                                       List<DeferredHolder<Block, Block>> blocks) {
         final ModelFile bottleModel = models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID, "bottle"));
         simpleBlock(blocks.get(index).get(), bottleModel);
     }
@@ -102,12 +102,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
      * Registers a flower bud block state.
      * @param block The block to create a block state for.
      */
-    private void registerFlowerBud(RegistryObject<Block> block) {
+    private void registerFlowerBud(DeferredHolder<Block, Block> block) {
 
         if (block.get() instanceof FlowerCropBlock flowerBud) {
-
-            // This should never be null.
-            assert block.getId() != null;
 
             String textureName = block.getId().getPath().substring(4);
 
@@ -118,7 +115,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
     }
 
-    private void registerButterflyOrigami(RegistryObject<Block> block) {
+    private void registerButterflyOrigami(DeferredHolder<Block,Block> block) {
 
         Function<BlockState, ConfiguredModel[]> function =
                 state -> generateOrientationState(state, block);
@@ -155,7 +152,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
      * @return A new variant of the block state.
      */
     private ConfiguredModel[] generateOrientationState(BlockState state,
-                                                       RegistryObject<Block> block) {
+                                                       DeferredHolder<Block, Block> block) {
         ConfiguredModel[] models = new ConfiguredModel[1];
         FrontAndTop orientation = state.getValue(ButterflyOrigamiBlock.ORIENTATION);
         int x = 0;
@@ -214,9 +211,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 y = 90;
                 break;
         }
-
-        // This should never be null.
-        assert block.getId() != null;
 
         final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "block/butterfly_origami");
         String path = block.getId().getPath();

@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
@@ -16,7 +17,6 @@ import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -71,9 +71,9 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
     @NotNull
     @Override
     protected Stream<EntityType<?>> getKnownEntityTypes() {
-        Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(ForgeRegistries.ENTITY_TYPES.spliterator(), false)
+        Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(BuiltInRegistries.ENTITY_TYPE.spliterator(), false)
                 .filter(entry ->
-                        Optional.ofNullable(ForgeRegistries.ENTITY_TYPES.getKey(entry))
+                        Optional.of(BuiltInRegistries.ENTITY_TYPE.getKey(entry))
                                 .filter(key -> key.getNamespace().equals(ButterfliesMod.MOD_ID)
                                         && StringUtils.equalsAny(key.getPath(), SILK_SPECIES.toArray(new String[0])))
                                 .isPresent()

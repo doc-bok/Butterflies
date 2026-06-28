@@ -8,7 +8,6 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -17,18 +16,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
  * Generates all advancements for the mod.
  */
-public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+public class ModAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
 
     /**
      * Entry point.
@@ -52,7 +53,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param item The item to add.
      */
     private void addItemCriterion(Advancement.Builder builder,
-                                  RegistryObject<Item> item) {
+                                  DeferredHolder<Item, Item> item) {
         builder.addCriterion(
                 Objects.requireNonNull(item.getKey()).location().getPath(),
                 InventoryChangeTrigger.TriggerInstance.hasItems(item.get()));
@@ -68,15 +69,15 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                                           String localization,
                                           int xpReward) {
         return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
+                .display(new ItemStack(iconItem),
                         createTitleString(localization),
                         createDescriptionString(localization),
                         null,
-                        FrameType.CHALLENGE,
+                        AdvancementType.CHALLENGE,
                         true,
                         true,
-                        false))
-                .rewards(new AdvancementRewards(xpReward, new ResourceLocation[0], new ResourceLocation[0], CommandFunction.CacheableFunction.NONE));
+                        false)
+                .rewards(new AdvancementRewards(xpReward, List.of(), List.of(), Optional.empty()));
     }
 
     /**
@@ -148,8 +149,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation createLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly/" + localization);
+    private String createLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":butterfly/" + localization;
     }
 
     /**
@@ -178,14 +179,14 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      */
     private AdvancementHolder createRoot(@NotNull Consumer<AdvancementHolder> saver) {
         return Advancement.Builder.advancement()
-            .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
+            .display(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                     createTitleString("root"),
                     createDescriptionString("root"),
                     new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
-                    FrameType.TASK,
+                    AdvancementType.TASK,
                     false,  // Show Toast
                     false,  // Announce Chat
-                    false)) // Hidden
+                    false) // Hidden
             .addCriterion("butterfly_net",
                     InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.EMPTY_BUTTERFLY_NET.get()))
             .save(saver, createLocation("root"));
@@ -251,15 +252,15 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                                      String localization,
                                      int xpReward) {
         return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
+                .display(new ItemStack(iconItem),
                         createTitleString(localization),
                         createDescriptionString(localization),
                         null,
-                        FrameType.GOAL,
+                        AdvancementType.GOAL,
                         true,
                         false,
-                        true))
-                .rewards(new AdvancementRewards(xpReward, new ResourceLocation[0], new ResourceLocation[0], CommandFunction.CacheableFunction.NONE));
+                        true)
+                .rewards(new AdvancementRewards(xpReward, List.of(), List.of(), Optional.empty()));
     }
 
     /**
@@ -274,7 +275,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private void singleItemGoal(@NotNull Consumer<AdvancementHolder> saver,
                                 Item iconItem,
                                 String localization,
-                                RegistryObject<Item> collectItem,
+                                DeferredHolder<Item, Item> collectItem,
                                 AdvancementHolder parent,
                                 int xpReward) {
         Advancement.Builder builder = goal(iconItem, localization.substring(1), xpReward);
@@ -322,14 +323,14 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private Advancement.Builder task(Item iconItem,
                                      String localization) {
         return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
+                .display(new ItemStack(iconItem),
                         createTitleString(localization),
                         createDescriptionString(localization),
                         null,
-                        FrameType.TASK,
+                        AdvancementType.TASK,
                         true,
                         true,
-                        false));
+                        false);
     }
 
     /**
