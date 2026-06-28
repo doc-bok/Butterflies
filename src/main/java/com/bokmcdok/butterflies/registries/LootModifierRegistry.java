@@ -1,9 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.common.loot.ButterflyLootModifier;
-import com.bokmcdok.butterflies.common.loot.OakLeavesLootModifier;
-import com.bokmcdok.butterflies.common.loot.TrailRuinsRareLootModifier;
+import com.bokmcdok.butterflies.common.loot.*;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
@@ -20,9 +18,8 @@ public class LootModifierRegistry {
 
     static {
         LOOT_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
-        LOOT_MODIFIERS.register("butterfly_loot", ButterflyLootModifier.CODEC);
-        LOOT_MODIFIERS.register("oak_leaves_loot", OakLeavesLootModifier.CODEC);
-        LOOT_MODIFIERS.register("trail_ruins_rare_loot", TrailRuinsRareLootModifier.CODEC);
+        LOOT_MODIFIERS.register("add_item_loot", () -> AddItemLootModifier.CODEC);
+        LOOT_MODIFIERS.register("replace_item_loot", () -> ReplaceItemLootModifier.CODEC);
     }
 
     /**

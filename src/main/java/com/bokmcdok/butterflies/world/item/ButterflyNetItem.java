@@ -196,7 +196,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                         (int) lookAngle.y + 1,
                         (int) lookAngle.z);
 
-            Butterfly.spawn(player.level(), entity, positionToSpawn, false);
+            Butterfly.spawnFree(player.level(), entity, positionToSpawn);
 
             ItemStack newStack = new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), 1);
             player.setItemInHand(hand, newStack);

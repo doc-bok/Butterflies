@@ -1,6 +1,0 @@
-{
-  "parent": "butterflies:block/butterfly_origami",
-  "textures": {
-    "all": "minecraft:block/blue_wool"
-  }
-}

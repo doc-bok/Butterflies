@@ -133,58 +133,42 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
-     * Used to spawn a butterfly into the world.
+     * Spawn a placed Butterfly (i.e. in a bottle)
      * @param level The current level.
      * @param location The type of butterfly to release.
      * @param position The current position of the player.
      */
-    public static void spawn(Level level,
-                             ResourceLocation location,
-                             BlockPos position,
-                             Boolean placed) {
 
-        // On clients, we just need to play a sound effect.
-        if (!(level instanceof ServerLevel)) {
-            level.playSound(null,
-                    position.getX(), position.getY(), position.getZ(),
-                    SoundEvents.PLAYER_ATTACK_WEAK,
-                    SoundSource.NEUTRAL, 1.0f, 1.0f);
-
+    public static void spawnBottled(Level level,
+                                    ResourceLocation location,
+                                    BlockPos position) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            playReleaseSound(level, position);
             return;
         }
 
-        // Peacemaker butterflies spawn the hostile version instead.
-        if (location.getPath().contains("peacemaker")) {
-            PeacemakerButterfly.spawn((ServerLevel) level, position);
+        spawn(serverLevel, location, position, false);
+    }
+
+    /**
+     * Spawn a released butterfly.
+     * @param level The current level.
+     * @param location The type of butterfly to release.
+     * @param position The current position of the player.
+     */
+    public static void spawnFree(Level level,
+                                 ResourceLocation location,
+                                 BlockPos position) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            playReleaseSound(level, position);
+            return;
+        }
+        if (isPeacemaker(location)) {
+            PeacemakerButterfly.spawn(serverLevel, position);
             return;
         }
 
-        EntityType<?> entityType =
-                BuiltInRegistries.ENTITY_TYPE.get(location);
-        if (entityType != null) {
-            Entity entity = entityType.create(level);
-            if (entity instanceof Butterfly butterfly) {
-
-                butterfly.moveTo(position.getX() + 0.45D,
-                        position.getY() + 0.2D,
-                        position.getZ() + 0.5D,
-                        0.0F, 0.0F);
-
-                butterfly.setYBodyRot(butterfly.random.nextFloat());
-
-                butterfly.finalizeSpawn((ServerLevel) level,
-                        level.getCurrentDifficultyAt(position),
-                        MobSpawnType.NATURAL,
-                        null);
-
-                if (placed || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
-                    butterfly.setInvulnerable(true);
-                    butterfly.setPersistenceRequired();
-                }
-
-                level.addFreshEntity(butterfly);
-            }
-        }
+        spawn(serverLevel, location, position, true);
     }
 
     /**
@@ -792,7 +776,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                         ButterflyData data = ButterflyData.getEntry(agedIndex);
                         if (data != null) {
                             ResourceLocation newLocation = data.getButterflyEntity();
-                            Butterfly.spawn(this.level(), newLocation, this.blockPosition(), false);
+                            Butterfly.spawnFree(this.level(), newLocation, this.blockPosition());
                             this.remove(RemovalReason.DISCARDED);
                         }
                     } else {
@@ -930,6 +914,70 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         } else {
             super.handleEntityEvent(eventId);
         }
+    }
+
+    /**
+     * Check if this is a Peacemaker Butterfly.
+     * @param location The resource location of the Butterfly entity.
+     * @return True if this is a peacemaker butterfly.
+     */
+    private static boolean isPeacemaker(ResourceLocation location) {
+        return ButterflyData.getEntry(location).hasTrait(ButterflyData.Trait.PEACEMAKER);
+    }
+
+    /**
+     * Play the sound for releasing a butterfly.
+     * @param level The current level.
+     * @param position The position to release the entity to.
+     */
+    private static void playReleaseSound(Level level,
+                                         BlockPos position) {
+        level.playSound(null,
+                position.getX(), position.getY(), position.getZ(),
+                SoundEvents.PLAYER_ATTACK_WEAK,
+                SoundSource.NEUTRAL, 1.0f, 1.0f);
+    }
+
+    /**
+     * Used to spawn a butterfly into the world.
+     * @param level The current level.
+     * @param location The type of butterfly to release.
+     * @param position The current position of the player.
+     * @param persistent True if the butterfly is persistent/immortal.
+     */
+    private static void spawn(Level level,
+                              ResourceLocation location,
+                              BlockPos position,
+                              boolean persistent) {
+
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+
+        Entity entity = entityType.create(level);
+        if (!(entity instanceof Butterfly butterfly)) {
+            return;
+        }
+
+        butterfly.moveTo(
+                position.getX() + 0.45D,
+                position.getY() + 0.2D,
+                position.getZ() + 0.5D,
+                0.0F,
+                0.0F);
+
+        butterfly.setYBodyRot(level.random.nextFloat());
+
+        butterfly.finalizeSpawn((ServerLevel) level,
+                level.getCurrentDifficultyAt(position),
+                MobSpawnType.NATURAL,
+                null,
+                null);
+
+        if (persistent || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
+            butterfly.setInvulnerable(true);
+            butterfly.setPersistenceRequired();
+        }
+
+        level.addFreshEntity(butterfly);
     }
 
     /**

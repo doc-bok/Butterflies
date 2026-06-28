@@ -42,7 +42,7 @@ public class LivingEventListener {
 
                     // Create a light butterfly.
                     ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "light");
-                    Butterfly.spawn(level, location, villager.getOnPos(), false);
+                    Butterfly.spawnFree(level, location, villager.getOnPos());
                 }
             }
         }

@@ -1,6 +1,0 @@
-{
-  "parent": "butterflies:item/template_butterfly_egg",
-  "textures": {
-    "layer0": "butterflies:item/butterfly_egg/atlas_egg"
-  }
-}
