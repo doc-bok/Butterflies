@@ -5,9 +5,8 @@ import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import net.minecraft.data.loot.EntityLootSubProvider;
+import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -28,7 +27,7 @@ import java.util.stream.StreamSupport;
 /**
  * Adds loot tables for entities.
  */
-public class ModEntityLootSubProvider extends EntityLootSubProvider {
+public class ModEntityLootSubProvider extends EntityLoot {
     private static final List<String> SILK_SPECIES = List.of(
             "atlas_chrysalis",
             "carpet_chrysalis",
@@ -36,17 +35,10 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
             "oak-silk_chrysalis");
 
     /**
-     * Construction.
-     */
-    public ModEntityLootSubProvider() {
-        super(FeatureFlags.REGISTRY.allFlags());
-    }
-
-    /**
      * Entry point.
      */
     @Override
-    public void generate() {
+    public void addTables() {
         SILK_SPECIES.stream()
                 .map(ButterflyData::getButterflyIndex)
                 .forEach(this::addChrysalisSilkLoot);
@@ -60,8 +52,8 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
      * @return True if the entity can have a loot table.
      */
     @Override
-    protected boolean canHaveLootTable(@NotNull EntityType<?> entityType) {
-        return super.canHaveLootTable(entityType) || entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
+    protected boolean isNonLiving(@NotNull EntityType<?> entityType) {
+        return super.isNonLiving(entityType) && !entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
     }
 
     /**
@@ -70,7 +62,7 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
      */
     @NotNull
     @Override
-    protected Stream<EntityType<?>> getKnownEntityTypes() {
+    protected Iterable<EntityType<?>> getKnownEntities() {
         Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(ForgeRegistries.ENTITY_TYPES.spliterator(), false)
                 .filter(entry ->
                         Optional.ofNullable(ForgeRegistries.ENTITY_TYPES.getKey(entry))
@@ -79,7 +71,7 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
                                 .isPresent()
                 );
 
-        return Stream.concat(silkChrysalisesStream, Stream.of(EntityTypeRegistry.BUTTERFLY_GOLEM.get()));
+        return Stream.concat(silkChrysalisesStream, Stream.of(EntityTypeRegistry.BUTTERFLY_GOLEM.get())).toList();
     }
 
     /**

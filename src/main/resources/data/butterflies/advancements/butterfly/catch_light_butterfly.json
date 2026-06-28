@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "light": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_light"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.catch_light_butterfly.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:butterfly_scroll_light"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_light_butterfly.title"
+    }
+  },
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "requirements": [
+    [
+      "light"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

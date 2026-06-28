@@ -1,8 +1,7 @@
 package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import net.minecraft.data.loot.BlockLootSubProvider;
-import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
@@ -12,20 +11,13 @@ import java.util.Set;
 /**
  * Provides loot tables for blocks.
  */
-public class ModBlockLootSubProvider extends BlockLootSubProvider {
-
-    /**
-     * Construction.
-     */
-    public ModBlockLootSubProvider() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
-    }
+public class ModBlockLootSubProvider extends BlockLoot {
 
     /**
      * Generate loot tables for all blocks in the mod.
      */
     @Override
-    protected void generate() {
+    protected void addTables() {
         for(RegistryObject<Block> bottledButterfly : BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS) {
             dropSelf(bottledButterfly.get());
         }

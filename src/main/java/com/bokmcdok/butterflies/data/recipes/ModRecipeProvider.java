@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.data.recipes;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -41,10 +41,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
 
     /**
      * Construction.
-     * @param packOutput The pack to output to.
+     * @param dataGenerator The pack to output to.
      */
-    public ModRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public ModRecipeProvider(DataGenerator dataGenerator) {
+        super(dataGenerator);
     }
 
     /**
@@ -52,7 +52,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param recipeOutput The recipe data to output to.
      */
     @Override
-    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
+    protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
 
         for(int i = 0; i < ItemRegistry.BOTTLED_BUTTERFLIES.size(); ++i) {
             ButterflyData data = ButterflyData.getEntry(i);
@@ -71,14 +71,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         }
 
         for(int i = 0; i < ORIGAMI_COLORS.length; ++i) {
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.BUTTERFLY_ORIGAMI.get(i).get())
+            ShapelessRecipeBuilder.shapeless(ItemRegistry.BUTTERFLY_ORIGAMI.get(i).get())
                     .requires(ORIGAMI_COLORS[i])
                     .requires(Items.PAPER)
                     .unlockedBy(getHasName(ORIGAMI_COLORS[i]), has(ORIGAMI_COLORS[i]))
                     .save(recipeOutput);
         }
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BUTTERFLY_BANNER_PATTERN.get())
+        ShapedRecipeBuilder.shaped(ItemRegistry.BUTTERFLY_BANNER_PATTERN.get())
                 .pattern(" s ")
                 .pattern("sss")
                 .pattern(" s ")
@@ -86,7 +86,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ItemRegistry.SILK.get()), has(ItemRegistry.SILK.get()))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ItemRegistry.BUTTERFLY_FEEDER.get())
+        ShapedRecipeBuilder.shaped(ItemRegistry.BUTTERFLY_FEEDER.get())
                 .pattern("iii")
                 .pattern("bsb")
                 .pattern("b b")
@@ -96,7 +96,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.IRON_INGOT), has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ItemRegistry.BUTTERFLY_MICROSCOPE.get())
+        ShapedRecipeBuilder.shaped(ItemRegistry.BUTTERFLY_MICROSCOPE.get())
                 .pattern(" i ")
                 .pattern(" / ")
                 .pattern(" - ")
@@ -106,7 +106,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.SPYGLASS), has(Items.SPYGLASS))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ItemRegistry.EMPTY_BUTTERFLY_NET.get())
+        ShapedRecipeBuilder.shaped(ItemRegistry.EMPTY_BUTTERFLY_NET.get())
                 .pattern("  /")
                 .pattern(" /s")
                 .pattern("/ss")
@@ -116,18 +116,18 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .save(recipeOutput);
 
         int codlingIndex = ButterflyData.getButterflyIndex("codling");
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.CATERPILLARS.get(codlingIndex).get())
+        ShapelessRecipeBuilder.shapeless(ItemRegistry.CATERPILLARS.get(codlingIndex).get())
                 .requires(ItemRegistry.INFESTED_APPLE.get())
                 .unlockedBy(getHasName(ItemRegistry.INFESTED_APPLE.get()), has(ItemRegistry.INFESTED_APPLE.get()))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.INFESTED_APPLE.get())
+        ShapelessRecipeBuilder.shapeless(ItemRegistry.INFESTED_APPLE.get())
                 .requires(ItemRegistry.CATERPILLARS.get(codlingIndex).get())
                 .requires(Items.APPLE)
                 .unlockedBy(getHasName(ItemRegistry.CATERPILLARS.get(codlingIndex).get()), has(ItemRegistry.CATERPILLARS.get(codlingIndex).get()))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.PAPER)
+        ShapedRecipeBuilder.shaped(Items.PAPER)
                 .pattern("sss")
                 .pattern("sss")
                 .pattern("sss")
@@ -135,7 +135,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ItemRegistry.SILK.get()), has(ItemRegistry.SILK.get()))
                 .save(recipeOutput, new ResourceLocation(ButterfliesMod.MOD_ID, "paper_from_silk"));
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STRING)
+        ShapedRecipeBuilder.shaped(Items.STRING)
                 .pattern(" s ")
                 .pattern("s s")
                 .pattern(" s ")
@@ -158,7 +158,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                  String groupName,
                                  int butterflyIndex) {
         Item base = baseItems.get(butterflyIndex).get();
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, outputItems.get(butterflyIndex).get())
+        ShapelessRecipeBuilder.shapeless(outputItems.get(butterflyIndex).get())
                 .group(groupName)
                 .requires(base)
                 .requires(Items.GLASS_BOTTLE)
@@ -181,7 +181,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                                  int butterflyIndex) {
         Item base = baseItems.get(butterflyIndex).get();
         Item result = ItemRegistry.BUTTERFLY_SCROLLS.get(butterflyIndex).get();
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, result)
+        ShapelessRecipeBuilder.shapeless(result)
                 .group(groupName)
                 .requires(base)
                 .requires(Items.PAPER)

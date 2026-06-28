@@ -1,0 +1,40 @@
+{
+  "criteria": {
+    "ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_ice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.catch_ice_butterfly.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:butterfly_scroll_ice"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_ice_butterfly.title"
+    }
+  },
+  "parent": "butterflies:butterfly/catch_butterfly",
+  "requirements": [
+    [
+      "ice"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

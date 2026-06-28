@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.data.loot.ChestLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -20,14 +20,14 @@ import java.util.function.BiConsumer;
 /**
  * Adds chest loot tables.
  */
-public class ModChestLootSubProvider implements LootTableSubProvider {
+public class ModChestLootSubProvider extends ChestLoot {
 
     /**
      * Entry point. Generates chest loot tables.
      * @param register The register for storing loot tables.
      */
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> register) {
+    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> register) {
         register.accept(new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

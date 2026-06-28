@@ -174,7 +174,9 @@ public class ButterflyInfo {
         {
             ButterflyData.Trait.GLOW,
         },
-        {}, // No traits for peacemaker
+        {
+            ButterflyData.Trait.PEACEMAKER,
+        },
     };
 
 }

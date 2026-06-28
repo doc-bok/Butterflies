@@ -1,0 +1,12 @@
+{
+  "biomes": "#minecraft:is_nether",
+  "spawners": [
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:lava",
+      "weight": 20
+    }
+  ],
+  "type": "forge:add_spawns"
+}

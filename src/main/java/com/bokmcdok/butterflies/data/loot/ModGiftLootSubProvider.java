@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.data.loot.GiftLoot;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -14,14 +14,14 @@ import java.util.function.BiConsumer;
 /**
  * Adds Gift Loot Tables.
  */
-public class ModGiftLootSubProvider implements LootTableSubProvider {
+public class ModGiftLootSubProvider extends GiftLoot {
 
     /**
      * Entry point. Generates chest loot tables.
      * @param register The register for storing loot tables.
      */
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> register) {
+    public void accept(BiConsumer<ResourceLocation, LootTable.Builder> register) {
         register.accept(new ResourceLocation(ButterfliesMod.MOD_ID, "gameplay/hero_of_the_village/lepidopterist"),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.common.loot.AddItemLootModifier;
 import com.bokmcdok.butterflies.common.loot.ReplaceItemLootModifier;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
@@ -18,10 +18,10 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
 
     /**
      * Construction.
-     * @param output The pack to output to.
+     * @param dataGenerator The pack to output to.
      */
-    public ModGlobalLootModifierProvider(PackOutput output) {
-        super(output, ButterfliesMod.MOD_ID);
+    public ModGlobalLootModifierProvider(DataGenerator dataGenerator) {
+        super(dataGenerator, ButterfliesMod.MOD_ID);
     }
 
     /**

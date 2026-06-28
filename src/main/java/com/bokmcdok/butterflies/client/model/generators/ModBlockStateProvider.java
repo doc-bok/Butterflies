@@ -5,7 +5,7 @@ import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.block.ButterflyOrigamiBlock;
 import com.bokmcdok.butterflies.world.block.FlowerCropBlock;
 import net.minecraft.core.FrontAndTop;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -26,12 +26,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     /**
      * Construction.
-     * @param output The pack to output data to.
+     * @param dataGenerator The pack to dataGenerator data to.
      * @param existingFileHelper Helper to access existing files.
      */
-    public ModBlockStateProvider(PackOutput output,
+    public ModBlockStateProvider(DataGenerator dataGenerator,
                                  ExistingFileHelper existingFileHelper) {
-        super(output, ButterfliesMod.MOD_ID, existingFileHelper);
+        super(dataGenerator, ButterfliesMod.MOD_ID, existingFileHelper);
     }
 
     /**
@@ -62,8 +62,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         registerFlowerBud(BlockRegistry.WITHER_ROSE_BUD);
 
         // Functional Blocks
-        simpleBlockWithItem(BlockRegistry.BUTTERFLY_FEEDER.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_FEEDER.getId()));
-        simpleBlockWithItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
+        simpleBlockItem(BlockRegistry.BUTTERFLY_FEEDER.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_FEEDER.getId()));
+        simpleBlockItem(BlockRegistry.BUTTERFLY_MICROSCOPE.get(), models().getExistingFile(BlockRegistry.BUTTERFLY_MICROSCOPE.getId()));
 
         // Origami
         for(RegistryObject<Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {

@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -23,11 +23,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     /**
      * Construction
-     * @param output The pack to output the resources to.
+     * @param dataGenerator The pack to dataGenerator the resources to.
      * @param existingFileHelper A helper containing the existing files.
      */
-    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, ButterfliesMod.MOD_ID, existingFileHelper);
+    public ModItemModelProvider(DataGenerator dataGenerator, ExistingFileHelper existingFileHelper) {
+        super(dataGenerator, ButterfliesMod.MOD_ID, existingFileHelper);
     }
 
     /**
