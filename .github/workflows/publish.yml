@@ -43,7 +43,7 @@ jobs:
           $HasDiff = $SourceDiff.Length -gt 0
           
           # Set the output named "version_changed"
-          Write-Host "::set-output name=version_changed::False"
+          Write-Host "::set-output name=version_changed::True"
           echo "version_changed=$HasDiff"
 
   build:
