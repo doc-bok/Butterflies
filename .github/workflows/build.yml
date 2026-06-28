@@ -30,5 +30,8 @@ jobs:                                             #The place where you actually 
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
 
+      - name: Build Data
+        run: ./gradlew runData
+
       - name: Build
         run: ./gradlew clean build --info

@@ -128,8 +128,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                     (int) lookAngle.x,
                     (int) lookAngle.y + 1,
                     (int) lookAngle.z);
-
-            Butterfly.spawn(player.level, entity, positionToSpawn, false);
+            Butterfly.spawnFree(player.level, entity, positionToSpawn);
         }
 
         player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
@@ -156,7 +155,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
 
                 if (entity != null) {
                     BlockPos position = context.getClickedPos();
-                    Butterfly.spawn(player.getLevel(), entity, position, true);
+                    Butterfly.spawnBottled(player.getLevel(), entity, position);
                 }
             }
         }

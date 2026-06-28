@@ -20,6 +20,8 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [],
+  "traits": [
+    "peacemaker"
+  ],
   "type": "special"
 }
