@@ -13,10 +13,10 @@ import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.forgespi.language.IModFileInfo;
 import net.minecraftforge.resource.ResourcePackLoader;
 
@@ -43,21 +43,18 @@ public class DataGenerators {
         preloadButterflyData();
 
         // Server Data
-        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(generator));
-        generator.addProvider(event.includeServer(), new ModLootTableProvider(generator));
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(generator));
-        generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(generator, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(generator, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(generator, existingFileHelper));
+        generator.addProvider(new ModGlobalLootModifierProvider(generator));
+        generator.addProvider(new ModLootTableProvider(generator));
+        generator.addProvider(new ModRecipeProvider(generator));
+        generator.addProvider(new ModBiomeTagsProvider(generator, existingFileHelper));
 
         ModBlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(generator, existingFileHelper);
-        generator.addProvider(event.includeServer(), blockTagsProvider);
-        generator.addProvider(event.includeServer(), new ModItemTagsProvider(generator, blockTagsProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(generator, existingFileHelper));
+        generator.addProvider(blockTagsProvider);
+        generator.addProvider(new ModItemTagsProvider(generator, blockTagsProvider, existingFileHelper));
 
         // Client Assets
-        generator.addProvider(event.includeClient(), new ModItemModelProvider(generator, existingFileHelper));
-        generator.addProvider(event.includeClient(), new ModBlockStateProvider(generator, existingFileHelper));
+        generator.addProvider(new ModItemModelProvider(generator, existingFileHelper));
+        generator.addProvider(new ModBlockStateProvider(generator, existingFileHelper));
     }
 
     /**

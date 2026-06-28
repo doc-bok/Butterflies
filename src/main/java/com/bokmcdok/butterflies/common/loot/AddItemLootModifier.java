@@ -1,28 +1,24 @@
 package com.bokmcdok.butterflies.common.loot;
 
-import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import com.google.gson.JsonObject;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
+import java.util.List;
 
 /**
  * A loot modifier that adds an item to the loot.
  */
 public class AddItemLootModifier extends LootModifier {
-    public static final Supplier<Codec<AddItemLootModifier>> CODEC = Suppliers.memoize(()
-            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ForgeRegistries.ITEMS.getCodec()
-            .fieldOf("item").forGetter(m -> m.item)).apply(inst, AddItemLootModifier::new)));
-    private final Item item;
+    private Item item;
 
     /**
      * Construction.
@@ -41,26 +37,58 @@ public class AddItemLootModifier extends LootModifier {
      * @param context The LootContext, identical to what is passed to loot tables.
      * @return The updated list of ItemStacks.
      */
+    @NotNull
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
-                                                          LootContext context) {
-        for(LootItemCondition condition : this.conditions) {
+    public List<ItemStack> doApply(List<ItemStack> generatedLoot,
+                                   LootContext context) {
+        for(LootItemCondition condition : conditions) {
             if(!condition.test(context)) {
                 return generatedLoot;
             }
         }
 
-        generatedLoot.add(new ItemStack(this.item));
+        if (item != null) {
+            generatedLoot.add(new ItemStack(item));
+        }
 
         return generatedLoot;
     }
 
     /**
-     * Access to the code.
-     * @return The codec.
+     * The Loot Modifier Serializer.
      */
-    @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+    public static class Serializer extends GlobalLootModifierSerializer<AddItemLootModifier> {
+
+        /**
+         * Read Loot Modifier data.
+         * @param name The resource name.
+         * @param object The JSON Object with any extra data.
+         * @param conditionsIn The conditions for the loot.
+         * @return A new loot modifier.
+         */
+        @Override
+        public AddItemLootModifier read(ResourceLocation name,
+                                        JsonObject object,
+                                        LootItemCondition[] conditionsIn) {
+            return new AddItemLootModifier(conditionsIn);
+        }
+
+        /**
+         * Write loot modifier data.
+         * @param instance The loot modifier.
+         * @return Modifier data in JSON format.
+         */
+        @Override
+        public JsonObject write(AddItemLootModifier instance) {
+            return makeConditions(instance.conditions);
+        }
+    }
+
+    /**
+     * Used by serializer.
+     * @param conditionsIn The conditions for this loot modifier.
+     */
+    protected AddItemLootModifier(LootItemCondition[] conditionsIn) {
+        super(conditionsIn);
     }
 }

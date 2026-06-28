@@ -137,13 +137,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
                                                 CropBlock block,
                                                 String textureName) {
         ConfiguredModel[] models = new ConfiguredModel[1];
-        int age = Math.min(state.getValue(((FlowerCropBlock) block).getAgeProperty()), 6);
+        int age = Math.min(state.getValue((block).getAgeProperty()), 6);
         if (age < 5 && textureName.contains("tulip")) {
             textureName = "tulip";
         }
 
         models[0] = new ConfiguredModel(models().cross("block/flower_buds/" + textureName +"_stage" + age,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName +"_stage" + age)).renderType("cutout"));
+                new ResourceLocation(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName +"_stage" + age)));
 
         return models;
     }

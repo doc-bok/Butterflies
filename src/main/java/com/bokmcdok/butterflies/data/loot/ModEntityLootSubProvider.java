@@ -63,9 +63,9 @@ public class ModEntityLootSubProvider extends EntityLoot {
     @NotNull
     @Override
     protected Iterable<EntityType<?>> getKnownEntities() {
-        Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(ForgeRegistries.ENTITY_TYPES.spliterator(), false)
+        Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(ForgeRegistries.ENTITIES.spliterator(), false)
                 .filter(entry ->
-                        Optional.ofNullable(ForgeRegistries.ENTITY_TYPES.getKey(entry))
+                        Optional.ofNullable(ForgeRegistries.ENTITIES.getKey(entry))
                                 .filter(key -> key.getNamespace().equals(ButterfliesMod.MOD_ID)
                                         && StringUtils.equalsAny(key.getPath(), SILK_SPECIES.toArray(new String[0])))
                                 .isPresent()

@@ -16,8 +16,8 @@ public class LootModifierRegistry {
 
     static {
         LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, ButterfliesMod.MOD_ID);
-        LOOT_MODIFIERS.register("add_item_loot", AddItemLootModifier.CODEC);
-        LOOT_MODIFIERS.register("replace_item_loot", ReplaceItemLootModifier.CODEC);
+        LOOT_MODIFIERS.register("add_item_loot", AddItemLootModifier.Serializer::new);
+        LOOT_MODIFIERS.register("replace_item_loot", ReplaceItemLootModifier.Serializer::new);
     }
 
     private LootModifierRegistry() {}

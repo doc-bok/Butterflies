@@ -30,19 +30,22 @@ public class ModGlobalLootModifierProvider extends GlobalLootModifierProvider {
     @Override
     protected void start() {
 
-        add("butterfly_loot", new AddItemLootModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
-                LootItemRandomChanceCondition.randomChance(0.03125f).build() },
-                ItemRegistry.ZHUANGZI_BOOK.get()));
+        add("butterfly_loot", new AddItemLootModifier.Serializer().setRegistryName(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly_loot")),
+                new AddItemLootModifier(new LootItemCondition[] {
+                    new LootTableIdCondition.Builder(new ResourceLocation("chests/simple_dungeon")).build(),
+                    LootItemRandomChanceCondition.randomChance(0.03125f).build() },
+                    ItemRegistry.ZHUANGZI_BOOK.get()));
 
-        add("oak_leaves_loot", new AddItemLootModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("blocks/oak_leaves")).build(),
-                LootItemRandomChanceCondition.randomChance(0.00025f).build() },
-                ItemRegistry.INFESTED_APPLE.get()));
+        add("oak_leaves_loot", new AddItemLootModifier.Serializer().setRegistryName(new ResourceLocation(ButterfliesMod.MOD_ID, "oak_leaves_loot")),
+                new AddItemLootModifier(new LootItemCondition[] {
+                    new LootTableIdCondition.Builder(new ResourceLocation("blocks/oak_leaves")).build(),
+                    LootItemRandomChanceCondition.randomChance(0.00025f).build() },
+                    ItemRegistry.INFESTED_APPLE.get()));
 
-        add("trail_runs_rare_loot", new ReplaceItemLootModifier(new LootItemCondition[] {
-                new LootTableIdCondition.Builder(new ResourceLocation("archeology/trail_ruins_rare")).build(),
-                LootItemRandomChanceCondition.randomChance(0.077f).build() },
-                ItemRegistry.BUTTERFLY_POTTERY_SHERD.get()));
+        add("trail_runs_rare_loot", new ReplaceItemLootModifier.Serializer().setRegistryName(new ResourceLocation(ButterfliesMod.MOD_ID, "trail_runs_rare_loot")),
+                new ReplaceItemLootModifier(new LootItemCondition[] {
+                    new LootTableIdCondition.Builder(new ResourceLocation("archeology/trail_ruins_rare")).build(),
+                    LootItemRandomChanceCondition.randomChance(0.077f).build() },
+                    ItemRegistry.BUTTERFLY_POTTERY_SHERD.get()));
     }
 }

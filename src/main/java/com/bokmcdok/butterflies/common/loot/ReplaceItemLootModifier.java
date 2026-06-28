@@ -1,35 +1,31 @@
 package com.bokmcdok.butterflies.common.loot;
 
-import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import com.google.gson.JsonObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 /**
  * A loot modifier that replaces an item in the loot.
  */
 public class ReplaceItemLootModifier extends LootModifier {
-    public static final Supplier<Codec<ReplaceItemLootModifier>> CODEC = Suppliers.memoize(()
-            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ForgeRegistries.ITEMS.getCodec()
-            .fieldOf("item").forGetter(m -> m.item)).apply(inst, ReplaceItemLootModifier::new)));
-    private final Item item;
+    private Item item;
 
     /**
      * Construction.
      * @param conditionsIn The conditions for this loot modifier.
      * @param item The item to add.
      */
-    public ReplaceItemLootModifier(LootItemCondition[] conditionsIn, Item item) {
+    public ReplaceItemLootModifier(LootItemCondition[] conditionsIn,
+                                   Item item) {
         super(conditionsIn);
         this.item = item;
     }
@@ -40,27 +36,59 @@ public class ReplaceItemLootModifier extends LootModifier {
      * @param context The LootContext, identical to what is passed to loot tables.
      * @return The updated list of ItemStacks.
      */
+    @NotNull
     @Override
-    protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot,
-                                                          LootContext context) {
+    public List<ItemStack> doApply(List<ItemStack> generatedLoot,
+                                   LootContext context) {
         for(LootItemCondition condition : this.conditions) {
             if(!condition.test(context)) {
                 return generatedLoot;
             }
         }
 
-        generatedLoot.remove(0);
-        generatedLoot.add(new ItemStack(this.item));
+        if (item != null) {
+            generatedLoot.remove(0);
+            generatedLoot.add(new ItemStack(this.item));
+        }
 
         return generatedLoot;
     }
 
     /**
-     * Access to the code.
-     * @return The codec.
+     * The Loot Modifier Serializer.
      */
-    @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+    public static class Serializer extends GlobalLootModifierSerializer<ReplaceItemLootModifier> {
+
+        /**
+         * Read Loot Modifier data.
+         * @param name The resource name.
+         * @param object The Json Object with any extra data.
+         * @param conditionsIn The conditions for the loot.
+         * @return A new loot modifier.
+         */
+        @Override
+        public ReplaceItemLootModifier read(ResourceLocation name,
+                                        JsonObject object,
+                                        LootItemCondition[] conditionsIn) {
+            return new ReplaceItemLootModifier(conditionsIn);
+        }
+
+        /**
+         * Write loot modifier data.
+         * @param instance The loot modifier.
+         * @return Modifier data in JSON format.
+         */
+        @Override
+        public JsonObject write(ReplaceItemLootModifier instance) {
+            return makeConditions(instance.conditions);
+        }
+    }
+
+    /**
+     * Used by serializer.
+     * @param conditionsIn The conditions for this loot modifier.
+     */
+    protected ReplaceItemLootModifier(LootItemCondition[] conditionsIn) {
+        super(conditionsIn);
     }
 }
