@@ -5,8 +5,6 @@ from .image_generation import ImageGenerator
 from .config import Config
 from .data_generation import DataGenerator
 from .localisation import LocalisationManager
-from .advancements import AdvancementGenerator
-from .biome_modifiers import BiomeModifierManager
 from .code_generation import CodeGenerator
 
 def load_species_data(config, logger, species: str) -> Optional[dict]:
@@ -35,8 +33,6 @@ def main():
     # Instantiate managers
     data_gen = DataGenerator(config)
     localisation = LocalisationManager(config)
-    adv_gen = AdvancementGenerator(config)
-    biome_mod_mgr = BiomeModifierManager(config)
     code_gen = CodeGenerator(config)
     image_gen = ImageGenerator(config)
 
@@ -56,51 +52,11 @@ def main():
 
     logger.info(f"Total species count: {len(all_species)}")
 
-    # Step 2: Generate JSON data files for all groups
-    for group_name, group_list in [
-        ("butterflies", butterflies),
-        ("male butterflies", variant_butterflies),
-        ("moths", moths),
-        ("male moths", variant_moths),
-        ("special", special),
-    ]:
-        logger.info(f"Generating data files for {group_name} ({len(group_list)})")
-        data_gen.generate_data_files(group_list)
-
-    # Optional Step: Uncomment if texture generation is needed
-    # logger.info("Generating placeholder textures...")
-    # data_gen.generate_textures(butterflies, "clipper")
-
-    # Step 3: Generate frog food file
-    data_gen.generate_frog_food(all_species)
-
     # Step 4: Generate localisation strings
     localisation.generate_localisation_strings(all_butterflies + special, all_moths)
 
-    # Step 5: Generate advancements JSON files for various groups
-    adv_gen.generate_advancements(butterflies, config.BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_butterflies, config.VARIANT_BUTTERFLY_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(moths, config.MOTH_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(all_moths, config.VARIANT_MOTH_ACHIEVEMENT_TEMPLATES)
-    adv_gen.generate_advancements(butterflies + moths, config.BOTH_ACHIEVEMENT_TEMPLATES)
-
     # Step 6: Generate Java code with species and traits
     code_gen.generate_code(all_species, species_data)
-
-    # Step 7: Reset and generate biome modifier files
-    biome_mod_mgr.reset_biome_modifiers()
-
-    biome_groups = [
-        (butterflies, config.BUTTERFLIES_FOLDER, False),
-        (variant_butterflies, config.VARIANT_BUTTERFLIES_FOLDER, True),
-        (moths, config.MOTHS_FOLDER, False),
-        (variant_moths, config.VARIANT_MOTHS_FOLDER, True),
-        (special, config.SPECIAL_FOLDER, False),
-    ]
-
-    for species_group, folder, is_variant in biome_groups:
-        logger.info(f"Generating biome modifiers for folder '{folder}' with is_variant={is_variant}")
-        biome_mod_mgr.generate_biome_modifiers(species_group, folder, is_variant)
 
     # Step 8: Generate images
     image_gen.generate_textures()
