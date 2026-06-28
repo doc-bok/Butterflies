@@ -172,7 +172,8 @@ public record ButterflyData(int butterflyIndex,
         MOTHWANDERER,
         POISONOUS,
         LAVA,
-        FEARLESS
+        FEARLESS,
+        PEACEMAKER
     }
 
     // Constants representing the base life spans of each butterfly cycle.
@@ -739,6 +740,14 @@ public record ButterflyData(int butterflyIndex,
      */
     public static int getNumMothSpecies() {
         return NUM_MOTHS;
+    }
+
+    /**
+     * Returns the total number of all species in the mod.
+     * @return The total number of all species.
+     */
+    public static int getTotalNumSpecies() {
+        return BUTTERFLY_ENTRIES.size();
     }
 
     /**

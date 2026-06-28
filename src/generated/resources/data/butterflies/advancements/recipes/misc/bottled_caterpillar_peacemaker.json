@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_caterpillar_peacemaker": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_peacemaker"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:bottled_caterpillar_peacemaker"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_caterpillar_peacemaker"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_caterpillar_peacemaker"
+    ]
+  },
+  "sends_telemetry_event": false
+}

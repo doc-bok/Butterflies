@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bottled_butterfly_diamondback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_diamondback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:butterfly_scroll_diamondback_from_bottle"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bottled_butterfly_diamondback"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:butterfly_scroll_diamondback_from_bottle"
+    ]
+  },
+  "sends_telemetry_event": false
+}

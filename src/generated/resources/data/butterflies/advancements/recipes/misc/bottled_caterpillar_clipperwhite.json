@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_caterpillar_clipperwhite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:caterpillar_clipperwhite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:bottled_caterpillar_clipperwhite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_caterpillar_clipperwhite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:bottled_caterpillar_clipperwhite"
+    ]
+  },
+  "sends_telemetry_event": false
+}

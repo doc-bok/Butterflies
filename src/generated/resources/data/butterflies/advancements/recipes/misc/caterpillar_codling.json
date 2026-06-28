@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_infested_apple": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:infested_apple"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "butterflies:caterpillar_codling"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_infested_apple"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "butterflies:caterpillar_codling"
+    ]
+  },
+  "sends_telemetry_event": false
+}
