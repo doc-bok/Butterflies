@@ -172,7 +172,8 @@ public record ButterflyData(int butterflyIndex,
         MOTHWANDERER,
         POISONOUS,
         LAVA,
-        FEARLESS
+        FEARLESS,
+        PEACEMAKER
     }
 
     // Constants representing the base life spans of each butterfly cycle.

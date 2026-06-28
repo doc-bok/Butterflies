@@ -206,7 +206,7 @@ public class Chrysalis extends DirectionalCreature {
             ButterflyData data = ButterflyData.getEntry(butterflyIndex);
             if (data != null) {
                 ResourceLocation newLocation = data.getButterflyEntity();
-                Butterfly.spawn(level, newLocation, this.blockPosition(), false);
+                Butterfly.spawnFree(level, newLocation, this.blockPosition());
                 this.remove(RemovalReason.DISCARDED);
             }
         }
