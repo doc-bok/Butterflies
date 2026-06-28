@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.7.2 (2026-06-28)
+ - No longer a need to commit generated resources.
+
 ### 7.7.1 (2026-06-28)
  - Fixed Bottled Peacemaker Butterflies not actually being bottled.
 
