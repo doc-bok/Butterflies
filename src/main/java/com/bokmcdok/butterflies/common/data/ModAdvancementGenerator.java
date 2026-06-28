@@ -38,9 +38,9 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      */
     @Override
     public void generate(@NotNull HolderLookup.Provider registries,
-                         @NotNull Consumer<AdvancementHolder> saver,
+                         @NotNull Consumer<Advancement> saver,
                          @NotNull ExistingFileHelper existingFileHelper) {
-        AdvancementHolder root = createRoot(saver);
+        Advancement root = createRoot(saver);
         createCollectionAdvancements(saver, root);
         createSpecialCatchAdvancements(saver, root);
         createMiscAdvancements(saver, root);
@@ -84,8 +84,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement in the tree.
      */
-    private void createCollectionAdvancements(@NotNull Consumer<AdvancementHolder> saver,
-                                              AdvancementHolder root) {
+    private void createCollectionAdvancements(@NotNull Consumer<Advancement> saver,
+                                              Advancement root) {
 
         int atlasMothIndex = ButterflyData.getButterflyIndex("atlas");
         SpeciesAdvancementSet butterflyAdvancements = new SpeciesAdvancementSet("butterfly", "butterflies", "caterpillar", "caterpillars", 0);
@@ -109,7 +109,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
 
         butterflyAdvancements.saveAll(saver, root);
         mothAdvancements.saveAll(saver, root);
-        AdvancementHolder createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.catchOneAdvancement, AdvancementRequirements.Strategy.AND, "create_butterfly_scroll");
+        Advancement createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.catchOneAdvancement, RequirementsStrategy.AND, "create_butterfly_scroll");
 
         CompoundTag fullButterflyBookTag = new CompoundTag();
         fullButterflyBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
@@ -124,14 +124,14 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         ItemPredicate.Builder fullBothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullBothBookTag);
 
         Advancement.Builder fillButterflyBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_butterfly_book", 200);
-        fillButterflyBookBuilder.addCriterion("butterflies", InventoryChangeTrigger.TriggerInstance.hasItems(fullButterflyBook));
-        fillButterflyBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook));
-        save(saver, fillButterflyBookBuilder, createButterflyScroll, AdvancementRequirements.Strategy.OR, "fill_butterfly_book");
+        fillButterflyBookBuilder.addCriterion("butterflies", InventoryChangeTrigger.TriggerInstance.hasItems(fullButterflyBook.build()));
+        fillButterflyBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook.build()));
+        save(saver, fillButterflyBookBuilder, createButterflyScroll, RequirementsStrategy.OR, "fill_butterfly_book");
 
         Advancement.Builder fillMothBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_moth_book", 200);
-        fillMothBookBuilder.addCriterion("moths", InventoryChangeTrigger.TriggerInstance.hasItems(fullMothBook));
-        fillMothBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook));
-        save(saver, fillMothBookBuilder, createButterflyScroll, AdvancementRequirements.Strategy.OR, "fill_moth_book");
+        fillMothBookBuilder.addCriterion("moths", InventoryChangeTrigger.TriggerInstance.hasItems(fullMothBook.build()));
+        fillMothBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook.build()));
+        save(saver, fillMothBookBuilder, createButterflyScroll, RequirementsStrategy.OR, "fill_moth_book");
     }
 
     /**
@@ -148,8 +148,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation createLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly/" + localization);
+    private String createLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":butterfly/" + localization;
     }
 
     /**
@@ -157,8 +157,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement in the tree.
      */
-    private void createMiscAdvancements(@NotNull Consumer<AdvancementHolder> saver,
-                                        AdvancementHolder root) {
+    private void createMiscAdvancements(@NotNull Consumer<Advancement> saver,
+                                        Advancement root) {
         Advancement.Builder builder = task(ItemRegistry.SILK.get(), "farm_silk");
         addItemCriterion(builder, ItemRegistry.SILK);
         save(saver, builder, root, "farm_silk");
@@ -176,7 +176,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @return The new root advancement.
      */
-    private AdvancementHolder createRoot(@NotNull Consumer<AdvancementHolder> saver) {
+    private Advancement createRoot(@NotNull Consumer<Advancement> saver) {
         return Advancement.Builder.advancement()
             .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                     createTitleString("root"),
@@ -189,7 +189,6 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
             .addCriterion("butterfly_net",
                     InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.EMPTY_BUTTERFLY_NET.get()))
             .save(saver, createLocation("root"));
-
     }
 
     /**
@@ -197,8 +196,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement in the tree.
      */
-    private void createSpecialCatchAdvancements(@NotNull Consumer<AdvancementHolder> saver,
-                                                AdvancementHolder root) {
+    private void createSpecialCatchAdvancements(@NotNull Consumer<Advancement> saver,
+                                                Advancement root) {
 
         int iceButterflyIndex = ButterflyData.getButterflyIndex("ice");
         singleItemGoal(saver,
@@ -271,11 +270,11 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param parent       The goal's parent.
      * @param xpReward     The experience reward for completing the goal.
      */
-    private void singleItemGoal(@NotNull Consumer<AdvancementHolder> saver,
+    private void singleItemGoal(@NotNull Consumer<Advancement> saver,
                                 Item iconItem,
                                 String localization,
                                 RegistryObject<Item> collectItem,
-                                AdvancementHolder parent,
+                                Advancement parent,
                                 int xpReward) {
         Advancement.Builder builder = goal(iconItem, localization.substring(1), xpReward);
         addItemCriterion(builder, collectItem);
@@ -289,11 +288,11 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param parent  The parent of the advancement.
      * @param name    The name of the advancement.
      */
-    private void save(@NotNull Consumer<AdvancementHolder> saver,
+    private void save(@NotNull Consumer<Advancement> saver,
                       Advancement.Builder builder,
-                      AdvancementHolder parent,
+                      Advancement parent,
                       String name) {
-        save(saver, builder, parent, AdvancementRequirements.Strategy.AND, name);
+        save(saver, builder, parent, RequirementsStrategy.AND, name);
     }
 
     /**
@@ -305,10 +304,10 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param name The name of the advancement.
      * @return The completed advancement.
      */
-    private AdvancementHolder save(@NotNull Consumer<AdvancementHolder> saver,
+    private Advancement save(@NotNull Consumer<Advancement> saver,
                                    Advancement.Builder builder,
-                                   AdvancementHolder parent,
-                                   AdvancementRequirements.Strategy strategy,
+                                   Advancement parent,
+                                   RequirementsStrategy strategy,
                                    String name) {
         return builder.parent(parent).requirements(strategy).save(saver, createLocation(name));
     }
@@ -348,7 +347,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         private final Pair<String, Advancement.Builder> bottleCrawlerAll;
 
         // Used by the scroll advancement.
-        private AdvancementHolder catchOneAdvancement;
+        private Advancement catchOneAdvancement;
 
         /**
          * Construction.
@@ -401,23 +400,23 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
          * @param saver A consumer used to write advancements to a file.
          * @param root The root advancement.
          */
-        private void saveAll(@NotNull Consumer<AdvancementHolder> saver,
-                             AdvancementHolder root) {
+        private void saveAll(@NotNull Consumer<Advancement> saver,
+                             Advancement root) {
 
-            catchOneAdvancement = save(saver, catchOne.getSecond(), root, AdvancementRequirements.Strategy.OR, catchOne.getFirst());
-            save(saver, catchAll.getSecond(), catchOneAdvancement, AdvancementRequirements.Strategy.AND, catchAll.getFirst());
+            catchOneAdvancement = save(saver, catchOne.getSecond(), root, RequirementsStrategy.OR, catchOne.getFirst());
+            save(saver, catchAll.getSecond(), catchOneAdvancement, RequirementsStrategy.AND, catchAll.getFirst());
 
-            AdvancementHolder findEggOneAdvancement = save(saver, findEggOne.getSecond(), root, AdvancementRequirements.Strategy.OR, findEggOne.getFirst());
-            AdvancementHolder findCrawlerOneAdvancement = save(saver, findCrawlerOne.getSecond(), root, AdvancementRequirements.Strategy.OR, findCrawlerOne.getFirst());
+            Advancement findEggOneAdvancement = save(saver, findEggOne.getSecond(), root, RequirementsStrategy.OR, findEggOne.getFirst());
+            Advancement findCrawlerOneAdvancement = save(saver, findCrawlerOne.getSecond(), root, RequirementsStrategy.OR, findCrawlerOne.getFirst());
 
-            save(saver, findEggAll.getSecond(), findEggOneAdvancement, AdvancementRequirements.Strategy.AND, findEggAll.getFirst());
-            save(saver, findCrawlerAll.getSecond(), findCrawlerOneAdvancement, AdvancementRequirements.Strategy.AND, findCrawlerAll.getFirst());
+            save(saver, findEggAll.getSecond(), findEggOneAdvancement, RequirementsStrategy.AND, findEggAll.getFirst());
+            save(saver, findCrawlerAll.getSecond(), findCrawlerOneAdvancement, RequirementsStrategy.AND, findCrawlerAll.getFirst());
 
-            AdvancementHolder bottleOneAdvancement = save(saver, bottleOne.getSecond(), catchOneAdvancement, AdvancementRequirements.Strategy.OR, bottleOne.getFirst());
-            AdvancementHolder bottleCrawlerAdvancement = save(saver, bottleCrawlerOne.getSecond(), findCrawlerOneAdvancement, AdvancementRequirements.Strategy.OR, bottleCrawlerOne.getFirst());
+            Advancement bottleOneAdvancement = save(saver, bottleOne.getSecond(), catchOneAdvancement, RequirementsStrategy.OR, bottleOne.getFirst());
+            Advancement bottleCrawlerAdvancement = save(saver, bottleCrawlerOne.getSecond(), findCrawlerOneAdvancement, RequirementsStrategy.OR, bottleCrawlerOne.getFirst());
 
-            save(saver, bottleAll.getSecond(), bottleOneAdvancement, AdvancementRequirements.Strategy.AND, bottleAll.getFirst());
-            save(saver, bottleCrawlerAll.getSecond(), bottleCrawlerAdvancement, AdvancementRequirements.Strategy.AND, bottleCrawlerAll.getFirst());
+            save(saver, bottleAll.getSecond(), bottleOneAdvancement, RequirementsStrategy.AND, bottleAll.getFirst());
+            save(saver, bottleCrawlerAll.getSecond(), bottleCrawlerAdvancement, RequirementsStrategy.AND, bottleCrawlerAll.getFirst());
         }
     }
 }

@@ -13,6 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Generates recipes and their unlock advancements.
@@ -51,7 +52,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param recipeOutput The recipe data to output to.
      */
     @Override
-    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
 
         for(int i = 0; i < ItemRegistry.BOTTLED_BUTTERFLIES.size(); ++i) {
             ButterflyData data = ButterflyData.getEntry(i);
@@ -151,7 +152,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param groupName The group name.
      * @param butterflyIndex The butterfly index.
      */
-    private void addBottleRecipe(@NotNull RecipeOutput recipeOutput,
+    private void addBottleRecipe(@NotNull Consumer<FinishedRecipe> recipeOutput,
                                  List<RegistryObject<Item>> baseItems,
                                  List<RegistryObject<Item>> outputItems,
                                  String groupName,
@@ -173,7 +174,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * @param groupName The group name.
      * @param butterflyIndex The butterfly index.
      */
-    private void addScrollRecipe(@NotNull RecipeOutput recipeOutput,
+    private void addScrollRecipe(@NotNull Consumer<FinishedRecipe> recipeOutput,
                                  List<RegistryObject<Item>> baseItems,
                                  String keySuffix,
                                  String groupName,
