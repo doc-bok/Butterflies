@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "bottled_larva",
+  "ingredients": [
+    {
+      "item": "butterflies:caterpillar_white-lined-sphinx"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "butterflies:bottled_caterpillar_white-lined-sphinx"
+  }
+}

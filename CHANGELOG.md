@@ -1,5 +1,11 @@
 ## Changelog
 
+### 7.7.1 (2026-06-28)
+ - Fixed Bottled Peacemaker Butterflies not actually being bottled.
+
+### 7.7.0 (2026-06-19)
+ - Mod now uses data generation properly.
+
 ### 7.6.0 (2026-06-04)
  - Added the Smile Butterfly.
 

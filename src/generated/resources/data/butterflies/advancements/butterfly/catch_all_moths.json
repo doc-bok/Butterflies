@@ -1,0 +1,266 @@
+{
+  "parent": "butterflies:butterfly/catch_moth",
+  "criteria": {
+    "butterfly_net_atlas": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_atlas"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_carpet": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_carpet"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_case-bearing-clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_case-bearing-clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_clearwing-hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_clearwing-hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_clothes": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_clothes"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_codling": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_codling"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_diamondback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_diamondback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_domestic_silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_domestic_silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_hummingbird": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_hummingbird"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_indianmeal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_indianmeal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_luna": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_luna"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_oak-silk": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_oak-silk"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_peppered": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peppered"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_spongy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_spongy"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_spongymale": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_spongymale"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "butterfly_net_white-lined-sphinx": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_white-lined-sphinx"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.catch_all_moths.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:butterfly_net_atlas"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_all_moths.title"
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_net_atlas"
+    ],
+    [
+      "butterfly_net_carpet"
+    ],
+    [
+      "butterfly_net_case-bearing-clothes"
+    ],
+    [
+      "butterfly_net_clearwing-hummingbird"
+    ],
+    [
+      "butterfly_net_clothes"
+    ],
+    [
+      "butterfly_net_codling"
+    ],
+    [
+      "butterfly_net_diamondback"
+    ],
+    [
+      "butterfly_net_domestic_silk"
+    ],
+    [
+      "butterfly_net_hummingbird"
+    ],
+    [
+      "butterfly_net_indianmeal"
+    ],
+    [
+      "butterfly_net_luna"
+    ],
+    [
+      "butterfly_net_oak-silk"
+    ],
+    [
+      "butterfly_net_peppered"
+    ],
+    [
+      "butterfly_net_spongy"
+    ],
+    [
+      "butterfly_net_white-lined-sphinx"
+    ],
+    [
+      "butterfly_net_spongymale"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

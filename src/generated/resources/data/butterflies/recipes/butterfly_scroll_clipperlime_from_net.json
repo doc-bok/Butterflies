@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "butterfly_scroll",
+  "ingredients": [
+    {
+      "item": "butterflies:butterfly_net_clipperlime"
+    },
+    {
+      "item": "minecraft:paper"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    }
+  ],
+  "result": {
+    "item": "butterflies:butterfly_scroll_clipperlime"
+  }
+}
