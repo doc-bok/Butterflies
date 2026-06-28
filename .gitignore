@@ -36,4 +36,4 @@ __pycache__
 
 # Files from data generation
 run-data
-/src/generated/resources/.cache
+/src/generated/
