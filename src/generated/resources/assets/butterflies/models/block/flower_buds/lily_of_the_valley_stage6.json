@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "cross": "butterflies:block/flower_bud/lily_of_the_valley_stage6"
-  }
-}
