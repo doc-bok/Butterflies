@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.data.recipes;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -13,6 +14,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Generates recipes and their unlock advancements.
@@ -42,8 +44,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
      * Construction.
      * @param packOutput The pack to output to.
      */
-    public ModRecipeProvider(PackOutput packOutput) {
-        super(packOutput);
+    public ModRecipeProvider(PackOutput packOutput,
+                             CompletableFuture<HolderLookup.Provider> registries) {
+        super(packOutput, registries);
     }
 
     /**
@@ -132,7 +135,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern("sss")
                 .define('s', ItemRegistry.SILK.get())
                 .unlockedBy(getHasName(ItemRegistry.SILK.get()), has(ItemRegistry.SILK.get()))
-                .save(recipeOutput, new ResourceLocation(ButterfliesMod.MOD_ID, "paper_from_silk"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "paper_from_silk"));
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.STRING)
                 .pattern(" s ")
@@ -140,7 +143,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .pattern(" s ")
                 .define('s', ItemRegistry.SILK.get())
                 .unlockedBy(getHasName(ItemRegistry.SILK.get()), has(ItemRegistry.SILK.get()))
-                .save(recipeOutput, new ResourceLocation(ButterfliesMod.MOD_ID, "string_from_silk"));
+                .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "string_from_silk"));
     }
 
     /**

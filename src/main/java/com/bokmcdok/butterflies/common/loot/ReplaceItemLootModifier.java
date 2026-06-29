@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.common.loot;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,8 +17,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ReplaceItemLootModifier extends LootModifier {
 
-    public static final Codec<ReplaceItemLootModifier> CODEC =
-            RecordCodecBuilder.create(inst ->
+    public static final MapCodec<ReplaceItemLootModifier> CODEC =
+            RecordCodecBuilder.mapCodec(inst ->
                     codecStart(inst)
                             .and(BuiltInRegistries.ITEM.byNameCodec()
                                     .fieldOf("item").forGetter(m -> m.item))
@@ -65,7 +65,7 @@ public class ReplaceItemLootModifier extends LootModifier {
      */
     @NotNull
     @Override
-    public Codec<? extends IGlobalLootModifier> codec() {
+    public MapCodec<? extends IGlobalLootModifier> codec() {
         return CODEC;
     }
 }

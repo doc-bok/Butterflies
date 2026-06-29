@@ -13,12 +13,15 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -27,12 +30,13 @@ import net.neoforged.neoforgespi.language.IModFileInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
  * Class used to generate data for the mod.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
 
     /**
@@ -55,9 +59,9 @@ public class DataGenerators {
 
         generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
         generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput));
-        generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput));
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput));
+        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput, lookupProvider));
+        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
         generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
@@ -77,7 +81,16 @@ public class DataGenerators {
     private static void preloadButterflyData() {
         List<PackResources> candidateServerResources = new ArrayList<>();
         IModFileInfo modFileInfo = ModList.get().getModFileById(ButterfliesMod.MOD_ID);
-        candidateServerResources.add(ResourcePackLoader.createPackForMod(modFileInfo).openPrimary("mod:" + ButterfliesMod.MOD_ID));
+        PackLocationInfo packLocationInfo = new PackLocationInfo(
+                "mod/" + ButterfliesMod.MOD_ID,
+                Component.empty(),
+                PackSource.BUILT_IN,
+                Optional.empty()
+        );
+
+        candidateServerResources.add(ResourcePackLoader.createPackForMod(modFileInfo).openPrimary(packLocationInfo));
+
+
         MultiPackResourceManager resourceManager = new MultiPackResourceManager(PackType.SERVER_DATA, candidateServerResources);
         ButterflyData.load(resourceManager);
     }

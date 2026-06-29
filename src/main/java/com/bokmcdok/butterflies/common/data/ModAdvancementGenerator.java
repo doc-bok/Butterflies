@@ -9,6 +9,8 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -16,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -112,26 +115,24 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
         mothAdvancements.saveAll(saver, root);
         AdvancementHolder createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.catchOneAdvancement, AdvancementRequirements.Strategy.AND, "create_butterfly_scroll");
 
-        CompoundTag fullButterflyBookTag = new CompoundTag();
-        fullButterflyBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
-        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullButterflyBookTag);
+        CompoundTag filledButterfly = new CompoundTag();
+        filledButterfly.putBoolean("filled_butterfly", true);
+        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+                .hasComponents(DataComponentPredicate.builder()
+                        .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledButterfly)).build());
 
-        CompoundTag fullMothBookTag = new CompoundTag();
-        fullMothBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 2);
-        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullMothBookTag);
-
-        CompoundTag fullBothBookTag = new CompoundTag();
-        fullBothBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 3);
-        ItemPredicate.Builder fullBothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullBothBookTag);
+        CompoundTag filledMoth = new CompoundTag();
+        filledMoth.putBoolean("filled_moth", true);
+        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+                .hasComponents(DataComponentPredicate.builder()
+                        .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledMoth)).build());
 
         Advancement.Builder fillButterflyBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_butterfly_book", 200);
         fillButterflyBookBuilder.addCriterion("butterflies", InventoryChangeTrigger.TriggerInstance.hasItems(fullButterflyBook));
-        fillButterflyBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook));
         save(saver, fillButterflyBookBuilder, createButterflyScroll, AdvancementRequirements.Strategy.OR, "fill_butterfly_book");
 
         Advancement.Builder fillMothBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_moth_book", 200);
         fillMothBookBuilder.addCriterion("moths", InventoryChangeTrigger.TriggerInstance.hasItems(fullMothBook));
-        fillMothBookBuilder.addCriterion("both", InventoryChangeTrigger.TriggerInstance.hasItems(fullBothBook));
         save(saver, fillMothBookBuilder, createButterflyScroll, AdvancementRequirements.Strategy.OR, "fill_moth_book");
     }
 
@@ -182,7 +183,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
             .display(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                     createTitleString("root"),
                     createDescriptionString("root"),
-                    new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
+                    ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                     AdvancementType.TASK,
                     false,  // Show Toast
                     false,  // Announce Chat

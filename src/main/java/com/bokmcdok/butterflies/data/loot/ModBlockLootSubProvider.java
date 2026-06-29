@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
@@ -17,8 +18,8 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
     /**
      * Construction.
      */
-    public ModBlockLootSubProvider() {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags());
+    public ModBlockLootSubProvider(HolderLookup.Provider lookupProvider) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
     }
 
     /**

@@ -6,7 +6,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -40,7 +40,7 @@ public class ModBiomeModifiers {
      * Entry point.
      * @param context The context for the biome modifier.
      */
-    public static void bootstrap(BootstapContext<BiomeModifier> context) {
+    public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var biomes = context.lookup(Registries.BIOME);
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
@@ -111,7 +111,7 @@ public class ModBiomeModifiers {
      * @return A new ResourceKey.
      */
     private static ResourceKey<BiomeModifier> registerKey(String name) {
-        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(ButterfliesMod.MOD_ID, name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, name));
     }
 
     /**
@@ -123,7 +123,7 @@ public class ModBiomeModifiers {
      * @param spawnerData The spawns to add.
      */
     private static void registerSpawnModifier(
-            BootstapContext<BiomeModifier> context,
+            BootstrapContext<BiomeModifier> context,
             HolderGetter<Biome> biomes,
             ResourceKey<BiomeModifier> key,
             TagKey<Biome> biomeTag,
@@ -141,7 +141,7 @@ public class ModBiomeModifiers {
      * @param spawnerData The spawns to add.
      */
     private static void registerVillageSpawnModifiers(
-            BootstapContext<BiomeModifier> context,
+            BootstrapContext<BiomeModifier> context,
             HolderGetter<Biome> biomes,
             List<MobSpawnSettings.SpawnerData> spawnerData) {
 

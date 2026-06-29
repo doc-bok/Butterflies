@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.data.worldgen;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -23,7 +23,7 @@ public class ModPlacedFeatures {
      * Entry point.
      * @param context The context for the biome modifier.
      */
-    public static void bootstrap(BootstapContext<PlacedFeature> context) {
+    public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
         context.register(PEACEMAKER_LAIR, new PlacedFeature(
@@ -39,6 +39,6 @@ public class ModPlacedFeatures {
      * @return A new ResourceKey.
      */
     private static ResourceKey<PlacedFeature> registerKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(ButterfliesMod.MOD_ID, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, name));
     }
 }

@@ -591,6 +591,14 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
+     * Get all butterfly data. Used for network synchronisation.
+     * @return The butterfly entries as a collection.
+     */
+    public static Collection<ButterflyData> getButterflyDataCollection() {
+        return BUTTERFLY_ENTRIES.values();
+    }
+
+    /**
      * Helper method to get the species string for creating resource locations.
      * @return A valid species string.
      */

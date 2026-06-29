@@ -94,7 +94,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
      */
     private void registerBottledEntity(int index,
                                        List<DeferredHolder<Block, Block>> blocks) {
-        final ModelFile bottleModel = models().getExistingFile(new ResourceLocation(ButterfliesMod.MOD_ID, "bottle"));
+        final ModelFile bottleModel = models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "bottle"));
         simpleBlock(blocks.get(index).get(), bottleModel);
     }
 
@@ -140,7 +140,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
 
         models[0] = new ConfiguredModel(models().cross("block/flower_buds/" + textureName +"_stage" + age,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName +"_stage" + age)).renderType("cutout"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName +"_stage" + age)).renderType("cutout"));
 
         return models;
     }
@@ -212,10 +212,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 break;
         }
 
-        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "block/butterfly_origami");
+        final ResourceLocation parent = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/butterfly_origami");
         String path = block.getId().getPath();
         models[0] = new ConfiguredModel(
-                models().withExistingParent("block/" + path, parent).texture("all", new ResourceLocation("block/" + path.substring(18) + "_wool")),
+                models().withExistingParent("block/" + path, parent).texture("all", ResourceLocation.withDefaultNamespace("block/" + path.substring(18) + "_wool")),
                 x, y, false);
 
         simpleBlockItem(block.get(), models[0].model);

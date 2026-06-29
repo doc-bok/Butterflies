@@ -2,8 +2,13 @@ package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -23,12 +28,19 @@ import java.util.function.BiConsumer;
 public class ModChestLootSubProvider implements LootTableSubProvider {
 
     /**
+     * Construction.
+     */
+    public ModChestLootSubProvider(HolderLookup.Provider lookupProvider) {
+        super();
+    }
+
+    /**
      * Entry point. Generates chest loot tables.
      * @param register The register for storing loot tables.
      */
     @Override
-    public void generate(BiConsumer<ResourceLocation, LootTable.Builder> register) {
-        register.accept(new ResourceLocation(ButterfliesMod.MOD_ID, "chests/peacemaker_lair"),
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> register) {
+        register.accept(ModLootTableProvider.registerKey("chests/peacemaker_lair"),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(UniformGenerator.between(0.0f, 1.0f))

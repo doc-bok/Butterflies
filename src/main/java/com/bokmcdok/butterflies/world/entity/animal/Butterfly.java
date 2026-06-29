@@ -969,7 +969,6 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         butterfly.finalizeSpawn((ServerLevel) level,
                 level.getCurrentDifficultyAt(position),
                 MobSpawnType.NATURAL,
-                null,
                 null);
 
         if (persistent || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {

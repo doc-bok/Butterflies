@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModBiomeTagsProvider extends BiomeTagsProvider {
 
     private static final TagKey<Biome> LIANGSHANBO_GRAVE =
-            TagKey.create(Registries.BIOME, new ResourceLocation(ButterfliesMod.MOD_ID, "has_structure/liangshanbo_grave"));
+            TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "has_structure/liangshanbo_grave"));
 
     /**
      * Construction.

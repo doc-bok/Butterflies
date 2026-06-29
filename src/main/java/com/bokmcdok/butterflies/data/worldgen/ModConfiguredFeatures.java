@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.data.worldgen;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.FeatureRegistry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -20,7 +20,7 @@ public class ModConfiguredFeatures {
      * Entry point.
      * @param context The context for the configured features.
      */
-    public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+    public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         context.register(PEACEMAKER_LAIR, new ConfiguredFeature<>(
                 FeatureRegistry.PEACEMAKER_LAIR.get(),
                 NoneFeatureConfiguration.INSTANCE));
@@ -32,6 +32,6 @@ public class ModConfiguredFeatures {
      * @return A new ResourceKey.
      */
     public static ResourceKey<ConfiguredFeature<?, ?>> registerKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ButterfliesMod.MOD_ID, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, name));
     }
 }

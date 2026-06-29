@@ -19,7 +19,7 @@ import java.util.Objects;
  */
 public class ModItemModelProvider extends ItemModelProvider {
 
-    private final static ResourceLocation HANDHELD_ROD = new ResourceLocation("item/handheld_rod");
+    private final static ResourceLocation HANDHELD_ROD = ResourceLocation.withDefaultNamespace("item/handheld_rod");
 
     /**
      * Construction
@@ -60,7 +60,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // Golem Spawn Egg.
         singleTexture(getPath(SpawnEggRegistry.BUTTERFLY_GOLEM_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/golem/butterfly"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/golem/butterfly"));
 
         // Peacemaker Spawn Eggs.
         registerPeacemakerSpawnEggs();
@@ -79,9 +79,9 @@ public class ModItemModelProvider extends ItemModelProvider {
      * @param index The butterfly index.
      */
     private void registerButterflyEgg(int index) {
-        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_butterfly_egg");
+        final ResourceLocation parent = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "template_butterfly_egg");
         String path = getPath(ItemRegistry.BUTTERFLY_EGGS.get(index));
-        singleTexture(path, parent, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_egg/" + path));
+        singleTexture(path, parent, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_egg/" + path));
     }
 
     /**
@@ -90,7 +90,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerButterflyScroll(int index) {
         String name = getPath(ItemRegistry.BUTTERFLY_SCROLLS.get(index));
-        singleTexture(name, mcLoc("generated"), "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_scroll/" + name));
+        singleTexture(name, mcLoc("generated"), "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_scroll/" + name));
     }
 
     /**
@@ -98,9 +98,9 @@ public class ModItemModelProvider extends ItemModelProvider {
      * @param index The butterfly index.
      */
     private void registerCaterpillar(int index) {
-        final ResourceLocation parent = new ResourceLocation(ButterfliesMod.MOD_ID, "template_caterpillar");
+        final ResourceLocation parent = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "template_caterpillar");
         String path = getPath(ItemRegistry.CATERPILLARS.get(index));
-        singleTexture(path, parent, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/caterpillar/" + path));
+        singleTexture(path, parent, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/caterpillar/" + path));
     }
 
     /**
@@ -111,16 +111,16 @@ public class ModItemModelProvider extends ItemModelProvider {
         String path = getPath(SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS.get(index));
         String species = path.substring(20);
 
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/butterfly/" + species));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/butterfly/" + species));
 
         path = getPath(SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/caterpillar/" + species));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/caterpillar/" + species));
 
         path = getPath(SpawnEggRegistry.CHRYSALIS_SPAWN_EGGS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/chrysalis/" + species));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/chrysalis/" + species));
 
         path = getPath(SpawnEggRegistry.EGG_SPAWN_EGGS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/egg/" + species));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/egg/" + species));
     }
 
     /**
@@ -128,31 +128,31 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     public void registerPeacemakerSpawnEggs() {
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/butterfly/peacemaker"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/butterfly/peacemaker"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_COW_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_cow"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_cow"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_EVOKER_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_evoker"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_evoker"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_ILLUSIONER_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_illusioner"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_illusioner"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_PILLAGER_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_pillager"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_pillager"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_VILLAGER_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_villager"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_villager"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_VINDICATOR_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_vindicator"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_vindicator"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_WANDERING_TRADER_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_wandering_trader"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_wandering_trader"));
 
         singleTexture(getPath(SpawnEggRegistry.PEACEMAKER_WITCH_SPAWN_EGG), HANDHELD_ROD, "layer0",
-                new ResourceLocation(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_witch"));
+                ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/spawn_egg/peacemaker/peacemaker_witch"));
     }
 
     /**
@@ -161,7 +161,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerFullButterflyNet(int index) {
         String path = getPath(ItemRegistry.BUTTERFLY_NETS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_net/butterfly_net_full"));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_net/butterfly_net_full"));
     }
 
     /**
@@ -170,7 +170,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerSpecialButterflyNet(DeferredHolder<Item, Item> item) {
         String path = getPath(item);
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_net/" + path));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_net/" + path));
     }
 
     /**
@@ -206,7 +206,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         ResourceLocation itemKey = Objects.requireNonNull(item.getKey()).location();
         getBuilder(itemKey.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/handheld_rod"))
-                .texture("layer0", new ResourceLocation(ButterfliesMod.MOD_ID,"item/" + textureLocation + "/" + texturePrefix + "_" + itemKey.getPath().substring(substrStart)));
+                .texture("layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID,"item/" + textureLocation + "/" + texturePrefix + "_" + itemKey.getPath().substring(substrStart)));
     }
 
     /**

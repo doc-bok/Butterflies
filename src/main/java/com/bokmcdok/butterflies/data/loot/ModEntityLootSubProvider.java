@@ -5,15 +5,19 @@ import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -38,8 +42,8 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
     /**
      * Construction.
      */
-    public ModEntityLootSubProvider() {
-        super(FeatureFlags.REGISTRY.allFlags());
+    public ModEntityLootSubProvider(HolderLookup.Provider provider) {
+        super(FeatureFlags.REGISTRY.allFlags(), provider);
     }
 
     /**
@@ -87,13 +91,13 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
      * @param butterflyIndex The butterfly index.
      */
     private void addChrysalisSilkLoot(int butterflyIndex) {
+        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         add(ButterflyEntityTypeRegistry.CHRYSALISES.get(butterflyIndex).get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1.0f))
                                 .add(LootItem.lootTableItem(ItemRegistry.SILK.get())
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f)))
-                                        .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0f, 1.0f))))));
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f))))));
     }
 
     /**
