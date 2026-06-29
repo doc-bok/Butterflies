@@ -119,6 +119,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      # Build the data using datagen
+      - name: Build Data
+        run: ./gradlew runData
+
       # Build the project using Gradle clean and build tasks
       - name: Build with Gradle
         uses: gradle/actions/setup-gradle@v3

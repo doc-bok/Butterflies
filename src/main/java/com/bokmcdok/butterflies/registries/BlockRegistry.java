@@ -56,6 +56,8 @@ public class BlockRegistry {
     public static final DeferredHolder<Block, Block> WHITE_TULIP_BUD;
     public static final DeferredHolder<Block, Block> WITHER_ROSE_BUD;
 
+    public static final List<DeferredHolder<Block, Block>> FLOWER_BUDS;
+
     // Origami
     public static final List<DeferredHolder<Block, Block>> BUTTERFLY_ORIGAMI;
 
@@ -217,6 +219,22 @@ public class BlockRegistry {
         RED_TULIP_BUD = registerFlowerBudBlock("bud_red_tulip", Blocks.RED_TULIP);
         WHITE_TULIP_BUD = registerFlowerBudBlock("bud_white_tulip", Blocks.WHITE_TULIP);
         WITHER_ROSE_BUD = registerFlowerBudBlock("bud_wither_rose", Blocks.WITHER_ROSE);
+
+        FLOWER_BUDS = List.of(
+                ALLIUM_BUD,
+                AZURE_BLUET_BUD,
+                BLUE_ORCHID_BUD,
+                CORNFLOWER_BUD,
+                DANDELION_BUD,
+                LILY_OF_THE_VALLEY_BUD,
+                ORANGE_TULIP_BUD,
+                OXEYE_DAISY_BUD,
+                PINK_TULIP_BUD,
+                POPPY_BUD,
+                RED_TULIP_BUD,
+                WHITE_TULIP_BUD,
+                WITHER_ROSE_BUD
+        );
 
         // Functional blocks
         BUTTERFLY_FEEDER = BLOCKS.register(ButterflyFeederBlock.ID, ButterflyFeederBlock::new);
