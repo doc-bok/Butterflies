@@ -7,9 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -23,13 +21,11 @@ public class ModItemTagsProvider extends ItemTagsProvider {
      * @param packOutput The pack to output to.
      * @param lookupProvider Helps with registry lookups.
      * @param blockLookupProvider Helps with block lookups.
-     * @param existingFileHelper Helps to check existing files.
      */
     public ModItemTagsProvider(PackOutput packOutput,
                                CompletableFuture<HolderLookup.Provider> lookupProvider,
-                               CompletableFuture<TagLookup<Block>> blockLookupProvider,
-                               @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, blockLookupProvider, ButterfliesMod.MOD_ID, existingFileHelper);
+                               CompletableFuture<TagLookup<Block>> blockLookupProvider) {
+        super(packOutput, lookupProvider, blockLookupProvider, ButterfliesMod.MOD_ID);
     }
 
     /**

@@ -6,9 +6,7 @@ import com.bokmcdok.butterflies.registries.TagRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BannerPatternTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -22,12 +20,10 @@ public class ModBannerPatternTagsProvider extends BannerPatternTagsProvider {
      * Construction.
      * @param packOutput The pack to output to.
      * @param lookupProvider Helps with registry lookups.
-     * @param existingFileHelper Helps to check existing files.
      */
     public ModBannerPatternTagsProvider(PackOutput packOutput,
-                                        CompletableFuture<HolderLookup.Provider> lookupProvider,
-                                        @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, ButterfliesMod.MOD_ID, existingFileHelper);
+                                        CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider, ButterfliesMod.MOD_ID);
     }
 
     /**

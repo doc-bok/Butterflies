@@ -168,7 +168,10 @@ public class ItemRegistry {
         // Banner Pattern
         BUTTERFLY_BANNER_PATTERN = ITEMS.register("banner_pattern_butterfly", () -> new BannerPatternItem(
                 TagRegistry.BUTTERFLY_BANNER_PATTERN,
-                (new Item.Properties()).stacksTo(1).rarity(Rarity.UNCOMMON).setId(createResourceKey("banner_pattern_butterfly"))));
+                (new Item.Properties())
+                        .stacksTo(1)
+                        .rarity(Rarity.UNCOMMON)
+                        .setId(createResourceKey("banner_pattern_butterfly"))));
 
         // Peacemaker Honey
         PEACEMAKER_HONEY_BOTTLE = ITEMS.register("peacemaker_honey_bottle",

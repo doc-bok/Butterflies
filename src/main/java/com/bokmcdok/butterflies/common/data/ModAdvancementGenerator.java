@@ -3,14 +3,17 @@ package com.bokmcdok.butterflies.common.data;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.CompoundTagId;
+
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -19,8 +22,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
@@ -32,20 +33,18 @@ import java.util.function.Consumer;
 /**
  * Generates all advancements for the mod.
  */
-public class ModAdvancementGenerator implements AdvancementProvider.AdvancementGenerator {
+public class ModAdvancementGenerator implements AdvancementSubProvider {
 
     /**
      * Entry point.
      * @param registries A lookup for registries and their objects.
      * @param saver A consumer used to write advancements to a file.
-     * @param existingFileHelper A helper used to find whether a file exists.
      */
     @Override
     public void generate(@NotNull HolderLookup.Provider registries,
-                         @NotNull Consumer<AdvancementHolder> saver,
-                         @NotNull ExistingFileHelper existingFileHelper) {
+                         @NotNull Consumer<AdvancementHolder> saver) {
         AdvancementHolder root = createRoot(saver);
-        createCollectionAdvancements(saver, root);
+        createCollectionAdvancements(registries, saver, root);
         createSpecialCatchAdvancements(saver, root);
         createMiscAdvancements(saver, root);
     }
@@ -88,14 +87,15 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement in the tree.
      */
-    private void createCollectionAdvancements(@NotNull Consumer<AdvancementHolder> saver,
+    private void createCollectionAdvancements(@NotNull HolderLookup.Provider registries,
+                                              @NotNull Consumer<AdvancementHolder> saver,
                                               AdvancementHolder root) {
 
         int atlasMothIndex = ButterflyData.getButterflyIndex("atlas");
         SpeciesAdvancementSet butterflyAdvancements = new SpeciesAdvancementSet("butterfly", "butterflies", "caterpillar", "caterpillars", 0);
         SpeciesAdvancementSet mothAdvancements = new SpeciesAdvancementSet("moth", "moths", "larva", "larvae", atlasMothIndex);
 
-        Advancement.Builder createButterflyScrollBuilder = task(ItemRegistry.BUTTERFLY_SCROLLS.get(0).get(), "create_butterfly_scroll");
+        Advancement.Builder createButterflyScrollBuilder = task(ItemRegistry.BUTTERFLY_SCROLLS.getFirst().get(), "create_butterfly_scroll");
 
         for(int i = 0; i < ButterflyData.getTotalNumSpecies(); ++i) {
             ButterflyData butterflyData = ButterflyData.getEntry(i);
@@ -115,15 +115,18 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
         mothAdvancements.saveAll(saver, root);
         AdvancementHolder createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.catchOneAdvancement, AdvancementRequirements.Strategy.AND, "create_butterfly_scroll");
 
+
+        HolderGetter<Item> itemRegistry = registries.lookupOrThrow(Registries.ITEM);
+
         CompoundTag filledButterfly = new CompoundTag();
         filledButterfly.putBoolean("filled_butterfly", true);
-        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(itemRegistry, ItemRegistry.BUTTERFLY_BOOK.get())
                 .hasComponents(DataComponentPredicate.builder()
                         .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledButterfly)).build());
 
         CompoundTag filledMoth = new CompoundTag();
         filledMoth.putBoolean("filled_moth", true);
-        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(itemRegistry, ItemRegistry.BUTTERFLY_BOOK.get())
                 .hasComponents(DataComponentPredicate.builder()
                         .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledMoth)).build());
 

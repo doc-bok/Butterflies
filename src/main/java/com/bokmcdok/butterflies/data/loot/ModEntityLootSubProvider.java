@@ -13,11 +13,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -63,10 +61,10 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
      * @param entityType The entity type.
      * @return True if the entity can have a loot table.
      */
-    @Override
-    protected boolean canHaveLootTable(@NotNull EntityType<?> entityType) {
-        return super.canHaveLootTable(entityType) || entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
-    }
+    //@Override
+    //protected boolean canHaveLootTable(@NotNull EntityType<?> entityType) {
+    //    return super.canHaveLootTable(entityType) || entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
+    //}
 
     /**
      * Get the entities that need loot tables.

@@ -953,9 +953,9 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                               BlockPos position,
                               boolean persistent) {
 
-        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(location);
+        EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.getValue(location);
 
-        Entity entity = entityType.create(level);
+        Entity entity = entityType.create(level, EntitySpawnReason.NATURAL);
         if (!(entity instanceof Butterfly butterfly)) {
             return;
         }
@@ -971,7 +971,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         butterfly.finalizeSpawn((ServerLevel) level,
                 level.getCurrentDifficultyAt(position),
-                MobSpawnType.NATURAL,
+                EntitySpawnReason.NATURAL,
                 null);
 
         if (persistent || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {

@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.data.event;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.client.model.generators.ModBlockStateProvider;
+import com.bokmcdok.butterflies.client.model.generators.ButterflyModelProvider;
+import com.bokmcdok.butterflies.client.model.generators.ModBlockModelProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;
 import com.bokmcdok.butterflies.common.data.ModAdvancementGenerator;
 import com.bokmcdok.butterflies.common.data.ModGlobalLootModifierProvider;
@@ -13,6 +14,7 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackResources;
@@ -22,8 +24,6 @@ import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.resource.ResourcePackLoader;
 import net.neoforged.neoforgespi.language.IModFileInfo;
@@ -44,35 +44,37 @@ public class DataGenerators {
      * @param event The event information.
      */
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent event) {
-
+    public static void gatherData(GatherDataEvent.Client event) {
         DataGenerator generator = event.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+        PackOutput output = generator.getPackOutput();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+        ModBuiltInEntriesProvider datapack = new ModBuiltInEntriesProvider(output, lookupProvider);
+        generator.addProvider(true, datapack);
+
+        var pack = generator.getVanillaPack(true);
 
         preloadButterflyData();
 
-        // Server Data
-        final List<AdvancementProvider.AdvancementGenerator> advancements = List.of(
-                new ModAdvancementGenerator());
-
-        generator.addProvider(event.includeServer(), new AdvancementProvider(packOutput, lookupProvider, existingFileHelper, advancements));
-        generator.addProvider(event.includeServer(), new ModWorldGenProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModGlobalLootModifierProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), ModLootTableProvider.create(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModRecipeProvider(packOutput, lookupProvider));
-        generator.addProvider(event.includeServer(), new ModBannerPatternTagsProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModBiomeTagsProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModEntityTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
-
-        ModBlockTagsProvider blockTagsProvider =  generator.addProvider(event.includeServer(), new ModBlockTagsProvider(packOutput, lookupProvider, existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
-        generator.addProvider(event.includeServer(), new ModPoiTypeTagsProvider(packOutput, lookupProvider, existingFileHelper));
-
         // Client Assets
-        generator.addProvider(event.includeClient(), new ModItemModelProvider(packOutput, existingFileHelper));
-        generator.addProvider(event.includeClient(), new ModBlockStateProvider(packOutput, existingFileHelper));
+        pack.addProvider(ButterflyModelProvider.create(
+                ButterfliesMod.MOD_ID,
+                ModBlockModelProvider::new,
+                ModItemModelProvider::new));
+
+        // Server Assets
+        pack.addProvider(packOutput -> new AdvancementProvider(packOutput, lookupProvider, List.of(new ModAdvancementGenerator())));
+        pack.addProvider(packOutput -> new ModWorldGenProvider(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> new ModGlobalLootModifierProvider(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> ModLootTableProvider.create(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> new ModRecipeProvider.Runner(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> new ModBannerPatternTagsProvider(packOutput, datapack.getRegistryProvider()));
+        pack.addProvider(packOutput -> new ModBiomeTagsProvider(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> new ModEntityTypeTagsProvider(packOutput, lookupProvider));
+
+        ModBlockTagsProvider blockTagsProvider =  pack.addProvider(packOutput -> new ModBlockTagsProvider(packOutput, lookupProvider));
+        pack.addProvider(packOutput -> new ModItemTagsProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter()));
+        pack.addProvider(packOutput -> new ModPoiTypeTagsProvider(packOutput, lookupProvider));
     }
 
     /**

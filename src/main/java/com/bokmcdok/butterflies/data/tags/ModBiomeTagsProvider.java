@@ -9,9 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,12 +25,10 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
      * Construction.
      * @param packOutput The pack to output to.
      * @param lookupProvider Helps with registry lookups.
-     * @param existingFileHelper Helps to check existing files.
      */
     public ModBiomeTagsProvider(PackOutput packOutput,
-                                CompletableFuture<HolderLookup.Provider> lookupProvider,
-                                @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, lookupProvider, ButterfliesMod.MOD_ID, existingFileHelper);
+                                CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(packOutput, lookupProvider, ButterfliesMod.MOD_ID);
     }
 
     /**
