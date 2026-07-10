@@ -2,7 +2,7 @@ package com.bokmcdok.butterflies.client.model.generators;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.data.models.model.ButterflyModelTemplates;
-import com.bokmcdok.butterflies.client.data.models.model.ButterflyTexturedModel;
+import com.bokmcdok.butterflies.client.data.models.model.ButterflyTexturedModels;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -18,14 +18,19 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
+import java.util.Optional;
+
 /**
- * Registers block states.
+ * Generates block states, block models, and block item models.
  */
 public class ModBlockModelProvider extends ModelSubProvider {
+
+    private static final int[] BUD_STAGE_BY_AGE = {0, 1, 2, 3, 4, 5, 6, 6};
 
     /**
      * Construction
@@ -39,61 +44,18 @@ public class ModBlockModelProvider extends ModelSubProvider {
      */
     @Override
     protected void register() {
-
-        // Bottled items
-        for (int i = 0; i < BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.size(); i++) {
-            simpleBlockWithItem(
-                    BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(i),
-                    ButterflyTexturedModel.BOTTLE);
-
-            simpleBlockWithItem(
-                    BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(i),
-                    ButterflyTexturedModel.BOTTLE);
-        }
-
-        // Flower buds
-        createFlowerBud(BlockRegistry.ALLIUM_BUD);
-        createFlowerBud(BlockRegistry.AZURE_BLUET_BUD);
-        createFlowerBud(BlockRegistry.BLUE_ORCHID_BUD);
-        createFlowerBud(BlockRegistry.CORNFLOWER_BUD);
-        createFlowerBud(BlockRegistry.DANDELION_BUD);
-        createFlowerBud(BlockRegistry.LILY_OF_THE_VALLEY_BUD);
-        createFlowerBud(BlockRegistry.ORANGE_TULIP_BUD);
-        createFlowerBud(BlockRegistry.OXEYE_DAISY_BUD);
-        createFlowerBud(BlockRegistry.PINK_TULIP_BUD);
-        createFlowerBud(BlockRegistry.POPPY_BUD);
-        createFlowerBud(BlockRegistry.RED_TULIP_BUD);
-        createFlowerBud(BlockRegistry.WHITE_TULIP_BUD);
-        createFlowerBud(BlockRegistry.WITHER_ROSE_BUD);
-
-        // Functional Blocks
-        simpleBlockWithItem(
-                BlockRegistry.BUTTERFLY_FEEDER,
-                ButterflyTexturedModel.BUTTERFLY_FEEDER);
-
-        simpleBlockWithItem(
-                BlockRegistry.BUTTERFLY_MICROSCOPE,
-                ButterflyTexturedModel.BUTTERFLY_MICROSCOPE);
-
-        // Origami
-        for(DeferredHolder<Block, Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
-            registerButterflyOrigami(origami);
-        }
+        registerBottledCreatures();
+        registerFlowerBuds();
+        registerFunctionalBlocks();
+        registerOrigamiBlocks();
     }
 
-    private void registerButterflyOrigami(DeferredHolder<Block,Block> block) {
-
-        String path = block.getId().getPath();
-        ResourceLocation textureLocation = ResourceLocation.withDefaultNamespace("block/" + path.substring(18) + "_wool");
-        TextureMapping texturemapping = (new TextureMapping()).put(TextureSlot.ALL, textureLocation);
-
-        ResourceLocation modelLocation = ButterflyModelTemplates.BUTTERFLY_ORIGAMI.create(block.get(), texturemapping, blockModels.modelOutput);
-
-        blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get(), Variant.variant().with(VariantProperties.MODEL, modelLocation))
-                .with(PropertyDispatch.property(BlockStateProperties.ORIENTATION)
-                        .generate((x ) -> applyRotation(x, Variant.variant()))));
-    }
-
+    /**
+     * Applies a specific rotation based on the variant's orientation.
+     * @param frontAndTop The orientation of the variant.
+     * @param variant The variant we are creating.
+     * @return The updated variant with the correct rotations.
+     */
     private Variant applyRotation(FrontAndTop frontAndTop,
                                   Variant variant) {
         return switch (frontAndTop) {
@@ -119,6 +81,164 @@ public class ModBlockModelProvider extends ModelSubProvider {
     }
 
     /**
+     * Creates a flower bud block.
+     * @param block The block to create.
+     */
+    private void createFlowerBudBlock(DeferredHolder<Block, Block> block) {
+        if (BlockStateProperties.AGE_7.getPossibleValues().size() != BUD_STAGE_BY_AGE.length) {
+            throw new IllegalArgumentException(String.format("Mismatch between Age values size [%d] and Bud Stage values length [%d].",
+                    BlockStateProperties.AGE_7.getPossibleValues().size(),
+                    BUD_STAGE_BY_AGE.length));
+        } else {
+            Int2ObjectMap<ResourceLocation> int2objectmap = new Int2ObjectOpenHashMap<>();
+            PropertyDispatch propertydispatch = PropertyDispatch.property(BlockStateProperties.AGE_7).generate((i) -> {
+                int age = BUD_STAGE_BY_AGE[i];
+                ResourceLocation resourcelocation = int2objectmap.computeIfAbsent(i, (x) -> {
+
+                    String blockPath = block.getId().getPath();
+                    Optional<String> flowerName = extractFlowerName(blockPath);
+
+                    if (flowerName.isPresent()) {
+                        String textureName = flowerName.get();
+                        boolean shouldGenerateBudModel = shouldGenerateBudModel(i, textureName);
+
+                        if (age < 5 && isTulip(textureName)) {
+                            textureName = "tulip";
+                        }
+
+                        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/flower_buds/" + textureName + "_stage" + age);
+                        if (shouldGenerateBudModel) {
+                            return ModelTemplates.CROP.create(location, TextureMapping.crop(location),  modelOutput);
+                        } else {
+                            return location;
+                        }
+                    } else {
+                        throw new IllegalArgumentException(String.format("Block is not a flower bud [%s.]", blockPath));
+                    }
+                });
+
+                return Variant.variant().with(VariantProperties.MODEL, resourcelocation);
+            });
+
+            blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get()).with(propertydispatch));
+        }
+    }
+
+    /**
+     * Creates a single origami block.
+     * @param block The block to create.
+     */
+    private void createOrigamiBlock(DeferredHolder<Block, Block> block) {
+        String path = block.getId().getPath();
+        Optional<String> color = extractColor(path);
+        if (color.isPresent()) {
+            ResourceLocation textureLocation = ResourceLocation.withDefaultNamespace("block/" + color + "_wool");
+            TextureMapping texturemapping = (new TextureMapping()).put(TextureSlot.ALL, textureLocation);
+
+            ResourceLocation modelLocation = ButterflyModelTemplates.BUTTERFLY_ORIGAMI.create(block.get(), texturemapping, blockModels.modelOutput);
+
+            blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get(), Variant.variant().with(VariantProperties.MODEL, modelLocation))
+                    .with(PropertyDispatch.property(BlockStateProperties.ORIENTATION)
+                            .generate((x) -> applyRotation(x, Variant.variant()))));
+        }
+    }
+
+    /**
+     * Extracts a color from a block name, if present.
+     * @param blockName The name of the block.
+     * @return The color of the block, if valid.
+     */
+    private Optional<String> extractColor(String blockName) {
+        for(DyeColor color : DyeColor.values()) {
+            if (blockName.contains(color.getName())) {
+                return Optional.of(color.getName());
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Extracts a flower name from a flower bud's block name.
+     * @param blockName The name of the block.
+     * @return The flower name, if present.
+     */
+    private Optional<String> extractFlowerName(String blockName) {
+        if (blockName.length() > 4 ) {
+            if (blockName.startsWith("bud_")) {
+                return Optional.of(blockName.substring(4));
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    /**
+     * Check if a flower is a type of tulip.
+     * @param textureName The name of the texture.
+     * @return True if the flower is a tulip.
+     */
+    private boolean isTulip(String textureName) {
+        return textureName.contains("tulip");
+    }
+
+    /**
+     * Registers bottled butterflies and bottled caterpillars.
+     */
+    private void registerBottledCreatures() {
+        for (int i = 0; i < BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.size(); i++) {
+            simpleBlockWithItem(
+                    BlockRegistry.BOTTLED_BUTTERFLY_BLOCKS.get(i),
+                    ButterflyTexturedModels.BOTTLE);
+
+            simpleBlockWithItem(
+                    BlockRegistry.BOTTLED_CATERPILLAR_BLOCKS.get(i),
+                    ButterflyTexturedModels.BOTTLE);
+        }
+    }
+
+    /**
+     * Registers all flower bud blocks.
+     */
+    private void registerFlowerBuds() {
+        createFlowerBudBlock(BlockRegistry.ALLIUM_BUD);
+        createFlowerBudBlock(BlockRegistry.AZURE_BLUET_BUD);
+        createFlowerBudBlock(BlockRegistry.BLUE_ORCHID_BUD);
+        createFlowerBudBlock(BlockRegistry.CORNFLOWER_BUD);
+        createFlowerBudBlock(BlockRegistry.DANDELION_BUD);
+        createFlowerBudBlock(BlockRegistry.LILY_OF_THE_VALLEY_BUD);
+        createFlowerBudBlock(BlockRegistry.ORANGE_TULIP_BUD);
+        createFlowerBudBlock(BlockRegistry.OXEYE_DAISY_BUD);
+        createFlowerBudBlock(BlockRegistry.PINK_TULIP_BUD);
+        createFlowerBudBlock(BlockRegistry.POPPY_BUD);
+        createFlowerBudBlock(BlockRegistry.RED_TULIP_BUD);
+        createFlowerBudBlock(BlockRegistry.WHITE_TULIP_BUD);
+        createFlowerBudBlock(BlockRegistry.WITHER_ROSE_BUD);
+    }
+
+    /**
+     * Registers the functional blocks.
+     */
+    private void registerFunctionalBlocks() {
+        simpleBlockWithItem(
+                BlockRegistry.BUTTERFLY_FEEDER,
+                ButterflyTexturedModels.BUTTERFLY_FEEDER);
+
+        simpleBlockWithItem(
+                BlockRegistry.BUTTERFLY_MICROSCOPE,
+                ButterflyTexturedModels.BUTTERFLY_MICROSCOPE);
+    }
+
+    /**
+     * Registers all our origami blocks.
+     */
+    private void registerOrigamiBlocks() {
+        for(DeferredHolder<Block, Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
+            createOrigamiBlock(origami);
+        }
+    }
+
+    /**
      * Create a simple block with a custom model.
      * @param block The block to generate a model for.
      * @param model The base model for the block.
@@ -128,37 +248,16 @@ public class ModBlockModelProvider extends ModelSubProvider {
         blockModels.createTrivialBlock(block.get(), model);
     }
 
-    private void createFlowerBud(DeferredHolder<Block, Block> block) {
-        if (BlockStateProperties.AGE_7.getPossibleValues().size() != new int[]{0, 1, 2, 3, 4, 5, 6, 6}.length) {
-            throw new IllegalArgumentException();
-        } else {
-            Int2ObjectMap<ResourceLocation> int2objectmap = new Int2ObjectOpenHashMap<>();
-            PropertyDispatch propertydispatch = PropertyDispatch.property(BlockStateProperties.AGE_7).generate((i) -> {
-                int age = new int[]{0, 1, 2, 3, 4, 5, 6, 6}[i];
-                ResourceLocation resourcelocation = int2objectmap.computeIfAbsent(i, (x) -> {
-
-                    String textureName = block.getId().getPath().substring(4);
-
-                    boolean shouldCreateModel =
-                            ((!textureName.contains("tulip") || textureName.contains("orange_tulip")) && i < 7) ||
-                            (textureName.contains("tulip") && i > 4 && i < 7);
-
-                    if (age < 5 && textureName.contains("tulip")) {
-                        textureName = "tulip";
-                    }
-
-                    ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/flower_buds/" + textureName +"_stage" + age);
-                    if (shouldCreateModel) {
-                        return ModelTemplates.CROP.create(location, TextureMapping.crop(location), modelOutput);
-                    } else {
-                        return location;
-                    }
-                });
-
-                return Variant.variant().with(VariantProperties.MODEL, resourcelocation);
-            });
-
-            blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get()).with(propertydispatch));
-        }
+    /**
+     * Check if a bud model should be generated. Prevents duplicate models, and
+     * allows for model reuse.
+     * @param age The age of the flower bud.
+     * @param textureName The name of the flower's texture.
+     * @return True if a model needs to be generated.
+     */
+    private boolean shouldGenerateBudModel(int age,
+                                           String textureName) {
+        return ((!textureName.contains("tulip") || textureName.contains("orange_tulip")) && age < 7) ||
+                (isTulip(textureName) && age > 4 && age < 7);
     }
 }

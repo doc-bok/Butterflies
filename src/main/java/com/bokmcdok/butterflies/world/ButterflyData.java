@@ -605,28 +605,36 @@ public record ButterflyData(int butterflyIndex,
      * @return A valid species string.
      */
     public static String getSpeciesString(LivingEntity entity) {
-        String species = "undiscovered";
-        String encodeId = entity.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
+        Optional<String> result = getSpeciesString(entity.getEncodeId());
+        return result.orElse("undiscovered");
+    }
+
+    /**
+     * Helper method to extract a species from a string.
+     * @param source The source string to try and extract from.
+     * @return The species string if it exists.
+     */
+    public static Optional<String> getSpeciesString(String source) {
+        if (source != null) {
+            String[] split = source.split(":");
             if (split.length >= 2) {
-                species = split[1];
+                String species = split[1];
 
                 // Kind of hacky. We should avoid butterfly IDs with
                 // underscores in the future. Making an exception here, so we
                 // don't lose work done before we realised it was a problem.
                 if (species.contains("domestic_silk")) {
-                    return "domestic_silk";
+                    return Optional.of("domestic_silk");
                 }
 
                 split = species.split("_");
-                if (split.length >=2) {
-                    species = split[0];
+                if (split.length >= 2) {
+                    return Optional.of(split[0]);
                 }
             }
         }
 
-        return species;
+        return Optional.empty();
     }
 
     /**

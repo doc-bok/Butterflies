@@ -7,12 +7,10 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -57,16 +55,6 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
     }
 
     /**
-     * Checks if an entity can have a loot table. Overridden to support Butterfly Golems.
-     * @param entityType The entity type.
-     * @return True if the entity can have a loot table.
-     */
-    //@Override
-    //protected boolean canHaveLootTable(@NotNull EntityType<?> entityType) {
-    //    return super.canHaveLootTable(entityType) || entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
-    //}
-
-    /**
      * Get the entities that need loot tables.
      * @return The vanilla entities.
      */
@@ -89,7 +77,6 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
      * @param butterflyIndex The butterfly index.
      */
     private void addChrysalisSilkLoot(int butterflyIndex) {
-        HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         add(ButterflyEntityTypeRegistry.CHRYSALISES.get(butterflyIndex).get(),
                 LootTable.lootTable()
                         .withPool(LootPool.lootPool()

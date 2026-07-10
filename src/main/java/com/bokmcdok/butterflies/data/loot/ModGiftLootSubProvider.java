@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -19,7 +18,7 @@ public class ModGiftLootSubProvider implements LootTableSubProvider {
     /**
      * Construction.
      */
-    public ModGiftLootSubProvider(HolderLookup.Provider lookupProvider) {
+    public ModGiftLootSubProvider() {
         super();
     }
 

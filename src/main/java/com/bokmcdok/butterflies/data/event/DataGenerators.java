@@ -40,7 +40,7 @@ import java.util.concurrent.CompletableFuture;
 public class DataGenerators {
 
     /**
-     * Gather up all the data generators.
+     * Gather all the data generators.
      * @param event The event information.
      */
     @SubscribeEvent
@@ -58,7 +58,6 @@ public class DataGenerators {
 
         // Client Assets
         pack.addProvider(ButterflyModelProvider.create(
-                ButterfliesMod.MOD_ID,
                 ModBlockModelProvider::new,
                 ModItemModelProvider::new));
 
@@ -78,7 +77,9 @@ public class DataGenerators {
     }
 
     /**
-     * Loads the butterfly data so it is ready for the data generators to reference.
+     * Loads the butterfly data so it is ready for the data generators to
+     * reference. This is initialized this way so we can use the data-driven
+     * approach to generate all our other data.
      */
     private static void preloadButterflyData() {
         List<PackResources> candidateServerResources = new ArrayList<>();

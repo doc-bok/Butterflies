@@ -8,18 +8,18 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Set;
+import java.util.Collections;
 
 /**
  * Provides loot tables for blocks.
  */
-public class ModBlockLootSubProvider extends BlockLootSubProvider {
+public final class ModBlockLootSubProvider extends BlockLootSubProvider {
 
     /**
      * Construction.
      */
     public ModBlockLootSubProvider(HolderLookup.Provider lookupProvider) {
-        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
+        super(Collections.emptySet(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
     }
 
     /**

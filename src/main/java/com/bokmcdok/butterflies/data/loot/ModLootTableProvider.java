@@ -24,7 +24,7 @@ public class ModLootTableProvider {
                 new LootTableProvider.SubProviderEntry(ModBlockLootSubProvider::new, LootContextParamSets.BLOCK),
                 new LootTableProvider.SubProviderEntry(ModChestLootSubProvider::new, LootContextParamSets.CHEST),
                 new LootTableProvider.SubProviderEntry(ModEntityLootSubProvider::new, LootContextParamSets.ENTITY),
-                new LootTableProvider.SubProviderEntry(ModGiftLootSubProvider::new, LootContextParamSets.GIFT)
+                new LootTableProvider.SubProviderEntry(x -> new ModGiftLootSubProvider(), LootContextParamSets.GIFT)
         ), lookupProvider);
     }
 
