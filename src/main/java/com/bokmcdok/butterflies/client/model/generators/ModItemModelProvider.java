@@ -34,11 +34,11 @@ public class ModItemModelProvider extends ModelSubProvider {
             new Pair<>(SpawnEggRegistry.PEACEMAKER_WITCH_SPAWN_EGG, "peacemaker_witch")
             );
 
-    private final static List<List<DeferredHolder<Item, Item>>> BUTTERFLY_STAGES = List.of(
-            SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS,
-            SpawnEggRegistry.CHRYSALIS_SPAWN_EGGS,
-            SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS,
-            SpawnEggRegistry.EGG_SPAWN_EGGS
+    private final static List<Pair< String, List<DeferredHolder<Item, Item>>>> BUTTERFLY_STAGES = List.of(
+            new Pair<>("butterfly", SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS),
+            new Pair<>("chrysalis", SpawnEggRegistry.CHRYSALIS_SPAWN_EGGS),
+            new Pair<>("caterpillar", SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS),
+            new Pair<>("egg", SpawnEggRegistry.EGG_SPAWN_EGGS)
     );
 
     /**
@@ -157,7 +157,7 @@ public class ModItemModelProvider extends ModelSubProvider {
     private void registerButterflySpawnEggs(int index) {
         String species = Objects.requireNonNull(ButterflyData.getEntry(index)).entityId();
         for (var stage : BUTTERFLY_STAGES) {
-            singleTextureItem(stage.get(index).get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/spawn_egg/butterfly/" + species);
+            singleTextureItem(stage.getSecond().get(index).get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/spawn_egg/" + stage.getFirst() + "/" + species);
         }
     }
 
@@ -169,7 +169,7 @@ public class ModItemModelProvider extends ModelSubProvider {
             singleTextureItem(
                     spawnEggs.getFirst().get(),
                     ModelTemplates.FLAT_HANDHELD_ROD_ITEM,
-                    "item/spawn_egg/butterfly/" + spawnEggs.getSecond());
+                    "item/spawn_egg/peacemaker/" + spawnEggs.getSecond());
         }
     }
 

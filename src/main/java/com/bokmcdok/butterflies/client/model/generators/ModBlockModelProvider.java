@@ -106,9 +106,11 @@ public class ModBlockModelProvider extends ModelSubProvider {
                             textureName = "tulip";
                         }
 
-                        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/flower_buds/" + textureName + "_stage" + age);
+                        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "block/flower_bud/" + textureName + "_stage" + age);
                         if (shouldGenerateBudModel) {
-                            return ModelTemplates.CROP.create(location, TextureMapping.crop(location),  modelOutput);
+                            return ModelTemplates.CROSS.extend()
+                                    .renderType(ResourceLocation.withDefaultNamespace("cutout")).build()
+                                    .create(location, TextureMapping.cross(location),  modelOutput);
                         } else {
                             return location;
                         }
@@ -117,7 +119,8 @@ public class ModBlockModelProvider extends ModelSubProvider {
                     }
                 });
 
-                return Variant.variant().with(VariantProperties.MODEL, resourcelocation);
+                return Variant.variant()
+                        .with(VariantProperties.MODEL, resourcelocation);
             });
 
             blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get()).with(propertydispatch));
@@ -139,7 +142,7 @@ public class ModBlockModelProvider extends ModelSubProvider {
 
             blockModels.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block.get(), Variant.variant().with(VariantProperties.MODEL, modelLocation))
                     .with(PropertyDispatch.property(BlockStateProperties.ORIENTATION)
-                            .generate((x) -> applyRotation(x, Variant.variant()))));
+                            .generate((frontAndTop) -> applyRotation(frontAndTop, Variant.variant()))));
         }
     }
 
