@@ -25,17 +25,6 @@ import java.util.List;
 
 public class BottledCaterpillarBlock extends Block {
 
-    // The base properties for a bottled caterpillar.
-    public static final BlockBehaviour.Properties BASE_PROPERTIES =
-            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::alwaysFalse)
-                    .isSuffocating(BlockRegistry::alwaysFalse)
-                    .isValidSpawn(BlockRegistry::alwaysFalse)
-                    .isViewBlocking(BlockRegistry::alwaysFalse)
-                    .noOcclusion()
-                    .sound(SoundType.GLASS)
-                    .strength(0.3F);
-
     private static final String NAME = "block.butterflies.bottled_caterpillar";
 
     //  The bottle's "model".

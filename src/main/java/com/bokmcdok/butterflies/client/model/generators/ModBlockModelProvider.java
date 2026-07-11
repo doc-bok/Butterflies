@@ -132,7 +132,7 @@ public class ModBlockModelProvider extends ModelSubProvider {
         String path = block.getId().getPath();
         Optional<String> color = extractColor(path);
         if (color.isPresent()) {
-            ResourceLocation textureLocation = ResourceLocation.withDefaultNamespace("block/" + color + "_wool");
+            ResourceLocation textureLocation = ResourceLocation.withDefaultNamespace("block/" + color.get() + "_wool");
             TextureMapping texturemapping = (new TextureMapping()).put(TextureSlot.ALL, textureLocation);
 
             ResourceLocation modelLocation = ButterflyModelTemplates.BUTTERFLY_ORIGAMI.create(block.get(), texturemapping, blockModels.modelOutput);

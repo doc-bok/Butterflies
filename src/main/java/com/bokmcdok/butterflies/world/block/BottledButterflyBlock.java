@@ -25,17 +25,6 @@ import java.util.List;
 
 public class BottledButterflyBlock extends Block {
 
-    // The base properties of a bottled butterfly.
-    public static final BlockBehaviour.Properties BASE_PROPERTIES =
-            BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
-                    .isRedstoneConductor(BlockRegistry::alwaysFalse)
-                    .isSuffocating(BlockRegistry::alwaysFalse)
-                    .isValidSpawn(BlockRegistry::alwaysFalse)
-                    .isViewBlocking(BlockRegistry::alwaysFalse)
-                    .noOcclusion()
-                    .sound(SoundType.GLASS)
-                    .strength(0.3F);
-
     private static final String NAME = "block.butterflies.bottled_butterfly";
 
     //  The bottle's "model".

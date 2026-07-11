@@ -27,13 +27,6 @@ import javax.annotation.Nullable;
  */
 public class ButterflyOrigamiBlock extends Block {
 
-    // The base properties for origami
-    public static final BlockBehaviour.Properties BASE_PROPERTIES =
-            BlockBehaviour.Properties.of()
-                    .noCollission()
-                    .strength(0.5F, 2.5F)
-                    .sound(SoundType.PINK_PETALS);
-
     // The block's facing property.
     public static final EnumProperty<FrontAndTop> ORIENTATION;
 

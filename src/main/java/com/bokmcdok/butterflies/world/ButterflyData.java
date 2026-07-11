@@ -593,7 +593,7 @@ public record ButterflyData(int butterflyIndex,
     }
 
     /**
-     * Get all butterfly data. Used for network synchronisation.
+     * Get all butterfly data. Used for network synchronization.
      * @return The butterfly entries as a collection.
      */
     public static Collection<ButterflyData> getButterflyDataCollection() {
@@ -616,29 +616,35 @@ public record ButterflyData(int butterflyIndex,
      */
     public static Optional<String> getSpeciesString(String source) {
         if (source != null) {
+            String species = source;
             String[] split = source.split(":");
             if (split.length >= 2) {
-                String species = split[1];
-
-                // Kind of hacky. We should avoid butterfly IDs with
-                // underscores in the future. Making an exception here, so we
-                // don't lose work done before we realised it was a problem.
-                if (species.contains("domestic_silk")) {
-                    return Optional.of("domestic_silk");
-                }
-
-                split = species.split("_");
-                if (split.length >= 2) {
-                    return Optional.of(split[0]);
-                }
+                species = split[1];
             }
+
+            // Kind of hacky. We should avoid butterfly IDs with
+            // underscores in the future. Making an exception here, so we
+            // don't lose work done before we realized it was a problem.
+            if (species.contains("domestic_silk")) {
+                return Optional.of("domestic_silk");
+            }
+
+            split = species.split("_");
+
+            if (split.length >= 3) {
+                species = split[2];
+            } else if (split.length == 2) {
+                species = split[0];
+            }
+
+            return Optional.of(species);
         }
 
         return Optional.empty();
     }
 
     /**
-     * Get all butterfly data. Used for network synchronisation.
+     * Get all butterfly data. Used for network synchronization.
      * @return The butterfly entries as a collection.
      */
     public static List<ButterflyData> getButterflyDataList() {
@@ -709,7 +715,7 @@ public record ButterflyData(int butterflyIndex,
     /**
      * Returns a collection of formatted components ready to render as text.
      * @param butterflyIndex The butterfly index.
-     * @return Formatted, localised text.
+     * @return Formatted, localized text.
      */
     public static FormattedText getFormattedButterflyData(int butterflyIndex) {
         ButterflyData entry = ButterflyData.getEntry(butterflyIndex);

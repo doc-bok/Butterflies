@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -143,7 +144,14 @@ public class BlockRegistry {
      */
     private static DeferredHolder<Block, Block> registerBottledButterfly(int butterflyIndex) {
         String registryId = getBottledButterflyRegistryId(butterflyIndex);
-        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, BottledButterflyBlock.BASE_PROPERTIES);
+        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F));
 
         // Light Butterflies glow when they are in a bottle.
         if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
@@ -160,7 +168,14 @@ public class BlockRegistry {
      */
     private static DeferredHolder<Block, Block> registerBottledCaterpillar(int butterflyIndex) {
         String registryId = getBottledCaterpillarRegistryId(butterflyIndex);
-        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, BottledCaterpillarBlock.BASE_PROPERTIES);
+        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, BlockBehaviour.Properties.ofFullCopy(Blocks.GLASS)
+                .isRedstoneConductor(BlockRegistry::alwaysFalse)
+                .isSuffocating(BlockRegistry::alwaysFalse)
+                .isValidSpawn(BlockRegistry::alwaysFalse)
+                .isViewBlocking(BlockRegistry::alwaysFalse)
+                .noOcclusion()
+                .sound(SoundType.GLASS)
+                .strength(0.3F));
         return BLOCKS.register(registryId, () -> new BottledCaterpillarBlock(properties));
     }
 
@@ -182,7 +197,10 @@ public class BlockRegistry {
      * @return The origami block entry.
      */
     private static DeferredHolder<Block, Block> registerButterflyOrigami(String registryId) {
-        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, ButterflyOrigamiBlock.BASE_PROPERTIES);
+        BlockBehaviour.Properties properties = createPropertiesWithKey(registryId, BlockBehaviour.Properties.of()
+                .noCollission()
+                .strength(0.5F, 2.5F)
+                .sound(SoundType.PINK_PETALS));
         return BLOCKS.register(registryId, () -> new ButterflyOrigamiBlock(properties));
     }
 
