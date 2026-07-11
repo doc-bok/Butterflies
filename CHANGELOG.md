@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.7.3 (2026-07-11)
+ - Fixed bottled butterflies/caterpillars always dropping Peacemaker Butterflies.
+
 ### 7.7.2 (2026-06-28)
  - No longer a need to commit generated resources.
 
