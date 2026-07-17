@@ -1,5 +1,9 @@
 ## Changelog
 
+### 7.7.5 (2026-07-17)
+ - Fixed translation strings for caterpillar items.
+ - Fixed missing texture for Peacemaker Butterfly Spawn Egg.
+
 ### 7.7.4 (2026-07-11)
  - Some models weren't generating properly leading to incorrect rendering.
 

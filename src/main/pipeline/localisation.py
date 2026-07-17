@@ -23,7 +23,7 @@ class LocalisationManager:
         for species in all_butterflies:
             name = format_name(species)
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}", f"{name} Butterfly")
-            self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_caterpillar", f"{name} Caterpillar")
+            self.try_add_localisation_string(json_data, f"entity.butterflies.caterpillar_{species}", f"{name} Caterpillar")
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_chrysalis", f"{name} Chrysalis")
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_egg", f"{name} Butterfly Egg")
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}", f"{name} Butterfly")
@@ -35,8 +35,8 @@ class LocalisationManager:
         for species in all_moths:
             name = format_name(species)
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}", f"{name} Moth")
-            self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_caterpillar", "Larva")
-            self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_chrysalis", "Cocoon")
+            self.try_add_localisation_string(json_data, f"entity.butterflies.caterpillar_{species}", f"{name} Larva")
+            self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_chrysalis", f"{name} Cocoon")
             self.try_add_localisation_string(json_data, f"entity.butterflies.{species}_egg", f"{name} Moth Egg")
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}", f"{name} Moth")
             self.try_add_localisation_string(json_data, f"item.butterflies.{species}_egg", f"{name} Moth Egg")
