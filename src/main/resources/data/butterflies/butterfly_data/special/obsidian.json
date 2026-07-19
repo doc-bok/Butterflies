@@ -1,0 +1,29 @@
+{
+  "diurnality": "cathemeral",
+  "eggMultiplier": "none",
+  "entityId": "obsidian",
+  "extraLandingBlocks": "obsidian",
+  "habitats": [
+    "end"
+  ],
+  "index": 65,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "long",
+    "chrysalis": "long",
+    "egg": "long"
+  },
+  "plantEffect": "pollinate",
+  "preferredFlower": "none",
+  "rarity": "rare",
+  "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "normal",
+  "traits": [
+    "tough"
+  ],
+  "type": "special"
+}

@@ -92,7 +92,8 @@ public record ButterflyData(int butterflyIndex,
         HAY_BALE,
         LOGS,
         WOOL,
-        FRUIT
+        FRUIT,
+        OBSIDIAN
     }
 
     // Represents a butterflies preferred habitat.Note that like rarity, this
@@ -108,7 +109,8 @@ public record ButterflyData(int butterflyIndex,
         PLATEAUS,
         SAVANNAS,
         VILLAGES,
-        WETLANDS
+        WETLANDS,
+        END
     }
 
     // Helper enum to determine a butterflies overall lifespan.
@@ -173,7 +175,8 @@ public record ButterflyData(int butterflyIndex,
         POISONOUS,
         LAVA,
         FEARLESS,
-        PEACEMAKER
+        PEACEMAKER,
+        TOUGH
     }
 
     // Constants representing the base life spans of each butterfly cycle.
@@ -700,6 +703,7 @@ public record ButterflyData(int butterflyIndex,
                     case SAVANNAS -> component.append(Component.translatable("gui.butterflies.habitat.savannas"));
                     case WETLANDS -> component.append(Component.translatable("gui.butterflies.habitat.wetlands"));
                     case VILLAGES -> component.append(Component.translatable("gui.butterflies.habitat.villages"));
+                    case END -> component.append(Component.translatable("gui.butterflies.habitat.end"));
                     default -> {
                     }
                 }
@@ -944,6 +948,7 @@ public record ButterflyData(int butterflyIndex,
             case LOGS -> blockState.is(BlockTags.LOGS);
             case WOOL -> blockState.is(BlockTags.WOOL);
             case FRUIT -> blockState.is(Blocks.PUMPKIN) || blockState.is(Blocks.MELON);
+            case OBSIDIAN -> blockState.is(Blocks.OBSIDIAN);
             default -> false;
         };
     }
