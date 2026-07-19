@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.8.0 (2026-07-19)
+ - Added the Obsidian Butterfly.
+
 ### 7.7.2 (2026-06-28)
  - No longer a need to commit generated resources.
 

@@ -43,6 +43,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -116,11 +117,17 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * maximum health (1.5 hearts).
      * @return The butterfly attribute supplier.
      */
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.Builder createAttributes(int butterflyIndex) {
+        double maxHealth = 3.0d;
+        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        if (data != null && data.hasTrait(ButterflyData.Trait.TOUGH)) {
+            maxHealth = 30.0d;
+        }
+
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 3d)
+                .add(Attributes.MAX_HEALTH, maxHealth)
                 .add(Attributes.FLYING_SPEED, BUTTERFLY_SPEED)
-                .add(Attributes.MOVEMENT_SPEED, BUTTERFLY_SPEED * 5d);
+                .add(Attributes.MOVEMENT_SPEED, BUTTERFLY_SPEED * 5.0d);
     }
 
     /**
@@ -390,6 +397,19 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             case HUGE -> 0.55f;
             default -> 0.35f;
         };
+    }
+
+    /**
+     * Helps to determine if a mob can spawn. Overridden so butterflies can
+     * spawn in the air.
+     * @param blockPos The position to check.
+     * @param level The current level.
+     * @return The walk target level of the position.
+     */
+    @Override
+    public float getWalkTargetValue(@NotNull BlockPos blockPos,
+                                    LevelReader level) {
+        return level.getBlockState(blockPos).isAir() ? 10.0F : 0.0F;
     }
 
     /**
