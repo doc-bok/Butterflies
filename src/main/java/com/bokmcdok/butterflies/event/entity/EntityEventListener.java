@@ -73,8 +73,8 @@ public class EntityEventListener {
      * Register the attributes for living entities
      */
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (RegistryObject<EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
-            event.put(i.get(), Butterfly.createAttributes().build());
+        for (int i = 0; i < ButterflyEntityTypeRegistry.BUTTERFLIES.size(); ++i) {
+            event.put(ButterflyEntityTypeRegistry.BUTTERFLIES.get(i).get(), Butterfly.createAttributes(i).build());
         }
 
         for (RegistryObject<EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {
