@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.event.entity;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.*;
 import com.bokmcdok.butterflies.world.entity.monster.*;
@@ -15,8 +16,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
-
-import java.util.Objects;
 
 /**
  * Holds event listeners for entities.
@@ -38,7 +37,7 @@ public class ModEntityEventListener {
      */
     private static boolean isButterflyAttackableByCat(LivingEntity entity) {
         if (entity instanceof Butterfly butterfly) {
-            return !Objects.equals(butterfly.getData().entityId(), "forester");
+            return butterfly.getData().hasTrait(ButterflyData.Trait.CATFRIEND);
         }
 
         return false;
@@ -49,8 +48,8 @@ public class ModEntityEventListener {
      */
     @SubscribeEvent
     private void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
-        for (DeferredHolder<EntityType<?>, EntityType<Butterfly>> i : ButterflyEntityTypeRegistry.BUTTERFLIES) {
-            event.put(i.get(), Butterfly.createAttributes().build());
+        for (int i = 0; i < ButterflyEntityTypeRegistry.BUTTERFLIES.size(); ++i) {
+            event.put(ButterflyEntityTypeRegistry.BUTTERFLIES.get(i).get(), Butterfly.createAttributes(i).build());
         }
 
         for (DeferredHolder<EntityType<?>, EntityType<Caterpillar>> i : ButterflyEntityTypeRegistry.CATERPILLARS) {

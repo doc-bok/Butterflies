@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.8.0 (2026-07-19)
+- Added the Obsidian Butterfly.
+
 ### 7.7.5 (2026-07-17)
  - Fixed translation strings for caterpillar items.
  - Fixed missing texture for Peacemaker Butterfly Spawn Egg.
