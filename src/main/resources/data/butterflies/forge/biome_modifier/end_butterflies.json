@@ -1,0 +1,12 @@
+{
+  "biomes": "#forge:is_end",
+  "spawners": [
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:obsidian",
+      "weight": 20
+    }
+  ],
+  "type": "forge:add_spawns"
+}

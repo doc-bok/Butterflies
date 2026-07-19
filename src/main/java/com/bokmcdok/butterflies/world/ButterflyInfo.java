@@ -75,6 +75,7 @@ public class ButterflyInfo {
             "ice",
             "lava",
             "light",
+            "obsidian",
             "peacemaker",
     };
 
@@ -173,6 +174,9 @@ public class ButterflyInfo {
         },
         {
             ButterflyData.Trait.GLOW,
+        },
+        {
+            ButterflyData.Trait.TOUGH,
         },
         {
             ButterflyData.Trait.PEACEMAKER,
