@@ -36,7 +36,7 @@ def main():
     code_gen = CodeGenerator(config)
     image_gen = ImageGenerator(config)
 
-    # Step 1: Gather species lists
+    # Gather species lists
     butterflies = data_gen.generate_butterfly_list(config.BUTTERFLIES_FOLDER)
     variant_butterflies = data_gen.generate_butterfly_list(config.VARIANT_BUTTERFLIES_FOLDER)
     moths = data_gen.generate_butterfly_list(config.MOTHS_FOLDER)
@@ -52,13 +52,19 @@ def main():
 
     logger.info(f"Total species count: {len(all_species)}")
 
-    # Step 4: Generate localisation strings
+    data_gen.update_data_files( "butterflies", butterflies)
+    data_gen.update_data_files( "butterflies/variant", variant_butterflies)
+    data_gen.update_data_files( "moths", moths)
+    data_gen.update_data_files( "moths/variant", variant_moths)
+    data_gen.update_data_files( "special", special)
+
+    # Generate localisation strings
     localisation.generate_localisation_strings(all_butterflies + special, all_moths)
 
-    # Step 6: Generate Java code with species and traits
+    # Generate Java code with species and traits
     code_gen.generate_code(all_species, species_data)
 
-    # Step 8: Generate images
+    # Generate images
     image_gen.generate_textures()
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
