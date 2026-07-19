@@ -20,6 +20,7 @@ class BiomeModifierManager:
             "village_snowy", "village_taiga",
         ],
         "wetlands":  ["mushroom", "river", "swamp"],
+        "end": ["end"]
     }
     RARITY_MAPPING = {
         "common": (100, 4),
@@ -63,15 +64,16 @@ class BiomeModifierManager:
 
         rarity = json_data.get("rarity", "uncommon")
         habitats = json_data.get("habitats", [])
+        egg_multiplier = json_data.get("eggMultiplier", "normal")
         weight, maximum = self.RARITY_MAPPING.get(rarity, (50, 3))
 
         for habitat, tags in self.HABITAT_TO_TAGS.items():
             if habitat in habitats:
                 for tag in tags:
-                    spawn_is_variant = is_variant if habitat != "nether" else True
-                    self._add_single_spawn(tag, species, weight, maximum, spawn_is_variant)
+                    only_butterfly = is_variant if (habitat != "nether" and egg_multiplier != "none") else True
+                    self._add_single_spawn(tag, species, weight, maximum, only_butterfly)
 
-    def _add_single_spawn(self, tag: str, species: str, weight: int, maximum: int, is_variant: bool) -> None:
+    def _add_single_spawn(self, tag: str, species: str, weight: int, maximum: int, only_butterfly: bool) -> None:
         """Safely add spawn data for a single species/tag combination without duplicates."""
         target_file = self.config.BIOME_MODIFIERS / f"{tag}_butterflies.json"
         try:
@@ -90,7 +92,7 @@ class BiomeModifierManager:
             "minCount": 1,
             "maxCount": maximum
         }]
-        if not is_variant:
+        if not only_butterfly:
             entries.extend({
                                "type": f"butterflies:{species}{suffix}",
                                "weight": weight,
