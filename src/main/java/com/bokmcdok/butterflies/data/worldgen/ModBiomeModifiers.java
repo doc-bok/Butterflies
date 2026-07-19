@@ -64,7 +64,7 @@ public class ModBiomeModifiers {
                 registerSpawnModifier(context, biomes,
                         profile.key,
                         profile.biomeTag,
-                        spawners.get(ButterflyData.Habitat.FORESTS));
+                        spawners.get(habitat));
             }
         }
 
@@ -92,7 +92,8 @@ public class ModBiomeModifiers {
                 ButterflyEntityTypeRegistry.BUTTERFLIES.get(butterflyIndex).get(),
                 profile.weight, profile.minCount, profile.maxCount));
 
-        if(data.getBaseButterflyIndex() == butterflyIndex) {
+        if(data.getBaseButterflyIndex() == butterflyIndex
+            && data.eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
             spawnerData.add(new MobSpawnSettings.SpawnerData(
                     ButterflyEntityTypeRegistry.CATERPILLARS.get(butterflyIndex).get(),
                     profile.weight, profile.minCount, profile.maxCount));
@@ -183,5 +184,6 @@ public class ModBiomeModifiers {
         BIOME_PROFILES.put(ButterflyData.Habitat.PLATEAUS, new BiomeProfile(registerKey("plateau_butterflies"), Tags.Biomes.IS_PLATEAU));
         BIOME_PROFILES.put(ButterflyData.Habitat.SAVANNAS, new BiomeProfile(registerKey("savanna_butterflies"), BiomeTags.IS_SAVANNA));
         BIOME_PROFILES.put(ButterflyData.Habitat.WETLANDS, new BiomeProfile(registerKey("wetlands_butterflies"), Tags.Biomes.IS_WET_OVERWORLD));
+        BIOME_PROFILES.put(ButterflyData.Habitat.END, new BiomeProfile(registerKey("end_butterflies"), BiomeTags.IS_END));
     }
 }
