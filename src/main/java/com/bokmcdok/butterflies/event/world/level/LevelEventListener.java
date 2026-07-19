@@ -137,6 +137,11 @@ public class LevelEventListener {
 
                         break;
 
+                    case END:
+                        if (event.getCategory().equals(Biome.BiomeCategory.THEEND)) {
+                            addSpawns(event, butterflyEggs.get(i), caterpillars.get(i), chrysalises.get(i), butterflies.get(i), weight, maximum);
+                        }
+
                     default:
                         break;
                 }
