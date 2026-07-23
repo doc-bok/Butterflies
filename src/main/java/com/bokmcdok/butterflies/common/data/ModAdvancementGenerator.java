@@ -223,11 +223,11 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                 root,
                 100);
 
-        int peacemakerButterflyIndex = ButterflyData.getButterflyIndex("peacemaker");
+        int obsidianButterflyIndex = ButterflyData.getButterflyIndex("obsidian");
         singleItemGoal(saver,
-                ItemRegistry.BUTTERFLY_SCROLLS.get(peacemakerButterflyIndex).get(),
-                "catch_peacemaker_butterfly",
-                ItemRegistry.BUTTERFLY_NETS.get(peacemakerButterflyIndex),
+                ItemRegistry.BUTTERFLY_SCROLLS.get(obsidianButterflyIndex).get(),
+                "catch_obsidian_butterfly",
+                ItemRegistry.BUTTERFLY_NETS.get(obsidianButterflyIndex),
                 root,
                 200);
     }
@@ -404,20 +404,35 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         private void saveAll(@NotNull Consumer<AdvancementHolder> saver,
                              AdvancementHolder root) {
 
-            catchOneAdvancement = save(saver, catchOne.getSecond(), root, AdvancementRequirements.Strategy.OR, catchOne.getFirst());
-            save(saver, catchAll.getSecond(), catchOneAdvancement, AdvancementRequirements.Strategy.AND, catchAll.getFirst());
+            // Catch/find advancements
+            catchOneAdvancement = savePair(saver, root, catchOne, catchAll);
+            savePair(saver, root, findEggOne, findEggAll);
+            AdvancementHolder findCrawlerOneAdvancement =
+                    savePair(saver, root, findCrawlerOne, findCrawlerAll);
 
-            AdvancementHolder findEggOneAdvancement = save(saver, findEggOne.getSecond(), root, AdvancementRequirements.Strategy.OR, findEggOne.getFirst());
-            AdvancementHolder findCrawlerOneAdvancement = save(saver, findCrawlerOne.getSecond(), root, AdvancementRequirements.Strategy.OR, findCrawlerOne.getFirst());
+            // Bottle advancements
+            savePair(saver, catchOneAdvancement, bottleOne, bottleAll);
+            savePair(saver, findCrawlerOneAdvancement, bottleCrawlerOne, bottleCrawlerAll);
+        }
 
-            save(saver, findEggAll.getSecond(), findEggOneAdvancement, AdvancementRequirements.Strategy.AND, findEggAll.getFirst());
-            save(saver, findCrawlerAll.getSecond(), findCrawlerOneAdvancement, AdvancementRequirements.Strategy.AND, findCrawlerAll.getFirst());
+        /**
+         * Saves a pair of advancements, one for a single species, the second
+         * for all species.
+         * @param saver A consumer used to write advancements to a file.
+         * @param parent The parent advancement.
+         * @param one The advancement for a single species.
+         * @param all The advancement for all species.
+         * @return Advancement holder for the single species advancement.
+         */
+        private AdvancementHolder savePair(@NotNull Consumer<AdvancementHolder> saver,
+                                           AdvancementHolder parent,
+                                           Pair<String, Advancement.Builder> one,
+                                           Pair<String, Advancement.Builder> all) {
+            AdvancementHolder oneAdvancement =
+                    save(saver, one.getSecond(), parent, AdvancementRequirements.Strategy.OR, one.getFirst());
 
-            AdvancementHolder bottleOneAdvancement = save(saver, bottleOne.getSecond(), catchOneAdvancement, AdvancementRequirements.Strategy.OR, bottleOne.getFirst());
-            AdvancementHolder bottleCrawlerAdvancement = save(saver, bottleCrawlerOne.getSecond(), findCrawlerOneAdvancement, AdvancementRequirements.Strategy.OR, bottleCrawlerOne.getFirst());
-
-            save(saver, bottleAll.getSecond(), bottleOneAdvancement, AdvancementRequirements.Strategy.AND, bottleAll.getFirst());
-            save(saver, bottleCrawlerAll.getSecond(), bottleCrawlerAdvancement, AdvancementRequirements.Strategy.AND, bottleCrawlerAll.getFirst());
+            save(saver, all.getSecond(), oneAdvancement, AdvancementRequirements.Strategy.AND, all.getFirst());
+            return oneAdvancement;
         }
     }
 }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.8.1 (2026-07-23)
+ - Add an advancement for catching the Obsidian Butterfly.
+
 ### 7.8.0 (2026-07-19)
  - Added the Obsidian Butterfly.
 
