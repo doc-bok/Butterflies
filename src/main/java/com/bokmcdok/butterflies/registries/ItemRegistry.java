@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
@@ -167,11 +168,14 @@ public class ItemRegistry {
     public static RegistryObject<Item> getButterflyNetFromIndex(int butterflyIndex) {
         if (butterflyIndex < 0) {
             return EMPTY_BUTTERFLY_NET;
-        } else if (Objects.equals(ButterflyInfo.SPECIES[butterflyIndex], "lava")) {
-            return BURNT_BUTTERFLY_NET;
-        } else {
-            return BUTTERFLY_NETS.get(butterflyIndex);
         }
+
+        ButterflyData dataEntry = ButterflyData.getEntry(butterflyIndex);
+        if (dataEntry != null && dataEntry.hasTrait(ButterflyData.Trait.LAVA)) {
+            return BURNT_BUTTERFLY_NET;
+        }
+
+        return BUTTERFLY_NETS.get(butterflyIndex);
     }
 
     // Register Methods

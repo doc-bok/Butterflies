@@ -3,13 +3,9 @@ package com.bokmcdok.butterflies.world.item;
 import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -63,13 +59,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
                                 @Nullable Level level,
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
-
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.place_egg");
-        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
-                .withItalic(true);
-        newComponent.setStyle(style);
-        components.add(newComponent);
-
+        components.add(helperTooltip("tooltip.butterflies.place_egg"));
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 

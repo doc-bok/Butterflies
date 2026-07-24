@@ -6,15 +6,11 @@ import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -72,13 +68,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
-
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.scroll");
-        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
-                .withItalic(true);
-        newComponent.setStyle(style);
-        components.add(newComponent);
-
+        components.add(helperTooltip("tooltip.butterflies.scroll"));
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 

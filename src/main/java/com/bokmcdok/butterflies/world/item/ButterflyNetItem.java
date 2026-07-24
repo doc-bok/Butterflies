@@ -4,13 +4,7 @@ import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,8 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +24,9 @@ import java.util.List;
  */
 public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
+    private static final String EMPTY_NET_HELP_TEXT = "tooltip.butterflies.butterfly_net";
+    private static final String FULL_NET_HELP_TEXT = "tooltip.butterflies.release_butterfly";
+
     //  The name this item is registered under.
     public static String getRegistryId(int butterflyIndex) {
         return "butterfly_net_" + ButterflyInfo.SPECIES[butterflyIndex];
@@ -40,7 +35,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     // The name this item is registered under.
     public static final String EMPTY_NAME = "butterfly_net";
 
-    // The localisation string ID for this item.
+    // The localization string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
 
     // The index of the butterfly species.
@@ -69,18 +64,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
-
-        String localisation = "tooltip.butterflies.release_butterfly";
-        if (butterflyIndex < 0) {
-            localisation = "tooltip.butterflies.butterfly_net";
-        }
-
-        MutableComponent newComponent = Component.translatable(localisation);
-        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
-                .withItalic(true);
-        newComponent.setStyle(style);
-        components.add(newComponent);
-
+        components.add(helperTooltip(butterflyIndex < 0 ? EMPTY_NET_HELP_TEXT : FULL_NET_HELP_TEXT));
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 
@@ -104,9 +88,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
@@ -129,46 +113,32 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * If we left-click on a butterfly with an empty net, the player will catch the butterfly.
      * @param stack  The Item being used
      * @param player The player that is attacking
-     * @param entity The entity being attacked
+     * @param target The entity being attacked
      * @return TRUE if the left-click action is consumed.
      */
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-
-        // Needs to target a butterfly with an empty net.
-        if (getButterflyEntity(stack) == null &&
-                entity instanceof Butterfly butterfly) {
-
-            RegistryObject<Item> item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
-            if (item != null) {
-                ItemStack newStack = new ItemStack(item.get(), 1);
-
-                if (item != ItemRegistry.BURNT_BUTTERFLY_NET) {
-                    entity.discard();
-                }
-
-                player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
-                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-
-                return true;
-            }
-        } else if (entity instanceof PeacemakerButterfly) {
-
-            RegistryObject<Item> item = ItemRegistry.PEACEMAKER_BUTTERFLY_NET;
-            if (item != null) {
-
-                ItemStack newStack = new ItemStack(item.get(), 1);
-
-                entity.discard();
-
-                player.setItemInHand(InteractionHand.MAIN_HAND, newStack);
-                player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
-
-                return true;
-            }
+    public boolean onLeftClickEntity(ItemStack stack,
+                                     Player player,
+                                     Entity target) {
+        if (!isEmptyNet(stack)) {
+            return false;
         }
 
-        return super.onLeftClickEntity(stack, player, entity);
+        ItemStack capturedNet = createCapturedNet(target);
+        if (capturedNet.isEmpty()) {
+            return false;
+        }
+
+        if (!player.level().isClientSide) {
+            if (!(target instanceof Butterfly && capturedNet.is(ItemRegistry.BURNT_BUTTERFLY_NET.get()))) {
+                target.discard();
+            }
+
+            player.setItemInHand(InteractionHand.MAIN_HAND, capturedNet);
+            player.playSound(SoundEvents.PLAYER_ATTACK_SWEEP, 1F, 1F);
+        }
+
+        return true;
     }
 
     /**
@@ -180,29 +150,38 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     @NotNull
-    public  InteractionResultHolder<ItemStack> use(@NotNull Level level,
-                                                   @NotNull Player player,
-                                                   @NotNull InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(@NotNull Level level,
+                                                  @NotNull Player player,
+                                                  @NotNull InteractionHand hand) {
+        return releaseButterfly(level, player, hand, ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+    }
 
-        ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(stack);
+    /**
+     * Checks to see if this is an empty net.
+     * @param stack The item stack with the item.
+     * @return True if this is an empty net.
+     */
+    private static boolean isEmptyNet(ItemStack stack) {
+        return stack.is(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+    }
 
-        if (entity != null) {
-            //  Move the target position slightly in front of the player
-            Vec3 lookAngle = player.getLookAngle();
-            BlockPos positionToSpawn = player.blockPosition().offset(
-                        (int) lookAngle.x,
-                        (int) lookAngle.y + 1,
-                        (int) lookAngle.z);
-
-            Butterfly.spawnFree(player.level(), entity, positionToSpawn);
-
-            ItemStack newStack = new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), 1);
-            player.setItemInHand(hand, newStack);
-
-            return InteractionResultHolder.success(stack);
+    /**
+     * Gets the Butterfly Net that contains the specified target.
+     * @param target The entity to try and capture.
+     * @return An instance of a Butterfly Net if the target is valid.
+     */
+    private static ItemStack createCapturedNet(Entity target) {
+        if (target instanceof PeacemakerButterfly) {
+            return new ItemStack(ItemRegistry.PEACEMAKER_BUTTERFLY_NET.get());
         }
 
-        return super.use(level, player, hand);
+        if (target instanceof Butterfly butterfly) {
+            var item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            if (item != null) {
+                return new ItemStack(item.get());
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 }
