@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -92,7 +93,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
                 if (!context.getLevel().isClientSide()) {
                     Direction clickedFace = context.getClickedFace();
 
-                    ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+                    ButterflyData data = ButterflyRegistry.getEntry(this.butterflyIndex);
                     if (data != null) {
                         ResourceLocation eggEntity = data.getButterflyEggEntity();
                         ButterflyEgg.spawn((ServerLevel) context.getLevel(), eggEntity, clickedPos.relative(clickedFace), clickedFace.getOpposite());

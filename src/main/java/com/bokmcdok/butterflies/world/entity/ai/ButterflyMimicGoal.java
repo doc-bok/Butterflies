@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
@@ -45,7 +46,7 @@ public class ButterflyMimicGoal extends AvoidEntityGoal<LivingEntity> {
         super.start();
 
         // Set butterfly texture index to random number.
-        int i = butterflyMob.getRandom().nextInt(ButterflyData.getNumButterflySpecies());
+        int i = butterflyMob.getRandom().nextInt(ButterflyRegistry.getNumButterflySpecies());
         butterflyMob.setMimicTextureIndex(i);
     }
 

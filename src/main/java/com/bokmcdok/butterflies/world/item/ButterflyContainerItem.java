@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.ChatFormatting;
@@ -16,7 +17,6 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +74,7 @@ public interface ButterflyContainerItem {
         }
 
         if (entity == null) {
-            ButterflyData data = ButterflyData.getEntry(getButterflyIndex());
+            ButterflyData data = ButterflyRegistry.getEntry(getButterflyIndex());
             if (data != null) {
                 entity = data.getButterflyEntity();
             }

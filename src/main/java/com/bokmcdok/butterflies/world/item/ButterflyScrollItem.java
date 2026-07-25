@@ -1,9 +1,11 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyScrollScreen;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.client.Minecraft;
@@ -90,8 +92,8 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
-        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyType.MOTH) {
             return Component.translatable(MOTH_SCROLL_STRING);
         } else {
             return Component.translatable(BUTTERFLY_SCROLL_STRING);

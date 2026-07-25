@@ -1,8 +1,10 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
 import com.bokmcdok.butterflies.world.item.BottledCaterpillarItem;
@@ -19,10 +21,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * This class registers items with Forge's Item Registry
@@ -34,9 +33,12 @@ public class ItemRegistry {
 
     // Nets
     public static final RegistryObject<Item> EMPTY_BUTTERFLY_NET;
+    public static final RegistryObject<Item> FIREPROOF_BUTTERFLY_NET;
     public static final List<RegistryObject<Item>> BUTTERFLY_NETS;
+    public static final List<RegistryObject<Item>> FIREPROOF_BUTTERFLY_NETS;
     public static final RegistryObject<Item> BURNT_BUTTERFLY_NET;
     public static final RegistryObject<Item> PEACEMAKER_BUTTERFLY_NET;
+    public static final RegistryObject<Item> FIREPROOF_PEACEMAKER_BUTTERFLY_NET;
 
     // Eggs
     public static final List<RegistryObject<Item>> BUTTERFLY_EGGS;
@@ -76,26 +78,32 @@ public class ItemRegistry {
 
     // Peacemaker Honey
     public static final RegistryObject<Item> PEACEMAKER_HONEY_BOTTLE;
-    
-    static {
-        ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
 
-        // Species-based.
-        List<RegistryObject<Item>> butterflyNets = new ArrayList<>();
-        List<RegistryObject<Item>> butterflyEggs = new ArrayList<>();
-        List<RegistryObject<Item>> caterpillars = new ArrayList<>();
-        List<RegistryObject<Item>> bottledButterflies = new ArrayList<>();
-        List<RegistryObject<Item>> bottledCaterpillars = new ArrayList<>();
-        List<RegistryObject<Item>> butterflyScrolls = new ArrayList<>();
+    /**
+     * Registers all items that are based on the species of butterflies.
+     * @return A record of all registered species-based items.
+     */
+    private static SpeciesRegistrations registerSpeciesItems() {
+        int speciesCount = ButterflyInfo.SPECIES.length;
+        List<RegistryObject<Item>> butterflyNets = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> fireproofButterflyNets = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> butterflyEggs = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> caterpillars = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> bottledButterflies = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> bottledCaterpillars = new ArrayList<>(speciesCount);
+        List<RegistryObject<Item>> butterflyScrolls = new ArrayList<>(speciesCount);
 
-        int peacemakerButterflyIndex = 0;
+        int peacemakerButterflyIndex = -1;
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             int butterflyIndex = i;
             String registryId = ButterflyNetItem.getRegistryId(butterflyIndex);
             RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(butterflyIndex));
             butterflyNets.add(butterflyNet);
 
-            if (registryId.contains("peacemaker")) {
+            RegistryObject<Item> fireproofButterflyNet = ITEMS.register("fireproof_" + registryId, () -> new ButterflyNetItem(butterflyIndex));
+            fireproofButterflyNets.add(fireproofButterflyNet);
+
+            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyTrait.PEACEMAKER)) {
                 peacemakerButterflyIndex = butterflyIndex;
             }
 
@@ -106,16 +114,36 @@ public class ItemRegistry {
             butterflyScrolls.add(registerButterflyScroll(butterflyIndex));
         }
 
-        BUTTERFLY_NETS = Collections.unmodifiableList(butterflyNets);
-        BUTTERFLY_EGGS = Collections.unmodifiableList(butterflyEggs);
-        CATERPILLARS = Collections.unmodifiableList(caterpillars);
-        BOTTLED_BUTTERFLIES = Collections.unmodifiableList(bottledButterflies);
-        BOTTLED_CATERPILLARS = Collections.unmodifiableList(bottledCaterpillars);
-        BUTTERFLY_SCROLLS = Collections.unmodifiableList(butterflyScrolls);
+        return new SpeciesRegistrations(
+                butterflyNets,
+                fireproofButterflyNets,
+                butterflyEggs,
+                caterpillars,
+                bottledButterflies,
+                bottledCaterpillars,
+                butterflyScrolls,
+                peacemakerButterflyIndex);
+    }
+    
+    static {
+        ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
+
+        // Species-based.
+        SpeciesRegistrations species = registerSpeciesItems();
+
+        BUTTERFLY_NETS = Collections.unmodifiableList(species.butterflyNets());
+        FIREPROOF_BUTTERFLY_NETS = Collections.unmodifiableList(species.fireproofButterflyNets());
+        BUTTERFLY_EGGS = Collections.unmodifiableList(species.butterflyEggs());
+        CATERPILLARS = Collections.unmodifiableList(species.caterpillars());
+        BOTTLED_BUTTERFLIES = Collections.unmodifiableList(species.bottledButterflies());
+        BOTTLED_CATERPILLARS = Collections.unmodifiableList(species.bottledCaterpillars());
+        BUTTERFLY_SCROLLS = Collections.unmodifiableList(species.butterflyScrolls());
 
         // Nets
         EMPTY_BUTTERFLY_NET = ITEMS.register(ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(-1));
-        PEACEMAKER_BUTTERFLY_NET = BUTTERFLY_NETS.get(peacemakerButterflyIndex);
+        FIREPROOF_BUTTERFLY_NET = ITEMS.register("fireproof_" + ButterflyNetItem.EMPTY_NAME, () -> new ButterflyNetItem(-1));
+        PEACEMAKER_BUTTERFLY_NET = BUTTERFLY_NETS.get(species.peacemakerIndex());
+        FIREPROOF_PEACEMAKER_BUTTERFLY_NET = FIREPROOF_BUTTERFLY_NETS.get(species.peacemakerIndex());
         BURNT_BUTTERFLY_NET = ITEMS.register("butterfly_net_burnt", () -> new Item(new Item.Properties()));
 
         // Books
@@ -136,15 +164,17 @@ public class ItemRegistry {
         SILK = ITEMS.register("silk", () -> new Item(new Item.Properties()));
 
         // Origami
-        BUTTERFLY_ORIGAMI = new ArrayList<>();
+        List<RegistryObject<Item>> origami = new ArrayList<>(BlockRegistry.BUTTERFLY_ORIGAMI.size());
         for (RegistryObject<Block> block : BlockRegistry.BUTTERFLY_ORIGAMI) {
             ResourceLocation id = block.getId();
             if (id != null) {
-                BUTTERFLY_ORIGAMI.add(ITEMS.register(
+                origami.add(ITEMS.register(
                         id.getPath(),
                         () -> new BlockItem(block.get(), new Item.Properties())));
             }
         }
+
+        BUTTERFLY_ORIGAMI = Collections.unmodifiableList(origami);
 
         // Sherd
         BUTTERFLY_POTTERY_SHERD = ITEMS.register("butterfly_pottery_sherd",
@@ -170,12 +200,25 @@ public class ItemRegistry {
             return EMPTY_BUTTERFLY_NET;
         }
 
-        ButterflyData dataEntry = ButterflyData.getEntry(butterflyIndex);
-        if (dataEntry != null && dataEntry.hasTrait(ButterflyData.Trait.LAVA)) {
+        ButterflyData dataEntry = ButterflyRegistry.getEntry(butterflyIndex);
+        if (dataEntry != null && dataEntry.hasTrait(ButterflyTrait.LAVA)) {
             return BURNT_BUTTERFLY_NET;
         }
 
         return BUTTERFLY_NETS.get(butterflyIndex);
+    }
+
+    /**
+     * Helper method to get the correct FIREPROOF butterfly net item.
+     * @param butterflyIndex The butterfly index.
+     * @return The registry entry for the related item.
+     */
+    public static RegistryObject<Item> getFireproofButterflyNetFromIndex(int butterflyIndex) {
+        if (butterflyIndex < 0) {
+            return FIREPROOF_BUTTERFLY_NET;
+        }
+
+        return FIREPROOF_BUTTERFLY_NETS.get(butterflyIndex);
     }
 
     // Register Methods

@@ -1,4 +1,4 @@
-package com.bokmcdok.butterflies.world;
+package com.bokmcdok.butterflies.butterfly_data;
 
 /**
  * Generated code - do not modify.
@@ -80,14 +80,14 @@ public class ButterflyInfo {
     };
 
     // A list of traits each butterfly has.
-    public static final ButterflyData.Trait[][] TRAITS = {
+    public static final ButterflyTrait[][] TRAITS = {
         {}, // No traits for admiral
         {}, // No traits for bluemoon
         {}, // No traits for buckeye
         {}, // No traits for cabbage
         {}, // No traits for chalkhill
         {
-            ButterflyData.Trait.CHRISTMASSY,
+            ButterflyTrait.CHRISTMASSY,
         },
         {}, // No traits for clipper
         {}, // No traits for clipperblack
@@ -107,35 +107,35 @@ public class ButterflyInfo {
         {}, // No traits for clipperyellow
         {}, // No traits for commander
         {
-            ButterflyData.Trait.INEDIBLE,
-            ButterflyData.Trait.POISONOUS,
+            ButterflyTrait.INEDIBLE,
+            ButterflyTrait.POISONOUS,
         },
         {
-            ButterflyData.Trait.MIMICRY,
+            ButterflyTrait.MIMICRY,
         },
         {}, // No traits for common
         {}, // No traits for commonbirdwing
         {}, // No traits for commongrassyellow
         {}, // No traits for emperor
         {
-            ButterflyData.Trait.CATFRIEND,
+            ButterflyTrait.CATFRIEND,
         },
         {}, // No traits for glasswing
         {}, // No traits for green-skirt-baron
         {}, // No traits for hairstreak
         {
-            ButterflyData.Trait.MOTHWANDERER,
+            ButterflyTrait.MOTHWANDERER,
         },
         {}, // No traits for longwing
         {
-            ButterflyData.Trait.POISONOUS,
+            ButterflyTrait.POISONOUS,
         },
         {}, // No traits for morpho
         {}, // No traits for peacock-pansy-dry
         {}, // No traits for peacock
         {}, // No traits for rainbow
         {
-            ButterflyData.Trait.FEARLESS,
+            ButterflyTrait.FEARLESS,
         },
         {}, // No traits for swallowtail
         {}, // No traits for bluemoonmale
@@ -146,14 +146,14 @@ public class ButterflyInfo {
         {}, // No traits for carpet
         {}, // No traits for case-bearing-clothes
         {
-            ButterflyData.Trait.HUMMINGBIRD,
+            ButterflyTrait.HUMMINGBIRD,
         },
         {}, // No traits for clothes
         {}, // No traits for codling
         {}, // No traits for diamondback
         {}, // No traits for domestic_silk
         {
-            ButterflyData.Trait.HUMMINGBIRD,
+            ButterflyTrait.HUMMINGBIRD,
         },
         {}, // No traits for indianmeal
         {}, // No traits for luna
@@ -161,26 +161,25 @@ public class ButterflyInfo {
         {}, // No traits for peppered
         {}, // No traits for spongy
         {
-            ButterflyData.Trait.HUMMINGBIRD,
+            ButterflyTrait.HUMMINGBIRD,
         },
         {}, // No traits for spongymale
         {
-            ButterflyData.Trait.GLOW,
-            ButterflyData.Trait.ICY,
+            ButterflyTrait.GLOW,
+            ButterflyTrait.ICY,
         },
         {
-            ButterflyData.Trait.GLOW,
-            ButterflyData.Trait.LAVA,
+            ButterflyTrait.GLOW,
+            ButterflyTrait.LAVA,
         },
         {
-            ButterflyData.Trait.GLOW,
+            ButterflyTrait.GLOW,
         },
         {
-            ButterflyData.Trait.TOUGH,
+            ButterflyTrait.TOUGH,
         },
         {
-            ButterflyData.Trait.PEACEMAKER,
+            ButterflyTrait.PEACEMAKER,
         },
     };
-
 }

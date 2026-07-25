@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.network.chat.Component;
@@ -37,9 +38,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
 
     // The localization string ID for this item.
     private static final String NAME = "item.butterflies.butterfly_net";
+    private static final String FIREPROOF_NAME = "item.butterflies.butterfly_net_fireproof";
 
-    // The index of the butterfly species.
-    private final int butterflyIndex;
+    private final int butterflyIndex; // The index of the butterfly species.
 
     /**
      * Construction
@@ -84,7 +85,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      */
     @Override
     public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-        return new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+        return isFireproof(itemStack) ?
+                new ItemStack(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get()) :
+                new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
 
     /**
@@ -96,7 +99,9 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        return Component.translatable(NAME);
+        return isFireproof(itemStack)?
+                Component.translatable(FIREPROOF_NAME) :
+                Component.translatable(NAME);
     }
 
     /**
@@ -124,7 +129,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             return false;
         }
 
-        ItemStack capturedNet = createCapturedNet(target);
+        ItemStack capturedNet = createCapturedNet(target, isFireproof(stack));
         if (capturedNet.isEmpty()) {
             return false;
         }
@@ -153,7 +158,35 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     public InteractionResultHolder<ItemStack> use(@NotNull Level level,
                                                   @NotNull Player player,
                                                   @NotNull InteractionHand hand) {
-        return releaseButterfly(level, player, hand, ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+        ItemStack stack = player.getItemInHand(hand);
+        return releaseButterfly(level, player, hand, isFireproof(stack) ?
+                ItemRegistry.FIREPROOF_BUTTERFLY_NET.get() :
+                ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+    }
+
+    /**
+     * Gets the Butterfly Net that contains the specified target.
+     * @param target The entity to try and capture.
+     * @return An instance of a Butterfly Net if the target is valid.
+     */
+    private static ItemStack createCapturedNet(Entity target,
+                                               boolean isFireproof) {
+        if (target instanceof PeacemakerButterfly) {
+            return isFireproof ?
+                    new ItemStack(ItemRegistry.FIREPROOF_PEACEMAKER_BUTTERFLY_NET.get()) :
+                    new ItemStack(ItemRegistry.PEACEMAKER_BUTTERFLY_NET.get());
+        }
+
+        if (target instanceof Butterfly butterfly) {
+            var item = isFireproof ?
+                    ItemRegistry.getFireproofButterflyNetFromIndex(butterfly.getButterflyIndex()) :
+                    ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
+            if (item != null) {
+                return new ItemStack(item.get());
+            }
+        }
+
+        return ItemStack.EMPTY;
     }
 
     /**
@@ -162,26 +195,16 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
      * @return True if this is an empty net.
      */
     private static boolean isEmptyNet(ItemStack stack) {
-        return stack.is(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
+        return stack.is(ItemRegistry.EMPTY_BUTTERFLY_NET.get()) ||
+                stack.is(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get());
     }
 
     /**
-     * Gets the Butterfly Net that contains the specified target.
-     * @param target The entity to try and capture.
-     * @return An instance of a Butterfly Net if the target is valid.
+     * Checks to see if the net is fireproof.
+     * @param stack The item stack with the item.
+     * @return True if the item is fireproof.
      */
-    private static ItemStack createCapturedNet(Entity target) {
-        if (target instanceof PeacemakerButterfly) {
-            return new ItemStack(ItemRegistry.PEACEMAKER_BUTTERFLY_NET.get());
-        }
-
-        if (target instanceof Butterfly butterfly) {
-            var item = ItemRegistry.getButterflyNetFromIndex(butterfly.getButterflyIndex());
-            if (item != null) {
-                return new ItemStack(item.get());
-            }
-        }
-
-        return ItemStack.EMPTY;
+    private static boolean isFireproof(ItemStack stack) {
+        return stack.is(TagRegistry.FIREPROOF_BUTTERFLY_NETS);
     }
 }
