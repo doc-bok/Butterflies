@@ -79,7 +79,9 @@ public class SpeciesAdvancementSet {
      * @param butterflyIndex The Butterfly Index.
      */
     public void addAllItemCriterion(int butterflyIndex) {
-        addCriterion(ActionType.CATCH, ItemRegistry.BUTTERFLY_NETS.get(butterflyIndex));
+        addCriterion(ActionType.CATCH,
+                ItemRegistry.BUTTERFLY_NETS.get(butterflyIndex));
+
         addCriterion(ActionType.FIND_EGG, ItemRegistry.BUTTERFLY_EGGS.get(butterflyIndex));
         addCriterion(ActionType.FIND_CRAWLER, ItemRegistry.CATERPILLARS.get(butterflyIndex));
         addCriterion(ActionType.BOTTLE, ItemRegistry.BOTTLED_BUTTERFLIES.get(butterflyIndex));
@@ -94,7 +96,8 @@ public class SpeciesAdvancementSet {
         return catchOneAdvancement;
     }
 
-    private void addCriterion(ActionType type, RegistryObject<Item> item) {
+    private void addCriterion(ActionType type,
+                              RegistryObject<Item> item) {
         ActionDefinition def = actions.get(type);
         generator.addItemCriterion(def.oneBuilder(), item);
         generator.addItemCriterion(def.allBuilder(), item);

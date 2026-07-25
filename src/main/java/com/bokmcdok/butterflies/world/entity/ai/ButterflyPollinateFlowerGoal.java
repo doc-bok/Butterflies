@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
@@ -51,7 +52,7 @@ public class ButterflyPollinateFlowerGoal extends MoveToBlockGoal {
         super(mob, speedModifier, searchRange, verticalSearchRange);
         this.butterfly = mob;
 
-        ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
+        ButterflyData data = ButterflyRegistry.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
             this.preferredFlowerBlock = BuiltInRegistries.BLOCK.get(data.preferredFlower());
             this.preferredFlowerItem = BuiltInRegistries.ITEM.get(data.preferredFlower());

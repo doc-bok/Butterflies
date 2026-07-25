@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.data.worldgen;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.*;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -34,8 +34,8 @@ public class ModBiomeModifiers {
     public static final ResourceKey<BiomeModifier> VILLAGE_SNOWY_BUTTERFLIES = registerKey("village_snowy_butterflies");
     public static final ResourceKey<BiomeModifier> VILLAGE_TAIGA_BUTTERFLIES = registerKey("village_taiga_butterflies");
 
-    private static final EnumMap<ButterflyData.Habitat, BiomeProfile> BIOME_PROFILES =
-            new EnumMap<>(ButterflyData.Habitat.class);
+    private static final EnumMap<ButterflyHabitat, BiomeProfile> BIOME_PROFILES =
+            new EnumMap<>(ButterflyHabitat.class);
     /**
      * Entry point.
      * @param context The context for the biome modifier.
@@ -44,21 +44,21 @@ public class ModBiomeModifiers {
         var biomes = context.lookup(Registries.BIOME);
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
 
-        EnumMap<ButterflyData.Habitat, List<MobSpawnSettings.SpawnerData>> spawners =
-                new EnumMap<>(ButterflyData.Habitat.class);
-        for (ButterflyData.Habitat habitat : ButterflyData.Habitat.values()) {
+        EnumMap<ButterflyHabitat, List<MobSpawnSettings.SpawnerData>> spawners =
+                new EnumMap<>(ButterflyHabitat.class);
+        for (ButterflyHabitat habitat : ButterflyHabitat.values()) {
             spawners.put(habitat, new ArrayList<>());
         }
 
         // Populate the data.
-        for (ButterflyData data : ButterflyData.getButterflyDataCollection()) {
-            for(ButterflyData.Habitat habitat : data.habitats()) {
+        for (ButterflyData data : ButterflyRegistry.getButterflyDataCollection()) {
+            for(ButterflyHabitat habitat : data.habitats()) {
                 addButterflySpawn(spawners.get(habitat), data);
             }
         }
 
         // Add the biome spawn modifiers.
-        for(ButterflyData.Habitat habitat : ButterflyData.Habitat.values()) {
+        for(ButterflyHabitat habitat : ButterflyHabitat.values()) {
             if(BIOME_PROFILES.containsKey(habitat)) {
                 BiomeProfile profile = BIOME_PROFILES.get(habitat);
                 registerSpawnModifier(context, biomes,
@@ -69,7 +69,7 @@ public class ModBiomeModifiers {
         }
 
         // Add the village biome modifiers.
-        registerVillageSpawnModifiers(context, biomes, spawners.get(ButterflyData.Habitat.VILLAGES));
+        registerVillageSpawnModifiers(context, biomes, spawners.get(ButterflyHabitat.VILLAGES));
 
         // Finally register the structures.
         context.register(registerKey("peacemaker_lair"), new ForgeBiomeModifiers.AddFeaturesBiomeModifier(
@@ -93,7 +93,7 @@ public class ModBiomeModifiers {
                 profile.weight, profile.minCount, profile.maxCount));
 
         if(data.getBaseButterflyIndex() == butterflyIndex
-            && data.eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
+            && data.eggMultiplier() != EggMultiplier.NONE) {
             spawnerData.add(new MobSpawnSettings.SpawnerData(
                     ButterflyEntityTypeRegistry.CATERPILLARS.get(butterflyIndex).get(),
                     profile.weight, profile.minCount, profile.maxCount));
@@ -163,7 +163,7 @@ public class ModBiomeModifiers {
      * @param rarity The rarity of the butterfly.
      * @return The spawn rates.
      */
-    private static SpawnProfile getSpawnProfile(ButterflyData.Rarity rarity) {
+    private static SpawnProfile getSpawnProfile(ButterflyRarity rarity) {
         return switch (rarity) {
             case COMMON -> new SpawnProfile(100, 1, 4);
             case UNCOMMON -> new SpawnProfile(50, 1, 3);
@@ -175,15 +175,15 @@ public class ModBiomeModifiers {
     private record BiomeProfile(ResourceKey<BiomeModifier> key, TagKey<Biome> biomeTag) {}
     
     static {
-        BIOME_PROFILES.put(ButterflyData.Habitat.FORESTS, new BiomeProfile(registerKey("forest_butterflies"), BiomeTags.IS_FOREST));
-        BIOME_PROFILES.put(ButterflyData.Habitat.HILLS, new BiomeProfile(registerKey("hill_butterflies"), BiomeTags.IS_HILL));
-        BIOME_PROFILES.put(ButterflyData.Habitat.ICE, new BiomeProfile(registerKey("ice_butterflies"), Tags.Biomes.IS_SNOWY));
-        BIOME_PROFILES.put(ButterflyData.Habitat.JUNGLES, new BiomeProfile(registerKey("jungle_butterflies"), BiomeTags.IS_JUNGLE));
-        BIOME_PROFILES.put(ButterflyData.Habitat.NETHER, new BiomeProfile(registerKey("nether_butterflies"), BiomeTags.IS_NETHER));
-        BIOME_PROFILES.put(ButterflyData.Habitat.PLAINS, new BiomeProfile(registerKey("plains_butterflies"), Tags.Biomes.IS_PLAINS));
-        BIOME_PROFILES.put(ButterflyData.Habitat.PLATEAUS, new BiomeProfile(registerKey("plateau_butterflies"), Tags.Biomes.IS_PLATEAU));
-        BIOME_PROFILES.put(ButterflyData.Habitat.SAVANNAS, new BiomeProfile(registerKey("savanna_butterflies"), BiomeTags.IS_SAVANNA));
-        BIOME_PROFILES.put(ButterflyData.Habitat.WETLANDS, new BiomeProfile(registerKey("wetlands_butterflies"), Tags.Biomes.IS_WET_OVERWORLD));
-        BIOME_PROFILES.put(ButterflyData.Habitat.END, new BiomeProfile(registerKey("end_butterflies"), BiomeTags.IS_END));
+        BIOME_PROFILES.put(ButterflyHabitat.FORESTS, new BiomeProfile(registerKey("forest_butterflies"), BiomeTags.IS_FOREST));
+        BIOME_PROFILES.put(ButterflyHabitat.HILLS, new BiomeProfile(registerKey("hill_butterflies"), BiomeTags.IS_HILL));
+        BIOME_PROFILES.put(ButterflyHabitat.ICE, new BiomeProfile(registerKey("ice_butterflies"), Tags.Biomes.IS_SNOWY));
+        BIOME_PROFILES.put(ButterflyHabitat.JUNGLES, new BiomeProfile(registerKey("jungle_butterflies"), BiomeTags.IS_JUNGLE));
+        BIOME_PROFILES.put(ButterflyHabitat.NETHER, new BiomeProfile(registerKey("nether_butterflies"), BiomeTags.IS_NETHER));
+        BIOME_PROFILES.put(ButterflyHabitat.PLAINS, new BiomeProfile(registerKey("plains_butterflies"), Tags.Biomes.IS_PLAINS));
+        BIOME_PROFILES.put(ButterflyHabitat.PLATEAUS, new BiomeProfile(registerKey("plateau_butterflies"), Tags.Biomes.IS_PLATEAU));
+        BIOME_PROFILES.put(ButterflyHabitat.SAVANNAS, new BiomeProfile(registerKey("savanna_butterflies"), BiomeTags.IS_SAVANNA));
+        BIOME_PROFILES.put(ButterflyHabitat.WETLANDS, new BiomeProfile(registerKey("wetlands_butterflies"), Tags.Biomes.IS_WET_OVERWORLD));
+        BIOME_PROFILES.put(ButterflyHabitat.END, new BiomeProfile(registerKey("end_butterflies"), BiomeTags.IS_END));
     }
 }
