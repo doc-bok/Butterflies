@@ -18,6 +18,14 @@ import java.util.zip.DataFormatException;
 
 public class ButterflyDataLoader {
 
+    // Constants representing the base life spans of each butterfly cycle.
+    private static final int[] LIFESPAN = {
+            24000 * 2,
+            24000 * 4,
+            24000 * 7,
+            Integer.MAX_VALUE
+    };
+
     /**
      * Load the butterfly data.
      * @param resourceManager The resource manager to use for loading.
@@ -119,10 +127,11 @@ public class ButterflyDataLoader {
                         speed,
                         rarity,
                         habitats,
-                        eggLifespan.getIndex(),
-                        caterpillarLifespan.getIndex(),
-                        chrysalisLifespan.getIndex(),
-                        butterflyLifespan.getIndex(),
+                        LIFESPAN[eggLifespan.getIndex()],
+                        LIFESPAN[caterpillarLifespan.getIndex()],
+                        LIFESPAN[chrysalisLifespan.getIndex()],
+                        LIFESPAN[butterflyLifespan.getIndex()] == Integer.MAX_VALUE ?
+                                Integer.MAX_VALUE : LIFESPAN[butterflyLifespan.getIndex()] * 2,
                         new ResourceLocation(preferredFlower),
                         type,
                         diurnality,
