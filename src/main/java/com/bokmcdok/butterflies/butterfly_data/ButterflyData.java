@@ -48,14 +48,6 @@ public record ButterflyData(int butterflyIndex,
                             String warmVariant,
                             String agedVariant) {
 
-    // Constants representing the base life spans of each butterfly cycle.
-    private static final int[] LIFESPAN = {
-            24000 * 2,
-            24000 * 4,
-            24000 * 7,
-            Integer.MAX_VALUE
-    };
-
     /**
      * Construction
      * @param entityId            The id of the butterfly species.
@@ -113,11 +105,10 @@ public record ButterflyData(int butterflyIndex,
         this.habitats = List.copyOf(habitats);
         this.traits = List.copyOf(traits);
 
-        this.eggLifespan = LIFESPAN[eggLifespan];
-        this.caterpillarLifespan = LIFESPAN[caterpillarLifespan] * 2;
-        this.chrysalisLifespan = LIFESPAN[chrysalisLifespan];
-        this.butterflyLifespan = LIFESPAN[butterflyLifespan] == Integer.MAX_VALUE ?
-                Integer.MAX_VALUE : LIFESPAN[butterflyLifespan] * 2;
+        this.eggLifespan = eggLifespan;
+        this.caterpillarLifespan = caterpillarLifespan;
+        this.chrysalisLifespan = chrysalisLifespan;
+        this.butterflyLifespan = butterflyLifespan;
 
         this.preferredFlower = preferredFlower;
 
