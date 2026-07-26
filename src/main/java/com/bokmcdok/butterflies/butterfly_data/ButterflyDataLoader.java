@@ -39,7 +39,7 @@ public class ButterflyDataLoader {
                 ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
                 ButterflyRegistry.addButterfly(butterflyData);
             } catch (DataFormatException | IOException e) {
-                LogUtils.getLogger().error("Failed to load butterfly data.", e);
+                LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Failed to load butterfly data.", e);
             }
         }
     }
@@ -209,7 +209,7 @@ public class ButterflyDataLoader {
             for (int i = 0; i < jsonData.size(); ++i) {
                 JsonElement element = jsonData.get(i);
                 if (!element.isJsonPrimitive()) {
-                    LogUtils.getLogger().error("Non-primitive enum value for [{}] in [{}]", key,
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Non-primitive enum value for [{}] in [{}]", key,
                             object.has("entityId") ? object.get("entityId").getAsString() : "unknown");
                     continue;
                 }
@@ -220,7 +220,7 @@ public class ButterflyDataLoader {
                 } catch (IllegalArgumentException e) {
 
                     // The value specified is invalid, so make sure it's written to the log.
-                    LogUtils.getLogger().error("Invalid [{}]([{}]) specified on [{}]",
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
                             key,
                             jsonData.get(i).getAsString(),
                             object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
@@ -255,7 +255,7 @@ public class ButterflyDataLoader {
             }
 
             if (!element.isJsonPrimitive()) {
-                LogUtils.getLogger().error("Non-primitive value for [{}] in [{}], using fallback [{}]",
+                LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Non-primitive value for [{}] in [{}], using fallback [{}]",
                         key,
                         object.has("entityId") ? object.get("entityId").getAsString() : "unknown",
                         fallback);
@@ -268,7 +268,7 @@ public class ButterflyDataLoader {
             } catch (IllegalArgumentException e) {
 
                 // The value specified is invalid, so make sure it's written to the log.
-                LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
+                LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
                         object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown",
                         key,
                         enumeration,
