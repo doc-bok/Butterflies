@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.network.protocol.common.custom;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -27,23 +27,23 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
         this((Collection<ButterflyData>) buffer.readCollection(ArrayList::new,
             (entry) -> new ButterflyData(entry.readInt(),
                     entry.readUtf(),
-                    entry.readEnum(ButterflyData.Size.class),
-                    entry.readEnum(ButterflyData.Speed.class),
-                    entry.readEnum(ButterflyData.Rarity.class),
-                    entry.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
+                    entry.readEnum(ButterflySize.class),
+                    entry.readEnum(ButterflySpeed.class),
+                    entry.readEnum(ButterflyRarity.class),
+                    entry.readList((x) -> x.readEnum(ButterflyHabitat.class)),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readResourceLocation(),
-                    entry.readEnum(ButterflyData.ButterflyType.class),
-                    entry.readEnum(ButterflyData.Diurnality.class),
-                    entry.readEnum(ButterflyData.ExtraLandingBlocks.class),
-                    entry.readEnum(ButterflyData.PlantEffect.class),
-                    entry.readEnum(ButterflyData.EggMultiplier.class),
+                    entry.readEnum(ButterflyType.class),
+                    entry.readEnum(Diurnality.class),
+                    entry.readEnum(ExtraLandingBlocks.class),
+                    entry.readEnum(PlantEffect.class),
+                    entry.readEnum(EggMultiplier.class),
                     entry.readBoolean(),
                     entry.readBoolean(),    
-                    entry.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                    entry.readList((x) -> x.readEnum(ButterflyTrait.class)),
                     entry.readUtf(),
                     entry.readUtf(),
                     entry.readUtf(),

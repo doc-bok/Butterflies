@@ -3,7 +3,7 @@ package com.bokmcdok.butterflies.common.data;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
  * Holds information on special catch advancements.
@@ -38,7 +38,7 @@ public record SpecialCatchDefinition(String species,
      * Returns the item to collect for the advancement.
      * @return The correct net item.
      */
-    RegistryObject<Item> collectItem() {
+    DeferredHolder<Item, Item> collectItem() {
         if (usesBurntNet) {
             return ItemRegistry.BURNT_BUTTERFLY_NET;
         }
@@ -55,7 +55,7 @@ public record SpecialCatchDefinition(String species,
      * Returns the item to collect for the advancement.
      * @return The correct net item.
      */
-    RegistryObject<Item> fireproofCollectItem() {
+    DeferredHolder<Item, Item> fireproofCollectItem() {
         if (usesBurntNet) {
             return ItemRegistry.BURNT_BUTTERFLY_NET;
         }

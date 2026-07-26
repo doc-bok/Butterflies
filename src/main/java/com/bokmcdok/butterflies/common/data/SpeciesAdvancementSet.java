@@ -6,7 +6,7 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
@@ -97,7 +97,7 @@ public class SpeciesAdvancementSet {
     }
 
     private void addCriterion(ActionType type,
-                              RegistryObject<Item> item) {
+                              DeferredHolder<Item, Item> item) {
         ActionDefinition def = actions.get(type);
         generator.addItemCriterion(def.oneBuilder(), item);
         generator.addItemCriterion(def.allBuilder(), item);

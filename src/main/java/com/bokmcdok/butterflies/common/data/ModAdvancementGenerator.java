@@ -12,7 +12,6 @@ import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.*;
-import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,7 +20,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -72,8 +70,8 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                         createTitleString("root"),
                         createDescriptionString("root"),
-                        new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
-                        FrameType.TASK,
+                        Optional.of(new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png")),
+                        AdvancementType.TASK,
                         false,  // Show Toast
                         false,  // Announce Chat
                         false)) // Hidden
@@ -160,8 +158,8 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(new DisplayInfo(new ItemStack(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG.get()),
                         createTitleString("peacemaker_root"),
                         createDescriptionString("peacemaker_root"),
-                        new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
-                        FrameType.TASK,
+                        Optional.of(new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png")),
+                        AdvancementType.TASK,
                         false,  // Show Toast
                         false,  // Announce Chat
                         false)); // Hidden
@@ -236,7 +234,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      * @param item The item to add.
      */
     public void addItemCriterion(Advancement.Builder builder,
-                                 RegistryObject<Item> item) {
+                                 DeferredHolder<Item, Item> item) {
         builder.addCriterion(
                 Objects.requireNonNull(item.getKey()).location().getPath(),
                 InventoryChangeTrigger.TriggerInstance.hasItems(item.get()));
@@ -247,7 +245,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      * @param builder The builder to modify.
      */
     private void addKillPeacemakerEntityCriterion(Advancement.Builder builder) {
-        for (RegistryObject<?> entityType : PeacemakerEntityTypeRegistry.PEACEMAKER_ENTITIES) {
+        for (DeferredHolder<?, ?> entityType : PeacemakerEntityTypeRegistry.PEACEMAKER_ENTITIES) {
             builder.addCriterion(Objects.requireNonNull(entityType.getKey()).location().getPath(),
                     KilledTrigger.TriggerInstance.playerKilledEntity(
                             EntityPredicate.Builder.entity().of((EntityType<?>) entityType.get())));
@@ -268,7 +266,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
     private Advancement.Builder advancement(
             Item iconItem,
             String localization,
-            FrameType frame,
+            AdvancementType frame,
             int xpReward,
             boolean announceChat,
             boolean hidden) {
@@ -278,7 +276,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                         new ItemStack(iconItem),
                         createTitleString(localization),
                         createDescriptionString(localization),
-                        null,
+                        Optional.empty(),
                         frame,
                         true,
                         announceChat,
@@ -288,9 +286,9 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
         if (xpReward > 0) {
             builder.rewards(new AdvancementRewards(
                     xpReward,
-                    new ResourceLocation[0],
-                    new ResourceLocation[0],
-                    CommandFunction.CacheableFunction.NONE));
+                    List.of(),
+                    List.of(),
+                    Optional.empty()));
         }
 
         return builder;
@@ -304,7 +302,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      */
     public Advancement.Builder task(Item iconItem,
                                     String localization) {
-        return advancement(iconItem, localization, FrameType.TASK, 0, true, false);
+        return advancement(iconItem, localization, AdvancementType.TASK, 0, true, false);
     }
 
     /**
@@ -316,7 +314,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
     private Advancement.Builder goal(Item iconItem,
                                      String localization,
                                      int xpReward) {
-        return advancement(iconItem, localization, FrameType.GOAL, xpReward, false, true);
+        return advancement(iconItem, localization, AdvancementType.GOAL, xpReward, false, true);
     }
 
     /**
@@ -328,7 +326,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
     public Advancement.Builder challenge(Item iconItem,
                                          String localization,
                                          int xpReward) {
-        return advancement(iconItem, localization, FrameType.CHALLENGE, xpReward, true, false);
+        return advancement(iconItem, localization, AdvancementType.CHALLENGE, xpReward, true, false);
     }
 
     /**
@@ -359,8 +357,8 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation butterflyLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly/" + localization);
+    private String butterflyLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":butterfly/" + localization;
     }
 
     /**
@@ -368,8 +366,8 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation peacemakerLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker/" + localization);
+    private String peacemakerLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":peacemaker/" + localization;
     }
 
     /**
@@ -414,8 +412,8 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
     private void dualItemGoal(@NotNull Consumer<AdvancementHolder> saver,
                               Item iconItem,
                               String localization,
-                              RegistryObject<Item> collectItem1,
-                              RegistryObject<Item> collectItem2,
+                              DeferredHolder<Item, Item> collectItem1,
+                              DeferredHolder<Item, Item> collectItem2,
                               AdvancementHolder parent,
                               int xpReward) {
         if (collectItem1 == collectItem2) {

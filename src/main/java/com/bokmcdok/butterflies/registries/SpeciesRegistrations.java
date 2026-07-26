@@ -1,17 +1,17 @@
 package com.bokmcdok.butterflies.registries;
 
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 
 public record SpeciesRegistrations(
-        List<RegistryObject<Item>> butterflyNets,
-        List<RegistryObject<Item>> fireproofButterflyNets,
-        List<RegistryObject<Item>> butterflyEggs,
-        List<RegistryObject<Item>> caterpillars,
-        List<RegistryObject<Item>> bottledButterflies,
-        List<RegistryObject<Item>> bottledCaterpillars,
-        List<RegistryObject<Item>> butterflyScrolls,
+        List<DeferredHolder<Item, Item>> butterflyNets,
+        List<DeferredHolder<Item, Item>> fireproofButterflyNets,
+        List<DeferredHolder<Item, Item>> butterflyEggs,
+        List<DeferredHolder<Item, Item>> caterpillars,
+        List<DeferredHolder<Item, Item>> bottledButterflies,
+        List<DeferredHolder<Item, Item>> bottledCaterpillars,
+        List<DeferredHolder<Item, Item>> butterflyScrolls,
         int peacemakerIndex) {
 }

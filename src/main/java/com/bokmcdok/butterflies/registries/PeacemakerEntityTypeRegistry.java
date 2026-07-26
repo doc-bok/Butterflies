@@ -29,7 +29,7 @@ public class PeacemakerEntityTypeRegistry {
     public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerWanderingTrader>> PEACEMAKER_WANDERING_TRADER;
     public static final DeferredHolder<EntityType<?>, EntityType<PeacemakerWitch>> PEACEMAKER_WITCH;
 
-    public static final List<RegistryObject<?>> PEACEMAKER_ENTITIES;
+    public static final List<DeferredHolder<?, ?>> PEACEMAKER_ENTITIES;
 
     static {
         PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ButterfliesMod.MOD_ID);

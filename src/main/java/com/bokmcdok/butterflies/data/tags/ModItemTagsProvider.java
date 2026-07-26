@@ -10,6 +10,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +48,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         IntrinsicTagAppender<Item> appender = tag(TagRegistry.FIREPROOF_BUTTERFLY_NETS)
                 .add(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get());
 
-        for (RegistryObject<Item> item : ItemRegistry.FIREPROOF_BUTTERFLY_NETS) {
+        for (DeferredHolder<Item, Item> item : ItemRegistry.FIREPROOF_BUTTERFLY_NETS) {
             appender.add(item.get());
         }
     }

@@ -119,7 +119,7 @@ public class ItemRegistry {
     }
     
     static {
-        ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ButterfliesMod.MOD_ID);
+        ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, ButterfliesMod.MOD_ID);
 
         // Species-based.
         SpeciesRegistrations species = registerSpeciesItems();
