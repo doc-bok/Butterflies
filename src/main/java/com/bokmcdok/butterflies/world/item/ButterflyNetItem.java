@@ -5,10 +5,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.registries.TagRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.*;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -105,8 +102,8 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
         return isFireproof(itemStack)?
-                TranslatableComponent(FIREPROOF_NAME) :
-                TranslatableComponent(NAME);
+                new TranslatableComponent(FIREPROOF_NAME) :
+                new TranslatableComponent(NAME);
     }
 
     /**

@@ -87,7 +87,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "HABITATS",
-                "ButterflyData.Habitat",
+                "ButterflyHabitat",
                 all_species,
                 lambda s: species_data[s].get("habitats") if species_data[s] else None,
                 header_comment="A list of habitats butterflies can be found in.")
@@ -96,7 +96,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "RARITIES",
-                "ButterflyData.Rarity",
+                "ButterflyRarity",
                 all_species,
                 lambda s: species_data[s].get("rarity") if species_data[s] else "COMMON",
                 nested = False,

@@ -125,7 +125,7 @@ public interface ButterflyContainerItem {
      * @return A new component with the helper style applied.
      */
     default Component helperTooltip(String key) {
-        return Component.translatable(key)
+        return new TranslatableComponent(key)
                 .withStyle(style -> style
                         .withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
                         .withItalic(true));

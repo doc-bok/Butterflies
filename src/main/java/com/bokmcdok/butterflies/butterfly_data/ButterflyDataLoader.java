@@ -10,10 +10,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.DataFormatException;
 
 public class ButterflyDataLoader {
@@ -36,18 +37,18 @@ public class ButterflyDataLoader {
         Gson gson = new GsonBuilder().registerTypeAdapter(ButterflyData.class, new Serializer()).create();
 
         // Get the butterfly JSON files
-        Map<ResourceLocation, Resource> resourceMap =
-                resourceManager.listResources("butterfly_data", (x) -> x.getPath().endsWith(".json"));
+        Collection<ResourceLocation> resourceLocations =
+                resourceManager.listResources("butterfly_data", (x) -> x.endsWith(".json"));
 
         // Parse each one and generate the data.
-        for (ResourceLocation location : resourceMap.keySet()) {
+        for (ResourceLocation location : resourceLocations) {
             try {
-                Resource resource = resourceMap.get(location);
-                BufferedReader reader = resource.openAsReader();
+                Resource resource = resourceManager.getResource(location);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
                 ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
                 ButterflyRegistry.addButterfly(butterflyData);
             } catch (DataFormatException | IOException e) {
-                LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Failed to load butterfly data.", e);
+                LogUtils.getLogger().error("Failed to load butterfly data.", e);
             }
         }
     }

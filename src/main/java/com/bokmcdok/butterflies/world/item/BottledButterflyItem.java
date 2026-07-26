@@ -89,7 +89,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
         ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
-        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+        if (data != null && data.type() == ButterflyType.MOTH) {
             return new TranslatableComponent(BOTTLED_MOTH_STRING);
         } else {
             return new TranslatableComponent(BOTTLED_BUTTERFLY_STRING);

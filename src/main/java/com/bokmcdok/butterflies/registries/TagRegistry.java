@@ -14,13 +14,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class TagRegistry {
 
     // The available tags for this mod.
-    public static final TagKey<BannerPattern> BUTTERFLY_BANNER_PATTERN;
     public static final TagKey<Item> FIREPROOF_BUTTERFLY_NETS;
 
     static {
-        BUTTERFLY_BANNER_PATTERN = TagKey.create(Registry.BANNER_PATTERN_REGISTRY,
-                new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
-
         FIREPROOF_BUTTERFLY_NETS = TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(),
                         new ResourceLocation(ButterfliesMod.MOD_ID, "fireproof_butterfly_nets"));
     }
