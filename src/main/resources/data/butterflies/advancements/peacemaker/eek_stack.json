@@ -1,0 +1,38 @@
+{
+  "parent": "butterflies:peacemaker/peace_catcher",
+  "criteria": {
+    "bottled_butterfly_peacemaker": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_peacemaker"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.eek_stack.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:bottled_butterfly_peacemaker"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.eek_stack.title"
+    }
+  },
+  "requirements": [
+    [
+      "bottled_butterfly_peacemaker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

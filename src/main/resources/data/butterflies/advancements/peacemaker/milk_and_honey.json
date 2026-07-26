@@ -1,0 +1,38 @@
+{
+  "parent": "butterflies:peacemaker/root",
+  "criteria": {
+    "peacemaker_honey_bottle": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:peacemaker_honey_bottle"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.milk_and_honey.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:peacemaker_honey_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.milk_and_honey.title"
+    }
+  },
+  "requirements": [
+    [
+      "peacemaker_honey_bottle"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

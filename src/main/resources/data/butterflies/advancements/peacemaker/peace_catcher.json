@@ -1,0 +1,38 @@
+{
+  "parent": "butterflies:peacemaker/root",
+  "criteria": {
+    "butterfly_net_peacemaker": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_net_peacemaker"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.butterfly.peace_catcher.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "butterflies:butterfly_net_peacemaker"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.peace_catcher.title"
+    }
+  },
+  "requirements": [
+    [
+      "butterfly_net_peacemaker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

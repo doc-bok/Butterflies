@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -75,7 +76,7 @@ public abstract class DirectionalCreature extends Animal {
 
             // Check if the entity can spawn on this surface.
             if (level.hasChunkAt(surfacePosition)) {
-                ButterflyData data = ButterflyData.getEntry(new ResourceLocation(ButterfliesMod.MOD_ID, components[2]));
+                ButterflyData data = ButterflyRegistry.getEntry(new ResourceLocation(ButterfliesMod.MOD_ID, components[2]));
 
                 // Fall back to leaves if we don't have the data yet.
                 if (data == null) {
@@ -257,7 +258,7 @@ public abstract class DirectionalCreature extends Animal {
      */
     protected ButterflyData getData() {
         if (this.data == null) {
-            this.data = ButterflyData.getButterflyDataForEntity(this);
+            this.data = ButterflyRegistry.getButterflyDataForEntity(this);
         }
 
         return this.data;

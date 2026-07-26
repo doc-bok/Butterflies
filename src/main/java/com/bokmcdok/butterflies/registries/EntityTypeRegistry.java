@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

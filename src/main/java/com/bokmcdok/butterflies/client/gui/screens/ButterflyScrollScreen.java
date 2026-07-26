@@ -1,9 +1,10 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.client.gui.chat.NarratorChatListener;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -59,7 +60,7 @@ public class ButterflyScrollScreen extends Screen {
     public void render(@NotNull PoseStack guiGraphics, int x, int y, float unknown) {
         this.renderBackground(guiGraphics);
 
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
         if (data != null) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

@@ -1,13 +1,13 @@
 package com.bokmcdok.butterflies.data.event;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyDataLoader;
 import com.bokmcdok.butterflies.client.model.generators.ModBlockStateProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;
 import com.bokmcdok.butterflies.common.data.ModGlobalLootModifierProvider;
 import com.bokmcdok.butterflies.data.loot.ModLootTableProvider;
 import com.bokmcdok.butterflies.data.recipes.ModRecipeProvider;
 import com.bokmcdok.butterflies.data.tags.*;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.PackType;
@@ -65,6 +65,6 @@ public class DataGenerators {
         IModFileInfo modFileInfo = ModList.get().getModFileById(ButterfliesMod.MOD_ID);
         candidateServerResources.add(ResourcePackLoader.createPackForMod(modFileInfo));
         MultiPackResourceManager resourceManager = new MultiPackResourceManager(PackType.SERVER_DATA, candidateServerResources);
-        ButterflyData.load(resourceManager);
+        ButterflyDataLoader.load(resourceManager);
     }
 }

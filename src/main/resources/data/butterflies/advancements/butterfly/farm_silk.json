@@ -1,4 +1,5 @@
 {
+  "parent": "butterflies:butterfly/root",
   "criteria": {
     "silk": {
       "conditions": {
@@ -28,10 +29,10 @@
       "translate": "advancements.butterfly.farm_silk.title"
     }
   },
-  "parent": "butterflies:butterfly/root",
   "requirements": [
     [
       "silk"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

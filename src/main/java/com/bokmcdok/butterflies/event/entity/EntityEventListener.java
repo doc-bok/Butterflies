@@ -1,9 +1,9 @@
 package com.bokmcdok.butterflies.event.entity;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
@@ -45,7 +45,7 @@ public class EntityEventListener {
      */
     private static boolean isButterflyEdible(LivingEntity entity) {
         if (entity instanceof Butterfly butterfly) {
-            return !butterfly.getData().hasTrait(ButterflyData.Trait.INEDIBLE);
+            return !butterfly.getData().hasTrait(ButterflyTrait.INEDIBLE);
         }
 
         return false;
@@ -58,7 +58,7 @@ public class EntityEventListener {
      */
     private static boolean isButterflyAttackableByCat(LivingEntity entity) {
         if (entity instanceof Butterfly butterfly) {
-            return !butterfly.getData().hasTrait(ButterflyData.Trait.CATFRIEND) &&
+            return !butterfly.getData().hasTrait(ButterflyTrait.CATFRIEND) &&
                     isButterflyEdible(entity);
         }
 

@@ -1,0 +1,41 @@
+{
+  "parent": "butterflies:butterfly/root",
+  "criteria": {
+    "fireproof_butterfly_net_lava": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:fireproof_butterfly_net_lava"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.catch_lava_butterfly_for_real.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:fireproof_butterfly_net_admiral"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.catch_lava_butterfly_for_real.title"
+    }
+  },
+  "requirements": [
+    [
+      "fireproof_butterfly_net_lava"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

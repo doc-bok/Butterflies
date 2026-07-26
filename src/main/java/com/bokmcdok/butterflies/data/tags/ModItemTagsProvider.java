@@ -5,6 +5,10 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.TagRegistry;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -29,8 +33,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
      */
     @Override
     protected void addTags() {
-        //tag(ItemTags.DECORATED_POT_SHERDS)
-        //        .replace(false)
-        //        .add(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
+
+        TagAppender<Item> appender = tag(TagRegistry.FIREPROOF_BUTTERFLY_NETS)
+                .add(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get());
+
+        for (RegistryObject<Item> item : ItemRegistry.FIREPROOF_BUTTERFLY_NETS) {
+            appender.add(item.get());
+        }
     }
 }

@@ -1,23 +1,7 @@
 {
   "parent": "butterflies:butterfly/root",
-  "display": {
-    "icon": {
-      "item": "butterflies:butterfly_zhuangzi"
-    },
-    "title": {
-      "translate": "advancements.butterfly.zhuangzi.title"
-    },
-    "description": {
-      "translate": "advancements.butterfly.zhuangzi.description"
-    },
-    "frame": "goal",
-    "show_toast": true,
-    "announce_to_chat": false,
-    "hidden": true
-  },
   "criteria": {
     "butterfly_zhuangzi": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.find_zhuangzi.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:butterfly_zhuangzi"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.find_zhuangzi.title"
     }
   },
   "requirements": [
@@ -35,6 +35,7 @@
     ]
   ],
   "rewards": {
-    "experience": 100
-  }
+    "experience": 150
+  },
+  "sends_telemetry_event": true
 }

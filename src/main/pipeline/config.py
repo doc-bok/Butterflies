@@ -39,7 +39,7 @@ class Config:
         self.DATA_FOLDER = self.RESOURCES_FOLDER / "data"
         self.MOD_DATA_FOLDER = self.DATA_FOLDER / "butterflies"
 
-        self.CODE_GENERATION = Path("java/com/bokmcdok/butterflies/world/ButterflyInfo.java")
+        self.CODE_GENERATION = Path("java/com/bokmcdok/butterflies/butterfly_data/ButterflyInfo.java")
         self.LOCALISATION = self.MOD_ASSETS_FOLDER / "lang/en_us.json"
         self.FROG_FOOD = self.DATA_FOLDER / "minecraft/tags/entity_types/frog_food.json"
 

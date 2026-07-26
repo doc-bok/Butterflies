@@ -1,6 +1,8 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -198,7 +200,7 @@ public class ButterflyBookScreen extends AbstractButterflyBookScreen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
             if (data != null) {
                 RenderSystem.setShaderTexture(0, data.getScrollTexture());
                 this.blit(poseStack, i, 2, 0, 0, 192, 192);
@@ -402,7 +404,7 @@ public class ButterflyBookScreen extends AbstractButterflyBookScreen {
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
                 int butterflyIndex = pages.getInt((page - 1) / 2);
-                return ButterflyData.getFormattedButterflyData(butterflyIndex);
+                return ButterflyTextFormatter.getFormattedButterflyData(butterflyIndex);
             }
 
             return null;

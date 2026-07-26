@@ -1,8 +1,10 @@
 package com.bokmcdok.butterflies.data.recipes;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
@@ -55,17 +57,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> recipeOutput) {
 
         for(int i = 0; i < ItemRegistry.BOTTLED_BUTTERFLIES.size(); ++i) {
-            ButterflyData data = ButterflyData.getEntry(i);
+            ButterflyData data = ButterflyRegistry.getEntry(i);
             if (data != null) {
-                boolean isButterfly = data.type() == ButterflyData.ButterflyType.BUTTERFLY;
+                boolean isButterfly = data.type() == ButterflyType.BUTTERFLY;
                 String bottledFlyer = isButterfly ? "bottled_butterfly" : "bottled_moth";
                 String bottledCrawler = isButterfly ? "bottled_caterpillar" : "bottled_larva";
                 String scroll = isButterfly ? "butterfly_scroll" : "moth_scroll";
 
-                addBottleRecipe(recipeOutput, ItemRegistry.BUTTERFLY_NETS, ItemRegistry.BOTTLED_BUTTERFLIES, bottledFlyer, i);
-                addBottleRecipe(recipeOutput, ItemRegistry.CATERPILLARS, ItemRegistry.BOTTLED_CATERPILLARS, bottledCrawler, i);
+                addBottleRecipe(recipeOutput, ItemRegistry.BUTTERFLY_NETS, ItemRegistry.BOTTLED_BUTTERFLIES, "_from_net", bottledFlyer, i);
+                addBottleRecipe(recipeOutput, ItemRegistry.FIREPROOF_BUTTERFLY_NETS, ItemRegistry.BOTTLED_BUTTERFLIES, "_from_fireproof", bottledFlyer, i);
+                addBottleRecipe(recipeOutput, ItemRegistry.CATERPILLARS, ItemRegistry.BOTTLED_CATERPILLARS, "_from_caterpillar", bottledCrawler, i);
 
                 addScrollRecipe(recipeOutput, ItemRegistry.BUTTERFLY_NETS, "_from_net", scroll, i);
+                addScrollRecipe(recipeOutput, ItemRegistry.FIREPROOF_BUTTERFLY_NETS, "_from_fireproof", scroll, i);
                 addScrollRecipe(recipeOutput, ItemRegistry.BOTTLED_BUTTERFLIES, "_from_bottle", scroll, i);
             }
         }
@@ -115,7 +119,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
                 .save(recipeOutput);
 
-        int codlingIndex = ButterflyData.getButterflyIndex("codling");
+        ShapelessRecipeBuilder.shapeless(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get())
+                .requires(ItemRegistry.EMPTY_BUTTERFLY_NET.get())
+                .requires(Items.MAGMA_CREAM)
+                .unlockedBy(getHasName(Items.MAGMA_CREAM), has(Items.MAGMA_CREAM))
+                .save(recipeOutput);
+
+        int codlingIndex = ButterflyRegistry.getButterflyIndex("codling");
         ShapelessRecipeBuilder.shapeless(ItemRegistry.CATERPILLARS.get(codlingIndex).get())
                 .requires(ItemRegistry.INFESTED_APPLE.get())
                 .unlockedBy(getHasName(ItemRegistry.INFESTED_APPLE.get()), has(ItemRegistry.INFESTED_APPLE.get()))
@@ -155,15 +165,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     private void addBottleRecipe(@NotNull Consumer<FinishedRecipe> recipeOutput,
                                  List<RegistryObject<Item>> baseItems,
                                  List<RegistryObject<Item>> outputItems,
+                                 String keySuffix,
                                  String groupName,
                                  int butterflyIndex) {
         Item base = baseItems.get(butterflyIndex).get();
-        ShapelessRecipeBuilder.shapeless(outputItems.get(butterflyIndex).get())
+        Item result = outputItems.get(butterflyIndex).get();
+        ShapelessRecipeBuilder.shapeless(result)
                 .group(groupName)
                 .requires(base)
                 .requires(Items.GLASS_BOTTLE)
                 .unlockedBy(getHasName(base), has(base))
-                .save(recipeOutput);
+                .save(recipeOutput, RecipeBuilder.getDefaultRecipeId(result) + keySuffix);
     }
 
     /**

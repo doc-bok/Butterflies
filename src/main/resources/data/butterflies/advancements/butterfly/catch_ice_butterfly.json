@@ -1,11 +1,24 @@
 {
+  "parent": "butterflies:butterfly/root",
   "criteria": {
-    "ice": {
+    "butterfly_net_ice": {
       "conditions": {
         "items": [
           {
             "items": [
               "butterflies:butterfly_net_ice"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "fireproof_butterfly_net_ice": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:fireproof_butterfly_net_ice"
             ]
           }
         ]
@@ -28,13 +41,14 @@
       "translate": "advancements.butterfly.catch_ice_butterfly.title"
     }
   },
-  "parent": "butterflies:butterfly/catch_butterfly",
   "requirements": [
     [
-      "ice"
+      "butterfly_net_ice",
+      "fireproof_butterfly_net_ice"
     ]
   ],
   "rewards": {
     "experience": 100
-  }
+  },
+  "sends_telemetry_event": true
 }
