@@ -1,11 +1,16 @@
 ## Changelog
 
+### 7.9.2 (2026-07-26)
+- Fixed Obsidian Butterfly having invalid speed.
+
+### 7.9.1 (2026-07-26)
+ - Fixed code generation.
+
 ### 7.9.0 (2026-07-26)
  - Added the Fireproof Butterfly Net.
 
 ### 7.8.2 (2026-07-24)
  - Added Peacemaker Advancements.
-
 ### 7.8.1 (2026-07-23)
  - Add an advancement for catching the Obsidian Butterfly.
 
