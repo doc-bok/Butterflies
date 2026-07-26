@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.9.1 (2026-07-26)
+ - Fixed code generation.
+
 ### 7.9.0 (2026-07-26)
  - Added the Fireproof Butterfly Net.
 
