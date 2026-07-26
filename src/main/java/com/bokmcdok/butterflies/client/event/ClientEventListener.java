@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.client.event;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.client.model.*;
 import com.bokmcdok.butterflies.client.renderer.blockentity.ButterflyFeederEntityRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
@@ -7,8 +8,7 @@ import com.bokmcdok.butterflies.registries.BlockEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import com.bokmcdok.butterflies.world.entity.animal.ButterflyEgg;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
@@ -126,10 +126,10 @@ public class ClientEventListener {
         EntityRendererProvider<Butterfly> rendererProvider = ButterflyRenderer::new;
 
         // Choose a different provider based on certain butterfly traits.
-        List<ButterflyData.Trait> traits = Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]);
-        if (traits.contains(ButterflyData.Trait.GLOW)) {
+        List<ButterflyTrait> traits = Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]);
+        if (traits.contains(ButterflyTrait.GLOW)) {
             rendererProvider =  GlowButterflyRenderer::new;
-        } else if (traits.contains(ButterflyData.Trait.HUMMINGBIRD)){
+        } else if (traits.contains(ButterflyTrait.HUMMINGBIRD)){
             rendererProvider = HummingbirdMothRenderer::new;
         }
         return rendererProvider;

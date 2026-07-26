@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -42,7 +43,7 @@ public class ButterflyEatCropGoal extends MoveToBlockGoal {
         super(mob, speedModifier, searchRange, verticalSearchRange);
         this.butterfly = mob;
 
-        ButterflyData data = ButterflyData.getEntry(this.butterfly.getButterflyIndex());
+        ButterflyData data = ButterflyRegistry.getEntry(this.butterfly.getButterflyIndex());
         if (data != null) {
             Block potentialFoodSource = ForgeRegistries.BLOCKS.getValue(data.preferredFlower());
             if (potentialFoodSource instanceof CropBlock cropBlock) {

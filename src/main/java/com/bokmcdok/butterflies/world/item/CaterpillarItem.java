@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -99,7 +100,7 @@ public class CaterpillarItem extends Item {
             BlockPos clickedPos = context.getClickedPos();
 
             BlockState blockState = context.getLevel().getBlockState(clickedPos);
-            if (!(ButterflyData.getEntry(this.species).isValidLandingBlock(blockState))) {
+            if (!(ButterflyRegistry.getEntry(this.species).isValidLandingBlock(blockState))) {
                 return InteractionResult.FAIL;
             } else {
                 if (!context.getLevel().isClientSide()) {
