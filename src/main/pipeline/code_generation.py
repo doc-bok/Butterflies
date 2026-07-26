@@ -88,7 +88,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "TYPES",
-                "ButterflyData.ButterflyType",
+                "ButterflyType",
                 all_species,
                 lambda s: species_data[s].get("type") if species_data[s] else "BUTTERFLY",
                 nested=False,
@@ -98,7 +98,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "RARITIES",
-                "ButterflyData.Rarity",
+                "ButterflyRarity",
                 all_species,
                 lambda s: species_data[s].get("rarity") if species_data[s] else "COMMON",
                 nested=False,

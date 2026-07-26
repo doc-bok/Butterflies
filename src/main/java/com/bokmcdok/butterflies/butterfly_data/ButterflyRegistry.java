@@ -6,6 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.DataFormatException;
 
@@ -62,7 +63,7 @@ public class ButterflyRegistry {
      */
     public static ButterflyData getButterflyDataForEntity(LivingEntity entity) {
         String species = getSpeciesString(entity);
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, species);
         return getEntry(location);
     }
 
@@ -101,6 +102,14 @@ public class ButterflyRegistry {
      */
     public static Collection<ButterflyData> getButterflyDataCollection() {
         return BUTTERFLY_ENTRIES.values();
+    }
+
+    /**
+     * Get all butterfly data. Used for network synchronization.
+     * @return The butterfly entries as a collection.
+     */
+    public static List<ButterflyData> getButterflyDataList() {
+        return BUTTERFLY_ENTRIES.values().stream().toList();
     }
 
     /**

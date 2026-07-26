@@ -67,7 +67,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
         components.add(helperTooltip(butterflyIndex < 0 ? EMPTY_NET_HELP_TEXT : FULL_NET_HELP_TEXT));
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**

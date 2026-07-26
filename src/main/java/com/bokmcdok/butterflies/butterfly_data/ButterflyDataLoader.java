@@ -3,6 +3,9 @@ package com.bokmcdok.butterflies.butterfly_data;
 import com.bokmcdok.butterflies.lang.EnumExtensions;
 import com.google.gson.*;
 import com.mojang.logging.LogUtils;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -132,7 +135,7 @@ public class ButterflyDataLoader {
                         LIFESPAN[chrysalisLifespan.getIndex()],
                         LIFESPAN[butterflyLifespan.getIndex()] == Integer.MAX_VALUE ?
                                 Integer.MAX_VALUE : LIFESPAN[butterflyLifespan.getIndex()] * 2,
-                        new ResourceLocation(preferredFlower),
+                        ResourceLocation.withDefaultNamespace(preferredFlower),
                         type,
                         diurnality,
                         extraLandingBlocks,
@@ -287,4 +290,78 @@ public class ButterflyDataLoader {
             }
         }
     }
+
+    /**
+     * Stream codec for syncing butterfly data.
+     */
+    public static final StreamCodec<RegistryFriendlyByteBuf, ButterflyData> STREAM_CODEC = new StreamCodec<>() {
+
+        /**
+         * Decode a data stream to an object.
+         * @param buffer The message buffer.
+         * @return A new butterfly object.
+         */
+        @NotNull
+        @Override
+        public ButterflyData decode(RegistryFriendlyByteBuf buffer) {
+            return new ButterflyData(buffer.readInt(),
+                    buffer.readUtf(),
+                    buffer.readEnum(ButterflySize.class),
+                    buffer.readEnum(ButterflySpeed.class),
+                    buffer.readEnum(ButterflyRarity.class),
+                    buffer.readList((x) -> x.readEnum(ButterflyHabitat.class)),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readInt(),
+                    buffer.readResourceLocation(),
+                    buffer.readEnum(ButterflyType.class),
+                    buffer.readEnum(Diurnality.class),
+                    buffer.readEnum(ExtraLandingBlocks.class),
+                    buffer.readEnum(PlantEffect.class),
+                    buffer.readEnum(EggMultiplier.class),
+                    buffer.readBoolean(),
+                    buffer.readBoolean(),
+                    buffer.readList((x) -> x.readEnum(ButterflyTrait.class)),
+                    buffer.readUtf(),
+                    buffer.readUtf(),
+                    buffer.readUtf(),
+                    buffer.readUtf(),
+                    buffer.readUtf());
+        }
+
+        /**
+         * Encode some data to a buffer.
+         * @param buffer The message buffer.
+         * @param data The data to encode.
+         */
+        @Override
+        public void encode(RegistryFriendlyByteBuf buffer,
+                           ButterflyData data) {
+            buffer.writeInt(data.butterflyIndex());
+            buffer.writeUtf(data.entityId());
+            buffer.writeEnum(data.size());
+            buffer.writeEnum(data.speed());
+            buffer.writeEnum(data.rarity());
+            buffer.writeCollection(data.habitats(), FriendlyByteBuf::writeEnum);
+            buffer.writeInt(data.eggLifespan());
+            buffer.writeInt(data.caterpillarLifespan());
+            buffer.writeInt(data.chrysalisLifespan());
+            buffer.writeInt(data.butterflyLifespan());
+            buffer.writeResourceLocation(data.preferredFlower());
+            buffer.writeEnum(data.type());
+            buffer.writeEnum(data.diurnality());
+            buffer.writeEnum(data.extraLandingBlocks());
+            buffer.writeEnum(data.plantEffect());
+            buffer.writeEnum(data.eggMultiplier());
+            buffer.writeBoolean(data.caterpillarSounds());
+            buffer.writeBoolean(data.butterflySounds());
+            buffer.writeCollection(data.traits(), FriendlyByteBuf::writeEnum);
+            buffer.writeUtf(data.baseVariant());
+            buffer.writeUtf(data.coldVariant());
+            buffer.writeUtf(data.mateVariant());
+            buffer.writeUtf(data.warmVariant());
+            buffer.writeUtf(data.agedVariant());
+        }
+    };
 }

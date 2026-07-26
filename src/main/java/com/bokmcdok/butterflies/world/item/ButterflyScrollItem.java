@@ -68,7 +68,7 @@ public class ButterflyScrollItem extends Item implements ButterflyContainerItem 
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
         components.add(helperTooltip("tooltip.butterflies.scroll"));
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**

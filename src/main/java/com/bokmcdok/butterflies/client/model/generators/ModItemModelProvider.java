@@ -172,7 +172,7 @@ public class ModItemModelProvider extends ItemModelProvider {
      */
     private void registerFireproofButterflyNet(int index) {
         String path = getPath(ItemRegistry.FIREPROOF_BUTTERFLY_NETS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_net/fireproof_butterfly_net_full"));
+        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_net/fireproof_butterfly_net_full"));
     }
 
     /**

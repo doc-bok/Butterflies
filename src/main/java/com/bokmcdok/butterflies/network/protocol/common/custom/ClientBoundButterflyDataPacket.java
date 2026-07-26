@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.network.protocol.common.custom;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyDataLoader;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,7 +22,7 @@ public record ClientBoundButterflyDataPacket(List<ButterflyData> data) implement
             ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "butterfly_data"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, ClientBoundButterflyDataPacket> STREAM_CODEC =
-            ButterflyData.STREAM_CODEC
+            ButterflyDataLoader.STREAM_CODEC
                     .apply(ByteBufCodecs.list())
                     .map(ClientBoundButterflyDataPacket::new, ClientBoundButterflyDataPacket::data);
 

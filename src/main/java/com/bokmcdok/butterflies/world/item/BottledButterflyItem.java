@@ -63,9 +63,9 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                 @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> tooltipComponents,
                                 @NotNull TooltipFlag tooltipFlag) {
-        appendButterflyNameToHoverText(stack, components);
-        components.add(helperTooltip("tooltip.butterflies.release_butterfly"));
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        appendButterflyNameToHoverText(stack, tooltipComponents);
+        tooltipComponents.add(helperTooltip("tooltip.butterflies.release_butterfly"));
+        super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 
     /**

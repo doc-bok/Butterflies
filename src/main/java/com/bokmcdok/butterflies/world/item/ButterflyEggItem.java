@@ -59,7 +59,7 @@ public class ButterflyEggItem extends Item implements ButterflyContainerItem {
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         components.add(helperTooltip("tooltip.butterflies.place_egg"));
-        super.appendHoverText(stack, level, components, tooltipFlag);
+        super.appendHoverText(stack, context, components, tooltipFlag);
     }
 
     /**

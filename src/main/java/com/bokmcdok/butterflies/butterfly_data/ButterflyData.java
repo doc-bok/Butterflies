@@ -167,7 +167,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getCaterpillarItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
+            return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
         }
 
         return null;
@@ -179,7 +179,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getButterflyEggItem() {
         if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
+            return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId + "_egg");
         }
 
         return null;
@@ -190,7 +190,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly.
      */
     public ResourceLocation getButterflyEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId);
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId);
     }
 
     /**
@@ -198,7 +198,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the butterfly egg.
      */
     public ResourceLocation getButterflyEggEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_egg");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_egg");
     }
 
     /**
@@ -206,7 +206,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the caterpillar.
      */
     public ResourceLocation getCaterpillarEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
     }
 
     /**
@@ -214,7 +214,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the chrysalis.
      */
     public  ResourceLocation getChrysalisEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
     }
 
     /**
@@ -267,7 +267,7 @@ public record ButterflyData(int butterflyIndex,
      * @return The resource location of the texture to use.
      */
     public ResourceLocation getScrollTexture() {
-        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/" + this.entityId + ".png");
     }
 
     /**

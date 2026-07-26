@@ -74,7 +74,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                         createTitleString("root"),
                         createDescriptionString("root"),
-                        Optional.of(new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png")),
+                        Optional.of(ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")),
                         AdvancementType.TASK,
                         false,  // Show Toast
                         false,  // Announce Chat
@@ -116,9 +116,17 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
         mothAdvancements.saveAll(saver, root);
         AdvancementHolder createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.getCatchOneAdvancement(), AdvancementRequirements.Strategy.AND, "create_butterfly_scroll");
 
-        ItemPredicate.Builder fullButterflyBook = butterflyBookWithModelData(BOOK_BUTTERFLIES);
-        ItemPredicate.Builder fullMothBook = butterflyBookWithModelData(BOOK_MOTHS);
-        ItemPredicate.Builder fullBothBook = butterflyBookWithModelData(BOOK_BOTH);
+        CompoundTag filledButterfly = new CompoundTag();
+        filledButterfly.putBoolean("filled_butterfly", true);
+        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+                .hasComponents(DataComponentPredicate.builder()
+                        .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledButterfly)).build());
+
+        CompoundTag filledMoth = new CompoundTag();
+        filledMoth.putBoolean("filled_moth", true);
+        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get())
+                .hasComponents(DataComponentPredicate.builder()
+                        .expect(DataComponents.CUSTOM_DATA, CustomData.of(filledMoth)).build());
 
         Advancement.Builder fillButterflyBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_butterfly_book", 200);
         fillButterflyBookBuilder.addCriterion("butterflies", InventoryChangeTrigger.TriggerInstance.hasItems(fullButterflyBook));
@@ -160,7 +168,7 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                 .display(new DisplayInfo(new ItemStack(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG.get()),
                         createTitleString("peacemaker_root"),
                         createDescriptionString("peacemaker_root"),
-                        Optional.of(new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png")),
+                        Optional.of(ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")),
                         AdvancementType.TASK,
                         false,  // Show Toast
                         false,  // Announce Chat
@@ -329,20 +337,6 @@ public class ModAdvancementGenerator implements AdvancementProvider.AdvancementG
                                          String localization,
                                          int xpReward) {
         return advancement(iconItem, localization, AdvancementType.CHALLENGE, xpReward, true, false);
-    }
-
-    /**
-     * Helper to handle custom model data for Butterfly Book Advancements.
-     * @param customModelData The value needed for the advancement.
-     * @return The new item predicate builder.
-     */
-    private ItemPredicate.Builder butterflyBookWithModelData(int customModelData) {
-        CompoundTag tag = new CompoundTag();
-        tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, customModelData);
-
-        return ItemPredicate.Builder.item()
-                .of(ItemRegistry.BUTTERFLY_BOOK.get())
-                .hasNbt(tag);
     }
 
     /**
