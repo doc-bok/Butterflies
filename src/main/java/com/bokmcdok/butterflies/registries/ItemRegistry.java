@@ -1,7 +1,10 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -105,7 +108,9 @@ public class ItemRegistry {
 
             butterflyNets.add(butterflyNet);
 
-            DeferredHolder<Item, Item> fireproofButterflyNet = ITEMS.register("fireproof_" + registryId, () -> new ButterflyNetItem(butterflyIndex));
+            DeferredHolder<Item, Item> fireproofButterflyNet = ITEMS.register("fireproof_" + registryId, () ->
+                    new ButterflyNetItem(new Item.Properties().stacksTo(1)
+                    .setId(createResourceKey(registryId)), butterflyIndex));
             fireproofButterflyNets.add(fireproofButterflyNet);
 
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyTrait.PEACEMAKER)) {

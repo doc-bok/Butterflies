@@ -5,12 +5,16 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyHabitat;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
+
+import java.util.Optional;
 
 @OnlyIn(Dist.CLIENT)
 public class ButterflyTextFormatter {
@@ -117,9 +121,11 @@ public class ButterflyTextFormatter {
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            @SuppressWarnings("deprecation")
-            Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
-            component.append(description);
+            Optional<Holder.Reference<Item>> preferredFlower = BuiltInRegistries.ITEM.get(entry.preferredFlower());
+            if (preferredFlower.isPresent()) {
+                Component description = preferredFlower.get().value().getName();
+                component.append(description);
+            }
 
             // Fact
             component.append("\n\n");

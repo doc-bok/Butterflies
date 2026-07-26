@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -154,7 +154,7 @@ public class BlockRegistry {
                 .strength(0.3F));
 
         // Light Butterflies glow when they are in a bottle.
-        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyData.Trait.GLOW)) {
+        if (Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]).contains(ButterflyTrait.GLOW)) {
             return BLOCKS.register(registryId, () -> new BottledButterflyBlock(properties.lightLevel((blockState) -> 15)));
         }
 

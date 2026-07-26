@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.data.event;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyDataLoader;
 import com.bokmcdok.butterflies.client.model.generators.ButterflyModelProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModBlockModelProvider;
 import com.bokmcdok.butterflies.client.model.generators.ModItemModelProvider;

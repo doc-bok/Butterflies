@@ -4,10 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.DataFormatException;
 
 public class ButterflyRegistry {
@@ -72,28 +69,42 @@ public class ButterflyRegistry {
      * @return A valid species string.
      */
     public static String getSpeciesString(LivingEntity entity) {
-        String species = "undiscovered";
-        String encodeId = entity.getEncodeId();
-        if (encodeId != null) {
-            String[] split = encodeId.split(":");
+        Optional<String> result = getSpeciesString(entity.getEncodeId());
+        return result.orElse("undiscovered");
+    }
+
+    /**
+     * Helper method to extract a species from a string.
+     * @param source The source string to try and extract from.
+     * @return The species string if it exists.
+     */
+    public static Optional<String> getSpeciesString(String source) {
+        if (source != null) {
+            String species = source;
+            String[] split = source.split(":");
             if (split.length >= 2) {
                 species = split[1];
-
-                // Kind of hacky. We should avoid butterfly IDs with
-                // underscores in the future. Making an exception here, so we
-                // don't lose work done before we realized it was a problem.
-                if (species.contains("domestic_silk")) {
-                    return "domestic_silk";
-                }
-
-                split = species.split("_");
-                if (split.length >=2) {
-                    species = split[0];
-                }
             }
+
+            // Kind of hacky. We should avoid butterfly IDs with
+            // underscores in the future. Making an exception here, so we
+            // don't lose work done before we realized it was a problem.
+            if (species.contains("domestic_silk")) {
+                return Optional.of("domestic_silk");
+            }
+
+            split = species.split("_");
+
+            if (split.length >= 3) {
+                species = split[2];
+            } else if (split.length == 2) {
+                species = split[0];
+            }
+
+            return Optional.of(species);
         }
 
-        return species;
+        return Optional.empty();
     }
 
     /**

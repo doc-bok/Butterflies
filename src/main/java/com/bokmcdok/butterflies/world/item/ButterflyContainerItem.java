@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -100,24 +100,26 @@ public interface ButterflyContainerItem {
      * @param itemLeftInHand The item that will be left in the player's hand.
      * @return The interaction result of trying to release a butterfly.
      */
-    default InteractionResultHolder<ItemStack> releaseButterfly(@NotNull Level level,
-                                                                @NotNull Player player,
-                                                                @NotNull InteractionHand hand,
-                                                                Item itemLeftInHand) {
+    default InteractionResult releaseButterfly(@NotNull Level level,
+                                               @NotNull Player player,
+                                               @NotNull InteractionHand hand,
+                                               Item itemLeftInHand) {
         ItemStack stack = player.getItemInHand(hand);
         ResourceLocation entityId = getContainedButterflyEntityId(stack);
 
         if (entityId == null) {
-            return InteractionResultHolder.pass(stack);
+            return InteractionResult.PASS;
         }
 
         if (!level.isClientSide) {
             BlockPos spawnPos = getReleasePosition(player);
             Butterfly.spawnFree(level, entityId, spawnPos);
+            ItemStack newStack = new ItemStack(itemLeftInHand);
             player.setItemInHand(hand, new ItemStack(itemLeftInHand));
+            return InteractionResult.SUCCESS.heldItemTransformedTo(newStack);
         }
 
-        return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide);
+        return InteractionResult.SUCCESS;
     }
 
     /**

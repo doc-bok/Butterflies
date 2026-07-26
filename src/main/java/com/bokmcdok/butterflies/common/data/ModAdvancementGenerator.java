@@ -6,14 +6,18 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 
-import com.mojang.datafixers.util.Pair;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
 import net.minecraft.advancements.*;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentPredicate;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +27,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.CustomData;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
@@ -40,11 +43,6 @@ public class ModAdvancementGenerator implements AdvancementSubProvider {
 
     // Definition of Special Catch Advancements.
     private static final List<SpecialCatchDefinition> SPECIAL_CATCHES;
-
-    // Values for book predicates for Butterfly Book Advancements.
-    private static final int BOOK_BUTTERFLIES = 1;
-    private static final int BOOK_MOTHS = 2;
-    private static final int BOOK_BOTH = 3;
 
     /**
      * Entry point.
@@ -259,7 +257,7 @@ public class ModAdvancementGenerator implements AdvancementSubProvider {
         for (DeferredHolder<?, ?> entityType : PeacemakerEntityTypeRegistry.PEACEMAKER_ENTITIES) {
             builder.addCriterion(Objects.requireNonNull(entityType.getKey()).location().getPath(),
                     KilledTrigger.TriggerInstance.playerKilledEntity(
-                            EntityPredicate.Builder.entity().of((EntityType<?>) entityType.get())));
+                            EntityPredicate.Builder.entity().of(BuiltInRegistries.ENTITY_TYPE, (EntityType<?>) entityType.get())));
         }
     }
 

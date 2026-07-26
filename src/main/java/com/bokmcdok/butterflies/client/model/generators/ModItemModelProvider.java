@@ -1,11 +1,11 @@
 package com.bokmcdok.butterflies.client.model.generators;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.client.data.models.model.ButterflyModelTemplates;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -157,7 +157,7 @@ public class ModItemModelProvider extends ModelSubProvider {
      * @param index The butterfly index.
      */
     private void registerButterflySpawnEggs(int index) {
-        String species = Objects.requireNonNull(ButterflyData.getEntry(index)).entityId();
+        String species = Objects.requireNonNull(ButterflyRegistry.getEntry(index)).entityId();
         for (var stage : BUTTERFLY_STAGES) {
             singleTextureItem(stage.getSecond().get(index).get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/spawn_egg/" + stage.getFirst() + "/" + species);
         }
@@ -189,8 +189,8 @@ public class ModItemModelProvider extends ModelSubProvider {
      * @param index The butterfly index.
      */
     private void registerFireproofButterflyNet(int index) {
-        String path = getPath(ItemRegistry.FIREPROOF_BUTTERFLY_NETS.get(index));
-        singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_net/fireproof_butterfly_net_full"));
+        DeferredHolder<Item, Item> butterflyNet = ItemRegistry.FIREPROOF_BUTTERFLY_NETS.get(index);
+        singleTextureItem(butterflyNet.get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/butterfly_net/fireproof_butterfly_net_full");
     }
 
     /**
@@ -231,7 +231,7 @@ public class ModItemModelProvider extends ModelSubProvider {
                              String texturePrefix)
     {
         ResourceLocation itemKey = Objects.requireNonNull(item.getKey()).location();
-        Optional<String> species = ButterflyData.getSpeciesString(itemKey.getPath());
+        Optional<String> species = ButterflyRegistry.getSpeciesString(itemKey.getPath());
         species.ifPresent(s -> singleTextureItem(item.get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/" + textureLocation + "/" + texturePrefix + "_" + s));
     }
 
