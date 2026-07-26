@@ -1,5 +1,14 @@
 ## Changelog
 
+### 7.9.0 (2026-07-26)
+ - Added the Fireproof Butterfly Net.
+
+### 7.8.2 (2026-07-24)
+ - Added Peacemaker Advancements.
+
+### 7.8.1 (2026-07-23)
+ - Add an advancement for catching the Obsidian Butterfly.
+
 ### 7.8.0 (2026-07-19)
  - Added the Obsidian Butterfly.
 

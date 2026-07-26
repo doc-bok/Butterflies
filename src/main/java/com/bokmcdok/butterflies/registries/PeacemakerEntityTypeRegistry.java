@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.world.entity.PeacemakerEntity;
 import com.bokmcdok.butterflies.world.entity.animal.PeacemakerCow;
 import com.bokmcdok.butterflies.world.entity.monster.*;
 import com.bokmcdok.butterflies.world.entity.npc.PeacemakerVillager;
@@ -11,6 +12,8 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.List;
 
 public class PeacemakerEntityTypeRegistry {
 
@@ -26,6 +29,8 @@ public class PeacemakerEntityTypeRegistry {
     public static final RegistryObject<EntityType<PeacemakerWanderingTrader>> PEACEMAKER_WANDERING_TRADER;
     public static final RegistryObject<EntityType<PeacemakerWitch>> PEACEMAKER_WITCH;
 
+    public static final List<RegistryObject<?>> PEACEMAKER_ENTITIES;
+
     static {
         PEACEMAKER_ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
 
@@ -38,6 +43,18 @@ public class PeacemakerEntityTypeRegistry {
         PEACEMAKER_VINDICATOR = registerPeacemakerEntity("peacemaker_vindicator", PeacemakerVindicator::new, 0.6F, 1.95F);
         PEACEMAKER_WANDERING_TRADER = registerPeacemakerEntity("peacemaker_wandering_trader", PeacemakerWanderingTrader::new, 0.6F, 1.95F);
         PEACEMAKER_WITCH = registerPeacemakerEntity("peacemaker_witch", PeacemakerWitch::new, 0.6F, 1.95F);
+
+        PEACEMAKER_ENTITIES = List.of(
+                PEACEMAKER_BUTTERFLY,
+                PEACEMAKER_COW,
+                PEACEMAKER_EVOKER,
+                PEACEMAKER_ILLUSIONER,
+                PEACEMAKER_PILLAGER,
+                PEACEMAKER_VILLAGER,
+                PEACEMAKER_VINDICATOR,
+                PEACEMAKER_WANDERING_TRADER,
+                PEACEMAKER_WITCH
+        );
     }
 
     /**

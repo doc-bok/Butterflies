@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -55,7 +56,7 @@ public class ButterflyScrollScreen extends Screen {
         this.renderBackground(guiGraphics);
         int i = (this.width - 192) / 2;
 
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
         if (data != null) {
             guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
         }

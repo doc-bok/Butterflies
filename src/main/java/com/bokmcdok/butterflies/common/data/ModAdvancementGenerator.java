@@ -1,27 +1,30 @@
 package com.bokmcdok.butterflies.common.data;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
+import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.*;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.ForgeAdvancementProvider;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -29,6 +32,14 @@ import java.util.function.Consumer;
  * Generates all advancements for the mod.
  */
 public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+
+    // Definition of Special Catch Advancements.
+    private static final List<SpecialCatchDefinition> SPECIAL_CATCHES;
+
+    // Values for book predicates for Butterfly Book Advancements.
+    private static final int BOOK_BUTTERFLIES = 1;
+    private static final int BOOK_MOTHS = 2;
+    private static final int BOOK_BOTH = 3;
 
     /**
      * Entry point.
@@ -43,40 +54,29 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         Advancement root = createRoot(saver);
         createCollectionAdvancements(saver, root);
         createSpecialCatchAdvancements(saver, root);
+        createPeacemakerAdvancements(saver);
         createMiscAdvancements(saver, root);
     }
 
     /**
-     * Adds an item criterion to the specified builder.
-     * @param builder The builder to modify.
-     * @param item The item to add.
+     * Creates the root advancement.
+     * @param saver A consumer used to write advancements to a file.
+     * @return The new root advancement.
      */
-    private void addItemCriterion(Advancement.Builder builder,
-                                  RegistryObject<Item> item) {
-        builder.addCriterion(
-                Objects.requireNonNull(item.getKey()).location().getPath(),
-                InventoryChangeTrigger.TriggerInstance.hasItems(item.get()));
-    }
-
-    /**
-     * Creates a builder for a challenge advancement.
-     * @param iconItem The item to use as an icon.
-     * @param localization The string to use for localization.
-     * @return A builder with the display setup.
-     */
-    private Advancement.Builder challenge(Item iconItem,
-                                          String localization,
-                                          int xpReward) {
+    private AdvancementHolder createRoot(@NotNull Consumer<AdvancementHolder> saver) {
         return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
-                        createTitleString(localization),
-                        createDescriptionString(localization),
-                        null,
-                        FrameType.CHALLENGE,
-                        true,
-                        true,
-                        false))
-                .rewards(new AdvancementRewards(xpReward, new ResourceLocation[0], new ResourceLocation[0], CommandFunction.CacheableFunction.NONE));
+                .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
+                        createTitleString("root"),
+                        createDescriptionString("root"),
+                        new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
+                        FrameType.TASK,
+                        false,  // Show Toast
+                        false,  // Announce Chat
+                        false)) // Hidden
+                .addCriterion("butterfly_net",
+                        InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.EMPTY_BUTTERFLY_NET.get()))
+                .save(saver, butterflyLocation("root"));
+
     }
 
     /**
@@ -87,19 +87,19 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private void createCollectionAdvancements(@NotNull Consumer<Advancement> saver,
                                               Advancement root) {
 
-        int atlasMothIndex = ButterflyData.getButterflyIndex("atlas");
-        SpeciesAdvancementSet butterflyAdvancements = new SpeciesAdvancementSet("butterfly", "butterflies", "caterpillar", "caterpillars", 0);
-        SpeciesAdvancementSet mothAdvancements = new SpeciesAdvancementSet("moth", "moths", "larva", "larvae", atlasMothIndex);
+        int atlasMothIndex = ButterflyRegistry.getButterflyIndex("atlas");
+        SpeciesAdvancementSet butterflyAdvancements = new SpeciesAdvancementSet(this, "butterfly", "butterflies", "caterpillar", "caterpillars", 0);
+        SpeciesAdvancementSet mothAdvancements = new SpeciesAdvancementSet(this, "moth", "moths", "larva", "larvae", atlasMothIndex);
 
         Advancement.Builder createButterflyScrollBuilder = task(ItemRegistry.BUTTERFLY_SCROLLS.get(0).get(), "create_butterfly_scroll");
 
-        for(int i = 0; i < ButterflyData.getTotalNumSpecies(); ++i) {
-            ButterflyData butterflyData = ButterflyData.getEntry(i);
+        for(int i = 0; i < ButterflyRegistry.getTotalNumSpecies(); ++i) {
+            ButterflyData butterflyData = ButterflyRegistry.getEntry(i);
             if(butterflyData != null) {
-                if (butterflyData.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                if (butterflyData.type() == ButterflyType.BUTTERFLY) {
                     butterflyAdvancements.addAllItemCriterion(i);
 
-                } else if(butterflyData.type() == ButterflyData.ButterflyType.MOTH) {
+                } else if(butterflyData.type() == ButterflyType.MOTH) {
                     mothAdvancements.addAllItemCriterion(i);
                 }
 
@@ -109,19 +109,11 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
 
         butterflyAdvancements.saveAll(saver, root);
         mothAdvancements.saveAll(saver, root);
-        Advancement createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.catchOneAdvancement, RequirementsStrategy.AND, "create_butterfly_scroll");
+        Advancement createButterflyScroll = save(saver, createButterflyScrollBuilder, butterflyAdvancements.getCatchOneAdvancement(), RequirementsStrategy.AND, "create_butterfly_scroll");
 
-        CompoundTag fullButterflyBookTag = new CompoundTag();
-        fullButterflyBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 1);
-        ItemPredicate.Builder fullButterflyBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullButterflyBookTag);
-
-        CompoundTag fullMothBookTag = new CompoundTag();
-        fullMothBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 2);
-        ItemPredicate.Builder fullMothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullMothBookTag);
-
-        CompoundTag fullBothBookTag = new CompoundTag();
-        fullBothBookTag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, 3);
-        ItemPredicate.Builder fullBothBook = ItemPredicate.Builder.item().of(ItemRegistry.BUTTERFLY_BOOK.get()).hasNbt(fullBothBookTag);
+        ItemPredicate.Builder fullButterflyBook = butterflyBookWithModelData(BOOK_BUTTERFLIES);
+        ItemPredicate.Builder fullMothBook = butterflyBookWithModelData(BOOK_MOTHS);
+        ItemPredicate.Builder fullBothBook = butterflyBookWithModelData(BOOK_BOTH);
 
         Advancement.Builder fillButterflyBookBuilder = challenge(ItemRegistry.BUTTERFLY_BOOK.get(), "fill_butterfly_book", 200);
         fillButterflyBookBuilder.addCriterion("butterflies", InventoryChangeTrigger.TriggerInstance.hasItems(fullButterflyBook.build()));
@@ -135,21 +127,85 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     }
 
     /**
-     * Creates a localization component for a description string.
-     * @param localization The name of the advancement.
-     * @return A new mutable component.
+     * Creates advancements for catching special butterflies.
+     * @param saver A consumer used to write advancements to a file.
+     * @param root The root advancement in the tree.
      */
-    private MutableComponent createDescriptionString(String localization) {
-        return Component.translatable("advancements.butterfly." + localization + ".description");
+    private void createSpecialCatchAdvancements(@NotNull Consumer<AdvancementHolder> saver,
+                                                AdvancementHolder root) {
+        for (SpecialCatchDefinition definition : SPECIAL_CATCHES) {
+            dualItemGoal(
+                    saver,
+                    definition.iconItem(),
+                    definition.localization(),
+                    definition.collectItem(),
+                    definition.fireproofCollectItem(),
+                    root,
+                    definition.xpReward());
+        }
     }
 
     /**
-     * Creates a resource location for an advancement.
-     * @param localization The name of the advancement.
-     * @return A new resource location.
+     * Creates all the Peacemaker Advancements.
+     * @param saver A consumer used to write advancements to a file.
      */
-    private String createLocation(String localization) {
-        return ButterfliesMod.MOD_ID + ":butterfly/" + localization;
+    private void createPeacemakerAdvancements(@NotNull Consumer<AdvancementHolder> saver) {
+        int peacemakerIndex = ButterflyRegistry.getButterflyIndex("peacemaker");
+
+        // Root - What's Project Butterfly?
+        Advancement.Builder rootBuilder = Advancement.Builder.advancement()
+                .display(new DisplayInfo(new ItemStack(SpawnEggRegistry.PEACEMAKER_BUTTERFLY_SPAWN_EGG.get()),
+                        createTitleString("peacemaker_root"),
+                        createDescriptionString("peacemaker_root"),
+                        new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
+                        FrameType.TASK,
+                        false,  // Show Toast
+                        false,  // Announce Chat
+                        false)); // Hidden
+        addKillPeacemakerEntityCriterion(rootBuilder);
+        AdvancementHolder root = rootBuilder
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .save(saver, peacemakerLocation("root"));
+
+        // Peace Catcher.
+        Advancement.Builder peaceCatcherBuilder = task(ItemRegistry.BUTTERFLY_NETS.get(peacemakerIndex).get(), "peace_catcher");
+        addItemCriterion(peaceCatcherBuilder, ItemRegistry.BUTTERFLY_NETS.get(peacemakerIndex));
+        AdvancementHolder peaceCatcher = peaceCatcherBuilder
+                .parent(root)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .save(saver, peacemakerLocation("peace_catcher"));
+
+        // Milk and Honey.
+        Advancement.Builder milkAndHoneyBuilder = task(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get(), "milk_and_honey");
+        addItemCriterion(milkAndHoneyBuilder, ItemRegistry.PEACEMAKER_HONEY_BOTTLE);
+        milkAndHoneyBuilder
+                .parent(root)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .save(saver, peacemakerLocation("milk_and_honey"));
+
+        // You Forgot to Tell Him About the Cow.
+        Advancement.Builder cowBuilder = goal(SpawnEggRegistry.PEACEMAKER_COW_SPAWN_EGG.get(), "forgot_to_tell", 300);
+        addKillPeacemakerEntityCriterion(cowBuilder);
+        cowBuilder
+                .parent(root)
+                .requirements(AdvancementRequirements.Strategy.AND)
+                .save(saver, peacemakerLocation("forgot_to_tell"));
+
+        // Oh. Project Butterfly.
+        Advancement.Builder projectButterflyBuilder = task(ItemRegistry.BUTTERFLY_SCROLLS.get(peacemakerIndex).get(), "project_butterfly");
+        addItemCriterion(projectButterflyBuilder, ItemRegistry.BUTTERFLY_SCROLLS.get(peacemakerIndex));
+        projectButterflyBuilder
+                .parent(peaceCatcher)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .save(saver, peacemakerLocation("project_butterfly"));
+
+        // Eek Stack Ik Ik.
+        Advancement.Builder eekStackBuilder = task(ItemRegistry.BOTTLED_BUTTERFLIES.get(peacemakerIndex).get(), "eek_stack");
+        addItemCriterion(eekStackBuilder, ItemRegistry.BOTTLED_BUTTERFLIES.get(peacemakerIndex));
+        eekStackBuilder
+                .parent(peaceCatcher)
+                .requirements(AdvancementRequirements.Strategy.OR)
+                .save(saver, peacemakerLocation("eek_stack"));
     }
 
     /**
@@ -172,72 +228,80 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     }
 
     /**
-     * Creates the root advancement.
-     * @param saver A consumer used to write advancements to a file.
-     * @return The new root advancement.
+     * Adds an item criterion to the specified builder.
+     * @param builder The builder to modify.
+     * @param item The item to add.
      */
-    private Advancement createRoot(@NotNull Consumer<Advancement> saver) {
-        return Advancement.Builder.advancement()
-            .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
-                    createTitleString("root"),
-                    createDescriptionString("root"),
-                    new ResourceLocation("minecraft:textures/gui/advancements/backgrounds/stone.png"),
-                    FrameType.TASK,
-                    false,  // Show Toast
-                    false,  // Announce Chat
-                    false)) // Hidden
-            .addCriterion("butterfly_net",
-                    InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.EMPTY_BUTTERFLY_NET.get()))
-            .save(saver, createLocation("root"));
+    public void addItemCriterion(Advancement.Builder builder,
+                                 RegistryObject<Item> item) {
+        builder.addCriterion(
+                Objects.requireNonNull(item.getKey()).location().getPath(),
+                InventoryChangeTrigger.TriggerInstance.hasItems(item.get()));
     }
 
     /**
-     * Creates advancements for catching special butterflies.
-     * @param saver A consumer used to write advancements to a file.
-     * @param root The root advancement in the tree.
+     * Adds kill entity criterion for all Peacemaker Entities.
+     * @param builder The builder to modify.
      */
-    private void createSpecialCatchAdvancements(@NotNull Consumer<Advancement> saver,
-                                                Advancement root) {
-
-        int iceButterflyIndex = ButterflyData.getButterflyIndex("ice");
-        singleItemGoal(saver,
-                ItemRegistry.BUTTERFLY_SCROLLS.get(iceButterflyIndex).get(),
-                "catch_ice_butterfly",
-                ItemRegistry.BUTTERFLY_NETS.get(iceButterflyIndex),
-                root,
-                100);
-
-        singleItemGoal(saver,
-                ItemRegistry.BURNT_BUTTERFLY_NET.get(),
-                "catch_lava_butterfly",
-                ItemRegistry.BURNT_BUTTERFLY_NET,
-                root,
-                100);
-
-        int lightButterflyIndex = ButterflyData.getButterflyIndex("light");
-        singleItemGoal(saver,
-                ItemRegistry.BUTTERFLY_SCROLLS.get(lightButterflyIndex).get(),
-                "catch_light_butterfly",
-                ItemRegistry.BUTTERFLY_NETS.get(lightButterflyIndex),
-                root,
-                100);
-
-        int peacemakerButterflyIndex = ButterflyData.getButterflyIndex("peacemaker");
-        singleItemGoal(saver,
-                ItemRegistry.BUTTERFLY_SCROLLS.get(peacemakerButterflyIndex).get(),
-                "catch_peacemaker_butterfly",
-                ItemRegistry.BUTTERFLY_NETS.get(peacemakerButterflyIndex),
-                root,
-                200);
+    private void addKillPeacemakerEntityCriterion(Advancement.Builder builder) {
+        for (RegistryObject<?> entityType : PeacemakerEntityTypeRegistry.PEACEMAKER_ENTITIES) {
+            builder.addCriterion(Objects.requireNonNull(entityType.getKey()).location().getPath(),
+                    KilledTrigger.TriggerInstance.playerKilledEntity(
+                            EntityPredicate.Builder.entity().of((EntityType<?>) entityType.get())));
+        }
     }
 
     /**
-     * Creates a localization component for a title string.
-     * @param localization The name of the advancement.
-     * @return A new mutable component.
+     * Creates a basic advancement builder.
+     *
+     * @param iconItem     The item to use for an icon.
+     * @param localization The ID of the localization string.
+     * @param frame        The frame type to use.
+     * @param xpReward     The XP reward for completing the advancement.
+     * @param announceChat Should we announce to chat?
+     * @param hidden       Should the advancement be hidden?
+     * @return The new advancement builder.
      */
-    private MutableComponent createTitleString(String localization) {
-        return Component.translatable("advancements.butterfly." + localization + ".title");
+    private Advancement.Builder advancement(
+            Item iconItem,
+            String localization,
+            FrameType frame,
+            int xpReward,
+            boolean announceChat,
+            boolean hidden) {
+
+        Advancement.Builder builder = Advancement.Builder.advancement()
+                .display(new DisplayInfo(
+                        new ItemStack(iconItem),
+                        createTitleString(localization),
+                        createDescriptionString(localization),
+                        null,
+                        frame,
+                        true,
+                        announceChat,
+                        hidden
+                ));
+
+        if (xpReward > 0) {
+            builder.rewards(new AdvancementRewards(
+                    xpReward,
+                    new ResourceLocation[0],
+                    new ResourceLocation[0],
+                    CommandFunction.CacheableFunction.NONE));
+        }
+
+        return builder;
+    }
+
+    /**
+     * Creates a builder for a task advancement.
+     * @param iconItem The item to use as an icon.
+     * @param localization The string to use for localization.
+     * @return A builder with the display setup.
+     */
+    public Advancement.Builder task(Item iconItem,
+                                    String localization) {
+        return advancement(iconItem, localization, FrameType.TASK, 0, true, false);
     }
 
     /**
@@ -249,16 +313,69 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private Advancement.Builder goal(Item iconItem,
                                      String localization,
                                      int xpReward) {
-        return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
-                        createTitleString(localization),
-                        createDescriptionString(localization),
-                        null,
-                        FrameType.GOAL,
-                        true,
-                        false,
-                        true))
-                .rewards(new AdvancementRewards(xpReward, new ResourceLocation[0], new ResourceLocation[0], CommandFunction.CacheableFunction.NONE));
+        return advancement(iconItem, localization, FrameType.GOAL, xpReward, false, true);
+    }
+
+    /**
+     * Creates a builder for a challenge advancement.
+     * @param iconItem The item to use as an icon.
+     * @param localization The string to use for localization.
+     * @return A builder with the display setup.
+     */
+    public Advancement.Builder challenge(Item iconItem,
+                                         String localization,
+                                         int xpReward) {
+        return advancement(iconItem, localization, FrameType.CHALLENGE, xpReward, true, false);
+    }
+
+    /**
+     * Helper to handle custom model data for Butterfly Book Advancements.
+     * @param customModelData The value needed for the advancement.
+     * @return The new item predicate builder.
+     */
+    private ItemPredicate.Builder butterflyBookWithModelData(int customModelData) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt(CompoundTagId.CUSTOM_MODEL_DATA, customModelData);
+
+        return ItemPredicate.Builder.item()
+                .of(ItemRegistry.BUTTERFLY_BOOK.get())
+                .hasNbt(tag);
+    }
+
+    /**
+     * Creates a localization component for a description string.
+     * @param localization The name of the advancement.
+     * @return A new mutable component.
+     */
+    private MutableComponent createDescriptionString(String localization) {
+        return Component.translatable("advancements.butterfly." + localization + ".description");
+    }
+
+    /**
+     * Creates a resource location for a Butterfly Advancement.
+     * @param localization The name of the advancement.
+     * @return A new resource location.
+     */
+    private ResourceLocation butterflyLocation(String localization) {
+        return new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly/" + localization);
+    }
+
+    /**
+     * Creates a resource location for a Peacemaker Advancement.
+     * @param localization The name of the advancement.
+     * @return A new resource location.
+     */
+    private ResourceLocation peacemakerLocation(String localization) {
+        return new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker/" + localization);
+    }
+
+    /**
+     * Creates a localization component for a title string.
+     * @param localization The name of the advancement.
+     * @return A new mutable component.
+     */
+    private MutableComponent createTitleString(String localization) {
+        return Component.translatable("advancements.butterfly." + localization + ".title");
     }
 
     /**
@@ -276,9 +393,37 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                                 RegistryObject<Item> collectItem,
                                 Advancement parent,
                                 int xpReward) {
-        Advancement.Builder builder = goal(iconItem, localization.substring(1), xpReward);
+        Advancement.Builder builder = goal(iconItem, localization, xpReward);
         addItemCriterion(builder, collectItem);
         save(saver, builder, parent, localization);
+    }
+
+    /**
+     * Creates a goal for obtaining one of two items.
+     * @param saver        The holder to save an advancement.
+     * @param iconItem     The item to use as an icon.
+     * @param localization The string to use for localization.
+     * @param collectItem1 The item to collect.
+     * @param collectItem2 The item to collect.
+     * @param parent       The goal's parent.
+     * @param xpReward     The experience reward for completing the goal.
+     */
+    private void dualItemGoal(@NotNull Consumer<AdvancementHolder> saver,
+                              Item iconItem,
+                              String localization,
+                              RegistryObject<Item> collectItem1,
+                              RegistryObject<Item> collectItem2,
+                              AdvancementHolder parent,
+                              int xpReward) {
+        if (collectItem1 == collectItem2) {
+            singleItemGoal(saver, iconItem, localization, collectItem1, parent, xpReward);
+            return;
+        }
+
+        Advancement.Builder builder = goal(iconItem, localization, xpReward);
+        addItemCriterion(builder, collectItem1);
+        addItemCriterion(builder, collectItem2);
+        save(saver, builder, parent, AdvancementRequirements.Strategy.OR, localization);
     }
 
     /**
@@ -304,119 +449,21 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param name The name of the advancement.
      * @return The completed advancement.
      */
-    private Advancement save(@NotNull Consumer<Advancement> saver,
-                                   Advancement.Builder builder,
-                                   Advancement parent,
-                                   RequirementsStrategy strategy,
-                                   String name) {
-        return builder.parent(parent).requirements(strategy).save(saver, createLocation(name));
+    public AdvancementHolder save(@NotNull Consumer<AdvancementHolder> saver,
+                                  Advancement.Builder builder,
+                                  AdvancementHolder parent,
+                                  AdvancementRequirements.Strategy strategy,
+                                  String name) {
+        return builder.parent(parent).requirements(strategy).save(saver, butterflyLocation(name));
     }
 
-    /**
-     * Creates a builder for a task advancement.
-     * @param iconItem The item to use as an icon.
-     * @param localization The string to use for localization.
-     * @return A builder with the display setup.
-     */
-    private Advancement.Builder task(Item iconItem,
-                                     String localization) {
-        return Advancement.Builder.advancement()
-                .display(new DisplayInfo(new ItemStack(iconItem),
-                        createTitleString(localization),
-                        createDescriptionString(localization),
-                        null,
-                        FrameType.TASK,
-                        true,
-                        true,
-                        false));
-    }
-
-    /**
-     * Helper to hold a set of species advancements.
-     */
-    private class SpeciesAdvancementSet {
-        private final Pair<String, Advancement.Builder> catchOne;
-        private final Pair<String, Advancement.Builder> catchAll;
-        private final Pair<String, Advancement.Builder> findEggOne;
-        private final Pair<String, Advancement.Builder> findCrawlerOne;
-        private final Pair<String, Advancement.Builder> findEggAll;
-        private final Pair<String, Advancement.Builder> findCrawlerAll;
-        private final Pair<String, Advancement.Builder> bottleOne;
-        private final Pair<String, Advancement.Builder> bottleCrawlerOne;
-        private final Pair<String, Advancement.Builder> bottleAll;
-        private final Pair<String, Advancement.Builder> bottleCrawlerAll;
-
-        // Used by the scroll advancement.
-        private Advancement catchOneAdvancement;
-
-        /**
-         * Construction.
-         * @param flyer The string to use for flyer advancements.
-         * @param flyerPlural The string to use for "all" flyer advancements.
-         * @param crawler The string to use for crawler advancements.
-         * @param crawlerPlural The string to use for "all" crawler advancements.
-         * @param butterflyIndex The butterfly index, used to generate icons.
-         */
-        private SpeciesAdvancementSet(String flyer,
-                                      String flyerPlural,
-                                      String crawler,
-                                      String crawlerPlural,
-                                      int butterflyIndex) {
-            catchOne = new Pair<>("catch_" + flyer, task(ItemRegistry.EMPTY_BUTTERFLY_NET.get(), "catch_" + flyer));
-            catchAll = new Pair<>("catch_all_" + flyerPlural, challenge(ItemRegistry.BUTTERFLY_NETS.get(butterflyIndex).get(), "catch_all_" + flyerPlural, 100));
-            findEggOne = new Pair<>("find_" + flyer + "_egg", task(ItemRegistry.BUTTERFLY_EGGS.get(butterflyIndex).get(), "find_" + flyer + "_egg"));
-            findCrawlerOne = new Pair<>("find_" + crawler,task(ItemRegistry.CATERPILLARS.get(butterflyIndex).get(), "find_" + crawler));
-            findEggAll = new Pair<>("find_all_" + flyer + "_eggs", challenge(ItemRegistry.BUTTERFLY_EGGS.get(butterflyIndex).get(), "find_all_" + flyer + "_eggs", 100));
-            findCrawlerAll = new Pair<>("find_all_" + crawlerPlural, challenge(ItemRegistry.CATERPILLARS.get(butterflyIndex).get(), "find_all_" + crawlerPlural, 100));
-            bottleOne = new Pair<>("bottle_" + flyer, task(Items.GLASS_BOTTLE, "bottle_" + flyer));
-            bottleCrawlerOne = new Pair<>("bottle_" + crawler,task(Items.GLASS_BOTTLE, "bottle_" + crawler));
-            bottleAll = new Pair<>("bottle_all_" + flyerPlural, challenge(ItemRegistry.BOTTLED_BUTTERFLIES.get(butterflyIndex).get(), "bottle_all_" + flyerPlural, 150));
-            bottleCrawlerAll = new Pair<>("bottle_all_" + crawlerPlural, challenge(ItemRegistry.BOTTLED_BUTTERFLIES.get(butterflyIndex).get(), "bottle_all_" + crawlerPlural, 150));
-        }
-
-        /**
-         * Add all item criterion for a specific butterfly index.
-         * @param butterflyIndex The Butterfly Index.
-         */
-        private void addAllItemCriterion(int butterflyIndex) {
-            addItemCriterion(catchOne.getSecond(), ItemRegistry.BUTTERFLY_NETS.get(butterflyIndex));
-            addItemCriterion(catchAll.getSecond(), ItemRegistry.BUTTERFLY_NETS.get(butterflyIndex));
-
-            addItemCriterion(findEggOne.getSecond(), ItemRegistry.BUTTERFLY_EGGS.get(butterflyIndex));
-            addItemCriterion(findCrawlerOne.getSecond(), ItemRegistry.CATERPILLARS.get(butterflyIndex));
-
-            addItemCriterion(findEggAll.getSecond(), ItemRegistry.BUTTERFLY_EGGS.get(butterflyIndex));
-            addItemCriterion(findCrawlerAll.getSecond(), ItemRegistry.CATERPILLARS.get(butterflyIndex));
-
-            addItemCriterion(bottleOne.getSecond(), ItemRegistry.BOTTLED_BUTTERFLIES.get(butterflyIndex));
-            addItemCriterion(bottleCrawlerOne.getSecond(), ItemRegistry.BOTTLED_CATERPILLARS.get(butterflyIndex));
-
-            addItemCriterion(bottleAll.getSecond(), ItemRegistry.BOTTLED_BUTTERFLIES.get(butterflyIndex));
-            addItemCriterion(bottleCrawlerAll.getSecond(), ItemRegistry.BOTTLED_CATERPILLARS.get(butterflyIndex));
-        }
-
-        /**
-         * Save all the advancements.
-         * @param saver A consumer used to write advancements to a file.
-         * @param root The root advancement.
-         */
-        private void saveAll(@NotNull Consumer<Advancement> saver,
-                             Advancement root) {
-
-            catchOneAdvancement = save(saver, catchOne.getSecond(), root, RequirementsStrategy.OR, catchOne.getFirst());
-            save(saver, catchAll.getSecond(), catchOneAdvancement, RequirementsStrategy.AND, catchAll.getFirst());
-
-            Advancement findEggOneAdvancement = save(saver, findEggOne.getSecond(), root, RequirementsStrategy.OR, findEggOne.getFirst());
-            Advancement findCrawlerOneAdvancement = save(saver, findCrawlerOne.getSecond(), root, RequirementsStrategy.OR, findCrawlerOne.getFirst());
-
-            save(saver, findEggAll.getSecond(), findEggOneAdvancement, RequirementsStrategy.AND, findEggAll.getFirst());
-            save(saver, findCrawlerAll.getSecond(), findCrawlerOneAdvancement, RequirementsStrategy.AND, findCrawlerAll.getFirst());
-
-            Advancement bottleOneAdvancement = save(saver, bottleOne.getSecond(), catchOneAdvancement, RequirementsStrategy.OR, bottleOne.getFirst());
-            Advancement bottleCrawlerAdvancement = save(saver, bottleCrawlerOne.getSecond(), findCrawlerOneAdvancement, RequirementsStrategy.OR, bottleCrawlerOne.getFirst());
-
-            save(saver, bottleAll.getSecond(), bottleOneAdvancement, RequirementsStrategy.AND, bottleAll.getFirst());
-            save(saver, bottleCrawlerAll.getSecond(), bottleCrawlerAdvancement, RequirementsStrategy.AND, bottleCrawlerAll.getFirst());
-        }
+    static {
+        SPECIAL_CATCHES  = List.of(
+                new SpecialCatchDefinition("ice", "catch_ice_butterfly", 100, false, false),
+                new SpecialCatchDefinition("lava", "catch_lava_butterfly", 100, true, false),
+                new SpecialCatchDefinition("lava", "catch_lava_butterfly_for_real", 100, false, true),
+                new SpecialCatchDefinition("light", "catch_light_butterfly", 100, false, false),
+                new SpecialCatchDefinition("obsidian", "catch_obsidian_butterfly", 200, false, false)
+        );
     }
 }
