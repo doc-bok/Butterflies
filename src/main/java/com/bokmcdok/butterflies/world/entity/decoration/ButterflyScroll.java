@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
 import net.minecraft.core.BlockPos;
@@ -114,7 +115,7 @@ public class ButterflyScroll extends HangingEntity {
      * @return The butterfly index.
      */
     public int getButterflyIndex() {
-        int result = ButterflyData.getButterflyIndex(this.getType().getDescriptionId());
+        int result = ButterflyRegistry.getButterflyIndex(this.getType().getDescriptionId());
         return result < 0 ? this.butterflyIndex : result;
     }
 
@@ -129,7 +130,7 @@ public class ButterflyScroll extends HangingEntity {
 
     @NotNull
     public ResourceLocation getTextureLocation() {
-        ButterflyData data = ButterflyData.getEntry(getButterflyIndex());
+        ButterflyData data = ButterflyRegistry.getEntry(getButterflyIndex());
         return data == null ? new ResourceLocation(ButterfliesMod.MOD_ID, "textures/gui/butterfly_scroll/admiral.png")
                 : data.getScrollTexture();
     }

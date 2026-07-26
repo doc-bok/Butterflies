@@ -1,8 +1,11 @@
 package com.bokmcdok.butterflies.event.village;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRarity;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.VillagerProfessionRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.entity.npc.BuyingItemTrade;
 import com.bokmcdok.butterflies.world.entity.npc.SellingItemTrade;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -42,7 +45,7 @@ public class VillageEventListener {
         if (event.getType() == VillagerProfessionRegistry.LEPIDOPTERIST.get()) {
             Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
-            Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
+            Collection<ButterflyData> butterflies = ButterflyRegistry.getButterflyDataCollection();
 
             List<VillagerTrades.ItemListing> tradesLevel1 = trades.get(1);
             List<VillagerTrades.ItemListing> tradesLevel2 = trades.get(2);
@@ -62,7 +65,7 @@ public class VillageEventListener {
             List<DeferredHolder<Item, Item>> caterpillars = ItemRegistry.CATERPILLARS;
 
             for (ButterflyData butterfly : butterflies) {
-                if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
+                if (butterfly.type() != ButterflyType.SPECIAL) {
                     int i = butterfly.butterflyIndex();
                     switch (butterfly.rarity()) {
                         case COMMON:
@@ -114,14 +117,14 @@ public class VillageEventListener {
     private void onWandererTrades(WandererTradesEvent event) {
         List<VillagerTrades.ItemListing> genericTrades = event.getGenericTrades();
 
-        Collection<ButterflyData> butterflies = ButterflyData.getButterflyDataCollection();
+        Collection<ButterflyData> butterflies = ButterflyRegistry.getButterflyDataCollection();
 
         List<DeferredHolder<Item, Item>> bottledButterflies = ItemRegistry.BOTTLED_BUTTERFLIES;
 
         for (ButterflyData butterfly : butterflies) {
-            if (butterfly.type() != ButterflyData.ButterflyType.SPECIAL) {
+            if (butterfly.type() != ButterflyType.SPECIAL) {
                 int i = butterfly.butterflyIndex();
-                if (Objects.requireNonNull(butterfly.rarity()) == ButterflyData.Rarity.UNCOMMON) {
+                if (Objects.requireNonNull(butterfly.rarity()) == ButterflyRarity.UNCOMMON) {
                     genericTrades.add(new SellingItemTrade(bottledButterflies.get(i).get(), 20, 1, 30));
                 }
             }

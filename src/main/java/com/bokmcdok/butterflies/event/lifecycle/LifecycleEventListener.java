@@ -1,12 +1,12 @@
 package com.bokmcdok.butterflies.event.lifecycle;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
 import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.MenuTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.google.common.collect.Maps;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.resources.ResourceKey;
@@ -51,7 +51,7 @@ public class LifecycleEventListener {
 
         // Check for the poisonous trait
         for (int i = 0; i < ButterflyInfo.TRAITS.length; ++i) {
-            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyData.Trait.POISONOUS)) {
+            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyTrait.POISONOUS)) {
                 BrewingRecipeRegistry.addRecipe(
                         Ingredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
                         Ingredient.of(ItemRegistry.BOTTLED_BUTTERFLIES.get(i).get()),

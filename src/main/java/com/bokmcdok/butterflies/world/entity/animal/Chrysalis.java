@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -201,7 +202,7 @@ public class Chrysalis extends DirectionalCreature {
                 }
             }
 
-            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
             if (data != null) {
                 ResourceLocation newLocation = data.getButterflyEntity();
                 Butterfly.spawnFree(level, newLocation, this.blockPosition());

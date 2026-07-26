@@ -2,10 +2,12 @@ package com.bokmcdok.butterflies.data.tags;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import com.bokmcdok.butterflies.registries.TagRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -41,5 +43,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ItemTags.DECORATED_POT_SHERDS)
                 .replace(false)
                 .add(ItemRegistry.BUTTERFLY_POTTERY_SHERD.get());
+
+        IntrinsicTagAppender<Item> appender = tag(TagRegistry.FIREPROOF_BUTTERFLY_NETS)
+                .add(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get());
+
+        for (RegistryObject<Item> item : ItemRegistry.FIREPROOF_BUTTERFLY_NETS) {
+            appender.add(item.get());
+        }
     }
 }

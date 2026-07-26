@@ -1,14 +1,12 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -35,7 +33,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
         return "bottled_butterfly_" + ButterflyInfo.SPECIES[butterflyIndex];
     }
 
-    //  The localisation strings.
+    //  The localization strings.
     public static final String BOTTLED_BUTTERFLY_STRING = "block.butterflies.bottled_butterfly";
     public static final String BOTTLED_MOTH_STRING = "block.butterflies.bottled_moth";
 
@@ -67,13 +65,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
                                 @NotNull List<Component> components,
                                 @NotNull TooltipFlag tooltipFlag) {
         appendButterflyNameToHoverText(stack, components);
-
-        MutableComponent newComponent = Component.translatable("tooltip.butterflies.release_butterfly");
-        Style style = newComponent.getStyle().withColor(TextColor.fromLegacyFormat(ChatFormatting.GRAY))
-                .withItalic(true);
-        newComponent.setStyle(style);
-        components.add(newComponent);
-
+        components.add(helperTooltip("tooltip.butterflies.release_butterfly"));
         super.appendHoverText(stack, level, components, tooltipFlag);
     }
 
@@ -87,16 +79,16 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     }
 
     /**
-     * Overridden so we can use a single localisation string for all instances.
+     * Overridden so we can use a single localization string for all instances.
      * @param itemStack The stack to get the name for.
-     * @return The description ID, which is a reference to the localisation
+     * @return The description ID, which is a reference to the localization
      *         string.
      */
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
-        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyType.MOTH) {
             return Component.translatable(BOTTLED_MOTH_STRING);
         } else {
             return Component.translatable(BOTTLED_BUTTERFLY_STRING);
@@ -115,24 +107,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
     public InteractionResultHolder<ItemStack> use(@NotNull Level level,
                                                   @NotNull Player player,
                                                   @NotNull InteractionHand hand) {
-
-        ItemStack stack = player.getItemInHand(hand);
-        ResourceLocation entity = getButterflyEntity(stack);
-        if (entity != null) {
-
-            //  Move the target position slightly in front of the player
-            Vec3 lookAngle = player.getLookAngle();
-            BlockPos positionToSpawn = player.blockPosition().offset(
-                    (int) lookAngle.x,
-                    (int) lookAngle.y + 1,
-                    (int) lookAngle.z);
-
-            Butterfly.spawnFree(player.level(), entity, positionToSpawn);
-        }
-
-        player.setItemInHand(hand, new ItemStack(Items.GLASS_BOTTLE));
-
-        return InteractionResultHolder.success(stack);
+        return releaseButterfly(level, player, hand, Items.GLASS_BOTTLE);
     }
 
     /**
@@ -150,7 +125,7 @@ public class BottledButterflyItem extends BlockItem implements ButterflyContaine
             Player player = context.getPlayer();
             if (player != null) {
                 ItemStack stack = player.getItemInHand(context.getHand());
-                ResourceLocation entity = getButterflyEntity(stack);
+                ResourceLocation entity = getContainedButterflyEntityId(stack);
 
                 if (entity != null) {
                     BlockPos position = context.getClickedPos();
