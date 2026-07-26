@@ -1,7 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -177,7 +178,7 @@ public class ButterflyEgg extends DirectionalCreature {
                         Level level) {
         super(entityType, level);
 
-        String species = ButterflyData.getSpeciesString(this);
+        String species = ButterflyRegistry.getSpeciesString(this);
         setTexture("textures/item/butterfly_egg/" + species + "_egg.png");
         setAge(-getData().eggLifespan());
     }

@@ -1,7 +1,9 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyBookScreen;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -59,11 +61,11 @@ public class ButterflyBookItem extends Item {
         int numMoths = 0;
         for (Tag i : newPages) {
             if (i instanceof IntTag intTag) {
-                ButterflyData data = ButterflyData.getEntry(intTag.getAsInt());
+                ButterflyData data = ButterflyRegistry.getEntry(intTag.getAsInt());
                 if (data != null) {
-                    if (data.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                    if (data.type() == ButterflyType.BUTTERFLY) {
                         numButterflies += 1;
-                    } else if (data.type() == ButterflyData.ButterflyType.MOTH) {
+                    } else if (data.type() == ButterflyType.MOTH) {
                         numMoths += 1;
                     }
                 }
@@ -74,11 +76,11 @@ public class ButterflyBookItem extends Item {
         newTag.put(CompoundTagId.PAGES, newPages);
 
         int customModelData = 0;
-        if (numButterflies >= ButterflyData.getNumButterflySpecies()) {
+        if (numButterflies >= ButterflyRegistry.getNumButterflySpecies()) {
             customModelData += 1;
         }
 
-        if (numMoths >= ButterflyData.getNumMothSpecies()) {
+        if (numMoths >= ButterflyRegistry.getNumMothSpecies()) {
             customModelData += 2;
         }
 

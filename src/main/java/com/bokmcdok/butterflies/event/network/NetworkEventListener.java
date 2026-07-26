@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.event.network;
 
+import com.bokmcdok.butterflies.butterfly_data.*;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.Packet;
@@ -40,7 +40,7 @@ public class NetworkEventListener {
     private void onDatapackSync(OnDatapackSyncEvent event) {
 
         // Get the butterfly data collection.
-        Collection<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyData.getButterflyDataCollection());
+        Collection<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyRegistry.getButterflyDataCollection());
 
         // Create our packet.
         ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
@@ -75,28 +75,28 @@ public class NetworkEventListener {
             if (payload != null) {
 
                 // First reset the Butterfly Data
-                ButterflyData.reset();
+                ButterflyRegistry.reset();
 
                 List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
                         (buffer) -> new ButterflyData(buffer.readInt(),
                                                       buffer.readUtf(),
-                                                      buffer.readEnum(ButterflyData.Size.class),
-                                                      buffer.readEnum(ButterflyData.Speed.class),
-                                                      buffer.readEnum(ButterflyData.Rarity.class),
-                                                      buffer.readList((x) -> x.readEnum(ButterflyData.Habitat.class)),
+                                                      buffer.readEnum(ButterflySize.class),
+                                                      buffer.readEnum(ButterflySpeed.class),
+                                                      buffer.readEnum(ButterflyRarity.class),
+                                                      buffer.readList((x) -> x.readEnum(ButterflyHabitat.class)),
                                                       buffer.readInt(),
                                                       buffer.readInt(),
                                                       buffer.readInt(),
                                                       buffer.readInt(),
                                                       buffer.readResourceLocation(),
-                                                      buffer.readEnum(ButterflyData.ButterflyType.class),
-                                                      buffer.readEnum(ButterflyData.Diurnality.class),
-                                                      buffer.readEnum(ButterflyData.ExtraLandingBlocks.class),
-                                                      buffer.readEnum(ButterflyData.PlantEffect.class),
-                                                      buffer.readEnum(ButterflyData.EggMultiplier.class),
+                                                      buffer.readEnum(ButterflyType.class),
+                                                      buffer.readEnum(Diurnality.class),
+                                                      buffer.readEnum(ExtraLandingBlocks.class),
+                                                      buffer.readEnum(PlantEffect.class),
+                                                      buffer.readEnum(EggMultiplier.class),
                                                       buffer.readBoolean(),
                                                       buffer.readBoolean(),
-                                                      buffer.readList((x) -> x.readEnum(ButterflyData.Trait.class)),
+                                                      buffer.readList((x) -> x.readEnum(ButterflyTrait.class)),
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
@@ -106,7 +106,7 @@ public class NetworkEventListener {
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {
                     try {
-                        ButterflyData.addButterfly(butterfly);
+                        ButterflyRegistry.addButterfly(butterfly);
                     } catch (DataFormatException e) {
                         LogUtils.getLogger().error("Received invalid butterfly data.", e);
                     }

@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.9.0 (2026-07-26)
+ - Added the Fireproof Butterfly Net.
+
 ### 7.8.2 (2026-07-24)
  - Added Peacemaker Advancements.
 

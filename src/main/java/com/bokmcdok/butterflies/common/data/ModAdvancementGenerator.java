@@ -1,10 +1,12 @@
 package com.bokmcdok.butterflies.common.data;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.PeacemakerEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.SpawnEggRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.CompoundTagId;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
@@ -85,19 +87,19 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private void createCollectionAdvancements(@NotNull Consumer<AdvancementHolder> saver,
                                               AdvancementHolder root) {
 
-        int atlasMothIndex = ButterflyData.getButterflyIndex("atlas");
+        int atlasMothIndex = ButterflyRegistry.getButterflyIndex("atlas");
         SpeciesAdvancementSet butterflyAdvancements = new SpeciesAdvancementSet(this, "butterfly", "butterflies", "caterpillar", "caterpillars", 0);
         SpeciesAdvancementSet mothAdvancements = new SpeciesAdvancementSet(this, "moth", "moths", "larva", "larvae", atlasMothIndex);
 
         Advancement.Builder createButterflyScrollBuilder = task(ItemRegistry.BUTTERFLY_SCROLLS.get(0).get(), "create_butterfly_scroll");
 
-        for(int i = 0; i < ButterflyData.getTotalNumSpecies(); ++i) {
-            ButterflyData butterflyData = ButterflyData.getEntry(i);
+        for(int i = 0; i < ButterflyRegistry.getTotalNumSpecies(); ++i) {
+            ButterflyData butterflyData = ButterflyRegistry.getEntry(i);
             if(butterflyData != null) {
-                if (butterflyData.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                if (butterflyData.type() == ButterflyType.BUTTERFLY) {
                     butterflyAdvancements.addAllItemCriterion(i);
 
-                } else if(butterflyData.type() == ButterflyData.ButterflyType.MOTH) {
+                } else if(butterflyData.type() == ButterflyType.MOTH) {
                     mothAdvancements.addAllItemCriterion(i);
                 }
 
@@ -132,11 +134,12 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     private void createSpecialCatchAdvancements(@NotNull Consumer<AdvancementHolder> saver,
                                                 AdvancementHolder root) {
         for (SpecialCatchDefinition definition : SPECIAL_CATCHES) {
-            singleItemGoal(
+            dualItemGoal(
                     saver,
                     definition.iconItem(),
                     definition.localization(),
                     definition.collectItem(),
+                    definition.fireproofCollectItem(),
                     root,
                     definition.xpReward());
         }
@@ -147,7 +150,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      */
     private void createPeacemakerAdvancements(@NotNull Consumer<AdvancementHolder> saver) {
-        int peacemakerIndex = ButterflyData.getButterflyIndex("peacemaker");
+        int peacemakerIndex = ButterflyRegistry.getButterflyIndex("peacemaker");
 
         // Root - What's Project Butterfly?
         Advancement.Builder rootBuilder = Advancement.Builder.advancement()
@@ -396,6 +399,34 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
     }
 
     /**
+     * Creates a goal for obtaining one of two items.
+     * @param saver        The holder to save an advancement.
+     * @param iconItem     The item to use as an icon.
+     * @param localization The string to use for localization.
+     * @param collectItem1 The item to collect.
+     * @param collectItem2 The item to collect.
+     * @param parent       The goal's parent.
+     * @param xpReward     The experience reward for completing the goal.
+     */
+    private void dualItemGoal(@NotNull Consumer<AdvancementHolder> saver,
+                              Item iconItem,
+                              String localization,
+                              RegistryObject<Item> collectItem1,
+                              RegistryObject<Item> collectItem2,
+                              AdvancementHolder parent,
+                              int xpReward) {
+        if (collectItem1 == collectItem2) {
+            singleItemGoal(saver, iconItem, localization, collectItem1, parent, xpReward);
+            return;
+        }
+
+        Advancement.Builder builder = goal(iconItem, localization, xpReward);
+        addItemCriterion(builder, collectItem1);
+        addItemCriterion(builder, collectItem2);
+        save(saver, builder, parent, AdvancementRequirements.Strategy.OR, localization);
+    }
+
+    /**
      * Saves an advancement.
      * @param saver   The holder to save an advancement.
      * @param builder The advancement builder.
@@ -428,10 +459,11 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
 
     static {
         SPECIAL_CATCHES  = List.of(
-                new SpecialCatchDefinition("ice", "catch_ice_butterfly", 100, false),
-                new SpecialCatchDefinition("lava", "catch_lava_butterfly", 100, true),
-                new SpecialCatchDefinition("light", "catch_light_butterfly", 100, false),
-                new SpecialCatchDefinition("obsidian", "catch_obsidian_butterfly", 200, false)
+                new SpecialCatchDefinition("ice", "catch_ice_butterfly", 100, false, false),
+                new SpecialCatchDefinition("lava", "catch_lava_butterfly", 100, true, false),
+                new SpecialCatchDefinition("lava", "catch_lava_butterfly_for_real", 100, false, true),
+                new SpecialCatchDefinition("light", "catch_light_butterfly", 100, false, false),
+                new SpecialCatchDefinition("obsidian", "catch_obsidian_butterfly", 200, false, false)
         );
     }
 }
