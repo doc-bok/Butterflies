@@ -2,8 +2,8 @@ package com.bokmcdok.butterflies.common.data;
 
 
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementRequirements;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.RegistryObject;
@@ -20,7 +20,7 @@ public class SpeciesAdvancementSet {
     private final EnumMap<ActionType, ActionDefinition> actions = new EnumMap<>(ActionType.class);
 
     // Used by the scroll advancement.
-    private AdvancementHolder catchOneAdvancement;
+    private Advancement catchOneAdvancement;
 
     /**
      * Construction.
@@ -92,7 +92,7 @@ public class SpeciesAdvancementSet {
      * Accessor for Catch One Advancement.
      * @return The Advancement Holder.
      */
-    public AdvancementHolder getCatchOneAdvancement() {
+    public Advancement getCatchOneAdvancement() {
         return catchOneAdvancement;
     }
 
@@ -108,8 +108,8 @@ public class SpeciesAdvancementSet {
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement.
      */
-    public void saveAll(@NotNull Consumer<AdvancementHolder> saver,
-                        AdvancementHolder root) {
+    public void saveAll(@NotNull Consumer<Advancement> saver,
+                        Advancement root) {
 
         BuiltAction catchAction = savePair(saver, root, ActionType.CATCH);
         savePair(saver, root, ActionType.FIND_EGG);
@@ -128,16 +128,16 @@ public class SpeciesAdvancementSet {
      * @param parent The parent advancement.
      * @return Advancement holder for the single species advancement.
      */
-    private BuiltAction savePair(@NotNull Consumer<AdvancementHolder> saver,
-                                 AdvancementHolder parent,
+    private BuiltAction savePair(@NotNull Consumer<Advancement> saver,
+                                 Advancement parent,
                                  ActionType type) {
         ActionDefinition def = actions.get(type);
 
-        AdvancementHolder oneHolder = generator.save(
+        Advancement oneHolder = generator.save(
                 saver,
                 def.oneBuilder(),
                 parent,
-                AdvancementRequirements.Strategy.OR,
+                RequirementsStrategy.OR,
                 def.oneId()
         );
 
@@ -145,7 +145,7 @@ public class SpeciesAdvancementSet {
                 saver,
                 def.allBuilder(),
                 oneHolder,
-                AdvancementRequirements.Strategy.AND,
+                RequirementsStrategy.AND,
                 def.allId()
         );
 

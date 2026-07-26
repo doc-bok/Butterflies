@@ -39,7 +39,7 @@ public class ButterflyDataLoader {
                 ButterflyData butterflyData = gson.fromJson(reader, ButterflyData.class);
                 ButterflyRegistry.addButterfly(butterflyData);
             } catch (DataFormatException | IOException e) {
-                LogUtils.getLogger().error("Failed to load butterfly data.", e);
+                LogUtils.getLogger().error("[BUTTERFLY_DATA] Failed to load butterfly data.", e);
             }
         }
     }
@@ -186,7 +186,7 @@ public class ButterflyDataLoader {
             JsonElement e = parent.get(key);
             if (e == null || e.isJsonNull()) {
                 String id = parent.has("entityId") ? parent.get("entityId").getAsString() : "unknown";
-                throw new JsonParseException("Missing required field [" + key + "] for [" + id + "]");
+                throw new JsonParseException("[BUTTERFLY_DATA] Missing required field [" + key + "] for [" + id + "]");
             }
             return e;
         }
@@ -220,7 +220,7 @@ public class ButterflyDataLoader {
                 } catch (IllegalArgumentException e) {
 
                     // The value specified is invalid, so make sure it's written to the log.
-                    LogUtils.getLogger().error("Invalid [{}]([{}]) specified on [{}]",
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA] Invalid [{}]([{}]) specified on [{}]",
                             key,
                             jsonData.get(i).getAsString(),
                             object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
@@ -247,7 +247,7 @@ public class ButterflyDataLoader {
             // Check the key exists in the JSON object.
             JsonElement element = object.get(key);
             if (element == null || element.isJsonNull()) {
-                LogUtils.getLogger().error("Element [{}] missing from [{}]",
+                LogUtils.getLogger().error("[BUTTERFLY_DATA] Element [{}] missing from [{}]",
                         key,
                         object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
 
@@ -268,7 +268,7 @@ public class ButterflyDataLoader {
             } catch (IllegalArgumentException e) {
 
                 // The value specified is invalid, so make sure it's written to the log.
-                LogUtils.getLogger().error("Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
+                LogUtils.getLogger().error("[BUTTERFLY_DATA] Invalid type specified on [{}] for [{}] of type [{}]:[{}]",
                         object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown",
                         key,
                         enumeration,

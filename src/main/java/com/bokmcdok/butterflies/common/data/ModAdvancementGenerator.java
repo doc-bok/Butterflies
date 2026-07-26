@@ -63,7 +63,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @return The new root advancement.
      */
-    private AdvancementHolder createRoot(@NotNull Consumer<AdvancementHolder> saver) {
+    private Advancement createRoot(@NotNull Consumer<Advancement> saver) {
         return Advancement.Builder.advancement()
                 .display(new DisplayInfo(new ItemStack(ItemRegistry.EMPTY_BUTTERFLY_NET.get()),
                         createTitleString("root"),
@@ -131,8 +131,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param saver A consumer used to write advancements to a file.
      * @param root The root advancement in the tree.
      */
-    private void createSpecialCatchAdvancements(@NotNull Consumer<AdvancementHolder> saver,
-                                                AdvancementHolder root) {
+    private void createSpecialCatchAdvancements(@NotNull Consumer<Advancement> saver,
+                                                Advancement root) {
         for (SpecialCatchDefinition definition : SPECIAL_CATCHES) {
             dualItemGoal(
                     saver,
@@ -149,7 +149,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * Creates all the Peacemaker Advancements.
      * @param saver A consumer used to write advancements to a file.
      */
-    private void createPeacemakerAdvancements(@NotNull Consumer<AdvancementHolder> saver) {
+    private void createPeacemakerAdvancements(@NotNull Consumer<Advancement> saver) {
         int peacemakerIndex = ButterflyRegistry.getButterflyIndex("peacemaker");
 
         // Root - What's Project Butterfly?
@@ -163,16 +163,16 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
                         false,  // Announce Chat
                         false)); // Hidden
         addKillPeacemakerEntityCriterion(rootBuilder);
-        AdvancementHolder root = rootBuilder
-                .requirements(AdvancementRequirements.Strategy.OR)
+        Advancement root = rootBuilder
+                .requirements(RequirementsStrategy.OR)
                 .save(saver, peacemakerLocation("root"));
 
         // Peace Catcher.
         Advancement.Builder peaceCatcherBuilder = task(ItemRegistry.BUTTERFLY_NETS.get(peacemakerIndex).get(), "peace_catcher");
         addItemCriterion(peaceCatcherBuilder, ItemRegistry.BUTTERFLY_NETS.get(peacemakerIndex));
-        AdvancementHolder peaceCatcher = peaceCatcherBuilder
+        Advancement peaceCatcher = peaceCatcherBuilder
                 .parent(root)
-                .requirements(AdvancementRequirements.Strategy.OR)
+                .requirements(RequirementsStrategy.OR)
                 .save(saver, peacemakerLocation("peace_catcher"));
 
         // Milk and Honey.
@@ -180,7 +180,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         addItemCriterion(milkAndHoneyBuilder, ItemRegistry.PEACEMAKER_HONEY_BOTTLE);
         milkAndHoneyBuilder
                 .parent(root)
-                .requirements(AdvancementRequirements.Strategy.OR)
+                .requirements(RequirementsStrategy.OR)
                 .save(saver, peacemakerLocation("milk_and_honey"));
 
         // You Forgot to Tell Him About the Cow.
@@ -188,7 +188,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         addKillPeacemakerEntityCriterion(cowBuilder);
         cowBuilder
                 .parent(root)
-                .requirements(AdvancementRequirements.Strategy.AND)
+                .requirements(RequirementsStrategy.AND)
                 .save(saver, peacemakerLocation("forgot_to_tell"));
 
         // Oh. Project Butterfly.
@@ -196,7 +196,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         addItemCriterion(projectButterflyBuilder, ItemRegistry.BUTTERFLY_SCROLLS.get(peacemakerIndex));
         projectButterflyBuilder
                 .parent(peaceCatcher)
-                .requirements(AdvancementRequirements.Strategy.OR)
+                .requirements(RequirementsStrategy.OR)
                 .save(saver, peacemakerLocation("project_butterfly"));
 
         // Eek Stack Ik Ik.
@@ -204,7 +204,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         addItemCriterion(eekStackBuilder, ItemRegistry.BOTTLED_BUTTERFLIES.get(peacemakerIndex));
         eekStackBuilder
                 .parent(peaceCatcher)
-                .requirements(AdvancementRequirements.Strategy.OR)
+                .requirements(RequirementsStrategy.OR)
                 .save(saver, peacemakerLocation("eek_stack"));
     }
 
@@ -356,8 +356,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation butterflyLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly/" + localization);
+    private String butterflyLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":butterfly/" + localization;
     }
 
     /**
@@ -365,8 +365,8 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param localization The name of the advancement.
      * @return A new resource location.
      */
-    private ResourceLocation peacemakerLocation(String localization) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker/" + localization);
+    private String peacemakerLocation(String localization) {
+        return ButterfliesMod.MOD_ID + ":peacemaker/" + localization;
     }
 
     /**
@@ -408,12 +408,12 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param parent       The goal's parent.
      * @param xpReward     The experience reward for completing the goal.
      */
-    private void dualItemGoal(@NotNull Consumer<AdvancementHolder> saver,
+    private void dualItemGoal(@NotNull Consumer<Advancement> saver,
                               Item iconItem,
                               String localization,
                               RegistryObject<Item> collectItem1,
                               RegistryObject<Item> collectItem2,
-                              AdvancementHolder parent,
+                              Advancement parent,
                               int xpReward) {
         if (collectItem1 == collectItem2) {
             singleItemGoal(saver, iconItem, localization, collectItem1, parent, xpReward);
@@ -423,7 +423,7 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
         Advancement.Builder builder = goal(iconItem, localization, xpReward);
         addItemCriterion(builder, collectItem1);
         addItemCriterion(builder, collectItem2);
-        save(saver, builder, parent, AdvancementRequirements.Strategy.OR, localization);
+        save(saver, builder, parent, RequirementsStrategy.OR, localization);
     }
 
     /**
@@ -449,10 +449,10 @@ public class ModAdvancementGenerator implements ForgeAdvancementProvider.Advance
      * @param name The name of the advancement.
      * @return The completed advancement.
      */
-    public AdvancementHolder save(@NotNull Consumer<AdvancementHolder> saver,
+    public Advancement save(@NotNull Consumer<Advancement> saver,
                                   Advancement.Builder builder,
-                                  AdvancementHolder parent,
-                                  AdvancementRequirements.Strategy strategy,
+                                  Advancement parent,
+                                  RequirementsStrategy strategy,
                                   String name) {
         return builder.parent(parent).requirements(strategy).save(saver, butterflyLocation(name));
     }

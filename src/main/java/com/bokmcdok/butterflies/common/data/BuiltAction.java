@@ -1,6 +1,6 @@
 package com.bokmcdok.butterflies.common.data;
 
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 
 /**
  * Holds an already built action.
@@ -8,5 +8,5 @@ import net.minecraft.advancements.AdvancementHolder;
  * @param oneHolder The single item advancement.
  */
 public record BuiltAction(ActionDefinition definition,
-                          AdvancementHolder oneHolder) {
+                          Advancement oneHolder) {
 }
