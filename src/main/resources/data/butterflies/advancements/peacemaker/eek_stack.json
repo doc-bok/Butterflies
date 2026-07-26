@@ -1,12 +1,12 @@
 {
-  "parent": "butterflies:butterfly/root",
+  "parent": "butterflies:peacemaker/peace_catcher",
   "criteria": {
-    "silk": {
+    "bottled_butterfly_peacemaker": {
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:silk"
+              "butterflies:bottled_butterfly_peacemaker"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.butterfly.farm_silk.description"
+      "translate": "advancements.butterfly.eek_stack.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:silk"
+      "item": "butterflies:bottled_butterfly_peacemaker"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.butterfly.farm_silk.title"
+      "translate": "advancements.butterfly.eek_stack.title"
     }
   },
   "requirements": [
     [
-      "silk"
+      "bottled_butterfly_peacemaker"
     ]
   ],
   "sends_telemetry_event": true

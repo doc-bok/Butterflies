@@ -98,7 +98,7 @@ public class ItemRegistry {
             RegistryObject<Item> butterflyNet = ITEMS.register(registryId, () -> new ButterflyNetItem(STACKS_TO_ONE, butterflyIndex));
             butterflyNets.add(butterflyNet);
 
-            RegistryObject<Item> fireproofButterflyNet = ITEMS.register("fireproof_" + registryId, () -> new ButterflyNetItem(butterflyIndex));
+            RegistryObject<Item> fireproofButterflyNet = ITEMS.register("fireproof_" + registryId, () -> new ButterflyNetItem(STACKS_TO_ONE, butterflyIndex));
             fireproofButterflyNets.add(fireproofButterflyNet);
 
             if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyTrait.PEACEMAKER)) {

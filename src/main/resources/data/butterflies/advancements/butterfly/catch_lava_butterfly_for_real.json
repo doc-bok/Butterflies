@@ -1,12 +1,12 @@
 {
   "parent": "butterflies:butterfly/root",
   "criteria": {
-    "butterfly_zhuangzi": {
+    "fireproof_butterfly_net_lava": {
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:butterfly_zhuangzi"
+              "butterflies:fireproof_butterfly_net_lava"
             ]
           }
         ]
@@ -17,25 +17,25 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.butterfly.find_zhuangzi.description"
+      "translate": "advancements.butterfly.catch_lava_butterfly_for_real.description"
     },
     "frame": "goal",
     "hidden": true,
     "icon": {
-      "item": "butterflies:butterfly_zhuangzi"
+      "item": "butterflies:fireproof_butterfly_net_admiral"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.butterfly.find_zhuangzi.title"
+      "translate": "advancements.butterfly.catch_lava_butterfly_for_real.title"
     }
   },
   "requirements": [
     [
-      "butterfly_zhuangzi"
+      "fireproof_butterfly_net_lava"
     ]
   ],
   "rewards": {
-    "experience": 150
+    "experience": 100
   },
   "sends_telemetry_event": true
 }

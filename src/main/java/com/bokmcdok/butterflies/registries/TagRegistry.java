@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Holds all the tags used by the mod.
@@ -20,7 +21,7 @@ public class TagRegistry {
         BUTTERFLY_BANNER_PATTERN = TagKey.create(Registry.BANNER_PATTERN_REGISTRY,
                 new ResourceLocation(ButterfliesMod.MOD_ID, "banner_pattern_butterfly"));
 
-        FIREPROOF_BUTTERFLY_NETS = TagKey.create(Registries.ITEM,
+        FIREPROOF_BUTTERFLY_NETS = TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(),
                         new ResourceLocation(ButterfliesMod.MOD_ID, "fireproof_butterfly_nets"));
     }
 

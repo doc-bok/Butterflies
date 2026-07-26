@@ -1,12 +1,12 @@
 {
-  "parent": "butterflies:butterfly/root",
+  "parent": "butterflies:peacemaker/root",
   "criteria": {
-    "silk": {
+    "peacemaker_honey_bottle": {
       "conditions": {
         "items": [
           {
             "items": [
-              "butterflies:silk"
+              "butterflies:peacemaker_honey_bottle"
             ]
           }
         ]
@@ -17,21 +17,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.butterfly.farm_silk.description"
+      "translate": "advancements.butterfly.milk_and_honey.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "butterflies:silk"
+      "item": "butterflies:peacemaker_honey_bottle"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.butterfly.farm_silk.title"
+      "translate": "advancements.butterfly.milk_and_honey.title"
     }
   },
   "requirements": [
     [
-      "silk"
+      "peacemaker_honey_bottle"
     ]
   ],
   "sends_telemetry_event": true

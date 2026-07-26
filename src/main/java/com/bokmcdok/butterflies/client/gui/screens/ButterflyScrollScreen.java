@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.components.Button;

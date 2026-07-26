@@ -136,7 +136,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
             return false;
         }
 
-        if (!player.level().isClientSide) {
+        if (!player.level.isClientSide) {
             if (!(target instanceof Butterfly && capturedNet.is(ItemRegistry.BURNT_BUTTERFLY_NET.get()))) {
                 target.discard();
             }
@@ -165,7 +165,7 @@ public class ButterflyNetItem extends Item implements ButterflyContainerItem {
                 ItemRegistry.FIREPROOF_BUTTERFLY_NET.get() :
                 ItemRegistry.EMPTY_BUTTERFLY_NET.get());
     }
-    
+
     /**
      * Gets the Butterfly Net that contains the specified target.
      * @param target The entity to try and capture.

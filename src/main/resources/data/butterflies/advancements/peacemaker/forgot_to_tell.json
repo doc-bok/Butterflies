@@ -1,0 +1,179 @@
+{
+  "parent": "butterflies:peacemaker/root",
+  "criteria": {
+    "peacemaker_butterfly": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_butterfly"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_cow": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_cow"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_evoker": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_evoker"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_illusioner": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_illusioner"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_pillager": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_pillager"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_villager": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_villager"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_vindicator": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_vindicator"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_wandering_trader": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_wandering_trader"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "peacemaker_witch": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "butterflies:peacemaker_witch"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "translate": "advancements.butterfly.forgot_to_tell.description"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "butterflies:spawn_egg_peacemaker_cow"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.butterfly.forgot_to_tell.title"
+    }
+  },
+  "requirements": [
+    [
+      "peacemaker_butterfly"
+    ],
+    [
+      "peacemaker_cow"
+    ],
+    [
+      "peacemaker_evoker"
+    ],
+    [
+      "peacemaker_illusioner"
+    ],
+    [
+      "peacemaker_pillager"
+    ],
+    [
+      "peacemaker_villager"
+    ],
+    [
+      "peacemaker_vindicator"
+    ],
+    [
+      "peacemaker_wandering_trader"
+    ],
+    [
+      "peacemaker_witch"
+    ]
+  ],
+  "rewards": {
+    "experience": 300
+  },
+  "sends_telemetry_event": true
+}

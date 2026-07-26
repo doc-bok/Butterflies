@@ -91,7 +91,7 @@ public interface ButterflyContainerItem {
     default BlockPos getReleasePosition(Player player) {
         Vec3 look = player.getLookAngle().normalize();
         Vec3 pos = player.position().add(look.scale(1.5D)).add(0.0D, 1.0D, 0.0D);
-        return BlockPos.containing(pos);
+        return new BlockPos(pos);
     }
 
     /**

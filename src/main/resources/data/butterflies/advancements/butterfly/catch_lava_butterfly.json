@@ -1,6 +1,7 @@
 {
+  "parent": "butterflies:butterfly/root",
   "criteria": {
-    "lava": {
+    "butterfly_net_burnt": {
       "conditions": {
         "items": [
           {
@@ -16,7 +17,7 @@
   "display": {
     "announce_to_chat": false,
     "description": {
-      "translate": "advancements.butterfly.catch_lava_moth.description"
+      "translate": "advancements.butterfly.catch_lava_butterfly.description"
     },
     "frame": "goal",
     "hidden": true,
@@ -25,16 +26,16 @@
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.butterfly.catch_lava_moth.title"
+      "translate": "advancements.butterfly.catch_lava_butterfly.title"
     }
   },
-  "parent": "butterflies:butterfly/catch_butterfly",
   "requirements": [
     [
-      "lava"
+      "butterfly_net_burnt"
     ]
   ],
   "rewards": {
     "experience": 100
-  }
+  },
+  "sends_telemetry_event": true
 }

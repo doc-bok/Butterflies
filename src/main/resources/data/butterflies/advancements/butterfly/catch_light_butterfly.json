@@ -1,11 +1,24 @@
 {
+  "parent": "butterflies:butterfly/root",
   "criteria": {
-    "light": {
+    "butterfly_net_light": {
       "conditions": {
         "items": [
           {
             "items": [
               "butterflies:butterfly_net_light"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "fireproof_butterfly_net_light": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:fireproof_butterfly_net_light"
             ]
           }
         ]
@@ -28,13 +41,14 @@
       "translate": "advancements.butterfly.catch_light_butterfly.title"
     }
   },
-  "parent": "butterflies:butterfly/catch_butterfly",
   "requirements": [
     [
-      "light"
+      "butterfly_net_light",
+      "fireproof_butterfly_net_light"
     ]
   ],
   "rewards": {
     "experience": 100
-  }
+  },
+  "sends_telemetry_event": true
 }
