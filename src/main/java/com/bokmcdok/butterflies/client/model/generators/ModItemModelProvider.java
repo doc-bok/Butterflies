@@ -41,6 +41,7 @@ public class ModItemModelProvider extends ItemModelProvider {
             registerBottledItems(i);
             registerButterflyEgg(i);
             registerFullButterflyNet(i);
+            registerFireproofButterflyNet(i);
             registerButterflyScroll(i);
             registerButterflySpawnEggs(i);
             registerCaterpillar(i);
@@ -49,6 +50,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         // Special Butterfly Nets.
         registerSpecialButterflyNet(ItemRegistry.EMPTY_BUTTERFLY_NET);
         registerSpecialButterflyNet(ItemRegistry.BURNT_BUTTERFLY_NET);
+        registerSpecialButterflyNet(ItemRegistry.FIREPROOF_BUTTERFLY_NET);
 
         // General Items.
         basicItem(ItemRegistry.BUTTERFLY_BOOK.get());
@@ -162,6 +164,15 @@ public class ModItemModelProvider extends ItemModelProvider {
     private void registerFullButterflyNet(int index) {
         String path = getPath(ItemRegistry.BUTTERFLY_NETS.get(index));
         singleTexture(path, HANDHELD_ROD, "layer0", ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "item/butterfly_net/butterfly_net_full"));
+    }
+
+    /**
+     * Registers a fireproof butterfly net.
+     * @param index The butterfly index.
+     */
+    private void registerFireproofButterflyNet(int index) {
+        String path = getPath(ItemRegistry.FIREPROOF_BUTTERFLY_NETS.get(index));
+        singleTexture(path, HANDHELD_ROD, "layer0", new ResourceLocation(ButterfliesMod.MOD_ID, "item/butterfly_net/fireproof_butterfly_net_full"));
     }
 
     /**

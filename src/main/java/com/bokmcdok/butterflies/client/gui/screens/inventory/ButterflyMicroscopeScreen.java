@@ -1,7 +1,9 @@
 package com.bokmcdok.butterflies.client.gui.screens.inventory;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.client.gui.screens.ButterflyTextFormatter;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.inventory.ButterflyMicroscopeMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -83,10 +85,10 @@ public class ButterflyMicroscopeScreen extends AbstractContainerScreen<Butterfly
         ResourceLocation scrollTexture = ButterflyTextures.SCROLL;
         int butterflyIndex = this.menu.getButterflyScrollIndex();
         if (butterflyIndex >= 0) {
-            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
             if (data != null) {
                 if (this.cachedButterflyIndex != butterflyIndex) {
-                    FormattedText formattedText = ButterflyData.getFormattedButterflyData(butterflyIndex);
+                    FormattedText formattedText = ButterflyTextFormatter.getFormattedButterflyData(butterflyIndex);
                     if (formattedText != null) {
                         this.cachedPageComponents = this.font.split(formattedText, 114);
                     }

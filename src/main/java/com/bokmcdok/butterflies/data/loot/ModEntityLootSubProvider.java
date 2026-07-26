@@ -1,10 +1,11 @@
 package com.bokmcdok.butterflies.data.loot;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -52,7 +53,7 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
     @Override
     public void generate() {
         SILK_SPECIES.stream()
-                .map(ButterflyData::getButterflyIndex)
+                .map(ButterflyRegistry::getButterflyIndex)
                 .forEach(this::addChrysalisSilkLoot);
 
         add(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), createButterflyGolemLoot());

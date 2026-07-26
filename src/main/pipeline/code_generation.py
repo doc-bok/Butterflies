@@ -57,7 +57,7 @@ class CodeGenerator:
         with open(self.config.CODE_GENERATION, "w", encoding="utf8") as out:
             # Write the java package and class header
             out.write(
-                "package com.bokmcdok.butterflies.world;\n\n"
+                "package com.bokmcdok.butterflies.butterfly_data;\n\n"
                 "/**\n"
                 " * Generated code - do not modify.\n"
                 " * Provides data that needs to be accessed before butterfly data files are\n"
@@ -79,7 +79,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "TRAITS",
-                "ButterflyData.Trait",
+                "ButterflyTrait",
                 all_species,
                 lambda s: species_data[s].get("traits") if species_data[s] else None,
                 header_comment="A list of traits each butterfly has.")

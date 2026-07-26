@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.ai;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyLifespan;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -73,7 +74,7 @@ public class ButterflyMudPuddlingGoal extends MoveToBlockGoal {
 
             // Don't allow butterflies to have an age outside its lifespan
             ButterflyData data = this.butterfly.getData();
-            if (data.getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
+            if (data.getOverallLifeSpan() != ButterflyLifespan.IMMORTAL) {
                 int newAge = Math.max(this.butterfly.getData().butterflyLifespan(), this.butterfly.getAge() - 2);
                 this.butterfly.setAge(newAge);
             }

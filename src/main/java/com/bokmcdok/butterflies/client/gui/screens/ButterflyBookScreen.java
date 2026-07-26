@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.client.gui.screens;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.client.texture.ButterflyTextures;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -194,7 +195,7 @@ public class ButterflyBookScreen extends Screen {
         this.cachedPage = this.currentPage;
         if (this.cachedPage % 2 == 0) {
             int butterflyIndex = bookAccess.getButterflyIndex(cachedPage);
-            ButterflyData data = ButterflyData.getEntry(butterflyIndex);
+            ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
             if (data != null) {
                 guiGraphics.blit(data.getScrollTexture(), i, 2, 0, 0, 192, 192);
             }
@@ -394,7 +395,7 @@ public class ButterflyBookScreen extends Screen {
         public FormattedText getPageRaw(int page) {
             if (pages != null) {
                 int butterflyIndex = pages.get((page - 1) / 2);
-                return ButterflyData.getFormattedButterflyData(butterflyIndex);
+                return ButterflyTextFormatter.getFormattedButterflyData(butterflyIndex);
             }
 
             return null;

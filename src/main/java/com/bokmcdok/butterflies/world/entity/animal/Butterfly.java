@@ -1,9 +1,8 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.*;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.ai.*;
@@ -119,8 +118,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     public static AttributeSupplier.Builder createAttributes(int butterflyIndex) {
         double maxHealth = 3.0d;
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
-        if (data != null && data.hasTrait(ButterflyData.Trait.TOUGH)) {
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
+        if (data != null && data.hasTrait(ButterflyTrait.TOUGH)) {
             maxHealth = 30.0d;
         }
 
@@ -216,10 +215,10 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.moveControl = new FlyingMoveControl(this, 20, true);
         this.setNoGravity(true);
 
-        String species = ButterflyData.getSpeciesString(this);
+        String species = ButterflyRegistry.getSpeciesString(this);
 
         // Support for Christmas Butterfly texture change.
-        if (getData().hasTrait(ButterflyData.Trait.CHRISTMASSY)) {
+        if (getData().hasTrait(ButterflyTrait.CHRISTMASSY)) {
             Calendar calendar = Calendar.getInstance();
             if (calendar.get(Calendar.MONTH) + 1 == 12 &&
                     calendar.get(Calendar.DAY_OF_MONTH) >= 24 &&
@@ -366,7 +365,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return TRUE if this is actually a moth.
      */
     public boolean getIsMoth() {
-        return getData().type() == ButterflyData.ButterflyType.MOTH;
+        return getData().type() == ButterflyType.MOTH;
     }
 
     /**
@@ -457,7 +456,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public @NotNull InteractionResult mobInteract(@NotNull Player player,
                                                   @NotNull InteractionHand interactionHand) {
         ItemStack itemstack = player.getItemInHand(interactionHand);
-        if (getData().eggMultiplier() != ButterflyData.EggMultiplier.NONE) {
+        if (getData().eggMultiplier() != EggMultiplier.NONE) {
             if (this.isFood(itemstack)) {
 
                 Level level = level();
@@ -483,7 +482,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public void setMimicTextureIndex(int i) {
 
         if (i >= 0) {
-            ButterflyData data = ButterflyData.getEntry(i);
+            ButterflyData data = ButterflyRegistry.getEntry(i);
             if (data != null) {
 
                 String species = data.entityId();
@@ -591,16 +590,16 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         super.registerGoals();
 
         // Some butterflies are fearless.
-        if (!getData().hasTrait(ButterflyData.Trait.FEARLESS)) {
+        if (!getData().hasTrait(ButterflyTrait.FEARLESS)) {
 
             // Some butterflies are not scared of cats.
             Predicate<LivingEntity> predicateOnAvoidEntity = Butterfly::isScaredOfEverything;
-            if (getData().hasTrait(ButterflyData.Trait.CATFRIEND)) {
+            if (getData().hasTrait(ButterflyTrait.CATFRIEND)) {
                 predicateOnAvoidEntity = Butterfly::isNotScaredOfCats;
             }
 
             // Some butterflies can mimic others.
-            if (getData().hasTrait(ButterflyData.Trait.MIMICRY)) {
+            if (getData().hasTrait(ButterflyTrait.MIMICRY)) {
                 this.goalSelector.addGoal(1, new ButterflyMimicGoal(this,
                         LivingEntity.class,
                         10.0F,
@@ -640,8 +639,8 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
 
         // Heath butterflies and moths are drawn to light.
-        if (getData().type() == ButterflyData.ButterflyType.MOTH ||
-                getData().hasTrait(ButterflyData.Trait.MOTHWANDERER)) {
+        if (getData().type() == ButterflyType.MOTH ||
+                getData().hasTrait(ButterflyTrait.MOTHWANDERER)) {
             this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
         } else {
             this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
@@ -785,7 +784,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         // If the butterfly gets too old it will die. This won't happen if it
         // has been set to persistent (e.g. by using a name tag).
         if (ButterfliesConfig.Common.enableLifespan.get()) {
-            if (getData().getOverallLifeSpan() != ButterflyData.Lifespan.IMMORTAL) {
+            if (getData().getOverallLifeSpan() != ButterflyLifespan.IMMORTAL) {
                 if (!this.isPersistenceRequired() &&
                         this.getAge() >= 0 &&
                         this.random.nextInt(0, 15) == 0) {
@@ -793,7 +792,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                     // Check for aged variants
                     int agedIndex = getData().getAgedButterflyIndex();
                     if (agedIndex != getData().butterflyIndex()) {
-                        ButterflyData data = ButterflyData.getEntry(agedIndex);
+                        ButterflyData data = ButterflyRegistry.getEntry(agedIndex);
                         if (data != null) {
                             ResourceLocation newLocation = data.getButterflyEntity();
                             Butterfly.spawnFree(this.level(), newLocation, this.blockPosition());
@@ -877,7 +876,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     protected SoundEvent getAmbientSound() {
         if (getIsActive() && getData().butterflySounds()) {
-            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyRegistry.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();
@@ -907,7 +906,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     public ButterflyData getData() {
         if (this.data == null) {
-            this.data = ButterflyData.getButterflyDataForEntity(this);
+            this.data = ButterflyRegistry.getButterflyDataForEntity(this);
         }
 
         return this.data;
@@ -942,7 +941,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      * @return True if this is a peacemaker butterfly.
      */
     private static boolean isPeacemaker(ResourceLocation location) {
-        return ButterflyData.getEntry(location).hasTrait(ButterflyData.Trait.PEACEMAKER);
+        return ButterflyRegistry.getEntry(location).hasTrait(ButterflyTrait.PEACEMAKER);
     }
 
     /**
@@ -991,7 +990,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                 MobSpawnType.NATURAL,
                 null);
 
-        if (persistent || butterfly.getData().getOverallLifeSpan() == ButterflyData.Lifespan.IMMORTAL) {
+        if (persistent || butterfly.getData().getOverallLifeSpan() == ButterflyLifespan.IMMORTAL) {
             butterfly.setInvulnerable(true);
             butterfly.setPersistenceRequired();
         }

@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.network.protocol.common.custom;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -24,18 +25,17 @@ public class ClientPayloadHandler {
 
         // Do something with the data, on the main thread
         context.enqueueWork(() -> {
-            
             // First reset the Butterfly Data
-            ButterflyData.reset();
+            ButterflyRegistry.reset();
 
             // Extract the data from the payload.
             Collection<ButterflyData> butterflyData = data.data();
 
             // Register the new data.
-            ButterflyData.reset(); // Forces client to use server data.
+            ButterflyRegistry.reset(); // Forces client to use server data.
             for (ButterflyData butterfly : butterflyData) {
                 try {
-                    ButterflyData.addButterfly(butterfly);
+                    ButterflyRegistry.addButterfly(butterfly);
                 } catch (DataFormatException e) {
                     LogUtils.getLogger().error("Received invalid butterfly data.", e);
                 }
