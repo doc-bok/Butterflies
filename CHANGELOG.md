@@ -1,7 +1,10 @@
 ## Changelog
 
+### 7.9.3 (2026-07-26)
+ - Fixed incorrect Lifespan data being sent over network.
+
 ### 7.9.2 (2026-07-26)
-- Fixed Obsidian Butterfly having invalid speed.
+ - Fixed Obsidian Butterfly having invalid speed.
 
 ### 7.9.1 (2026-07-26)
  - Fixed code generation.
