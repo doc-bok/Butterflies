@@ -78,7 +78,7 @@ class CodeGenerator:
             self._write_enum_array(
                 out,
                 "TRAITS",
-                "ButterflyData.Trait",
+                "Trait",
                 all_species,
                 lambda s: species_data[s].get("traits") if species_data[s] else None,
                 header_comment="A list of traits each butterfly has."
