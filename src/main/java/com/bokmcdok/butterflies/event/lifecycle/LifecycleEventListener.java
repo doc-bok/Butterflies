@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.event.lifecycle;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyFeederScreen;
 import com.bokmcdok.butterflies.client.gui.screens.inventory.ButterflyMicroscopeScreen;
 import com.bokmcdok.butterflies.registries.DecoratedPotPatternsRegistry;

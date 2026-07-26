@@ -43,6 +43,8 @@ public class ModEventListener {
         event.accept(ItemRegistry.EMPTY_BUTTERFLY_NET.get());
         ItemRegistry.BUTTERFLY_NETS.forEach((x) -> event.accept(x.get()));
         event.accept(ItemRegistry.BURNT_BUTTERFLY_NET.get());
+        event.accept(ItemRegistry.FIREPROOF_BUTTERFLY_NET.get());
+        ItemRegistry.FIREPROOF_BUTTERFLY_NETS.forEach((x) -> event.accept(x.get()));
 
         // Eggs
         ItemRegistry.BUTTERFLY_EGGS.forEach((x) -> event.accept(x.get()));

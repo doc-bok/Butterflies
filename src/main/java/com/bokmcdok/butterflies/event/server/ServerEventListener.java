@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.event.server;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyDataLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -38,6 +39,6 @@ public class ServerEventListener {
             resourceManager = server.getResourceManager();
         }
 
-        ButterflyData.load(resourceManager);
+        ButterflyDataLoader.load(resourceManager);
     }
 }

@@ -1,8 +1,9 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import net.minecraft.core.BlockPos;
@@ -241,7 +242,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
                           Level level) {
         super(entityType, level);
 
-        setTexture("textures/entity/caterpillar/caterpillar_" + ButterflyData.getSpeciesString(this) + ".png");
+        setTexture("textures/entity/caterpillar/caterpillar_" + ButterflyRegistry.getSpeciesString(this) + ".png");
         setAge(-getData().caterpillarLifespan());
     }
 
@@ -399,7 +400,7 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     @Override
     protected SoundEvent getAmbientSound() {
         if (getData().caterpillarSounds()) {
-            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyData.getSpeciesString(this)));
+            return SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, ButterflyRegistry.getSpeciesString(this)));
         }
 
         return super.getAmbientSound();

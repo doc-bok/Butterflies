@@ -1,9 +1,11 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.client.gui.screens.ButterflyBookScreen;
 import com.bokmcdok.butterflies.registries.DataComponentRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
@@ -54,11 +56,11 @@ public class ButterflyBookItem extends Item {
         int numButterflies = 0;
         int numMoths = 0;
         for (int i : newPages) {
-            ButterflyData data = ButterflyData.getEntry(i);
+            ButterflyData data = ButterflyRegistry.getEntry(i);
             if (data != null) {
-                if (data.type() == ButterflyData.ButterflyType.BUTTERFLY) {
+                if (data.type() == ButterflyType.BUTTERFLY) {
                     numButterflies += 1;
-                } else if (data.type() == ButterflyData.ButterflyType.MOTH) {
+                } else if (data.type() == ButterflyType.MOTH) {
                     numMoths += 1;
                 }
             }
@@ -66,13 +68,13 @@ public class ButterflyBookItem extends Item {
 
         newBook.set(DataComponentRegistry.BUTTERFLY_BOOK_PAGES, newPages);
 
-        if (numButterflies >= ButterflyData.getNumButterflySpecies()) {
+        if (numButterflies >= ButterflyRegistry.getNumButterflySpecies()) {
             CompoundTag filledButterfly = new CompoundTag();
             filledButterfly.putBoolean("filled_butterfly", true);
             newBook.set(DataComponents.CUSTOM_DATA, CustomData.of(filledButterfly));
         }
 
-        if (numMoths >= ButterflyData.getNumMothSpecies()) {
+        if (numMoths >= ButterflyRegistry.getNumMothSpecies()) {
             CompoundTag filledMoth = new CompoundTag();
             filledMoth.putBoolean("filled_moth", true);
             newBook.set(DataComponents.CUSTOM_DATA, CustomData.of(filledMoth));

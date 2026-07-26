@@ -1,8 +1,10 @@
 package com.bokmcdok.butterflies.data.tags;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
@@ -35,8 +37,8 @@ public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(@NotNull HolderLookup.Provider lookupProvider) {
         IntrinsicTagAppender<EntityType<?>> frogFoodTag = tag(EntityTypeTags.FROG_FOOD).replace(false);
-        for(int i = 0; i < ButterflyData.getTotalNumSpecies(); ++i) {
-            if(!Objects.requireNonNull(ButterflyData.getEntry(i)).hasTrait(ButterflyData.Trait.INEDIBLE)) {
+        for(int i = 0; i < ButterflyRegistry.getTotalNumSpecies(); ++i) {
+            if(!Objects.requireNonNull(ButterflyRegistry.getEntry(i)).hasTrait(ButterflyTrait.INEDIBLE)) {
                 frogFoodTag.add(ButterflyEntityTypeRegistry.BUTTERFLIES.get(i).get());
             }
         }

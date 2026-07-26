@@ -1,7 +1,9 @@
 package com.bokmcdok.butterflies.world.item;
 
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -71,7 +73,7 @@ public class BottledCaterpillarItem extends BlockItem {
                                 @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> tooltipComponents,
                                 @NotNull TooltipFlag tooltipFlag) {
-        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        ButterflyData data = ButterflyRegistry.getEntry(this.butterflyIndex);
         if (data != null) {
             ResourceLocation caterpillarEntity = data.getCaterpillarEntity();
             String translatable = "entity." + caterpillarEntity.toString().replace(':', '.');
@@ -101,8 +103,8 @@ public class BottledCaterpillarItem extends BlockItem {
     @NotNull
     @Override
     public Component getName(@NotNull ItemStack itemStack) {
-        ButterflyData data = ButterflyData.getEntry(butterflyIndex);
-        if (data != null && data.type() == ButterflyData.ButterflyType.MOTH) {
+        ButterflyData data = ButterflyRegistry.getEntry(butterflyIndex);
+        if (data != null && data.type() == ButterflyType.MOTH) {
             return Component.translatable(BOTTLED_LARVA_STRING);
         } else {
             return Component.translatable(BOTTLED_CATERPILLAR_STRING);
@@ -124,7 +126,7 @@ public class BottledCaterpillarItem extends BlockItem {
             Level level = context.getLevel();
             if (level instanceof ServerLevel serverLevel) {
 
-                ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+                ButterflyData data = ButterflyRegistry.getEntry(this.butterflyIndex);
                 if (data != null) {
                     ResourceLocation entity = data.getCaterpillarEntity();
 
@@ -155,7 +157,7 @@ public class BottledCaterpillarItem extends BlockItem {
                                  @NotNull Player player,
                                  @NotNull InteractionHand hand) {
 
-        ButterflyData data = ButterflyData.getEntry(this.butterflyIndex);
+        ButterflyData data = ButterflyRegistry.getEntry(this.butterflyIndex);
         if (data != null) {
             ResourceLocation location = data.getCaterpillarItem();
             if (location != null) {

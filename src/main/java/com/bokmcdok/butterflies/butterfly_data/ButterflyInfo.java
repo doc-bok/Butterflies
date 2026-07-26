@@ -1,0 +1,328 @@
+package com.bokmcdok.butterflies.butterfly_data;
+
+/**
+ * Generated code - do not modify.
+ * Provides data that needs to be accessed before butterfly data files are
+ * loaded.
+ */
+ 
+public class ButterflyInfo {
+
+    // A list of all the species in the mod.
+    public static final String[] SPECIES = {
+            "admiral",
+            "bluemoon",
+            "buckeye",
+            "cabbage",
+            "chalkhill",
+            "christmas",
+            "clipper",
+            "clipperblack",
+            "clipperblue",
+            "clipperbrown",
+            "clippercyan",
+            "clippergray",
+            "clippergreen",
+            "clipperlightgray",
+            "clipperlime",
+            "clippermagenta",
+            "clipperorange",
+            "clipperpink",
+            "clipperpurple",
+            "clipperred",
+            "clipperwhite",
+            "clipperyellow",
+            "commander",
+            "common-crow",
+            "common-mime",
+            "common",
+            "commonbirdwing",
+            "commongrassyellow",
+            "emperor",
+            "forester",
+            "glasswing",
+            "green-skirt-baron",
+            "hairstreak",
+            "heath",
+            "longwing",
+            "monarch",
+            "morpho",
+            "peacock-pansy-dry",
+            "peacock",
+            "rainbow",
+            "smile",
+            "swallowtail",
+            "bluemoonmale",
+            "commongrassyellow-dry",
+            "peacock-pansy-aged",
+            "peacock-pansy-wet",
+            "atlas",
+            "carpet",
+            "case-bearing-clothes",
+            "clearwing-hummingbird",
+            "clothes",
+            "codling",
+            "diamondback",
+            "domestic_silk",
+            "hummingbird",
+            "indianmeal",
+            "luna",
+            "oak-silk",
+            "peppered",
+            "spongy",
+            "white-lined-sphinx",
+            "spongymale",
+            "ice",
+            "lava",
+            "light",
+            "obsidian",
+            "peacemaker",
+    };
+
+    // A list of traits each butterfly has.
+    public static final ButterflyTrait[][] TRAITS = {
+        {}, // No traits for admiral
+        {}, // No traits for bluemoon
+        {}, // No traits for buckeye
+        {}, // No traits for cabbage
+        {}, // No traits for chalkhill
+        {
+            ButterflyTrait.CHRISTMASSY,
+        },
+        {}, // No traits for clipper
+        {}, // No traits for clipperblack
+        {}, // No traits for clipperblue
+        {}, // No traits for clipperbrown
+        {}, // No traits for clippercyan
+        {}, // No traits for clippergray
+        {}, // No traits for clippergreen
+        {}, // No traits for clipperlightgray
+        {}, // No traits for clipperlime
+        {}, // No traits for clippermagenta
+        {}, // No traits for clipperorange
+        {}, // No traits for clipperpink
+        {}, // No traits for clipperpurple
+        {}, // No traits for clipperred
+        {}, // No traits for clipperwhite
+        {}, // No traits for clipperyellow
+        {}, // No traits for commander
+        {
+            ButterflyTrait.INEDIBLE,
+            ButterflyTrait.POISONOUS,
+        },
+        {
+            ButterflyTrait.MIMICRY,
+        },
+        {}, // No traits for common
+        {}, // No traits for commonbirdwing
+        {}, // No traits for commongrassyellow
+        {}, // No traits for emperor
+        {
+            ButterflyTrait.CATFRIEND,
+        },
+        {}, // No traits for glasswing
+        {}, // No traits for green-skirt-baron
+        {}, // No traits for hairstreak
+        {
+            ButterflyTrait.MOTHWANDERER,
+        },
+        {}, // No traits for longwing
+        {
+            ButterflyTrait.POISONOUS,
+        },
+        {}, // No traits for morpho
+        {}, // No traits for peacock-pansy-dry
+        {}, // No traits for peacock
+        {}, // No traits for rainbow
+        {
+            ButterflyTrait.FEARLESS,
+        },
+        {}, // No traits for swallowtail
+        {}, // No traits for bluemoonmale
+        {}, // No traits for commongrassyellow-dry
+        {}, // No traits for peacock-pansy-aged
+        {}, // No traits for peacock-pansy-wet
+        {}, // No traits for atlas
+        {}, // No traits for carpet
+        {}, // No traits for case-bearing-clothes
+        {
+            ButterflyTrait.HUMMINGBIRD,
+        },
+        {}, // No traits for clothes
+        {}, // No traits for codling
+        {}, // No traits for diamondback
+        {}, // No traits for domestic_silk
+        {
+            ButterflyTrait.HUMMINGBIRD,
+        },
+        {}, // No traits for indianmeal
+        {}, // No traits for luna
+        {}, // No traits for oak-silk
+        {}, // No traits for peppered
+        {}, // No traits for spongy
+        {
+            ButterflyTrait.HUMMINGBIRD,
+        },
+        {}, // No traits for spongymale
+        {
+            ButterflyTrait.GLOW,
+            ButterflyTrait.ICY,
+        },
+        {
+            ButterflyTrait.GLOW,
+            ButterflyTrait.LAVA,
+        },
+        {
+            ButterflyTrait.GLOW,
+        },
+        {
+            ButterflyTrait.TOUGH,
+        },
+        {
+            ButterflyTrait.PEACEMAKER,
+        },
+    };
+
+    // A list of types of  butterflies.
+    public static final ButterflyType[] TYPES = {
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.BUTTERFLY,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.MOTH,
+            ButterflyType.SPECIAL,
+            ButterflyType.SPECIAL,
+            ButterflyType.SPECIAL,
+            ButterflyType.SPECIAL,
+            ButterflyType.SPECIAL,
+    };
+
+    // A list of how rare each butterfly is.
+    public static final ButterflyRarity[] RARITIES = {
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.UNCOMMON,
+            ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+            ButterflyRarity.RARE,
+    };
+
+}

@@ -1,8 +1,8 @@
 package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -70,13 +70,13 @@ public class ButterflyEntityTypeRegistry {
      * @return The factory method for creating butterfly entities.
      */
     private static EntityType.@NotNull EntityFactory<Butterfly> getEntityFactory(int butterflyIndex) {
-        ButterflyData.Trait[] traits = ButterflyInfo.TRAITS[butterflyIndex];
+        ButterflyTrait[] traits = ButterflyInfo.TRAITS[butterflyIndex];
 
-        for (ButterflyData.Trait trait : traits) {
-            if (trait == ButterflyData.Trait.ICY) {
+        for (ButterflyTrait trait : traits) {
+            if (trait == ButterflyTrait.ICY) {
                 return ButterflyEntityTypeRegistry::createIceButterfly;
             }
-            if (trait == ButterflyData.Trait.LAVA) {
+            if (trait == ButterflyTrait.LAVA) {
                 return ButterflyEntityTypeRegistry::createLavaMoth;
             }
         }

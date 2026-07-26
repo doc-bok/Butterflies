@@ -1,9 +1,12 @@
 package com.bokmcdok.butterflies.event.village;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyType;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyRarity;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.registries.VillagerProfessionRegistry;
-import com.bokmcdok.butterflies.world.ButterflyData;
-import com.bokmcdok.butterflies.world.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.npc.BuyingItemTrade;
 import com.bokmcdok.butterflies.world.entity.npc.SellingItemTrade;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -60,7 +63,7 @@ public class VillageEventListener {
             List<DeferredHolder<Item, Item>> caterpillars = ItemRegistry.CATERPILLARS;
 
             for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-                if (ButterflyInfo.TYPES[i] != ButterflyData.ButterflyType.SPECIAL) {
+                if (ButterflyInfo.TYPES[i] != ButterflyType.SPECIAL) {
                     switch (ButterflyInfo.RARITIES[i]) {
                         case COMMON:
                             tradesLevel1.add(new BuyingItemTrade(butterflyEggs.get(i).get(), 15, 16, 2));
@@ -113,8 +116,8 @@ public class VillageEventListener {
         List<DeferredHolder<Item, Item>> bottledButterflies = ItemRegistry.BOTTLED_BUTTERFLIES;
 
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
-            if (ButterflyInfo.TYPES[i] != ButterflyData.ButterflyType.SPECIAL) {
-                if (Objects.requireNonNull(ButterflyInfo.RARITIES[i]) == ButterflyData.Rarity.UNCOMMON) {
+            if (ButterflyInfo.TYPES[i] != ButterflyType.SPECIAL) {
+                if (Objects.requireNonNull(ButterflyInfo.RARITIES[i]) == ButterflyRarity.UNCOMMON) {
                     genericTrades.add(new SellingItemTrade(bottledButterflies.get(i).get(), 20, 1, 30));
                 }
             }

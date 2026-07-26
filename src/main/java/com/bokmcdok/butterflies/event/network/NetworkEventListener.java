@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.event.network;
 
+import com.bokmcdok.butterflies.butterfly_data.*;
 import com.bokmcdok.butterflies.network.protocol.common.custom.ClientBoundButterflyDataPacket;
-import com.bokmcdok.butterflies.world.ButterflyData;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,7 +35,7 @@ public class NetworkEventListener {
     private void onDatapackSync(OnDatapackSyncEvent event) {
 
         // Get the butterfly data collection.
-        List<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyData.getButterflyDataList());
+        List<ButterflyData> butterflyDataCollection = new ArrayList<>(ButterflyRegistry.getButterflyDataList());
 
         // Create our packet.
         ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
