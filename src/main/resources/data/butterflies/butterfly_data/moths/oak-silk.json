@@ -22,6 +22,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
-  "traits": [],
+  "traits": [
+    "silk"
+  ],
   "type": "moth"
 }

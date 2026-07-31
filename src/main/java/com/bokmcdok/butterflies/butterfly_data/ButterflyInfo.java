@@ -142,8 +142,12 @@ public class ButterflyInfo {
         {}, // No traits for commongrassyellow-dry
         {}, // No traits for peacock-pansy-aged
         {}, // No traits for peacock-pansy-wet
-        {}, // No traits for atlas
-        {}, // No traits for carpet
+        {
+            ButterflyTrait.SILK,
+        },
+        {
+            ButterflyTrait.SILK,
+        },
         {}, // No traits for case-bearing-clothes
         {
             ButterflyTrait.HUMMINGBIRD,
@@ -151,13 +155,17 @@ public class ButterflyInfo {
         {}, // No traits for clothes
         {}, // No traits for codling
         {}, // No traits for diamondback
-        {}, // No traits for domestic_silk
+        {
+            ButterflyTrait.SILK,
+        },
         {
             ButterflyTrait.HUMMINGBIRD,
         },
         {}, // No traits for indianmeal
         {}, // No traits for luna
-        {}, // No traits for oak-silk
+        {
+            ButterflyTrait.SILK,
+        },
         {}, // No traits for peppered
         {}, // No traits for spongy
         {
@@ -182,4 +190,5 @@ public class ButterflyInfo {
             ButterflyTrait.PEACEMAKER,
         },
     };
+
 }
