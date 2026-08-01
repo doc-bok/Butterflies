@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "swallowtail",
   "extraLandingBlocks": "none",
+  "foodSource": "azure_bluet",
   "habitats": [
     "plains"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "azure_bluet",
   "rarity": "common",
   "size": "huge",
   "sounds": {

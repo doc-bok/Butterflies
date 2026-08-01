@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "common",
   "extraLandingBlocks": "none",
+  "foodSource": "dandelion",
   "habitats": [
     "forests",
     "plains"
@@ -15,7 +16,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "dandelion",
   "rarity": "common",
   "size": "small",
   "sounds": {

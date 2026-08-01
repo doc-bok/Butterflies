@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
+  "foodSource": "lily_of_the_valley",
   "habitats": [
     "plains"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "lily_of_the_valley",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {
