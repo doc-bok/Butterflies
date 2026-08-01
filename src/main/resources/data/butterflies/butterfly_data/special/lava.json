@@ -3,10 +3,11 @@
   "eggMultiplier": "none",
   "entityId": "lava",
   "extraLandingBlocks": "none",
+  "foodSource": "none",
   "habitats": [
     "nether"
   ],
-  "index": 63,
+  "index": 64,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "foodSource": "none",
   "rarity": "rare",
   "size": "large",
   "sounds": {

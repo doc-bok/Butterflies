@@ -68,6 +68,7 @@ public class ButterflyInfo {
             "indianmeal",
             "luna",
             "oak-silk",
+            "orizaba",
             "peppered",
             "spongy",
             "white-lined-sphinx",
@@ -163,6 +164,9 @@ public class ButterflyInfo {
         },
         {}, // No traits for indianmeal
         {}, // No traits for luna
+        {
+            ButterflyTrait.SILK,
+        },
         {
             ButterflyTrait.SILK,
         },

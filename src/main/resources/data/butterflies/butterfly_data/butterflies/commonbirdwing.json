@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "commonbirdwing",
   "extraLandingBlocks": "none",
+  "foodSource": "allium",
   "habitats": [
     "forests"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "allium",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

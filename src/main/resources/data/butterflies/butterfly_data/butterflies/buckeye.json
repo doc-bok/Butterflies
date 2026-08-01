@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "buckeye",
   "extraLandingBlocks": "fruit",
+  "foodSource": "blue_orchid",
   "habitats": [
     "plains",
     "savannas"
@@ -15,7 +16,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "blue_orchid",
   "rarity": "common",
   "size": "medium",
   "sounds": {

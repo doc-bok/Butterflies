@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
+  "foodSource": "cornflower",
   "habitats": [
     "plains",
     "wetlands"
@@ -15,7 +16,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "cornflower",
   "rarity": "common",
   "size": "tiny",
   "sounds": {

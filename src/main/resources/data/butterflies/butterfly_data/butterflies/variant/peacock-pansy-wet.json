@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "peacock-pansy-wet",
   "extraLandingBlocks": "none",
+  "foodSource": "blue_orchid",
   "habitats": [
     "plains",
     "wetlands"
@@ -15,7 +16,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "blue_orchid",
   "rarity": "common",
   "size": "medium",
   "sounds": {

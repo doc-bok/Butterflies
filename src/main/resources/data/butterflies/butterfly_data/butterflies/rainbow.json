@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "rainbow",
   "extraLandingBlocks": "none",
+  "foodSource": "allium",
   "habitats": [
     "forests",
     "plains"
@@ -15,7 +16,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "allium",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {

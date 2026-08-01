@@ -3,10 +3,11 @@
   "eggMultiplier": "double",
   "entityId": "spongy",
   "extraLandingBlocks": "none",
+  "foodSource": "bud_orange_tulip",
   "habitats": [
     "forests"
   ],
-  "index": 59,
+  "index": 60,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "long",
@@ -14,7 +15,6 @@
     "egg": "long"
   },
   "plantEffect": "consume",
-  "foodSource": "bud_orange_tulip",
   "rarity": "common",
   "size": "medium",
   "sounds": {

@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "monarch",
   "extraLandingBlocks": "none",
+  "foodSource": "poppy",
   "habitats": [
     "plains"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "poppy",
   "rarity": "common",
   "size": "large",
   "sounds": {

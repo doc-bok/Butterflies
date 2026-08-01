@@ -1,20 +1,20 @@
 {
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
-  "entityId": "atlas",
+  "entityId": "orizaba",
   "extraLandingBlocks": "none",
-  "foodSource": "white_tulip",
+  "foodSource": "cocoa",
   "habitats": [
-    "forests"
+    "jungles"
   ],
-  "index": 46,
+  "index": 58,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
-    "chrysalis": "medium",
+    "chrysalis": "long",
     "egg": "medium"
   },
-  "plantEffect": "pollinate",
+  "plantEffect": "consume",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "peacock",
   "extraLandingBlocks": "none",
+  "foodSource": "sweet_berry_bush",
   "habitats": [
     "forests",
     "plains"
@@ -15,7 +16,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "sweet_berry_bush",
   "rarity": "common",
   "size": "medium",
   "sounds": {

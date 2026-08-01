@@ -3,10 +3,11 @@
   "eggMultiplier": "normal",
   "entityId": "peppered",
   "extraLandingBlocks": "logs",
+  "foodSource": "lily_of_the_valley",
   "habitats": [
     "forests"
   ],
-  "index": 58,
+  "index": 59,
   "lifespan": {
     "butterfly": "medium",
     "caterpillar": "medium",
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "lily_of_the_valley",
   "rarity": "common",
   "size": "medium",
   "sounds": {

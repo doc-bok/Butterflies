@@ -3,10 +3,11 @@
   "eggMultiplier": "none",
   "entityId": "obsidian",
   "extraLandingBlocks": "obsidian",
+  "foodSource": "none",
   "habitats": [
     "end"
   ],
-  "index": 65,
+  "index": 66,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "long",
@@ -14,7 +15,6 @@
     "egg": "long"
   },
   "plantEffect": "pollinate",
-  "foodSource": "none",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

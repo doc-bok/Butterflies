@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "case-bearing-clothes",
   "extraLandingBlocks": "wool",
+  "foodSource": "cornflower",
   "habitats": [
     "villages"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "cornflower",
   "rarity": "common",
   "size": "tiny",
   "sounds": {

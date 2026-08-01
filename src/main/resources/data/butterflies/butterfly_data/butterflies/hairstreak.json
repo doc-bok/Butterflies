@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "hairstreak",
   "extraLandingBlocks": "logs",
+  "foodSource": "poppy",
   "habitats": [
     "forests",
     "plains",
@@ -16,7 +17,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "foodSource": "poppy",
   "rarity": "common",
   "size": "small",
   "sounds": {

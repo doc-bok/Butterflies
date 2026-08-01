@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "domestic_silk",
   "extraLandingBlocks": "none",
+  "foodSource": "red_tulip",
   "habitats": [
     "villages"
   ],
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "red_tulip",
   "rarity": "common",
   "size": "medium",
   "sounds": {

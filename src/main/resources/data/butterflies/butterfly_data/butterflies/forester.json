@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "forester",
   "extraLandingBlocks": "none",
+  "foodSource": "lily_of_the_valley",
   "habitats": [
     "forests",
     "plains",
@@ -16,7 +17,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "lily_of_the_valley",
   "rarity": "rare",
   "size": "small",
   "sounds": {

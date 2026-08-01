@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "emperor",
   "extraLandingBlocks": "logs",
+  "foodSource": "red_tulip",
   "habitats": [
     "forests"
   ],
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "foodSource": "red_tulip",
   "rarity": "common",
   "size": "medium",
   "sounds": {

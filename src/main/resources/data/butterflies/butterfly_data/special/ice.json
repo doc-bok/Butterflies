@@ -3,10 +3,11 @@
   "eggMultiplier": "normal",
   "entityId": "ice",
   "extraLandingBlocks": "none",
+  "foodSource": "wither_rose",
   "habitats": [
     "ice"
   ],
-  "index": 62,
+  "index": 63,
   "lifespan": {
     "butterfly": "long",
     "caterpillar": "long",
@@ -14,7 +15,6 @@
     "egg": "long"
   },
   "plantEffect": "pollinate",
-  "foodSource": "wither_rose",
   "rarity": "rare",
   "size": "medium",
   "sounds": {
