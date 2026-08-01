@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "morpho",
   "extraLandingBlocks": "none",
+  "foodSource": "pink_tulip",
   "habitats": [
     "jungles"
   ],
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "pink_tulip",
   "rarity": "rare",
   "size": "large",
   "sounds": {
