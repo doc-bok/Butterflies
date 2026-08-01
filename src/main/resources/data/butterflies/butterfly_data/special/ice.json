@@ -14,7 +14,7 @@
     "egg": "long"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "wither_rose",
+  "foodSource": "wither_rose",
   "rarity": "rare",
   "size": "medium",
   "sounds": {

@@ -15,7 +15,7 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "white_tulip",
+  "foodSource": "white_tulip",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {

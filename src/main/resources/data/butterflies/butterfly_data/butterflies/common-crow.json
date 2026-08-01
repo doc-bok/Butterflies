@@ -18,7 +18,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "red_tulip",
+  "foodSource": "red_tulip",
   "rarity": "common",
   "size": "large",
   "sounds": {

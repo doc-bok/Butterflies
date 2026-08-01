@@ -118,7 +118,7 @@ public class ButterflyTextFormatter {
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
             @SuppressWarnings("deprecation")
-            Component description = BuiltInRegistries.ITEM.get(entry.preferredFlower()).asItem().getDescription();
+            Component description = BuiltInRegistries.ITEM.get(entry.foodSource()).asItem().getDescription();
             component.append(description);
 
             // Fact

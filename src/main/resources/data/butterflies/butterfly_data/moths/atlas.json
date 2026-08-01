@@ -14,7 +14,7 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "white_tulip",
+  "foodSource": "white_tulip",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

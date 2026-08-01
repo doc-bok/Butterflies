@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "lily_of_the_valley",
+  "foodSource": "lily_of_the_valley",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {

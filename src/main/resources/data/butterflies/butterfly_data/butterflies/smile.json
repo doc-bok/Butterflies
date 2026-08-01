@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "cornflower",
+  "foodSource": "cornflower",
   "rarity": "common",
   "size": "medium",
   "sounds": {

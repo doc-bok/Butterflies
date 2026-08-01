@@ -12,7 +12,7 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "wither_rose",
+  "foodSource": "wither_rose",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

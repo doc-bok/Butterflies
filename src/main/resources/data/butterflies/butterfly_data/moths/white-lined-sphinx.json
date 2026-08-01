@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "azure_bluet",
+  "foodSource": "azure_bluet",
   "rarity": "uncommon",
   "size": "medium",
   "sounds": {

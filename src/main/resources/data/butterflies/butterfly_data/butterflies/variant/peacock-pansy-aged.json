@@ -12,7 +12,7 @@
     "egg": "medium"
   },
   "plantEffect": "none",
-  "preferredFlower": "blue_orchid",
+  "foodSource": "blue_orchid",
   "rarity": "common",
   "size": "medium",
   "sounds": {

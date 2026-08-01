@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "allium",
+  "foodSource": "allium",
   "rarity": "common",
   "size": "large",
   "sounds": {

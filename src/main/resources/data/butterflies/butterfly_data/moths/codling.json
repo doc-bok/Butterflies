@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "apple",
+  "foodSource": "apple",
   "rarity": "common",
   "size": "small",
   "sounds": {

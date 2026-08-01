@@ -16,7 +16,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "poppy",
+  "foodSource": "poppy",
   "rarity": "common",
   "size": "small",
   "sounds": {

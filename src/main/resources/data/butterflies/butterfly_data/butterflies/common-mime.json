@@ -15,7 +15,7 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "pink_tulip",
+  "foodSource": "pink_tulip",
   "rarity": "common",
   "size": "medium",
   "sounds": {

@@ -14,7 +14,7 @@
     "egg": "medium"
   },
   "plantEffect": "consume",
-  "preferredFlower": "wheat",
+  "foodSource": "wheat",
   "rarity": "common",
   "size": "tiny",
   "sounds": {

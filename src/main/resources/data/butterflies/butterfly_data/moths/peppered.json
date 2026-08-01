@@ -14,7 +14,7 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "lily_of_the_valley",
+  "foodSource": "lily_of_the_valley",
   "rarity": "common",
   "size": "medium",
   "sounds": {

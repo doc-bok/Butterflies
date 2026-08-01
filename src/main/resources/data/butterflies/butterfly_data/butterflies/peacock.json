@@ -15,7 +15,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "sweet_berry_bush",
+  "foodSource": "sweet_berry_bush",
   "rarity": "common",
   "size": "medium",
   "sounds": {

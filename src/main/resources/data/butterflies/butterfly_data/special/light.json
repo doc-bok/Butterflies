@@ -12,7 +12,7 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "none",
+  "foodSource": "none",
   "rarity": "rare",
   "size": "small",
   "sounds": {

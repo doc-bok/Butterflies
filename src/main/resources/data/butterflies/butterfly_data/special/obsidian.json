@@ -14,7 +14,7 @@
     "egg": "long"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "none",
+  "foodSource": "none",
   "rarity": "rare",
   "size": "huge",
   "sounds": {

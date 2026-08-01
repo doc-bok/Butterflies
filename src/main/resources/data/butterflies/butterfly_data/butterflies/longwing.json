@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "dandelion",
+  "foodSource": "dandelion",
   "rarity": "common",
   "size": "medium",
   "sounds": {

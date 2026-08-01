@@ -14,7 +14,7 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "none",
+  "foodSource": "none",
   "rarity": "rare",
   "size": "large",
   "sounds": {
