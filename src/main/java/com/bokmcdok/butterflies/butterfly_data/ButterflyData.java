@@ -322,4 +322,16 @@ public record ButterflyData(int butterflyIndex,
             default -> false;
         };
     }
+
+    /**
+     * Helper method for getting a food source item from a non-item block.
+     * @return The Resource Location of the food source item.
+     */
+    public ResourceLocation getFoodSourceItem() {
+        if (foodSource.getPath().equals("cocoa")) {
+            return new ResourceLocation("minecraft:cocoa_beans");
+        }
+
+        return foodSource;
+    }
 }

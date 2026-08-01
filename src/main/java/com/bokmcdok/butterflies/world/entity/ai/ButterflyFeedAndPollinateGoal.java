@@ -7,7 +7,6 @@ import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -80,15 +79,8 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            ResourceLocation foodSource = data.foodSource();
-            foodSourceBlock = BuiltInRegistries.BLOCK.get(foodSource);
-
-            // Support for cocoa beans.
-            if (foodSource.getPath().equals("cocoa")) {
-                foodSource = new ResourceLocation("minecraft:cocoa_beans");
-            }
-
-            foodSourceItem = BuiltInRegistries.ITEM.get(foodSource);
+            foodSourceBlock = BuiltInRegistries.BLOCK.get(data.foodSource());
+            foodSourceItem = BuiltInRegistries.ITEM.get(data.getFoodSourceItem());
         } else {
             foodSourceBlock = null;
             foodSourceItem = null;
