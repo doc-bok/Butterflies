@@ -329,7 +329,7 @@ public record ButterflyData(int butterflyIndex,
      */
     public ResourceLocation getFoodSourceItem() {
         if (foodSource.getPath().equals("cocoa")) {
-            return new ResourceLocation("minecraft:cocoa_beans");
+            return ResourceLocation.withDefaultNamespace("cocoa_beans");
         }
 
         return foodSource;

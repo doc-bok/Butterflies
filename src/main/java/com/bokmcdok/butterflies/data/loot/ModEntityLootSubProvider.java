@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
@@ -13,10 +14,13 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
@@ -89,7 +93,7 @@ public class ModEntityLootSubProvider extends EntityLootSubProvider {
         add(entityType, singleRollCountedLoot(
                 ItemRegistry.SILK.get(),
                 UniformGenerator.between(1.0f, 3.0f),
-                LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0f, 1.0f))
+                EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0f, 1.0f))
         ));
     }
 

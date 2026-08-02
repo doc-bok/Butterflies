@@ -348,7 +348,7 @@ public class ButterflyDataLoader {
             buffer.writeInt(data.caterpillarLifespan());
             buffer.writeInt(data.chrysalisLifespan());
             buffer.writeInt(data.butterflyLifespan());
-            buffer.writeResourceLocation(data.preferredFlower());
+            buffer.writeResourceLocation(data.foodSource());
             buffer.writeEnum(data.type());
             buffer.writeEnum(data.diurnality());
             buffer.writeEnum(data.extraLandingBlocks());
