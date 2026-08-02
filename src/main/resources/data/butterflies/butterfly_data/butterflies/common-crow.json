@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "common-crow",
   "extraLandingBlocks": "none",
+  "foodSource": "red_tulip",
   "habitats": [
     "forests",
     "hills",
@@ -18,7 +19,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "red_tulip",
   "rarity": "common",
   "size": "large",
   "sounds": {
