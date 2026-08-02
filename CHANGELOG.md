@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.0 (2026/08/01)
+ - Added the Orizaba Silkmoth.
+
 ### 7.9.3 (2026-07-26)
  - Fixed incorrect Lifespan data being sent over network.
 

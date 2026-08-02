@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "clipperpurple",
   "extraLandingBlocks": "none",
+  "foodSource": "poppy",
   "habitats": [
     "jungles"
   ],
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "poppy",
   "rarity": "rare",
   "size": "large",
   "sounds": {

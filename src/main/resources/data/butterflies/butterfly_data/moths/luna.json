@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "luna",
   "extraLandingBlocks": "none",
+  "foodSource": "oxeye_daisy",
   "habitats": [
     "forests"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "oxeye_daisy",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {

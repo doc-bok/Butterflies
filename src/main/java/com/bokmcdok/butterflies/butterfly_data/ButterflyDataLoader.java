@@ -87,7 +87,7 @@ public class ButterflyDataLoader {
                 ButterflyLifespan chrysalisLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "chrysalis", ButterflyLifespan.MEDIUM);
                 ButterflyLifespan butterflyLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "butterfly", ButterflyLifespan.MEDIUM);
 
-                String preferredFlower = object.get("preferredFlower").getAsString();
+                String foodSource = object.get("foodSource").getAsString();
 
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
                 Diurnality diurnality = getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
@@ -132,7 +132,7 @@ public class ButterflyDataLoader {
                         LIFESPAN[chrysalisLifespan.getIndex()],
                         LIFESPAN[butterflyLifespan.getIndex()] == Integer.MAX_VALUE ?
                                 Integer.MAX_VALUE : LIFESPAN[butterflyLifespan.getIndex()] * 2,
-                        new ResourceLocation(preferredFlower),
+                        new ResourceLocation(foodSource),
                         type,
                         diurnality,
                         extraLandingBlocks,

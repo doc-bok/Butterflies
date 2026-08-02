@@ -16,5 +16,6 @@ public enum ButterflyTrait {
     LAVA,
     FEARLESS,
     PEACEMAKER,
-    TOUGH
+    TOUGH,
+    SILK
 }
