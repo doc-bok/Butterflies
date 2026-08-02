@@ -456,6 +456,30 @@
       "minCount": 1,
       "type": "butterflies:indianmeal_egg",
       "weight": 100
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:orizaba",
+      "weight": 20
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:orizaba_caterpillar",
+      "weight": 20
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:orizaba_chrysalis",
+      "weight": 20
+    },
+    {
+      "maxCount": 2,
+      "minCount": 1,
+      "type": "butterflies:orizaba_egg",
+      "weight": 20
     }
   ],
   "type": "forge:add_spawns"

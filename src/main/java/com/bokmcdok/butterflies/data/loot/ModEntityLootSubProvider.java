@@ -5,7 +5,6 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
-import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
@@ -37,8 +36,6 @@ public class ModEntityLootSubProvider extends EntityLoot {
      * Construction.
      */
     public ModEntityLootSubProvider() {
-        super(FeatureFlags.REGISTRY.allFlags());
-
         this.silkChrysalises = ButterflyRegistry.getButterflyDataCollection().stream()
                 .filter(data -> data.hasTrait(ButterflyTrait.SILK))
                 .map(data -> ButterflyEntityTypeRegistry.CHRYSALISES.get(data.butterflyIndex()).get())
@@ -54,7 +51,7 @@ public class ModEntityLootSubProvider extends EntityLoot {
      * Entry point.
      */
     @Override
-    public void generate() {
+    public void addTables() {
         silkChrysalises.forEach(this::addChrysalisSilkLoot);
         add(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), createButterflyGolemLoot());
     }
@@ -66,7 +63,7 @@ public class ModEntityLootSubProvider extends EntityLoot {
      */
     @Override
     protected boolean isNonLiving(@NotNull EntityType<?> entityType) {
-        return !knownEntityTypes.contains(entityType) || super.isNonLiving(entityType);
+        return !knownEntityTypes.contains(entityType) && super.isNonLiving(entityType);
     }
 
     /**
@@ -75,8 +72,8 @@ public class ModEntityLootSubProvider extends EntityLoot {
      */
     @NotNull
     @Override
-    protected Stream<EntityType<?>> getKnownEntities() {
-        return knownEntityTypes.stream();
+    protected Iterable<EntityType<?>> getKnownEntities() {
+        return knownEntityTypes.stream().toList();
     }
 
     /**

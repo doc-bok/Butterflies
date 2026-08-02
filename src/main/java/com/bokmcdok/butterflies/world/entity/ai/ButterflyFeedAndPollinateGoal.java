@@ -6,7 +6,6 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -17,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -42,7 +42,6 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
             Map.entry(Blocks.PINK_TULIP, BlockRegistry.PINK_TULIP_BUD),
             Map.entry(Blocks.POPPY, BlockRegistry.POPPY_BUD),
             Map.entry(Blocks.RED_TULIP, BlockRegistry.RED_TULIP_BUD),
-            Map.entry(Blocks.TORCHFLOWER, () -> Blocks.TORCHFLOWER_CROP),
             Map.entry(Blocks.WHITE_TULIP, BlockRegistry.WHITE_TULIP_BUD),
             Map.entry(Blocks.WITHER_ROSE, BlockRegistry.WITHER_ROSE_BUD),
             Map.entry(Blocks.SWEET_BERRY_BUSH, () -> Blocks.SWEET_BERRY_BUSH)
@@ -79,8 +78,8 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSourceBlock = BuiltInRegistries.BLOCK.get(data.foodSource());
-            foodSourceItem = BuiltInRegistries.ITEM.get(data.getFoodSourceItem());
+            foodSourceBlock = ForgeRegistries.BLOCKS.getValue(data.foodSource());
+            foodSourceItem = ForgeRegistries.ITEMS.getValue(data.getFoodSourceItem());
         } else {
             foodSourceBlock = null;
             foodSourceItem = null;
@@ -233,11 +232,7 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
 
                         // Torchflowers require farmland.
                         Block requiredBlock = Blocks.GRASS_BLOCK;
-                        Level level = mob.level();
-                        if (level.getBlockState(blockPos).is(Blocks.TORCHFLOWER)) {
-                            requiredBlock = Blocks.FARMLAND;
-                        }
-
+                        Level level = mob.level;
                         if (level.getBlockState(mutableBlockPos).isAir() &&
                             level.getBlockState(mutableBlockPos.below()).is(requiredBlock)) {
 
@@ -255,7 +250,7 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
      * Attempt to eat from a butterfly feeder.
      */
     private void tryEatFromFeeder() {
-        Level level = butterfly.level();
+        Level level = butterfly.level;
         if (!(level.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder)) {
             return;
         }
@@ -272,7 +267,7 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
      * Attempt to pollinate a flower.
      */
     private void tryPollinateFlower() {
-        Level level = butterfly.level();
+        Level level = butterfly.level;
         BlockState blockState = level.getBlockState(blockPos);
         Block flowerBlock = blockState.getBlock();
         if (!FLOWER_BUDS.containsKey(flowerBlock)) {

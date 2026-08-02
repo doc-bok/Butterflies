@@ -4,7 +4,6 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,7 +42,6 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
      * @param searchRange         The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyConsumeGoal(Butterfly mob,
                                 double speedModifier,
                                 int searchRange,
@@ -52,7 +51,7 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSource = BuiltInRegistries.BLOCK.get(data.foodSource());
+            foodSource = ForgeRegistries.BLOCKS.getValue(data.foodSource());
         }
     }
 
@@ -118,7 +117,7 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
         butterfly.setDeltaMovement(0.0, delta.y, 0.0);
 
         if (!hasTried) {
-            Level level = mob.level();
+            Level level = mob.level;
             BlockState state = level.getBlockState(blockPos);
 
             if (tryEatTarget(level, state)) {

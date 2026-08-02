@@ -144,6 +144,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "orizaba": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:orizaba_egg"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peppered": {
       "conditions": {
         "items": [
@@ -211,6 +223,7 @@
       "indianmeal",
       "luna",
       "oak-silk",
+      "orizaba",
       "peppered",
       "spongy",
       "white-lined-sphinx"

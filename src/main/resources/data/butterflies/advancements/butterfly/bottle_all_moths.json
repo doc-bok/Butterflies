@@ -144,6 +144,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "orizaba": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:bottled_butterfly_orizaba"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peppered": {
       "conditions": {
         "items": [
@@ -245,6 +257,9 @@
     ],
     [
       "oak-silk"
+    ],
+    [
+      "orizaba"
     ],
     [
       "peppered"

@@ -118,7 +118,7 @@ public class ButterflyTextFormatter {
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            Item value = ForgeRegistries.ITEMS.getValue(entry.getFoodSourceItem();
+            Item value = ForgeRegistries.ITEMS.getValue(entry.getFoodSourceItem());
             if (value != null) {
                 Component description = value.getDescription();
                 component.append(description);
