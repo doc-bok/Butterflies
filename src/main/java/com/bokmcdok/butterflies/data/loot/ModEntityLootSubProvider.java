@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.data.loot;
 
-import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.registries.ButterflyEntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
@@ -9,41 +9,53 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Adds loot tables for entities.
  */
 public class ModEntityLootSubProvider extends EntityLoot {
-    private static final List<String> SILK_SPECIES = List.of(
-            "atlas_chrysalis",
-            "carpet_chrysalis",
-            "domestic_silk_chrysalis",
-            "oak-silk_chrysalis");
+
+    private final Set<EntityType<?>> knownEntityTypes;
+    private final Set<EntityType<?>> silkChrysalises;
+
+    /**
+     * Construction.
+     */
+    public ModEntityLootSubProvider() {
+        super(FeatureFlags.REGISTRY.allFlags());
+
+        this.silkChrysalises = ButterflyRegistry.getButterflyDataCollection().stream()
+                .filter(data -> data.hasTrait(ButterflyTrait.SILK))
+                .map(data -> ButterflyEntityTypeRegistry.CHRYSALISES.get(data.butterflyIndex()).get())
+                .collect(Collectors.toUnmodifiableSet());
+
+        this.knownEntityTypes = Stream.concat(
+                silkChrysalises.stream(),
+                Stream.of(EntityTypeRegistry.BUTTERFLY_GOLEM.get())
+        ).collect(Collectors.toUnmodifiableSet());
+    }
 
     /**
      * Entry point.
      */
     @Override
-    public void addTables() {
-        SILK_SPECIES.stream()
-                .map(ButterflyRegistry::getButterflyIndex)
-                .forEach(this::addChrysalisSilkLoot);
-
+    public void generate() {
+        silkChrysalises.forEach(this::addChrysalisSilkLoot);
         add(EntityTypeRegistry.BUTTERFLY_GOLEM.get(), createButterflyGolemLoot());
     }
 
@@ -54,7 +66,7 @@ public class ModEntityLootSubProvider extends EntityLoot {
      */
     @Override
     protected boolean isNonLiving(@NotNull EntityType<?> entityType) {
-        return super.isNonLiving(entityType) && !entityType.equals(EntityTypeRegistry.BUTTERFLY_GOLEM.get());
+        return !knownEntityTypes.contains(entityType) || super.isNonLiving(entityType);
     }
 
     /**
@@ -63,30 +75,20 @@ public class ModEntityLootSubProvider extends EntityLoot {
      */
     @NotNull
     @Override
-    protected Iterable<EntityType<?>> getKnownEntities() {
-        Stream<EntityType<?>> silkChrysalisesStream = StreamSupport.stream(ForgeRegistries.ENTITY_TYPES.spliterator(), false)
-                .filter(entry ->
-                        Optional.ofNullable(ForgeRegistries.ENTITY_TYPES.getKey(entry))
-                                .filter(key -> key.getNamespace().equals(ButterfliesMod.MOD_ID)
-                                        && StringUtils.equalsAny(key.getPath(), SILK_SPECIES.toArray(new String[0])))
-                                .isPresent()
-                );
-
-        return Stream.concat(silkChrysalisesStream, Stream.of(EntityTypeRegistry.BUTTERFLY_GOLEM.get())).toList();
+    protected Stream<EntityType<?>> getKnownEntities() {
+        return knownEntityTypes.stream();
     }
 
     /**
      * Adds a silk drop to a chrysalis.
-     * @param butterflyIndex The butterfly index.
+     * @param entityType The entity to add a loot table for.
      */
-    private void addChrysalisSilkLoot(int butterflyIndex) {
-        add(ButterflyEntityTypeRegistry.CHRYSALISES.get(butterflyIndex).get(),
-                LootTable.lootTable()
-                        .withPool(LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0f))
-                                .add(LootItem.lootTableItem(ItemRegistry.SILK.get())
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0f, 3.0f)))
-                                        .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0f, 1.0f))))));
+    private void addChrysalisSilkLoot(EntityType<?> entityType) {
+        add(entityType, singleRollCountedLoot(
+                ItemRegistry.SILK.get(),
+                UniformGenerator.between(1.0f, 3.0f),
+                LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0f, 1.0f))
+        ));
     }
 
     /**
@@ -95,13 +97,43 @@ public class ModEntityLootSubProvider extends EntityLoot {
      */
     private LootTable.Builder createButterflyGolemLoot() {
         return LootTable.lootTable()
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0f))
-                        .add(LootItem.lootTableItem(Items.POPPY)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0f, 2.0f)))))
-                .withPool(LootPool.lootPool()
-                        .setRolls(ConstantValue.exactly(1.0f))
-                        .add(LootItem.lootTableItem(Items.IRON_INGOT)
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0f, 5.0f)))));
+                .withPool(singleRollPool(Items.POPPY, UniformGenerator.between(0.0f, 2.0f)))
+                .withPool(singleRollPool(Items.IRON_INGOT, UniformGenerator.between(3.0f, 5.0f)));
+    }
+
+    /**
+     * Creates a single roll for counted loot.
+     * @param item The item to roll for.
+     * @param count The count for the loot.
+     * @param functions Any functions that can be applied to the roll.
+     * @return A single roll for a loot table.
+     */
+    private LootTable.Builder singleRollCountedLoot(ItemLike item,
+                                                    NumberProvider count,
+                                                    LootItemFunction.Builder... functions) {
+        LootPool.Builder pool = LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0f))
+                .add(LootItem.lootTableItem(item).apply(SetItemCountFunction.setCount(count)));
+
+        for (LootItemFunction.Builder function : functions) {
+            pool.apply(function);
+        }
+
+        return LootTable.lootTable().withPool(pool);
+    }
+
+
+    /**
+     * Creates a single roll for a loot table.
+     * @param item The item to roll for.
+     * @param count The count for the loot.
+     * @return A single roll for a loot table.
+     */
+    private LootPool.Builder singleRollPool(ItemLike item,
+                                            NumberProvider count) {
+        return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1.0f))
+                .add(LootItem.lootTableItem(item)
+                        .apply(SetItemCountFunction.setCount(count)));
     }
 }

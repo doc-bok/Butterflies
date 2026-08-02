@@ -3,8 +3,9 @@
   "eggMultiplier": "none",
   "entityId": "light",
   "extraLandingBlocks": "none",
+  "foodSource": "none",
   "habitats": [],
-  "index": 64,
+  "index": 65,
   "lifespan": {
     "butterfly": "immortal",
     "caterpillar": "short",
@@ -12,7 +13,6 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "none",
   "rarity": "rare",
   "size": "small",
   "sounds": {
