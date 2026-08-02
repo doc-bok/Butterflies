@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "chalkhill",
   "extraLandingBlocks": "none",
+  "foodSource": "oxeye_daisy",
   "habitats": [
     "hills",
     "plateaus"
@@ -15,7 +16,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "oxeye_daisy",
   "rarity": "common",
   "size": "small",
   "sounds": {

@@ -3,6 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "peacock-pansy-aged",
   "extraLandingBlocks": "none",
+  "foodSource": "blue_orchid",
   "habitats": [],
   "index": 44,
   "lifespan": {
@@ -12,7 +13,6 @@
     "egg": "medium"
   },
   "plantEffect": "none",
-  "preferredFlower": "blue_orchid",
   "rarity": "common",
   "size": "medium",
   "sounds": {

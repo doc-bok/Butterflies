@@ -121,7 +121,7 @@ public class ButterflyTextFormatter {
             component.append("\n");
             component.append(Component.translatable("gui.butterflies.preferred_flower"));
 
-            Optional<Holder.Reference<Item>> preferredFlower = BuiltInRegistries.ITEM.get(entry.preferredFlower());
+            Optional<Holder.Reference<Item>> preferredFlower = BuiltInRegistries.ITEM.get(entry.getFoodSourceItem());
             if (preferredFlower.isPresent()) {
                 Component description = preferredFlower.get().value().getName();
                 component.append(description);

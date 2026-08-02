@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "cabbage",
   "extraLandingBlocks": "none",
+  "foodSource": "dandelion",
   "habitats": [
     "plains",
     "wetlands"
@@ -15,7 +16,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "dandelion",
   "rarity": "common",
   "size": "medium",
   "sounds": {

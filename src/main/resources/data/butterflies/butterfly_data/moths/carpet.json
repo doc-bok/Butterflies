@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
+  "foodSource": "cornflower",
   "habitats": [
     "plains",
     "wetlands"
@@ -15,7 +16,6 @@
     "egg": "medium"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "cornflower",
   "rarity": "common",
   "size": "tiny",
   "sounds": {
@@ -23,6 +23,8 @@
     "caterpillar": false
   },
   "speed": "moderate",
-  "traits": [],
+  "traits": [
+    "silk"
+  ],
   "type": "moth"
 }
