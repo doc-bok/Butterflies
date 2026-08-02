@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "smile",
   "extraLandingBlocks": "none",
+  "foodSource": "cornflower",
   "habitats": [
     "forests"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "cornflower",
   "rarity": "common",
   "size": "medium",
   "sounds": {

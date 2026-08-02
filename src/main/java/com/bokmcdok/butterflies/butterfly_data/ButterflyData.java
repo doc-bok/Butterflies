@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.butterfly_data;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.google.gson.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
@@ -21,7 +20,7 @@ import java.util.*;
  * @param caterpillarLifespan The lifespan of the caterpillar phase
  * @param chrysalisLifespan   The lifespan of the chrysalis phase
  * @param butterflyLifespan   The lifespan of the butterfly phase
- * @param preferredFlower     The flower this butterfly prefers
+ * @param foodSource     The flower this butterfly prefers
  */
 public record ButterflyData(int butterflyIndex,
                             String entityId,
@@ -33,7 +32,7 @@ public record ButterflyData(int butterflyIndex,
                             int caterpillarLifespan,
                             int chrysalisLifespan,
                             int butterflyLifespan,
-                            ResourceLocation preferredFlower,
+                            ResourceLocation foodSource,
                             ButterflyType type,
                             Diurnality diurnality,
                             ExtraLandingBlocks extraLandingBlocks,
@@ -57,7 +56,7 @@ public record ButterflyData(int butterflyIndex,
      * @param caterpillarLifespan How long it remains in the caterpillar stage.
      * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
      * @param butterflyLifespan   How long it lives as a butterfly.
-     * @param preferredFlower     The flower this butterfly prefers
+     * @param foodSource     The flower this butterfly prefers
      */
     public ButterflyData(int butterflyIndex,
                          String entityId,
@@ -69,7 +68,7 @@ public record ButterflyData(int butterflyIndex,
                          int caterpillarLifespan,
                          int chrysalisLifespan,
                          int butterflyLifespan,
-                         ResourceLocation preferredFlower,
+                         ResourceLocation foodSource,
                          ButterflyType type,
                          Diurnality diurnality,
                          ExtraLandingBlocks extraLandingBlocks,
@@ -88,7 +87,7 @@ public record ButterflyData(int butterflyIndex,
         Objects.requireNonNull(speed, "speed must not be null");
         Objects.requireNonNull(rarity, "rarity must not be null");
         Objects.requireNonNull(habitats, "habitats must not be null");
-        Objects.requireNonNull(preferredFlower, "preferredFlower must not be null");
+        Objects.requireNonNull(foodSource, "foodSource must not be null");
         Objects.requireNonNull(type, "type must not be null");
         Objects.requireNonNull(diurnality, "diurnality must not be null");
         Objects.requireNonNull(extraLandingBlocks, "extraLandingBlocks must not be null");
@@ -110,7 +109,7 @@ public record ButterflyData(int butterflyIndex,
         this.chrysalisLifespan = chrysalisLifespan;
         this.butterflyLifespan = butterflyLifespan;
 
-        this.preferredFlower = preferredFlower;
+        this.foodSource = foodSource;
 
         this.type = type;
         this.diurnality = diurnality;
@@ -322,5 +321,17 @@ public record ButterflyData(int butterflyIndex,
             case OBSIDIAN -> blockState.is(Blocks.OBSIDIAN);
             default -> false;
         };
+    }
+
+    /**
+     * Helper method for getting a food source item from a non-item block.
+     * @return The Resource Location of the food source item.
+     */
+    public ResourceLocation getFoodSourceItem() {
+        if (foodSource.getPath().equals("cocoa")) {
+            return new ResourceLocation("minecraft:cocoa_beans");
+        }
+
+        return foodSource;
     }
 }

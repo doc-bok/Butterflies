@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "clearwing-hummingbird",
   "extraLandingBlocks": "none",
+  "foodSource": "white_tulip",
   "habitats": [
     "plains",
     "ice"
@@ -15,7 +16,6 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "white_tulip",
   "rarity": "uncommon",
   "size": "small",
   "sounds": {

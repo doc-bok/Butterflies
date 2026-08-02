@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "codling",
   "extraLandingBlocks": "none",
+  "foodSource": "apple",
   "habitats": [
     "forests"
   ],
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "none",
-  "preferredFlower": "apple",
   "rarity": "common",
   "size": "small",
   "sounds": {

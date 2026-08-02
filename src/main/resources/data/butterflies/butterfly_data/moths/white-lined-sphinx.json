@@ -3,10 +3,11 @@
   "eggMultiplier": "normal",
   "entityId": "white-lined-sphinx",
   "extraLandingBlocks": "none",
+  "foodSource": "azure_bluet",
   "habitats": [
     "plains"
   ],
-  "index": 60,
+  "index": 61,
   "lifespan": {
     "butterfly": "short",
     "caterpillar": "medium",
@@ -14,7 +15,6 @@
     "egg": "short"
   },
   "plantEffect": "consume",
-  "preferredFlower": "azure_bluet",
   "rarity": "uncommon",
   "size": "medium",
   "sounds": {

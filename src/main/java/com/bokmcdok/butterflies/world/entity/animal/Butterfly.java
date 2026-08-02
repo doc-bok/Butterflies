@@ -419,7 +419,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
-        ResourceLocation location = this.getData().preferredFlower();
+        ResourceLocation location = this.getData().foodSource();
         Item item = BuiltInRegistries.ITEM.get(location);
         return stack.is(item);
     }
@@ -626,11 +626,11 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
                     break;
 
                 case POLLINATE:
-                    this.goalSelector.addGoal(3, new ButterflyPollinateFlowerGoal(this, 0.8d, 8, 8));
+                    this.goalSelector.addGoal(3, new ButterflyFeedAndPollinateGoal(this, 0.8d, 8, 8));
                     break;
 
                 case CONSUME:
-                    this.goalSelector.addGoal(3, new ButterflyEatCropGoal(this, 0.8d, 8, 8));
+                    this.goalSelector.addGoal(3, new ButterflyConsumeGoal(this, 0.8d, 8, 8));
                     break;
             }
         }
