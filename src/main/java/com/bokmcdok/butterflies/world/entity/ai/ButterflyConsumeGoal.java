@@ -4,8 +4,10 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Goal that enables butterflies to eat crops.
@@ -42,7 +45,6 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
      * @param searchRange         The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyConsumeGoal(Butterfly mob,
                                 double speedModifier,
                                 int searchRange,
@@ -52,7 +54,8 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSource = BuiltInRegistries.BLOCK.get(data.foodSource());
+            Optional<Holder.Reference<Block>> block = BuiltInRegistries.BLOCK.get(data.foodSource());
+            block.ifPresent(blockReference -> foodSource = blockReference.value());
         }
     }
 

@@ -6,6 +6,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -20,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -52,8 +54,8 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private final Block foodSourceBlock;
-    private final Item foodSourceItem;
+    private Block foodSourceBlock = null;
+    private Item foodSourceItem = null;
 
     // The RNG.
     public final RandomSource random;
@@ -69,7 +71,6 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyFeedAndPollinateGoal(Butterfly mob,
                                          double speedModifier,
                                          int searchRange,
@@ -79,11 +80,13 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSourceBlock = BuiltInRegistries.BLOCK.get(data.foodSource());
-            foodSourceItem = BuiltInRegistries.ITEM.get(data.getFoodSourceItem());
-        } else {
-            foodSourceBlock = null;
-            foodSourceItem = null;
+
+            Optional<Holder.Reference<Block>> block = BuiltInRegistries.BLOCK.get(data.foodSource());
+            block.ifPresent(blockReference -> foodSourceBlock = blockReference.value());
+
+            Optional<Holder.Reference<Item>> item = BuiltInRegistries.ITEM.get(data.foodSource());
+            item.ifPresent(itemReference -> foodSourceItem = itemReference.value());
+
         }
 
         random = butterfly.getRandom();
