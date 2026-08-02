@@ -588,6 +588,18 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
+    "orizaba": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "butterflies:butterfly_scroll_orizaba"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "peacock": {
       "conditions": {
         "items": [
@@ -757,6 +769,7 @@
       "indianmeal",
       "luna",
       "oak-silk",
+      "orizaba",
       "peppered",
       "spongy",
       "white-lined-sphinx"
