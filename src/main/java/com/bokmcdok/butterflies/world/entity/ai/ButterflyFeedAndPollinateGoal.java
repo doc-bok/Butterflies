@@ -7,7 +7,6 @@ import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -20,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Random;
 import java.util.function.Supplier;
 
 /**
@@ -55,7 +55,7 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
     private final Item foodSourceItem;
 
     // The RNG.
-    public final RandomSource random;
+    public final Random random;
 
     // Has pollination been attempted yet?
     public boolean hasTried;
@@ -68,7 +68,6 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyFeedAndPollinateGoal(Butterfly mob,
                                          double speedModifier,
                                          int searchRange,

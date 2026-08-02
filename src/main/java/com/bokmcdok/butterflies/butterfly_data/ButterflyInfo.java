@@ -390,6 +390,9 @@ public class ButterflyInfo {
             ButterflyHabitat.FORESTS,
         },
         {
+            ButterflyHabitat.JUNGLES,
+        },
+        {
             ButterflyHabitat.FORESTS,
         },
         {
@@ -474,6 +477,7 @@ public class ButterflyInfo {
             ButterflyRarity.COMMON,
             ButterflyRarity.UNCOMMON,
             ButterflyRarity.COMMON,
+            ButterflyRarity.RARE,
             ButterflyRarity.COMMON,
             ButterflyRarity.COMMON,
             ButterflyRarity.UNCOMMON,
