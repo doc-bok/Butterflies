@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "heath",
   "extraLandingBlocks": "none",
+  "foodSource": "white_tulip",
   "habitats": [
     "plains"
   ],
@@ -14,7 +15,6 @@
     "egg": "long"
   },
   "plantEffect": "pollinate",
-  "preferredFlower": "white_tulip",
   "rarity": "rare",
   "size": "small",
   "sounds": {

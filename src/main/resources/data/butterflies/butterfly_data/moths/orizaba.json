@@ -1,0 +1,29 @@
+{
+  "diurnality": "nocturnal",
+  "eggMultiplier": "normal",
+  "entityId": "orizaba",
+  "extraLandingBlocks": "none",
+  "foodSource": "cocoa",
+  "habitats": [
+    "jungles"
+  ],
+  "index": 58,
+  "lifespan": {
+    "butterfly": "short",
+    "caterpillar": "medium",
+    "chrysalis": "long",
+    "egg": "medium"
+  },
+  "plantEffect": "consume",
+  "rarity": "rare",
+  "size": "huge",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "moderate",
+  "traits": [
+    "silk"
+  ],
+  "type": "moth"
+}

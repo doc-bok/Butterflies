@@ -3,6 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "indianmeal",
   "extraLandingBlocks": "hay_bale",
+  "foodSource": "wheat",
   "habitats": [
     "jungles"
   ],
@@ -14,7 +15,6 @@
     "egg": "medium"
   },
   "plantEffect": "consume",
-  "preferredFlower": "wheat",
   "rarity": "common",
   "size": "tiny",
   "sounds": {
