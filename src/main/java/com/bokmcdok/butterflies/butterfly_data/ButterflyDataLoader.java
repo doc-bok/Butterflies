@@ -11,9 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.DataFormatException;
 
 public class ButterflyDataLoader {
@@ -23,7 +21,7 @@ public class ButterflyDataLoader {
             24000 * 2,
             24000 * 4,
             24000 * 7,
-            Integer.MAX_VALUE
+            ButterflyData.IMMORTAL_LIFESPAN
     };
 
     /**
@@ -79,7 +77,7 @@ public class ButterflyDataLoader {
                 ButterflySpeed speed = getEnumValue(object, ButterflySpeed.class, "speed", ButterflySpeed.MODERATE);
                 ButterflyRarity rarity = getEnumValue(object, ButterflyRarity.class, "rarity", ButterflyRarity.COMMON);
 
-                List<ButterflyHabitat> habitats = getEnumCollection(object, ButterflyHabitat.class, "habitats");
+                Set<ButterflyHabitat> habitats = getEnumCollection(object, ButterflyHabitat.class, "habitats");
 
                 JsonObject lifespan = getOptionalObject(object, "lifespan");
                 ButterflyLifespan eggLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "egg", ButterflyLifespan.MEDIUM);
@@ -120,7 +118,7 @@ public class ButterflyDataLoader {
                     butterflySounds = butterflyElem.getAsBoolean();
                 }
 
-                List<ButterflyTrait> traits = getEnumCollection(object, ButterflyTrait.class, "traits");
+                Set<ButterflyTrait> traits = getEnumCollection(object, ButterflyTrait.class, "traits");
 
                 JsonElement variantElement = getOptionalObject(object, "variants");
                 JsonObject variants = variantElement.getAsJsonObject();
@@ -140,8 +138,8 @@ public class ButterflyDataLoader {
                         LIFESPAN[eggLifespan.getIndex()],
                         LIFESPAN[caterpillarLifespan.getIndex()],
                         LIFESPAN[chrysalisLifespan.getIndex()],
-                        LIFESPAN[butterflyLifespan.getIndex()] == Integer.MAX_VALUE ?
-                                Integer.MAX_VALUE : LIFESPAN[butterflyLifespan.getIndex()] * 2,
+                        LIFESPAN[butterflyLifespan.getIndex()] == ButterflyData.IMMORTAL_LIFESPAN ?
+                                ButterflyData.IMMORTAL_LIFESPAN : LIFESPAN[butterflyLifespan.getIndex()] * 2,
                         new ResourceLocation(foodBlock),
                         new ResourceLocation(foodItem),
                         type,
@@ -219,13 +217,13 @@ public class ButterflyDataLoader {
          * @return A value of the enumerated type.
          * @param <T> (Inferred) The type of the enumeration.
          */
-        private static <T extends Enum<?>> List<T> getEnumCollection(
+        private static <T extends Enum<?>> Set<T> getEnumCollection(
                 JsonObject object,
                 Class<T> enumeration,
                 String key
         ) {
             JsonArray jsonData = getOptionalArray(object, key);
-            List<T> result = new ArrayList<>();
+            Set<T> result = new HashSet<>();
             for (int i = 0; i < jsonData.size(); ++i) {
                 JsonElement element = jsonData.get(i);
                 if (!element.isJsonPrimitive()) {

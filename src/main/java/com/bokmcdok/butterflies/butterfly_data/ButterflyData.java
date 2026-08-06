@@ -7,60 +7,54 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.*;
+import java.util.regex.Pattern;
+
+import static net.minecraft.world.level.Level.TICKS_PER_DAY;
 
 /**
  * Helper for converting entity ID to index and vice versa.
- * @param butterflyIndex      The index of the butterfly
- * @param entityId            The butterfly species
- * @param size                The size of the butterfly
- * @param speed               The speed of the butterfly
- * @param rarity              How rare the butterfly is
- * @param habitats            A list of the butterflies habitats
- * @param eggLifespan         The lifespan of the caterpillar phase
- * @param caterpillarLifespan The lifespan of the caterpillar phase
- * @param chrysalisLifespan   The lifespan of the chrysalis phase
- * @param butterflyLifespan   The lifespan of the butterfly phase
- * @param foodBlock           The block this butterfly considers food
- * @param foodItem            The item this butterfly considers food
- * @param type                The type of butterfly
- * @param diurnality          The sleeping pattern of the butterfly
- * @param extraLandingBlocks  The extra blocks the butterfly can land on
- * @param plantEffect         The effect the butterfly has on its food
- * @param eggMultiplier       Multiplies the amount of eggs the butterfly has
- * @param caterpillarSounds   The sounds the caterpillar makes
- * @param butterflySounds     The sounds the butterfly makes
- * @param traits              The traits of the butterfly
- * @param baseVariant         The base variant of the butterfly
- * @param coldVariant         The cold variant of the butterfly
- * @param mateVariant         The mate variant of the butterfly
- * @param warmVariant         The warm variant of the butterfly
- * @param agedVariant         The aged variant of the butterfly
  */
-public record ButterflyData(int butterflyIndex,
-                            String entityId,
-                            ButterflySize size,
-                            ButterflySpeed speed,
-                            ButterflyRarity rarity,
-                            List<ButterflyHabitat> habitats,
-                            int eggLifespan,
-                            int caterpillarLifespan,
-                            int chrysalisLifespan,
-                            int butterflyLifespan,
-                            ResourceLocation foodBlock,
-                            ResourceLocation foodItem,
-                            ButterflyType type,
-                            Diurnality diurnality,
-                            ExtraLandingBlocks extraLandingBlocks,
-                            PlantEffect plantEffect,
-                            EggMultiplier eggMultiplier,
-                            boolean caterpillarSounds,
-                            boolean butterflySounds,
-                            List<ButterflyTrait> traits,
-                            String baseVariant,
-                            String coldVariant,
-                            String mateVariant,
-                            String warmVariant,
-                            String agedVariant) {
+public final class ButterflyData { 
+    private final int butterflyIndex;
+    private final String entityId;
+    private final ButterflySize size;
+    private final ButterflySpeed speed;
+    private final ButterflyRarity rarity;
+    private final Set<ButterflyHabitat> habitats;
+    private final int eggLifespan;
+    private final int caterpillarLifespan;
+    private final int chrysalisLifespan;
+    private final int butterflyLifespan;
+    private final ResourceLocation foodBlock;
+    private final ResourceLocation foodItem;
+    private final ButterflyType type;
+    private final Diurnality diurnality;
+    private final ExtraLandingBlocks extraLandingBlocks;
+    private final PlantEffect plantEffect;
+    private final EggMultiplier eggMultiplier;
+    private final boolean caterpillarSounds;
+    private final boolean butterflySounds;
+    private final Set<ButterflyTrait> traits;
+    private final String baseVariant;
+    private final String coldVariant;
+    private final String mateVariant;
+    private final String warmVariant;
+    private final String agedVariant;
+
+    private final ResourceLocation butterflyEntity;
+    private final ResourceLocation butterflyEggEntity;
+    private final ResourceLocation caterpillarEntity;
+    private final ResourceLocation chrysalisEntity;
+    private final ResourceLocation caterpillarItem;
+    private final ResourceLocation butterflyEggItem;
+    private final ResourceLocation scrollTexture;
+
+    private final ButterflyLifespan overallLifespan;
+
+    private final float sizeMultiplier;
+
+    public static final int IMMORTAL_LIFESPAN = Integer.MAX_VALUE;
+    private static final Pattern ENTITY_ID_PATTERN = Pattern.compile("[a-z0-9._-]+");
 
     /**
      * Construction
@@ -70,7 +64,7 @@ public record ButterflyData(int butterflyIndex,
      * @param speed               The speed of the butterfly
      * @param rarity              How rare the butterfly is
      * @param habitats            A list of the butterflies habitats
-     * @param eggLifespan         The lifespan of the caterpillar phase
+     * @param eggLifespan         The lifespan of the egg phase
      * @param caterpillarLifespan The lifespan of the caterpillar phase
      * @param chrysalisLifespan   The lifespan of the chrysalis phase
      * @param butterflyLifespan   The lifespan of the butterfly phase
@@ -95,7 +89,7 @@ public record ButterflyData(int butterflyIndex,
                          ButterflySize size,
                          ButterflySpeed speed,
                          ButterflyRarity rarity,
-                         List<ButterflyHabitat> habitats,
+                         Set<ButterflyHabitat> habitats,
                          int eggLifespan,
                          int caterpillarLifespan,
                          int chrysalisLifespan,
@@ -109,223 +103,83 @@ public record ButterflyData(int butterflyIndex,
                          EggMultiplier eggMultiplier,
                          boolean caterpillarSounds,
                          boolean butterflySounds,
-                         List<ButterflyTrait> traits,
+                         Set<ButterflyTrait> traits,
                          String baseVariant,
                          String coldVariant,
                          String mateVariant,
                          String warmVariant,
                          String agedVariant) {
-        Objects.requireNonNull(entityId, "entityId must not be null");
-        Objects.requireNonNull(size, "size must not be null");
-        Objects.requireNonNull(speed, "speed must not be null");
-        Objects.requireNonNull(rarity, "rarity must not be null");
-        Objects.requireNonNull(habitats, "habitats must not be null");
-        Objects.requireNonNull(foodBlock, "foodBlock must not be null");
-        Objects.requireNonNull(foodItem, "foodItem must not be null");
-        Objects.requireNonNull(type, "type must not be null");
-        Objects.requireNonNull(diurnality, "diurnality must not be null");
-        Objects.requireNonNull(extraLandingBlocks, "extraLandingBlocks must not be null");
-        Objects.requireNonNull(plantEffect, "plantEffect must not be null");
-        Objects.requireNonNull(eggMultiplier, "eggMultiplier must not be null");
-        Objects.requireNonNull(traits, "traits must not be null");
+        this.butterflyIndex = validateIndex(butterflyIndex);
 
-        this.butterflyIndex = butterflyIndex;
-        this.entityId = entityId;
-        this.size = size;
-        this.speed = speed;
-        this.rarity = rarity;
+        this.entityId = requireValidEntityId(entityId);
 
-        this.habitats = List.copyOf(habitats);
-        this.traits = List.copyOf(traits);
+        this.size = Objects.requireNonNull(size, "size must not be null");
+        this.speed = Objects.requireNonNull(speed, "speed must not be null");
+        this.rarity = Objects.requireNonNull(rarity, "rarity must not be null");
+        this.foodBlock = Objects.requireNonNull(foodBlock, "foodBlock must not be null");
+        this.foodItem = Objects.requireNonNull(foodItem, "foodItem must not be null");
+        this.type = Objects.requireNonNull(type, "type must not be null");
+        this.diurnality = Objects.requireNonNull(diurnality, "diurnality must not be null");
+        this.extraLandingBlocks = Objects.requireNonNull(extraLandingBlocks, "extraLandingBlocks must not be null");
+        this.plantEffect = Objects.requireNonNull(plantEffect, "plantEffect must not be null");
+        this.eggMultiplier = Objects.requireNonNull(eggMultiplier, "eggMultiplier must not be null");
 
-        this.eggLifespan = eggLifespan;
-        this.caterpillarLifespan = caterpillarLifespan;
-        this.chrysalisLifespan = chrysalisLifespan;
-        this.butterflyLifespan = butterflyLifespan;
+        validateLifeCycle(eggLifespan, caterpillarLifespan, chrysalisLifespan, butterflyLifespan);
 
-        this.foodBlock = foodBlock;
-        this.foodItem = foodItem;
+        this.eggLifespan = validateLifespan(eggLifespan, "eggLifespan");
+        this.caterpillarLifespan = validateLifespan(caterpillarLifespan, "caterpillarLifespan");
+        this.chrysalisLifespan = validateLifespan(chrysalisLifespan, "chrysalisLifespan");
+        this.butterflyLifespan = validateLifespan(butterflyLifespan, "butterflyLifespan");
 
-        this.type = type;
-        this.diurnality = diurnality;
-        this.extraLandingBlocks = extraLandingBlocks;
-        this.plantEffect = plantEffect;
+        this.habitats = Set.copyOf(Objects.requireNonNull(
+                habitats,
+                "habitats must not be null"
+        ));
 
-        this.eggMultiplier = eggMultiplier;
-
-        this.caterpillarSounds = caterpillarSounds;
-        this.butterflySounds = butterflySounds;
+        this.traits = Set.copyOf(Objects.requireNonNull(
+                traits,
+                "traits must not be null"
+        ));
 
         this.baseVariant = normalizeVariant(baseVariant, entityId);
         this.coldVariant = normalizeVariant(coldVariant, entityId);
         this.mateVariant = normalizeVariant(mateVariant, entityId);
         this.warmVariant = normalizeVariant(warmVariant, entityId);
         this.agedVariant = normalizeVariant(agedVariant, entityId);
-    }
 
-    /**
-     * Helper method to ensure variants aren't null.
-     * @param variant The variant to use.
-     * @param fallbackEntityId The fallback Entity if the variant is invalid.
-     * @return A valid Entity ID.
-     */
-    private String normalizeVariant(String variant, String fallbackEntityId) {
-        if (variant == null || variant.isEmpty()) {
-            return fallbackEntityId;
-        }
-        return variant;
-    }
+        this.caterpillarSounds = caterpillarSounds;
+        this.butterflySounds = butterflySounds;
 
-    /**
-     * Get the overall lifespan as a simple enumeration
-     * @return A representation of the lifespan.
-     */
-    public ButterflyLifespan getOverallLifeSpan() {
-        if (butterflyLifespan == Integer.MAX_VALUE) {
-            return ButterflyLifespan.IMMORTAL;
-        }
+        this.butterflyEntity = item(entityId);
+        this.butterflyEggEntity = entity("_egg");
+        this.caterpillarEntity = entity("_caterpillar");
+        this.chrysalisEntity = entity("_chrysalis");
+        this.caterpillarItem = item("caterpillar_" + entityId);
+        this.butterflyEggItem = entity("_egg");
+        this.scrollTexture = item("textures/gui/butterfly_scroll/" + entityId + ".png");
 
-        int days = (eggLifespan + caterpillarLifespan + chrysalisLifespan + butterflyLifespan) / 24000;
-        if (days < 18) {
-            return ButterflyLifespan.SHORT;
-        } else if (days < 30) {
-            return ButterflyLifespan.MEDIUM;
+        if (butterflyLifespan == IMMORTAL_LIFESPAN) {
+            this.overallLifespan = ButterflyLifespan.IMMORTAL;
         } else {
-            return ButterflyLifespan.LONG;
-        }
-    }
 
-    /**
-     * Gets the resource location for the caterpillar item.
-     * @return The resource location of the caterpillar item.
-     */
-    public ResourceLocation getCaterpillarItem() {
-        if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, "caterpillar_" + this.entityId);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the butterfly egg item.
-     * @return The resource location of the butterfly egg.
-     */
-    public ResourceLocation getButterflyEggItem() {
-        if (this.entityId != null) {
-            return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + "_egg");
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the resource location for the butterfly entity.
-     * @return The resource location of the butterfly.
-     */
-    public ResourceLocation getButterflyEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId);
-    }
-
-    /**
-     * Gets the resource location for the butterfly egg at the specified index.
-     * @return The resource location of the butterfly egg.
-     */
-    public ResourceLocation getButterflyEggEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_egg");
-    }
-
-    /**
-     * Gets the resource location for the caterpillar at the specified index.
-     * @return The resource location of the caterpillar.
-     */
-    public ResourceLocation getCaterpillarEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_caterpillar");
-    }
-
-    /**
-     * Gets the resource location for the chrysalis at the specified index.
-     * @return The resource location of the chrysalis.
-     */
-    public  ResourceLocation getChrysalisEntity() {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, this.entityId + "_chrysalis");
-    }
-
-    /**
-     * Returns the butterfly index of the butterfly's aged variant.
-     * @return The index of the butterfly to age into.
-     */
-    public int getAgedButterflyIndex() {
-        return ButterflyRegistry.getButterflyIndex(this.agedVariant);
-    }
-
-    /**
-     * Returns the butterfly index of the butterfly's base variant.
-     * @return The index of the butterfly to try and mate with.
-     */
-    public int getBaseButterflyIndex() {
-        int index = ButterflyRegistry.getButterflyIndex(this.baseVariant);
-        if (index < 0) {
-            index = this.butterflyIndex;
-        }
-
-        return index;
-    }
-
-    /**
-     * Returns the butterfly index of the butterfly's cold variant.
-     * @return The index of the cold variant of the butterfly.
-     */
-    public int getColdButterflyIndex() {
-        return ButterflyRegistry.getButterflyIndex(this.coldVariant);
-    }
-
-    /**
-     * Returns the butterfly index of the butterfly's mate.
-     * @return The index of the butterfly to try and mate with.
-     */
-    public int getMateButterflyIndex() {
-        return ButterflyRegistry.getButterflyIndex(this.mateVariant);
-    }
-
-    /**
-     * Returns the butterfly index of the butterfly's warm variant.
-     * @return The index of the butterfly to try and mate with.
-     */
-    public int getWarmButterflyIndex() {
-        return ButterflyRegistry.getButterflyIndex(this.warmVariant);
-    }
-
-    /**
-     * Gets the texture to use for a specific butterfly
-     * @return The resource location of the texture to use.
-     */
-    public ResourceLocation getScrollTexture() {
-        return new ResourceLocation("butterflies", "textures/gui/butterfly_scroll/" + this.entityId + ".png");
-    }
-
-    /**
-     * Returns a multiplier for the sizes of eggs, caterpillars, and chrysalises.
-     * @return A multiplier based on the butterfly size.
-     */
-    public float getSizeMultiplier() {
-        switch (this.size) {
-            case TINY -> {
-                return 0.5f;
-            }
-            case SMALL -> {
-                return 0.7f;
-            }
-            case LARGE -> {
-                return 1.28f;
-            }
-            case HUGE -> {
-                return 1.5f;
-            }
-            default -> {
-                return 1.0f;
+            long totalTicks = (long) eggLifespan + caterpillarLifespan + chrysalisLifespan + butterflyLifespan;
+            long days = totalTicks / TICKS_PER_DAY;
+            if (days < 18) {
+                this.overallLifespan = ButterflyLifespan.SHORT;
+            } else if (days < 30) {
+                this.overallLifespan = ButterflyLifespan.MEDIUM;
+            } else {
+                this.overallLifespan = ButterflyLifespan.LONG;
             }
         }
+
+        this.sizeMultiplier = switch (size) {
+            case TINY -> 0.5f;
+            case SMALL -> 0.7f;
+            case LARGE -> 1.28f;
+            case HUGE -> 1.5f;
+            default ->1.0f;
+        };
     }
 
     /**
@@ -356,5 +210,278 @@ public record ButterflyData(int butterflyIndex,
             case OBSIDIAN -> blockState.is(Blocks.OBSIDIAN);
             default -> false;
         };
+    }
+
+    //***
+    // Accessor Methods
+    //***
+
+    public int butterflyIndex() {
+        return butterflyIndex;
+    }
+
+    public String entityId() {
+        return entityId;
+    }
+
+    public ButterflySize size() {
+        return size;
+    }
+
+    public ButterflySpeed speed() {
+        return speed;
+    }
+
+    public ButterflyRarity rarity() {
+        return rarity;
+    }
+
+    public Set<ButterflyHabitat> habitats() {
+        return habitats;
+    }
+
+    public int eggLifespan() {
+        return eggLifespan;
+    }
+
+    public int caterpillarLifespan() {
+        return caterpillarLifespan;
+    }
+
+    public int chrysalisLifespan() {
+        return chrysalisLifespan;
+    }
+
+    public int butterflyLifespan() {
+        return butterflyLifespan;
+    }
+
+    public ResourceLocation foodBlock() {
+        return foodBlock;
+    }
+
+    public ResourceLocation foodItem() {
+        return foodItem;
+    }
+
+    public ButterflyType type() {
+        return type;
+    }
+
+    public Diurnality diurnality() {
+        return diurnality;
+    }
+
+    public ExtraLandingBlocks extraLandingBlocks() {
+        return extraLandingBlocks;
+    }
+
+    public PlantEffect plantEffect() {
+        return plantEffect;
+    }
+
+    public EggMultiplier eggMultiplier() {
+        return eggMultiplier;
+    }
+
+    public boolean caterpillarSounds() {
+        return caterpillarSounds;
+    }
+
+    public boolean butterflySounds() {
+        return butterflySounds;
+    }
+
+    public Set<ButterflyTrait> traits() {
+        return traits;
+    }
+
+    public String baseVariant() {
+        return baseVariant;
+    }
+
+    public String coldVariant() {
+        return coldVariant;
+    }
+
+    public String mateVariant() {
+        return mateVariant;
+    }
+
+    public String warmVariant() {
+        return warmVariant;
+    }
+
+    public ButterflyLifespan getOverallLifeSpan() {
+        return overallLifespan;
+    }
+
+    public ResourceLocation getCaterpillarItem() {
+        return caterpillarItem;
+    }
+
+    public ResourceLocation getButterflyEggItem() {
+        return butterflyEggItem;
+    }
+
+    public ResourceLocation getButterflyEntity() {
+        return butterflyEntity;
+    }
+
+    public ResourceLocation getButterflyEggEntity() {
+        return butterflyEggEntity;
+    }
+
+    public ResourceLocation getCaterpillarEntity() {
+        return caterpillarEntity;
+    }
+
+    public  ResourceLocation getChrysalisEntity() {
+        return chrysalisEntity;
+    }
+
+    public int getAgedButterflyIndex() {
+        return ButterflyRegistry.getButterflyIndex(this.agedVariant);
+    }
+
+    public int getBaseButterflyIndex() {
+        int index = ButterflyRegistry.getButterflyIndex(this.baseVariant);
+        if (index < 0) {
+            index = this.butterflyIndex;
+        }
+
+        return index;
+    }
+
+    public int getColdButterflyIndex() {
+        return ButterflyRegistry.getButterflyIndex(this.coldVariant);
+    }
+
+    public int getMateButterflyIndex() {
+        return ButterflyRegistry.getButterflyIndex(this.mateVariant);
+    }
+
+    public int getWarmButterflyIndex() {
+        return ButterflyRegistry.getButterflyIndex(this.warmVariant);
+    }
+
+    public ResourceLocation getScrollTexture() {
+        return scrollTexture;
+    }
+
+    public float getSizeMultiplier() {
+        return sizeMultiplier;
+    }
+
+    //***
+    // Helper methods for ResourceLocations
+    //***
+
+    private ResourceLocation item(String path) {
+        return new ResourceLocation(ButterfliesMod.MOD_ID, path);
+    }
+
+    private ResourceLocation entity(String suffix) {
+        return new ResourceLocation(ButterfliesMod.MOD_ID, entityId + suffix
+        );
+    }
+
+    //***
+    // Validation methods
+    //***
+
+    private static String normalizeVariant(String variant,
+                                           String fallbackEntityId) {
+        if (variant == null) {
+            return fallbackEntityId;
+        }
+
+        String normalized = variant.strip();
+
+        if (normalized.isBlank()) {
+            return fallbackEntityId;
+        }
+
+        if (!ENTITY_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException(
+                    "Invalid butterfly variant ID: " + variant
+            );
+        }
+
+        return normalized;
+    }
+
+    private static String requireNonBlank(String value) {
+        Objects.requireNonNull(value, "entityId must not be null");
+
+        String normalized = value.strip();
+
+        if (normalized.isBlank()) {
+            throw new IllegalArgumentException(
+                    "entityId must not be blank"
+            );
+        }
+
+        return normalized;
+    }
+
+    private static String requireValidEntityId(String entityId) {
+        String normalized = requireNonBlank(entityId);
+
+        if (!ENTITY_ID_PATTERN.matcher(normalized).matches()) {
+            throw new IllegalArgumentException(
+                    "entityId contains invalid characters: " + entityId
+            );
+        }
+
+        return normalized;
+    }
+
+    private static int validateIndex(int index) {
+        if (index < 0) {
+            throw new IllegalArgumentException(
+                    "butterflyIndex must be >= 0, but was " + index
+            );
+        }
+
+        return index;
+    }
+
+    private static int validateLifespan(int lifespan, String fieldName) {
+        if (lifespan < 0) {
+            throw new IllegalArgumentException(
+                    fieldName + " must be >= 0 or IMMORTAL_LIFESPAN, but was " + lifespan
+            );
+        }
+
+        return lifespan;
+    }
+
+    private static void validateLifeCycle(
+            int eggLifespan,
+            int caterpillarLifespan,
+            int chrysalisLifespan,
+            int butterflyLifespan
+    ) {
+        if (eggLifespan == IMMORTAL_LIFESPAN
+                && caterpillarLifespan != IMMORTAL_LIFESPAN) {
+            throw new IllegalArgumentException(
+                    "An immortal egg phase cannot be followed by a finite caterpillar phase"
+            );
+        }
+
+        if (caterpillarLifespan == IMMORTAL_LIFESPAN
+                && chrysalisLifespan != IMMORTAL_LIFESPAN) {
+            throw new IllegalArgumentException(
+                    "An immortal caterpillar phase cannot be followed by a finite chrysalis phase"
+            );
+        }
+
+        if (chrysalisLifespan == IMMORTAL_LIFESPAN
+                && butterflyLifespan != IMMORTAL_LIFESPAN) {
+            throw new IllegalArgumentException(
+                    "An immortal chrysalis phase cannot be followed by a finite butterfly phase"
+            );
+        }
     }
 }
