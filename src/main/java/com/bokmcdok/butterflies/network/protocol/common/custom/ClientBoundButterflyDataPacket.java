@@ -49,6 +49,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
             collectionBuffer.writeUtf(i.coldVariant());
             collectionBuffer.writeUtf(i.mateVariant());
             collectionBuffer.writeUtf(i.warmVariant());
+            collectionBuffer.writeUtf(i.agedVariant());
         });
     }
 
