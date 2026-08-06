@@ -3,7 +3,8 @@
   "eggMultiplier": "normal",
   "entityId": "diamondback",
   "extraLandingBlocks": "fruit",
-  "foodSource": "cornflower",
+  "foodBlock": "minecraft:melon",
+  "foodItem": "minecraft:melon_slice",
   "habitats": [
     "plains"
   ],

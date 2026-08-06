@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "morpho",
   "extraLandingBlocks": "none",
-  "foodSource": "pink_tulip",
+  "foodSource": "minecraft:pink_tulip",
   "habitats": [
     "jungles"
   ],

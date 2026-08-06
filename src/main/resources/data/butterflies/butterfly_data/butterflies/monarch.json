@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "monarch",
   "extraLandingBlocks": "none",
-  "foodSource": "poppy",
+  "foodSource": "minecraft:poppy",
   "habitats": [
     "plains"
   ],

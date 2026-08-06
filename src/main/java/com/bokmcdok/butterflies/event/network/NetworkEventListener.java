@@ -89,6 +89,7 @@ public class NetworkEventListener {
                                                       buffer.readInt(),
                                                       buffer.readInt(),
                                                       buffer.readResourceLocation(),
+                                                      buffer.readResourceLocation(),
                                                       buffer.readEnum(ButterflyType.class),
                                                       buffer.readEnum(Diurnality.class),
                                                       buffer.readEnum(ExtraLandingBlocks.class),

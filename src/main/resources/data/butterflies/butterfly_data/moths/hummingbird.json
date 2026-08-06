@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "hummingbird",
   "extraLandingBlocks": "none",
-  "foodSource": "lily_of_the_valley",
+  "foodSource": "minecraft:lily_of_the_valley",
   "habitats": [
     "plains"
   ],

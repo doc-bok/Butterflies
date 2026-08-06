@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "atlas",
   "extraLandingBlocks": "none",
-  "foodSource": "white_tulip",
+  "foodSource": "minecraft:white_tulip",
   "habitats": [
     "forests"
   ],

@@ -20,7 +20,21 @@ import java.util.*;
  * @param caterpillarLifespan The lifespan of the caterpillar phase
  * @param chrysalisLifespan   The lifespan of the chrysalis phase
  * @param butterflyLifespan   The lifespan of the butterfly phase
- * @param foodSource     The flower this butterfly prefers
+ * @param foodBlock           The block this butterfly considers food
+ * @param foodItem            The item this butterfly considers food
+ * @param type                The type of butterfly
+ * @param diurnality          The sleeping pattern of the butterfly
+ * @param extraLandingBlocks  The extra blocks the butterfly can land on
+ * @param plantEffect         The effect the butterfly has on its food
+ * @param eggMultiplier       Multiplies the amount of eggs the butterfly has
+ * @param caterpillarSounds   The sounds the caterpillar makes
+ * @param butterflySounds     The sounds the butterfly makes
+ * @param traits              The traits of the butterfly
+ * @param baseVariant         The base variant of the butterfly
+ * @param coldVariant         The cold variant of the butterfly
+ * @param mateVariant         The mate variant of the butterfly
+ * @param warmVariant         The warm variant of the butterfly
+ * @param agedVariant         The aged variant of the butterfly
  */
 public record ButterflyData(int butterflyIndex,
                             String entityId,
@@ -32,7 +46,8 @@ public record ButterflyData(int butterflyIndex,
                             int caterpillarLifespan,
                             int chrysalisLifespan,
                             int butterflyLifespan,
-                            ResourceLocation foodSource,
+                            ResourceLocation foodBlock,
+                            ResourceLocation foodItem,
                             ButterflyType type,
                             Diurnality diurnality,
                             ExtraLandingBlocks extraLandingBlocks,
@@ -49,14 +64,31 @@ public record ButterflyData(int butterflyIndex,
 
     /**
      * Construction
-     * @param entityId            The id of the butterfly species.
-     * @param size                The size of the butterfly.
-     * @param speed               The speed of the butterfly.
-     * @param rarity              The rarity of the butterfly.
-     * @param caterpillarLifespan How long it remains in the caterpillar stage.
-     * @param chrysalisLifespan   How long it takes for a chrysalis to hatch.
-     * @param butterflyLifespan   How long it lives as a butterfly.
-     * @param foodSource     The flower this butterfly prefers
+     * @param butterflyIndex      The index of the butterfly
+     * @param entityId            The butterfly species
+     * @param size                The size of the butterfly
+     * @param speed               The speed of the butterfly
+     * @param rarity              How rare the butterfly is
+     * @param habitats            A list of the butterflies habitats
+     * @param eggLifespan         The lifespan of the caterpillar phase
+     * @param caterpillarLifespan The lifespan of the caterpillar phase
+     * @param chrysalisLifespan   The lifespan of the chrysalis phase
+     * @param butterflyLifespan   The lifespan of the butterfly phase
+     * @param foodBlock           The block this butterfly considers food
+     * @param foodItem            The item this butterfly considers food
+     * @param type                The type of butterfly
+     * @param diurnality          The sleeping pattern of the butterfly
+     * @param extraLandingBlocks  The extra blocks the butterfly can land on
+     * @param plantEffect         The effect the butterfly has on its food
+     * @param eggMultiplier       Multiplies the amount of eggs the butterfly has
+     * @param caterpillarSounds   The sounds the caterpillar makes
+     * @param butterflySounds     The sounds the butterfly makes
+     * @param traits              The traits of the butterfly
+     * @param baseVariant         The base variant of the butterfly
+     * @param coldVariant         The cold variant of the butterfly
+     * @param mateVariant         The mate variant of the butterfly
+     * @param warmVariant         The warm variant of the butterfly
+     * @param agedVariant         The aged variant of the butterfly
      */
     public ButterflyData(int butterflyIndex,
                          String entityId,
@@ -68,7 +100,8 @@ public record ButterflyData(int butterflyIndex,
                          int caterpillarLifespan,
                          int chrysalisLifespan,
                          int butterflyLifespan,
-                         ResourceLocation foodSource,
+                         ResourceLocation foodBlock,
+                         ResourceLocation foodItem,
                          ButterflyType type,
                          Diurnality diurnality,
                          ExtraLandingBlocks extraLandingBlocks,
@@ -87,7 +120,8 @@ public record ButterflyData(int butterflyIndex,
         Objects.requireNonNull(speed, "speed must not be null");
         Objects.requireNonNull(rarity, "rarity must not be null");
         Objects.requireNonNull(habitats, "habitats must not be null");
-        Objects.requireNonNull(foodSource, "foodSource must not be null");
+        Objects.requireNonNull(foodBlock, "foodBlock must not be null");
+        Objects.requireNonNull(foodItem, "foodItem must not be null");
         Objects.requireNonNull(type, "type must not be null");
         Objects.requireNonNull(diurnality, "diurnality must not be null");
         Objects.requireNonNull(extraLandingBlocks, "extraLandingBlocks must not be null");
@@ -109,7 +143,8 @@ public record ButterflyData(int butterflyIndex,
         this.chrysalisLifespan = chrysalisLifespan;
         this.butterflyLifespan = butterflyLifespan;
 
-        this.foodSource = foodSource;
+        this.foodBlock = foodBlock;
+        this.foodItem = foodItem;
 
         this.type = type;
         this.diurnality = diurnality;
@@ -321,17 +356,5 @@ public record ButterflyData(int butterflyIndex,
             case OBSIDIAN -> blockState.is(Blocks.OBSIDIAN);
             default -> false;
         };
-    }
-
-    /**
-     * Helper method for getting a food source item from a non-item block.
-     * @return The Resource Location of the food source item.
-     */
-    public ResourceLocation getFoodSourceItem() {
-        if (foodSource.getPath().equals("cocoa")) {
-            return new ResourceLocation("minecraft:cocoa_beans");
-        }
-
-        return foodSource;
     }
 }

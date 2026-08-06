@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.1 (2026/08/06)
+ - Separated `foodSource` into `foodBlock` and `foodItem`
+
 ### 7.10.0 (2026/08/01)
  - Added the Orizaba Silkmoth.
 

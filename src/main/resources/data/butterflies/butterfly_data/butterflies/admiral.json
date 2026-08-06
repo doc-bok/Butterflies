@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "admiral",
   "extraLandingBlocks": "none",
-  "foodSource": "blue_orchid",
+  "foodSource": "minecraft:blue_orchid",
   "habitats": [
     "forests",
     "wetlands"

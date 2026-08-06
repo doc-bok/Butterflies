@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "green-skirt-baron",
   "extraLandingBlocks": "none",
-  "foodSource": "azure_bluet",
+  "foodSource": "minecraft:azure_bluet",
   "habitats": [
     "forests"
   ],

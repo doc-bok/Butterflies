@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "white-lined-sphinx",
   "extraLandingBlocks": "none",
-  "foodSource": "azure_bluet",
+  "foodSource": "minecraft:azure_bluet",
   "habitats": [
     "plains"
   ],

@@ -3,7 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "light",
   "extraLandingBlocks": "none",
-  "foodSource": "none",
+  "foodSource": "minecraft:none",
   "habitats": [],
   "index": 65,
   "lifespan": {

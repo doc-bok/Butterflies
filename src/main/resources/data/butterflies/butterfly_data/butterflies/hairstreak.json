@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "hairstreak",
   "extraLandingBlocks": "logs",
-  "foodSource": "poppy",
+  "foodSource": "minecraft:poppy",
   "habitats": [
     "forests",
     "plains",

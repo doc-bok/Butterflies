@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "rainbow",
   "extraLandingBlocks": "none",
-  "foodSource": "allium",
+  "foodSource": "minecraft:allium",
   "habitats": [
     "forests",
     "plains"

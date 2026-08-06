@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "peacock",
   "extraLandingBlocks": "none",
-  "foodSource": "sweet_berry_bush",
+  "foodSource": "minecraft:sweet_berry_bush",
   "habitats": [
     "forests",
     "plains"

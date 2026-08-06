@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "ice",
   "extraLandingBlocks": "none",
-  "foodSource": "wither_rose",
+  "foodSource": "minecraft:wither_rose",
   "habitats": [
     "ice"
   ],

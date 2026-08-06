@@ -3,7 +3,8 @@
   "eggMultiplier": "normal",
   "entityId": "indianmeal",
   "extraLandingBlocks": "hay_bale",
-  "foodSource": "wheat",
+  "foodBlock": "minecraft:wheat",
+  "foodItem": "minecraft:wheat",
   "habitats": [
     "jungles"
   ],

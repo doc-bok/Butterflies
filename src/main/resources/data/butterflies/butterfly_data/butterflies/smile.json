@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "smile",
   "extraLandingBlocks": "none",
-  "foodSource": "cornflower",
+  "foodSource": "minecraft:cornflower",
   "habitats": [
     "forests"
   ],

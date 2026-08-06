@@ -422,7 +422,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     @Override
     public boolean isFood(@NotNull ItemStack stack) {
-        ResourceLocation location = this.getData().foodSource();
+        ResourceLocation location = this.getData().foodItem();
         @SuppressWarnings("deprecation")
         Item item = BuiltInRegistries.ITEM.get(location);
         return stack.is(item);
