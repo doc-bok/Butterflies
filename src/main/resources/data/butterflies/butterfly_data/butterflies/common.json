@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "common",
   "extraLandingBlocks": "none",
-  "foodSource": "dandelion",
+  "foodSource": "minecraft:dandelion",
   "habitats": [
     "forests",
     "plains"

@@ -3,7 +3,8 @@
   "eggMultiplier": "normal",
   "entityId": "codling",
   "extraLandingBlocks": "none",
-  "foodSource": "apple",
+  "foodBlock": "minecraft:oak_leaves",
+  "foodItem": "minecraft:apple",
   "habitats": [
     "forests"
   ],

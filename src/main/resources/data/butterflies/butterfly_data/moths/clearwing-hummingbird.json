@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "clearwing-hummingbird",
   "extraLandingBlocks": "none",
-  "foodSource": "white_tulip",
+  "foodSource": "minecraft:white_tulip",
   "habitats": [
     "plains",
     "ice"

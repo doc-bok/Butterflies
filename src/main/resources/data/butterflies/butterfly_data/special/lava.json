@@ -3,7 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "lava",
   "extraLandingBlocks": "none",
-  "foodSource": "none",
+  "foodSource": "minecraft:none",
   "habitats": [
     "nether"
   ],

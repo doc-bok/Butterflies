@@ -3,7 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "bluemoonmale",
   "extraLandingBlocks": "none",
-  "foodSource": "allium",
+  "foodSource": "minecraft:allium",
   "habitats": [
     "forests"
   ],

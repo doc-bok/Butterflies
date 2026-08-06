@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "buckeye",
   "extraLandingBlocks": "fruit",
-  "foodSource": "blue_orchid",
+  "foodSource": "minecraft:blue_orchid",
   "habitats": [
     "plains",
     "savannas"

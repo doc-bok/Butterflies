@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "chalkhill",
   "extraLandingBlocks": "none",
-  "foodSource": "oxeye_daisy",
+  "foodSource": "minecraft:oxeye_daisy",
   "habitats": [
     "hills",
     "plateaus"

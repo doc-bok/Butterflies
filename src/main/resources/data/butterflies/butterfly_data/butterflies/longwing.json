@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "longwing",
   "extraLandingBlocks": "none",
-  "foodSource": "dandelion",
+  "foodSource": "minecraft:dandelion",
   "habitats": [
     "wetlands"
   ],

@@ -3,7 +3,7 @@
   "eggMultiplier": "double",
   "entityId": "spongy",
   "extraLandingBlocks": "none",
-  "foodSource": "bud_orange_tulip",
+  "foodSource": "minecraft:bud_orange_tulip",
   "habitats": [
     "forests"
   ],

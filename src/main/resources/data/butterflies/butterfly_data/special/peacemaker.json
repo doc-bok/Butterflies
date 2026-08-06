@@ -3,7 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "peacemaker",
   "extraLandingBlocks": "none",
-  "foodSource": "wither_rose",
+  "foodSource": "minecraft:wither_rose",
   "habitats": [],
   "index": 67,
   "lifespan": {

@@ -1,5 +1,12 @@
 ## Changelog
 
+### 7.10.2 (2026/08/06)
+- Separated `foodSource` into `foodBlock` and `foodItem`
+- 
+### 7.10.1 (2026/08/02)
+ - Write agedVariant in ClientBoundButterflyDataPacket to prevent network error.
+ - Thanks to Spagles for this fix
+
 ### 7.10.0 (2026/08/01)
  - Added the Orizaba Silkmoth.
 

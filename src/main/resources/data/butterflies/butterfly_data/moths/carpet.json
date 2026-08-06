@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "carpet",
   "extraLandingBlocks": "wool",
-  "foodSource": "cornflower",
+  "foodSource": "minecraft:cornflower",
   "habitats": [
     "plains",
     "wetlands"

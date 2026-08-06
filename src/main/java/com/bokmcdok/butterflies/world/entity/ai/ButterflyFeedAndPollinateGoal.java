@@ -11,6 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -79,8 +80,8 @@ public class ButterflyFeedAndPollinateGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSourceBlock = BuiltInRegistries.BLOCK.get(data.foodSource());
-            foodSourceItem = BuiltInRegistries.ITEM.get(data.getFoodSourceItem());
+            foodSourceBlock = BuiltInRegistries.BLOCK.get(data.foodBlock());
+            foodSourceItem = BuiltInRegistries.ITEM.get(data.foodItem());
         } else {
             foodSourceBlock = null;
             foodSourceItem = null;

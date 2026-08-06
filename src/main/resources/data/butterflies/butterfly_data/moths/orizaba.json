@@ -3,7 +3,8 @@
   "eggMultiplier": "normal",
   "entityId": "orizaba",
   "extraLandingBlocks": "none",
-  "foodSource": "cocoa",
+  "foodBlock": "minecraft:cocoa",
+  "foodItem": "minecraft:cocoa_beans",
   "habitats": [
     "jungles"
   ],

@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "commonbirdwing",
   "extraLandingBlocks": "none",
-  "foodSource": "allium",
+  "foodSource": "minecraft:allium",
   "habitats": [
     "forests"
   ],

@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "domestic_silk",
   "extraLandingBlocks": "none",
-  "foodSource": "red_tulip",
+  "foodSource": "minecraft:red_tulip",
   "habitats": [
     "villages"
   ],

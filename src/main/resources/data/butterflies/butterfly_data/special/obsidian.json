@@ -3,7 +3,7 @@
   "eggMultiplier": "none",
   "entityId": "obsidian",
   "extraLandingBlocks": "obsidian",
-  "foodSource": "none",
+  "foodSource": "minecraft:none",
   "habitats": [
     "end"
   ],

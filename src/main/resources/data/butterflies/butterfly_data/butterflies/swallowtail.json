@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "swallowtail",
   "extraLandingBlocks": "none",
-  "foodSource": "azure_bluet",
+  "foodSource": "minecraft:azure_bluet",
   "habitats": [
     "plains"
   ],

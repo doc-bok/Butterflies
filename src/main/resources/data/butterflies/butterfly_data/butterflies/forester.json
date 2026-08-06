@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "forester",
   "extraLandingBlocks": "none",
-  "foodSource": "lily_of_the_valley",
+  "foodSource": "minecraft:lily_of_the_valley",
   "habitats": [
     "forests",
     "plains",

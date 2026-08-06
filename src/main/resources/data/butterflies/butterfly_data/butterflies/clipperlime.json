@@ -3,7 +3,7 @@
   "eggMultiplier": "normal",
   "entityId": "clipperlime",
   "extraLandingBlocks": "none",
-  "foodSource": "poppy",
+  "foodSource": "minecraft:poppy",
   "habitats": [
     "jungles"
   ],
