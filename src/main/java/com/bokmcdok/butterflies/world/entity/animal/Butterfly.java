@@ -489,7 +489,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             ButterflyData data = ButterflyRegistry.getEntry(i);
             if (data != null) {
 
-                String species = data.entityId();
+                String species = data.speciesId().value();
                 entityData.set(DATA_MIMIC_TEXTURE, "textures/entity/butterfly/butterfly_" + species + ".png");
             }
         } else {

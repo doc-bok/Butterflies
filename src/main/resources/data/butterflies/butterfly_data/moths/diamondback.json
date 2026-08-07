@@ -2,7 +2,7 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "diamondback",
-  "extraLandingBlocks": "fruit",
+  "extraLandingBlocks": ["minecraft:pumpkin",  "minecraft:melon"],
   "foodBlock": "minecraft:melon",
   "foodItem": "minecraft:melon_slice",
   "habitats": [

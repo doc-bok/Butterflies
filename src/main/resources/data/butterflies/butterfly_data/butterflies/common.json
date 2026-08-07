@@ -2,7 +2,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "common",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:dandelion",
   "habitats": [
     "forests",

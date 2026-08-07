@@ -2,7 +2,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "common-crow",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:red_tulip",
   "habitats": [
     "forests",

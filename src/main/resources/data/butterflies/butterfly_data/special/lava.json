@@ -2,7 +2,7 @@
   "diurnality": "cathemeral",
   "eggMultiplier": "none",
   "entityId": "lava",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:none",
   "habitats": [
     "nether"

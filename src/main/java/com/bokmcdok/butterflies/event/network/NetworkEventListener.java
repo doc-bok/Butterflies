@@ -13,6 +13,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -78,7 +79,7 @@ public class NetworkEventListener {
                 ButterflyRegistry.reset();
 
                 List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
-                        (buffer) -> new ButterflyData(buffer.readInt(),
+                        (buffer) -> new ButterflyData.Builder(buffer.readInt(),
                                                       buffer.readUtf(),
                                                       buffer.readEnum(ButterflySize.class),
                                                       buffer.readEnum(ButterflySpeed.class),
@@ -92,7 +93,7 @@ public class NetworkEventListener {
                                                       buffer.readResourceLocation(),
                                                       buffer.readEnum(ButterflyType.class),
                                                       buffer.readEnum(Diurnality.class),
-                                                      buffer.readEnum(ExtraLandingBlocks.class),
+                                                      buffer.readCollection(FriendlyByteBuf.limitValue(HashSet::new, 4), FriendlyByteBuf::readUtf),
                                                       buffer.readEnum(PlantEffect.class),
                                                       buffer.readEnum(EggMultiplier.class),
                                                       buffer.readBoolean(),
@@ -102,7 +103,7 @@ public class NetworkEventListener {
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
                                                       buffer.readUtf(),
-                                                      buffer.readUtf()));
+                                                      buffer.readUtf()).build());
 
                 // Register the new data.
                 for (ButterflyData butterfly : butterflyData) {

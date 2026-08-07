@@ -2,7 +2,7 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "luna",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:oxeye_daisy",
   "habitats": [
     "forests"

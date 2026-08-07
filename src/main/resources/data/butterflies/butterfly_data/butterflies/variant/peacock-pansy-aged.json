@@ -2,7 +2,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "none",
   "entityId": "peacock-pansy-aged",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:blue_orchid",
   "habitats": [],
   "index": 44,
