@@ -2,7 +2,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "none",
   "entityId": "bluemoonmale",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:allium",
   "habitats": [
     "forests"

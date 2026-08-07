@@ -2,7 +2,7 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "codling",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodBlock": "minecraft:oak_leaves",
   "foodItem": "minecraft:apple",
   "habitats": [

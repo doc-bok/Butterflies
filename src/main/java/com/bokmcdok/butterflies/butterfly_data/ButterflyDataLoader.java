@@ -99,7 +99,7 @@ public class ButterflyDataLoader {
 
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
                 Diurnality diurnality = getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
-                ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
+                Set<String> extraLandingBlocks = getStringCollection(object, "extraLandingBlocks");
                 PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
@@ -128,7 +128,7 @@ public class ButterflyDataLoader {
                 String warmVariant = getOptionalString(variants, "warm");
                 String agedVariant = getOptionalString(variants, "aged");
 
-                entry = new ButterflyData(
+                entry = new ButterflyData.Builder(
                         index,
                         entityId,
                         size,
@@ -155,7 +155,7 @@ public class ButterflyDataLoader {
                         mateVariant,
                         warmVariant,
                         agedVariant
-                );
+                ).build();
             }
 
             return entry;
@@ -234,6 +234,40 @@ public class ButterflyDataLoader {
 
                 try {
                     T value = EnumExtensions.searchEnum(enumeration, element.getAsString());
+                    result.add(value);
+                } catch (IllegalArgumentException e) {
+
+                    // The value specified is invalid, so make sure it's written to the log.
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
+                            key,
+                            jsonData.get(i).getAsString(),
+                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                }
+            }
+
+            return result;
+        }
+
+        /**
+         * Helper method for pulling out a collection of strings.
+         * @param object The JSON object to read the value from.
+         * @param key The key to look for.
+         * @return A value of the enumerated type.
+         */
+        private static Set<String> getStringCollection(JsonObject object,
+                                                       String key) {
+            JsonArray jsonData = getOptionalArray(object, key);
+            Set<String> result = new HashSet<>();
+            for (int i = 0; i < jsonData.size(); ++i) {
+                JsonElement element = jsonData.get(i);
+                if (!element.isJsonPrimitive()) {
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Non-primitive string value for [{}] in [{}]", key,
+                            object.has("entityId") ? object.get("entityId").getAsString() : "unknown");
+                    continue;
+                }
+
+                try {
+                    String value = element.getAsString();
                     result.add(value);
                 } catch (IllegalArgumentException e) {
 

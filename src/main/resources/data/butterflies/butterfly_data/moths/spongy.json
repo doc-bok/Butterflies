@@ -2,7 +2,7 @@
   "diurnality": "crepuscular",
   "eggMultiplier": "double",
   "entityId": "spongy",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:bud_orange_tulip",
   "habitats": [
     "forests"

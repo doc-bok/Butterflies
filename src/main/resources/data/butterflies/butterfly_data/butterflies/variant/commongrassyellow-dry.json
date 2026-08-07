@@ -2,7 +2,7 @@
   "diurnality": "diurnal",
   "eggMultiplier": "double",
   "entityId": "commongrassyellow-dry",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:azure_bluet",
   "habitats": [
     "plains"

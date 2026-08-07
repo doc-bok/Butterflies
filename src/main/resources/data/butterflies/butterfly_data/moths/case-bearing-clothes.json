@@ -2,7 +2,7 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "case-bearing-clothes",
-  "extraLandingBlocks": "wool",
+  "extraLandingBlocks": ["#minecraft:wool"],
   "foodSource": "minecraft:cornflower",
   "habitats": [
     "villages"

@@ -2,7 +2,7 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "orizaba",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodBlock": "minecraft:cocoa",
   "foodItem": "minecraft:cocoa_beans",
   "habitats": [

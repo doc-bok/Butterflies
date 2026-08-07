@@ -2,7 +2,7 @@
   "diurnality": "crepuscular",
   "eggMultiplier": "normal",
   "entityId": "admiral",
-  "extraLandingBlocks": "none",
+  "extraLandingBlocks": [],
   "foodSource": "minecraft:blue_orchid",
   "habitats": [
     "forests",
