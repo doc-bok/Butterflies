@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.3 (2026/08/07)
+ - Extra Landing Blocks can now be set using Resource Locations or Block Tags.
+
 ### 7.10.2 (2026/08/06)
  - Separated `foodSource` into `foodBlock` and `foodItem
 
