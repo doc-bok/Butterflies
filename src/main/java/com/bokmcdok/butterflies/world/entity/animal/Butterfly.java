@@ -593,17 +593,19 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     protected void registerGoals() {
         super.registerGoals();
 
+        ButterflyData butterflyData = getData();
+
         // Some butterflies are fearless.
-        if (!getData().hasTrait(ButterflyTrait.FEARLESS)) {
+        if (!butterflyData.hasTrait(ButterflyTrait.FEARLESS)) {
 
             // Some butterflies are not scared of cats.
             Predicate<LivingEntity> predicateOnAvoidEntity = Butterfly::isScaredOfEverything;
-            if (getData().hasTrait(ButterflyTrait.CATFRIEND)) {
+            if (butterflyData.hasTrait(ButterflyTrait.CATFRIEND)) {
                 predicateOnAvoidEntity = Butterfly::isNotScaredOfCats;
             }
 
             // Some butterflies can mimic others.
-            if (getData().hasTrait(ButterflyTrait.MIMICRY)) {
+            if (butterflyData.hasTrait(ButterflyTrait.MIMICRY)) {
                 this.goalSelector.addGoal(1, new ButterflyMimicGoal(this,
                         LivingEntity.class,
                         10.0F,
@@ -625,12 +627,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
 
         // Pollination can be configured to be off.
         if (ButterfliesConfig.Common.enablePollination.get()) {
-            switch (this.getData().plantEffect()) {
+            switch (butterflyData.plantEffect()) {
                 case NONE:
                     break;
 
                 case POLLINATE:
-                    this.goalSelector.addGoal(3, new ButterflyFeedAndPollinateGoal(this, 0.8d, 8, 8));
+                    this.goalSelector.addGoal(3, new ButterflyPollinateGoal(this, 0.8d, 8, 8));
                     break;
 
                 case CONSUME:
@@ -639,12 +641,16 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             }
         }
 
+        if (butterflyData.eggMultiplier() != EggMultiplier.NONE) {
+            this.goalSelector.addGoal(3, new ButterflyFeedGoal(this, 0.8d, 8, 8));
+        }
+
         this.goalSelector.addGoal(4, new ButterflyMudPuddlingGoal(this, 0.8, 8, 8));
         this.goalSelector.addGoal(6, new ButterflyRestGoal(this, 0.8, 8, 8));
 
         // Heath butterflies and moths are drawn to light.
-        if (getData().type() == ButterflyType.MOTH ||
-                getData().hasTrait(ButterflyTrait.MOTHWANDERER)) {
+        if (butterflyData.type() == ButterflyType.MOTH ||
+                butterflyData.hasTrait(ButterflyTrait.MOTHWANDERER)) {
             this.goalSelector.addGoal(8, new MothWanderGoal(this, 1.0));
         } else {
             this.goalSelector.addGoal(8, new ButterflyWanderGoal(this, 1.0));
