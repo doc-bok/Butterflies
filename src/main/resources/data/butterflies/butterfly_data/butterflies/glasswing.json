@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "glasswing",
-  "extraLandingBlocks": "none",
-  "foodSource": "orange_tulip",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:orange_tulip",
   "habitats": [
     "jungles"
   ],
