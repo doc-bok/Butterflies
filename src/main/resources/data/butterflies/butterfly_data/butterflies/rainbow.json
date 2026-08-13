@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "rainbow",
-  "extraLandingBlocks": "none",
-  "foodSource": "allium",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:allium",
   "habitats": [
     "forests",
     "plains"

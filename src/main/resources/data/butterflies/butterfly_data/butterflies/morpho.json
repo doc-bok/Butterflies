@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "morpho",
-  "extraLandingBlocks": "none",
-  "foodSource": "pink_tulip",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:pink_tulip",
   "habitats": [
     "jungles"
   ],

@@ -36,6 +36,7 @@ public class ButterflyFeederSlot extends Slot {
                 itemStack.is(Items.APPLE) ||
                 itemStack.is(Items.SWEET_BERRIES) ||
                 itemStack.is(Items.MELON_SLICE) ||
+                itemStack.is(Items.WHEAT) ||
                 itemStack.is(Items.COCOA_BEANS);
     }
 }

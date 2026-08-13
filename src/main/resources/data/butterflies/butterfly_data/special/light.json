@@ -2,8 +2,8 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "none",
   "entityId": "light",
-  "extraLandingBlocks": "none",
-  "foodSource": "none",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:none",
   "habitats": [],
   "index": 65,
   "lifespan": {
