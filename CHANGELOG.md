@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.5 (2026/08/14)
+ - Butterfly entities will no longer die when on solid blocks.
+
 ### 7.10.4 (2026/08/08)
  - Separated goals for pollination and feeding.
 
