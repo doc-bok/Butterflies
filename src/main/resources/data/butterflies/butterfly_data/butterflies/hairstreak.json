@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "hairstreak",
-  "extraLandingBlocks": "logs",
-  "foodSource": "poppy",
+  "extraLandingBlocks": ["#minecraft:logs"],
+  "foodSource": "minecraft:poppy",
   "habitats": [
     "forests",
     "plains",

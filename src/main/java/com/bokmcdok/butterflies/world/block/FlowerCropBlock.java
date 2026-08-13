@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
@@ -87,6 +88,19 @@ public class FlowerCropBlock extends CropBlock {
     @Override
     public BlockState getStateForAge(int age) {
         return age == MAX_AGE ? this.flowerBlock.defaultBlockState() : super.getStateForAge(age);
+    }
+
+    @Override
+    public boolean canSurvive(@NotNull BlockState blockState,
+                              @NotNull LevelReader levelReader,
+                              @NotNull BlockPos blockPos) {
+
+        if (!levelReader.getBlockState(blockPos).isAir() ||
+                !levelReader.getBlockState(blockPos.below()).is(Blocks.GRASS_BLOCK)) {
+            return false;
+        }
+
+        return super.canSurvive(blockState, levelReader, blockPos);
     }
 
     /**

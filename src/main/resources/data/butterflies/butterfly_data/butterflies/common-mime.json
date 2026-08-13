@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "common-mime",
-  "extraLandingBlocks": "none",
-  "foodSource": "pink_tulip",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:pink_tulip",
   "habitats": [
     "hills",
     "plateaus"
