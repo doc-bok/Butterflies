@@ -2,6 +2,8 @@ package com.bokmcdok.butterflies.network.protocol.common.custom;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyHabitat;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +31,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
             collectionBuffer.writeEnum(i.size());
             collectionBuffer.writeEnum(i.speed());
             collectionBuffer.writeEnum(i.rarity());
-            collectionBuffer.writeCollection(i.habitats(), FriendlyByteBuf::writeEnum);
+            collectionBuffer.writeEnumSet(i.habitats(), ButterflyHabitat.class);
             collectionBuffer.writeInt(i.eggLifespan());
             collectionBuffer.writeInt(i.caterpillarLifespan());
             collectionBuffer.writeInt(i.chrysalisLifespan());
@@ -43,7 +45,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
             collectionBuffer.writeEnum(i.eggMultiplier());
             collectionBuffer.writeBoolean(i.caterpillarSounds());
             collectionBuffer.writeBoolean(i.butterflySounds());
-            collectionBuffer.writeCollection(i.traits(), FriendlyByteBuf::writeEnum);
+            collectionBuffer.writeEnumSet(i.traits(), ButterflyTrait.class);
             collectionBuffer.writeUtf(i.baseVariant().value());
             collectionBuffer.writeUtf(i.coldVariant().value());
             collectionBuffer.writeUtf(i.mateVariant().value());

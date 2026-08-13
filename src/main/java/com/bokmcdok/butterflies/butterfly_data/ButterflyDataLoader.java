@@ -128,34 +128,35 @@ public class ButterflyDataLoader {
                 String warmVariant = getOptionalString(variants, "warm");
                 String agedVariant = getOptionalString(variants, "aged");
 
-                entry = new ButterflyData.Builder(
-                        index,
-                        entityId,
-                        size,
-                        speed,
-                        rarity,
-                        habitats,
-                        LIFESPAN[eggLifespan.getIndex()],
-                        LIFESPAN[caterpillarLifespan.getIndex()],
-                        LIFESPAN[chrysalisLifespan.getIndex()],
-                        LIFESPAN[butterflyLifespan.getIndex()] == ButterflyData.IMMORTAL_LIFESPAN ?
-                                ButterflyData.IMMORTAL_LIFESPAN : LIFESPAN[butterflyLifespan.getIndex()] * 2,
-                        new ResourceLocation(foodBlock),
-                        new ResourceLocation(foodItem),
-                        type,
-                        diurnality,
-                        extraLandingBlocks,
-                        plantEffect,
-                        eggMultiplier,
-                        caterpillarSounds,
-                        butterflySounds,
-                        traits,
-                        baseVariant,
-                        coldVariant,
-                        mateVariant,
-                        warmVariant,
-                        agedVariant
-                ).build();
+                entry = new ButterflyData.Builder(index)
+                        .speciesId(entityId)
+                        .size(size)
+                        .speed(speed)
+                        .rarity(rarity)
+                        .habitats(habitats)
+                        .eggLifespan(LIFESPAN[eggLifespan.getIndex()])
+                        .caterpillarLifespan(LIFESPAN[caterpillarLifespan.getIndex()])
+                        .chrysalisLifespan(LIFESPAN[chrysalisLifespan.getIndex()])
+                        .butterflyLifespan(
+                                LIFESPAN[butterflyLifespan.getIndex()] == ButterflyData.IMMORTAL_LIFESPAN
+                                        ? ButterflyData.IMMORTAL_LIFESPAN
+                                        : LIFESPAN[butterflyLifespan.getIndex()] * 2)
+                        .foodBlock(new ResourceLocation(foodBlock))
+                        .foodItem(new ResourceLocation(foodItem))
+                        .type(type)
+                        .diurnality(diurnality)
+                        .extraLandingBlocks(extraLandingBlocks)
+                        .plantEffect(plantEffect)
+                        .eggMultiplier(eggMultiplier)
+                        .caterpillarSounds(caterpillarSounds)
+                        .butterflySounds(butterflySounds)
+                        .traits(traits)
+                        .baseVariant(baseVariant)
+                        .coldVariant(coldVariant)
+                        .mateVariant(mateVariant)
+                        .warmVariant(warmVariant)
+                        .agedVariant(agedVariant)
+                        .build();
             }
 
             return entry;

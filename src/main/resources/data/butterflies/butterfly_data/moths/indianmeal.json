@@ -2,7 +2,9 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "indianmeal",
-  "extraLandingBlocks": ["minecraft:hay_block"],
+  "extraLandingBlocks": [
+    "minecraft:hay_block"
+  ],
   "foodBlock": "minecraft:wheat",
   "foodItem": "minecraft:wheat",
   "habitats": [
