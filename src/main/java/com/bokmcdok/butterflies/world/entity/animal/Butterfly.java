@@ -45,6 +45,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
@@ -517,6 +518,41 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Accessor to help get butterfly data when needed.
+     * @return A valid butterfly data entry.
+     */
+    public ButterflyData getData() {
+        if (this.data == null) {
+            this.data = ButterflyRegistry.getButterflyDataForEntity(this);
+        }
+
+        return this.data;
+    }
+
+    /**
+     * Handle an event from the server. Spawns particles when mud puddling.
+     * @param eventId The ID of the event.
+     */
+    @Override
+    public void handleEntityEvent(byte eventId) {
+        if (eventId == 38) {
+            double d0 = this.random.nextGaussian() * 0.02;
+            double d1 = this.random.nextGaussian() * 0.02;
+            double d2 = this.random.nextGaussian() * 0.02;
+            level().addParticle(
+                    ParticleTypes.HAPPY_VILLAGER,
+                    this.getRandomX(1.0),
+                    this.getRandomY() + 0.5,
+                    this.getRandomZ(1.0),
+                    d0,
+                    d1,
+                    d2);
+        } else {
+            super.handleEntityEvent(eventId);
+        }
+    }
+
+    /**
      * Controls when a flapping event should be emitted.
      * @return TRUE when a flapping event should be emitted.
      */
@@ -533,6 +569,15 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     @Override
     public boolean isIgnoringBlockTriggers() {
         return true;
+    }
+
+    /**
+     * Ignore wall collisions entirely.
+     * @return Always returns false.
+     */
+    @Override
+    public boolean isInWall() {
+        return false;
     }
 
     /**
@@ -684,12 +729,12 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     public void setLanded(BlockPos landingBlockPosition) {
 
         switch (this.getLandedDirection()) {
-            case DOWN -> this.setPos(this.getX(), landingBlockPosition.getY() + 1.1, this.getZ());
-            case UP -> this.setPos(this.getX(), landingBlockPosition.getY() - 0.1, this.getZ());
-            case NORTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() + 1.1);
-            case SOUTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() - 0.1);
-            case WEST -> this.setPos(landingBlockPosition.getX() + 1.1, this.getY(), this.getZ());
-            case EAST -> this.setPos(landingBlockPosition.getX() - 0.1, this.getY(), this.getZ());
+            case DOWN -> this.setPos(this.getX(), landingBlockPosition.getY() + 1.0, this.getZ());
+            case UP -> this.setPos(this.getX(), landingBlockPosition.getY() - 0.01, this.getZ());
+            case NORTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() + 1.0);
+            case SOUTH -> this.setPos(this.getX(), this.getY(), landingBlockPosition.getZ() - 0.01);
+            case WEST -> this.setPos(landingBlockPosition.getX() + 1.0, this.getY(), this.getZ());
+            case EAST -> this.setPos(landingBlockPosition.getX() - 0.01, this.getY(), this.getZ());
         }
 
         entityData.set(DATA_LANDED, true);
@@ -902,47 +947,57 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
     }
 
     /**
+     * Create a bounding box that respects landing direction.
+     * @return The butterfly's bounding box.
+     */
+    @NotNull
+    @Override
+    protected AABB makeBoundingBox() {
+        Vec3 pos = this.position();
+        double halfWidth = getBbWidth() * 0.5;
+        double height = getBbHeight();
+
+        if (!getIsLanded()) {
+            return standingBox(pos.x, pos.y, pos.z, halfWidth, height);
+        }
+
+        return switch (getLandedDirection()) {
+            case NORTH -> new AABB(
+                    pos.x - halfWidth, pos.y - halfWidth, pos.z,
+                    pos.x + halfWidth, pos.y + halfWidth, pos.z + height
+            );
+
+            case SOUTH -> new AABB(
+                    pos.x - halfWidth, pos.y - halfWidth, pos.z,
+                    pos.x + halfWidth, pos.y + halfWidth, pos.z - height
+            );
+
+            case EAST -> new AABB(
+                    pos.x, pos.y - halfWidth, pos.z - halfWidth,
+                    pos.x - height, pos.y + halfWidth, pos.z + halfWidth
+            );
+
+            case WEST -> new AABB(
+                    pos.x, pos.y - halfWidth, pos.z - halfWidth,
+                    pos.x + height, pos.y + halfWidth, pos.z + halfWidth
+            );
+
+            case UP -> new AABB(
+                    pos.x - halfWidth, pos.y, pos.z - halfWidth,
+                    pos.x + halfWidth, pos.y - height, pos.z + halfWidth
+            );
+
+            case DOWN -> standingBox(pos.x, pos.y, pos.z, halfWidth, height);
+        };
+    }
+
+    /**
      * Override to change how pushing other entities affects them. Butterflies
      * don't push other entities.
      */
     @Override
     protected void pushEntities() {
         // No-op
-    }
-
-    /**
-     * Accessor to help get butterfly data when needed.
-     * @return A valid butterfly data entry.
-     */
-    public ButterflyData getData() {
-        if (this.data == null) {
-            this.data = ButterflyRegistry.getButterflyDataForEntity(this);
-        }
-
-        return this.data;
-    }
-
-    /**
-     * Handle an event from the server. Spawns particles when mud puddling.
-     * @param eventId The ID of the event.
-     */
-    @Override
-    public void handleEntityEvent(byte eventId) {
-        if (eventId == 38) {
-            double d0 = this.random.nextGaussian() * 0.02;
-            double d1 = this.random.nextGaussian() * 0.02;
-            double d2 = this.random.nextGaussian() * 0.02;
-            level().addParticle(
-                    ParticleTypes.HAPPY_VILLAGER,
-                    this.getRandomX(1.0),
-                    this.getRandomY() + 0.5,
-                    this.getRandomZ(1.0),
-                    d0,
-                    d1,
-                    d2);
-        } else {
-            super.handleEntityEvent(eventId);
-        }
     }
 
     /**
@@ -1031,5 +1086,25 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
         }
 
         return false;
+    }
+
+    /**
+     * Helper method to create a default bounding box.
+     * @param x The x-position.
+     * @param y The y-position.
+     * @param z The z-position.
+     * @param halfWidth Half the width of the entity.
+     * @param height The height of the entity.
+     * @return The new bounding box.
+     */
+    private static AABB standingBox(double x,
+                                    double y,
+                                    double z,
+                                    double halfWidth,
+                                    double height) {
+        return new AABB(
+                x - halfWidth, y, z - halfWidth,
+                x + halfWidth, y + height, z + halfWidth
+        );
     }
 }
