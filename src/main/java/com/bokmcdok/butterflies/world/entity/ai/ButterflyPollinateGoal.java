@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -18,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -49,7 +51,7 @@ public class ButterflyPollinateGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private final Block preferredFlower;
+    private Holder.Reference<Block> preferredFlower;
 
     // The RNG.
     private final RandomSource random;
@@ -67,22 +69,22 @@ public class ButterflyPollinateGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyPollinateGoal(Butterfly mob,
                                   double speedModifier,
                                   int searchRange,
                                   int verticalSearchRange) {
         super(mob, speedModifier, searchRange, verticalSearchRange);
         butterfly = mob;
+        preferredFlower = null;
+        random = butterfly.getRandom();
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
-        if (data != null) {
-            preferredFlower = BuiltInRegistries.BLOCK.get(data.foodBlock());
-        } else {
-            preferredFlower = null;
+        if (data == null) {
+            return;
         }
 
-        random = butterfly.getRandom();
+        Optional<Holder.Reference<Block>> blockReference = BuiltInRegistries.BLOCK.get(data.foodBlock());
+        blockReference.ifPresent(reference -> preferredFlower = reference);
     }
 
     /**

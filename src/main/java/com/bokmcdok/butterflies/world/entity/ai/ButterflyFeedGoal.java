@@ -5,6 +5,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
@@ -12,6 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Goal that enables butterflies to feed from Butterfly Feeders.
@@ -24,7 +27,7 @@ public class ButterflyFeedGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private final Item foodSourceItem;
+    private Holder.Reference<Item> foodSourceItem;
 
     // Has pollination been attempted yet?
     private boolean hasFedAtTarget;
@@ -37,20 +40,21 @@ public class ButterflyFeedGoal extends MoveToBlockGoal {
      * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
-    @SuppressWarnings("deprecation")
     public ButterflyFeedGoal(Butterfly mob,
                              double speedModifier,
                              int searchRange,
                              int verticalSearchRange) {
         super(mob, speedModifier, searchRange, verticalSearchRange);
         butterfly = mob;
+        foodSourceItem = null;
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
-        if (data != null) {
-            foodSourceItem = BuiltInRegistries.ITEM.get(data.foodItem());
-        } else {
-            foodSourceItem = null;
+        if (data == null) {
+            return;
         }
+
+        Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(data.foodItem());
+        itemReference.ifPresent(reference -> foodSourceItem = reference);
     }
 
     /**

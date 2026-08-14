@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.butterfly_data;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -10,13 +11,14 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
  * Holds the landing rules for a butterfly.
  */
 public final class LandingRules {
-    private final Set<Block> landingBlocks;
+    private final Set<Holder.Reference<Block>> landingBlocks;
     private final Set<TagKey<Block>> landingBlockTags;
 
     /**
@@ -49,7 +51,7 @@ public final class LandingRules {
             }
         }
 
-        for (Block block : landingBlocks) {
+        for (Holder.Reference<Block> block : landingBlocks) {
             if (block != null && state.is(block)) {
                 return true;
             }
@@ -88,9 +90,15 @@ public final class LandingRules {
      * @param raw The raw string used to create a Resource Location.
      * @return A valid Block.
      */
-    private static Block requireBlock(String raw) {
+    private static Holder.Reference<Block> requireBlock(String raw) {
         ResourceLocation id = requireResourceLocation(raw, "landing block");
-        return BuiltInRegistries.BLOCK.get(id);
+
+        Optional<Holder.Reference<Block>> blockReference = BuiltInRegistries.BLOCK.get(id);
+        if (blockReference.isEmpty()) {
+            throw new IllegalArgumentException("Unknown landing block: '" + raw + "' (" + id + ")");
+        }
+
+        return blockReference.get();
     }
 
     /**

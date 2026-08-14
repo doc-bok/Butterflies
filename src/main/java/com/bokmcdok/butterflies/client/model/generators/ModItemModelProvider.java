@@ -157,7 +157,7 @@ public class ModItemModelProvider extends ModelSubProvider {
      * @param index The butterfly index.
      */
     private void registerButterflySpawnEggs(int index) {
-        String species = Objects.requireNonNull(ButterflyRegistry.getEntry(index)).entityId();
+        String species = Objects.requireNonNull(ButterflyRegistry.getEntry(index)).speciesId().value();
         for (var stage : BUTTERFLY_STAGES) {
             singleTextureItem(stage.getSecond().get(index).get(), ModelTemplates.FLAT_HANDHELD_ROD_ITEM, "item/spawn_egg/" + stage.getFirst() + "/" + species);
         }

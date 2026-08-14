@@ -950,42 +950,41 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
      */
     @NotNull
     @Override
-    protected AABB makeBoundingBox() {
-        Vec3 pos = this.position();
+    protected AABB makeBoundingBox(@NotNull Vec3 position) {
         double halfWidth = getBbWidth() * 0.5;
         double height = getBbHeight();
 
         if (!getIsLanded()) {
-            return standingBox(pos.x, pos.y, pos.z, halfWidth, height);
+            return standingBox(position.x, position.y, position.z, halfWidth, height);
         }
 
         return switch (getLandedDirection()) {
             case NORTH -> new AABB(
-                    pos.x - halfWidth, pos.y - halfWidth, pos.z,
-                    pos.x + halfWidth, pos.y + halfWidth, pos.z + height
+                    position.x - halfWidth, position.y - halfWidth, position.z,
+                    position.x + halfWidth, position.y + halfWidth, position.z + height
             );
 
             case SOUTH -> new AABB(
-                    pos.x - halfWidth, pos.y - halfWidth, pos.z,
-                    pos.x + halfWidth, pos.y + halfWidth, pos.z - height
+                    position.x - halfWidth, position.y - halfWidth, position.z,
+                    position.x + halfWidth, position.y + halfWidth, position.z - height
             );
 
             case EAST -> new AABB(
-                    pos.x, pos.y - halfWidth, pos.z - halfWidth,
-                    pos.x - height, pos.y + halfWidth, pos.z + halfWidth
+                    position.x, position.y - halfWidth, position.z - halfWidth,
+                    position.x - height, position.y + halfWidth, position.z + halfWidth
             );
 
             case WEST -> new AABB(
-                    pos.x, pos.y - halfWidth, pos.z - halfWidth,
-                    pos.x + height, pos.y + halfWidth, pos.z + halfWidth
+                    position.x, position.y - halfWidth, position.z - halfWidth,
+                    position.x + height, position.y + halfWidth, position.z + halfWidth
             );
 
             case UP -> new AABB(
-                    pos.x - halfWidth, pos.y, pos.z - halfWidth,
-                    pos.x + halfWidth, pos.y - height, pos.z + halfWidth
+                    position.x - halfWidth, position.y, position.z - halfWidth,
+                    position.x + halfWidth, position.y - height, position.z + halfWidth
             );
 
-            case DOWN -> standingBox(pos.x, pos.y, pos.z, halfWidth, height);
+            case DOWN -> standingBox(position.x, position.y, position.z, halfWidth, height);
         };
     }
 
