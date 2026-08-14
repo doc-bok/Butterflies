@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.event.entity;
 
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.entity.animal.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -12,8 +13,6 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-
-import java.util.Objects;
 
 /**
  * Holds event listeners for entities.
@@ -36,7 +35,7 @@ public class ForgeEntityEventListener {
      */
     private static boolean isButterflyAttackableByCat(LivingEntity entity) {
         if (entity instanceof Butterfly butterfly) {
-            return !Objects.equals(butterfly.getData().entityId(), "forester");
+            return !butterfly.getData().hasTrait(ButterflyTrait.CATFRIEND);
         }
 
         return false;

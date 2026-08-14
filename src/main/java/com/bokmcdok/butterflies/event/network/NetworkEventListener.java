@@ -11,9 +11,6 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.zip.DataFormatException;
 
 /**
  * Listens for network-based events.
@@ -52,7 +49,7 @@ public class NetworkEventListener {
         }
 
         // Handle multiple players.
-        else if (event.getPlayerList() != null) {
+        else {
             for (ServerPlayer i : event.getPlayerList().getPlayers()) {
                 i.connection.send(payload);
             }

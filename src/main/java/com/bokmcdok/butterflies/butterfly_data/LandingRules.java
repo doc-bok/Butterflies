@@ -1,12 +1,12 @@
 package com.bokmcdok.butterflies.butterfly_data;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -90,15 +90,7 @@ public final class LandingRules {
      */
     private static Block requireBlock(String raw) {
         ResourceLocation id = requireResourceLocation(raw, "landing block");
-
-        Block block = ForgeRegistries.BLOCKS.getValue(id);
-        if (block == null) {
-            throw new IllegalArgumentException(
-                    "Unknown landing block: '" + raw + "' (" + id + ")"
-            );
-        }
-
-        return block;
+        return BuiltInRegistries.BLOCK.get(id);
     }
 
     /**

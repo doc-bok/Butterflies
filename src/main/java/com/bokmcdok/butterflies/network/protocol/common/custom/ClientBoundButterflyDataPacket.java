@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * A network packet used to send butterfly data to the clients.
@@ -25,30 +26,31 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
      */
     public ClientBoundButterflyDataPacket(final FriendlyByteBuf buffer) {
         this((Collection<ButterflyData>) buffer.readCollection(ArrayList::new,
-            (entry) -> new ButterflyData(entry.readInt(),
+            (entry) -> new ButterflyData.Builder(entry.readInt(),
                     entry.readUtf(),
                     entry.readEnum(ButterflySize.class),
                     entry.readEnum(ButterflySpeed.class),
                     entry.readEnum(ButterflyRarity.class),
-                    entry.readList((x) -> x.readEnum(ButterflyHabitat.class)),
+                    entry.readEnumSet(ButterflyHabitat.class),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readInt(),
                     entry.readResourceLocation(),
+                    entry.readResourceLocation(),
                     entry.readEnum(ButterflyType.class),
                     entry.readEnum(Diurnality.class),
-                    entry.readEnum(ExtraLandingBlocks.class),
+                    entry.readCollection(FriendlyByteBuf.limitValue(HashSet::new, 4), FriendlyByteBuf::readUtf),
                     entry.readEnum(PlantEffect.class),
                     entry.readEnum(EggMultiplier.class),
                     entry.readBoolean(),
                     entry.readBoolean(),    
-                    entry.readList((x) -> x.readEnum(ButterflyTrait.class)),
+                    entry.readEnumSet(ButterflyTrait.class),
                     entry.readUtf(),
                     entry.readUtf(),
                     entry.readUtf(),
                     entry.readUtf(),
-                    entry.readUtf())));
+                    entry.readUtf()).build()));
     }
 
     /**
