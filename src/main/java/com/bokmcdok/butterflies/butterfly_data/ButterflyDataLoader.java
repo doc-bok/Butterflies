@@ -12,9 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.zip.DataFormatException;
 
 public class ButterflyDataLoader {
@@ -24,7 +22,7 @@ public class ButterflyDataLoader {
             24000 * 2,
             24000 * 4,
             24000 * 7,
-            Integer.MAX_VALUE
+            ButterflyData.IMMORTAL_LIFESPAN
     };
 
     /**
@@ -66,6 +64,7 @@ public class ButterflyDataLoader {
          * @return A new butterfly entry
          * @throws IllegalArgumentException Unused
          */
+        @SuppressWarnings("removal")
         @Override
         public ButterflyData deserialize(JsonElement json,
                                          Type typeOfT,
@@ -88,11 +87,21 @@ public class ButterflyDataLoader {
                 ButterflyLifespan chrysalisLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "chrysalis", ButterflyLifespan.MEDIUM);
                 ButterflyLifespan butterflyLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "butterfly", ButterflyLifespan.MEDIUM);
 
-                String foodSource = object.get("foodSource").getAsString();
+                String foodBlock;
+                String foodItem;
+
+                // For backwards compatibility allow "foodSource" to be used.
+                if (object.has("foodSource")) {
+                    foodBlock = object.get("foodSource").getAsString();
+                    foodItem = object.get("foodSource").getAsString();
+                } else {
+                    foodBlock = require(object, "foodBlock").getAsString();
+                    foodItem = require(object, "foodItem").getAsString();
+                }
 
                 ButterflyType type = getEnumValue(object, ButterflyType.class, "type", ButterflyType.BUTTERFLY);
                 Diurnality diurnality = getEnumValue(object, Diurnality.class, "diurnality", Diurnality.DIURNAL);
-                ExtraLandingBlocks extraLandingBlocks = getEnumValue(object, ExtraLandingBlocks.class, "extraLandingBlocks", ExtraLandingBlocks.NONE);
+                Set<String> extraLandingBlocks = getStringCollection(object, "extraLandingBlocks");
                 PlantEffect plantEffect = getEnumValue(object, PlantEffect.class, "plantEffect", PlantEffect.NONE);
 
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
@@ -121,33 +130,35 @@ public class ButterflyDataLoader {
                 String warmVariant = getOptionalString(variants, "warm");
                 String agedVariant = getOptionalString(variants, "aged");
 
-                entry = new ButterflyData(
-                        index,
-                        entityId,
-                        size,
-                        speed,
-                        rarity,
-                        habitats,
-                        LIFESPAN[eggLifespan.getIndex()],
-                        LIFESPAN[caterpillarLifespan.getIndex()],
-                        LIFESPAN[chrysalisLifespan.getIndex()],
-                        LIFESPAN[butterflyLifespan.getIndex()] == Integer.MAX_VALUE ?
-                                Integer.MAX_VALUE : LIFESPAN[butterflyLifespan.getIndex()] * 2,
-                        new ResourceLocation(foodSource),
-                        type,
-                        diurnality,
-                        extraLandingBlocks,
-                        plantEffect,
-                        eggMultiplier,
-                        caterpillarSounds,
-                        butterflySounds,
-                        traits,
-                        baseVariant,
-                        coldVariant,
-                        mateVariant,
-                        warmVariant,
-                        agedVariant
-                );
+                entry = new ButterflyData.Builder(index)
+                        .speciesId(entityId)
+                        .size(size)
+                        .speed(speed)
+                        .rarity(rarity)
+                        .habitats(habitats)
+                        .eggLifespan(LIFESPAN[eggLifespan.getIndex()])
+                        .caterpillarLifespan(LIFESPAN[caterpillarLifespan.getIndex()])
+                        .chrysalisLifespan(LIFESPAN[chrysalisLifespan.getIndex()])
+                        .butterflyLifespan(
+                                LIFESPAN[butterflyLifespan.getIndex()] == ButterflyData.IMMORTAL_LIFESPAN
+                                        ? ButterflyData.IMMORTAL_LIFESPAN
+                                        : LIFESPAN[butterflyLifespan.getIndex()] * 2)
+                        .foodBlock(new ResourceLocation(foodBlock))
+                        .foodItem(new ResourceLocation(foodItem))
+                        .type(type)
+                        .diurnality(diurnality)
+                        .extraLandingBlocks(extraLandingBlocks)
+                        .plantEffect(plantEffect)
+                        .eggMultiplier(eggMultiplier)
+                        .caterpillarSounds(caterpillarSounds)
+                        .butterflySounds(butterflySounds)
+                        .traits(traits)
+                        .baseVariant(baseVariant)
+                        .coldVariant(coldVariant)
+                        .mateVariant(mateVariant)
+                        .warmVariant(warmVariant)
+                        .agedVariant(agedVariant)
+                        .build();
             }
 
             return entry;
@@ -230,10 +241,38 @@ public class ButterflyDataLoader {
                 } catch (IllegalArgumentException e) {
 
                     // The value specified is invalid, so make sure it's written to the log.
-                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
-                            key,
-                            jsonData.get(i).getAsString(),
-                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                    logIllegalArgument(key, jsonData.get(i).getAsString(), tryGetSpeciesId(object));
+                }
+            }
+
+            return result;
+        }
+
+        /**
+         * Helper method for pulling out a collection of strings.
+         * @param object The JSON object to read the value from.
+         * @param key The key to look for.
+         * @return A value of the enumerated type.
+         */
+        private static Set<String> getStringCollection(JsonObject object,
+                                                       String key) {
+            JsonArray jsonData = getOptionalArray(object, key);
+            Set<String> result = new HashSet<>();
+            for (int i = 0; i < jsonData.size(); ++i) {
+                JsonElement element = jsonData.get(i);
+                if (!element.isJsonPrimitive()) {
+                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Non-primitive string value for [{}] in [{}]", key,
+                            object.has("entityId") ? object.get("entityId").getAsString() : "unknown");
+                    continue;
+                }
+
+                try {
+                    String value = element.getAsString();
+                    result.add(value);
+                } catch (IllegalArgumentException e) {
+
+                    // The value specified is invalid, so make sure it's written to the log.
+                    logIllegalArgument(key, jsonData.get(i).getAsString(), tryGetSpeciesId(object));
                 }
             }
 
@@ -286,6 +325,28 @@ public class ButterflyDataLoader {
 
                 return fallback;
             }
+        }
+
+        /**
+         * Helper method fot logging illegal arguments.
+         * @param entityId The Entity ID.
+         * @param key The key of the invalid argument.
+         * @param value The invalid value.
+         */
+        private static void logIllegalArgument(String entityId,
+                                               String key,
+                                               String value) {
+            LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
+                    key, value, entityId);
+        }
+
+        /**
+         * Helper to safely extract a Species ID.
+         * @param object The object to pull from.
+         * @return The Species ID, if any.
+         */
+        private static String tryGetSpeciesId(JsonObject object) {
+            return object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown";
         }
     }
 }

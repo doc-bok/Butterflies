@@ -26,7 +26,7 @@ public class ButterflyTextFormatter {
         ButterflyData entry = ButterflyRegistry.getEntry(butterflyIndex);
         if (entry != null) {
             //  Butterfly name
-            MutableComponent component = new TranslatableComponent("entity.butterflies." + entry.entityId());
+            MutableComponent component = new TranslatableComponent("entity.butterflies." + entry.speciesId());
 
             if (entry.type() == ButterflyType.SPECIAL) {
                 component.withStyle(ChatFormatting.DARK_BLUE);
@@ -119,7 +119,7 @@ public class ButterflyTextFormatter {
             component.append("\n");
             component.append(new TranslatableComponent("gui.butterflies.preferred_flower"));
 
-            Item value = ForgeRegistries.ITEMS.getValue(entry.getFoodSourceItem());
+            Item value = ForgeRegistries.ITEMS.getValue(entry.foodItem());
             if (value != null) {
                 Component description = value.getDescription();
                 component.append(description);
@@ -127,7 +127,7 @@ public class ButterflyTextFormatter {
 
             // Fact
             component.append("\n\n");
-            component.append(new TranslatableComponent("gui.butterflies.fact." + entry.entityId()));
+            component.append(new TranslatableComponent("gui.butterflies.fact." + entry.speciesId()));
 
             return component;
         }

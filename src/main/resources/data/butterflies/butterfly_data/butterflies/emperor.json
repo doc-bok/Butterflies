@@ -2,8 +2,10 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "emperor",
-  "extraLandingBlocks": "logs",
-  "foodSource": "red_tulip",
+  "extraLandingBlocks": [
+    "#minecraft:logs"
+  ],
+  "foodSource": "minecraft:red_tulip",
   "habitats": [
     "forests"
   ],

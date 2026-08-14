@@ -2,6 +2,8 @@ package com.bokmcdok.butterflies.network.protocol.common.custom;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyHabitat;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -25,29 +27,30 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
     public void write(@NotNull FriendlyByteBuf buffer) {
         buffer.writeCollection(data, (collectionBuffer, i) -> {
             collectionBuffer.writeInt(i.butterflyIndex());
-            collectionBuffer.writeUtf(i.entityId());
+            collectionBuffer.writeUtf(i.speciesId().value());
             collectionBuffer.writeEnum(i.size());
             collectionBuffer.writeEnum(i.speed());
             collectionBuffer.writeEnum(i.rarity());
-            collectionBuffer.writeCollection(i.habitats(), FriendlyByteBuf::writeEnum);
+            collectionBuffer.writeCollection(i.habitats(), FriendlyByteBuf::writeEnum);;
             collectionBuffer.writeInt(i.eggLifespan());
             collectionBuffer.writeInt(i.caterpillarLifespan());
             collectionBuffer.writeInt(i.chrysalisLifespan());
             collectionBuffer.writeInt(i.butterflyLifespan());
-            collectionBuffer.writeResourceLocation(i.foodSource());
+            collectionBuffer.writeResourceLocation(i.foodBlock());
+            collectionBuffer.writeResourceLocation(i.foodItem());
             collectionBuffer.writeEnum(i.type());
             collectionBuffer.writeEnum(i.diurnality());
-            collectionBuffer.writeEnum(i.extraLandingBlocks());
+            collectionBuffer.writeCollection(i.extraLandingBlocks(), FriendlyByteBuf::writeUtf);
             collectionBuffer.writeEnum(i.plantEffect());
             collectionBuffer.writeEnum(i.eggMultiplier());
             collectionBuffer.writeBoolean(i.caterpillarSounds());
             collectionBuffer.writeBoolean(i.butterflySounds());
-            collectionBuffer.writeCollection(i.traits(), FriendlyByteBuf::writeEnum);
-            collectionBuffer.writeUtf(i.baseVariant());
-            collectionBuffer.writeUtf(i.coldVariant());
-            collectionBuffer.writeUtf(i.mateVariant());
-            collectionBuffer.writeUtf(i.warmVariant());
-            collectionBuffer.writeUtf(i.agedVariant());
+            collectionBuffer.writeCollection(i.traits(), FriendlyByteBuf::writeEnum);;
+            collectionBuffer.writeUtf(i.baseVariant().value());
+            collectionBuffer.writeUtf(i.coldVariant().value());
+            collectionBuffer.writeUtf(i.mateVariant().value());
+            collectionBuffer.writeUtf(i.warmVariant().value());
+            collectionBuffer.writeUtf(i.agedVariant().value());
         });
     }
 

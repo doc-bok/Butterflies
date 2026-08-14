@@ -2,8 +2,8 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "atlas",
-  "extraLandingBlocks": "none",
-  "foodSource": "white_tulip",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:white_tulip",
   "habitats": [
     "forests"
   ],

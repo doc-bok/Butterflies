@@ -36,6 +36,7 @@ public final class ButterfliesMod {
     /**
      * Initialize and configure the mod.
      */
+    @SuppressWarnings("removal")
     public ButterfliesMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -104,6 +105,7 @@ public final class ButterfliesMod {
     /**
      * Register the mod's configs.
      */
+    @SuppressWarnings("removal")
     private void registerConfigs() {
         ModLoadingContext modLoadingContext = ModLoadingContext.get();
         modLoadingContext.registerConfig(ModConfig.Type.COMMON, ButterfliesConfig.COMMON_CONFIG);

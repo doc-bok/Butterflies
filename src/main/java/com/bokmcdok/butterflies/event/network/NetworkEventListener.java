@@ -16,6 +16,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.zip.DataFormatException;
 
@@ -86,30 +87,34 @@ public class NetworkEventListener {
             ButterflyRegistry.reset();
 
             List<ButterflyData> butterflyData = payload.readCollection(ArrayList::new,
-                    (buffer) -> new ButterflyData(buffer.readInt(),
-                            buffer.readUtf(),
-                            buffer.readEnum(ButterflySize.class),
-                            buffer.readEnum(ButterflySpeed.class),
-                            buffer.readEnum(ButterflyRarity.class),
-                            buffer.readList((x) -> x.readEnum(ButterflyHabitat.class)),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readInt(),
-                            buffer.readResourceLocation(),
-                            buffer.readEnum(ButterflyType.class),
-                            buffer.readEnum(Diurnality.class),
-                            buffer.readEnum(ExtraLandingBlocks.class),
-                            buffer.readEnum(PlantEffect.class),
-                            buffer.readEnum(EggMultiplier.class),
-                            buffer.readBoolean(),
-                            buffer.readBoolean(),
-                            buffer.readList((x) -> x.readEnum(ButterflyTrait.class)),
-                            buffer.readUtf(),
-                            buffer.readUtf(),
-                            buffer.readUtf(),
-                            buffer.readUtf(),
-                            buffer.readUtf()));
+                    (buffer) -> new ButterflyData.Builder(buffer.readInt())
+                            .speciesId(buffer.readUtf())
+                            .size(buffer.readEnum(ButterflySize.class))
+                            .speed(buffer.readEnum(ButterflySpeed.class))
+                            .rarity(buffer.readEnum(ButterflyRarity.class))
+                            .habitats(buffer.readList((x) -> x.readEnum(ButterflyHabitat.class)))
+                            .eggLifespan(buffer.readInt())
+                            .caterpillarLifespan(buffer.readInt())
+                            .chrysalisLifespan(buffer.readInt())
+                            .butterflyLifespan(buffer.readInt())
+                            .foodBlock(buffer.readResourceLocation())
+                            .foodItem(buffer.readResourceLocation())
+                            .type(buffer.readEnum(ButterflyType.class))
+                            .diurnality(buffer.readEnum(Diurnality.class))
+                            .extraLandingBlocks(buffer.readCollection(
+                                    FriendlyByteBuf.limitValue(HashSet::new, 4),
+                                    FriendlyByteBuf::readUtf))
+                            .plantEffect(buffer.readEnum(PlantEffect.class))
+                            .eggMultiplier(buffer.readEnum(EggMultiplier.class))
+                            .caterpillarSounds(buffer.readBoolean())
+                            .butterflySounds(buffer.readBoolean())
+                            .traits(buffer.readList((x) -> x.readEnum(ButterflyTrait.class)))
+                            .baseVariant(buffer.readUtf())
+                            .coldVariant(buffer.readUtf())
+                            .mateVariant(buffer.readUtf())
+                            .warmVariant(buffer.readUtf())
+                            .agedVariant(buffer.readUtf())
+                            .build());
 
             // Register the new data.
             for (ButterflyData butterfly : butterflyData) {

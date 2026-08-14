@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "smile",
-  "extraLandingBlocks": "none",
-  "foodSource": "cornflower",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:cornflower",
   "habitats": [
     "forests"
   ],
