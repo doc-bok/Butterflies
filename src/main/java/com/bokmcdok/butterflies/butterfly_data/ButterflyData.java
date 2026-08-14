@@ -314,11 +314,11 @@ public final class ButterflyData {
     //***
 
     private ResourceLocation item(String path) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, path);
     }
 
     private ResourceLocation entity(String suffix) {
-        return new ResourceLocation(ButterfliesMod.MOD_ID, speciesId.withSuffix(suffix));
+        return ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, speciesId.withSuffix(suffix));
     }
 
     //***

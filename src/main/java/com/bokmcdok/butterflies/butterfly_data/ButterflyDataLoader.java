@@ -143,8 +143,8 @@ public class ButterflyDataLoader {
                         LIFESPAN[chrysalisLifespan.getIndex()],
                         LIFESPAN[butterflyLifespan.getIndex()] == ButterflyData.IMMORTAL_LIFESPAN ?
                                 ButterflyData.IMMORTAL_LIFESPAN : LIFESPAN[butterflyLifespan.getIndex()] * 2,
-                        new ResourceLocation(foodBlock),
-                        new ResourceLocation(foodItem),
+                        ResourceLocation.tryParse(foodBlock),
+                        ResourceLocation.tryParse(foodItem),
                         type,
                         diurnality,
                         extraLandingBlocks,
@@ -347,30 +347,31 @@ public class ButterflyDataLoader {
         @NotNull
         @Override
         public ButterflyData decode(RegistryFriendlyByteBuf buffer) {
-            return new ButterflyData(buffer.readInt(),
+            return new ButterflyData.Builder(buffer.readInt(),
                     buffer.readUtf(),
                     buffer.readEnum(ButterflySize.class),
                     buffer.readEnum(ButterflySpeed.class),
                     buffer.readEnum(ButterflyRarity.class),
-                    buffer.readList((x) -> x.readEnum(ButterflyHabitat.class)),
+                    buffer.readEnumSet(ButterflyHabitat.class),
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readResourceLocation(),
+                    buffer.readResourceLocation(),
                     buffer.readEnum(ButterflyType.class),
                     buffer.readEnum(Diurnality.class),
-                    buffer.readEnum(ExtraLandingBlocks.class),
+                    buffer.readCollection(FriendlyByteBuf.limitValue(HashSet::new, 4), FriendlyByteBuf::readUtf),
                     buffer.readEnum(PlantEffect.class),
                     buffer.readEnum(EggMultiplier.class),
                     buffer.readBoolean(),
                     buffer.readBoolean(),
-                    buffer.readList((x) -> x.readEnum(ButterflyTrait.class)),
+                    buffer.readEnumSet(ButterflyTrait.class),
                     buffer.readUtf(),
                     buffer.readUtf(),
                     buffer.readUtf(),
                     buffer.readUtf(),
-                    buffer.readUtf());
+                    buffer.readUtf()).build();
         }
 
         /**
@@ -382,29 +383,30 @@ public class ButterflyDataLoader {
         public void encode(RegistryFriendlyByteBuf buffer,
                            ButterflyData data) {
             buffer.writeInt(data.butterflyIndex());
-            buffer.writeUtf(data.entityId());
+            buffer.writeUtf(data.speciesId().value());
             buffer.writeEnum(data.size());
             buffer.writeEnum(data.speed());
             buffer.writeEnum(data.rarity());
-            buffer.writeCollection(data.habitats(), FriendlyByteBuf::writeEnum);
+            buffer.writeEnumSet(data.habitats(), ButterflyHabitat.class);
             buffer.writeInt(data.eggLifespan());
             buffer.writeInt(data.caterpillarLifespan());
             buffer.writeInt(data.chrysalisLifespan());
             buffer.writeInt(data.butterflyLifespan());
-            buffer.writeResourceLocation(data.foodSource());
+            buffer.writeResourceLocation(data.foodBlock());
+            buffer.writeResourceLocation(data.foodItem());
             buffer.writeEnum(data.type());
             buffer.writeEnum(data.diurnality());
-            buffer.writeEnum(data.extraLandingBlocks());
+            buffer.writeCollection(data.extraLandingBlocks(), FriendlyByteBuf::writeUtf);
             buffer.writeEnum(data.plantEffect());
             buffer.writeEnum(data.eggMultiplier());
             buffer.writeBoolean(data.caterpillarSounds());
             buffer.writeBoolean(data.butterflySounds());
-            buffer.writeCollection(data.traits(), FriendlyByteBuf::writeEnum);
-            buffer.writeUtf(data.baseVariant());
-            buffer.writeUtf(data.coldVariant());
-            buffer.writeUtf(data.mateVariant());
-            buffer.writeUtf(data.warmVariant());
-            buffer.writeUtf(data.agedVariant());
+            buffer.writeEnumSet(data.traits(), ButterflyTrait.class);
+            buffer.writeUtf(data.baseVariant().value());
+            buffer.writeUtf(data.coldVariant().value());
+            buffer.writeUtf(data.mateVariant().value());
+            buffer.writeUtf(data.warmVariant().value());
+            buffer.writeUtf(data.agedVariant().value());
         }
     };
 }
