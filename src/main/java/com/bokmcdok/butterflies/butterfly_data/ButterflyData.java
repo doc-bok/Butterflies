@@ -15,7 +15,7 @@ public final class ButterflyData {
     private final ButterflySize size;
     private final ButterflySpeed speed;
     private final ButterflyRarity rarity;
-    private final Set<ButterflyHabitat> habitats;
+    private final EnumSet<ButterflyHabitat> habitats;
     private final ResourceLocation foodBlock;
     private final ResourceLocation foodItem;
     private final ButterflyType type;
@@ -25,7 +25,7 @@ public final class ButterflyData {
     private final EggMultiplier eggMultiplier;
     private final boolean caterpillarSounds;
     private final boolean butterflySounds;
-    private final Set<ButterflyTrait> traits;
+    private final EnumSet<ButterflyTrait> traits;
 
     private final LifecycleData lifecycle;
     private final VariantSet variants;
@@ -169,7 +169,7 @@ public final class ButterflyData {
         return rarity;
     }
 
-    public Set<ButterflyHabitat> habitats() {
+    public EnumSet<ButterflyHabitat> habitats() {
         return habitats;
     }
 
@@ -225,7 +225,7 @@ public final class ButterflyData {
         return butterflySounds;
     }
 
-    public Set<ButterflyTrait> traits() {
+    public EnumSet<ButterflyTrait> traits() {
         return traits;
     }
 
@@ -497,7 +497,7 @@ public final class ButterflyData {
         /**
          * Helper to ensure variant strings are valid.
          * @param variant The ID of the variant.
-         * @param fallback The fallback if the variand ID is invalid.
+         * @param fallback The fallback if the variant ID is invalid.
          * @return A valid variant string.
          */
         private static String normalizeVariant(String variant,
