@@ -1,5 +1,21 @@
 ## Changelog
 
+### 7.10.5 (2026/08/14)
+ - Butterfly entities will no longer die when on solid blocks.
+
+### 7.10.4 (2026/08/08)
+ - Separated goals for pollination and feeding.
+
+### 7.10.3 (2026/08/07)
+ - Extra Landing Blocks can now be set using Resource Locations or Block Tags.
+
+### 7.10.2 (2026/08/06)
+ - Separated `foodSource` into `foodBlock` and `foodItem
+
+### 7.10.1 (2026/08/02)
+ - Write agedVariant in ClientBoundButterflyDataPacket to prevent network error.
+ - Thanks to Spagles for this fix
+
 ### 7.10.0 (2026/08/01)
  - Added the Orizaba Silkmoth.
 
@@ -90,7 +106,7 @@
 - Butterfly nets can only catch butterflies when empty.
 
 ### 7.1.1 (2026-02-02)
-- Added localisation strings for Peacemaker villagers with jobs.
+- Added localization strings for Peacemaker villagers with jobs.
 
 ### 7.1.0 (2026-01-10)
 - Peacemaker Butterflies can now infest Wandering Traders.
@@ -190,7 +206,7 @@
 - Moved butterflies to their own spawn pool.
 
 ### 6.1.4 (2025-03-17)
-- Fixed scale methods accidentally overriding base entity behaviour.
+- Fixed scale methods accidentally overriding base entity behavior.
 
 ### 6.1.2 (2025-03-09)
 - Increased butterfly spawn rates.
@@ -389,7 +405,7 @@
 - Added the Diamondback Moth.
 
 ### 4.11.3 (2024-08-03)
-- Fixed mating goal fertilising butterflies with zero eggs.
+- Fixed mating goal fertilizing butterflies with zero eggs.
 
 ### 4.11.2 (2024-08-03)
 - Fixed missing `spongymale` textures and models.
@@ -492,8 +508,8 @@ up.
 - Butterfly based advancements can now be generated.
 
 ### 3.4.5 (2024-05-26)
-- Reduced number of localisation strings needed.
-- Can now generate localisation strings.
+- Reduced number of localization strings needed.
+- Can now generate localization strings.
 
 ### 3.4.4 (2024-05-26)
 - Texture locations for butterfly scrolls are automatically generated.
@@ -572,7 +588,7 @@ up.
 - Caterpillars can be picked up and moved by players.
 
 ### 2.1.1 (2024-02-07)
-- Expanded culling boxes for butterfly entities for compatibility with optimisation mods.
+- Expanded culling boxes for butterfly entities for compatibility with optimization mods.
 
 ### 2.1.0 (2024-01-28)
 - Butterfly data can now be edited via JSON files.

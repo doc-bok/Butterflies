@@ -92,6 +92,15 @@ public class Chrysalis extends DirectionalCreature {
     }
 
     /**
+     * Ignore wall collisions entirely.
+     * @return Always returns false.
+     */
+    @Override
+    public boolean isInWall() {
+        return false;
+    }
+
+    /**
      * Chrysalises ignore gravity.
      */
     @Override

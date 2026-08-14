@@ -59,29 +59,30 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
     public void write(@NotNull FriendlyByteBuf buffer) {
         buffer.writeCollection(data, (collectionBuffer, i) -> {
             collectionBuffer.writeInt(i.butterflyIndex());
-            collectionBuffer.writeUtf(i.entityId());
+            collectionBuffer.writeUtf(i.speciesId().value());
             collectionBuffer.writeEnum(i.size());
             collectionBuffer.writeEnum(i.speed());
             collectionBuffer.writeEnum(i.rarity());
-            collectionBuffer.writeCollection(i.habitats(), FriendlyByteBuf::writeEnum);
+            collectionBuffer.writeEnumSet(i.habitats(), ButterflyHabitat.class);
             collectionBuffer.writeInt(i.eggLifespan());
             collectionBuffer.writeInt(i.caterpillarLifespan());
             collectionBuffer.writeInt(i.chrysalisLifespan());
             collectionBuffer.writeInt(i.butterflyLifespan());
-            collectionBuffer.writeResourceLocation(i.foodSource());
+            collectionBuffer.writeResourceLocation(i.foodBlock());
+            collectionBuffer.writeResourceLocation(i.foodItem());
             collectionBuffer.writeEnum(i.type());
             collectionBuffer.writeEnum(i.diurnality());
-            collectionBuffer.writeEnum(i.extraLandingBlocks());
+            collectionBuffer.writeCollection(i.extraLandingBlocks(), FriendlyByteBuf::writeUtf);
             collectionBuffer.writeEnum(i.plantEffect());
             collectionBuffer.writeEnum(i.eggMultiplier());
             collectionBuffer.writeBoolean(i.caterpillarSounds());
             collectionBuffer.writeBoolean(i.butterflySounds());
-            collectionBuffer.writeCollection(i.traits(), FriendlyByteBuf::writeEnum);
-            collectionBuffer.writeUtf(i.baseVariant());
-            collectionBuffer.writeUtf(i.coldVariant());
-            collectionBuffer.writeUtf(i.mateVariant());
-            collectionBuffer.writeUtf(i.warmVariant());
-            collectionBuffer.writeUtf(i.agedVariant());
+            collectionBuffer.writeEnumSet(i.traits(), ButterflyTrait.class);
+            collectionBuffer.writeUtf(i.baseVariant().value());
+            collectionBuffer.writeUtf(i.coldVariant().value());
+            collectionBuffer.writeUtf(i.mateVariant().value());
+            collectionBuffer.writeUtf(i.warmVariant().value());
+            collectionBuffer.writeUtf(i.agedVariant().value());
         });
     }
 

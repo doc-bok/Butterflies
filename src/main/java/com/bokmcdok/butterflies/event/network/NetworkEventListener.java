@@ -11,6 +11,9 @@ import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.zip.DataFormatException;
 
 /**
  * Listens for network-based events.

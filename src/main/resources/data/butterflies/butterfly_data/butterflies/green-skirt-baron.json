@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "green-skirt-baron",
-  "extraLandingBlocks": "none",
-  "foodSource": "azure_bluet",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:azure_bluet",
   "habitats": [
     "forests"
   ],

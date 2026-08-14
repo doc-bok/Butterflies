@@ -2,26 +2,21 @@ package com.bokmcdok.butterflies.world.entity.ai;
 
 import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
+import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 /**
- * Goal that enables butterflies to eat crops.
+ * Goal that enables butterflies to feed from Butterfly Feeders.
  */
-public class ButterflyConsumeGoal extends MoveToBlockGoal {
+public class ButterflyFeedGoal extends MoveToBlockGoal {
 
     private static final int POST_EAT_LINGER_TICKS = 10;
 
@@ -29,30 +24,32 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
     private final Butterfly butterfly;
 
     // The flower this butterfly prefers.
-    private Block foodSource = null;
+    private final Item foodSourceItem;
 
-    // Has consumption been attempted yet?
-    private boolean hasTried;
+    // Has pollination been attempted yet?
+    private boolean hasFedAtTarget;
     private int postEatTicks;
 
     /**
      * Construction
-     * @param mob                 The instance of the butterfly.
-     * @param speedModifier       The speed modifier applied when this goal is in progress.
-     * @param searchRange         The range to search for blocks.
+     * @param mob The instance of the butterfly.
+     * @param speedModifier The speed modifier applied when this goal is in progress.
+     * @param searchRange The range to search for blocks.
      * @param verticalSearchRange The vertical range to search for blocks.
      */
     @SuppressWarnings("deprecation")
-    public ButterflyConsumeGoal(Butterfly mob,
-                                double speedModifier,
-                                int searchRange,
-                                int verticalSearchRange) {
+    public ButterflyFeedGoal(Butterfly mob,
+                             double speedModifier,
+                             int searchRange,
+                             int verticalSearchRange) {
         super(mob, speedModifier, searchRange, verticalSearchRange);
         butterfly = mob;
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSource = BuiltInRegistries.BLOCK.get(data.foodBlock());
+            foodSourceItem = BuiltInRegistries.ITEM.get(data.foodItem());
+        } else {
+            foodSourceItem = null;
         }
     }
 
@@ -71,11 +68,11 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean canContinueToUse() {
-        if (!butterfly.getIsActive()) {
+        if (!canFeedNow()) {
             return false;
         }
 
-        if (hasTried) {
+        if (hasFedAtTarget) {
             return postEatTicks > 0;
         }
 
@@ -88,9 +85,7 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean canUse() {
-        return foodSource != null
-                && butterfly.getIsActive()
-                && super.canUse();
+        return canFeedNow() && super.canUse();
     }
 
     /**
@@ -98,9 +93,19 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
      */
     @Override
     public void start() {
-        hasTried = false;
+        hasFedAtTarget = false;
         postEatTicks = 0;
         super.start();
+    }
+
+    /**
+     * Ensure state is reset when we stop.
+     */
+    @Override
+    public void stop() {
+        hasFedAtTarget = false;
+        postEatTicks = 0;
+        super.stop();
     }
 
     /**
@@ -114,17 +119,15 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
             return;
         }
 
-        Vec3 delta = butterfly.getDeltaMovement();
-        butterfly.setDeltaMovement(0.0, delta.y, 0.0);
+        // Don't stay in the landed state for too long.
+        Vec3 deltaMovement = butterfly.getDeltaMovement();
+        butterfly.setDeltaMovement(0.0, deltaMovement.y, 0.0);
 
-        if (!hasTried) {
-            Level level = mob.level();
-            BlockState state = level.getBlockState(blockPos);
+        if (!hasFedAtTarget) {
+            hasFedAtTarget = true;
+            postEatTicks = POST_EAT_LINGER_TICKS;
 
-            if (tryEatTarget(level, state)) {
-                hasTried = true;
-                postEatTicks = POST_EAT_LINGER_TICKS;
-            }
+            tryEatFromFeeder();
         } else if (postEatTicks > 0) {
             --postEatTicks;
         }
@@ -137,23 +140,23 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
     @NotNull
     @Override
     public String toString() {
-        return "Eat Crop / Food Source = [" + Objects.toString(foodSource.toString(), "<none>") +
-                "] / Target = [" + getMoveToTarget() +
+        return "Feed / Target = [" + getMoveToTarget() +
                 "] / Reached Target = [" + isReachedTarget() +
-                "] / Has Eaten = [" + hasTried +
+                "] / Has Tried = [" + hasFedAtTarget +
+                "] / Num Eggs = [" + butterfly.getNumEggs() +
                 "]";
     }
 
     /**
      * Tells the base goal which blocks are valid targets.
      * @param levelReader Gives access to the level.
-     * @param blockPos    The block position to check.
+     * @param blockPos The block position to check.
      * @return TRUE if the block is a valid target.
      */
     @Override
     protected boolean isValidTarget(@NotNull LevelReader levelReader,
                                     @NotNull BlockPos blockPos) {
-        if (foodSource == null) {
+        if (foodSourceItem == null) {
             return false;
         }
 
@@ -161,46 +164,51 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
             return false;
         }
 
-        BlockState blockState = levelReader.getBlockState(blockPos);
-        return blockState.is(foodSource);
+        if (levelReader.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder) {
+            return feeder.getItem(0).is(foodSourceItem);
+        }
+
+        return false;
     }
 
     /**
-     * Attempt to eat the target. If it has any kind of age property, its age
-     * will be reduced by 1.
-     * @param level    The current level.
-     * @param state    The Block State of the target Block.
+     * Check if the butterfly can feed right now.
+     * @return True if the butterfly can feed.
      */
-    private boolean tryEatTarget(Level level,
-                                 BlockState state) {
-        IntegerProperty ageProperty = getEdibleAgeProperty(state);
-        if (ageProperty == null) {
+    private boolean canFeedNow() {
+        if (foodSourceItem == null) {
             return false;
         }
 
-        int age = state.getValue(ageProperty);
-        if (age <= 0) {
+        if (!butterfly.getIsActive()) {
             return false;
         }
 
-        BlockState newState = state.setValue(ageProperty, age - 1);
-        level.setBlockAndUpdate(blockPos, newState);
-        return true;
+        return butterfly.getNumEggs() == 0;
     }
 
     /**
-     * Gets the age property for a block if it exists.
-     * @param state The current block state.
-     * @return The Age Property if it exists, otherwise null.
+     * Attempt to eat from a butterfly feeder.
      */
-    @Nullable
-    private IntegerProperty getEdibleAgeProperty(BlockState state) {
-        for (Property<?> property : state.getProperties()) {
-            if (property instanceof IntegerProperty intProp && "age".equals(property.getName())) {
-                return intProp;
-            }
+    private void tryEatFromFeeder() {
+        if (!canFeedNow()) {
+            return;
         }
 
-        return null;
+        if (foodSourceItem == null) {
+            return;
+        }
+
+        Level level = butterfly.level();
+        if (!(level.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder)) {
+            return;
+        }
+
+        if (!feeder.getItem(0).is(foodSourceItem)) {
+            return;
+        }
+
+        butterfly.setNumEggs(1);
+        feeder.removeItem(0, 1);
     }
 }

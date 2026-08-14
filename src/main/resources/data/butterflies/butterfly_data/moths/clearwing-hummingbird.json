@@ -2,8 +2,8 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "clearwing-hummingbird",
-  "extraLandingBlocks": "none",
-  "foodSource": "white_tulip",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:white_tulip",
   "habitats": [
     "plains",
     "ice"
