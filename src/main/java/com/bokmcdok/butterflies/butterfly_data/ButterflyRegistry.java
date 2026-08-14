@@ -24,8 +24,8 @@ public class ButterflyRegistry {
      */
     public static void addButterfly(ButterflyData entry)
             throws DataFormatException {
-        if (ENTITY_ID_TO_INDEX_MAP.containsKey(entry.entityId())) {
-            String message = String.format("Butterfly Data Entry for entity [%s] already exists.", entry.entityId());
+        if (ENTITY_ID_TO_INDEX_MAP.containsKey(entry.speciesId().value())) {
+            String message = String.format("Butterfly Data Entry for entity [%s] already exists.", entry.speciesId());
             throw new DataFormatException(message);
         }
 
@@ -34,7 +34,7 @@ public class ButterflyRegistry {
             throw new DataFormatException(message);
         }
 
-        ENTITY_ID_TO_INDEX_MAP.put(entry.entityId(), entry.butterflyIndex());
+        ENTITY_ID_TO_INDEX_MAP.put(entry.speciesId().value(), entry.butterflyIndex());
         BUTTERFLY_ENTRIES.put(entry.butterflyIndex(), entry);
 
         //  Recount the butterflies

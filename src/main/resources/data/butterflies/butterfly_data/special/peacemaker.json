@@ -2,8 +2,8 @@
   "diurnality": "cathemeral",
   "eggMultiplier": "none",
   "entityId": "peacemaker",
-  "extraLandingBlocks": "none",
-  "foodSource": "wither_rose",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:wither_rose",
   "habitats": [],
   "index": 67,
   "lifespan": {

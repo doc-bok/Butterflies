@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
@@ -32,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 /**
- * Creates the Caterpillar behaviour.
+ * Creates the Caterpillar behavior.
  */
 public class Caterpillar extends DirectionalCreature implements DebugInfoSupplier {
 
@@ -180,6 +179,15 @@ public class Caterpillar extends DirectionalCreature implements DebugInfoSupplie
     @Override
     public boolean isIgnoringBlockTriggers() {
         return true;
+    }
+
+    /**
+     * Ignore wall collisions entirely.
+     * @return Always returns false.
+     */
+    @Override
+    public boolean isInWall() {
+        return false;
     }
 
     /**
