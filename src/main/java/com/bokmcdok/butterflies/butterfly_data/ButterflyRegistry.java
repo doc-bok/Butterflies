@@ -60,6 +60,7 @@ public class ButterflyRegistry {
      * Accessor to help get butterfly data when needed.
      * @return A valid butterfly data entry.
      */
+    @SuppressWarnings("removal")
     public static ButterflyData getButterflyDataForEntity(LivingEntity entity) {
         String species = getSpeciesString(entity);
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, species);

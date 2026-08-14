@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.butterfly_data;
 
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -116,6 +115,6 @@ public final class LandingRules {
         }
 
         ResourceLocation id = requireResourceLocation(raw.substring(1), "landing block tag");
-        return TagKey.create(Registries.BLOCK, id);
+        return TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), id);
     }
 }

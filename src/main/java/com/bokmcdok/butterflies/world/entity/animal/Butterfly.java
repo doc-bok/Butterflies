@@ -537,7 +537,7 @@ public class Butterfly extends Animal implements DebugInfoSupplier {
             double d0 = this.random.nextGaussian() * 0.02;
             double d1 = this.random.nextGaussian() * 0.02;
             double d2 = this.random.nextGaussian() * 0.02;
-            level().addParticle(
+            level.addParticle(
                     ParticleTypes.HAPPY_VILLAGER,
                     this.getRandomX(1.0),
                     this.getRandomY() + 0.5,

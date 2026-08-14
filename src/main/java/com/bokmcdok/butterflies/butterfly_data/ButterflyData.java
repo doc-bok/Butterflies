@@ -314,10 +314,12 @@ public final class ButterflyData {
     // Helper methods for ResourceLocations
     //***
 
+    @SuppressWarnings("removal")
     private ResourceLocation item(String path) {
         return new ResourceLocation(ButterfliesMod.MOD_ID, path);
     }
 
+    @SuppressWarnings("removal")
     private ResourceLocation entity(String suffix) {
         return new ResourceLocation(ButterfliesMod.MOD_ID, speciesId.withSuffix(suffix));
     }
@@ -381,9 +383,9 @@ public final class ButterflyData {
         private PlantEffect plantEffect;
         private EggMultiplier eggMultiplier;
 
-        private Set<ButterflyHabitat> habitats;
+        private List<ButterflyHabitat> habitats;
         private Set<String> extraLandingBlocks;
-        private Set<ButterflyTrait> traits;
+        private List<ButterflyTrait> traits;
         private boolean caterpillarSounds;
         private boolean butterflySounds;
 
@@ -483,7 +485,7 @@ public final class ButterflyData {
             return this;
         }
 
-        public Builder habitats(Set<ButterflyHabitat> habitats) {
+        public Builder habitats(List<ButterflyHabitat> habitats) {
             this.habitats = habitats;
             return this;
         }
@@ -523,7 +525,7 @@ public final class ButterflyData {
             return this;
         }
 
-        public Builder traits(Set<ButterflyTrait> traits) {
+        public Builder traits(List<ButterflyTrait> traits) {
             this.traits = traits;
             return this;
         }
@@ -539,7 +541,7 @@ public final class ButterflyData {
         /**
          * Helper to ensure variant strings are valid.
          * @param variant The ID of the variant.
-         * @param fallback The fallback if the variand ID is invalid.
+         * @param fallback The fallback if the variant ID is invalid.
          * @return A valid variant string.
          */
         private static String normalizeVariant(String variant,

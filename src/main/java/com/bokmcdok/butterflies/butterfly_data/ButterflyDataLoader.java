@@ -63,6 +63,7 @@ public class ButterflyDataLoader {
          * @return A new butterfly entry
          * @throws IllegalArgumentException Unused
          */
+        @SuppressWarnings("removal")
         @Override
         public ButterflyData deserialize(JsonElement json,
                                          Type typeOfT,
@@ -77,7 +78,7 @@ public class ButterflyDataLoader {
                 ButterflySpeed speed = getEnumValue(object, ButterflySpeed.class, "speed", ButterflySpeed.MODERATE);
                 ButterflyRarity rarity = getEnumValue(object, ButterflyRarity.class, "rarity", ButterflyRarity.COMMON);
 
-                Set<ButterflyHabitat> habitats = getEnumCollection(object, ButterflyHabitat.class, "habitats");
+                List<ButterflyHabitat> habitats = getEnumCollection(object, ButterflyHabitat.class, "habitats");
 
                 JsonObject lifespan = getOptionalObject(object, "lifespan");
                 ButterflyLifespan eggLifespan = getEnumValue(lifespan, ButterflyLifespan.class, "egg", ButterflyLifespan.MEDIUM);
@@ -118,7 +119,7 @@ public class ButterflyDataLoader {
                     butterflySounds = butterflyElem.getAsBoolean();
                 }
 
-                Set<ButterflyTrait> traits = getEnumCollection(object, ButterflyTrait.class, "traits");
+                List<ButterflyTrait> traits = getEnumCollection(object, ButterflyTrait.class, "traits");
 
                 JsonElement variantElement = getOptionalObject(object, "variants");
                 JsonObject variants = variantElement.getAsJsonObject();
@@ -218,13 +219,13 @@ public class ButterflyDataLoader {
          * @return A value of the enumerated type.
          * @param <T> (Inferred) The type of the enumeration.
          */
-        private static <T extends Enum<?>> Set<T> getEnumCollection(
+        private static <T extends Enum<?>> List<T> getEnumCollection(
                 JsonObject object,
                 Class<T> enumeration,
                 String key
         ) {
             JsonArray jsonData = getOptionalArray(object, key);
-            Set<T> result = new HashSet<>();
+            List<T> result = new ArrayList<>();
             for (int i = 0; i < jsonData.size(); ++i) {
                 JsonElement element = jsonData.get(i);
                 if (!element.isJsonPrimitive()) {
@@ -239,10 +240,7 @@ public class ButterflyDataLoader {
                 } catch (IllegalArgumentException e) {
 
                     // The value specified is invalid, so make sure it's written to the log.
-                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
-                            key,
-                            jsonData.get(i).getAsString(),
-                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                    logIllegalArgument(key, jsonData.get(i).getAsString(), tryGetSpeciesId(object));
                 }
             }
 
@@ -273,10 +271,7 @@ public class ButterflyDataLoader {
                 } catch (IllegalArgumentException e) {
 
                     // The value specified is invalid, so make sure it's written to the log.
-                    LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
-                            key,
-                            jsonData.get(i).getAsString(),
-                            object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown");
+                    logIllegalArgument(key, jsonData.get(i).getAsString(), tryGetSpeciesId(object));
                 }
             }
 
@@ -329,6 +324,28 @@ public class ButterflyDataLoader {
 
                 return fallback;
             }
+        }
+
+        /**
+         * Helper method fot logging illegal arguments.
+         * @param entityId The Entity ID.
+         * @param key The key of the invalid argument.
+         * @param value The invalid value.
+         */
+        private static void logIllegalArgument(String entityId,
+                                               String key,
+                                               String value) {
+            LogUtils.getLogger().error("[BUTTERFLY_DATA_LOADER] Invalid [{}]([{}]) specified on [{}]",
+                    key, value, entityId);
+        }
+
+        /**
+         * Helper to safely extract a Species ID.
+         * @param object The object to pull from.
+         * @return The Species ID, if any.
+         */
+        private static String tryGetSpeciesId(JsonObject object) {
+            return object.get("entityId") != null ? object.get("entityId").getAsString() : "unknown";
         }
     }
 }

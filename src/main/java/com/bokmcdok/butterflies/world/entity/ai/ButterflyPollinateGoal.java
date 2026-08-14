@@ -5,7 +5,6 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
@@ -15,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -39,7 +39,6 @@ public class ButterflyPollinateGoal extends MoveToBlockGoal {
             Map.entry(Blocks.PINK_TULIP, () -> BlockRegistry.PINK_TULIP_BUD.get().defaultBlockState()),
             Map.entry(Blocks.POPPY, () -> BlockRegistry.POPPY_BUD.get().defaultBlockState()),
             Map.entry(Blocks.RED_TULIP, () -> BlockRegistry.RED_TULIP_BUD.get().defaultBlockState()),
-            Map.entry(Blocks.TORCHFLOWER, Blocks.TORCHFLOWER_CROP::defaultBlockState),
             Map.entry(Blocks.WHITE_TULIP, () -> BlockRegistry.WHITE_TULIP_BUD.get().defaultBlockState()),
             Map.entry(Blocks.WITHER_ROSE, () -> BlockRegistry.WITHER_ROSE_BUD.get().defaultBlockState()),
             Map.entry(Blocks.SWEET_BERRY_BUSH, Blocks.SWEET_BERRY_BUSH::defaultBlockState)
@@ -77,7 +76,7 @@ public class ButterflyPollinateGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            preferredFlower = BuiltInRegistries.BLOCK.get(data.foodBlock());
+            preferredFlower = ForgeRegistries.BLOCKS.getValue(data.foodBlock());
         } else {
             preferredFlower = null;
         }
@@ -255,7 +254,7 @@ public class ButterflyPollinateGoal extends MoveToBlockGoal {
      * Attempt to pollinate a flower.
      */
     private void tryPollinateFlower() {
-        Level level = butterfly.level();
+        Level level = butterfly.level;
 
         if (!canPollinateNow()) {
             return;

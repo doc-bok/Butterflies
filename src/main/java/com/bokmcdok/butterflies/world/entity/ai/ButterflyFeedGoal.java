@@ -5,12 +5,12 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.block.entity.ButterflyFeederEntity;
 import com.bokmcdok.butterflies.world.entity.animal.Butterfly;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -47,7 +47,7 @@ public class ButterflyFeedGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            foodSourceItem = BuiltInRegistries.ITEM.get(data.foodItem());
+            foodSourceItem = ForgeRegistries.ITEMS.getValue(data.foodItem());
         } else {
             foodSourceItem = null;
         }
@@ -199,7 +199,7 @@ public class ButterflyFeedGoal extends MoveToBlockGoal {
             return;
         }
 
-        Level level = butterfly.level();
+        Level level = butterfly.level;
         if (!(level.getBlockEntity(blockPos) instanceof ButterflyFeederEntity feeder)) {
             return;
         }
