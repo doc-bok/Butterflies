@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "peacock-pansy-wet",
-  "extraLandingBlocks": "none",
-  "foodSource": "blue_orchid",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:blue_orchid",
   "habitats": [
     "plains",
     "wetlands"

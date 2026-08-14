@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "clippercyan",
-  "extraLandingBlocks": "none",
-  "foodSource": "poppy",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:poppy",
   "habitats": [
     "jungles"
   ],

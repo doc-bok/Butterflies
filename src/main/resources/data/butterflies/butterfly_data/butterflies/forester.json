@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "forester",
-  "extraLandingBlocks": "none",
-  "foodSource": "lily_of_the_valley",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:lily_of_the_valley",
   "habitats": [
     "forests",
     "plains",
