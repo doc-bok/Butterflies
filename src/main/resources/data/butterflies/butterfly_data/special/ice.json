@@ -2,8 +2,8 @@
   "diurnality": "cathemeral",
   "eggMultiplier": "normal",
   "entityId": "ice",
-  "extraLandingBlocks": "none",
-  "foodSource": "wither_rose",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:wither_rose",
   "habitats": [
     "ice"
   ],

@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.animal;
 
-import com.bokmcdok.butterflies.butterfly_data.ButterflyData;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
@@ -133,6 +132,15 @@ public class ButterflyEgg extends DirectionalCreature {
     @Override
     public boolean isIgnoringBlockTriggers() {
         return true;
+    }
+
+    /**
+     * Ignore wall collisions entirely.
+     * @return Always returns false.
+     */
+    @Override
+    public boolean isInWall() {
+        return false;
     }
 
     /**

@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "cabbage",
-  "extraLandingBlocks": "none",
-  "foodSource": "dandelion",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:dandelion",
   "habitats": [
     "plains",
     "wetlands"

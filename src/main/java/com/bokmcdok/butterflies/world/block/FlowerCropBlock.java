@@ -90,6 +90,19 @@ public class FlowerCropBlock extends CropBlock {
         return age == MAX_AGE ? this.flowerBlock.defaultBlockState() : super.getStateForAge(age);
     }
 
+    @Override
+    public boolean canSurvive(@NotNull BlockState blockState,
+                              @NotNull LevelReader levelReader,
+                              @NotNull BlockPos blockPos) {
+
+        if (!levelReader.getBlockState(blockPos).isAir() ||
+                !levelReader.getBlockState(blockPos.below()).is(Blocks.GRASS_BLOCK)) {
+            return false;
+        }
+
+        return super.canSurvive(blockState, levelReader, blockPos);
+    }
+
     /**
      * FLower buds can be placed on grass blocks.
      * @param blockState The block state.

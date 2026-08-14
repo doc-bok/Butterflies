@@ -2,8 +2,8 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "chalkhill",
-  "extraLandingBlocks": "none",
-  "foodSource": "oxeye_daisy",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:oxeye_daisy",
   "habitats": [
     "hills",
     "plateaus"

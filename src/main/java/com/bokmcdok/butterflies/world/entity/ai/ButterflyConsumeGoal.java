@@ -54,7 +54,7 @@ public class ButterflyConsumeGoal extends MoveToBlockGoal {
 
         ButterflyData data = ButterflyRegistry.getEntry(butterfly.getButterflyIndex());
         if (data != null) {
-            Optional<Holder.Reference<Block>> block = BuiltInRegistries.BLOCK.get(data.foodSource());
+            Optional<Holder.Reference<Block>> block = BuiltInRegistries.BLOCK.get(data.foodBlock());
             block.ifPresent(blockReference -> foodSource = blockReference.value());
         }
     }
