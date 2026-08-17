@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.7
+ - Improved Origami block and item textures.
+
 ### 7.10.6 (2026/08/17)
  - Backported fixes made for other versions of Minecraft.
 
