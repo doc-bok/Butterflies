@@ -370,120 +370,162 @@ public final class ButterflyData {
     public static final class Builder {
 
         private final int butterflyIndex;
-        private final SpeciesId speciesId;
-        private final ButterflySize size;
-        private final ButterflySpeed speed;
-        private final ButterflyRarity rarity;
-        private final ResourceLocation foodBlock;
-        private final ResourceLocation foodItem;
-        private final ButterflyType type;
-        private final Diurnality diurnality;
-        private final PlantEffect plantEffect;
-        private final EggMultiplier eggMultiplier;
+        private SpeciesId speciesId;
+        private ButterflySize size;
+        private ButterflySpeed speed;
+        private ButterflyRarity rarity;
+        private ResourceLocation foodBlock;
+        private ResourceLocation foodItem;
+        private ButterflyType type;
+        private Diurnality diurnality;
+        private PlantEffect plantEffect;
+        private EggMultiplier eggMultiplier;
 
-        private final Set<ButterflyHabitat> habitats;
-        private final Set<String> extraLandingBlocks;
-        private final Set<ButterflyTrait> traits;
-        private final boolean caterpillarSounds;
-        private final boolean butterflySounds;
+        private Set<ButterflyHabitat> habitats;
+        private Set<String> extraLandingBlocks;
+        private Set<ButterflyTrait> traits;
+        private boolean caterpillarSounds;
+        private boolean butterflySounds;
 
         // Lifespan
-        private final int eggLifespan;
-        private final int caterpillarLifespan;
-        private final int chrysalisLifespan;
-        private final int butterflyLifespan;
+        private int eggLifespan;
+        private int caterpillarLifespan;
+        private int chrysalisLifespan;
+        private int butterflyLifespan;
 
         // Variants (default to entityId)
-        private final SpeciesId baseVariant;
-        private final SpeciesId coldVariant;
-        private final SpeciesId mateVariant;
-        private final SpeciesId warmVariant;
-        private final SpeciesId agedVariant;
+        private SpeciesId baseVariant;
+        private SpeciesId coldVariant;
+        private SpeciesId mateVariant;
+        private SpeciesId warmVariant;
+        private SpeciesId agedVariant;
 
         /**
          * Construction.
          * @param butterflyIndex      The index of the butterfly
-         * @param speciesId           The butterfly species
-         * @param size                The size of the butterfly
-         * @param speed               The speed of the butterfly
-         * @param rarity              How rare the butterfly is
-         * @param habitats            A list of the butterflies habitats
-         * @param eggLifespan         The lifespan of the egg phase
-         * @param caterpillarLifespan The lifespan of the caterpillar phase
-         * @param chrysalisLifespan   The lifespan of the chrysalis phase
-         * @param butterflyLifespan   The lifespan of the butterfly phase
-         * @param foodBlock           The block this butterfly considers food
-         * @param foodItem            The item this butterfly considers food
-         * @param type                The type of butterfly
-         * @param diurnality          The sleeping pattern of the butterfly
-         * @param extraLandingBlocks  The extra blocks the butterfly can land on
-         * @param plantEffect         The effect the butterfly has on its food
-         * @param eggMultiplier       Multiplies the amount of eggs the butterfly has
-         * @param caterpillarSounds   The sounds the caterpillar makes
-         * @param butterflySounds     The sounds the butterfly makes
-         * @param traits              The traits of the butterfly
-         * @param baseVariant         The base variant of the butterfly
-         * @param coldVariant         The cold variant of the butterfly
-         * @param mateVariant         The mate variant of the butterfly
-         * @param warmVariant         The warm variant of the butterfly
-         * @param agedVariant         The aged variant of the butterfly
          */
-        public Builder(int butterflyIndex,
-                       String speciesId,
-                       ButterflySize size,
-                       ButterflySpeed speed,
-                       ButterflyRarity rarity,
-                       Set<ButterflyHabitat> habitats,
-                       int eggLifespan,
-                       int caterpillarLifespan,
-                       int chrysalisLifespan,
-                       int butterflyLifespan,
-                       ResourceLocation foodBlock,
-                       ResourceLocation foodItem,
-                       ButterflyType type,
-                       Diurnality diurnality,
-                       Set<String> extraLandingBlocks,
-                       PlantEffect plantEffect,
-                       EggMultiplier eggMultiplier,
-                       boolean caterpillarSounds,
-                       boolean butterflySounds,
-                       Set<ButterflyTrait> traits,
-                       String baseVariant,
-                       String coldVariant,
-                       String mateVariant,
-                       String warmVariant,
-                       String agedVariant) {
+        public Builder(int butterflyIndex) {
             this.butterflyIndex = butterflyIndex;
+        }
+
+        public Builder speciesId(String speciesId) {
             this.speciesId = new SpeciesId(speciesId);
+            return this;
+        }
+
+        public Builder size(ButterflySize size) {
             this.size = size;
+            return this;
+        }
+
+        public Builder speed(ButterflySpeed speed) {
             this.speed = speed;
+            return this;
+        }
+
+        public Builder rarity(ButterflyRarity rarity) {
             this.rarity = rarity;
+            return this;
+        }
+
+        public Builder foodBlock(ResourceLocation foodBlock) {
             this.foodBlock = foodBlock;
+            return this;
+        }
+
+        public Builder foodItem(ResourceLocation foodItem) {
             this.foodItem = foodItem;
+            return this;
+        }
+
+        public Builder type(ButterflyType type) {
             this.type = type;
+            return this;
+        }
+
+        public Builder diurnality(Diurnality diurnality) {
             this.diurnality = diurnality;
+            return this;
+        }
+
+        public Builder plantEffect(PlantEffect plantEffect) {
             this.plantEffect = plantEffect;
+            return this;
+        }
+
+        public Builder eggMultiplier(EggMultiplier eggMultiplier) {
             this.eggMultiplier = eggMultiplier;
+            return this;
+        }
 
-            // Default variants to speciesId; will be normalized in constructor
-            this.baseVariant = new SpeciesId(normalizeVariant(baseVariant, speciesId));
-            this.coldVariant = new SpeciesId(normalizeVariant(coldVariant, speciesId));
-            this.mateVariant = new SpeciesId(normalizeVariant(mateVariant, speciesId));
-            this.warmVariant = new SpeciesId(normalizeVariant(warmVariant, speciesId));
-            this.agedVariant = new SpeciesId(normalizeVariant(agedVariant, speciesId));
+        public Builder baseVariant(String baseVariant) {
+            this.baseVariant = new SpeciesId(normalizeVariant(baseVariant, this.speciesId.value()));
+            return this;
+        }
 
+        public Builder coldVariant(String coldVariant) {
+            this.coldVariant = new SpeciesId(normalizeVariant(coldVariant, this.speciesId.value()));
+            return this;
+        }
+
+        public Builder mateVariant(String mateVariant) {
+            this.mateVariant = new SpeciesId(normalizeVariant(mateVariant, this.speciesId.value()));
+            return this;
+        }
+
+        public Builder warmVariant(String warmVariant) {
+            this.warmVariant = new SpeciesId(normalizeVariant(warmVariant, this.speciesId.value()));
+            return this;
+        }
+
+        public Builder agedVariant(String agedVariant) {
+            this.agedVariant = new SpeciesId(normalizeVariant(agedVariant, this.speciesId.value()));
+            return this;
+        }
+
+        public Builder habitats(Set<ButterflyHabitat> habitats) {
             this.habitats = habitats;
+            return this;
+        }
 
+        public Builder eggLifespan(int eggLifespan) {
             this.eggLifespan = eggLifespan;
+            return this;
+        }
+
+        public Builder caterpillarLifespan(int caterpillarLifespan) {
             this.caterpillarLifespan = caterpillarLifespan;
+            return this;
+        }
+
+        public Builder chrysalisLifespan(int chrysalisLifespan) {
             this.chrysalisLifespan = chrysalisLifespan;
+            return this;
+        }
+
+        public Builder butterflyLifespan(int butterflyLifespan) {
             this.butterflyLifespan = butterflyLifespan;
+            return this;
+        }
 
+        public Builder extraLandingBlocks(Set<String> extraLandingBlocks) {
             this.extraLandingBlocks = extraLandingBlocks;
+            return this;
+        }
 
+        public Builder caterpillarSounds(boolean caterpillarSounds) {
             this.caterpillarSounds = caterpillarSounds;
+            return this;
+        }
+
+        public Builder butterflySounds(boolean butterflySounds) {
             this.butterflySounds = butterflySounds;
+            return this;
+        }
+
+        public Builder traits(Set<ButterflyTrait> traits) {
             this.traits = traits;
+            return this;
         }
 
         /**

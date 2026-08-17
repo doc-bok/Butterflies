@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.6 (2026/08/17)
+ - Backported fixes made for other versions of Minecraft.
+
 ### 7.10.5 (2026/08/14)
  - Butterfly entities will no longer die when on solid blocks.
 
