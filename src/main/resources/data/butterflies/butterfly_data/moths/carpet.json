@@ -2,7 +2,9 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "carpet",
-  "extraLandingBlocks": ["#minecraft:wool"],
+  "extraLandingBlocks": [
+    "#minecraft:wool"
+  ],
   "foodSource": "minecraft:cornflower",
   "habitats": [
     "plains",

@@ -2,7 +2,10 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "buckeye",
-  "extraLandingBlocks": ["minecraft:pumpkin",  "minecraft:melon"],
+  "extraLandingBlocks": [
+    "minecraft:pumpkin",
+    "minecraft:melon"
+  ],
   "foodSource": "minecraft:blue_orchid",
   "habitats": [
     "plains",
