@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.IronGolem;
@@ -24,6 +25,8 @@ public class EntityTypeRegistry {
     public static final RegistryObject<EntityType<IronGolem>> BUTTERFLY_GOLEM;
     public static final RegistryObject<EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
     public static final List<RegistryObject<EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
+    public static final RegistryObject<EntityType<RopeKnotEntity>> ROPE_KNOT;
+
 
     static {
         ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ButterfliesMod.MOD_ID);
@@ -47,6 +50,15 @@ public class EntityTypeRegistry {
 
 
         BUTTERFLY_GOLEM = registerButterflyGolem();
+
+        ROPE_KNOT = ENTITY_TYPES.register(
+                RopeKnotEntity.NAME,
+                () -> EntityType.Builder.<RopeKnotEntity>of(RopeKnotEntity::new, MobCategory.MISC)
+                        .noSave()
+                        .sized(0.375F, 0.5F)
+                        .clientTrackingRange(10)
+                        .updateInterval(Integer.MAX_VALUE)
+                        .build(RopeKnotEntity.NAME));
     }
 
     private static RegistryObject<EntityType<IronGolem>> registerButterflyGolem() {

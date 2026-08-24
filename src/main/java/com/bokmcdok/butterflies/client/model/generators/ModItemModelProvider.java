@@ -59,6 +59,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ItemRegistry.PEACEMAKER_HONEY_BOTTLE.get());
         basicItem(ItemRegistry.SILK.get());
         basicItem(ItemRegistry.ZHUANGZI_BOOK.get());
+        basicItem(ItemRegistry.ROPE.get());
 
         // Golem Spawn Egg.
         singleTexture(getPath(SpawnEggRegistry.BUTTERFLY_GOLEM_SPAWN_EGG), HANDHELD_ROD, "layer0",

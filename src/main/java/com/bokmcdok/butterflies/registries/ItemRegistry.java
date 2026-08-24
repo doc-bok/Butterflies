@@ -6,14 +6,7 @@ import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyRegistry;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.entity.animal.Caterpillar;
-import com.bokmcdok.butterflies.world.item.BottledButterflyItem;
-import com.bokmcdok.butterflies.world.item.BottledCaterpillarItem;
-import com.bokmcdok.butterflies.world.item.ButterflyBookItem;
-import com.bokmcdok.butterflies.world.item.ButterflyEggItem;
-import com.bokmcdok.butterflies.world.item.ButterflyNetItem;
-import com.bokmcdok.butterflies.world.item.ButterflyScrollItem;
-import com.bokmcdok.butterflies.world.item.ButterflyZhuangziItem;
-import com.bokmcdok.butterflies.world.item.CaterpillarItem;
+import com.bokmcdok.butterflies.world.item.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
@@ -78,6 +71,9 @@ public class ItemRegistry {
 
     // Peacemaker Honey
     public static final RegistryObject<Item> PEACEMAKER_HONEY_BOTTLE;
+
+    // Rope
+    public static final RegistryObject<Item> ROPE;
 
     /**
      * Registers all items that are based on the species of butterflies.
@@ -188,6 +184,8 @@ public class ItemRegistry {
         // Peacemaker Honey
         PEACEMAKER_HONEY_BOTTLE = ITEMS.register("peacemaker_honey_bottle",
                 () -> new Item(new Item.Properties().stacksTo(1)));
+
+        ROPE = ITEMS.register("rope", () -> new RopeItem(new Item.Properties()));
     }
 
     /**

@@ -79,6 +79,9 @@ public class ModEventListener {
         // Peacemaker Honey
         event.accept(ItemRegistry.PEACEMAKER_HONEY_BOTTLE);
 
+        // Rope
+        event.accept(ItemRegistry.ROPE);
+
         // Spawn Eggs
         SpawnEggRegistry.BUTTERFLY_SPAWN_EGGS.forEach(event::accept);
         SpawnEggRegistry.CATERPILLAR_SPAWN_EGGS.forEach(event::accept);

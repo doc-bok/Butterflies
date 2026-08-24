@@ -151,6 +151,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .define('s', ItemRegistry.SILK.get())
                 .unlockedBy(getHasName(ItemRegistry.SILK.get()), has(ItemRegistry.SILK.get()))
                 .save(recipeOutput, new ResourceLocation(ButterfliesMod.MOD_ID, "string_from_silk"));
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.ROPE.get())
+                .pattern("sss")
+                .pattern("s s")
+                .pattern("sss")
+                .define('s', Items.STRING)
+                .unlockedBy(getHasName(Items.STRING), has(Items.STRING))
+                .save(recipeOutput, new ResourceLocation(ButterfliesMod.MOD_ID, "rope"));
     }
 
     /**
