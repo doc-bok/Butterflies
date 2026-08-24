@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.world.entity.decoration;
 
-import java.util.List;
 import javax.annotation.Nullable;
 
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
@@ -18,16 +17,16 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * A class to handle player interactions with the rope.
@@ -37,7 +36,6 @@ public class RopeKnotEntity extends HangingEntity {
 
     public static final int PIXEL_WIDTH = 9;
     public static final int PIXEL_HEIGHT = 9;
-    public static final double SEARCH_RADIUS = 7.0d;
     public static final double RENDER_DISTANCE_SQR = 1024.0d;
     public static final double ROPE_HOLD_Y_OFFSET = 0.375D;
 
@@ -165,12 +163,6 @@ public class RopeKnotEntity extends HangingEntity {
             return InteractionResult.SUCCESS;
         }
 
-        List<Mob> nearbyMobs = this.getNearbyMobs();
-        if (this.attachPlayerLeashedMobs(player, nearbyMobs)
-                || this.removeKnotIfUnused(player, nearbyMobs)) {
-            this.gameEvent(GameEvent.BLOCK_ATTACH, player);
-        }
-
         return InteractionResult.CONSUME;
     }
 
@@ -189,18 +181,26 @@ public class RopeKnotEntity extends HangingEntity {
      * @param blockPos The position to check.
      * @return A knot in the specified position.
      */
-    public static RopeKnotEntity getOrCreateKnot(Level level,
-                                                 BlockPos blockPos) {
+    public static Optional<RopeKnotEntity> getRopeKnot(Level level,
+                                                       BlockPos blockPos) {
         int i = blockPos.getX();
         int j = blockPos.getY();
         int k = blockPos.getZ();
 
-        for(RopeKnotEntity existingEntity : level.getEntitiesOfClass(RopeKnotEntity.class, new AABB((double)i - 1.0D, (double)j - 1.0D, (double)k - 1.0D, (double)i + 1.0D, (double)j + 1.0D, (double)k + 1.0D))) {
+        for(RopeKnotEntity existingEntity : level.getEntitiesOfClass(RopeKnotEntity.class, new AABB(
+                (double)i - 1.0D, (double)j - 1.0D, (double)k - 1.0D,
+                (double)i + 1.0D, (double)j + 1.0D, (double)k + 1.0D))) {
             if (existingEntity.getPos().equals(blockPos)) {
-                return existingEntity;
+                return Optional.of(existingEntity);
             }
         }
 
+        return Optional.empty();
+    }
+
+    @NotNull
+    public static RopeKnotEntity createRopeKnot(Level level,
+                                                BlockPos blockPos) {
         RopeKnotEntity newEntity = new RopeKnotEntity(level, blockPos);
         level.addFreshEntity(newEntity);
         return newEntity;
@@ -242,74 +242,5 @@ public class RopeKnotEntity extends HangingEntity {
     @Override
     public ItemStack getPickResult() {
         return new ItemStack(ItemRegistry.ROPE.get());
-    }
-
-    /**
-     * Find any nearby mobs.
-     * @return A list of mobs.
-     */
-    private List<Mob> getNearbyMobs() {
-        AABB searchBox = new AABB(
-                this.getX() - SEARCH_RADIUS, this.getY() - SEARCH_RADIUS, this.getZ() - SEARCH_RADIUS,
-                this.getX() + SEARCH_RADIUS, this.getY() + SEARCH_RADIUS, this.getZ() + SEARCH_RADIUS
-        );
-
-        return this.level().getEntitiesOfClass(Mob.class, searchBox);
-    }
-
-    /**
-     * Attach any mobs leashed by the player.
-     * @param player The current player.
-     * @param nearbyMobs A list of nearby mobs.
-     * @return True if any mobs are attached.
-     */
-    private boolean attachPlayerLeashedMobs(@NotNull Player player,
-                                            @NotNull List<Mob> nearbyMobs) {
-        boolean attachedAny = false;
-
-        for (Mob mob : nearbyMobs) {
-            if (mob.getLeashHolder() == player) {
-                mob.setLeashedTo(this, true);
-                attachedAny = true;
-            }
-        }
-
-        return attachedAny;
-    }
-
-    /**
-     * Remove any unused knots.
-     * @param player The current player.
-     * @param nearbyMobs A list of nearby mobs.
-     * @return True if any knots are removed.
-     */
-    private boolean removeKnotIfUnused(@NotNull Player player,
-                                       @NotNull List<Mob> nearbyMobs) {
-
-        this.discard();
-
-        if (!player.getAbilities().instabuild) {
-            return false;
-        }
-
-        return this.dropCreativeLeashesFromKnot(nearbyMobs);
-    }
-
-    /**
-     * Drops leashes from any nearby mobs.
-     * @param nearbyMobs A list of nearby mobs.
-     * @return True if any knots are removed.
-     */
-    private boolean dropCreativeLeashesFromKnot(@NotNull List<Mob> nearbyMobs) {
-        boolean detachedAny = false;
-
-        for (Mob mob : nearbyMobs) {
-            if (mob.isLeashed() && mob.getLeashHolder() == this) {
-                mob.dropLeash(true, false);
-                detachedAny = true;
-            }
-        }
-
-        return detachedAny;
     }
 }

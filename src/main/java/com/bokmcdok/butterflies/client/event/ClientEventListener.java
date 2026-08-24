@@ -56,6 +56,7 @@ public class ClientEventListener {
         event.registerLayerDefinition(HummingbirdMothModel.LAYER_LOCATION, HummingbirdMothModel::createBodyLayer);
         event.registerLayerDefinition(PeacemakerButterflyModel.LAYER_LOCATION, PeacemakerButterflyModel::createBodyLayer);
         event.registerLayerDefinition(PeacemakerCowModel.LAYER_LOCATION, PeacemakerCowModel::createBodyLayer);
+        event.registerLayerDefinition(RopeKnotModel.LAYER_LOCATION, RopeKnotModel::createBodyLayer);
     }
 
     /**
@@ -114,6 +115,9 @@ public class ClientEventListener {
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_VINDICATOR.get(), VindicatorRenderer::new);
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_WANDERING_TRADER.get(), WanderingTraderRenderer::new);
         event.registerEntityRenderer(PeacemakerEntityTypeRegistry.PEACEMAKER_WITCH.get(), WitchRenderer::new);
+
+        // Rope
+        event.registerEntityRenderer(EntityTypeRegistry.ROPE_KNOT.get(), RopeKnotRenderer::new);
 
     }
 
