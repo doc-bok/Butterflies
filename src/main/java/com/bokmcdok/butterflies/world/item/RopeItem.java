@@ -2,14 +2,20 @@ package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+
+import javax.annotation.Nullable;
 
 /**
  * A class to represent a rope.
@@ -45,12 +51,13 @@ public class RopeItem extends Item {
             return InteractionResult.PASS;
         }
 
-        if(RopeKnotEntity.getRopeKnot(level, blockPos).isPresent()) {
-            return InteractionResult.PASS;
-        }
-
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
+        }
+
+        // TODO: This will eventually attach a free hanging rope.
+        if(RopeKnotEntity.tryGetRopeKnot(level, blockPos).isPresent()) {
+            return InteractionResult.PASS;
         }
 
         RopeKnotEntity ropeKnot = RopeKnotEntity.createRopeKnot(level, blockPos);

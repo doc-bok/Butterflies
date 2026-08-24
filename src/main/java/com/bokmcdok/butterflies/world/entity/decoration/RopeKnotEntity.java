@@ -21,6 +21,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -123,12 +124,21 @@ public class RopeKnotEntity extends HangingEntity {
     }
 
     /**
-     * Respond to the item being dropped.
+     * Drop a rope item when a rope knot is destroyed.
      * @param entity The entity dropping the item.
      */
     @Override
     public void dropItem(@Nullable Entity entity) {
-        this.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0F, 1.0F);
+        if (this.level().getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
+            this.playSound(SoundEvents.LEASH_KNOT_BREAK, 1.0F, 1.0F);
+            if (entity instanceof Player player) {
+                if (player.getAbilities().instabuild) {
+                    return;
+                }
+            }
+
+            this.spawnAtLocation(ItemRegistry.ROPE.get());
+        }
     }
 
     /**
@@ -150,8 +160,9 @@ public class RopeKnotEntity extends HangingEntity {
     }
 
     /**
-     * Handle players interacting with the rope.
-     * @param player The player interacting with the rope.
+     * Handle players interacting with the rope knot.
+     * TODO: Allow for rope attachments here?
+     * @param player The player interacting with the rope knot.
      * @param interactionHand The hand they are using to interact.
      * @return The result of the interaction.
      */
@@ -181,8 +192,8 @@ public class RopeKnotEntity extends HangingEntity {
      * @param blockPos The position to check.
      * @return A knot in the specified position.
      */
-    public static Optional<RopeKnotEntity> getRopeKnot(Level level,
-                                                       BlockPos blockPos) {
+    public static Optional<RopeKnotEntity> tryGetRopeKnot(Level level,
+                                                          BlockPos blockPos) {
         int i = blockPos.getX();
         int j = blockPos.getY();
         int k = blockPos.getZ();
