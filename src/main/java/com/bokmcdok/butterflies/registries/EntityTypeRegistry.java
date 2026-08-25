@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.registries;
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
 import com.bokmcdok.butterflies.world.entity.decoration.ButterflyScroll;
+import com.bokmcdok.butterflies.world.entity.decoration.RopeEntity;
 import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -26,6 +27,7 @@ public class EntityTypeRegistry {
     public static final RegistryObject<EntityType<ButterflyScroll>> BUTTERFLY_SCROLL; // TODO: Remove after migration, kept for backwards compatibility
     public static final List<RegistryObject<EntityType<ButterflyScroll>>> BUTTERFLY_SCROLLS;
     public static final RegistryObject<EntityType<RopeKnotEntity>> ROPE_KNOT;
+    public static final RegistryObject<EntityType<RopeEntity>> ROPE;
 
 
     static {
@@ -54,13 +56,24 @@ public class EntityTypeRegistry {
         ROPE_KNOT = ENTITY_TYPES.register(
                 RopeKnotEntity.NAME,
                 () -> EntityType.Builder.<RopeKnotEntity>of(RopeKnotEntity::new, MobCategory.MISC)
-                        .noSave()
-                        .sized(0.375F, 0.5F)
+                        .sized(0.375f, 0.5f)
                         .clientTrackingRange(10)
                         .updateInterval(Integer.MAX_VALUE)
                         .build(RopeKnotEntity.NAME));
+
+        ROPE = ENTITY_TYPES.register(
+                RopeEntity.NAME,
+                () -> EntityType.Builder.<RopeEntity>of(RopeEntity::new, MobCategory.MISC)
+                        .sized(0.2f, 1.0f)
+                        .clientTrackingRange(10)
+                        .updateInterval(Integer.MAX_VALUE)
+                        .build(RopeEntity.NAME));
     }
 
+    /**
+     * Registers a Butterfly Golem entity.
+     * @return The Registry Object.
+     */
     private static RegistryObject<EntityType<IronGolem>> registerButterflyGolem() {
         String registryId = "butterfly_golem";
         return ENTITY_TYPES.register(registryId,
@@ -70,6 +83,10 @@ public class EntityTypeRegistry {
                         .build(registryId));
     }
 
+    /**
+     * Registers a Butterfly Scroll entity.
+     * @return The Registry Object.
+     */
     private static RegistryObject<EntityType<ButterflyScroll>> registerButterflyScroll(int butterflyIndex) {
         String registryId = ButterflyScroll.getRegistryId(butterflyIndex);
         return ENTITY_TYPES.register(registryId,

@@ -1,21 +1,18 @@
 package com.bokmcdok.butterflies.world.item;
 
+import com.bokmcdok.butterflies.world.entity.decoration.AbstractRopeEntity;
 import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+import java.util.Optional;
 
 /**
  * A class to represent a rope.
@@ -45,28 +42,37 @@ public class RopeItem extends Item {
         }
 
         Level level = useOnContext.getLevel();
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+
+        // Try to attach to rope or rope knot, if present.
         BlockPos blockPos = useOnContext.getClickedPos();
+        Optional<AbstractRopeEntity> rope = AbstractRopeEntity.tryGetAbstractRope(level, blockPos);
+        if(rope.isPresent()) {
+            if(rope.get().tryAttachRope(player.getDirection().getOpposite())) {
+                useOnContext.getItemInHand().shrink(1);
+                return InteractionResult.CONSUME;
+            }
+
+            return InteractionResult.PASS;
+        }
+
+        // Check for an anchor before creating rope knot.
         BlockState blockState = level.getBlockState(blockPos);
         if (!isValidAnchor(blockState)) {
             return InteractionResult.PASS;
         }
 
-        if (level.isClientSide) {
-            return InteractionResult.SUCCESS;
-        }
-
-        // TODO: This will eventually attach a free hanging rope.
-        if(RopeKnotEntity.tryGetRopeKnot(level, blockPos).isPresent()) {
-            return InteractionResult.PASS;
-        }
-
-        RopeKnotEntity ropeKnot = RopeKnotEntity.createRopeKnot(level, blockPos);
-        ropeKnot.playPlacementSound();
-
+        // Attach a rope knot to the anchor.
+        RopeKnotEntity newRopeKnot = RopeKnotEntity.createRopeKnot(level, blockPos);
+        newRopeKnot.playPlacementSound();
         useOnContext.getItemInHand().shrink(1);
 
         return InteractionResult.CONSUME;
     }
+
+
 
     /**
      * Returns true if a block is a valid anchor.

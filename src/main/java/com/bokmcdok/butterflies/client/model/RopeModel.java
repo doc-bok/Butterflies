@@ -16,25 +16,25 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public class RopeKnotModel<T extends Entity> extends HierarchicalModel<T> {
-    private static final String KNOT = "knot";
+public class RopeModel<T extends Entity> extends HierarchicalModel<T> {
+    private static final String ROPE = "rope";
 
     public static final ModelLayerLocation LAYER_LOCATION =
-            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "rope_knot"), KNOT);
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, ROPE), ROPE);
 
     private final ModelPart root;
-    private final ModelPart knot;
+    private final ModelPart rope;
 
-    public RopeKnotModel(ModelPart modelPart) {
+    public RopeModel(ModelPart modelPart) {
         this.root = modelPart;
-        this.knot = modelPart.getChild(KNOT);
+        this.rope = modelPart.getChild(ROPE);
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild(KNOT, CubeListBuilder.create().texOffs(0, 0)
-                .addBox(-3.0F, -8.0F, -3.0F, 6.0F, 8.0F, 6.0F), PartPose.ZERO);
+        partdefinition.addOrReplaceChild(ROPE, CubeListBuilder.create().texOffs(0, 0)
+                .addBox(-1.5F, -16.0F, -1.5F, 3.0F, 16.0F, 3.0F), PartPose.ZERO);
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
@@ -51,7 +51,7 @@ public class RopeKnotModel<T extends Entity> extends HierarchicalModel<T> {
                           float ageInTicks,
                           float netHeadYaw,
                           float headPitch) {
-        this.knot.yRot = netHeadYaw * ((float)Math.PI / 180F);
-        this.knot.xRot = headPitch * ((float)Math.PI / 180F);
+        this.rope.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        this.rope.xRot = headPitch * ((float)Math.PI / 180F);
     }
 }
