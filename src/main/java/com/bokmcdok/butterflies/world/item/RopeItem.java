@@ -1,8 +1,10 @@
 package com.bokmcdok.butterflies.world.item;
 
 import com.bokmcdok.butterflies.world.entity.decoration.AbstractRopeEntity;
+import com.bokmcdok.butterflies.world.entity.decoration.RopeEntity;
 import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -48,9 +50,17 @@ public class RopeItem extends Item {
 
         // Try to attach to rope or rope knot, if present.
         BlockPos blockPos = useOnContext.getClickedPos();
-        Optional<AbstractRopeEntity> rope = AbstractRopeEntity.tryGetAbstractRope(level, blockPos);
-        if(rope.isPresent()) {
-            if(rope.get().tryAttachRope(player.getDirection().getOpposite())) {
+        Optional<AbstractRopeEntity> abstractRope = AbstractRopeEntity.tryGetAbstractRope(level, blockPos);
+        if(abstractRope.isPresent()) {
+            Direction direction = player.getDirection().getOpposite();
+            boolean onFullBlock = false;
+
+            if (abstractRope.get() instanceof RopeEntity rope) {
+                direction = rope.getDirection();
+                onFullBlock = rope.getOnFullBlock();
+            }
+
+            if(abstractRope.get().tryAttachRope(direction, onFullBlock)) {
                 useOnContext.getItemInHand().shrink(1);
                 return InteractionResult.CONSUME;
             }

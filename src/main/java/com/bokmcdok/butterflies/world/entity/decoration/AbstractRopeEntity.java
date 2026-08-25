@@ -142,10 +142,15 @@ public abstract class AbstractRopeEntity extends HangingEntity {
             return InteractionResult.SUCCESS;
         }
 
-        Direction direction = this instanceof RopeEntity ?
-                this.direction : player.getDirection().getOpposite();
+        Direction direction = player.getDirection().getOpposite();
+        boolean onFullBlock = false;
 
-        if (tryAttachRope(direction)) {
+        if (this instanceof RopeEntity rope) {
+            direction = rope.direction;
+            onFullBlock = rope.getOnFullBlock();
+        }
+
+        if (tryAttachRope(direction, onFullBlock)) {
             player.getItemInHand(interactionHand).shrink(1);
             return InteractionResult.CONSUME;
         }
@@ -174,23 +179,28 @@ public abstract class AbstractRopeEntity extends HangingEntity {
      * Try and attach a rope to the block below this entity.
      * @return True if a rope was attached.
      */
-    public boolean tryAttachRope(Direction direction) {
+    public boolean tryAttachRope(Direction direction,
+                                 boolean onFullBlock) {
         BlockPos below = this.pos.below();
 
         // Check for solid blocks.
         BlockState blockState = this.level().getBlockState(below);
         if (!blockState.isAir() && !blockState.is(BlockTags.FENCES) && !blockState.is(BlockTags.WALLS)) {
+            if (this.level().getBlockState(below.relative(direction)).isAir()) {
+                onFullBlock = true;
+            } else {
             return false;
+            }
         }
 
         // We can keep attaching rope from the top.
         Optional<AbstractRopeEntity> rope = tryGetAbstractRope(this.level(), this.pos.below());
         if (rope.isPresent()) {
-            return rope.get().tryAttachRope(direction);
+            return rope.get().tryAttachRope(direction, onFullBlock);
         }
 
         // Attach a new rope entity.
-        RopeEntity newRope = RopeEntity.createRope(this.level(), below, direction);
+        RopeEntity newRope = RopeEntity.createRope(this.level(), below, direction, onFullBlock);
         newRope.playPlacementSound();
         return true;
     }
