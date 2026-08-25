@@ -1,5 +1,6 @@
 package com.bokmcdok.butterflies.client.renderer.entity;
 
+import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.model.RopeModel;
 import com.bokmcdok.butterflies.world.entity.decoration.RopeEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -16,7 +17,8 @@ import org.jetbrains.annotations.NotNull;
 @OnlyIn(Dist.CLIENT)
 public class RopeRenderer extends EntityRenderer<RopeEntity> {
 
-    private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation("textures/entity/lead_knot.png");
+    private static final ResourceLocation TEXTURE_LOCATION =
+            new ResourceLocation(ButterfliesMod.MOD_ID, "textures/entity/rope/rope.png");
     private final RopeModel<RopeEntity> model;
 
     public RopeRenderer(EntityRendererProvider.Context context) {
