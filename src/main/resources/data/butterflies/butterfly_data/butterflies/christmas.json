@@ -2,7 +2,10 @@
   "diurnality": "diurnal",
   "eggMultiplier": "normal",
   "entityId": "christmas",
-  "extraLandingBlocks": ["minecraft:pumpkin",  "minecraft:melon"],
+  "extraLandingBlocks": [
+    "minecraft:pumpkin",
+    "minecraft:melon"
+  ],
   "foodSource": "minecraft:oxeye_daisy",
   "habitats": [
     "forests"
