@@ -539,7 +539,7 @@ public final class ButterflyData {
         /**
          * Helper to ensure variant strings are valid.
          * @param variant The ID of the variant.
-         * @param fallback The fallback if the variand ID is invalid.
+         * @param fallback The fallback if the variant ID is invalid.
          * @return A valid variant string.
          */
         private static String normalizeVariant(String variant,
