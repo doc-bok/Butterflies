@@ -2,7 +2,9 @@
   "diurnality": "nocturnal",
   "eggMultiplier": "normal",
   "entityId": "peppered",
-  "extraLandingBlocks": ["#minecraft:logs"],
+  "extraLandingBlocks": [
+    "#minecraft:logs"
+  ],
   "foodSource": "minecraft:lily_of_the_valley",
   "habitats": [
     "forests"

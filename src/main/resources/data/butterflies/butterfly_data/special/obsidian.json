@@ -2,7 +2,9 @@
   "diurnality": "cathemeral",
   "eggMultiplier": "none",
   "entityId": "obsidian",
-  "extraLandingBlocks": ["minecraft:obsidian"],
+  "extraLandingBlocks": [
+    "minecraft:obsidian"
+  ],
   "foodSource": "minecraft:none",
   "habitats": [
     "end"
