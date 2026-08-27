@@ -4,6 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.client.data.models.model.ButterflyModelTemplates;
 import com.bokmcdok.butterflies.client.data.models.model.ButterflyTexturedModels;
 import com.bokmcdok.butterflies.registries.BlockRegistry;
+import com.bokmcdok.butterflies.registries.ItemRegistry;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -12,13 +13,11 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
-import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.data.models.model.TextureMapping;
-import net.minecraft.client.data.models.model.TextureSlot;
-import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.data.models.model.*;
 import net.minecraft.core.FrontAndTop;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -129,9 +128,9 @@ public class ModBlockModelProvider extends ModelSubProvider {
 
     /**
      * Creates a single origami block.
-     * @param block The block to create.
      */
-    private void createOrigamiBlock(DeferredHolder<Block, Block> block) {
+    private void createOrigamiBlock(int index) {
+        DeferredHolder<Block, Block> block = BlockRegistry.BUTTERFLY_ORIGAMI.get(index);
         String path = block.getId().getPath();
         Optional<String> color = extractColor(path);
         if (color.isPresent()) {
@@ -144,6 +143,14 @@ public class ModBlockModelProvider extends ModelSubProvider {
                     .with(PropertyDispatch.property(BlockStateProperties.ORIENTATION)
                             .generate((frontAndTop) -> applyRotation(frontAndTop, Variant.variant()))));
         }
+
+        // Create an item with an actual texture.
+        DeferredHolder<Item, Item> item = ItemRegistry.BUTTERFLY_ORIGAMI.get(index);
+        String textureLocation = "item/butterfly_origami/" + path;
+        ResourceLocation flatItemModel = ModelTemplates.FLAT_HANDHELD_ITEM.create(ModelLocationUtils.getModelLocation(item.get()),
+                TextureMapping.layer0(ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, textureLocation)),
+                itemModels.modelOutput);
+        itemModels.itemModelOutput.accept(item.get(), ItemModelUtils.plainModel(flatItemModel));
     }
 
     /**
@@ -236,8 +243,8 @@ public class ModBlockModelProvider extends ModelSubProvider {
      * Registers all our origami blocks.
      */
     private void registerOrigamiBlocks() {
-        for(DeferredHolder<Block, Block> origami : BlockRegistry.BUTTERFLY_ORIGAMI) {
-            createOrigamiBlock(origami);
+        for(int i = 0; i < BlockRegistry.BUTTERFLY_ORIGAMI.size(); ++i) {
+            createOrigamiBlock(i);
         }
     }
 
