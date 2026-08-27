@@ -21,7 +21,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModBlockTagsProvider extends BlockTagsProvider {
 
     private static final TagKey<Block> SIMPLE_HARVEST_BLACKLISTED =
-            TagKey.create(Registries.BLOCK, new ResourceLocation("quark", "simple_harvest_blacklisted"));
+            TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("quark", "simple_harvest_blacklisted"));
 
     /**
      * Construction.
@@ -43,6 +43,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
     protected void addTags(HolderLookup.@NotNull Provider lookupProvider) {
         tag(SIMPLE_HARVEST_BLACKLISTED)
                 .replace(false)
-                .add(TagEntry.tag(new ResourceLocation("minecraft:small_flowers")));
+                .add(TagEntry.tag(ResourceLocation.withDefaultNamespace("small_flowers")));
     }
 }
