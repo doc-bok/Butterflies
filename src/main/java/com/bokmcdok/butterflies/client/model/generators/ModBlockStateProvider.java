@@ -17,7 +17,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
-import java.util.function.Function;
 
 /**
  * Registers block states.
@@ -110,20 +109,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
             assert block.getId() != null;
 
             String textureName = block.getId().getPath().substring(4);
-
-            Function<BlockState, ConfiguredModel[]> function =
-                    state -> generateCropState(state, flowerBud, textureName);
-
-            getVariantBuilder(flowerBud).forAllStates(function);
+            getVariantBuilder(flowerBud).forAllStates(state -> generateCropState(state, flowerBud, textureName));
         }
     }
 
     private void registerButterflyOrigami(RegistryObject<Block> block) {
 
-        Function<BlockState, ConfiguredModel[]> function =
-                state -> generateOrientationState(state, block);
+        // This should never be null.
+        assert block.getId() != null;
 
-        getVariantBuilder(block.get()).forAllStates(function);
+        getVariantBuilder(block.get()).forAllStates(state -> generateOrientationState(state, block));
+
+        String path = block.getId().getPath();
+        itemModels()
+                .withExistingParent(path, mcLoc("item/generated"))
+                .texture("layer0", modLoc("item/butterfly_origami/" + path));
     }
 
     /**
