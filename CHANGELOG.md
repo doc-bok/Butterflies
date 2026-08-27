@@ -1,6 +1,9 @@
 ## Changelog
 
-### 7.10.7
+### 7.10.8 (2026/08/27)
+ - Added compat for Quark's Simple Harvest feature.
+
+### 7.10.7 (2026/08/22)
  - Improved Origami block and item textures.
 
 ### 7.10.6 (2026/08/17)
