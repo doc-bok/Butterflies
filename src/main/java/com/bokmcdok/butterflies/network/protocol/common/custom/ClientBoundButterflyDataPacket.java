@@ -26,31 +26,32 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
      */
     public ClientBoundButterflyDataPacket(final FriendlyByteBuf buffer) {
         this((Collection<ButterflyData>) buffer.readCollection(ArrayList::new,
-            (entry) -> new ButterflyData.Builder(entry.readInt(),
-                    entry.readUtf(),
-                    entry.readEnum(ButterflySize.class),
-                    entry.readEnum(ButterflySpeed.class),
-                    entry.readEnum(ButterflyRarity.class),
-                    entry.readEnumSet(ButterflyHabitat.class),
-                    entry.readInt(),
-                    entry.readInt(),
-                    entry.readInt(),
-                    entry.readInt(),
-                    entry.readResourceLocation(),
-                    entry.readResourceLocation(),
-                    entry.readEnum(ButterflyType.class),
-                    entry.readEnum(Diurnality.class),
-                    entry.readCollection(FriendlyByteBuf.limitValue(HashSet::new, 4), FriendlyByteBuf::readUtf),
-                    entry.readEnum(PlantEffect.class),
-                    entry.readEnum(EggMultiplier.class),
-                    entry.readBoolean(),
-                    entry.readBoolean(),    
-                    entry.readEnumSet(ButterflyTrait.class),
-                    entry.readUtf(),
-                    entry.readUtf(),
-                    entry.readUtf(),
-                    entry.readUtf(),
-                    entry.readUtf()).build()));
+            (entry) -> new ButterflyData.Builder(entry.readInt())
+                        .speciesId(entry.readUtf())
+                        .size(entry.readEnum(ButterflySize.class))
+                        .speed(entry.readEnum(ButterflySpeed.class))
+                        .rarity(entry.readEnum(ButterflyRarity.class))
+                        .habitats(entry.readEnumSet(ButterflyHabitat.class))
+                        .eggLifespan(entry.readInt())
+                        .caterpillarLifespan(entry.readInt())
+                        .chrysalisLifespan(entry.readInt())
+                        .butterflyLifespan(entry.readInt())
+                        .foodBlock(entry.readResourceLocation())
+                        .foodItem(entry.readResourceLocation())
+                        .type(entry.readEnum(ButterflyType.class))
+                        .diurnality(entry.readEnum(Diurnality.class))
+                        .extraLandingBlocks(entry.readCollection(FriendlyByteBuf.limitValue(HashSet::new, 4), FriendlyByteBuf::readUtf))
+                        .plantEffect(entry.readEnum(PlantEffect.class))
+                        .eggMultiplier(entry.readEnum(EggMultiplier.class))
+                        .caterpillarSounds(entry.readBoolean())
+                        .butterflySounds(entry.readBoolean())
+                        .traits(entry.readEnumSet(ButterflyTrait.class))
+                        .baseVariant(entry.readUtf())
+                        .coldVariant(entry.readUtf())
+                        .mateVariant(entry.readUtf())
+                        .warmVariant(entry.readUtf())
+                        .agedVariant(entry.readUtf())
+                        .build()));
     }
 
     /**
