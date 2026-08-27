@@ -4,7 +4,7 @@ import com.bokmcdok.butterflies.ButterfliesMod;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagEntry;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -16,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ModBlockTagsProvider extends BlockTagsProvider {
 
-    @SuppressWarnings("removal")
     private static final TagKey<Block> SIMPLE_HARVEST_BLACKLISTED =
             TagKey.create(ForgeRegistries.BLOCKS.getRegistryKey(), new ResourceLocation("quark", "simple_harvest_blacklisted"));
 
@@ -34,10 +33,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
      * Entry point.
      */
     @Override
-    @SuppressWarnings("removal")
     protected void addTags() {
         tag(SIMPLE_HARVEST_BLACKLISTED)
                 .replace(false)
-                .add(TagEntry.tag(new ResourceLocation("minecraft:small_flowers")));
+                .add(new Tag.TagEntry(new ResourceLocation("minecraft:small_flowers")));
     }
 }
