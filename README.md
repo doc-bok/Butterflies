@@ -38,6 +38,24 @@ Built by Caterpillars, these will eventually hatch into new Butterflies within
 the world. These cannot be moved by players and will be destroyed if they
 attempt to do so.
 
+### Flower Pollination
+
+Butterflies will occasionally fly toward and pollinate flowers. This will spawn
+flower buds that will eventually bloom into full flowers.
+
+### Mud Puddling
+
+In order to gain nutrients, butterflies will swarm around mud puddles. This
+will extend their lifespan meaning they won't die as quickly. To create a mud
+puddle just place a Mud Block next to a Water Source (use Clay Blocks in
+versions of Minecraft without mud).
+
+### Breeding
+
+Butterflies can be bred by players feeding them their favourite flower (or
+other plant). You will need to learn what their favourite food is by studying
+the Lepidopterist's Book.
+
 ### Silk
 
 Some Moth cocoons will drop Silk, which can be crafted into string or paper.
@@ -59,35 +77,28 @@ this way will not die, lay Eggs or create Chrysalises.
 If you want to get the Butterfly or Caterpillar back, they can be released by
 using the bottle while not highlighting a block.
 
-### Flower Pollination
-
-Butterflies will occasionally fly toward and pollinate flowers. This will spawn
-flower buds that will eventually bloom into full flowers.
-
-### Breeding
-
-Butterflies can be bred by players feeding them their favourite flower (or
-other plant). You will need to learn what their favourite food is by studying
-the Lepidopterist's Book.
-
 ### Butterfly Feeder
 
 These can be filled with food to allow automated breeding of Butterflies. They
 can only take one stack at a time though.
 
-### Lepidopterist
-
-This new village will provide players with Butterfly-related trades.
+### Lepidopterist and Wandering Trader
+ 
+This new Villager will provide players with Butterfly-related trades. The
+Wandering Trader has also been updated to offer new trades as well.
 
 ### New Cosmetic Items
 
-Butterfly Banners and Butterfly Origami add some Butterfly-related flavour for
-builders and collectors.
+Butterfly Banners and Butterfly Origami add some flavour for builders and
+collectors.
 
 ### Peacemaker Butterflies
 
-These creatures look like butterflies, but are actually aliens intent on taking
-over your Minecraft world. Be wary if you encounter them.
+These creatures look like Butterflies, but are actually aliens intent on taking
+over your Minecraft world. Be wary if you encounter them. 
+
+If you are wanting a more peaceful experience, such as in cottagecore mod
+packs, these mobs can be disabled in the configs (see below).
 
 ### Secrets
 
@@ -133,3 +144,26 @@ save folder under:
 - [BokMcDok](https://www.bokmcdok.com/minecraft-modding-diaries/boks-Butterflies/)
 - [CurseForge](https://www.curseforge.com/minecraft/mc-mods/boks-Butterflies)
 - [Modrinth](https://modrinth.com/mod/boks-Butterflies/)
+
+# Contributors
+
+Although this mod is a passion project of mine, that doesn't mean I've done all
+of this alone. Others have helped by contributing code, reporting bugs, and
+making suggestions. The following is an incomplete list of users that have
+helped with the project.
+
+## Pull Requests Created
+- Andepthy (2)
+- Spagles (1)
+
+## Issues Created
+- mxnmnm (4)
+- FunkyPig112 (2)
+- katubug (2)
+- ZLLZTMNB (2)
+- al-wei (1)
+- dandalous (1)
+- IMS212 (1)
+- Sandiozo (1)
+- SociallyAwkrd (1)
+- tayvill (1)
