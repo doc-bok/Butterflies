@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.bokmcdok.butterflies.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.butterflies.refmap.json",
+  "mixins": [
+    "ClimbRopeMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
