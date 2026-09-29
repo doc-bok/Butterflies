@@ -17,24 +17,27 @@ import java.util.Set;
  */
 public final class LandingRules {
     private final Set<Block> landingBlocks;
-    private final Set<TagKey<Block>> landingBlockTags;
+    private final TagKey<Block>[] landingBlockTags;
 
     /**
      * Construction - pregenerate the landing rules
      * @param extraLandingBlocks The list of Resource Locations and Tags
      */
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public LandingRules(Set<String> extraLandingBlocks) {
         this.landingBlocks = new HashSet<>();
-        this.landingBlockTags = new HashSet<>();
-        this.landingBlockTags.add(BlockTags.LEAVES);
+        Set<TagKey<Block>> landingBlockTags = new HashSet<>();
+        landingBlockTags.add(BlockTags.LEAVES);
 
         for (String entry : extraLandingBlocks) {
             if (entry.startsWith("#")) {
-                this.landingBlockTags.add(requireBlockTag(entry));
+                landingBlockTags.add(requireBlockTag(entry));
             } else {
                 this.landingBlocks.add(requireBlock(entry));
             }
         }
+
+        this.landingBlockTags = landingBlockTags.toArray(TagKey[]::new);
     }
 
     /**
@@ -43,14 +46,12 @@ public final class LandingRules {
      * @return TRUE if the butterfly can land on the block.
      */
     public boolean isValidLandingBlock(BlockState state) {
-        for (TagKey<Block> tag : landingBlockTags) {
-            if (state.is(tag)) {
-                return true;
-            }
+        if (landingBlocks.contains(state.getBlock())) {
+            return true;
         }
 
-        for (Block block : landingBlocks) {
-            if (block != null && state.is(block)) {
+        for (TagKey<Block> tag : landingBlockTags) {
+            if (state.is(tag)) {
                 return true;
             }
         }
