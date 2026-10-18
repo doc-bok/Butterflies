@@ -53,14 +53,11 @@ public class RopeItem extends Item {
         Optional<AbstractRopeEntity> abstractRope = AbstractRopeEntity.tryGetAbstractRope(level, blockPos);
         if(abstractRope.isPresent()) {
             Direction direction = player.getDirection().getOpposite();
-            boolean onFullBlock = false;
-
             if (abstractRope.get() instanceof RopeEntity rope) {
                 direction = rope.getDirection();
-                onFullBlock = rope.getOnFullBlock();
             }
 
-            if(abstractRope.get().tryAttachRope(direction, onFullBlock)) {
+            if(abstractRope.get().tryAttachRope(direction)) {
                 useOnContext.getItemInHand().shrink(1);
                 return InteractionResult.CONSUME;
             }

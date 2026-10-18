@@ -32,6 +32,9 @@ public class ClimbRopeMixin {
     @Unique
     private static final double SEARCH_Y = 0.1d;
 
+    @Unique
+    private static final double CLIMB_BOX_EXPAND_XZ = 0.1d;
+
     /**
      * Inject code into `isOnLivingLadder()`
      * @param state The current block state.
@@ -50,10 +53,10 @@ public class ClimbRopeMixin {
         if (entity instanceof Player player &&
                 player.isSpectator()) {
             returnable.setReturnValue(Optional.empty());
+            return;
         }
 
-        RopeEntity rope = butterflies$findClimbableRope(entity);
-        if (rope != null) {
+        if (butterflies$findClimbableRope(entity)) {
             returnable.setReturnValue(Optional.of(pos));
         }
     }
@@ -64,7 +67,7 @@ public class ClimbRopeMixin {
      * @return A rope if the entity is colliding with one, otherwise NULL.
      */
     @Unique
-    private static RopeEntity butterflies$findClimbableRope(Entity entity) {
+    private static boolean butterflies$findClimbableRope(Entity entity) {
 
         AABB searchBox = entity.getBoundingBox().inflate(SEARCH_XZ, SEARCH_Y, SEARCH_XZ);
         List<RopeEntity> ropes = entity.level().getEntitiesOfClass(RopeEntity.class, searchBox);
@@ -72,11 +75,11 @@ public class ClimbRopeMixin {
         for (RopeEntity rope : ropes) {
             AABB playerBox = entity.getBoundingBox();
             if (playerBox.intersects(butterflies$getClimbBox(rope))) {
-                return rope;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -88,8 +91,8 @@ public class ClimbRopeMixin {
     private static AABB butterflies$getClimbBox(RopeEntity rope) {
         AABB box = rope.getBoundingBox();
         return new AABB(
-                box.minX - 0.1d, box.minY, box.minZ - 0.1d,
-                box.maxX + 0.1d, box.maxY, box.maxZ + 0.1d
+                box.minX - CLIMB_BOX_EXPAND_XZ, box.minY, box.minZ - CLIMB_BOX_EXPAND_XZ,
+                box.maxX + CLIMB_BOX_EXPAND_XZ, box.maxY, box.maxZ + CLIMB_BOX_EXPAND_XZ
         );
     }
 }

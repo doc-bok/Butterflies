@@ -3,6 +3,9 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -12,6 +15,10 @@ import org.jetbrains.annotations.NotNull;
  * A class to handle player interactions with the rope.
  */
 public class RopeKnotEntity extends AbstractRopeEntity {
+
+    protected static final EntityDataAccessor<Direction> DATA_DIRECTION =
+            SynchedEntityData.defineId(RopeKnotEntity.class, EntityDataSerializers.DIRECTION);
+
     public static final String NAME = "rope_knot_entity";
 
     public static final double ROPE_KNOT_Y_OFFSET = 0.375d;
@@ -51,12 +58,23 @@ public class RopeKnotEntity extends AbstractRopeEntity {
     }
 
     /**
-     * Ropes don't have a specific direction.
-     * @param direction The direction to ignore.
+     * Get the current direction of the rope.
+     * @return The direction the rope knot is facing.
+     */
+    @NotNull
+    @Override
+    public Direction getDirection() {
+        return entityData.get(DATA_DIRECTION);
+    }
+
+    /**
+     * Set the direction on the entity data so that it is synced with the client.
+     * @param direction The direction the rope is connected by.
      */
     @Override
     public void setDirection(@NotNull Direction direction) {
-        // No-op
+        super.setDirection(direction);
+        entityData.set(DATA_DIRECTION, this.direction);
     }
 
     /**
@@ -80,5 +98,14 @@ public class RopeKnotEntity extends AbstractRopeEntity {
         RopeKnotEntity newEntity = new RopeKnotEntity(level, blockPos);
         level.addFreshEntity(newEntity);
         return newEntity;
+    }
+
+    /**
+     * Define data that is synced between server and client.
+     */
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.getEntityData().define(DATA_DIRECTION, Direction.NORTH);
     }
 }

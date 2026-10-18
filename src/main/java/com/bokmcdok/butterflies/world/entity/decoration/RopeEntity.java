@@ -29,6 +29,8 @@ public class RopeEntity extends AbstractRopeEntity {
     public static final double DIRECTION_OFFSET = 0.2d;
     public static final double DIRECTION_OFFSET_FULL_BLOCK = 0.6d;
 
+    private RopeEntity parent = null;
+
     /**
      * Construction.
      * @param entityType The entity type of the rope.
@@ -116,13 +118,22 @@ public class RopeEntity extends AbstractRopeEntity {
     public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
         super.readAdditionalSaveData(compoundTag);
         this.setDirection(Direction.from3DDataValue(compoundTag.getByte("Facing")));
-        this.setOnFullBlock(compoundTag.getBoolean("OnFullBlock"), false);
+        this.setOnFullBlock(compoundTag.getBoolean("OnFullBlock"));
+    }
+
+    /**
+     * Set the rope's parent, if any.
+     * @param parent The parent rope entity.
+     */
+    public void setParent(RopeEntity parent) {
+        this.parent = parent;
     }
 
     /**
      * Define data that is synced between server and client.
      */
     protected void defineSynchedData() {
+        super.defineSynchedData();
         this.getEntityData().define(DATA_ON_FULL_BLOCK, false);
     }
 
@@ -147,26 +158,40 @@ public class RopeEntity extends AbstractRopeEntity {
     }
 
     /**
-     * Set this rope to being on a full block.
-     * @param value The value to set.
+     * Update the ropes current state with relation to nearby blocks.
      */
-    public void setOnFullBlock(boolean value) {
-        this.setOnFullBlock(value, true);
+    @Override
+    public void updateBlockConnections() {
+
+        if (level().isClientSide) {
+            return;
+        }
+
+        if (parent != null && parent.getOnFullBlock()) {
+            this.getEntityData().set(DATA_ON_FULL_BLOCK, true);
+            this.getEntityData().set(DATA_TRANSITIONING, false);
+            return;
+        }
+
+        if (updateBlockConnection(this.level().getBlockState(this.getPos()), DATA_ON_FULL_BLOCK)) {
+            this.getEntityData().set(DATA_TRANSITIONING, false);
+        } else {
+            updateBlockConnection(this.level().getBlockState(this.getPos().below()), DATA_TRANSITIONING);
+        }
     }
 
     /**
      * Set this rope to being on a full block.
+     *
      * @param value The value to set.
-     * @param isServer True if the value is sent from a server context.
      */
     @SuppressWarnings("boxing")
-    private void setOnFullBlock(boolean value,
-                                boolean isServer) {
+    private void setOnFullBlock(boolean value) {
         this.getEntityData().set(DATA_ON_FULL_BLOCK, value);
 
         // This is called during the constructor so direction can actually be
         // null as the object is only partially initialized.
-        if (isServer && this.pos != null) {
+        if (this.pos != null) {
             this.level().updateNeighbourForOutputSignal(this.pos, Blocks.AIR);
         }
 
@@ -187,17 +212,23 @@ public class RopeEntity extends AbstractRopeEntity {
      * @param level The current level.
      * @param blockPos The position of the rope.
      * @param direction The direction the rope is facing.
-     * @param onFullBlock True if the rope is on a full block.
      * @return A new rope entity.
      */
     @NotNull
     public static RopeEntity createRope(Level level,
+                                        AbstractRopeEntity parent,
                                         BlockPos blockPos,
-                                        Direction direction,
-                                        boolean onFullBlock) {
+                                        Direction direction) {
         RopeEntity newEntity = new RopeEntity(level, blockPos);
-        newEntity.setOnFullBlock(onFullBlock);
         newEntity.setDirection(direction);
+
+        if (parent instanceof RopeEntity rope) {
+            newEntity.setParent(rope);
+        } else {
+            parent.setDirection(direction);
+        }
+
+        newEntity.updateBlockConnections();
         level.addFreshEntity(newEntity);
         return newEntity;
     }

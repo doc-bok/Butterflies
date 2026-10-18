@@ -1,7 +1,7 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import net.minecraft.client.model.HierarchicalModel;
+import com.bokmcdok.butterflies.world.entity.decoration.RopeKnotEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,48 +10,64 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
 
 @OnlyIn(Dist.CLIENT)
-public class RopeKnotModel<T extends Entity> extends HierarchicalModel<T> {
+public class RopeKnotModel<T extends RopeKnotEntity> extends AbstractRopeModel<T> {
     private static final String KNOT = "knot";
 
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "rope_knot"), KNOT);
 
-    private final ModelPart root;
-    private final ModelPart knot;
-
     public RopeKnotModel(ModelPart modelPart) {
-        this.root = modelPart;
-        this.knot = modelPart.getChild(KNOT);
+        super(modelPart);
     }
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
-        partdefinition.addOrReplaceChild(KNOT, CubeListBuilder.create().texOffs(0, 0)
+        partdefinition.addOrReplaceChild(KNOT, CubeListBuilder.create().texOffs(7, 14)
                 .addBox(-3.0F, -8.0F, -3.0F, 6.0F, 8.0F, 6.0F), PartPose.ZERO);
+
+        partdefinition.addOrReplaceChild(LOWER,
+                CubeListBuilder.create()
+                        .texOffs(0, 0)
+                        .addBox(1.7F, 0.0F, -1.5F, 3.0F, 10.0F, 3.0F),
+                PartPose.ZERO);
+
         return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
-    @NotNull
     @Override
-    public ModelPart root() {
-        return this.root;
-    }
-
-    @Override
-    public void setupAnim(@NotNull T entity,
+    public void setupAnim(@NotNull RopeKnotEntity entity,
                           float limbSwing,
                           float limbSwingAmount,
                           float ageInTicks,
                           float netHeadYaw,
                           float headPitch) {
-        this.knot.yRot = netHeadYaw * ((float)Math.PI / 180F);
-        this.knot.xRot = headPitch * ((float)Math.PI / 180F);
+
+        switch (entity.getDirection()) {
+            case NORTH:
+                this.root().yRot = (float)Math.PI / 2.0f;
+                break;
+
+            case SOUTH:
+                this.root().yRot = 3.0f * ((float)Math.PI / 2.0f);
+                break;
+
+            case EAST:
+                this.root().yRot = (float)Math.PI;
+                break;
+
+            default:
+                this.root().yRot = 0;
+                break;
+        }
+
+        if (entity.getTransitioning()) {
+            this.lower.zRot = entity.getTransitioning() ? -ROPE_CONNECT_ANGLE : 0;
+        }
     }
 }

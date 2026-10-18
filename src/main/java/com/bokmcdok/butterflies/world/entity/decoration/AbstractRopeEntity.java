@@ -6,6 +6,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
@@ -33,9 +36,13 @@ import java.util.Optional;
  */
 public abstract class AbstractRopeEntity extends HangingEntity {
 
+    protected static final EntityDataAccessor<Boolean> DATA_TRANSITIONING =
+            SynchedEntityData.defineId(AbstractRopeEntity.class, EntityDataSerializers.BOOLEAN);
+
     public static final double RENDER_DISTANCE_SQR = 1024.0d;
     public static final int PIXEL_WIDTH = 9;
     public static final int PIXEL_HEIGHT = 9;
+
     /**
      * Construction.
      * @param entityType The entity type of the rope.
@@ -101,6 +108,15 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     }
 
     /**
+     * Ropes don't have a specific direction.
+     * @param direction The direction to ignore.
+     */
+    @Override
+    public void setDirection(@NotNull Direction direction) {
+        super.setDirection(direction);
+    }
+
+    /**
      * Check if we should render the entity at this distance.
      * @param distance The distance to check.
      * @return True if we should render the entity.
@@ -143,14 +159,12 @@ public abstract class AbstractRopeEntity extends HangingEntity {
         }
 
         Direction direction = player.getDirection().getOpposite();
-        boolean onFullBlock = false;
 
         if (this instanceof RopeEntity rope) {
             direction = rope.direction;
-            onFullBlock = rope.getOnFullBlock();
         }
 
-        if (tryAttachRope(direction, onFullBlock)) {
+        if (tryAttachRope(direction)) {
             player.getItemInHand(interactionHand).shrink(1);
             return InteractionResult.CONSUME;
         }
@@ -179,28 +193,25 @@ public abstract class AbstractRopeEntity extends HangingEntity {
      * Try and attach a rope to the block below this entity.
      * @return True if a rope was attached.
      */
-    public boolean tryAttachRope(Direction direction,
-                                 boolean onFullBlock) {
+    public boolean tryAttachRope(Direction direction) {
         BlockPos below = this.pos.below();
 
         // Check for solid blocks.
         BlockState blockState = this.level().getBlockState(below);
         if (!blockState.isAir() && !blockState.is(BlockTags.FENCES) && !blockState.is(BlockTags.WALLS)) {
-            if (this.level().getBlockState(below.relative(direction)).isAir()) {
-                onFullBlock = true;
-            } else {
-            return false;
+            if (!this.level().getBlockState(below.relative(direction)).isAir()) {
+                return false;
             }
         }
 
         // We can keep attaching rope from the top.
         Optional<AbstractRopeEntity> rope = tryGetAbstractRope(this.level(), this.pos.below());
         if (rope.isPresent()) {
-            return rope.get().tryAttachRope(direction, onFullBlock);
+            return rope.get().tryAttachRope(direction);
         }
 
         // Attach a new rope entity.
-        RopeEntity newRope = RopeEntity.createRope(this.level(), below, direction, onFullBlock);
+        RopeEntity newRope = RopeEntity.createRope(this.level(), this, below, direction);
         newRope.playPlacementSound();
         return true;
     }
@@ -264,5 +275,55 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     @Override
     public ItemStack getPickResult() {
         return new ItemStack(ItemRegistry.ROPE.get());
+    }
+
+    /**
+     * Get whether this rope is on a full block.
+     * @return True if the rope is on a full block.
+     */
+    public boolean getTransitioning() {
+        return this.getEntityData().get(DATA_TRANSITIONING);
+    }
+
+    /**
+     * Update the ropes current state with relation to nearby blocks.
+     */
+    public void updateBlockConnections() {
+        if (level().isClientSide) {
+            return;
+        }
+
+        updateBlockConnection(this.level().getBlockState(this.getPos().below()), DATA_TRANSITIONING);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        updateBlockConnections();
+    }
+
+    /**
+     * Define data that is synced between server and client.
+     */
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.getEntityData().define(DATA_TRANSITIONING, false);
+    }
+
+    /**
+     * Updates the rope's connection state.
+     * @param blockState The current block state.
+     * @param dataAccessor The entity's data accessor.
+     * @return True if the block is solid.
+     */
+    protected boolean updateBlockConnection(BlockState blockState,
+                                            EntityDataAccessor<Boolean> dataAccessor) {
+        boolean result = !blockState.isAir() &&
+                !blockState.is(BlockTags.FENCES) &&
+                !blockState.is(BlockTags.WALLS);
+
+        this.getEntityData().set(dataAccessor, result);
+        return result;
     }
 }
