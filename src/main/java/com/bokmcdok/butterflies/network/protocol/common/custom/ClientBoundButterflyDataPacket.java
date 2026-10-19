@@ -60,7 +60,6 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) {
      */
     public FriendlyByteBuf getBuffer() {
         FriendlyByteBuf result = new FriendlyByteBuf(Unpooled.buffer());
-        result.writeResourceLocation(ID);
         write(result);
         return result;
     }

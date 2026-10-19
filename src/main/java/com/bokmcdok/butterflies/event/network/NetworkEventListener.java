@@ -60,7 +60,7 @@ public class NetworkEventListener {
         ClientBoundButterflyDataPacket packet = new ClientBoundButterflyDataPacket(butterflyDataCollection);
 
         // Create the payload.
-        Packet<?> payload = new ClientboundCustomPayloadPacket(packet.getBuffer());
+        Packet<?> payload = new ClientboundCustomPayloadPacket(ClientBoundButterflyDataPacket.ID, packet.getBuffer());
 
         // Handle a single player.
         if (event.getPlayer() != null) {
