@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.10.11 (2026/10/19)
+- Fixed network buffer leak.
+
 ### 7.10.9 (2026/08/27)
 - Added missing localization strings for flower bud blocks.
 
