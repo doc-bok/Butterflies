@@ -168,3 +168,7 @@ helped with the project.
 - Sandiozo (1)
 - SociallyAwkrd (1)
 - tayvill (1)
+- Zelioth (2)
+
+## General Advice
+- Zelioth (2)

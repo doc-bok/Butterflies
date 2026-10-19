@@ -1,6 +1,7 @@
 package com.bokmcdok.butterflies.world.entity.monster;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
+import com.bokmcdok.butterflies.event.entity.living.MobSpawnEventListener;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.world.entity.DebugInfoSupplier;
@@ -72,157 +73,6 @@ public class PeacemakerButterfly
     private static final double PEACEMAKER_BUTTERFLY_SPEED = 0.9d;
 
     /**
-     * Convert a raider to one with a butterfly host
-     * @param level   The current level
-     * @param raider The raider to convert
-     */
-    public static void possess(ServerLevelAccessor level,
-                               Raider raider) {
-
-        // Don't do any of this if the entity is already possessed.
-        if (raider instanceof PeacemakerEntity) {
-            return;
-        }
-
-        // Don't spawn in PEACEFUL difficulty, and reduce chances of spawn in
-        // NORMAL difficulty.
-        Difficulty difficulty = level.getDifficulty();
-        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
-            if (difficulty != Difficulty.HARD && raider.getRandom().nextBoolean()) {
-                return;
-            }
-
-            if (raider instanceof Evoker) {
-                possess(level, raider, "peacemaker_evoker");
-            } else if (raider instanceof Illusioner) {
-                possess(level, raider, "peacemaker_illusioner");
-            } else if (raider instanceof Pillager) {
-                possess(level, raider, "peacemaker_pillager");
-            } else if (raider instanceof Vindicator) {
-                possess(level, raider, "peacemaker_vindicator");
-            } else if (raider instanceof Witch) {
-                possess(level, raider, "peacemaker_witch");
-            }
-        }
-    }
-
-    /**
-     * Set the eye height of the Peacemaker Butterfly. Ensures the bounding box
-     * is correct.
-     * @param pose The current pose of the entity.
-     * @param entityDimensions The dimensions of the entity.
-     * @return The height of the entity's eyes.
-     */
-    @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         @NotNull EntityDimensions entityDimensions) {
-        return 0.4f;
-    }
-
-    /**
-     * Convert a Villager to one with a Butterfly host
-     * @param level The current level
-     * @param villager The villager to convert
-     */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
-    public static void possess(ServerLevelAccessor level,
-                               Villager villager) {
-
-        // Don't do any of this if the villager is already possessed.
-        if (villager instanceof PeacemakerEntity) {
-            return;
-        }
-
-        Difficulty difficulty = level.getDifficulty();
-        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
-            if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
-                return;
-            }
-
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
-            if (entityType == null) {
-                return;
-            }
-
-            if (ForgeEventFactory.canLivingConvert(villager, entityType, (x) -> {
-            })) {
-                PeacemakerVillager peacemakerVillager = villager.convertTo(entityType, false);
-                if (peacemakerVillager != null) {
-                    peacemakerVillager.setVillagerData(villager.getVillagerData());
-                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-                    peacemakerVillager.setOffers(villager.getOffers());
-                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
-
-                    finalizePossess(level, villager, peacemakerVillager);
-                }
-            }
-        }
-    }
-
-    /**
-     * Convert a Wandering Trader to one with a Butterfly host
-     * @param level The current level
-     * @param wanderingTrader The wanderingTrader to convert
-     */
-    @SuppressWarnings({"unchecked", "UnstableApiUsage"})
-    public static void possess(ServerLevelAccessor level,
-                               WanderingTrader wanderingTrader) {
-
-        // Don't do any of this if the trader is already possessed.
-        if (wanderingTrader instanceof PeacemakerEntity) {
-            return;
-        }
-
-        Difficulty difficulty = level.getDifficulty();
-        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
-            if (difficulty != Difficulty.HARD && wanderingTrader.getRandom().nextBoolean()) {
-                return;
-            }
-
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
-            if (entityType == null) {
-                return;
-            }
-
-            if (ForgeEventFactory.canLivingConvert(wanderingTrader, entityType, (x) -> {
-            })) {
-                PeacemakerWanderingTrader peacemakerWanderingTrader = wanderingTrader.convertTo(entityType, false);
-                if (peacemakerWanderingTrader != null) {
-
-                    finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
-                }
-            }
-        }
-    }
-
-    /**
-     * Finalizes the possession for villager-based entities.
-     * @param level The current level.
-     * @param unpossessed The unpossessed version of the entity to be removed.
-     * @param possessed The possessed version of the entity to replace it with.
-     */
-    @SuppressWarnings({"UnstableApiUsage"})
-    public static void finalizePossess(ServerLevelAccessor level,
-                                       AbstractVillager unpossessed,
-                                       AbstractVillager possessed) {
-        possessed.finalizeSpawn(level,
-                level.getCurrentDifficultyAt(possessed.blockPosition()),
-                MobSpawnType.CONVERSION,
-                null,
-                null);
-
-        possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
-
-        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(unpossessed, possessed);
-
-        if (!possessed.isSilent()) {
-            level.levelEvent(null, 1026, possessed.blockPosition(), 0);
-        }
-    }
-
-    /**
      * Generates attributes for the Peacemaker Butterfly.
      * @return A builder containing the mob's attributes.
      */
@@ -243,6 +93,50 @@ public class PeacemakerButterfly
         if (!level.isClientSide()) {
             spawn((ServerLevel) level, entity.blockPosition());
         }
+    }
+
+    /**
+     * Try to possess a specific entity.
+     * @param level The current level accessor (WorldGen, ServerLevel, etc.)
+     * @param entity The entity to try and possess.
+     * @param spawnType The type of spawn that we are trying to possess.
+     * @return TRUE if the entity is successfully possessed.
+     */
+    public static boolean tryPossess(ServerLevelAccessor level,
+                                     LivingEntity entity,
+                                     MobSpawnType spawnType) {
+
+        // Peacemaker butterflies can be disabled via a config.
+        if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
+            return false;
+        }
+
+        // Entities can't be born with butterflies.
+        if (spawnType == MobSpawnType.BREEDING) {
+            return false;
+        }
+
+        // Don't infest entities if they are already infested.
+        if (entity instanceof PeacemakerEntity) {
+            return false;
+        }
+
+        // Only villagers, wandering traders, and pillagers can be infested.
+        if (entity instanceof Villager villager) {
+            if (villager.getRandom().nextInt(1000) < ButterfliesConfig.Common.villagerPossessionChance.get()) {
+                return possess(level, villager);
+            }
+        } else if (entity instanceof WanderingTrader wanderingTrader) {
+            if (wanderingTrader.getRandom().nextInt(1000) < ButterfliesConfig.Common.wanderingTraderPossessionChance.get()) {
+                return possess(level, wanderingTrader);
+            }
+        } else if (entity instanceof Raider raider) {
+            if (raider.getRandom().nextInt(1000) < ButterfliesConfig.Common.illagerPossessionChance.get()) {
+                return possess(level, raider);
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -272,42 +166,6 @@ public class PeacemakerButterfly
                         null);
 
                 level.addFreshEntity(butterfly);
-            }
-        }
-    }
-
-    /**
-     * Convert a raider to one with a butterfly host
-     * @param level    The current level
-     * @param raider  The raider to convert
-     * @param entityId The ID of the entity
-     * @param <T>      The entity class
-     */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked", "UnstableApiUsage"})
-    private static <T extends Mob> void possess(ServerLevelAccessor level,
-                                                Raider raider,
-                                                String entityId) {
-
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-        EntityType<T> entityType = (EntityType<T>) ForgeRegistries.ENTITY_TYPES.getValue(location);
-        if (entityType != null) {
-
-            if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
-            })) {
-                T newMob = raider.convertTo(entityType, false);
-                if (newMob != null) {
-                    newMob.finalizeSpawn(level,
-                            level.getCurrentDifficultyAt(newMob.blockPosition()),
-                            MobSpawnType.CONVERSION,
-                            null,
-                            null);
-
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
-
-                    if (!newMob.isSilent()) {
-                        level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                    }
-                }
             }
         }
     }
@@ -542,6 +400,28 @@ public class PeacemakerButterfly
     }
 
     /**
+     * Get the current friend UUID (if any)
+     * @return The UUID of the friend.
+     */
+    @Nullable
+    public UUID getFriendUUID() {
+        return this.entityData.get(DATA_FRIEND_UUID).orElse(null);
+    }
+
+    /**
+     * Set the eye height of the Peacemaker Butterfly. Ensures the bounding box
+     * is correct.
+     * @param pose The current pose of the entity.
+     * @param entityDimensions The dimensions of the entity.
+     * @return The height of the entity's eyes.
+     */
+    @Override
+    protected float getStandingEyeHeight(@NotNull Pose pose,
+                                         @NotNull EntityDimensions entityDimensions) {
+        return 0.4f;
+    }
+
+    /**
      * Register the goals for the Peacemaker Butterfly AI.
      */
     @Override
@@ -581,12 +461,189 @@ public class PeacemakerButterfly
     }
 
     /**
-     * Get the current friend UUID (if any)
-     * @return The UUID of the friend.
+     * Finalizes the possession for villager-based entities.
+     * @param level The current level.
+     * @param unpossessed The unpossessed version of the entity to be removed.
+     * @param possessed The possessed version of the entity to replace it with.
      */
-    @Nullable
-    public UUID getFriendUUID() {
-        return this.entityData.get(DATA_FRIEND_UUID).orElse(null);
+    private static boolean finalizePossess(ServerLevelAccessor level,
+                                           AbstractVillager unpossessed,
+                                           AbstractVillager possessed) {
+        possessed.finalizeSpawn(level,
+                level.getCurrentDifficultyAt(possessed.blockPosition()),
+                MobSpawnType.CONVERSION,
+                null,
+                null);
+
+        possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
+
+        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(unpossessed, possessed);
+
+        if (!possessed.isSilent()) {
+            level.levelEvent(null, 1026, possessed.blockPosition(), 0);
+        }
+
+        return level.addFreshEntity(possessed);
+    }
+
+    /**
+     * Convert a raider to one with a butterfly host
+     * @param level   The current level
+     * @param raider The raider to convert
+     */
+    private static boolean possess(ServerLevelAccessor level,
+                                   Raider raider) {
+
+        // Don't do any of this if the entity is already possessed.
+        if (raider instanceof PeacemakerEntity) {
+            return false;
+        }
+
+        // Don't spawn in PEACEFUL difficulty, and reduce chances of spawn in
+        // NORMAL difficulty.
+        Difficulty difficulty = level.getDifficulty();
+        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+            if (difficulty != Difficulty.HARD && raider.getRandom().nextBoolean()) {
+                return false;
+            }
+
+            if (raider instanceof Evoker) {
+                return possess(level, raider, "peacemaker_evoker");
+            } else if (raider instanceof Illusioner) {
+                return possess(level, raider, "peacemaker_illusioner");
+            } else if (raider instanceof Pillager) {
+                return possess(level, raider, "peacemaker_pillager");
+            } else if (raider instanceof Vindicator) {
+                return possess(level, raider, "peacemaker_vindicator");
+            } else if (raider instanceof Witch) {
+                return possess(level, raider, "peacemaker_witch");
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Convert a Villager to one with a Butterfly host
+     * @param level The current level
+     * @param villager The villager to convert
+     * @return TRUE if the possession succeeds.
+     */
+    @SuppressWarnings({"unchecked"})
+    private static boolean possess(ServerLevelAccessor level,
+                                   Villager villager) {
+
+        // Don't do any of this if the villager is already possessed.
+        if (villager instanceof PeacemakerEntity) {
+            return false;
+        }
+
+        Difficulty difficulty = level.getDifficulty();
+        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+            if (difficulty != Difficulty.HARD && villager.getRandom().nextBoolean()) {
+                return false;
+            }
+
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            if (entityType == null) {
+                return false;
+            }
+
+            if (ForgeEventFactory.canLivingConvert(villager, entityType, (x) -> {
+            })) {
+                PeacemakerVillager peacemakerVillager = MobSpawnEventListener.tryConvertMob(level, villager, entityType, true);
+                if (peacemakerVillager != null) {
+                    peacemakerVillager.setVillagerData(villager.getVillagerData());
+                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                    peacemakerVillager.setOffers(villager.getOffers());
+                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
+
+                    return finalizePossess(level, villager, peacemakerVillager);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Convert a Wandering Trader to one with a Butterfly host
+     * @param level The current level
+     * @param wanderingTrader The wanderingTrader to convert
+     */
+    @SuppressWarnings({"unchecked"})
+    private static boolean possess(ServerLevelAccessor level,
+                                   WanderingTrader wanderingTrader) {
+
+        // Don't do any of this if the trader is already possessed.
+        if (wanderingTrader instanceof PeacemakerEntity) {
+            return false;
+        }
+
+        Difficulty difficulty = level.getDifficulty();
+        if (difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) {
+            if (difficulty != Difficulty.HARD && wanderingTrader.getRandom().nextBoolean()) {
+                return false;
+            }
+
+            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
+            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            if (entityType == null) {
+                return false;
+            }
+
+            if (ForgeEventFactory.canLivingConvert(wanderingTrader, entityType, (x) -> {
+            })) {
+                PeacemakerWanderingTrader peacemakerWanderingTrader = MobSpawnEventListener.tryConvertMob(level, wanderingTrader, entityType, true);
+                if (peacemakerWanderingTrader != null) {
+
+                    return finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Convert a raider to one with a butterfly host
+     * @param level    The current level
+     * @param raider  The raider to convert
+     * @param entityId The ID of the entity
+     * @param <T>      The entity class
+     */
+    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
+    private static <T extends Mob> boolean possess(ServerLevelAccessor level,
+                                                   Raider raider,
+                                                   String entityId) {
+
+        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
+        EntityType<T> entityType = (EntityType<T>) ForgeRegistries.ENTITY_TYPES.getValue(location);
+        if (entityType != null) {
+
+            if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
+            })) {
+                T newMob = MobSpawnEventListener.tryConvertMob(level, raider, entityType, true);
+                if (newMob != null) {
+                    newMob.finalizeSpawn(level,
+                            level.getCurrentDifficultyAt(newMob.blockPosition()),
+                            MobSpawnType.CONVERSION,
+                            null,
+                            null);
+
+                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
+
+                    if (!newMob.isSilent()) {
+                        level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+                    }
+
+                    return level.addFreshEntity(newMob);
+                }
+            }
+        }
+
+        return false;
     }
     
     /**
