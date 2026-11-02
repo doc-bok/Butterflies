@@ -154,6 +154,7 @@ helped with the project.
 
 ## Pull Requests Created
 - Andepthy (2)
+- BonsUnleashed (1)
 - Spagles (1)
 
 ## Issues Created
@@ -167,3 +168,7 @@ helped with the project.
 - Sandiozo (1)
 - SociallyAwkrd (1)
 - tayvill (1)
+- Zelioth (2)
+
+## General Advice
+- Zelioth (2)
