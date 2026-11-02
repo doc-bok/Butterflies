@@ -6,21 +6,13 @@ import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.*;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.WanderingTrader;
-import net.minecraft.world.entity.raid.Raider;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -35,9 +27,11 @@ public class MobSpawnEventListener {
      * @param event The event context.
      */
     @SubscribeEvent
-    public static void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
-        trySpawnButterflyGolem(event);
-        trySpawnPeacemakerButterfly(event);
+    public static void onMobSpawn(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide() && !event.loadedFromDisk()) {
+            trySpawnButterflyGolem(event);
+            trySpawnPeacemakerButterfly(event);
+        }
     }
 
     /**
@@ -59,14 +53,13 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
-    private static void trySpawnButterflyGolem(MobSpawnEvent.FinalizeSpawn event) {
+    private static void trySpawnButterflyGolem(EntityJoinLevelEvent event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
 
             // Read probability from the configs.
             if (ironGolem.getRandom().nextInt(1000) < ButterfliesConfig.Common.butterflyGolemSpawnChance.get()) {
-                ServerLevelAccessor level = event.getLevel();
+                ServerLevelAccessor level = (ServerLevelAccessor) event.getLevel();
                 EntityType<IronGolem> entityType = EntityTypeRegistry.BUTTERFLY_GOLEM.get();
 
                 if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
@@ -79,16 +72,14 @@ public class MobSpawnEventListener {
                                 null,
                                 null);
 
-                            ForgeEventFactory.onLivingConvert(ironGolem, newMob);
+                        ForgeEventFactory.onLivingConvert(ironGolem, newMob);
 
-                            if (!newMob.isSilent()) {
-                                level.levelEvent(null, 1026, newMob.blockPosition(), 0);
-                            }
+                        if (!newMob.isSilent()) {
+                            level.levelEvent(null, 1026, newMob.blockPosition(), 0);
                         }
 
                         if (level.addFreshEntity(newMob)) {
                             event.setCanceled(true);
-                            event.setSpawnCancelled(true);
                         }
                     }
                 }
@@ -100,10 +91,11 @@ public class MobSpawnEventListener {
      * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
      * @param event The event context.
      */
-    private static void trySpawnPeacemakerButterfly(MobSpawnEvent.FinalizeSpawn event) {
-        if (PeacemakerButterfly.tryPossess(event.getLevel(), event.getEntity(), event.getSpawnType())) {
-            event.setCanceled(true);
-            event.setSpawnCancelled(true);
+    private static void trySpawnPeacemakerButterfly(EntityJoinLevelEvent event) {
+        if (event.getEntity() instanceof Mob mob) {
+            if (PeacemakerButterfly.tryPossess((ServerLevelAccessor) event.getLevel(), mob, mob.getSpawnType())) {
+                event.setCanceled(true);
+            }
         }
     }
 
@@ -147,7 +139,7 @@ public class MobSpawnEventListener {
                     for(EquipmentSlot equipmentslot : EquipmentSlot.values()) {
                         ItemStack itemstack = from.getItemBySlot(equipmentslot);
                         if (!itemstack.isEmpty()) {
-                            converted.setItemSlot(equipmentslot, itemstack.copyAndClear());
+                            converted.setItemSlot(equipmentslot, itemstack.copy());
                             converted.setDropChance(equipmentslot, from.getEquipmentDropChance(equipmentslot));
                         }
                     }

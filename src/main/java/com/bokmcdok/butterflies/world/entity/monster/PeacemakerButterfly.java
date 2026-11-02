@@ -292,7 +292,6 @@ public class PeacemakerButterfly
                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
 
-        Level level = getLevel();
         if (level.isClientSide()) {
             boolean shouldConsume =
                     this.getFriendUUID() != player.getUUID() &&
@@ -564,7 +563,7 @@ public class PeacemakerButterfly
                 PeacemakerVillager peacemakerVillager = MobSpawnEventListener.tryConvertMob(level, villager, entityType, true);
                 if (peacemakerVillager != null) {
                     peacemakerVillager.setVillagerData(villager.getVillagerData());
-                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE).getValue());
                     peacemakerVillager.setOffers(villager.getOffers());
                     peacemakerVillager.setVillagerXp(villager.getVillagerXp());
 
@@ -622,7 +621,7 @@ public class PeacemakerButterfly
      * @param entityId The ID of the entity
      * @param <T>      The entity class
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     private static <T extends Mob> boolean possess(ServerLevelAccessor level,
                                                    Raider raider,
                                                    String entityId) {
