@@ -477,13 +477,26 @@ public class PeacemakerButterfly
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
 
-        net.minecraftforge.event.ForgeEventFactory.onLivingConvert(unpossessed, possessed);
+        ForgeEventFactory.onLivingConvert(unpossessed, possessed);
 
         if (!possessed.isSilent()) {
             level.levelEvent(null, 1026, possessed.blockPosition(), 0);
         }
 
-        return level.addFreshEntity(possessed);
+        if (level.addFreshEntity(possessed)) {
+            return true;
+        }
+
+        // Possession failed. Revert riding changes, if any.
+        if (possessed.isPassenger()) {
+            Entity entity = possessed.getVehicle();
+            possessed.stopRiding();
+            if (entity != null) {
+                unpossessed.startRiding(entity, true);
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -632,7 +645,7 @@ public class PeacemakerButterfly
                             null,
                             null);
 
-                    net.minecraftforge.event.ForgeEventFactory.onLivingConvert(raider, newMob);
+                    ForgeEventFactory.onLivingConvert(raider, newMob);
 
                     if (!newMob.isSilent()) {
                         level.levelEvent(null, 1026, newMob.blockPosition(), 0);

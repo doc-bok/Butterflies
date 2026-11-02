@@ -152,7 +152,6 @@ public class MobSpawnEventListener {
                     }
                 }
 
-                from.discard();
                 return converted;
             }
         }

@@ -63,7 +63,7 @@ public class ButterfliesConfig {
                 .defineInRange("illager_possession_chance", 50, 0, 1000);
         Common.butterflyGolemSpawnChance = commonBuilder
                 .comment("Chance out of 1000 that a Butterfly Golem will spawn instead of an Iron Golem.")
-                .defineInRange("illager_possession_chance", 4, 0, 1000);
+                .defineInRange("butterfly_golem_spawn_chance", 4, 0, 1000);
         commonBuilder.pop();
         COMMON_CONFIG = commonBuilder.build();
 
