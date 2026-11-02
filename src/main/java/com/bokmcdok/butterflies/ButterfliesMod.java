@@ -81,7 +81,6 @@ public final class ButterfliesMod {
         new EntityEventListener(forgeEventBus, modEventBus);
         new ForgeEventListener(forgeEventBus);
         new LivingEventListener(forgeEventBus);
-        new MobSpawnEventListener(forgeEventBus);
         new NetworkEventListener(forgeEventBus);
         new PlayerEventListener(forgeEventBus);
         new ServerEventListener(forgeEventBus);

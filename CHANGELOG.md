@@ -1,5 +1,11 @@
 ## Changelog
 
+### 7.10.12 (2026/10/19)
+- Fixed unsafe entity insertions due to mob conversions during generation.
+
+### 7.10.10 (2026/10/18)
+- Ported optimization for block lookups.
+
 ### 7.10.9 (2026/08/27)
 - Added missing localization strings for flower bud blocks.
 
