@@ -11,7 +11,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,7 +28,7 @@ public class MobSpawnEventListener {
      */
     @SubscribeEvent
     public static void onMobSpawn(EntityJoinWorldEvent event) {
-        if (!event.getLevel().isClientSide() && !event.loadedFromDisk()) {
+        if (!event.getWorld().isClientSide() && !event.loadedFromDisk()) {
             trySpawnButterflyGolem(event);
             trySpawnPeacemakerButterfly(event);
         }
@@ -43,7 +42,7 @@ public class MobSpawnEventListener {
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
         if (event.getSource().getEntity() instanceof PeacemakerButterfly) {
-            LivingEntity killed = event.getEntity();
+            Entity killed = event.getEntity();
             if (killed instanceof Villager || killed instanceof AbstractIllager) {
                 event.setCanceled(true);
             }
@@ -60,12 +59,12 @@ public class MobSpawnEventListener {
 
             // Read probability from the configs.
             if (ironGolem.getRandom().nextInt(1000) < ButterfliesConfig.Common.butterflyGolemSpawnChance.get()) {
-                ServerLevelAccessor level = (ServerLevelAccessor) event.getLevel();
+                ServerLevelAccessor level = (ServerLevelAccessor) event.getWorld();
                 EntityType<IronGolem> entityType = EntityTypeRegistry.BUTTERFLY_GOLEM.get();
 
                 if (ForgeEventFactory.canLivingConvert(ironGolem, entityType, (x) -> {
                 })) {
-                    IronGolem newMob = tryConvertMob(level, ironGolem, entityType, false);//ironGolem.convertTo(entityType, false);
+                    IronGolem newMob = tryConvertMob(level, ironGolem, entityType, false);
                     if (newMob != null) {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
@@ -92,9 +91,9 @@ public class MobSpawnEventListener {
      * Some Illagers and Villagers may be infected with Peacemaker Butterflies.
      * @param event The event context.
      */
-    private static void trySpawnPeacemakerButterfly(EntityJoinLevelEvent event) {
+    private static void trySpawnPeacemakerButterfly(EntityJoinWorldEvent event) {
         if (event.getEntity() instanceof Mob mob) {
-            if (PeacemakerButterfly.tryPossess((ServerLevelAccessor) event.getLevel(), mob, mob.getSpawnType())) {
+            if (PeacemakerButterfly.tryPossess((ServerLevelAccessor) event.getWorld(), mob)) {
                 event.setCanceled(true);
             }
         }

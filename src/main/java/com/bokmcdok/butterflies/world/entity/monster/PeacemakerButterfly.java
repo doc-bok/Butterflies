@@ -99,20 +99,13 @@ public class PeacemakerButterfly
      * Try to possess a specific entity.
      * @param level The current level accessor (WorldGen, ServerLevel, etc.)
      * @param entity The entity to try and possess.
-     * @param spawnType The type of spawn that we are trying to possess.
      * @return TRUE if the entity is successfully possessed.
      */
     public static boolean tryPossess(ServerLevelAccessor level,
-                                     LivingEntity entity,
-                                     MobSpawnType spawnType) {
+                                     LivingEntity entity) {
 
         // Peacemaker butterflies can be disabled via a config.
         if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
-            return false;
-        }
-
-        // Entities can't be born with butterflies.
-        if (spawnType == MobSpawnType.BREEDING) {
             return false;
         }
 
@@ -554,7 +547,7 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)ForgeRegistries.ENTITIES.getValue(location);
             if (entityType == null) {
                 return false;
             }
@@ -597,7 +590,7 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITY_TYPES.getValue(location);
+            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)ForgeRegistries.ENTITIES.getValue(location);
             if (entityType == null) {
                 return false;
             }
@@ -628,7 +621,7 @@ public class PeacemakerButterfly
                                                    String entityId) {
 
         ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
-        EntityType<T> entityType = (EntityType<T>) ForgeRegistries.ENTITY_TYPES.getValue(location);
+        EntityType<T> entityType = (EntityType<T>) ForgeRegistries.ENTITIES.getValue(location);
         if (entityType != null) {
 
             if (ForgeEventFactory.canLivingConvert(raider, entityType, (x) -> {
