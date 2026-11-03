@@ -5,26 +5,18 @@ import com.bokmcdok.butterflies.config.ButterfliesConfig;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import com.bokmcdok.butterflies.world.entity.EntityBehaviours;
 import com.bokmcdok.butterflies.world.entity.monster.PeacemakerButterfly;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.MobSpawnEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+
 /**
  * Holds event listeners for entities.
  */
@@ -60,7 +52,6 @@ public class MobSpawnEventListener {
      * Occasionally replace an iron golem with a butterfly golem.
      * @param event The event context.
      */
-    @SuppressWarnings({"deprecation", "OverrideOnly"})
     private static void trySpawnButterflyGolem(MobSpawnEvent.FinalizeSpawn event) {
         if (event.getEntity().getType() == EntityType.IRON_GOLEM) {
             IronGolem ironGolem = (IronGolem) event.getEntity();
@@ -80,7 +71,7 @@ public class MobSpawnEventListener {
                                 null,
                                 null);
 
-                        EntityBehaviours.onLivingConvert(ironGolem, newMob);
+                        EntityBehaviours.finalizeConvert(level, ironGolem, newMob);
 
                         if (!newMob.isSilent()) {
                             level.levelEvent(null, 1026, newMob.blockPosition(), 0);
@@ -147,7 +138,7 @@ public class MobSpawnEventListener {
                     for(EquipmentSlot equipmentslot : EquipmentSlot.values()) {
                         ItemStack itemstack = from.getItemBySlot(equipmentslot);
                         if (!itemstack.isEmpty()) {
-                            converted.setItemSlot(equipmentslot, itemstack.copyAndClear());
+                            converted.setItemSlot(equipmentslot, itemstack.copy());
                             converted.setDropChance(equipmentslot, from.getEquipmentDropChance(equipmentslot));
                         }
                     }
