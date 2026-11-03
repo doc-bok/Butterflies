@@ -16,6 +16,10 @@ public class ButterfliesConfig {
         public static ModConfigSpec.BooleanValue enableLifespan;
         public static ModConfigSpec.BooleanValue enablePollination;
         public static ModConfigSpec.BooleanValue enableHostileButterflies;
+        public static ModConfigSpec.IntValue villagerPossessionChance;
+        public static ModConfigSpec.IntValue wanderingTraderPossessionChance;
+        public static ModConfigSpec.IntValue illagerPossessionChance;
+        public static ModConfigSpec.IntValue butterflyGolemSpawnChance;
     }
 
     // Group server config values in a static inner class
@@ -47,6 +51,21 @@ public class ButterfliesConfig {
         Common.enableHostileButterflies = commonBuilder
                 .comment("If true, hostile butterflies will spawn.")
                 .define("enable_hostile_butterflies", true);
+        Common.villagerPossessionChance = commonBuilder
+                .comment("Chance out of 1000 that Villagers are spawned with Peacemaker Butterflies. " +
+                        "Requires hostile butterflies enabled.")
+                .defineInRange("villager_possession_chance", 17, 0, 1000);
+        Common.wanderingTraderPossessionChance = commonBuilder
+                .comment("Chance out of 1000 that Wandering Traders are spawned with Peacemaker Butterflies. " +
+                        "Requires hostile butterflies enabled.")
+                .defineInRange("wandering_trader_possession_chance", 35, 0, 1000);
+        Common.illagerPossessionChance = commonBuilder
+                .comment("Chance out of 1000 that Illagers are spawned with Peacemaker Butterflies. " +
+                        "Requires hostile butterflies enabled.")
+                .defineInRange("illager_possession_chance", 50, 0, 1000);
+        Common.butterflyGolemSpawnChance = commonBuilder
+                .comment("Chance out of 1000 that a Butterfly Golem will spawn instead of an Iron Golem.")
+                .defineInRange("butterfly_golem_spawn_chance", 4, 0, 1000);
         commonBuilder.pop();
         COMMON_CONFIG = commonBuilder.build();
 
