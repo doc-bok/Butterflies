@@ -106,7 +106,7 @@ public class PeacemakerButterfly
      */
     public static boolean tryPossess(ServerLevelAccessor level,
                                      LivingEntity entity,
-                                     MobSpawnType spawnType) {
+                                     EntitySpawnReason spawnType) {
 
         // Peacemaker butterflies can be disabled via a config.
         if (!ButterfliesConfig.Common.enableHostileButterflies.get()) {
@@ -114,7 +114,7 @@ public class PeacemakerButterfly
         }
 
         // Entities can't be born with butterflies.
-        if (spawnType == MobSpawnType.BREEDING) {
+        if (spawnType == EntitySpawnReason.BREEDING) {
             return false;
         }
 
@@ -153,21 +153,26 @@ public class PeacemakerButterfly
         final ResourceLocation PEACEMAKER_BUTTERFLY =
                 ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_butterfly");
 
-        EntityType<?> entityType =
+        Optional<Holder.Reference<EntityType<?>>> entityType =
                 BuiltInRegistries.ENTITY_TYPE.get(PEACEMAKER_BUTTERFLY);
 
-        Entity newEntity = entityType.create(level);
+        if (entityType.isPresent()) {
+            EntityType<PeacemakerButterfly> entityTypeValue =
+                    (EntityType<PeacemakerButterfly>) entityType.get().value();
 
-        if (newEntity instanceof PeacemakerButterfly butterfly) {
-            butterfly.setPos(position.getCenter());
+            Entity newEntity = entityTypeValue.create(level, EntitySpawnReason.NATURAL);
+
+            if (newEntity instanceof PeacemakerButterfly butterfly) {
+                butterfly.setPos(position.getCenter());
 
 
-            butterfly.finalizeSpawn(level,
-                    level.getCurrentDifficultyAt(butterfly.getOnPos()),
-                    MobSpawnType.CONVERSION,
-                    null);
+                butterfly.finalizeSpawn(level,
+                        level.getCurrentDifficultyAt(butterfly.getOnPos()),
+                        EntitySpawnReason.CONVERSION,
+                        null);
 
-            level.addFreshEntity(butterfly);
+                level.addFreshEntity(butterfly);
+            }
         }
     }
 
@@ -467,7 +472,7 @@ public class PeacemakerButterfly
                                            AbstractVillager possessed) {
         possessed.finalizeSpawn(level,
                 level.getCurrentDifficultyAt(possessed.blockPosition()),
-                MobSpawnType.CONVERSION,
+                EntitySpawnReason.CONVERSION,
                 null);
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
@@ -553,18 +558,21 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_villager");
-            EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)BuiltInRegistries.ENTITY_TYPE.get(location);
+            Optional<Holder.Reference<EntityType<?>>> entityTypeHolder = BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (entityTypeHolder.isPresent()) {
+                EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>) entityTypeHolder.get().value();
 
-            if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
-            })) {
-                PeacemakerVillager peacemakerVillager = MobSpawnEventListener.tryConvertMob(level, villager, entityType, true);
-                if (peacemakerVillager != null) {
-                    peacemakerVillager.setVillagerData(villager.getVillagerData());
-                    peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
-                    peacemakerVillager.setOffers(villager.getOffers());
-                    peacemakerVillager.setVillagerXp(villager.getVillagerXp());
+                if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
+                })) {
+                    PeacemakerVillager peacemakerVillager = MobSpawnEventListener.tryConvertMob(level, villager, entityType, true);
+                    if (peacemakerVillager != null) {
+                        peacemakerVillager.setVillagerData(villager.getVillagerData());
+                        peacemakerVillager.setGossips(villager.getGossips().store(NbtOps.INSTANCE));
+                        peacemakerVillager.setOffers(villager.getOffers());
+                        peacemakerVillager.setVillagerXp(villager.getVillagerXp());
 
-                    return finalizePossess(level, villager, peacemakerVillager);
+                        return finalizePossess(level, villager, peacemakerVillager);
+                    }
                 }
             }
         }
@@ -593,14 +601,16 @@ public class PeacemakerButterfly
             }
 
             ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
-            EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)BuiltInRegistries.ENTITY_TYPE.get(location);
+            Optional<Holder.Reference<EntityType<?>>> entityTypeHolder = BuiltInRegistries.ENTITY_TYPE.get(location);
+            if (entityTypeHolder.isPresent()) {
+                EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>) entityTypeHolder.get().value();
+                if (EventHooks.canLivingConvert(wanderingTrader, entityType, (x) -> {
+                })) {
+                    PeacemakerWanderingTrader peacemakerWanderingTrader = MobSpawnEventListener.tryConvertMob(level, wanderingTrader, entityType, true);
+                    if (peacemakerWanderingTrader != null) {
 
-            if (EventHooks.canLivingConvert(wanderingTrader, entityType, (x) -> {
-            })) {
-                PeacemakerWanderingTrader peacemakerWanderingTrader = MobSpawnEventListener.tryConvertMob(level, wanderingTrader, entityType, true);
-                if (peacemakerWanderingTrader != null) {
-
-                    return finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
+                        return finalizePossess(level, wanderingTrader, peacemakerWanderingTrader);
+                    }
                 }
             }
         }
@@ -621,23 +631,26 @@ public class PeacemakerButterfly
                                                    String entityId) {
 
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
-        EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
-        if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
-        })) {
-            T newMob = MobSpawnEventListener.tryConvertMob(level, raider, entityType, true);
-            if (newMob != null) {
-                newMob.finalizeSpawn(level,
-                        level.getCurrentDifficultyAt(newMob.blockPosition()),
-                        MobSpawnType.CONVERSION,
-                        null);
+        Optional<Holder.Reference<EntityType<?>>> entityTypeHolder = BuiltInRegistries.ENTITY_TYPE.get(location);
+        if (entityTypeHolder.isPresent()) {
+            EntityType<T> entityType = (EntityType<T>) entityTypeHolder.get().value();
+            if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
+            })) {
+                T newMob = MobSpawnEventListener.tryConvertMob(level, raider, entityType, true);
+                if (newMob != null) {
+                    newMob.finalizeSpawn(level,
+                            level.getCurrentDifficultyAt(newMob.blockPosition()),
+                            EntitySpawnReason.CONVERSION,
+                            null);
 
-                EventHooks.onLivingConvert(raider, newMob);
+                    EventHooks.onLivingConvert(raider, newMob);
 
-                if (!newMob.isSilent()) {
-                    level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+                    if (!newMob.isSilent()) {
+                        level.levelEvent(null, 1026, newMob.blockPosition(), 0);
+                    }
+
+                    return level.addFreshEntity(newMob);
                 }
-
-                return level.addFreshEntity(newMob);
             }
         }
 

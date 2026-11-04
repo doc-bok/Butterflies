@@ -67,7 +67,7 @@ public class MobSpawnEventListener {
                     if (newMob != null) {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
-                                MobSpawnType.CONVERSION,
+                                EntitySpawnReason.CONVERSION,
                                 null);
 
                         EntityBehaviours.finalizeConvert(level, ironGolem, newMob);
@@ -113,7 +113,7 @@ public class MobSpawnEventListener {
         if (from.isRemoved()) {
             return null;
         } else {
-            T converted = to.create(level.getLevel());
+            T converted = to.create(level.getLevel(), EntitySpawnReason.CONVERSION);
             if (converted == null) {
                 return null;
             } else {
