@@ -161,7 +161,6 @@ public class PeacemakerButterfly
             butterfly.finalizeSpawn(level,
                     level.getCurrentDifficultyAt(butterfly.getOnPos()),
                     MobSpawnType.CONVERSION,
-                    null,
                     null);
 
             level.addFreshEntity(butterfly);
@@ -407,14 +406,11 @@ public class PeacemakerButterfly
     /**
      * Set the eye height of the Peacemaker Butterfly. Ensures the bounding box
      * is correct.
-     * @param pose The current pose of the entity.
-     * @param entityDimensions The dimensions of the entity.
      * @return The height of the entity's eyes.
      */
     @Override
-    protected float getStandingEyeHeight(@NotNull Pose pose,
-                                         @NotNull EntityDimensions entityDimensions) {
-        return 0.4f;
+    public double getEyeY() {
+        return this.position().y + 0.4;
     }
 
     /**
@@ -468,7 +464,6 @@ public class PeacemakerButterfly
         possessed.finalizeSpawn(level,
                 level.getCurrentDifficultyAt(possessed.blockPosition()),
                 MobSpawnType.CONVERSION,
-                null,
                 null);
 
         possessed.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200, 0));
@@ -553,7 +548,7 @@ public class PeacemakerButterfly
                 return false;
             }
 
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_villager");
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_villager");
             EntityType<PeacemakerVillager> entityType = (EntityType<PeacemakerVillager>)BuiltInRegistries.ENTITY_TYPE.get(location);
 
             if (EventHooks.canLivingConvert(villager, entityType, (x) -> {
@@ -593,7 +588,7 @@ public class PeacemakerButterfly
                 return false;
             }
 
-            ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
+            ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, "peacemaker_wandering_trader");
             EntityType<PeacemakerWanderingTrader> entityType = (EntityType<PeacemakerWanderingTrader>)BuiltInRegistries.ENTITY_TYPE.get(location);
 
             if (EventHooks.canLivingConvert(wanderingTrader, entityType, (x) -> {
@@ -621,7 +616,7 @@ public class PeacemakerButterfly
                                                    Raider raider,
                                                    String entityId) {
 
-        ResourceLocation location = new ResourceLocation(ButterfliesMod.MOD_ID, entityId);
+        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(ButterfliesMod.MOD_ID, entityId);
         EntityType<T> entityType = (EntityType<T>) BuiltInRegistries.ENTITY_TYPE.get(location);
         if (EventHooks.canLivingConvert(raider, entityType, (x) -> {
         })) {
@@ -630,7 +625,6 @@ public class PeacemakerButterfly
                 newMob.finalizeSpawn(level,
                         level.getCurrentDifficultyAt(newMob.blockPosition()),
                         MobSpawnType.CONVERSION,
-                        null,
                         null);
 
                 EventHooks.onLivingConvert(raider, newMob);

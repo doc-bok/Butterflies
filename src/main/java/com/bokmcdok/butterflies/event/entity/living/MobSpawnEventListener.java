@@ -9,7 +9,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
@@ -20,7 +20,7 @@ import net.minecraft.world.item.ItemStack;
 /**
  * Holds event listeners for entities.
  */
-@Mod.EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = ButterfliesMod.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class MobSpawnEventListener {
 
     /**
@@ -68,7 +68,6 @@ public class MobSpawnEventListener {
                         newMob.finalizeSpawn(level,
                                 level.getCurrentDifficultyAt(newMob.blockPosition()),
                                 MobSpawnType.CONVERSION,
-                                null,
                                 null);
 
                         EntityBehaviours.finalizeConvert(level, ironGolem, newMob);
