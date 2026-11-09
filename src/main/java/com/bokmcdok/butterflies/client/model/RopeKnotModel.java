@@ -66,8 +66,8 @@ public class RopeKnotModel<T extends RopeKnotEntity> extends AbstractRopeModel<T
                 break;
         }
 
-        if (entity.getTransitioning()) {
-            this.lower.zRot = entity.getTransitioning() ? -ROPE_CONNECT_ANGLE : 0;
+        if (entity.isTransitioning()) {
+            this.lower.zRot = entity.isTransitioning() ? -ROPE_CONNECT_ANGLE : 0;
         }
     }
 }

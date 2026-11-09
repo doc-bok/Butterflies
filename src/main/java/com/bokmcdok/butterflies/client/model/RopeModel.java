@@ -1,7 +1,6 @@
 package com.bokmcdok.butterflies.client.model;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
-import com.bokmcdok.butterflies.world.entity.decoration.AbstractRopeEntity;
 import com.bokmcdok.butterflies.world.entity.decoration.RopeEntity;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -51,7 +50,7 @@ public class RopeModel<T extends RopeEntity> extends AbstractRopeModel<T> {
                           float netHeadYaw,
                           float headPitch) {
 
-        if (entity.getTransitioning()) {
+        if (entity.isTransitioning()) {
             switch (entity.getDirection()) {
                 case NORTH:
                     this.lower.xRot = -ROPE_CONNECT_ANGLE;

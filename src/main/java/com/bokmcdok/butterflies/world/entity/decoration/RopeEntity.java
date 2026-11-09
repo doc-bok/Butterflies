@@ -10,9 +10,12 @@ import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,7 +32,7 @@ public class RopeEntity extends AbstractRopeEntity {
     public static final double DIRECTION_OFFSET = 0.2d;
     public static final double DIRECTION_OFFSET_FULL_BLOCK = 0.6d;
 
-    private RopeEntity parent = null;
+    private AbstractRopeEntity parent = null;
 
     /**
      * Construction.
@@ -167,7 +170,7 @@ public class RopeEntity extends AbstractRopeEntity {
             return;
         }
 
-        if (parent != null && parent.getOnFullBlock()) {
+        if (getParent() instanceof RopeEntity ropeEntity && ropeEntity.getOnFullBlock()) {
             this.getEntityData().set(DATA_ON_FULL_BLOCK, true);
             this.getEntityData().set(DATA_TRANSITIONING, false);
             return;
@@ -189,7 +192,7 @@ public class RopeEntity extends AbstractRopeEntity {
     private void setOnFullBlock(boolean value) {
         this.getEntityData().set(DATA_ON_FULL_BLOCK, value);
 
-        // This is called during the constructor so direction can actually be
+        // This is called during the constructor so position can actually be
         // null as the object is only partially initialized.
         if (this.pos != null) {
             this.level().updateNeighbourForOutputSignal(this.pos, Blocks.AIR);
@@ -204,7 +207,7 @@ public class RopeEntity extends AbstractRopeEntity {
      */
     @Override
     public boolean survives() {
-        return AbstractRopeEntity.tryGetAbstractRope(this.level(), this.pos.above()).isPresent();
+        return AbstractRopeEntity.getRopeAt(this.level(), this.pos.above()) != null;
     }
 
     /**
@@ -231,5 +234,87 @@ public class RopeEntity extends AbstractRopeEntity {
         newEntity.updateBlockConnections();
         level.addFreshEntity(newEntity);
         return newEntity;
+    }
+
+    /**
+     * Get the direction to attach a rope.
+     * @param player The player attempting to attach a rope.
+     * @return The direction to attach.
+     */
+    @Override
+    protected Direction getAttachmentDirection(Player player) {
+        AbstractRopeEntity child = getChild();
+        if (child != null) {
+            return child.getAttachmentDirection(player);
+        }
+
+        return this.direction;
+    }
+
+    /**
+     * Called whenever a rope entity is added to the level.
+     */
+    @Override
+    protected void onAddedToLevel() {
+        super.onAddedToLevel();
+        this.updateRopeAbove(this);
+    }
+
+    /**
+     * Called whenever a rope entity is removed from the level.
+     */
+    @Override
+    protected void onRemovedFromLevel() {
+        this.updateRopeAbove(null);
+        super.onRemovedFromLevel();
+    }
+
+    /**
+     * Get the parent rope, if any.
+     * @return The rope above this one, otherwise NULL.
+     */
+    private AbstractRopeEntity getParent() {
+        if (parent == null) {
+            parent = getRopeAt(this.level(), this.getPos().above());
+        }
+
+        return parent;
+    }
+
+    /**
+     * Updates the rope's connection state.
+     * @param blockState The current block state.
+     * @param dataAccessor The entity's data accessor.
+     * @return True if the block is solid.
+     */
+    private boolean updateBlockConnection(BlockState blockState,
+                                            EntityDataAccessor<Boolean> dataAccessor) {
+
+        // No rope below means no transitioning.
+        AbstractRopeEntity child = getChild();
+        if (child == null) {
+            this.getEntityData().set(dataAccessor, false);
+            return false;
+        }
+
+        boolean result = !blockState.isAir() &&
+                !blockState.is(BlockTags.FENCES) &&
+                !blockState.is(BlockTags.WALLS);
+
+        this.getEntityData().set(dataAccessor, result);
+        return result;
+    }
+
+    /**
+     * Updates the rope entity above in the case of any rope placement changes.
+     */
+    private void updateRopeAbove(AbstractRopeEntity newChild) {
+        if (!this.level().isClientSide) {
+            AbstractRopeEntity above = AbstractRopeEntity.getRopeAt(this.level(), this.pos.above());
+            if (above != null) {
+                above.setChild(newChild);
+                above.updateBlockConnections();
+            }
+        }
     }
 }

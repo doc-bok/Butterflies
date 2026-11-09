@@ -3,11 +3,13 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 import com.bokmcdok.butterflies.registries.EntityTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -107,5 +109,40 @@ public class RopeKnotEntity extends AbstractRopeEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.getEntityData().define(DATA_DIRECTION, Direction.NORTH);
+    }
+
+    /**
+     * Get the direction to attach a rope.
+     * @param player The player attempting to attach a rope.
+     * @return The direction to attach.
+     */
+    @Override
+    protected Direction getAttachmentDirection(Player player) {
+        AbstractRopeEntity child = getChild();
+        if (child != null) {
+            return child.getAttachmentDirection(player);
+        }
+
+        return player.getDirection().getOpposite();
+    }
+
+    /**
+     * Set up any additional save data.
+     * @param compoundTag The compound tag containing the data.
+     */
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        compoundTag.putByte("Facing", (byte)this.getDirection().get3DDataValue());
+    }
+
+    /**
+     * Read any additional save data.
+     * @param compoundTag The compound tag containing the data.
+     */
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        this.setDirection(Direction.from3DDataValue(compoundTag.getByte("Facing")));
     }
 }

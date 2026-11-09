@@ -50,14 +50,14 @@ public class RopeItem extends Item {
 
         // Try to attach to rope or rope knot, if present.
         BlockPos blockPos = useOnContext.getClickedPos();
-        Optional<AbstractRopeEntity> abstractRope = AbstractRopeEntity.tryGetAbstractRope(level, blockPos);
-        if(abstractRope.isPresent()) {
+        AbstractRopeEntity abstractRope = AbstractRopeEntity.getRopeAt(level, blockPos);
+        if(abstractRope != null) {
             Direction direction = player.getDirection().getOpposite();
-            if (abstractRope.get() instanceof RopeEntity rope) {
+            if (abstractRope instanceof RopeEntity rope) {
                 direction = rope.getDirection();
             }
 
-            if(abstractRope.get().tryAttachRope(direction)) {
+            if(abstractRope.tryAttachRope(direction)) {
                 useOnContext.getItemInHand().shrink(1);
                 return InteractionResult.CONSUME;
             }

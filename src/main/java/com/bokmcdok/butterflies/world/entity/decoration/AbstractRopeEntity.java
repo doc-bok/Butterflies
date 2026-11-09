@@ -3,6 +3,7 @@ package com.bokmcdok.butterflies.world.entity.decoration;
 import com.bokmcdok.butterflies.registries.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -23,18 +24,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.Optional;
 
 /**
  * Base class for rope entities.
  */
 public abstract class AbstractRopeEntity extends HangingEntity {
+
+    // Cache the block state below to avoid too many updates.
+    @Nullable
+    private BlockState cachedBelowState;
+
+    @Nullable
+    private AbstractRopeEntity child;
 
     protected static final EntityDataAccessor<Boolean> DATA_TRANSITIONING =
             SynchedEntityData.defineId(AbstractRopeEntity.class, EntityDataSerializers.BOOLEAN);
@@ -66,7 +74,7 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     }
 
     /**
-     * Calculate the bounding boxes.
+     * Re-calculate the bounding box.
      */
     @Override
     protected void recalculateBoundingBox() {
@@ -88,23 +96,11 @@ public abstract class AbstractRopeEntity extends HangingEntity {
 
     /**
      * Get the height of the rope "block".
-     * @return The current width.
+     * @return The current height.
      */
     @Override
     public int getHeight() {
         return PIXEL_HEIGHT;
-    }
-
-    /**
-     * Get the "eye height" of the entity.
-     * @param pose The current pose.
-     * @param entityDimensions The dimensions of the entity.
-     * @return The entity's "eye height"
-     */
-    @Override
-    protected float getEyeHeight(@NotNull Pose pose,
-                                 @NotNull EntityDimensions entityDimensions) {
-        return 0.0625F;
     }
 
     /**
@@ -158,11 +154,12 @@ public abstract class AbstractRopeEntity extends HangingEntity {
             return InteractionResult.SUCCESS;
         }
 
-        Direction direction = player.getDirection().getOpposite();
-
-        if (this instanceof RopeEntity rope) {
-            direction = rope.direction;
+        ItemStack held = player.getItemInHand(interactionHand);
+        if (!held.is(ItemRegistry.ROPE.get())) {
+            return InteractionResult.PASS;
         }
+
+        Direction direction = getAttachmentDirection(player);
 
         if (tryAttachRope(direction)) {
             player.getItemInHand(interactionHand).shrink(1);
@@ -181,12 +178,21 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     @Override
     public boolean hurt(@NotNull DamageSource damageSource,
                         float amount) {
-        Optional<AbstractRopeEntity> abstractRopeEntity = tryGetAbstractRope(this.level(), this.pos.below());
-        if (abstractRopeEntity.isPresent() && abstractRopeEntity.get() instanceof RopeEntity rope) {
-            rope.hurt(damageSource, amount);
+        boolean damaged = super.hurt(damageSource, amount);
+
+        if (damaged) {
+
+            // Destroy any ropes below.
+            AbstractRopeEntity belowRopeEntity = getChild();
+            if (belowRopeEntity instanceof RopeEntity rope) {
+                rope.hurt(damageSource, amount);
+            }
+
+            // Event handler.
+            onRemovedFromLevel();
         }
         
-        return super.hurt(damageSource, amount);
+        return damaged;
     }
 
     /**
@@ -205,13 +211,14 @@ public abstract class AbstractRopeEntity extends HangingEntity {
         }
 
         // We can keep attaching rope from the top.
-        Optional<AbstractRopeEntity> rope = tryGetAbstractRope(this.level(), this.pos.below());
-        if (rope.isPresent()) {
-            return rope.get().tryAttachRope(direction);
+        AbstractRopeEntity rope = getChild();
+        if (rope != null) {
+            return rope.tryAttachRope(direction);
         }
 
         // Attach a new rope entity.
         RopeEntity newRope = RopeEntity.createRope(this.level(), this, below, direction);
+        newRope.onAddedToLevel();
         newRope.playPlacementSound();
         return true;
     }
@@ -219,24 +226,27 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     /**
      * Create a new knot, or get one that is already there.
      * @param level The current level.
-     * @param blockPos The position to check.
+     * @param pos The position to check.
      * @return A knot in the specified position.
      */
-    public static Optional<AbstractRopeEntity> tryGetAbstractRope(Level level,
-                                                                  BlockPos blockPos) {
-        int i = blockPos.getX();
-        int j = blockPos.getY();
-        int k = blockPos.getZ();
+    public static AbstractRopeEntity getRopeAt(LevelAccessor level,
+                                               BlockPos pos) {
+        AABB searchBox = new AABB(
+                pos.getX() - 1.0D,
+                pos.getY(),
+                pos.getZ() - 1.0D,
 
-        for(AbstractRopeEntity existingEntity : level.getEntitiesOfClass(AbstractRopeEntity.class, new AABB(
-                (double)i - 1.0D, (double)j - 1.0D, (double)k - 1.0D,
-                (double)i + 1.0D, (double)j + 1.0D, (double)k + 1.0D))) {
-            if (existingEntity.getPos().equals(blockPos)) {
-                return Optional.of(existingEntity);
+                pos.getX() + 2.0D,
+                pos.getY() + 1.0D,
+                pos.getZ() + 2.0D);
+
+        for (AbstractRopeEntity rope : level.getEntitiesOfClass(AbstractRopeEntity.class, searchBox)) {
+            if (rope.getPos().equals(pos)) {
+                return rope;
             }
         }
 
-        return Optional.empty();
+        return null;
     }
 
     /**
@@ -281,25 +291,81 @@ public abstract class AbstractRopeEntity extends HangingEntity {
      * Get whether this rope is on a full block.
      * @return True if the rope is on a full block.
      */
-    public boolean getTransitioning() {
+    public boolean isTransitioning() {
         return this.getEntityData().get(DATA_TRANSITIONING);
     }
 
     /**
-     * Update the ropes current state with relation to nearby blocks.
+     * Update the rope's connection state.
      */
     public void updateBlockConnections() {
-        if (level().isClientSide) {
+        if (this.level().isClientSide) {
             return;
         }
 
-        updateBlockConnection(this.level().getBlockState(this.getPos().below()), DATA_TRANSITIONING);
+        boolean hasRopeBelow = this.hasRopeEntityBelow();
+        boolean hasSolidSupport = this.hasSolidSupportBelow();
+
+        boolean connected = hasRopeBelow && hasSolidSupport;
+
+        this.getEntityData().set(DATA_TRANSITIONING, connected);
     }
 
+    /**
+     * Check for any below block state changes and update the connections if necessary.
+     */
     @Override
     public void tick() {
         super.tick();
-        updateBlockConnections();
+        if (this.level().isClientSide) {
+            return;
+        }
+
+        // Only update on block state changes.
+        BlockState belowState = this.level().getBlockState(this.pos.below());
+        if (belowState != this.cachedBelowState) {
+            this.cachedBelowState = belowState;
+            this.updateBlockConnections();
+        }
+    }
+
+    /**
+     * Set up any additional save data.
+     * @param compoundTag The compound tag containing the data.
+     */
+    @Override
+    public void addAdditionalSaveData(@NotNull CompoundTag compoundTag) {
+        super.addAdditionalSaveData(compoundTag);
+        compoundTag.putBoolean("Transitioning", this.isTransitioning());
+    }
+
+    /**
+     * Read any additional save data.
+     * @param compoundTag The compound tag containing the data.
+     */
+    @Override
+    public void readAdditionalSaveData(@NotNull CompoundTag compoundTag) {
+        super.readAdditionalSaveData(compoundTag);
+        this.getEntityData().set(DATA_TRANSITIONING, compoundTag.getBoolean("Transitioning"));
+    }
+
+    /**
+     * Get the direction to attach a rope.
+     * @param player The player attempting to attach a rope.
+     * @return The direction to attach.
+     */
+    protected abstract Direction getAttachmentDirection(Player player);
+
+    /**
+     * Get the "eye height" of the entity.
+     * @param pose The current pose.
+     * @param entityDimensions The dimensions of the entity.
+     * @return The entity's "eye height"
+     */
+    @Override
+    protected float getEyeHeight(@NotNull Pose pose,
+                                 @NotNull EntityDimensions entityDimensions) {
+        return 0.0625F;
     }
 
     /**
@@ -312,18 +378,52 @@ public abstract class AbstractRopeEntity extends HangingEntity {
     }
 
     /**
-     * Updates the rope's connection state.
-     * @param blockState The current block state.
-     * @param dataAccessor The entity's data accessor.
-     * @return True if the block is solid.
+     * Check if there is a rope entity below this one.
+     * @return TRUE if there is a rope entity below.
      */
-    protected boolean updateBlockConnection(BlockState blockState,
-                                            EntityDataAccessor<Boolean> dataAccessor) {
-        boolean result = !blockState.isAir() &&
-                !blockState.is(BlockTags.FENCES) &&
-                !blockState.is(BlockTags.WALLS);
+    protected boolean hasRopeEntityBelow() {
+        return getChild() instanceof RopeEntity;
+    }
 
-        this.getEntityData().set(dataAccessor, result);
-        return result;
+    /**
+     * Check if there is a solid block below this entity.
+     * @return TRUE if the block below is solid.
+     */
+    protected boolean hasSolidSupportBelow() {
+        BlockState state = this.level().getBlockState(this.pos.below());
+
+        return !state.isAir()
+                && !state.is(BlockTags.FENCES)
+                && !state.is(BlockTags.WALLS);
+    }
+
+    /**
+     * Called whenever a rope entity is added to the level.
+     */
+    protected void onAddedToLevel() {}
+
+    /**
+     * Called whenever a rope entity is removed from the level.
+     */
+    protected void onRemovedFromLevel() {}
+
+    /**
+     * Update the child on the entity.
+     * @param newChild The new child, which can be NULL.
+     */
+    protected void setChild(@Nullable AbstractRopeEntity newChild) {
+        this.child = newChild;
+    }
+
+    /**
+     * Get the child rope, if any.
+     * @return The rope below this one, otherwise NULL.
+     */
+    protected AbstractRopeEntity getChild() {
+        if (child == null) {
+            child = getRopeAt(this.level(), this.getPos().below());
+        }
+
+        return child;
     }
 }
