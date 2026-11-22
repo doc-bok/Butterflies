@@ -14,6 +14,7 @@
     "chrysalis": "short",
     "egg": "short"
   },
+  "model": "glow",
   "plantEffect": "none",
   "rarity": "rare",
   "size": "large",
@@ -23,7 +24,6 @@
   },
   "speed": "fast",
   "traits": [
-    "glow",
     "lava"
   ],
   "type": "special"

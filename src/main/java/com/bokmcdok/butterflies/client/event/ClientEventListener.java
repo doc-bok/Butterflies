@@ -1,6 +1,5 @@
 package com.bokmcdok.butterflies.client.event;
 
-import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.client.model.*;
 import com.bokmcdok.butterflies.client.renderer.blockentity.ButterflyFeederEntityRenderer;
 import com.bokmcdok.butterflies.client.renderer.entity.*;
@@ -23,7 +22,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -123,15 +121,18 @@ public class ClientEventListener {
      * @return The renderer provider to use.
      */
     private static @NotNull EntityRendererProvider<Butterfly> getButterflyEntityRendererProvider(int butterflyIndex) {
-        EntityRendererProvider<Butterfly> rendererProvider = ButterflyRenderer::new;
+        switch (ButterflyInfo.MODEL_TYPES[butterflyIndex]) {
+            case GLOW -> {
+                return GlowButterflyRenderer::new;
+            }
 
-        // Choose a different provider based on certain butterfly traits.
-        List<ButterflyTrait> traits = Arrays.asList(ButterflyInfo.TRAITS[butterflyIndex]);
-        if (traits.contains(ButterflyTrait.GLOW)) {
-            rendererProvider =  GlowButterflyRenderer::new;
-        } else if (traits.contains(ButterflyTrait.HUMMINGBIRD)){
-            rendererProvider = HummingbirdMothRenderer::new;
+            case HUMMINGBIRD -> {
+                return HummingbirdMothRenderer::new;
+            }
+
+            default -> {
+                return ButterflyRenderer::new;
+            }
         }
-        return rendererProvider;
     }
 }

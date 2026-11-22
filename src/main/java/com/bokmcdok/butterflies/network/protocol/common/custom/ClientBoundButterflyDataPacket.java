@@ -44,6 +44,7 @@ public record ClientBoundButterflyDataPacket(Collection<ButterflyData> data) imp
             collectionBuffer.writeCollection(i.extraLandingBlocks(), FriendlyByteBuf::writeUtf);
             collectionBuffer.writeEnum(i.plantEffect());
             collectionBuffer.writeEnum(i.eggMultiplier());
+            collectionBuffer.writeEnum(i.modelType());
             collectionBuffer.writeBoolean(i.caterpillarSounds());
             collectionBuffer.writeBoolean(i.butterflySounds());
             collectionBuffer.writeEnumSet(i.traits(), ButterflyTrait.class);

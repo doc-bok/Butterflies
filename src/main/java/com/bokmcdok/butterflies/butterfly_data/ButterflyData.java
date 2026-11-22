@@ -26,6 +26,7 @@ public final class ButterflyData {
     private final boolean caterpillarSounds;
     private final boolean butterflySounds;
     private final EnumSet<ButterflyTrait> traits;
+    private final ButterflyModelType modelType;
 
     private final LifecycleData lifecycle;
     private final VariantSet variants;
@@ -84,6 +85,8 @@ public final class ButterflyData {
         this.traits = builder.traits.isEmpty()
                 ? EnumSet.noneOf(ButterflyTrait.class)
                 : EnumSet.copyOf(builder.traits);
+
+        this.modelType = builder.modelType;
 
         this.caterpillarSounds = builder.caterpillarSounds;
         this.butterflySounds = builder.butterflySounds;
@@ -215,6 +218,10 @@ public final class ButterflyData {
 
     public EggMultiplier eggMultiplier() {
         return eggMultiplier;
+    }
+
+    public ButterflyModelType modelType() {
+        return modelType;
     }
 
     public boolean caterpillarSounds() {
@@ -380,6 +387,7 @@ public final class ButterflyData {
         private Diurnality diurnality;
         private PlantEffect plantEffect;
         private EggMultiplier eggMultiplier;
+        private ButterflyModelType modelType;
 
         private Set<ButterflyHabitat> habitats;
         private Set<String> extraLandingBlocks;
@@ -455,6 +463,11 @@ public final class ButterflyData {
 
         public Builder eggMultiplier(EggMultiplier eggMultiplier) {
             this.eggMultiplier = eggMultiplier;
+            return this;
+        }
+
+        public Builder modelType(ButterflyModelType modelType) {
+            this.modelType = modelType;
             return this;
         }
 

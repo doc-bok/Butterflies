@@ -12,6 +12,7 @@
     "chrysalis": "short",
     "egg": "short"
   },
+  "model": "base",
   "plantEffect": "none",
   "rarity": "rare",
   "size": "huge",

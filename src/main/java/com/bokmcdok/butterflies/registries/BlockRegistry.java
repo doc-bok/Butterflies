@@ -2,6 +2,7 @@ package com.bokmcdok.butterflies.registries;
 
 import com.bokmcdok.butterflies.ButterfliesMod;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyInfo;
+import com.bokmcdok.butterflies.butterfly_data.ButterflyModelType;
 import com.bokmcdok.butterflies.butterfly_data.ButterflyTrait;
 import com.bokmcdok.butterflies.world.block.*;
 import net.minecraft.core.BlockPos;
@@ -157,9 +158,9 @@ public class BlockRegistry {
         for (int i = 0; i < ButterflyInfo.SPECIES.length; ++i) {
             String registryId = getBottledButterflyRegistryId(i);
 
-            // Light Butterflies glow when they are in a bottle.
+            // Glowing Butterflies act as a light source when they are in a bottle.
             RegistryObject<Block> newBlock;
-            if (Arrays.asList(ButterflyInfo.TRAITS[i]).contains(ButterflyTrait.GLOW)) {
+            if (ButterflyInfo.MODEL_TYPES[i] == ButterflyModelType.GLOW) {
                 newBlock = BLOCKS.register(registryId, () -> new BottledButterflyBlock(GLOWING_BOTTLED_BUTTERFLY_PROPERTIES));
             } else {
                 newBlock = BLOCKS.register(registryId, () -> new BottledButterflyBlock(BOTTLED_BUTTERFLY_PROPERTIES));

@@ -84,6 +84,17 @@ class CodeGenerator:
                 header_comment="A list of traits each butterfly has."
             )
 
+            # Write model types
+            out.write(
+                "\n"
+                "    // A list of all the species in the mod.\n"
+                "    public static final ButterflyModelType[] MODEL_TYPES = {\n"
+            )
+            for name in all_species:
+                model_type = species_data[name].get("model") if species_data[name] else "BASE"
+                out.write(f'            ButterflyModelType.{model_type.upper()},\n')
+            out.write("    };\n\n")
+
             # End file
             out.write("}\n")
 

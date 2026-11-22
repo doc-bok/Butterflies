@@ -14,6 +14,7 @@
     "chrysalis": "short",
     "egg": "short"
   },
+  "model": "hummingbird",
   "plantEffect": "consume",
   "rarity": "uncommon",
   "size": "medium",
@@ -22,8 +23,6 @@
     "caterpillar": false
   },
   "speed": "moderate",
-  "traits": [
-    "hummingbird"
-  ],
+  "traits": [],
   "type": "moth"
 }

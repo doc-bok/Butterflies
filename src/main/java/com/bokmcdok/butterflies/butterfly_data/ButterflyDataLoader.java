@@ -104,6 +104,8 @@ public class ButterflyDataLoader {
 
                 EggMultiplier eggMultiplier = getEnumValue(object, EggMultiplier.class, "eggMultiplier", EggMultiplier.NORMAL);
 
+                ButterflyModelType modelType = getEnumValue(object, ButterflyModelType.class, "model", ButterflyModelType.BASE);
+
                 JsonObject sounds = getOptionalObject(object, "sounds");
                 boolean caterpillarSounds = false;
                 boolean butterflySounds = false;
@@ -148,6 +150,7 @@ public class ButterflyDataLoader {
                         .extraLandingBlocks(extraLandingBlocks)
                         .plantEffect(plantEffect)
                         .eggMultiplier(eggMultiplier)
+                        .modelType(modelType)
                         .caterpillarSounds(caterpillarSounds)
                         .butterflySounds(butterflySounds)
                         .traits(traits)

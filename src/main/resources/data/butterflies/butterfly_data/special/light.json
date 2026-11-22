@@ -12,6 +12,7 @@
     "chrysalis": "short",
     "egg": "short"
   },
+  "model": "glow",
   "plantEffect": "none",
   "rarity": "rare",
   "size": "small",
@@ -20,8 +21,6 @@
     "caterpillar": false
   },
   "speed": "fast",
-  "traits": [
-    "glow"
-  ],
+  "traits": [],
   "type": "special"
 }

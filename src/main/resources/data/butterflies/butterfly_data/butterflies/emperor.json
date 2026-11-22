@@ -16,6 +16,7 @@
     "chrysalis": "short",
     "egg": "medium"
   },
+  "model": "base",
   "plantEffect": "pollinate",
   "rarity": "common",
   "size": "medium",

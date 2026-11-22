@@ -98,6 +98,7 @@ public class NetworkEventListener {
                                         FriendlyByteBuf::readUtf))
                                 .plantEffect(buffer.readEnum(PlantEffect.class))
                                 .eggMultiplier(buffer.readEnum(EggMultiplier.class))
+                                .modelType(buffer.readEnum(ButterflyModelType.class))
                                 .caterpillarSounds(buffer.readBoolean())
                                 .butterflySounds(buffer.readBoolean())
                                 .traits(buffer.readEnumSet(ButterflyTrait.class))

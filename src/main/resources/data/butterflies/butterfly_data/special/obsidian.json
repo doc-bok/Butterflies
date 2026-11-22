@@ -16,6 +16,7 @@
     "chrysalis": "long",
     "egg": "long"
   },
+  "model": "base",
   "plantEffect": "pollinate",
   "rarity": "rare",
   "size": "huge",

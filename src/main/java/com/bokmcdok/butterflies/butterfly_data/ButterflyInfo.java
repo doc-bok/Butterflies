@@ -151,18 +151,14 @@ public class ButterflyInfo {
             ButterflyTrait.SILK,
         },
         {}, // No traits for case-bearing-clothes
-        {
-            ButterflyTrait.HUMMINGBIRD,
-        },
+        {}, // No traits for clearwing-hummingbird
         {}, // No traits for clothes
         {}, // No traits for codling
         {}, // No traits for diamondback
         {
             ButterflyTrait.SILK,
         },
-        {
-            ButterflyTrait.HUMMINGBIRD,
-        },
+        {}, // No traits for hummingbird
         {}, // No traits for indianmeal
         {}, // No traits for luna
         {
@@ -173,9 +169,7 @@ public class ButterflyInfo {
         },
         {}, // No traits for peppered
         {}, // No traits for spongy
-        {
-            ButterflyTrait.HUMMINGBIRD,
-        },
+        {}, // No traits for white-lined-sphinx
         {}, // No traits for spongymale
         {
             ButterflyTrait.GLOW,
@@ -198,6 +192,80 @@ public class ButterflyInfo {
         {
             ButterflyTrait.PEACEMAKER,
         },
+    };
+
+
+    // A list of all the species in the mod.
+    public static final ButterflyModelType[] MODEL_TYPES = {
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.HUMMINGBIRD,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.HUMMINGBIRD,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
+            ButterflyModelType.HUMMINGBIRD,
+            ButterflyModelType.BASE,
+            ButterflyModelType.GLOW,
+            ButterflyModelType.GLOW,
+            ButterflyModelType.GLOW,
+            ButterflyModelType.GLOW,
+            ButterflyModelType.BASE,
+            ButterflyModelType.BASE,
     };
 
 }
