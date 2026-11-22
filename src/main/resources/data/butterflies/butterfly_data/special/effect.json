@@ -1,0 +1,30 @@
+{
+  "diurnality": "cathemeral",
+  "eggMultiplier": "none",
+  "entityId": "effect",
+  "extraLandingBlocks": [],
+  "foodSource": "minecraft:none",
+  "habitats": [
+    "villages"
+  ],
+  "index": 63,
+  "lifespan": {
+    "butterfly": "immortal",
+    "caterpillar": "short",
+    "chrysalis": "short",
+    "egg": "short"
+  },
+  "plantEffect": "pollinate",
+  "rarity": "rare",
+  "size": "medium",
+  "sounds": {
+    "butterfly": false,
+    "caterpillar": false
+  },
+  "speed": "fast",
+  "traits": [
+    "glow",
+    "icy"
+  ],
+  "type": "special"
+}
