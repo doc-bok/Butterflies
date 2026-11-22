@@ -172,20 +172,15 @@ public class ButterflyInfo {
         {}, // No traits for white-lined-sphinx
         {}, // No traits for spongymale
         {
-            ButterflyTrait.GLOW,
             ButterflyTrait.ICY,
         },
         {
-            ButterflyTrait.GLOW,
             ButterflyTrait.ICY,
         },
         {
-            ButterflyTrait.GLOW,
             ButterflyTrait.LAVA,
         },
-        {
-            ButterflyTrait.GLOW,
-        },
+        {}, // No traits for light
         {
             ButterflyTrait.TOUGH,
         },
