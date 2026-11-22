@@ -73,6 +73,7 @@ public class ButterflyInfo {
             "spongy",
             "white-lined-sphinx",
             "spongymale",
+            "effect",
             "ice",
             "lava",
             "light",
@@ -176,6 +177,10 @@ public class ButterflyInfo {
             ButterflyTrait.HUMMINGBIRD,
         },
         {}, // No traits for spongymale
+        {
+            ButterflyTrait.GLOW,
+            ButterflyTrait.ICY,
+        },
         {
             ButterflyTrait.GLOW,
             ButterflyTrait.ICY,

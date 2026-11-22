@@ -1,5 +1,8 @@
 ## Changelog
 
+### 7.11.0 (2026/11/22)
+- Added the Blue Morph Butterfly.
+
 ### 7.10.12 (2026/10/19)
 - Fixed unsafe entity insertions due to mob conversions during generation.
 
