@@ -132,9 +132,9 @@ class ScrollTextureGenerator:
             Image.Resampling.NEAREST
         )
 
-        overlay_image = self.image_file_handler.combine_images(scroll_image, antenna_image, (-32, -80))
+        overlay_image = self.image_file_handler.combine_images(scroll_image, antenna_image, (-48, -80))
         antenna_image = antenna_image.transpose(Image.FLIP_LEFT_RIGHT)
-        overlay_image = self.image_file_handler.combine_images(overlay_image, antenna_image, (-48, -80))
+        overlay_image = self.image_file_handler.combine_images(overlay_image, antenna_image, (-32, -80))
 
         # Body
         body_image = self.image_file_handler.crop_image(butterfly_image, (18, 44), (30, 4))
