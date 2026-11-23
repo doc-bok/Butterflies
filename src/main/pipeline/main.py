@@ -65,7 +65,7 @@ def main():
     code_gen.generate_code(all_species, species_data)
 
     # Generate images
-    image_gen.generate_textures()
+    image_gen.generate_textures(species_data)
 
     logger.info("Butterflies/moths data pipeline completed successfully.")
 

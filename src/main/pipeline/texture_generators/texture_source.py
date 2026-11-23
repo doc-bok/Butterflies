@@ -1,13 +1,20 @@
 import os
 
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 
 from PIL import Image
 
+class ModelType(Enum):
+    BASE = 0
+    GLOW = 1
+    DETAILED = 2
+    HUMMINGBIRD = 3
 
 @dataclass(frozen=True)
 class TextureSource:
+
     BUTTERFLY_PREFIX = "butterfly_"
     CHRYSALIS_PREFIX = "chrysalis_"
     CATERPILLAR_PREFIX = "caterpillar_"
@@ -15,6 +22,7 @@ class TextureSource:
 
     path: Path
     image: Image.Image
+    model_type: ModelType
 
     @property
     def name(self) -> str:
@@ -49,4 +57,4 @@ class TextureSource:
     def strip_suffix(name: str, suffix: str) -> str:
         if not name.endswith(suffix):
             raise ValueError(f"Expected {name!r} to end with {suffix!r}")
-        return name[len(suffix):]
+        return name[:-len(suffix)]

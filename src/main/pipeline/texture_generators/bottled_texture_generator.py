@@ -4,7 +4,9 @@ from PIL import Image
 
 from pipeline.config import Config
 from pipeline.images.image_file_handler import ImageFileHandler
-from .texture_source import TextureSource
+
+from .texture_source import TextureSource, ModelType
+
 
 class BottledTextureGenerator:
     """
@@ -25,6 +27,7 @@ class BottledTextureGenerator:
             TextureSource(
                 path=texture_path,
                 image=self.image_file_handler.load_image(texture_path),
+                model_type=ModelType.BASE
             )
             for texture_path in TextureSource.find_textures_with_prefix(
                 self.config.CATERPILLAR_ITEM_TEXTURE_PATH,

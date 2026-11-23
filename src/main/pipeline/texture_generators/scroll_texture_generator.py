@@ -6,6 +6,7 @@ from PIL import Image
 from pipeline.config import Config
 from pipeline.images.image_file_handler import ImageFileHandler
 
+from .texture_source import ModelType
 from .texture_source import TextureSource
 
 class ScrollTextureGenerator:
@@ -17,13 +18,6 @@ class ScrollTextureGenerator:
         self.config = config
         self.logger = config.logger
         self.image_file_handler = image_file_handler
-
-        # Temporary. TODO: Implement system based on butterfly model types.
-        self.HUMMINGBIRD_MOTHS = [
-            'clearwing-hummingbird',
-            'hummingbird',
-            'white-lined-sphinx'
-        ]
 
     def generate(self, butterfly_entity_textures: list[TextureSource]) -> None:
         self.logger.info(f"Generating scroll textures")
@@ -54,10 +48,13 @@ class ScrollTextureGenerator:
         nail_image = self.image_file_handler.load_image(self.config.NAIL_TEXTURE_PATH)
 
         for texture in butterfly_entity_textures:
-            if any(moth in str(texture.path) for moth in self.HUMMINGBIRD_MOTHS):
-                self._generate_hummingbird_scroll_gui(scroll_image, nail_image, texture.path)
-            else:
-                self._generate_butterfly_scroll_gui(scroll_image, nail_image, texture.path)
+            match texture.model_type:
+                case ModelType.HUMMINGBIRD:
+                    self._generate_hummingbird_scroll_gui(scroll_image, nail_image, texture.path)
+                case ModelType.DETAILED:
+                    self._generate_detailed_butterfly_scroll_gui(scroll_image, nail_image, texture.path)
+                case _:
+                    self._generate_butterfly_scroll_gui(scroll_image, nail_image, texture.path)
 
     def _generate_butterfly_scroll_gui(self,
                                        scroll_image: Image.Image,
@@ -81,7 +78,7 @@ class ScrollTextureGenerator:
         overlay_image = self.image_file_handler.combine_images(overlay_image, antenna_image, (-48, -80))
 
         # Body
-        body_image = self.image_file_handler.crop_image(butterfly_image, (9, 22), (24, 24))
+        body_image = self.image_file_handler.crop_image(butterfly_image, (9, 22), (15, 2))
         body_image = self.image_file_handler.rotate_image(body_image, 90)
         body_image = self.image_file_handler.resize_image(
             body_image,
@@ -90,7 +87,7 @@ class ScrollTextureGenerator:
             Image.Resampling.NEAREST
         )
 
-        overlay_image = self.image_file_handler.combine_images(overlay_image, body_image, (15, -59))
+        overlay_image = self.image_file_handler.combine_images(overlay_image, body_image, (-40, -36))
 
         # Wings
         wing_image = self.image_file_handler.crop_image(butterfly_image, (10, 0), (17, 10))
@@ -110,6 +107,65 @@ class ScrollTextureGenerator:
             wing_image,
             int(wing_image.width * 5),
             int(wing_image.height * 5),
+            Image.Resampling.NEAREST
+        )
+        overlay_image = self.image_file_handler.combine_images(overlay_image, wing_image, (-11, -35))
+
+        # Nail
+        overlay_image = self.image_file_handler.combine_images(overlay_image, nail_image)
+        self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_GUI_TEXTURE_PATH / TextureSource.strip_prefix(os.path.basename(texture), TextureSource.BUTTERFLY_PREFIX), overlay_image)
+
+    def _generate_detailed_butterfly_scroll_gui(self,
+                                       scroll_image: Image.Image,
+                                       nail_image: Image.Image,
+                                       texture: Path) -> None:
+        # Base butterfly texture
+        butterfly_image = self.image_file_handler.load_image(texture)
+
+        # Antennae
+        antenna_image = self.image_file_handler.crop_image(butterfly_image, (0, 48), (6, 4))
+        antenna_image = self.image_file_handler.rotate_image(antenna_image, 90)
+        antenna_image = self.image_file_handler.resize_image(
+            antenna_image,
+            int(antenna_image.width * 2.5),
+            int(antenna_image.height * 2.5),
+            Image.Resampling.NEAREST
+        )
+
+        overlay_image = self.image_file_handler.combine_images(scroll_image, antenna_image, (-32, -80))
+        antenna_image = antenna_image.transpose(Image.FLIP_LEFT_RIGHT)
+        overlay_image = self.image_file_handler.combine_images(overlay_image, antenna_image, (-48, -80))
+
+        # Body
+        body_image = self.image_file_handler.crop_image(butterfly_image, (18, 44), (30, 4))
+        body_image = self.image_file_handler.rotate_image(body_image, 90)
+        body_image = self.image_file_handler.resize_image(
+            body_image,
+            int(body_image.width * 2.5),
+            int(body_image.height * 2.5),
+            Image.Resampling.NEAREST
+        )
+
+        overlay_image = self.image_file_handler.combine_images(overlay_image, body_image, (-40, -36))
+
+        # Wings
+        wing_image = self.image_file_handler.crop_image(butterfly_image, (0, 0), (34, 20))
+        wing_image = self.image_file_handler.rotate_image(wing_image, 90)
+        wing_image = self.image_file_handler.resize_image(
+            wing_image,
+            int(wing_image.width * 2.5),
+            int(wing_image.height * 2.5),
+            Image.Resampling.NEAREST
+        )
+
+        overlay_image = self.image_file_handler.combine_images(overlay_image, wing_image, (-68, -35))
+
+        wing_image = self.image_file_handler.crop_image(butterfly_image, (0, 20), (34, 20))
+        wing_image = self.image_file_handler.rotate_image(wing_image, 90)
+        wing_image = self.image_file_handler.resize_image(
+            wing_image,
+            int(wing_image.width * 2.5),
+            int(wing_image.height * 2.5),
             Image.Resampling.NEAREST
         )
         overlay_image = self.image_file_handler.combine_images(overlay_image, wing_image, (-11, -35))
