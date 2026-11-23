@@ -30,10 +30,7 @@ class ImageFileHandler:
         """
         try:
             suffix = image_path.suffix.lstrip(".").upper()
-            if suffix == "PNG":
-                image.save(image_path, optimize=True)
-            else:
-                image.save(image_path)
+            image.save(image_path, format="PNG", optimize=True)
         except Exception as e:
             self.logger.error(f"Failed to save image {image_path}: {e}")
             raise
@@ -42,7 +39,7 @@ class ImageFileHandler:
             image: Image.Image,
             new_width: int,
             new_height: int,
-            resampling: Image.Resampling = Image.Resampling.LANCZOS
+            resampling: Image.Resampling
     ) -> Image.Image:
         """
         Resizes the given image.
@@ -75,18 +72,24 @@ class ImageFileHandler:
             overlay_image = overlay_image.convert('RGBA')
 
         # Ensure the overlay fits
-        if overlay_image.size > base_image.size:
+        if overlay_image.width > base_image.width or overlay_image.height > base_image.height:
             overlay_resized = overlay_image.resize(base_image.size, Image.Resampling.LANCZOS)
         else:
             overlay_resized = overlay_image
 
-        position =\
-            (((base_image.width - overlay_resized.width) // 2) + offset[0],
-             ((base_image.height - overlay_resized.height) // 2) + offset[1])
+        offset_x, offset_y = offset
+        position_x = (base_image.width - overlay_image.width) // 2 + offset_x
+        position_y = (base_image.height - overlay_image.height) // 2 + offset_y
+
+        if position_x < 0 or position_y < 0:
+            raise ValueError(
+                f"Overlay position ({position_x}, {position_y}) is outside "
+                f"the base image"
+            )
 
         # Offset the image
         overlay_final = Image.new('RGBA', base_image.size, (0, 0, 0, 0))
-        overlay_final.paste(overlay_resized, position, overlay_resized)
+        overlay_final.paste(overlay_resized, (position_x, position_y), overlay_resized)
 
         return Image.alpha_composite(base_image, overlay_final)
 
@@ -102,12 +105,28 @@ class ImageFileHandler:
         :param crop_size: The size of the crop.
         :return: A newly cropped image.
         """
-        return image.crop((
-            crop_start[0],
-            crop_start[1],
-            crop_start[0] + crop_size[0],
-            crop_start[1] + crop_size[1]
-        ))
+        left, top = crop_start
+        width, height = crop_size
+        right = left + width
+        bottom = top + height
+
+        if left < 0 or top < 0:
+            raise ValueError(
+                f"Crop origin must be non-negative: got ({left}, {top})"
+            )
+
+        if width <= 0 or height <= 0:
+            raise ValueError(
+                f"Crop size must be positive: got {width}x{height}"
+            )
+
+        if right > image.width or bottom > image.height:
+            raise ValueError(
+                f"Crop rectangle ({left}, {top}, {right}, {bottom}) "
+                f"exceeds image bounds {image.width}x{image.height}"
+            )
+
+        return image.crop((left, top, right, bottom))
 
     def rotate_image(self, image: Image.Image, rotate: int) -> Image.Image:
         """

@@ -6,6 +6,8 @@ from PIL import Image
 from pipeline.config import Config
 from pipeline.images.image_file_handler import ImageFileHandler
 
+from .texture_source import TextureSource
+
 class ScrollTextureGenerator:
     """
     Generator for Scroll Item/GUI Textures.
@@ -23,13 +25,13 @@ class ScrollTextureGenerator:
             'white-lined-sphinx'
         ]
 
-    def generate(self, butterfly_entity_textures: [Image.Image]) -> None:
+    def generate(self, butterfly_entity_textures: list[TextureSource]) -> None:
         self.logger.info(f"Generating scroll textures")
 
         self._generate_butterfly_scroll(butterfly_entity_textures)
         self._generate_scroll_gui()
 
-    def _generate_butterfly_scroll(self, butterfly_entity_textures) -> None:
+    def _generate_butterfly_scroll(self, butterfly_entity_textures: list[TextureSource]) -> None:
         """
         Generate butterfly scroll textures.
         """
@@ -37,10 +39,10 @@ class ScrollTextureGenerator:
         paper_image = self.image_file_handler.load_image(self.config.PAPER_TEXTURE_PATH)
 
         for texture_info in butterfly_entity_textures:
-            overlay_image = self.image_file_handler.rotate_image(texture_info[1], 45)
-            overlay_image = self.image_file_handler.resize_image(overlay_image, int(paper_image.width * 0.65), int(paper_image.height * 0.65))
+            overlay_image = self.image_file_handler.rotate_image(texture_info.image, 45)
+            overlay_image = self.image_file_handler.resize_image(overlay_image, int(paper_image.width * 0.65), int(paper_image.height * 0.65), Image.Resampling.LANCZOS)
             overlay_image = self.image_file_handler.combine_images(paper_image, overlay_image, (1, 0))
-            self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_TEXTURE_PATH / ('butterfly_scroll_' + os.path.basename(texture_info[0])[10:]), overlay_image)
+            self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_TEXTURE_PATH / ('butterfly_scroll_' + os.path.basename(texture_info.path)[10:]), overlay_image)
 
     def _generate_scroll_gui(self):
         """
@@ -119,7 +121,7 @@ class ScrollTextureGenerator:
 
         # Nail
         overlay_image = self.image_file_handler.combine_images(overlay_image, nail_image)
-        self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_GUI_TEXTURE_PATH / os.path.basename(texture)[10:], overlay_image)
+        self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_GUI_TEXTURE_PATH / TextureSource.strip_prefix(os.path.basename(texture), TextureSource.BUTTERFLY_PREFIX), overlay_image)
 
 
     def _generate_hummingbird_scroll_gui(self,

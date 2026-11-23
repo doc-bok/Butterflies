@@ -6,6 +6,7 @@ from .texture_generators.caterpillar_texture_generator import CaterpillarTexture
 from .texture_generators.spawn_egg_texture_generator import SpawnEggTextureGenerator
 from .texture_generators.bottled_texture_generator import BottledTextureGenerator
 from .texture_generators.scroll_texture_generator import ScrollTextureGenerator
+from .texture_generators.texture_source import TextureSource
 
 from PIL import Image
 
@@ -56,12 +57,15 @@ class ImageGenerator:
         Generate all derivative textures.
         """
         butterfly_entity_textures = [
-            [f, self._load_butterfly_entity_texture(f)]
-            for f in self.config.BUTTERFLY_ENTITY_TEXTURE_PATH.iterdir()
-            if f.suffix == ".png" and os.path.basename(f).startswith("butterfly_")
+            TextureSource(
+                path=texture_path,
+                image=self._load_butterfly_entity_texture(texture_path),
+            )
+            for texture_path in TextureSource.find_textures_with_prefix(
+                self.config.BUTTERFLY_ENTITY_TEXTURE_PATH,
+                prefix=TextureSource.BUTTERFLY_PREFIX,
+            )
         ]
-
-        bottle_image = self.image_file_handler.load_image(self.config.GLASS_BOTTLE_TEXTURE_PATH)
 
         # Create generators.
         caterpillar_generator = CaterpillarTextureGenerator(self.config, self.image_file_handler)

@@ -5,6 +5,8 @@ from PIL import Image
 from pipeline.config import Config
 from pipeline.images.image_file_handler import ImageFileHandler
 
+from .texture_source import TextureSource
+
 class SpawnEggTextureGenerator:
     """
     Generator for Spawn Egg Item Textures.
@@ -15,7 +17,7 @@ class SpawnEggTextureGenerator:
         self.logger = config.logger
         self.image_file_handler = image_file_handler
 
-    def generate(self, butterfly_entity_textures: [Image.Image]) -> None:
+    def generate(self, butterfly_entity_textures: list[TextureSource]) -> None:
         self.logger.info(f"Generating spawn egg item textures")
 
         egg_image = self.image_file_handler.load_image(self.config.SPAWN_EGG_BASE_TEXTURE_PATH)
@@ -31,15 +33,21 @@ class SpawnEggTextureGenerator:
         self.logger.info(f"Generating egg spawn egg textures")
 
         butterfly_entity_textures = [
-            f for f in self.config.EGG_ITEM_TEXTURE_PATH.iterdir()
-            if os.path.basename(f).endswith("_egg.png")
+            TextureSource(
+                path=texture_path,
+                image=self._load_butterfly_entity_texture(texture_path),
+            )
+            for texture_path in TextureSource.find_textures_with_suffix(
+                self.config.BUTTERFLY_ENTITY_TEXTURE_PATH,
+                suffix=TextureSource.EGG_SUFFIX,
+            )
         ]
 
         for texture in butterfly_entity_textures:
-            overlay_image = self.image_file_handler.load_image(texture)
-            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8))
+            overlay_image = self.image_file_handler.load_image(texture.path)
+            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8), Image.Resampling.LANCZOS)
             overlay_image = self.image_file_handler.combine_images(egg_image, overlay_image)
-            self.image_file_handler.save_image(self.config.EGG_SPAWN_EGG_TEXTURE_PATH / (os.path.basename(texture)[:-8] + '.png'), overlay_image)
+            self.image_file_handler.save_image(self.config.EGG_SPAWN_EGG_TEXTURE_PATH / (TextureSource.strip_suffix(basename(texture), TextureSource.EGG_SUFFIX) + '.png'), overlay_image)
 
 
     def _generate_caterpillar_spawn_eggs(self, egg_image: Image.Image) -> None:
@@ -56,7 +64,7 @@ class SpawnEggTextureGenerator:
         for texture in caterpillar_item_textures:
             overlay_image = self.image_file_handler.load_image(texture)
             overlay_image = self.image_file_handler.combine_images(egg_image, overlay_image)
-            self.image_file_handler.save_image(self.config.CATERPILLAR_SPAWN_EGG_TEXTURE_PATH / os.path.basename(texture)[12:], overlay_image)
+            self.image_file_handler.save_image(self.config.CATERPILLAR_SPAWN_EGG_TEXTURE_PATH / TextureSource.strip_prefix(os.path.basename(texture), TextureSource.CATERPILLAR_PREFIX), overlay_image)
 
     def _generate_chrysalis_spawn_eggs(self, egg_image: Image.Image) -> None:
         """
@@ -72,18 +80,24 @@ class SpawnEggTextureGenerator:
         for texture in butterfly_entity_textures:
             overlay_image = self.image_file_handler.load_image(texture)
             overlay_image = self.image_file_handler.crop_image(overlay_image, (0, 0), (16, 16))
-            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8))
+            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8), Image.Resampling.LANCZOS)
             overlay_image = self.image_file_handler.combine_images(egg_image, overlay_image, (3, 1))
-            self.image_file_handler.save_image(self.config.CHRYSALIS_SPAWN_EGG_TEXTURE_PATH / os.path.basename(texture)[10:], overlay_image)
 
-    def _generate_butterfly_spawn_eggs(self, egg_image: Image.Image, butterfly_entity_textures: [Image.Image]) -> None:
+            base_path = TextureSource.strip_prefix(os.path.basename(texture), TextureSource.CHRYSALIS_PREFIX)
+            full_path = self.config.CHRYSALIS_SPAWN_EGG_TEXTURE_PATH / base_path
+            self.image_file_handler.save_image(full_path, overlay_image)
+
+    def _generate_butterfly_spawn_eggs(self, egg_image: Image.Image, butterfly_entity_textures: list[TextureSource]) -> None:
         """
         Generate butterfly spawn egg textures.
         """
         self.logger.info(f"Generating butterfly spawn egg textures")
 
         for texture_info in butterfly_entity_textures:
-            overlay_image = self.image_file_handler.rotate_image(texture_info[1], 90)
-            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8))
+            overlay_image = self.image_file_handler.rotate_image(texture_info.image, 90)
+            overlay_image = self.image_file_handler.resize_image(overlay_image, int(egg_image.width * 0.8), int(egg_image.height * 0.8), Image.Resampling.LANCZOS)
             overlay_image = self.image_file_handler.combine_images(egg_image, overlay_image, (0, 1))
-            self.image_file_handler.save_image(self.config.BUTTERFLY_SPAWN_EGG_TEXTURE_PATH / os.path.basename(texture_info[0])[10:], overlay_image)
+
+            base_path = TextureSource.strip_prefix(os.path.basename(texture_info.path), TextureSource.BUTTERFLY_PREFIX)
+            full_path = self.config.BUTTERFLY_SPAWN_EGG_TEXTURE_PATH  / base_path
+            self.image_file_handler.save_image(full_path, overlay_image)
