@@ -238,7 +238,7 @@ public class ButterflyInfo {
             ButterflyModelType.BASE,
             ButterflyModelType.BASE,
             ButterflyModelType.BASE,
-            ButterflyModelType.BASE,
+            ButterflyModelType.DETAILED,
             ButterflyModelType.BASE,
             ButterflyModelType.BASE,
             ButterflyModelType.HUMMINGBIRD,

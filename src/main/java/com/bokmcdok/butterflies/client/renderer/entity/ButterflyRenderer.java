@@ -25,6 +25,18 @@ public class ButterflyRenderer extends ButterflyBaseRenderer<Butterfly, Butterfl
     }
 
     /**
+     * Used by subclasses to override the model and shadow radius.
+     * @param context The rendering context.
+     * @param butterflyModel The model to use with this renderer.
+     * @param shadowRadius The radius of the model's shadow.
+     */
+    public ButterflyRenderer(EntityRendererProvider.Context context,
+                             ButterflyModel butterflyModel,
+                             float shadowRadius) {
+        super(context, butterflyModel, shadowRadius);
+    }
+
+    /**
      * Override to fix a bug with the model's orientation.
      * @param entity            The butterfly entity.
      * @param p_115456_         Unknown.

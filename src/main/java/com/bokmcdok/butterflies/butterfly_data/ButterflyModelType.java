@@ -5,6 +5,7 @@ package com.bokmcdok.butterflies.butterfly_data;
  */
 public enum ButterflyModelType {
     BASE,
+    DETAILED,
     GLOW,
     HUMMINGBIRD
 }

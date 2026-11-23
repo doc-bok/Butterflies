@@ -33,6 +33,10 @@ public class ButterflyModel extends HierarchicalModel<Butterfly> {
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "butterfly"), "main");
 
+    //  Holds the layers for the butterfly.
+    public static final ModelLayerLocation DETAILED_LAYER_LOCATION =
+            new ModelLayerLocation(new ResourceLocation(ButterfliesMod.MOD_ID, "detailed-butterfly"), "main");
+
     //  The root of the model.
     private final ModelPart root;
 
@@ -84,6 +88,34 @@ public class ButterflyModel extends HierarchicalModel<Butterfly> {
                 PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 3.1416F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
+    }
+
+    /**
+     * Create the 3D model.
+     * @return The complete 3D model for the butterfly.
+     */
+    public static LayerDefinition createDetailedBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
+
+        PartDefinition body = partdefinition.addOrReplaceChild(BODY, CubeListBuilder.create()
+                        .texOffs(0, 20).addBox(-5.0F, -4.0F, -1.0F, 10.0F, 2.0F, 2.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        body.addOrReplaceChild(LEFT_WING, CubeListBuilder.create()
+                        .texOffs(-10, 0).addBox(-8.0F, 0.0F, 0.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, -3.0F, 1.0F));
+
+        body.addOrReplaceChild(RIGHT_WING, CubeListBuilder.create()
+                        .texOffs(-10, 10).addBox(-8.0F, 0.0F, -10.0F, 17.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, -3.0F, -1.0F));
+
+        body.addOrReplaceChild(ANTENNAE, CubeListBuilder.create()
+                        .texOffs(0, 24).addBox(5.0F, -6.0F, -1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F))
+                        .texOffs(0, 24).addBox(5.0F, -6.0F, 1.0F, 3.0F, 2.0F, 0.0F, new CubeDeformation(0.0F)),
+                PartPose.offset(0.0F, 0.0F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 32, 32);
     }
 
     /**

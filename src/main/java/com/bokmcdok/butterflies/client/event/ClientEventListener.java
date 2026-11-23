@@ -46,6 +46,7 @@ public class ClientEventListener {
      */
     public void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ButterflyModel.LAYER_LOCATION, ButterflyModel::createBodyLayer);
+        event.registerLayerDefinition(ButterflyModel.DETAILED_LAYER_LOCATION, ButterflyModel::createDetailedBodyLayer);
         event.registerLayerDefinition(CaterpillarModel.LAYER_LOCATION, CaterpillarModel::createBodyLayer);
         event.registerLayerDefinition(ChrysalisModel.LAYER_LOCATION, ChrysalisModel::createBodyLayer);
         event.registerLayerDefinition(ButterflyEggModel.LAYER_LOCATION, ButterflyEggModel::createBodyLayer);
@@ -128,6 +129,10 @@ public class ClientEventListener {
 
             case HUMMINGBIRD -> {
                 return HummingbirdMothRenderer::new;
+            }
+
+            case DETAILED -> {
+                return DetailedButterflyRenderer::new;
             }
 
             default -> {
