@@ -29,7 +29,7 @@ class ScrollTextureGenerator:
         self.logger.info(f"Generating scroll textures")
 
         self._generate_butterfly_scroll(butterfly_entity_textures)
-        self._generate_scroll_gui()
+        self._generate_scroll_gui(butterfly_entity_textures)
 
     def _generate_butterfly_scroll(self, butterfly_entity_textures: list[TextureSource]) -> None:
         """
@@ -44,7 +44,7 @@ class ScrollTextureGenerator:
             overlay_image = self.image_file_handler.combine_images(paper_image, overlay_image, (1, 0))
             self.image_file_handler.save_image(self.config.BUTTERFLY_SCROLL_TEXTURE_PATH / ('butterfly_scroll_' + os.path.basename(texture_info.path)[10:]), overlay_image)
 
-    def _generate_scroll_gui(self):
+    def _generate_scroll_gui(self, butterfly_entity_textures: list[TextureSource]):
         """
         Generate butterfly scroll gui textures.
         """
@@ -53,16 +53,11 @@ class ScrollTextureGenerator:
         scroll_image = self.image_file_handler.load_image(self.config.SCROLL_TEXTURE_PATH)
         nail_image = self.image_file_handler.load_image(self.config.NAIL_TEXTURE_PATH)
 
-        butterfly_entity_textures = [
-            f for f in self.config.BUTTERFLY_ENTITY_TEXTURE_PATH.iterdir()
-            if f.suffix == ".png" and os.path.basename(f).startswith("butterfly_")
-        ]
-
         for texture in butterfly_entity_textures:
-            if any(moth in str(texture) for moth in self.HUMMINGBIRD_MOTHS):
-                self._generate_hummingbird_scroll_gui(scroll_image, nail_image, texture)
+            if any(moth in str(texture.path) for moth in self.HUMMINGBIRD_MOTHS):
+                self._generate_hummingbird_scroll_gui(scroll_image, nail_image, texture.path)
             else:
-                self._generate_butterfly_scroll_gui(scroll_image, nail_image, texture)
+                self._generate_butterfly_scroll_gui(scroll_image, nail_image, texture.path)
 
     def _generate_butterfly_scroll_gui(self,
                                        scroll_image: Image.Image,
